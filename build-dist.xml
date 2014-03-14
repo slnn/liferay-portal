@@ -19,6 +19,7 @@
 		<attribute name="plugins.includes.plugin.marketplace" />
 		<attribute name="plugins.includes.plugin.name" />
 		<attribute name="plugins.includes.plugin.public" />
+		<attribute name="plugins.includes.plugin.public" />
 
 		<sequential>
 			<if>
