@@ -14,16 +14,25 @@
 
 package com.liferay.portal.cache.ehcache;
 
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.util.PropsValues;
+
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.FieldSelector;
+import org.apache.lucene.document.SetBasedFieldSelector;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 
 /**
  * @author Tina Tian
@@ -98,11 +107,48 @@ public class CacheSearchManager {
 
 		CacheIndexAccessor cacheIndexAccessor = _indexAccessors.get(cacheName);
 
-		if (cacheIndexAccessor != null) {
-			return cacheIndexAccessor.search(query);
+		if (cacheIndexAccessor == null) {
+			return Collections.emptySet();
 		}
 
-		return Collections.emptySet();
+		IndexSearcher indexSearcher = null;
+
+		try {
+			indexSearcher = cacheIndexAccessor.getIndexSearcher();
+
+			TopDocs topdocs = indexSearcher.search(
+				query, null, PropsValues.INDEX_SEARCH_LIMIT);
+
+			ScoreDoc[] scoreDocs = topdocs.scoreDocs;
+
+			int totalHits = topdocs.totalHits;
+
+			if (totalHits <= 0) {
+				return Collections.emptySet();
+			}
+
+			FieldSelector fieldSelector = new SetBasedFieldSelector(
+				SetUtil.fromArray(
+					new String[]{SearchablePortalCache.FIELD_UID}),
+					Collections.<String>emptySet());
+
+			Set<String> results = new HashSet<String>();
+
+			for (int i = 0; i < totalHits; i++) {
+				int docId = scoreDocs[i].doc;
+
+				Document document = indexSearcher.doc(docId, fieldSelector);
+
+				results.add(document.get(SearchablePortalCache.FIELD_UID));
+			}
+
+			return results;
+		}
+		finally {
+			if (indexSearcher != null) {
+				cacheIndexAccessor.releaseIndexSearcher(indexSearcher);
+			}
+		}
 	}
 
 	private void _updateDocument(String cacheName, Term term, Document document)
