@@ -16,32 +16,22 @@ package com.liferay.portal.cache.ehcache;
 
 import static com.liferay.portal.cache.ehcache.SearchablePortalCache.FIELD_UID;
 
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.search.lucene.FieldWeightSimilarity;
+import com.liferay.portal.search.lucene.IndexSearcherManager;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.LimitTokenCountAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.FieldSelector;
-import org.apache.lucene.document.SetBasedFieldSelector;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.RAMDirectory;
 
 /**
@@ -58,6 +48,8 @@ public class CacheIndexAccessor {
 			LuceneHelperUtil.getVersion(), analyzer);
 
 		_indexWriter = new IndexWriter(new RAMDirectory(), indexWriterConfig);
+
+		_indexSearcherManager = new IndexSearcherManager(_indexWriter);
 	}
 
 	public void clear() throws IOException {
@@ -69,7 +61,19 @@ public class CacheIndexAccessor {
 	public void close() throws IOException {
 		_doCommit();
 
+		_indexSearcherManager.close();
+
 		_indexWriter.close();
+	}
+
+	public IndexSearcher getIndexSearcher() throws IOException {
+		return _indexSearcherManager.acquire();
+	}
+
+	public void releaseIndexSearcher(IndexSearcher indexSearcher)
+		throws IOException {
+
+		_indexSearcherManager.release(indexSearcher);
 	}
 
 	public void removeDocument(Object key) throws IOException {
@@ -78,40 +82,6 @@ public class CacheIndexAccessor {
 		_indexWriter.deleteDocuments(term);
 
 		_doCommit();
-	}
-
-	public Set<String> search(Query query) throws IOException {
-		IndexSearcher indexSearcher = new IndexSearcher(
-			IndexReader.open(_indexWriter.getDirectory(), true));
-
-		indexSearcher.setDefaultFieldSortScoring(true, false);
-		indexSearcher.setSimilarity(new FieldWeightSimilarity());
-
-		TopDocs topdocs = indexSearcher.search(
-			query, null, PropsValues.INDEX_SEARCH_LIMIT);
-		ScoreDoc[] scoreDocs = topdocs.scoreDocs;
-
-		int totalHits = topdocs.totalHits;
-
-		if (totalHits <= 0) {
-			return Collections.emptySet();
-		}
-
-		FieldSelector fieldSelector = new SetBasedFieldSelector(
-			SetUtil.fromArray(new String[]{SearchablePortalCache.FIELD_UID}),
-			Collections.<String>emptySet());
-
-		Set<String> results = new HashSet<String>();
-
-		for (int i = 0; i < totalHits; i++) {
-			int docId = scoreDocs[i].doc;
-
-			Document document = indexSearcher.doc(docId, fieldSelector);
-
-			results.add(document.get(SearchablePortalCache.FIELD_UID));
-		}
-
-		return results;
 	}
 
 	public void updateDocument(Term term, Document document)
@@ -129,11 +99,14 @@ public class CacheIndexAccessor {
 			_indexWriter.commit();
 		}
 		finally {
+			_indexSearcherManager.invalidate();
+
 			_commitLock.unlock();
 		}
 	}
 
 	private Lock _commitLock = new ReentrantLock();
+	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
 
 }
