@@ -185,7 +185,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 			<div class="journal-article-wrapper-content">
 				<c:if test="<%= Validator.isNull(toLanguageId) %>">
 					<c:if test="<%= (article != null) && !article.isNew() %>">
-						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
 						<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
 					</c:if>
@@ -213,10 +213,14 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					boolean approved = false;
 					boolean pending = false;
 
+					long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
+
+					boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
 					if ((article != null) && (version > 0)) {
 						approved = article.isApproved();
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
+						 if (workflowEnabled) {
 							pending = article.isPending();
 						}
 					}
@@ -254,7 +258,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 						String publishButtonLabel = "publish";
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalArticle.class.getName())) {
+						if (workflowEnabled) {
 							publishButtonLabel = "submit-for-publication";
 						}
 
@@ -266,11 +270,11 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 						<c:choose>
 							<c:when test="<%= Validator.isNull(toLanguageId) %>">
 								<c:if test="<%= hasSavePermission %>">
+									<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishArticle()" %>' type="submit" value="<%= publishButtonLabel %>" />
+
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 										<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveArticle()" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 									</c:if>
-
-									<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishArticle()" %>' type="submit" value="<%= publishButtonLabel %>" />
 								</c:if>
 							</c:when>
 							<c:otherwise>
@@ -346,20 +350,20 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	var <portlet:namespace />imageGalleryInput = null;
 
 	function <portlet:namespace />publishArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.PUBLISH %>";
+		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.PUBLISH %>';
 	}
 
 	function <portlet:namespace />removeArticleLocale() {
-		if (confirm("<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-deactivate-this-language") %>")) {
-			document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE_TRANSLATION %>";
-			document.<portlet:namespace />fm1.<portlet:namespace />redirect.value = "<portlet:renderURL><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="articleId" value="<%= articleId %>" /><portlet:param name="version" value="<%= String.valueOf(version) %>" /></portlet:renderURL>&<portlet:namespace />languageId=<%= HtmlUtil.escapeJS(defaultLanguageId) %>";
+		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-deactivate-this-language") %>')) {
+			document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE_TRANSLATION %>';
+			document.<portlet:namespace />fm1.<portlet:namespace />redirect.value = '<portlet:renderURL><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="articleId" value="<%= articleId %>" /><portlet:param name="version" value="<%= String.valueOf(version) %>" /></portlet:renderURL>&<portlet:namespace />languageId=<%= HtmlUtil.escapeJS(defaultLanguageId) %>';
 
 			submitForm(document.<portlet:namespace />fm1);
 		}
 	}
 
 	function <portlet:namespace />saveArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>';
 	}
 
 	function <portlet:namespace />selectDocumentLibrary(url) {
@@ -386,7 +390,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	}
 
 	function <portlet:namespace />translateArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.TRANSLATE %>";
+		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

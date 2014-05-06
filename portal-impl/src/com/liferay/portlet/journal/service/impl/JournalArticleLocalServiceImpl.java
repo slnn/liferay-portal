@@ -896,7 +896,8 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false)
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(JournalArticle article)
 		throws PortalException, SystemException {
 
@@ -921,7 +922,9 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(
 			JournalArticle article, String articleURL,
 			ServiceContext serviceContext)
@@ -3780,7 +3783,7 @@ public class JournalArticleLocalServiceImpl
 	 * article ID, title, description, and content, a DDM structure key
 	 * parameter, a DDM template key parameter, and an AND operator switch. It
 	 * is preferable to use the indexed version {@link #search(long, long, List,
-	 * long, String, String, String, String, String, String, String, String,
+	 * long, String, String, String, String, String, int, String, String,
 	 * LinkedHashMap, boolean, int, int, Sort)} instead of this method wherever
 	 * possible for performance reasons.
 	 *
@@ -4016,16 +4019,15 @@ public class JournalArticleLocalServiceImpl
 			andOperator = true;
 		}
 
-		String status = String.valueOf(WorkflowConstants.STATUS_ANY);
-
 		if (params != null) {
 			params.put("keywords", keywords);
 		}
 
 		return search(
 			companyId, groupId, folderIds, classNameId, articleId, title,
-			description, content, null, status, ddmStructureKey, ddmTemplateKey,
-			params, andOperator, start, end, sort);
+			description, content, null, WorkflowConstants.STATUS_ANY,
+			ddmStructureKey, ddmTemplateKey, params, andOperator, start, end,
+			sort);
 	}
 
 	/**
@@ -4091,7 +4093,7 @@ public class JournalArticleLocalServiceImpl
 	public Hits search(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, String title,
-			String description, String content, String type, String status,
+			String description, String content, String type, int status,
 			String ddmStructureKey, String ddmTemplateKey,
 			LinkedHashMap<String, Object> params, boolean andSearch, int start,
 			int end, Sort sort)
@@ -4111,6 +4113,30 @@ public class JournalArticleLocalServiceImpl
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	 *             long, String, String, String, String, String, int, String,
+	 *             String, LinkedHashMap, boolean, int, int, Sort)}
+	 */
+	@Deprecated
+	@Override
+	public Hits search(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, String title,
+			String description, String content, String type,
+			String statusString, String ddmStructureKey, String ddmTemplateKey,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws SystemException {
+
+		int status = GetterUtil.getInteger(statusString);
+
+		return search(
+			companyId, groupId, folderIds, classNameId, articleId, title,
+			description, content, type, status, ddmStructureKey, ddmTemplateKey,
+			params, andSearch, start, end, sort);
 	}
 
 	@Override
@@ -4361,23 +4387,22 @@ public class JournalArticleLocalServiceImpl
 			andOperator = true;
 		}
 
-		String status = String.valueOf(WorkflowConstants.STATUS_ANY);
-
 		if (params != null) {
 			params.put("keywords", keywords);
 		}
 
 		return searchJournalArticles(
 			companyId, groupId, folderIds, classNameId, articleId, title,
-			description, content, null, status, ddmStructureKey, ddmTemplateKey,
-			params, andOperator, start, end, sort);
+			description, content, null, WorkflowConstants.STATUS_ANY,
+			ddmStructureKey, ddmTemplateKey, params, andOperator, start, end,
+			sort);
 	}
 
 	@Override
 	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, String title,
-			String description, String content, String type, String status,
+			String description, String content, String type, int status,
 			String ddmStructureKey, String ddmTemplateKey,
 			LinkedHashMap<String, Object> params, boolean andSearch, int start,
 			int end, Sort sort)
@@ -5202,8 +5227,6 @@ public class JournalArticleLocalServiceImpl
 	 *         information see {@link WorkflowConstants} for constants starting
 	 *         with the "STATUS_" prefix.
 	 * @param  articleURL the web content article's accessible URL
-	 * @param  workflowContext the web content article's configured workflow
-	 *         context
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, status date, and portlet preferences. With
 	 *         respect to social activities, by setting the service context's
@@ -5211,6 +5234,8 @@ public class JournalArticleLocalServiceImpl
 	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	 *         is considered a web content update activity; otherwise it is
 	 *         considered a web content add activity.
+	 * @param  workflowContext the web content article's configured workflow
+	 *         context
 	 * @return the updated web content article
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -5316,18 +5341,9 @@ public class JournalArticleLocalServiceImpl
 							userId, assetEntry.getEntryId(), assetLinkEntryIds,
 							AssetLinkConstants.TYPE_RELATED);
 
-						SystemEventHierarchyEntryThreadLocal.push(
-							JournalArticle.class);
-
-						try {
-							assetEntryLocalService.deleteEntry(
-								JournalArticle.class.getName(),
-								article.getPrimaryKey());
-						}
-						finally {
-							SystemEventHierarchyEntryThreadLocal.pop(
-								JournalArticle.class);
-						}
+						assetEntryLocalService.deleteEntry(
+							JournalArticle.class.getName(),
+							article.getPrimaryKey());
 					}
 				}
 
@@ -5566,9 +5582,9 @@ public class JournalArticleLocalServiceImpl
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, String title, String description, String content,
-		String type, String status, String ddmStructureKey,
-		String ddmTemplateKey, LinkedHashMap<String, Object> params,
-		boolean andSearch, int start, int end, Sort sort) {
+		String type, int status, String ddmStructureKey, String ddmTemplateKey,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -6011,8 +6027,6 @@ public class JournalArticleLocalServiceImpl
 		catch (DocumentException de) {
 			_log.error(de, de);
 		}
-
-		content = HtmlUtil.replaceMsWordCharacters(content);
 
 		return content;
 	}
@@ -6966,6 +6980,8 @@ public class JournalArticleLocalServiceImpl
 			long groupId, long folderId, String ddmStructureKey)
 		throws PortalException, SystemException {
 
+		int restrictionType = JournalUtil.getRestrictionType(folderId);
+
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
 			PortalUtil.getSiteGroupId(groupId),
 			classNameLocalService.getClassNameId(JournalArticle.class),
@@ -6974,7 +6990,7 @@ public class JournalArticleLocalServiceImpl
 		List<DDMStructure> folderDDMStructures =
 			ddmStructureLocalService.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
-				true);
+				restrictionType);
 
 		for (DDMStructure folderDDMStructure : folderDDMStructures) {
 			if (folderDDMStructure.getStructureId() ==

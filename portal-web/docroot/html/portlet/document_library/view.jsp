@@ -17,6 +17,10 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+
+DLActionsDisplayContext dlActionsDisplayContext = dlEntriesListDisplayContext.getDLActionsDisplayContext();
+
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
 String navigation = ParamUtil.getString(request, "navigation");
@@ -53,12 +57,14 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 
+String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
+
 if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
 
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
@@ -98,7 +104,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			<div class="folder-pagination"></div>
 		</aui:col>
 
-		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 75 : 100 %>">
+		<aui:col cssClass="context-pane" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"
@@ -176,7 +182,7 @@ entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryS
 folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
 folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
 
-if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);
 	PortalUtil.setPageDescription(folder.getDescription(), request);
 }
@@ -204,9 +210,9 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 </aui:script>
 
 <aui:script use="liferay-document-library">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
 	<%
+	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];
 
 	for (int i = 0; i < entryColumns.length; i++) {
@@ -242,6 +248,12 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
 				},
 				'listViewConfig.useTransition': false,
+
+				<liferay-portlet:resourceURL
+					copyCurrentRenderParameters="<%= false %>"
+					varImpl="mainURL"
+				/>
+
 				mainUrl: '<%= mainURL %>',
 				strutsAction: '/document_library/view'
 			},
@@ -253,7 +265,7 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
 				form: {
-					method: 'post',
+					method: 'POST',
 					node: A.one(document.<portlet:namespace />fm2)
 				},
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',

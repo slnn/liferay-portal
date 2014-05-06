@@ -351,7 +351,7 @@ else {
 									/>
 								</span>
 
-								<aui:input cssClass="hide" hideLabel="<%= true %>" label="message-attachment" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
+								<aui:input cssClass="hide" label="" name='<%= "msgFile" + (i + 1) %>' size="70" title="message-attachment" type="file" />
 
 								<liferay-ui:icon-delete
 									id='<%= "removeExisting" + (i + 1) %>'
@@ -396,7 +396,7 @@ else {
 				%>
 
 					<div>
-						<aui:input hideLabel="<%= true %>" label="message-attachment" name='<%= "msgFile" + i %>' size="70" type="file" />
+						<aui:input label="" name='<%= "msgFile" + i %>' size="70" title="message-attachment" type="file" />
 					</div>
 
 				<%
@@ -521,7 +521,7 @@ else {
 	}
 
 	function <portlet:namespace />saveMessage(draft) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (message == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
 
 		if (!draft) {
@@ -535,10 +535,10 @@ else {
 	function <portlet:namespace />selectCategory(categoryId, categoryName) {
 		document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = categoryId;
 
-		var nameEl = document.getElementById("<portlet:namespace />categoryName");
+		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 
-		nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + categoryId;
-		nameEl.innerHTML = categoryName + "&nbsp;";
+		nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
+		nameEl.innerHTML = categoryName + '&nbsp;';
 	}
 
 	<c:choose>

@@ -243,6 +243,19 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -713,6 +726,13 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public long getInheritedWorkflowFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchFolderException {
+		return _journalFolderLocalService.getInheritedWorkflowFolderId(folderId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getNoAssetFolders()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderLocalService.getNoAssetFolders();
@@ -814,13 +834,13 @@ public class JournalFolderLocalServiceWrapper
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderLocalService.updateFolder(userId, folderId,
 			parentFolderId, name, description, ddmStructureIds,
-			overrideDDMStructures, mergeWithParentFolder, serviceContext);
+			restrictionType, mergeWithParentFolder, serviceContext);
 	}
 
 	@Override
@@ -839,6 +859,14 @@ public class JournalFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderLocalService.updateStatus(userId, folder, status);
+	}
+
+	@Override
+	public void validateFolderDDMStructures(long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.validateFolderDDMStructures(folderId,
+			parentFolderId);
 	}
 
 	/**

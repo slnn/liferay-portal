@@ -41,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -153,7 +154,7 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setDescription(ServiceTestUtil.randomString());
 
-		newJournalFolder.setOverrideDDMStructures(ServiceTestUtil.randomBoolean());
+		newJournalFolder.setRestrictionType(ServiceTestUtil.nextInt());
 
 		newJournalFolder.setStatus(ServiceTestUtil.nextInt());
 
@@ -193,8 +194,8 @@ public class JournalFolderPersistenceTest {
 			newJournalFolder.getName());
 		Assert.assertEquals(existingJournalFolder.getDescription(),
 			newJournalFolder.getDescription());
-		Assert.assertEquals(existingJournalFolder.getOverrideDDMStructures(),
-			newJournalFolder.getOverrideDDMStructures());
+		Assert.assertEquals(existingJournalFolder.getRestrictionType(),
+			newJournalFolder.getRestrictionType());
 		Assert.assertEquals(existingJournalFolder.getStatus(),
 			newJournalFolder.getStatus());
 		Assert.assertEquals(existingJournalFolder.getStatusByUserId(),
@@ -418,7 +419,7 @@ public class JournalFolderPersistenceTest {
 			true, "folderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentFolderId", true, "treePath", true,
-			"name", true, "description", true, "overrideDDMStructures", true,
+			"name", true, "description", true, "restrictionType", true,
 			"status", true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
 	}
@@ -445,16 +446,18 @@ public class JournalFolderPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = new JournalFolderActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = JournalFolderLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				protected void performAction(Object object) {
+				public void performAction(Object object) {
 					JournalFolder journalFolder = (JournalFolder)object;
 
 					Assert.assertNotNull(journalFolder);
 
 					count.increment();
 				}
-			};
+			});
 
 		actionableDynamicQuery.performActions();
 
@@ -593,7 +596,7 @@ public class JournalFolderPersistenceTest {
 
 		journalFolder.setDescription(ServiceTestUtil.randomString());
 
-		journalFolder.setOverrideDDMStructures(ServiceTestUtil.randomBoolean());
+		journalFolder.setRestrictionType(ServiceTestUtil.nextInt());
 
 		journalFolder.setStatus(ServiceTestUtil.nextInt());
 

@@ -67,9 +67,15 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="PAGE_INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="ADD">
-			<execute function="Click#clickAtSidebarClickAt" />
+			<execute function="Click#clickAtSidebarClickAtWaitForScript" />
 		</case>
 
 		<case locator-key1="ADMIN">
@@ -82,6 +88,10 @@
 
 		<case locator-key1="MY_SITES">
 			<execute function="Click#textClickAtClickDockbar" />
+		</case>
+
+		<case locator-key1="PREVIEW">
+			<execute function="Click#clickAtSidebarClickAt" />
 		</case>
 
 		<case locator-key1="USER_NAME">

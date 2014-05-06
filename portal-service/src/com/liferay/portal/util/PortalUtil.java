@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -464,6 +465,14 @@ public class PortalUtil {
 		return getPortal().getBasicAuthUserId(request, companyId);
 	}
 
+	public static List<Group> getBrowsableScopeGroups(
+			long userId, long companyId, long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		return getPortal().getBrowsableScopeGroups(
+			userId, companyId, groupId, portletId);
+	}
+
 	/**
 	 * Returns the canonical URL for the page. The canonical URL is often used
 	 * to distinguish a preferred page from its translations.
@@ -728,6 +737,12 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getCurrentAndAncestorSiteGroupIds(groupId);
+	}
+
+	public static List<Group> getCurrentAndAncestorSiteGroups(long groupId)
+		throws PortalException, SystemException {
+
+		return getPortal().getCurrentAndAncestorSiteGroups(groupId);
 	}
 
 	public static String getCurrentCompleteURL(HttpServletRequest request) {
@@ -1676,6 +1691,10 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getRelativeHomeURL(request);
+	}
+
+	public static ResourceBundle getResourceBundle(Locale locale) {
+		return getPortal().getResourceBundle(locale);
 	}
 
 	public static long getScopeGroupId(HttpServletRequest request)

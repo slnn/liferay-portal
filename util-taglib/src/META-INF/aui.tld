@@ -1529,12 +1529,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>hideLabel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1578,6 +1572,12 @@
 		</attribute>
 		<attribute>
 			<name>last</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>localized</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
@@ -1894,6 +1894,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>iconSrc</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2124,12 +2130,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>hideLabel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>id</name>

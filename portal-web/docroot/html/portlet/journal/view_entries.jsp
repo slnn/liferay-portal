@@ -175,11 +175,11 @@ int total = 0;
 	<c:when test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
 
 		<%
-		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate());
+		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate());
 
 		searchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -246,14 +246,15 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							image="unsubscribe"
+							iconCssClass="icon-remove-sign"
 							label="<%= true %>"
+							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							image="unsubscribe"
+							iconCssClass="icon-remove-sign"
 							label="<%= true %>"
 							message="subscribed-to-a-parent-folder"
 						/>
@@ -277,8 +278,9 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="subscribe"
+					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
+					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
 			</c:otherwise>
@@ -287,7 +289,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 </div>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="entries-empty alert alert-info">
+	<div class="alert alert-info entries-empty">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 				<c:if test="<%= total == 0 %>">
@@ -344,6 +346,10 @@ for (int i = 0; i < results.size(); i++) {
 					<liferay-util:buffer var="articleTitle">
 
 						<%
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(curArticle));
+
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 						rowURL.setParameter("struts_action", "/journal/edit_article");
@@ -357,7 +363,7 @@ for (int i = 0; i < results.size(); i++) {
 
 						<liferay-ui:icon
 							cssClass="entry-display-style selectable"
-							image="../file_system/small/html"
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= curArticle.getTitle(locale) %>"
 							method="get"
@@ -475,16 +481,14 @@ for (int i = 0; i < results.size(); i++) {
 					<liferay-util:buffer var="folderTitle">
 
 						<%
-						String folderImage = "folder_empty";
-
-						if (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) {
-							folderImage = "folder_full_document";
-						}
-
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						data.put("folder", true);
 						data.put("folder-id", curFolder.getFolderId());
+
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
@@ -496,7 +500,7 @@ for (int i = 0; i < results.size(); i++) {
 
 						<liferay-ui:icon
 							data="<%= data %>"
-							image="<%= folderImage %>"
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= curFolder.getName() %>"
 							method="get"

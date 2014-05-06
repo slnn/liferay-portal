@@ -149,15 +149,14 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					<aui:field-wrapper label="public-pages">
 						<c:choose>
 							<c:when test="<%= userGroupGroup != null %>">
-
-								<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
-									<portlet:param name="struts_action" value="/MY_SITES/view" />
-									<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
-									<portlet:param name="publicLayout" value="<%= Boolean.TRUE.toString() %>" />
-								</liferay-portlet:actionURL>
-
 								<c:choose>
 									<c:when test="<%= userGroupGroup.getPublicLayoutsPageCount() > 0 %>">
+										<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
+											<portlet:param name="struts_action" value="/MY_SITES/view" />
+											<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
+											<portlet:param name="publicLayout" value="<%= Boolean.TRUE.toString() %>" />
+										</liferay-portlet:actionURL>
+
 										<liferay-ui:icon
 											image="view"
 											label="<%= true %>"
@@ -220,14 +219,14 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					<aui:field-wrapper label="private-pages">
 						<c:choose>
 							<c:when test="<%= userGroupGroup != null %>">
-								<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
-									<portlet:param name="struts_action" value="/MY_SITES/view" />
-									<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
-									<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-								</liferay-portlet:actionURL>
-
 								<c:choose>
 									<c:when test="<%= userGroupGroup.getPrivateLayoutsPageCount() > 0 %>">
+										<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
+											<portlet:param name="struts_action" value="/MY_SITES/view" />
+											<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
+											<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+										</liferay-portlet:actionURL>
+
 										<liferay-ui:icon
 											image="view"
 											label="<%= true %>"
@@ -273,9 +272,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	}
 
 	function <portlet:namespace />saveUserGroup() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (userGroup == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (userGroup == null) ? Constants.ADD : Constants.UPDATE %>';
 
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>");
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>');
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');

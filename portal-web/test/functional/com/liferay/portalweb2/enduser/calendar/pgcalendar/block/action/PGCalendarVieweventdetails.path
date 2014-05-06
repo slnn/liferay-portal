@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCEPT_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Accept')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAYBE_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Maybe')]</td>
 	<td></td>
@@ -102,6 +107,22 @@
 <tr>
 	<td>COMMENTS_BODY</td>
 	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_eventComment}')]/div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAGS-->
+<tr>
+	<td>TAGS_LABEL</td>
+	<td>//div[@class='entry-tags']/span[@class='taglib-asset-tags-summary' and contains(.,'Tags:')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_TAG_SPECIFIC</td>
+	<td>//div[@class='entry-tags']//span[@class='tag' and contains(.,'${key_tagText}')]</td>
 	<td></td>
 </tr>
 </tbody>

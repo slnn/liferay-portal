@@ -64,6 +64,11 @@ public class JournalFolderAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-folder-close";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

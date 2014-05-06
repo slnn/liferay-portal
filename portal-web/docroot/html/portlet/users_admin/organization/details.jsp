@@ -93,9 +93,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 				</aui:select>
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="type">
-					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
-				</aui:field-wrapper>
+				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
 
 				<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
 			</c:otherwise>
@@ -110,9 +108,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 		</div>
 
 		<c:if test="<%= organization != null %>">
-			<aui:field-wrapper label="site-id">
-				<liferay-ui:input-resource url="<%= String.valueOf(groupId) %>" />
-			</aui:field-wrapper>
+			<aui:input name="siteId" type="resource" value="<%= String.valueOf(groupId) %>" />
 		</c:if>
 	</aui:fieldset>
 
@@ -289,7 +285,7 @@ if (parentOrganization != null) {
 					function(event) {
 						var rowColumns = [];
 
-						var href = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=" + event.organizationid;
+						var href = '<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.organizationid;
 
 						rowColumns.push(<portlet:namespace />createURL(href, event.name));
 						rowColumns.push(<portlet:namespace />createURL(href, event.type));

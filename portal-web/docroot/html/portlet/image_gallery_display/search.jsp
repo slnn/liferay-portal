@@ -42,8 +42,6 @@ else {
 }
 
 String keywords = ParamUtil.getString(request, "keywords");
-
-String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -78,7 +76,7 @@ String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
 	try {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		searchContext.setAttribute("mimeTypes", mediaGalleryMimeTypes);
+		searchContext.setAttribute("mimeTypes", dlPortletInstanceSettings.getMimeTypes());
 		searchContext.setAttribute("paginationType", "more");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setFolderIds(folderIdsArray);
@@ -119,12 +117,12 @@ String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
 		<%
 		Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-		long defaultFolderId = GetterUtil.getLong(portletPreferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
 
 		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
 
 		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
-		request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+		request.setAttribute("view.jsp-mediaGalleryMimeTypes", dlPortletInstanceSettings.getMimeTypes());
 		request.setAttribute("view.jsp-searchContainer", searchContainer);
 		%>
 

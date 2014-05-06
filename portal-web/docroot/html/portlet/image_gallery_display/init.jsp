@@ -16,22 +16,20 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
-page import="com.liferay.portal.kernel.search.Document" %><%@
+<%@ page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolder" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
+page import="com.liferay.portlet.imagegallerydisplay.context.IGConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 
 <%
@@ -41,9 +39,16 @@ if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	portletId = portletResource;
+}
+
+DLPortletInstanceSettings dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId);
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
 
-long rootFolderId = dlSettings.getRootFolderId();
+long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -61,21 +66,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }
-
-boolean showFoldersSearch = dlSettings.getShowFoldersSearch();
-
-String portletId = portletDisplay.getId();
-
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
-}
-
-boolean showActions = dlSettings.getShowActions();
-boolean showFolderMenu = dlSettings.getShowFolderMenu();
-boolean showTabs = dlSettings.getShowTabs();
-
-boolean enableRatings = dlSettings.getEnableRatings();
-boolean enableCommentRatings = dlSettings.getEnableCommentRatings();
 
 String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());

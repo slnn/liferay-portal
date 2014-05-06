@@ -609,17 +609,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Asset
 
-		SystemEventHierarchyEntryThreadLocal.pop(
-			Layout.class, layout.getPlid());
-
-		try {
-			assetEntryLocalService.deleteEntry(
-				Layout.class.getName(), layout.getPlid());
-		}
-		finally {
-			SystemEventHierarchyEntryThreadLocal.push(
-				Layout.class, layout.getPlid());
-		}
+		assetEntryLocalService.deleteEntry(
+			Layout.class.getName(), layout.getPlid());
 
 		// Ratings
 
@@ -1037,7 +1028,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletExporter portletExporter = new PortletExporter();
+			PortletExporter portletExporter = PortletExporter.getInstance();
 
 			return portletExporter.exportPortletInfoAsFile(
 				plid, groupId, portletId, parameterMap, startDate, endDate);
@@ -1961,7 +1952,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletImporter portletImporter = new PortletImporter();
+			PortletImporter portletImporter = PortletImporter.getInstance();
 
 			portletImporter.importPortletInfo(
 				userId, plid, groupId, portletId, parameterMap, file);
@@ -3114,7 +3105,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletImporter portletImporter = new PortletImporter();
+			PortletImporter portletImporter = PortletImporter.getInstance();
 
 			return portletImporter.validateFile(
 				userId, plid, groupId, portletId, parameterMap, file);

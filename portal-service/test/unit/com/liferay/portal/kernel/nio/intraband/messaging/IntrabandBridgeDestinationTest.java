@@ -33,13 +33,11 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-
-import java.lang.reflect.Field;
 
 import java.nio.ByteBuffer;
 
@@ -84,15 +82,7 @@ public class IntrabandBridgeDestinationTest {
 		_mockIntraband = new MockIntraband() {
 
 			@Override
-			public Datagram sendSyncDatagram(
-					RegistrationReference registrationReference,
-					Datagram datagram)
-				throws IOException {
-
-				if (_throwRuntimeException) {
-					throw new IOException("Unable to send");
-				}
-
+			protected Datagram processDatagram(Datagram datagram) {
 				ByteBuffer byteBuffer = datagram.getDataByteBuffer();
 
 				try {
@@ -108,7 +98,7 @@ public class IntrabandBridgeDestinationTest {
 						datagram, receivedMessageRoutingBag.toByteArray());
 				}
 				catch (ClassNotFoundException cnfe) {
-					throw new IOException(cnfe);
+					throw new RuntimeException(cnfe);
 				}
 			}
 
@@ -258,7 +248,9 @@ public class IntrabandBridgeDestinationTest {
 
 		_installSPIs(mockSPI);
 
-		_throwRuntimeException = true;
+		IOException ioException = new IOException();
+
+		_mockIntraband.setIOException(ioException);
 
 		try {
 			MessageRoutingBag messageRoutingBag = _createMessageRoutingBag();
@@ -272,13 +264,10 @@ public class IntrabandBridgeDestinationTest {
 			Throwable throwable = re.getCause();
 
 			Assert.assertEquals(RuntimeException.class, throwable.getClass());
-
-			throwable = throwable.getCause();
-
-			Assert.assertEquals(IOException.class, throwable.getClass());
+			Assert.assertSame(ioException, throwable.getCause());
 		}
 		finally {
-			_throwRuntimeException = false;
+			_mockIntraband.setIOException(null);
 		}
 
 		// Is not SPI, with child SPI, not visited, able to send
@@ -330,7 +319,9 @@ public class IntrabandBridgeDestinationTest {
 
 		// Is SPI, without child SPI, upcast, unable to send
 
-		_throwRuntimeException = true;
+		IOException ioException = new IOException();
+
+		_mockIntraband.setIOException(ioException);
 
 		try {
 			messageRoutingBag = _createMessageRoutingBag();
@@ -344,13 +335,10 @@ public class IntrabandBridgeDestinationTest {
 			Throwable throwable = re.getCause();
 
 			Assert.assertEquals(RuntimeException.class, throwable.getClass());
-
-			throwable = throwable.getCause();
-
-			Assert.assertEquals(IOException.class, throwable.getClass());
+			Assert.assertSame(ioException, throwable.getCause());
 		}
 		finally {
-			_throwRuntimeException = false;
+			_mockIntraband.setIOException(null);
 		}
 
 		Assert.assertTrue(messageRoutingBag.isVisited(_toRoutingId(mockSPI1)));
@@ -436,10 +424,7 @@ public class IntrabandBridgeDestinationTest {
 			spisMap.put(spiConfiguration.getSPIId(), spi);
 		}
 
-		Field spisField = ReflectionUtil.getDeclaredField(
-			MPIHelperUtil.class, "_spis");
-
-		spisField.set(null, spisMap);
+		ReflectionTestUtil.setFieldValue(MPIHelperUtil.class, "_spis", spisMap);
 	}
 
 	private String _toRoutingId(SPI spi) throws RemoteException {
@@ -461,6 +446,5 @@ public class IntrabandBridgeDestinationTest {
 	private MessageBus _messageBus;
 	private MockIntraband _mockIntraband;
 	private MockRegistrationReference _mockRegistrationReference;
-	private boolean _throwRuntimeException;
 
 }

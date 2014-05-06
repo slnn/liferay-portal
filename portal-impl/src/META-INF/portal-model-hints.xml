@@ -1887,7 +1887,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="data" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 	</model>
 	<model name="com.liferay.portlet.journal.model.JournalArticle">
@@ -2038,7 +2038,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="overrideDDMStructures" type="boolean" />
+		<field name="restrictionType" type="int" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

@@ -232,6 +232,17 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getJournalArticle(id);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -670,6 +681,7 @@ public class JournalArticleLocalServiceUtil {
 	* Deletes the web content article and its resources.
 	*
 	* @param article the web content article
+	* @return the deleted web content article
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -691,6 +703,7 @@ public class JournalArticleLocalServiceUtil {
 	<code>null</code>). Can set the portlet preferences that include
 	email information to notify recipients of the unapproved web
 	content's denial.
+	* @return the deleted web content article
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -715,6 +728,7 @@ public class JournalArticleLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
+	* @return the deleted web content article
 	* @throws PortalException if a matching web content article could not be
 	found or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -2334,6 +2348,7 @@ public class JournalArticleLocalServiceUtil {
 	* @param userId the primary key of the user restoring the web content
 	article
 	* @param article the web content article
+	* @return the restored web content article from the Recycle Bin
 	* @throws PortalException if the web content article with the primary key
 	could not be found in the Recycle Bin, if the user did not have
 	permission to restore the article, or if a portal exception
@@ -2440,7 +2455,7 @@ public class JournalArticleLocalServiceUtil {
 	* article ID, title, description, and content, a DDM structure key
 	* parameter, a DDM template key parameter, and an AND operator switch. It
 	* is preferable to use the indexed version {@link #search(long, long, List,
-	* long, String, String, String, String, String, String, String, String,
+	* long, String, String, String, String, String, int, String, String,
 	* LinkedHashMap, boolean, int, int, Sort)} instead of this method wherever
 	* possible for performance reasons.
 	*
@@ -2722,6 +2737,28 @@ public class JournalArticleLocalServiceUtil {
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.String title,
 		java.lang.String description, java.lang.String content,
+		java.lang.String type, int status, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(companyId, groupId, folderIds, classNameId,
+			articleId, title, description, content, type, status,
+			ddmStructureKey, ddmTemplateKey, params, andSearch, start, end, sort);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	long, String, String, String, String, String, int, String,
+	String, LinkedHashMap, boolean, int, int, Sort)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String articleId, java.lang.String title,
+		java.lang.String description, java.lang.String content,
 		java.lang.String type, java.lang.String status,
 		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
@@ -2957,8 +2994,8 @@ public class JournalArticleLocalServiceUtil {
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.String title,
 		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String status,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.lang.String type, int status, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
@@ -3310,8 +3347,6 @@ public class JournalArticleLocalServiceUtil {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @param articleURL the web content article's accessible URL
-	* @param workflowContext the web content article's configured workflow
-	context
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, and portlet preferences. With
 	respect to social activities, by setting the service context's
@@ -3319,6 +3354,8 @@ public class JournalArticleLocalServiceUtil {
 	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
+	* @param workflowContext the web content article's configured workflow
+	context
 	* @return the updated web content article
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred

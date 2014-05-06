@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -154,6 +156,20 @@ public class DLUtil {
 		return getDL().getDLFolderControlPanelLink(portletRequest, folderId);
 	}
 
+	public static DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		return getDL().getDLPortletInstanceSettings(layout, portletId);
+	}
+
+	public static DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		return getDL().getDLPortletInstanceSettings(layout, portletId, request);
+	}
+
 	public static DLSettings getDLSettings(long groupId)
 		throws PortalException, SystemException {
 
@@ -190,6 +206,10 @@ public class DLUtil {
 
 	public static List<Object> getEntries(Hits hits) {
 		return getDL().getEntries(hits);
+	}
+
+	public static List<FileEntry> getFileEntries(Hits hits) {
+		return getDL().getFileEntries(hits);
 	}
 
 	public static String getFileEntryImage(

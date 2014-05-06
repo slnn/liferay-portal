@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -127,7 +129,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildSettingsMap(
 			PortletRequest portletRequest, long groupId, int type)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -205,8 +207,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 			portletRequest, "remotePrivateLayout");
 
 		StagingUtil.validateRemote(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId);
+			groupId, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId);
 
 		return buildSettingsMap(
 			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,

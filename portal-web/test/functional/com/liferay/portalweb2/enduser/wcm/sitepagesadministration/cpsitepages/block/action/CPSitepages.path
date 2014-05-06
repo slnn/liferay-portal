@@ -223,6 +223,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_LANGAUGE_TRANSLATIONS</td>
+	<td>//div[contains(@id,'nameContentBox')]//li[contains(@data-value,'${key_pageTranslation}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_HTML_TITLE_FIELD</td>
 	<td>//input[@id='_156_title']</td>
 	<td></td>
@@ -296,7 +301,7 @@
 </tr>
 <tr>
 	<td>STAGING_BUTTON</td>
-	<td>//li[@class='dropdown']/a/span[contains(.,'Staging')]</td>
+	<td>//div/ul/li[contains(.,'Staging')]/a</td>
 	<td></td>
 </tr>
 <tr>

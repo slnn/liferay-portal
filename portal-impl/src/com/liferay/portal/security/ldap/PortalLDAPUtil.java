@@ -298,13 +298,11 @@ public class PortalLDAPUtil {
 		long preferredLDAPServerId = LDAPSettingsUtil.getPreferredLDAPServerId(
 			companyId, screenName);
 
-		if (preferredLDAPServerId >= 0) {
-			if (hasUser(
-					preferredLDAPServerId, companyId, screenName,
-					emailAddress)) {
+		if ((preferredLDAPServerId >= 0) &&
+			hasUser(
+				preferredLDAPServerId, companyId, screenName, emailAddress)) {
 
-				return preferredLDAPServerId;
-			}
+			return preferredLDAPServerId;
 		}
 
 		long[] ldapServerIds = StringUtil.split(

@@ -2739,6 +2739,11 @@
 			<finder-column name="createDate" />
 			<finder-column name="modifiedDate" />
 		</finder>
+		<finder name="C_DU_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="defaultUser" />
+			<finder-column name="status" />
+		</finder>
 
 		<!-- References -->
 

@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -62,6 +63,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -180,10 +182,13 @@ public class DLImpl implements DL {
 
 		data.put("direction-right", Boolean.TRUE.toString());
 
-		DLSettings dlSettings = getDLSettings(
-			themeDisplay.getScopeGroupId(), request);
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		data.put("folder-id", dlSettings.getDefaultFolderId());
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			DLUtil.getDLPortletInstanceSettings(
+				themeDisplay.getLayout(), portletDisplay.getId());
+
+		data.put("folder-id", dlPortletInstanceSettings.getDefaultFolderId());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -200,10 +205,13 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DLSettings dlSettings = getDLSettings(
-			themeDisplay.getScopeGroupId(), request);
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		long defaultFolderId = dlSettings.getDefaultFolderId();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			DLUtil.getDLPortletInstanceSettings(
+				themeDisplay.getLayout(), portletDisplay.getId());
+
+		long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
@@ -440,7 +448,7 @@ public class DLImpl implements DL {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.DOCUMENT_LIBRARY,
+			portletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
@@ -460,7 +468,7 @@ public class DLImpl implements DL {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.DOCUMENT_LIBRARY,
+			portletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
@@ -468,6 +476,31 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new DLPortletInstanceSettings(settings);
+	}
+
+	@Override
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			request.getParameterMap(), settings);
+
+		return new DLPortletInstanceSettings(parameterMapSettings);
 	}
 
 	@Override
@@ -488,7 +521,7 @@ public class DLImpl implements DL {
 			groupId, DLConstants.SERVICE_NAME);
 
 		Settings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new DLSettings(parameterMapSettings);
 	}
@@ -653,6 +686,32 @@ public class DLImpl implements DL {
 						"Documents and Media search index is stale and " +
 							"contains entry {className=" + entryClassName +
 								", classPK=" + entryClassPK + "}");
+				}
+			}
+		}
+
+		return entries;
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(Hits hits) {
+		List<FileEntry> entries = new ArrayList<FileEntry>();
+
+		for (Document document : hits.getDocs()) {
+			long fileEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					fileEntryId);
+
+				entries.add(fileEntry);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Documents and Media search index is stale and " +
+							"contains file entry " + fileEntryId);
 				}
 			}
 		}

@@ -29,9 +29,6 @@
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
 
-	<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
-	<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
-
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
@@ -542,13 +539,14 @@ create database lportal2 character set utf8;</echo>
 					<equals arg1="${app.server.type}" arg2="jetty" />
 					<equals arg1="${app.server.type}" arg2="jonas" />
 					<equals arg1="${app.server.type}" arg2="resin" />
+					<equals arg1="${app.server.type}" arg2="tcserver" />
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<equals arg1="${app.server.type}" arg2="weblogic" />
 					<equals arg1="${app.server.type}" arg2="websphere" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tomcat, weblogic, or websphere.</fail>
+				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tcserver, tomcat, weblogic, or websphere.</fail>
 			</then>
 		</if>
 
@@ -750,6 +748,22 @@ create database lportal2 character set utf8;</echo>
 						dest="${todir}"
 						src="${test.jdbc.drivers.url}/oracle/11.2.0.1.0/${jdbc.oracle.driver}"
 					/>
+				</then>
+			</elseif>
+			<elseif>
+				<and>
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<not>
+						<available file="${app.server.lib.global.dir}/${jdbc.postgresql.driver}" />
+					</not>
+				</and>
+				<then>
+					<copy todir="${todir}">
+						<fileset
+							dir="lib/development"
+							includes="${jdbc.postgresql.driver}"
+						/>
+					</copy>
 				</then>
 			</elseif>
 		</if>
@@ -1060,6 +1074,10 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="generate-test-properties" depends="check-config">
+		<property file="${project.dir}/test.generated.properties" />
+
+		<var name="mobile.device.type" unset="true" />
+
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
@@ -1122,6 +1140,93 @@ create database lportal2 character set utf8;</echo>
 		</loadfile>
 
 		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
+
+		<property file="${project.dir}/test.${user.name}.properties" />
+		<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
+		<property file="${project.dir}/test.${env.HOST}.properties" />
+		<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
+		<property file="${project.dir}/test.properties" />
+
+		<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
+		<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
+	</target>
+
+	<target name="merge-jenkins-test-results">
+		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
+
+		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />
+
+		<copy flatten="true" todir="${jenkins.test.results.dir}">
+			<fileset dir="${env.JENKINS_HOME}/userContent/jobs/" erroronmissingdir="false">
+				<include name="**/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_*.xml" />
+			</fileset>
+		</copy>
+
+		<first id="first">
+			<fileset dir="${jenkins.test.results.dir}" includes="*.xml" />
+		</first>
+
+		<loadfile property="jenkins.results.xml.suite.file.header" srcfile="${toString:first}" />
+
+		<propertyregex
+			input="${jenkins.results.xml.suite.file.header}"
+			override="true"
+			property="jenkins.results.xml.suite.file.header"
+			regexp="&lt;testcase[\s\S.]*"
+			replace=""
+		/>
+
+		<propertyregex
+			input="${jenkins.results.xml.suite.file.header}"
+			override="true"
+			property="jenkins.results.xml.suite.file.header"
+			regexp="&lt;testsuite.*\n"
+			replace="&lt;testsuite&gt;${line.separator}"
+		/>
+
+		<echo file="${jenkins.results.xml.suite.file}">${jenkins.results.xml.suite.file.header}</echo>
+
+		<for param="jenkins.results.xml.file">
+			<path>
+				<fileset dir="${jenkins.test.results.dir}">
+					<include name="*.xml" />
+				</fileset>
+			</path>
+			<sequential>
+				<echo>Merging @{jenkins.results.xml.file}.</echo>
+
+				<var name="jenkins.results.xml.suite.file.body" unset="true" />
+
+				<loadfile property="jenkins.results.xml.suite.file.body" srcfile="@{jenkins.results.xml.file}" />
+
+				<propertyregex
+					input="${jenkins.results.xml.suite.file.body}"
+					override="true"
+					property="jenkins.results.xml.suite.file.body"
+					regexp="&lt;\?xml[\s\S.]*&lt;testcase"
+					replace="&lt;testcase"
+				/>
+
+				<propertyregex
+					input="${jenkins.results.xml.suite.file.body}"
+					override="true"
+					property="jenkins.results.xml.suite.file.body"
+					regexp="&lt;/testcase&gt;[\s\S.]*"
+					replace="&lt;/testcase&gt;${line.separator}"
+				/>
+
+				<echo append="true" file="${jenkins.results.xml.suite.file}">${jenkins.results.xml.suite.file.body}</echo>
+			</sequential>
+		</for>
+
+		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
+
+		<if>
+			<isset property="jenkins.testray.results.dir" />
+			<then>
+				<copy file="${jenkins.results.xml.suite.file}" todir="${jenkins.testray.results.dir}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="merge-test-results">
@@ -1639,9 +1744,7 @@ tck.url=true</echo>
 		</replace>
 	</target>
 
-	<target name="prepare-selenium">
-		<ant dir="portal-impl" target="build-selenium-new-test-case" />
-
+	<target name="prepare-selenium" depends="generate-test-properties">
 		<delete file="portal-web/test/test-portal-web-ext.properties" />
 
 		<if>
@@ -1897,6 +2000,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.geronimo.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.geronimo}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=geronimo</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-geronimo" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1908,6 +2023,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-glassfish" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1919,6 +2046,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jboss}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=jboss</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1930,6 +2069,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jetty}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=jetty</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-jetty" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1941,6 +2092,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jonas}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=jonas</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-jonas" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1952,6 +2115,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.resin}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=resin</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-resin" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1971,12 +2146,51 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+			<and>
+				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="tcserver" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<and>
+				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
 					<param name="app.server.type" value="weblogic" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2017,9 +2231,9 @@ tck.url=true</echo>
 
 	<target name="prepare-test-bundle">
 		<if>
-			<equals arg1="${app.server.type}" arg2="weblogic" />
+			<equals arg1="${app.server.type}" arg2="tcserver" />
 			<then>
-				<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+				<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
 
 				<get
 					dest="liferay-portal.war"
@@ -2027,7 +2241,7 @@ tck.url=true</echo>
 				/>
 
 				<unzip
-					dest="${app.server.weblogic.portal.dir}"
+					dest="${app.server.tcserver.portal.dir}"
 					src="liferay-portal.war"
 				/>
 
@@ -2039,7 +2253,7 @@ tck.url=true</echo>
 				/>
 
 				<unzip
-					dest="${app.server.weblogic.lib.global.dir}"
+					dest="${app.server.tcserver.lib.global.dir}"
 					src="liferay-portal-dependencies.zip"
 				>
 					<mapper
@@ -2050,7 +2264,57 @@ tck.url=true</echo>
 				</unzip>
 
 				<delete file="liferay-portal-dependencies.zip" />
+
+				<copy todir="${app.server.tcserver.lib.global.dir}">
+					<fileset
+						dir="lib/development"
+						includes="activation.jar,jms.jar,jta.jar,jutf7.jar,mail.jar,mysql.jar,persistence.jar,script-10.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.tcserver.lib.global.dir}">
+					<fileset
+						dir="lib/portal"
+						includes="ccpp.jar"
+					/>
+				</copy>
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+					<get
+						dest="liferay-portal.war"
+						src="${test.build.portal.war.url}"
+					/>
+
+					<unzip
+						dest="${app.server.weblogic.portal.dir}"
+						src="liferay-portal.war"
+					/>
+
+					<delete file="liferay-portal.war" />
+
+					<get
+						dest="liferay-portal-dependencies.zip"
+						src="${test.build.portal.dependencies.zip.url}"
+					/>
+
+					<unzip
+						dest="${app.server.weblogic.lib.global.dir}"
+						src="liferay-portal-dependencies.zip"
+					>
+						<mapper
+							from="[^/]+/(.*)"
+							to="\1"
+							type="regexp"
+						/>
+					</unzip>
+
+					<delete file="liferay-portal-dependencies.zip" />
+				</then>
+			</elseif>
 			<else>
 				<mkdir dir="${app.server.parent.dir}" />
 
@@ -2290,6 +2554,19 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 							</exec>
 						</then>
 					</elseif>
+					<elseif>
+						<equals arg1="${database.type}" arg2="postgresql" />
+						<then>
+							<exec executable="${postgresql.executable}">
+								<arg value="-U" />
+								<arg value="${database.username}" />
+								<arg value="-w" />
+								<arg value="${database.password}" />
+								<arg value="-f" />
+								<arg value="create.sql" />
+							</exec>
+						</then>
+					</elseif>
 					<else>
 						<exec executable="${plink.executable}">
 							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\temporary" />
@@ -2514,6 +2791,33 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						<copy
 							file="portal-web/test-results/functional/report.html"
 							tofile="report.html"
+						/>
+					</then>
+				</if>
+
+				<antcall target="build-test-results-xml" />
+
+				<first id="first">
+					<fileset dir="portal-web/test-results/functional/" includes="TEST-com.liferay.portalweb2.*.xml" />
+				</first>
+
+				<property name="jenkins.results.xml.file" value="${toString:first}" />
+
+				<if>
+					<available file="${jenkins.results.xml.file}" />
+					<then>
+						<if>
+							<not>
+								<isset property="test.class" />
+							</not>
+							<then>
+								<property name="test.class" value="${test.simple.class.name}#${test.method.name}" />
+							</then>
+						</if>
+
+						<copy
+							file="${jenkins.results.xml.file}"
+							tofile="test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
 						/>
 					</then>
 				</if>
@@ -2835,11 +3139,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="start-selenium">
-		<loadfile failonerror="false" property="system-ext.properties.content" srcfile="portal-impl/classes/system-ext.properties" />
-
 		<if>
 			<not>
-				<contains string="${system-ext.properties.content}" substring="java.awt.headless=false" />
+				<resourcecontains
+					resource="portal-impl/classes/system-ext.properties"
+					substring="java.awt.headless=false"
+				/>
 			</not>
 			<then>
 				<echo append="true" file="portal-impl/classes/system-ext.properties">

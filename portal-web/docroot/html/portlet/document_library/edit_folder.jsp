@@ -42,10 +42,6 @@ if (workflowEnabled) {
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
-<portlet:actionURL var="editFolderURL">
-	<portlet:param name="struts_action" value="/document_library/edit_folder" />
-</portlet:actionURL>
-
 <liferay-util:buffer var="removeFileEntryTypeIcon">
 	<liferay-ui:icon
 		image="unlink"
@@ -53,6 +49,10 @@ if (workflowEnabled) {
 		message="remove"
 	/>
 </liferay-util:buffer>
+
+<portlet:actionURL var="editFolderURL">
+	<portlet:param name="struts_action" value="/document_library/edit_folder" />
+</portlet:actionURL>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
@@ -92,9 +92,7 @@ if (workflowEnabled) {
 			%>
 
 			<c:if test="<%= folder != null %>">
-				<aui:field-wrapper label="parent-folder">
-					<liferay-ui:input-resource url="<%= parentFolderName %>" />
-				</aui:field-wrapper>
+				<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
 			</c:if>
 
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
@@ -201,7 +199,7 @@ if (workflowEnabled) {
 
 								<c:if test="<%= workflowEnabled %>">
 									<liferay-ui:search-container-column-text name="workflow">
-										<aui:select hideLabel="<%= true %>" label="workflow-definition" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>'>
+										<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>' title="workflow-definition">
 
 											<aui:option label="no-workflow" value="" />
 
@@ -285,7 +283,7 @@ if (workflowEnabled) {
 
 <liferay-util:buffer var="workflowDefinitionsBuffer">
 	<c:if test="<%= workflowEnabled %>">
-		<aui:select hideLabel="<%= true %>" label="workflow-definition" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE">
+		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE" title="workflow-definition">
 			<aui:option label="no-workflow" value="" />
 
 			<%

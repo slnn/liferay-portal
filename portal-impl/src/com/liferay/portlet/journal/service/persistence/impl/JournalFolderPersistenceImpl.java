@@ -7709,7 +7709,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolderImpl.setTreePath(journalFolder.getTreePath());
 		journalFolderImpl.setName(journalFolder.getName());
 		journalFolderImpl.setDescription(journalFolder.getDescription());
-		journalFolderImpl.setOverrideDDMStructures(journalFolder.isOverrideDDMStructures());
+		journalFolderImpl.setRestrictionType(journalFolder.getRestrictionType());
 		journalFolderImpl.setStatus(journalFolder.getStatus());
 		journalFolderImpl.setStatusByUserId(journalFolder.getStatusByUserId());
 		journalFolderImpl.setStatusByUserName(journalFolder.getStatusByUserName());
@@ -8323,6 +8323,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("JournalFolders_DDMStructures");
 	}
 
 	@BeanReference(type = DDMStructurePersistence.class)

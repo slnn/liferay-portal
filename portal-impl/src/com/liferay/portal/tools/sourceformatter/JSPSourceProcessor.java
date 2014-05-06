@@ -322,13 +322,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
+		String absolutePath = fileUtil.getAbsolutePath(file);
+
 		String content = fileUtil.read(file);
 
 		String oldContent = content;
 		String newContent = StringPool.BLANK;
 
 		while (true) {
-			newContent = formatJSP(fileName, oldContent);
+			newContent = formatJSP(fileName, absolutePath, oldContent);
 
 			if (oldContent.equals(newContent)) {
 				break;
@@ -350,7 +352,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"while (", ") {\n", "\n\n"
 			});
 
-		newContent = fixCompatClassImports(file, newContent);
+		newContent = fixCompatClassImports(absolutePath, newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
@@ -439,7 +441,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String formatJSP(String fileName, String content)
+	protected String formatJSP(
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -502,7 +505,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (javaSource || trimmedLine.contains("<%= ")) {
-				checkInefficientStringMethods(line, fileName, lineCount);
+				checkInefficientStringMethods(
+					line, fileName, absolutePath, lineCount);
 			}
 
 			if (javaSource && portalSource &&
@@ -572,8 +576,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);
 
-						if (!trimmedLine.endsWith(StringPool.QUOTE) &&
-							!trimmedLine.endsWith(StringPool.APOSTROPHE)) {
+						if (!trimmedLine.endsWith(StringPool.APOSTROPHE) &&
+							!trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+							!trimmedLine.endsWith(StringPool.QUOTE)) {
 
 							processErrorMessage(
 								fileName,
@@ -590,7 +595,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							readAttributes = false;
 						}
 						else if (Validator.isNotNull(previousAttribute)) {
-							if (!isJSPAttributName(attribute)) {
+							if (!isJSPAttributName(attribute) &&
+								!attribute.startsWith(StringPool.LESS_THAN)) {
+
 								processErrorMessage(
 									fileName,
 									"attribute: " + fileName + " " + lineCount);
@@ -1325,10 +1332,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"<=%\\[\\s]+\"");
 	private Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
 		"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").+(?:'|\").*" +
-			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
-				"hidden\").*name=\"([^<=%\\[\\s]+)\"");
+			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*title=" +
+				"(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
+					"hidden\").*name=\"([^<=%\\[\\s]+)\"");
 	private Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
-		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*label=" +
+		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
 	private Properties _unusedVariablesExclusions;
 	private Pattern _xssPattern = Pattern.compile(

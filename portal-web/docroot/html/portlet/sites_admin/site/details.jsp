@@ -129,9 +129,7 @@ else if (group != null) {
 			<aui:input name="name" type="hidden" />
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
-			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<liferay-ui:input-resource url="<%= liveGroup.getDescriptiveName(locale) %>" />
-			</aui:field-wrapper>
+			<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
 		</c:when>
 		<c:otherwise>
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
@@ -141,9 +139,7 @@ else if (group != null) {
 	<aui:input name="description" />
 
 	<c:if test="<%= liveGroup != null %>">
-		<aui:field-wrapper label="site-id">
-			<liferay-ui:input-resource url="<%= String.valueOf(liveGroup.getGroupId()) %>" />
-		</aui:field-wrapper>
+		<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
 	</c:if>
 
 	<c:if test="<%= (group == null) || !group.isCompany() %>">
@@ -235,14 +231,14 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							<c:otherwise>
 								<c:choose>
 									<c:when test="<%= group != null %>">
-										<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
-											<portlet:param name="struts_action" value="/my_sites/view" />
-											<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-										</liferay-portlet:actionURL>
-
 										<c:choose>
 											<c:when test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+												<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
+													<portlet:param name="struts_action" value="/my_sites/view" />
+													<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+													<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+												</liferay-portlet:actionURL>
+
 												<liferay-ui:icon
 													image="view"
 													label="<%= true %>"
@@ -337,14 +333,14 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							<c:otherwise>
 								<c:choose>
 									<c:when test="<%= group != null %>">
-										<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
-											<portlet:param name="struts_action" value="/my_sites/view" />
-											<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-										</liferay-portlet:actionURL>
-
 										<c:choose>
 											<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+												<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
+													<portlet:param name="struts_action" value="/my_sites/view" />
+													<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+													<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+												</liferay-portlet:actionURL>
+
 												<liferay-ui:icon
 													image="view"
 													label="<%= true %>"
@@ -577,11 +573,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		<aui:input label="show-parent-sites-in-the-breadcrumb" name="TypeSettingsProperties--breadcrumbShowParentGroups--" type="checkbox" value="<%= breadcrumbShowParentGroups %>" />
 	</div>
 
-	<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="struts_action" value="/sites_admin/select_site" />
-		<portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' />
-	</portlet:renderURL>
-
 	<aui:script>
 		function <portlet:namespace />isVisible(currentValue, value) {
 			return currentValue != '';
@@ -610,6 +601,12 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						},
 						id: '<portlet:namespace />selectGroup',
 						title: '<liferay-ui:message arguments="site" key="select-x" />',
+
+						<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="struts_action" value="/sites_admin/select_site" />
+							<portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' />
+						</portlet:renderURL>
+
 						uri: '<%= groupSelectorURL.toString() %>'
 					},
 					function(event) {

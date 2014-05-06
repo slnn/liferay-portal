@@ -355,7 +355,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="${localization1NameKey}" />
+			<var name="lowercaseLanguageCode" value="de" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 			<var name="webContentTranslationContent" value="Netz Content1 Inhalt" />
@@ -364,7 +364,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="${localization2NameKey}" />
+			<var name="lowercaseLanguageCode" value="fr" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 			<var name="webContentTranslationContent" value="Contenu de Contenu Web1" />
@@ -1089,7 +1089,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" known-issues="LPS-45472" priority="4">
+	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
 		<var name="pageName" value="Asset Publisher Page" />
 		<var name="portletName" value="Asset Publisher" />
 		<var name="siteName" value="Site Name" />
@@ -1338,7 +1338,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
+	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" known-issues="LIFERAYQA-6795" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

@@ -174,6 +174,11 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-file-2";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

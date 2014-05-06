@@ -287,6 +287,27 @@
 		</execute>
 	</command>
 
+	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewStructureViaAddMenuCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+	</command>
+
 	<command name="ViewWebContentCategorizationType" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -484,9 +505,9 @@
 		</execute>
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
-			<var name="languageKey" value="${localization1NameKey}" />
 			<var name="localizedText" value="${localizedText}" />
 			<var name="localizedTitle" value="${localizedTitle}" />
+			<var name="lowercaseLanguageCode" value="fr" />
 			<var name="structureLocalizationName" value="${structureNameLocalization1}" />
 			<var name="templateLocalizationName" value="${templateNameLocalization1}" />
 			<var name="webContentTranslationLanguage" value="français (France)" />

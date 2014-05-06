@@ -126,7 +126,13 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 				</span>
 			</c:if>
 
-			<liferay-ui:icon cssClass="close-search" id="closeSearch" image="../aui/remove" url="javascript:;" />
+			<liferay-ui:icon
+				cssClass="close-search"
+				iconCssClass="icon-remove"
+				id="closeSearch"
+				message="remove"
+				url="javascript:;"
+			/>
 		</div>
 
 		<aui:script use="aui-base">
@@ -201,7 +207,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 							searchContext.setAttribute(Field.ARTICLE_ID, searchTerms.getArticleId());
 							searchContext.setAttribute(Field.CONTENT, searchTerms.getContent());
 							searchContext.setAttribute(Field.DESCRIPTION, searchTerms.getDescription());
-							searchContext.setAttribute(Field.STATUS, searchTerms.getStatusCode());
+							searchContext.setAttribute(Field.STATUS, searchTerms.getStatus());
 							searchContext.setAttribute(Field.TITLE, searchTerms.getTitle());
 							searchContext.setAttribute(Field.TYPE, searchTerms.getType());
 						}
