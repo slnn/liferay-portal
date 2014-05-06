@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.HashCode;
+import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
@@ -55,15 +55,16 @@ public class WikiCacheUtil {
 
 		stopWatch.start();
 
-		String key = _encodeKey(nodeId, title, viewPageURL.toString());
+		InnerKey innerKey = new InnerKey(nodeId, title, viewPageURL.toString());
 
-		WikiPageDisplay pageDisplay = (WikiPageDisplay)_portalCache.get(key);
+		WikiPageDisplay pageDisplay = (WikiPageDisplay)_portalCache.get(
+			innerKey);
 
 		if (pageDisplay == null) {
 			pageDisplay = _getPageDisplay(
 				nodeId, title, viewPageURL, editPageURL, attachmentURLPrefix);
 
-			_portalCache.put(key, pageDisplay);
+			_portalCache.put(innerKey, pageDisplay);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -79,37 +80,19 @@ public class WikiCacheUtil {
 	public static Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException {
 
-		String key = _encodeKey(
+		InnerKey innerKey = new InnerKey(
 			page.getNodeId(), page.getTitle(), _OUTGOING_LINKS);
 
 		Map<String, Boolean> links = (Map<String, Boolean>)_portalCache.get(
-			key);
+			innerKey);
 
 		if (links == null) {
 			links = WikiUtil.getLinks(page);
 
-			_portalCache.put(key, (Serializable)links);
+			_portalCache.put(innerKey, (Serializable)links);
 		}
 
 		return links;
-	}
-
-	private static String _encodeKey(
-		long nodeId, String title, String postfix) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_CACHE_NAME);
-		sb.append(StringPool.POUND);
-		sb.append(StringUtil.toHexString(nodeId));
-		sb.append(title);
-
-		if (postfix != null) {
-			sb.append(StringPool.POUND);
-			sb.append(postfix);
-		}
-
-		return sb.toString();
 	}
 
 	private static WikiPageDisplay _getPageDisplay(
@@ -143,7 +126,61 @@ public class WikiCacheUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(WikiCacheUtil.class);
 
-	private static PortalCache<String, Serializable> _portalCache =
+	private static PortalCache<InnerKey, Serializable> _portalCache =
 		MultiVMPoolUtil.getCache(_CACHE_NAME);
+
+	private static class InnerKey implements Serializable {
+
+		public InnerKey(long nodeId, String title, String postfix) {
+			_nodeId = nodeId;
+			_title = title;
+			_postfix = postfix;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof InnerKey)) {
+				return false;
+			}
+
+			InnerKey innerKey = (InnerKey)object;
+
+			return (_nodeId == innerKey._nodeId) &&
+				(Validator.equals(_title, innerKey._title)) &&
+				(Validator.equals(_postfix, innerKey._postfix));
+		}
+
+		@Override
+		public int hashCode() {
+			HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+
+			hashCode.append(_nodeId);
+			hashCode.append(_title);
+			hashCode.append(_postfix);
+
+			return hashCode.toHashCode();
+		}
+
+		public long getNodeId() {
+			return _nodeId;
+		}
+
+		public String getTitle() {
+			return _title;
+		}
+
+		public String getPostfix() {
+			return _postfix;
+		}
+
+		private long _nodeId;
+		private String _title;
+		private String _postfix;
+
+	}
 
 }
