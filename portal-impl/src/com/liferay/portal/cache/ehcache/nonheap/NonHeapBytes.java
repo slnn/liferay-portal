@@ -31,26 +31,26 @@ public class NonHeapBytes {
 	}
 	
 	public byte get(int index) {
-		_byteBuffer.limit(index + 1);
+		_byteBuffer.limit(_size);
 
 		return _byteBuffer.get(index);
 	}
 	
 	public void get(byte[] b, int offset, int length, int startIndex) {
-		_byteBuffer.limit(startIndex + length + 1);
+		_byteBuffer.limit(_size);
 		_byteBuffer.position(startIndex);
 
 		_byteBuffer.get(b, offset, length);
 	}
 	
 	public void set(byte b, int index)  {
-		_byteBuffer.limit(index + 1);
+		_byteBuffer.limit(_size);
 		
 		_byteBuffer.put(index, b);
 	}
 	
 	public void set(byte[] b, int offset, int length, int startIndex) {
-		_byteBuffer.limit(startIndex + length + 1);
+		_byteBuffer.limit(_size);
 		_byteBuffer.position(startIndex);
 		
 		_byteBuffer.put(b, offset, length);
