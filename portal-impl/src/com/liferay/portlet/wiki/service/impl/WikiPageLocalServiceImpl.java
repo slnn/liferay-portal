@@ -219,7 +219,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(userId, page, serviceContext);
+		boolean clearCache = WikiCacheThreadLocal.isClearCache();
+
+		WikiCacheThreadLocal.setClearCache(false);
+
+		try {
+			startWorkflowInstance(userId, page, serviceContext);
+		}
+		finally {
+			WikiCacheThreadLocal.setClearCache(clearCache);
+		}
 
 		return page;
 	}
