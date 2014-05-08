@@ -2467,7 +2467,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		WikiCacheUtil.clearCache(page.getNodeId());
+		WikiCacheUtil.clearCache(page.getNodeId(), page.getTitle());
 	}
 
 	protected void deletePageAttachment(long fileEntryId)
