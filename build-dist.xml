@@ -665,7 +665,6 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-ea
 			<jvmarg value="-Ddeployer.portlet.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet.tld" />
 			<jvmarg value="-Ddeployer.portlet-ext.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet-ext.tld" />
 			<jvmarg value="-Ddeployer.security.taglib.dtd=util-taglib/classes/META-INF/liferay-security.tld" />
-			<jvmarg value="-Ddeployer.staging.taglib.dtd=util-taglib/classes/META-INF/liferay-staging.tld" />
 			<jvmarg value="-Ddeployer.theme.taglib.dtd=util-taglib/classes/META-INF/liferay-theme.tld" />
 			<jvmarg value="-Ddeployer.ui.taglib.dtd=util-taglib/classes/META-INF/liferay-ui.tld" />
 			<jvmarg value="-Ddeployer.util.taglib.dtd=util-taglib/classes/META-INF/liferay-util.tld" />
@@ -1444,6 +1443,11 @@ this task.
 							</echo>
 						</then>
 						<else>
+							<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+								<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
+								<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+							</replace>
+
 							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
 								<![CDATA[
 									JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
