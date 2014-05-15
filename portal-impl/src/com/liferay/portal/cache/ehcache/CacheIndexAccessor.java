@@ -19,15 +19,13 @@ import com.liferay.portal.cache.ehcache.nonheap.NonHeapRAMDirectory;
 
 import com.liferay.portal.search.lucene.IndexSearcherManager;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.LimitTokenCountAnalyzer;
+import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -40,12 +38,8 @@ import org.apache.lucene.search.IndexSearcher;
 public class CacheIndexAccessor {
 
 	public CacheIndexAccessor() throws IOException {
-		Analyzer analyzer = new LimitTokenCountAnalyzer(
-			LuceneHelperUtil.getAnalyzer(),
-			PropsValues.LUCENE_ANALYZER_MAX_TOKENS);
-
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
-			LuceneHelperUtil.getVersion(), analyzer);
+			LuceneHelperUtil.getVersion(), new KeywordAnalyzer());
 
 		_indexWriter = new IndexWriter(
 			new NonHeapRAMDirectory(), indexWriterConfig);
