@@ -27,7 +27,7 @@ import org.apache.lucene.index.IndexFileNameFilter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.apache.lucene.store.SingleInstanceLockFactory;
+import org.apache.lucene.store.NoLockFactory;
 import org.apache.lucene.util.ThreadInterruptedException;
 
 /**
@@ -48,7 +48,7 @@ public class NonHeapRAMDirectory extends Directory implements Serializable {
 	/** Constructs an empty {@link Directory}. */
 	public NonHeapRAMDirectory() {
 		try {
-			setLockFactory(new SingleInstanceLockFactory());
+			setLockFactory(NoLockFactory.getNoLockFactory());
 		}
 		catch (IOException e) {
 		// Cannot happen
