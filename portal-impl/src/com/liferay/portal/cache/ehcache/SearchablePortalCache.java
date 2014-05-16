@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.Term;
 
 /**
@@ -132,6 +133,8 @@ public class SearchablePortalCache <K extends Serializable, V>
 				entry.getKey(), entry.getValue(), Field.Store.YES,
 				Field.Index.NOT_ANALYZED_NO_NORMS);
 
+			field.setIndexOptions(FieldInfo.IndexOptions.DOCS_ONLY);
+			
 			document.add(field);
 		}
 
@@ -147,6 +150,8 @@ public class SearchablePortalCache <K extends Serializable, V>
 				FIELD_UID, String.valueOf(key), Field.Store.YES,
 				Field.Index.NOT_ANALYZED_NO_NORMS);
 		}
+		
+		uidField.setIndexOptions(FieldInfo.IndexOptions.DOCS_ONLY);
 
 		document.add(uidField);
 
