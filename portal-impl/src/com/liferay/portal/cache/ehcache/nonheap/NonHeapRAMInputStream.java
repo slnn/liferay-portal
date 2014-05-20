@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.nonheap;
 
+import com.liferay.portal.cache.ehcache.non.heap.NonHeapByteArray;
 import java.io.EOFException;
 import java.io.IOException;
 import org.apache.lucene.store.IndexInput;
@@ -29,7 +30,7 @@ public class NonHeapRAMInputStream extends IndexInput implements Cloneable {
 	private NonHeapRAMFile file;
 	private long length;
 
-	private byte[] currentBuffer;
+	private NonHeapByteArray currentBuffer;
 	private int currentBufferIndex;
 
 	private int bufferPosition;
@@ -80,7 +81,7 @@ public class NonHeapRAMInputStream extends IndexInput implements Cloneable {
 			switchCurrentBuffer(true);
 		}
 
-		return currentBuffer[bufferPosition++];
+		return currentBuffer.get(bufferPosition++);
 	}
 
 	@Override
@@ -95,8 +96,7 @@ public class NonHeapRAMInputStream extends IndexInput implements Cloneable {
 			int remainInBuffer = bufferLength - bufferPosition;
 			int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
 
-			System.arraycopy(
-				currentBuffer, bufferPosition, b, offset, bytesToCopy);
+			currentBuffer.copyTo(b, offset, len, bufferPosition);
 
 			offset += bytesToCopy;
 			len -= bytesToCopy;
@@ -148,7 +148,11 @@ public class NonHeapRAMInputStream extends IndexInput implements Cloneable {
 			final int toCopy =
 				(int)(bytesInBuffer < left ? bytesInBuffer : left);
 
-			out.writeBytes(currentBuffer, bufferPosition, toCopy);
+			byte[] bytes = new byte[toCopy];
+			
+			currentBuffer.copyTo(bytes, 0, toCopy, bufferPosition);
+			
+			out.writeBytes(bytes, 0, toCopy);
 
 			bufferPosition += toCopy;
 			left -= toCopy;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.nonheap;
 
+import com.liferay.portal.cache.ehcache.non.heap.NonHeapByteArray;
 import java.io.IOException;
 import org.apache.lucene.store.DataInput;
 import org.apache.lucene.store.IndexOutput;
@@ -26,7 +27,7 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 
 	private NonHeapRAMFile file;
 
-	private byte[] currentBuffer;
+	private NonHeapByteArray currentBuffer;
 	private int currentBufferIndex;
 
 	private int bufferPosition;
@@ -63,7 +64,13 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 				length = (int)(end - pos);
 			}
 
-			out.writeBytes(file.getBuffer(buffer++), length);
+			NonHeapByteArray nonHeapBytes = file.getBuffer(buffer++);
+			
+			byte[] bytes = new byte[length];
+			
+			nonHeapBytes.copyTo(bytes, 0, length, length);
+			
+			out.writeBytes(bytes, length);
 
 			pos = nextPos;
 		}
@@ -110,8 +117,8 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 			currentBufferIndex++;
 			switchCurrentBuffer();
 		}
-
-		currentBuffer[bufferPosition++] = b;
+		
+		currentBuffer.put(bufferPosition++, b);
 	}
 
 	@Override
@@ -123,12 +130,11 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 				switchCurrentBuffer();
 			}
 
-			int remainInBuffer = currentBuffer.length - bufferPosition;
+			int remainInBuffer = currentBuffer.getSize() - bufferPosition;
 
 			int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
 
-			System.arraycopy(
-				b, offset, currentBuffer, bufferPosition, bytesToCopy);
+			currentBuffer.copyFrom(b, offset, bytesToCopy, bufferPosition);
 
 			offset += bytesToCopy;
 			len -= bytesToCopy;
@@ -146,7 +152,7 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 
 		bufferPosition = 0;
 		bufferStart = (long)BUFFER_SIZE * (long)currentBufferIndex;
-		bufferLength = currentBuffer.length;
+		bufferLength = currentBuffer.getSize();
 	}
 
 	private void setFileLength() {
@@ -185,13 +191,17 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 				switchCurrentBuffer();
 			}
 
-			int toCopy = currentBuffer.length - bufferPosition;
+			int toCopy = currentBuffer.getSize() - bufferPosition;
 
 			if (numBytes < toCopy) {
 				toCopy = (int) numBytes;
 			}
 
-			input.readBytes(currentBuffer, bufferPosition, toCopy, false);
+			byte[] bytes = new byte[toCopy];
+			
+			input.readBytes(bytes, 0, toCopy, false);
+			
+			currentBuffer.copyFrom(bytes, 0, toCopy, bufferPosition);
 
 			numBytes -= toCopy;
 			bufferPosition += toCopy;

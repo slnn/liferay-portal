@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.nonheap;
 
+import com.liferay.portal.cache.ehcache.non.heap.NonHeapByteArray;
 import java.io.Serializable;
 
 
@@ -26,7 +27,7 @@ public class NonHeapRAMFile implements Serializable {
 
 	private static final long serialVersionUID = 1l;
 
-	protected ArrayList<byte[]> buffers = new ArrayList<byte[]>();
+	protected ArrayList<NonHeapByteArray> buffers = new ArrayList<NonHeapByteArray>();
 	long length;
 	NonHeapRAMDirectory directory;
 	protected long sizeInBytes;
@@ -59,11 +60,12 @@ public class NonHeapRAMFile implements Serializable {
 		this.lastModified = lastModified;
 	}
 
-	protected final byte[] addBuffer(int size) {
-		byte[] buffer = newBuffer(size);
+	protected final NonHeapByteArray addBuffer(int size) {
+		NonHeapByteArray buffer = new NonHeapByteArray(size);
 
 		synchronized(this) {
 			buffers.add(buffer);
+
 			sizeInBytes += size;
 		}
 
@@ -74,22 +76,12 @@ public class NonHeapRAMFile implements Serializable {
 		return buffer;
 	}
 
-	protected final synchronized byte[] getBuffer(int index) {
+	protected final synchronized NonHeapByteArray getBuffer(int index) {
 		return buffers.get(index);
 	}
 
 	protected final synchronized int numBuffers() {
 		return buffers.size();
-	}
-
-	/**
-	* Expert: allocate a new buffer. 
-	* Subclasses can allocate differently. 
-	* @param size size of allocated buffer.
-	* @return allocated buffer.
-	*/
-	protected byte[] newBuffer(int size) {
-		return new byte[size];
 	}
 
 	public synchronized long getSizeInBytes() {
