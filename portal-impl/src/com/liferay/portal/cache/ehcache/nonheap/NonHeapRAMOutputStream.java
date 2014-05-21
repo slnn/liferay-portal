@@ -26,7 +26,7 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 
 	private NonHeapRAMFile file;
 
-	private byte[] currentBuffer;
+	private NonHeapBytes currentBuffer;
 	private int currentBufferIndex;
 
 	private int bufferPosition;
@@ -63,7 +63,13 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 				length = (int)(end - pos);
 			}
 
-			out.writeBytes(file.getBuffer(buffer++), length);
+			NonHeapBytes  nonHeapBytes = file.getBuffer(buffer++);
+			
+			byte[] bytes = new byte[length];
+			
+			nonHeapBytes.get(bytes, 0, length, 0);
+			
+			out.writeBytes(bytes, length);
 
 			pos = nextPos;
 		}
@@ -110,8 +116,8 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 			currentBufferIndex++;
 			switchCurrentBuffer();
 		}
-
-		currentBuffer[bufferPosition++] = b;
+		
+		currentBuffer.set(b, bufferPosition++);
 	}
 
 	@Override
@@ -123,12 +129,11 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 				switchCurrentBuffer();
 			}
 
-			int remainInBuffer = currentBuffer.length - bufferPosition;
+			int remainInBuffer = currentBuffer.getSize() - bufferPosition;
 
 			int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
 
-			System.arraycopy(
-				b, offset, currentBuffer, bufferPosition, bytesToCopy);
+			currentBuffer.set(b, offset, bytesToCopy, bufferPosition);
 
 			offset += bytesToCopy;
 			len -= bytesToCopy;
@@ -146,7 +151,7 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 
 		bufferPosition = 0;
 		bufferStart = (long)BUFFER_SIZE * (long)currentBufferIndex;
-		bufferLength = currentBuffer.length;
+		bufferLength = currentBuffer.getSize();
 	}
 
 	private void setFileLength() {
@@ -185,13 +190,17 @@ public class NonHeapRAMOutputStream extends IndexOutput {
 				switchCurrentBuffer();
 			}
 
-			int toCopy = currentBuffer.length - bufferPosition;
+			int toCopy = currentBuffer.getSize() - bufferPosition;
 
 			if (numBytes < toCopy) {
 				toCopy = (int) numBytes;
 			}
 
-			input.readBytes(currentBuffer, bufferPosition, toCopy, false);
+			byte[] bytes = new byte[toCopy];
+			
+			input.readBytes(bytes, 0, toCopy, false);
+			
+			currentBuffer.set(bytes, 0, toCopy, bufferPosition);
 
 			numBytes -= toCopy;
 			bufferPosition += toCopy;
