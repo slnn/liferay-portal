@@ -29,6 +29,7 @@ import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
@@ -42,6 +43,8 @@ public class CacheIndexAccessor {
 	public CacheIndexAccessor() throws IOException {
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
 			LuceneHelperUtil.getVersion(), new KeywordAnalyzer());
+
+		indexWriterConfig.setMergePolicy(NoMergePolicy.NO_COMPOUND_FILES);
 
 		_directory = new NonHeapRAMDirectory();
 
