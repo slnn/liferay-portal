@@ -33,6 +33,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.store.Directory;
 
 /**
  * @author Tina Tian
@@ -47,8 +48,9 @@ public class CacheIndexAccessor {
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
 			LuceneHelperUtil.getVersion(), analyzer);
 
-		_indexWriter = new IndexWriter(
-			new NonHeapRAMDirectory(), indexWriterConfig);
+		_directory = new NonHeapRAMDirectory();
+
+		_indexWriter = new IndexWriter(_directory, indexWriterConfig);
 
 		_indexSearcherManager = new IndexSearcherManager(_indexWriter);
 	}
@@ -60,11 +62,11 @@ public class CacheIndexAccessor {
 	}
 
 	public void close() throws IOException {
-		_doCommit();
-
 		_indexSearcherManager.close();
 
 		_indexWriter.close();
+
+		_directory.close();
 	}
 
 	public IndexSearcher getIndexSearcher() throws IOException {
@@ -109,5 +111,6 @@ public class CacheIndexAccessor {
 	private Lock _commitLock = new ReentrantLock();
 	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
+	private Directory _directory;
 
 }
