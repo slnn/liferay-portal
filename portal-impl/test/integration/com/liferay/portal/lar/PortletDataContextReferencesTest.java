@@ -28,18 +28,18 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.util.AssetTestUtil;
+import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
+import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -85,7 +85,7 @@ public class PortletDataContextReferencesTest {
 
 		_bookmarksEntry = BookmarksTestUtil.addEntry(true);
 		_bookmarksFolder = BookmarksTestUtil.addFolder(
-			TestPropsValues.getGroupId(), ServiceTestUtil.randomString());
+			TestPropsValues.getGroupId(), RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -268,6 +268,36 @@ public class PortletDataContextReferencesTest {
 			missingReferencesElement.elements();
 
 		Assert.assertEquals(0, missingReferenceElements.size());
+	}
+
+	@Test
+	public void testNotReferenceMissingReference() throws Exception {
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		_portletDataContext.setZipWriter(zipWriter);
+
+		Element bookmarksEntryElement =
+			_portletDataContext.getExportDataElement(_bookmarksEntry);
+
+		_portletDataContext.addClassedModel(
+			bookmarksEntryElement,
+			ExportImportPathUtil.getModelPath(_bookmarksEntry),
+			_bookmarksEntry);
+
+		Element bookmarksFolderElement =
+			_portletDataContext.getExportDataElement(_bookmarksFolder);
+
+		_portletDataContext.addReferenceElement(
+			_bookmarksFolder, bookmarksFolderElement, _bookmarksEntry,
+			PortletDataContext.REFERENCE_TYPE_CHILD, true);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements();
+
+		Assert.assertTrue(missingReferenceElements.isEmpty());
 	}
 
 	@Test

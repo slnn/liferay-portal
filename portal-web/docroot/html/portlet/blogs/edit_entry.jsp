@@ -59,6 +59,19 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 	<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
 
+	<liferay-ui:error exception="<%= FileSizeException.class %>">
+
+		<%
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if (fileMaxSize == 0) {
+			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		}
+		%>
+
+		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:asset-categories-error />
 
 	<liferay-ui:asset-tags-error />
@@ -181,7 +194,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<aui:row>
 							<c:if test="<%= smallImage && (entry != null) %>">
 								<aui:col width="<%= 50 %>">
-									<img alt="<liferay-ui:message key="preview" />" class="lfr-blogs-small-image-preview" src="<%= Validator.isNotNull(entry.getSmallImageURL()) ? entry.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) %>" />
+									<img alt="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(pageContext, "preview")) %>" class="lfr-blogs-small-image-preview" src="<%= Validator.isNotNull(entry.getSmallImageURL()) ? entry.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) %>" />
 								</aui:col>
 							</c:if>
 
