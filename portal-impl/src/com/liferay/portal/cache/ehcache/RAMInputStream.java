@@ -19,6 +19,7 @@ package com.liferay.portal.cache.ehcache;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 
@@ -31,7 +32,7 @@ public class RAMInputStream extends IndexInput implements Cloneable {
   private RAMFile file;
   private long length;
 
-  private byte[] currentBuffer;
+  private ByteBuffer currentBuffer;
   private int currentBufferIndex;
   
   private int bufferPosition;
@@ -74,7 +75,7 @@ public class RAMInputStream extends IndexInput implements Cloneable {
       currentBufferIndex++;
       switchCurrentBuffer(true);
     }
-    return currentBuffer[bufferPosition++];
+    return currentBuffer.get(bufferPosition++);
   }
 
   @Override
@@ -87,7 +88,8 @@ public class RAMInputStream extends IndexInput implements Cloneable {
 
       int remainInBuffer = bufferLength - bufferPosition;
       int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
-      System.arraycopy(currentBuffer, bufferPosition, b, offset, bytesToCopy);
+	  currentBuffer.position(bufferPosition);
+	  currentBuffer.get(b, offset, bytesToCopy);
       offset += bytesToCopy;
       len -= bytesToCopy;
       bufferPosition += bytesToCopy;
@@ -126,7 +128,13 @@ public class RAMInputStream extends IndexInput implements Cloneable {
       
       final int bytesInBuffer = bufferLength - bufferPosition;
       final int toCopy = (int) (bytesInBuffer < left ? bytesInBuffer : left);
-      out.writeBytes(currentBuffer, bufferPosition, toCopy);
+	  byte[] bytes = new byte[toCopy];
+	  
+	  currentBuffer.position(bufferPosition);
+	  
+	  currentBuffer.get(bytes, 0, toCopy);
+	  
+      out.writeBytes(bytes, 0, toCopy);
       bufferPosition += toCopy;
       left -= toCopy;
     }

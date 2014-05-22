@@ -18,6 +18,7 @@ package com.liferay.portal.cache.ehcache;
  */
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import org.apache.lucene.store.DataInput;
 import org.apache.lucene.store.IndexOutput;
 
@@ -31,7 +32,7 @@ public class RAMOutputStream extends IndexOutput {
 
   private RAMFile file;
 
-  private byte[] currentBuffer;
+  private ByteBuffer currentBuffer;
   private int currentBufferIndex;
   
   private int bufferPosition;
@@ -64,7 +65,11 @@ public class RAMOutputStream extends IndexOutput {
       if (nextPos > end) {                        // at the last buffer
         length = (int)(end - pos);
       }
-      out.writeBytes(file.getBuffer(buffer++), length);
+	  ByteBuffer byteBuffer = file.getBuffer(buffer++);
+	  byte[] bytes = new byte[length];
+	  byteBuffer.position(0);
+	  byteBuffer.get(bytes);
+      out.writeBytes(bytes, length);
       pos = nextPos;
     }
   }
@@ -108,7 +113,7 @@ public class RAMOutputStream extends IndexOutput {
       currentBufferIndex++;
       switchCurrentBuffer();
     }
-    currentBuffer[bufferPosition++] = b;
+    currentBuffer.put(bufferPosition++, b);
   }
 
   @Override
@@ -120,9 +125,10 @@ public class RAMOutputStream extends IndexOutput {
         switchCurrentBuffer();
       }
 
-      int remainInBuffer = currentBuffer.length - bufferPosition;
+      int remainInBuffer = currentBuffer.capacity() - bufferPosition;
       int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
-      System.arraycopy(b, offset, currentBuffer, bufferPosition, bytesToCopy);
+	  currentBuffer.position(bufferPosition);
+	  currentBuffer.put(b, offset, bytesToCopy);
       offset += bytesToCopy;
       len -= bytesToCopy;
       bufferPosition += bytesToCopy;
@@ -137,7 +143,7 @@ public class RAMOutputStream extends IndexOutput {
     }
     bufferPosition = 0;
     bufferStart = (long) BUFFER_SIZE * (long) currentBufferIndex;
-    bufferLength = currentBuffer.length;
+    bufferLength = currentBuffer.capacity();
   }
 
   private void setFileLength() {
@@ -173,11 +179,14 @@ public class RAMOutputStream extends IndexOutput {
         switchCurrentBuffer();
       }
 
-      int toCopy = currentBuffer.length - bufferPosition;
+      int toCopy = currentBuffer.capacity() - bufferPosition;
       if (numBytes < toCopy) {
         toCopy = (int) numBytes;
       }
-      input.readBytes(currentBuffer, bufferPosition, toCopy, false);
+	  byte[] bytes = new byte[toCopy];
+      input.readBytes(bytes, 0, toCopy, false);
+	  currentBuffer.position(bufferPosition);
+	  currentBuffer.put(bytes, 0, toCopy);
       numBytes -= toCopy;
       bufferPosition += toCopy;
     }

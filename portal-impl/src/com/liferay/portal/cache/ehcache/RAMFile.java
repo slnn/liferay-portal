@@ -19,13 +19,14 @@ package com.liferay.portal.cache.ehcache;
 
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 
 /** @lucene.internal */
 public class RAMFile implements Serializable {
 
   private static final long serialVersionUID = 1l;
 
-  protected ArrayList<byte[]> buffers = new ArrayList<byte[]>();
+  protected ArrayList<ByteBuffer> buffers = new ArrayList<ByteBuffer>();
   long length;
   RAMDirectory directory;
   protected long sizeInBytes;
@@ -58,8 +59,8 @@ public class RAMFile implements Serializable {
     this.lastModified = lastModified;
   }
 
-  protected final byte[] addBuffer(int size) {
-    byte[] buffer = newBuffer(size);
+  protected final ByteBuffer addBuffer(int size) {
+    ByteBuffer buffer = newBuffer(size);
     synchronized(this) {
       buffers.add(buffer);
       sizeInBytes += size;
@@ -71,7 +72,7 @@ public class RAMFile implements Serializable {
     return buffer;
   }
 
-  protected final synchronized byte[] getBuffer(int index) {
+  protected final synchronized ByteBuffer getBuffer(int index) {
     return buffers.get(index);
   }
 
@@ -85,8 +86,8 @@ public class RAMFile implements Serializable {
    * @param size size of allocated buffer.
    * @return allocated buffer.
    */
-  protected byte[] newBuffer(int size) {
-    return new byte[size];
+  protected ByteBuffer newBuffer(int size) {
+    return ByteBuffer.allocate(size);
   }
 
   public synchronized long getSizeInBytes() {
