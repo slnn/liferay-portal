@@ -87,7 +87,7 @@ public class RAMFile implements Serializable {
    * @return allocated buffer.
    */
   protected ByteBuffer newBuffer(int size) {
-    return ByteBuffer.allocate(size);
+    return ByteBuffer.allocateDirect(size);
   }
 
   public synchronized long getSizeInBytes() {
