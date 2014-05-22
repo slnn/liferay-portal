@@ -60,7 +60,7 @@ public class ByteBufferFile {
 
       protected final ByteBuffer addBuffer(int size) {
         //byte[] buffer = newBuffer(size);
-        ByteBuffer buffer = ByteBuffer.allocateDirect(size);
+        ByteBuffer buffer = ByteBuffer.allocate(size);
         synchronized(this) {
           buffers.add(buffer);
           sizeInBytes += size;
