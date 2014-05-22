@@ -133,7 +133,7 @@ public class SearchablePortalCache <K extends Serializable, V>
 				entry.getKey(), entry.getValue(), Field.Store.YES,
 				Field.Index.NOT_ANALYZED_NO_NORMS);
 
-			field.setIndexOptions(FieldInfo.IndexOptions.DOCS_ONLY);
+			field.setIndexOptions(FieldInfo.IndexOptions.DOCS_AND_FREQS);
 
 			document.add(field);
 		}
@@ -151,7 +151,7 @@ public class SearchablePortalCache <K extends Serializable, V>
 				Field.Index.NOT_ANALYZED_NO_NORMS);
 		}
 
-		uidField.setIndexOptions(FieldInfo.IndexOptions.DOCS_ONLY);
+		uidField.setIndexOptions(FieldInfo.IndexOptions.DOCS_AND_FREQS);
 
 		document.add(uidField);
 
