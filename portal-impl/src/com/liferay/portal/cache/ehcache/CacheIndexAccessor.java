@@ -32,7 +32,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.NoLockFactory;
-import org.apache.lucene.store.RAMDirectory;
 
 /**
  * @author Tina Tian
@@ -43,7 +42,7 @@ public class CacheIndexAccessor {
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
 			LuceneHelperUtil.getVersion(), new KeywordAnalyzer());
 
-		_directory = new RAMDirectory();
+		_directory = new ByteBufferDirectory();
 
 		_directory.setLockFactory(NoLockFactory.getNoLockFactory());
 
