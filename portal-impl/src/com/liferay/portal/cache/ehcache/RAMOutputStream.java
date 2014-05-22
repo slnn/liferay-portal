@@ -65,10 +65,10 @@ public class RAMOutputStream extends IndexOutput {
       if (nextPos > end) {                        // at the last buffer
         length = (int)(end - pos);
       }
-	  ByteBuffer byteBuffer = file.getBuffer(buffer++);
+	  ByteBuffer tempByteBuffer = file.getBuffer(buffer++).duplicate();
 	  byte[] bytes = new byte[length];
-	  byteBuffer.position(0);
-	  byteBuffer.get(bytes);
+	  tempByteBuffer.position(0);
+	  tempByteBuffer.get(bytes);
       out.writeBytes(bytes, length);
       pos = nextPos;
     }
@@ -127,8 +127,9 @@ public class RAMOutputStream extends IndexOutput {
 
       int remainInBuffer = currentBuffer.capacity() - bufferPosition;
       int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
-	  currentBuffer.position(bufferPosition);
-	  currentBuffer.put(b, offset, bytesToCopy);
+	  ByteBuffer tempByteBuffer = currentBuffer.duplicate();
+	  tempByteBuffer.position(bufferPosition);
+	  tempByteBuffer.put(b, offset, bytesToCopy);
       offset += bytesToCopy;
       len -= bytesToCopy;
       bufferPosition += bytesToCopy;
@@ -185,8 +186,9 @@ public class RAMOutputStream extends IndexOutput {
       }
 	  byte[] bytes = new byte[toCopy];
       input.readBytes(bytes, 0, toCopy, false);
-	  currentBuffer.position(bufferPosition);
-	  currentBuffer.put(bytes, 0, toCopy);
+	  ByteBuffer tempByteBuffer = currentBuffer.duplicate();
+	  tempByteBuffer.position(bufferPosition);
+	  tempByteBuffer.put(bytes, 0, toCopy);
       numBytes -= toCopy;
       bufferPosition += toCopy;
     }

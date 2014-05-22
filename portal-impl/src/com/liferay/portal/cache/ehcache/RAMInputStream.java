@@ -88,8 +88,9 @@ public class RAMInputStream extends IndexInput implements Cloneable {
 
       int remainInBuffer = bufferLength - bufferPosition;
       int bytesToCopy = len < remainInBuffer ? len : remainInBuffer;
-	  currentBuffer.position(bufferPosition);
-	  currentBuffer.get(b, offset, bytesToCopy);
+	  ByteBuffer tempByteBuffer = currentBuffer.duplicate();
+	  tempByteBuffer.position(bufferPosition);
+	  tempByteBuffer.get(b, offset, bytesToCopy);
       offset += bytesToCopy;
       len -= bytesToCopy;
       bufferPosition += bytesToCopy;
@@ -129,10 +130,10 @@ public class RAMInputStream extends IndexInput implements Cloneable {
       final int bytesInBuffer = bufferLength - bufferPosition;
       final int toCopy = (int) (bytesInBuffer < left ? bytesInBuffer : left);
 	  byte[] bytes = new byte[toCopy];
+	  ByteBuffer tempByteBuffer = currentBuffer.duplicate();
+	  tempByteBuffer.position(bufferPosition);
 	  
-	  currentBuffer.position(bufferPosition);
-	  
-	  currentBuffer.get(bytes, 0, toCopy);
+	  tempByteBuffer.get(bytes, 0, toCopy);
 	  
       out.writeBytes(bytes, 0, toCopy);
       bufferPosition += toCopy;
