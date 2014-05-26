@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -27,10 +25,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.settings.Settings;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.messageboards.MBSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +57,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		updateUserRanks(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	protected Settings getSettings(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		return new MBSettings(super.getSettings(actionRequest));
 	}
 
 	protected boolean isValidUserRank(String rank) {

@@ -5,7 +5,11 @@
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
 	xmlns:sonar="antlib:org.sonar.ant"
 >
-	<dirname file="${ant.file.build-common}" property="project.dir" />
+	<dirname file="${ant.file.build-common}" property="project.dir.native" />
+
+	<pathconvert property="project.dir" targetos="unix">
+		<path location="${project.dir.native}" />
+	</pathconvert>
 
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 
@@ -55,6 +59,7 @@
 	<path id="test.classpath">
 		<pathelement path="${classpath}" />
 		<pathelement path="test-classes/${test.type}" />
+		<pathelement path="${test.additional.classpath}" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
@@ -76,10 +81,15 @@
 	<typedef classpathref="lib.classpath" resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant" />
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
 
+	<taskdef classname="com.liferay.ant.bnd.BaselineJarTask" classpathref="lib.classpath" name="baseline-jar" />
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
 
-	<property location="${project.dir}" name="project.location.absolute" />
+	<property location="${project.dir}" name="project.location.absolute.native" />
+
+	<pathconvert property="project.location.absolute" targetos="unix">
+		<path location="${project.location.absolute.native}" />
+	</pathconvert>
 
 	<propertycopy
 		from="project.location.absolute"
@@ -500,6 +510,24 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="app-server-properties-reset">
+		<sequential>
+			<delete file="app.server.${user.name}.properties" />
+
+			<delete file="${project.dir}/tools/sdk/build.${user.name}.properties" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="app-server-properties-update">
+		<text name="properties.content" />
+
+		<sequential>
+			<echo file="app.server.${user.name}.properties">@{properties.content}</echo>
+
+			<echo file="${project.dir}/tools/sdk/build.${user.name}.properties">@{properties.content}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="baseline-jar-macro">
 		<attribute name="bndRootFile" />
 		<attribute name="file" />
@@ -508,26 +536,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="sourcePath" />
 
 		<sequential>
-			<trycatch>
-				<try>
-					<taskdef
-						classname="com.liferay.portal.ant.bnd.BaselineJarTask"
-						classpathref="project.classpath"
-						name="baseline-jar"
-					/>
-				</try>
-				<catch>
-					<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
-					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
-
-					<taskdef
-						classname="com.liferay.portal.ant.bnd.BaselineJarTask"
-						classpathref="project.classpath"
-						name="baseline-jar"
-					/>
-				</catch>
-			</trycatch>
-
 			<manifest-helper />
 
 			<bndexpand propertyfile="@{bndRootFile}" />
@@ -623,10 +631,20 @@ Please set the environment variable ANT_OPTS to the recommended value of
 									<available file="@{fix.pack.dir}/${fix.pack.requirement.file.name}" />
 								</not>
 								<then>
-									<get
-										dest="@{fix.pack.dir}"
-										src="http://mirrors/files.liferay.com/private/ee/fix-packs/${fix.pack.portal.version}/${fix.pack.requirement.type}/${fix.pack.requirement.file.name}"
-									/>
+									<trycatch>
+										<try>
+											<get
+												dest="@{fix.pack.dir}"
+												src="http://mirrors/files.liferay.com/private/ee/fix-packs/${fix.pack.portal.version}/${fix.pack.requirement.type}/${fix.pack.requirement.file.name}"
+											/>
+										</try>
+										<catch>
+											<get
+												dest="@{fix.pack.dir}"
+												src="http://mirrors/files.liferay.com/private/ee/fix-packs/incubation/${fix.pack.requirement.file.name}"
+											/>
+										</catch>
+									</trycatch>
 
 									<check-fix-pack-requirements
 										fix.pack.dir="@{fix.pack.dir}"
@@ -798,7 +816,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<trycatch>
 				<try>
 					<taskdef
-						classname="com.liferay.portal.ant.ManifestHelperTask"
+						classname="com.liferay.util.ant.ManifestHelperTask"
 						classpathref="project.classpath"
 						name="liferay-manifest-helper"
 					/>
@@ -808,7 +826,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
 
 					<taskdef
-						classname="com.liferay.portal.ant.ManifestHelperTask"
+						classname="com.liferay.util.ant.ManifestHelperTask"
 						classpathref="project.classpath"
 						name="liferay-manifest-helper"
 					/>
@@ -831,7 +849,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<trycatch>
 				<try>
 					<taskdef
-						classname="com.liferay.portal.ant.bnd.ReleaseToRepoTask"
+						classname="com.liferay.util.ant.bnd.ReleaseToRepoTask"
 						classpathref="project.classpath"
 						name="release-to-repo"
 					/>
@@ -841,7 +859,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
 
 					<taskdef
-						classname="com.liferay.portal.ant.bnd.ReleaseToRepoTask"
+						classname="com.liferay.util.ant.bnd.ReleaseToRepoTask"
 						classpathref="project.classpath"
 						name="release-to-repo"
 					/>

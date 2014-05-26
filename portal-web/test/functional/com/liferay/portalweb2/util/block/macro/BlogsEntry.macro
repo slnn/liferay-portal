@@ -327,7 +327,15 @@
 			</else>
 		</if>
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+		<if>
+			<condition action="PGAssetpublisher#isVisible" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" />
+			<then>
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
+			</else>
+		</if>
 
 		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -661,6 +669,14 @@
 		<execute action="PGBlogs#assertClick" locator-key1="DRAFT_ENTRY_TITLE" value1="${entryTitle}" />
 	</command>
 
+	<command name="gotoEditCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+	</command>
+
 	<command name="gotoEditPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -737,6 +753,11 @@
 
 		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="PREVIEW" value1="${entryContent}" />
+	</command>
+
+	<command name="publishCP">
+		<execute action="CPBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPBlogsAdd#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishDraftCP">
@@ -1417,6 +1438,17 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewWithWorkflowPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#click" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewWithWorkflowPGViaAP">

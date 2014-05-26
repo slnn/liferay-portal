@@ -345,6 +345,8 @@ public interface PropsKeys {
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_OPTIONS = "breadcrumb.display.style.options";
 
+	public static final String BREADCRUMB_DISPLAY_TEMPLATES_CONFIG = "breadcrumb.display.templates.config";
+
 	public static final String BREADCRUMB_SHOW_GUEST_GROUP = "breadcrumb.show.guest.group";
 
 	public static final String BREADCRUMB_SHOW_PARENT_GROUPS = "breadcrumb.show.parent.groups";
@@ -524,6 +526,8 @@ public interface PropsKeys {
 	public static final String COMPANY_SETTINGS_FORM_IDENTIFICATION = "company.settings.form.identification";
 
 	public static final String COMPANY_SETTINGS_FORM_MISCELLANEOUS = "company.settings.form.miscellaneous";
+
+	public static final String COMPANY_SETTINGS_FORM_SOCIAL = "company.settings.form.social";
 
 	public static final String CONTROL_PANEL_DEFAULT_ENTRY_CLASS = "control.panel.default.entry.class";
 
@@ -800,6 +804,10 @@ public interface PropsKeys {
 	public static final String DL_RELATED_ASSETS_ENABLED = "dl.related.assets.enabled";
 
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
+
+	public static final String DL_REPOSITORY_GUEST_PASSWORD = "dl.repository.guest.password";
+
+	public static final String DL_REPOSITORY_GUEST_USERNAME = "dl.repository.guest.username";
 
 	public static final String DL_REPOSITORY_IMPL = "dl.repository.impl";
 

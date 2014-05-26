@@ -1,0 +1,104 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.cache.ehcache;
+
+import static com.liferay.portal.cache.ehcache.SearchablePortalCache.FIELD_UID;
+
+import com.liferay.portal.search.lucene.IndexSearcherManager;
+import com.liferay.portal.search.lucene.LuceneHelperUtil;
+
+import java.io.IOException;
+
+import org.apache.lucene.analysis.KeywordAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.NoLockFactory;
+
+/**
+ * @author Tina Tian
+ */
+public class CacheIndexAccessor {
+
+	public CacheIndexAccessor() throws IOException {
+		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
+			LuceneHelperUtil.getVersion(), new KeywordAnalyzer());
+
+		_directory = new NonHeapDirectory();
+
+		_directory.setLockFactory(NoLockFactory.getNoLockFactory());
+
+		_indexWriter = new IndexWriter(_directory, indexWriterConfig);
+
+		_indexSearcherManager = new IndexSearcherManager(_indexWriter);
+	}
+
+	public void clear() throws IOException {
+		_indexWriter.deleteAll();
+
+		_doCommit();
+	}
+
+	public void close() throws IOException {
+		_doCommit();
+
+		_indexSearcherManager.close();
+
+		_indexWriter.close();
+	}
+
+	public IndexSearcher getIndexSearcher() throws IOException {
+		return _indexSearcherManager.acquire();
+	}
+
+	public void releaseIndexSearcher(IndexSearcher indexSearcher)
+		throws IOException {
+
+		_indexSearcherManager.release(indexSearcher);
+	}
+
+	public void removeDocument(Object key) throws IOException {
+		Term term = new Term(FIELD_UID, key.toString());
+
+		_indexWriter.deleteDocuments(term);
+
+		_doCommit();
+	}
+
+	public void updateDocument(Term term, Document document)
+		throws IOException {
+
+		_indexWriter.updateDocument(term, document);
+
+		_doCommit();
+	}
+
+	private void _doCommit() throws IOException {
+		try {
+			_indexWriter.commit();
+		}
+		finally {
+			_indexSearcherManager.invalidate();
+		}
+	}
+
+	private Directory _directory;
+	private IndexSearcherManager _indexSearcherManager;
+	private IndexWriter _indexWriter;
+
+}

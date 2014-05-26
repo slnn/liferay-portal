@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -49,7 +50,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -107,7 +107,6 @@ import net.htmlparser.jericho.StartTag;
  */
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String description, String content,
@@ -1022,7 +1021,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateEntry(
 			long userId, long entryId, String title, String description,
@@ -1211,9 +1209,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			// Asset
 
-			assetEntryLocalService.updateEntry(
-				BlogsEntry.class.getName(), entryId, entry.getDisplayDate(),
-				true);
+			assetEntryLocalService.updateVisible(
+				BlogsEntry.class.getName(), entryId, true);
 
 			// Social
 

@@ -800,7 +800,18 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFolderRepository(folderId);
 
+		List<FileEntry> fileEntries = repository.getRepositoryFileEntries(
+			0, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (FileEntry fileEntry : fileEntries) {
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+		}
+
+		Folder folder = repository.getFolder(folderId);
+
 		repository.deleteFolder(folderId);
+
+		dlAppHelperLocalService.deleteFolder(folder);
 	}
 
 	/**
@@ -2234,6 +2245,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			FileEntry fileEntry = fromRepository.moveFileEntry(
 				fileEntryId, newFolderId, serviceContext);
 
+			dlAppHelperLocalService.moveFileEntry(fileEntry);
+
 			return fileEntry;
 		}
 
@@ -3167,8 +3180,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			repository = getFolderRepository(folderId);
 		}
 
-		return repository.updateFolder(
+		Folder folder = repository.updateFolder(
 			folderId, name, description, serviceContext);
+
+		dlAppHelperLocalService.updateFolder(
+			serviceContext.getUserId(), folder, serviceContext);
+
+		return folder;
 	}
 
 	/**
