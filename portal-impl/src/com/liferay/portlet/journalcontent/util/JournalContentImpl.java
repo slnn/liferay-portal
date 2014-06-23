@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.journalcontent.util;
 
+import com.liferay.portal.cache.ehcache.CacheSearchManager;
+import com.liferay.portal.cache.ehcache.SearchablePortalCache;
+import com.liferay.portal.kernel.cache.IndexedFieldExtractor;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -32,9 +35,20 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
+import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.time.StopWatch;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * @author Brian Wing Shun Chan
@@ -57,7 +71,32 @@ public class JournalContentImpl implements JournalContent {
 	public void clearCache(
 		long groupId, String articleId, String ddmTemplateKey) {
 
-		clearCache();
+//		clearCache();
+		Term term1 = new Term("groupId", String.valueOf(groupId));
+		Term term2 = new Term("articleId", articleId);
+		Term term3 = new Term("ddmTemplateKey", ddmTemplateKey);
+
+		Query query1 = new TermQuery(term1);
+		Query query2 = new TermQuery(term2);
+		Query query3 = new TermQuery(term3);
+
+		BooleanQuery booleanQuery = new BooleanQuery();
+
+		booleanQuery.add(query1, BooleanClause.Occur.MUST);
+		booleanQuery.add(query2, BooleanClause.Occur.MUST);
+		booleanQuery.add(query3, BooleanClause.Occur.MUST);
+
+		try {
+			Set<String> keys = CacheSearchManager.search(
+				CACHE_NAME, booleanQuery);
+
+			for (String key : keys) {
+				portalCache.remove(key);
+			}
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
@@ -318,9 +357,34 @@ public class JournalContentImpl implements JournalContent {
 
 	protected static final String CACHE_NAME = JournalContent.class.getName();
 
-	protected static PortalCache<String, JournalArticleDisplay> portalCache =
-		MultiVMPoolUtil.getCache(CACHE_NAME);
+	protected static PortalCache<String, JournalArticleDisplay> portalCache;
 
 	private static Log _log = LogFactoryUtil.getLog(JournalContentImpl.class);
+
+	static {
+		portalCache = MultiVMPoolUtil.getCache(CACHE_NAME);
+
+		portalCache = new SearchablePortalCache<String, JournalArticleDisplay>(
+			portalCache,
+			new IndexedFieldExtractor<String, JournalArticleDisplay>() {
+
+				@Override
+				public Map<String, String> getIndexedFields(
+					String key, JournalArticleDisplay value) {
+
+					Map<String, String> indexedFields =
+						new HashMap<String, String>();
+
+					indexedFields.put(
+						"groupId", String.valueOf(value.getGroupId()));
+					indexedFields.put("articleId", value.getArticleId());
+					indexedFields.put(
+						"ddmTemplateKey", value.getDDMTemplateKey());
+
+					return indexedFields;
+				}
+
+			});
+	}
 
 }

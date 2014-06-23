@@ -14,6 +14,9 @@
 
 package com.liferay.portal.servlet.filters.cache;
 
+import com.liferay.portal.cache.ehcache.CacheSearchManager;
+import com.liferay.portal.cache.ehcache.SearchablePortalCache;
+import com.liferay.portal.kernel.cache.IndexedFieldExtractor;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -22,6 +25,16 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.servlet.filters.CacheResponseData;
+
+import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * @author Alexander Chow
@@ -40,7 +53,22 @@ public class CacheUtil {
 	}
 
 	public static void clearCache(long companyId) {
-		clearCache();
+//		clearCache();
+
+		Term term = new Term("companyId", StringUtil.toHexString(companyId));
+
+		Query query = new TermQuery(term);
+
+		try {
+			Set<String> keys = CacheSearchManager.search(CACHE_NAME, query);
+
+			for (String key : keys) {
+				_portalCache.remove(key);
+			}
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public static CacheResponseData getCacheResponseData(
@@ -77,7 +105,35 @@ public class CacheUtil {
 		return sb.toString();
 	}
 
-	private static PortalCache<String, CacheResponseData> _portalCache =
-		MultiVMPoolUtil.getCache(CACHE_NAME);
+	private static String _getCompanyId(String key) {
+		int index1 = key.indexOf(StringPool.POUND);
+		int index2 = key.indexOf(StringPool.POUND, index1 + 1);
+
+		return key.substring(index1 + 1, index2);
+	}
+
+	private static PortalCache<String, CacheResponseData> _portalCache;
+
+	static {
+		_portalCache = MultiVMPoolUtil.getCache(CACHE_NAME);
+
+		_portalCache = new SearchablePortalCache<String, CacheResponseData>(
+			_portalCache,
+			new IndexedFieldExtractor<String, CacheResponseData>() {
+
+				@Override
+				public Map<String, String> getIndexedFields(
+					String key, CacheResponseData value) {
+
+					Map<String, String> indexedFields =
+						new HashMap<String, String>();
+
+					indexedFields.put("companyId", _getCompanyId(key));
+
+					return indexedFields;
+				}
+
+			});
+	}
 
 }

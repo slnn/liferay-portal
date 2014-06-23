@@ -115,7 +115,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		try {
 			_portalCaches.clear();
 
+			CacheSearchManager.close();
+
 			_cacheManager.shutdown();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 		finally {
 			if (_managementService != null) {
