@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sf.ehcache.CacheException;
@@ -781,5 +782,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	private Ehcache _ehcache;
 	private AtomicInteger _referenceCounter = new AtomicInteger(0);
+
+	@Override
+	public Set<Attribute> getSearchAttributes() throws CacheException {
+		return _ehcache.getSearchAttributes();
+	}
 
 }
