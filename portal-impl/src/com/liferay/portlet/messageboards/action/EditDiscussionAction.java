@@ -276,6 +276,7 @@ public class EditDiscussionAction extends PortletAction {
 				if ((user == null) ||
 					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
+					System.out.println("##### null path #####");
 					return null;
 				}
 			}
