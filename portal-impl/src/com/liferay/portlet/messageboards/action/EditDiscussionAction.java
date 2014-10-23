@@ -69,6 +69,46 @@ public class EditDiscussionAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				MBMessage message = updateMessage(actionRequest);
 
+				if (message == null) {
+					System.out.println("################## null ##################");
+
+					String className = ParamUtil.getString(actionRequest, "className");
+					System.out.println(className);
+
+					long classPK = ParamUtil.getLong(actionRequest, "classPK");
+					System.out.println(classPK);
+
+					String permissionClassName = ParamUtil.getString(
+						actionRequest, "permissionClassName");
+					System.out.println(permissionClassName);
+
+					long permissionClassPK = ParamUtil.getLong(
+						actionRequest, "permissionClassPK");
+					System.out.println(permissionClassPK);
+
+					long permissionOwnerId = ParamUtil.getLong(
+						actionRequest, "permissionOwnerId");
+					System.out.println(permissionOwnerId);
+
+					long messageId = ParamUtil.getLong(actionRequest, "messageId");
+					System.out.println(messageId);
+
+					long threadId = ParamUtil.getLong(actionRequest, "threadId");
+					System.out.println(threadId);
+
+					long parentMessageId = ParamUtil.getLong(
+						actionRequest, "parentMessageId");
+					System.out.println(parentMessageId);
+
+					String subject = ParamUtil.getString(actionRequest, "subject");
+					System.out.println(subject);
+
+					String body = ParamUtil.getString(actionRequest, "body");
+					System.out.println(body);
+
+					System.out.println("##########################################");
+				}
+
 				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
 				if (ajax) {
@@ -236,6 +276,7 @@ public class EditDiscussionAction extends PortletAction {
 				if ((user == null) ||
 					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
+					System.out.println("##### null path #####");
 					return null;
 				}
 			}
