@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.registry.Registry;
@@ -29,7 +30,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -657,10 +657,41 @@ public class SearchEngineUtil {
 		_companyIds.remove(companyId);
 	}
 
+	public static void printSearchEngines() {
+		StringBundler sb = new StringBundler();
+		
+		sb.append("####################SearchEngines");
+		
+		for (Map.Entry<String, SearchEngine> entry : _searchEngines.entrySet()) {
+			sb.append("\n####SearchEngineID :");
+			sb.append(entry.getKey());
+			sb.append("\n####SearchEngine:");
+			sb.append(entry.getValue());
+			SearchEngineProxyWrapper searchEngineProxyWrapper = 
+				(SearchEngineProxyWrapper)entry.getValue();
+			sb.append("\n####searchEngineProxyWrapper.getIndexWriter() ");
+			sb.append(searchEngineProxyWrapper.getIndexWriter().getClass());
+			sb.append("\n####searchEngineProxyWrapper.getIndexSearcher() ");
+			sb.append(searchEngineProxyWrapper.getIndexSearcher().getClass());
+			sb.append("\n####searchEngineProxyWrapper.getSearchEngine() ");
+			sb.append(searchEngineProxyWrapper.getSearchEngine().getClass());
+			sb.append("\n####searchEngineProxyWrapper.getSearchEngine().getIndexWriter() ");
+			sb.append(searchEngineProxyWrapper.getSearchEngine().getIndexWriter().getClass());
+			sb.append("\n####searchEngineProxyWrapper.getSearchEngine().getIndexSearcher() ");
+			sb.append(searchEngineProxyWrapper.getSearchEngine().getIndexSearcher().getClass());
+		}
+
+		System.out.println(sb.toString());
+	}
+	
 	public static SearchEngine removeSearchEngine(String searchEngineId) {
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
-		return _searchEngines.remove(searchEngineId);
+		SearchEngine searchEngine = _searchEngines.remove(searchEngineId);
+		
+		printSearchEngines();
+		
+		return searchEngine;
 	}
 
 	public synchronized static void restore(long companyId, String backupName)
@@ -867,6 +898,8 @@ public class SearchEngineUtil {
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
 		_searchEngines.put(searchEngineId, searchEngine);
+		
+		printSearchEngines();
 
 		for (Long companyId : _companyIds) {
 			searchEngine.initialize(companyId);

@@ -52,6 +52,9 @@ public abstract class AbstractSearchEngineConfigurator
 		Set<Entry<String, SearchEngine>> entrySet = _searchEngines.entrySet();
 
 		for (Entry<String, SearchEngine> entry : entrySet) {
+			System.out.println(
+				"##########Initial Search Engine : " + entry.getKey() + ", " +
+					entry.getValue().getClass());
 			initSearchEngine(entry.getKey(), entry.getValue());
 		}
 
