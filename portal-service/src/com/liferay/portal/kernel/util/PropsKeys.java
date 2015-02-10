@@ -615,6 +615,8 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = "discussion.comments.always.editable.by.owner";
 
+	public static final String DISCUSSION_COMMENTS_DELTA_VALUE = "discussion.comments.delta.value";
+
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED = "discussion.email.comments.added.enabled";
@@ -1746,8 +1748,6 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES = "module.framework.services.ignored.interfaces";
 
 	public static final String MODULE_FRAMEWORK_STATE_DIR = "module.framework.state.dir";
-
-	public static final String MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS = "module.framework.system.bundle.ignored.fragments";
 
 	public static final String MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = "module.framework.system.packages.extra";
 
