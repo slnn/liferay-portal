@@ -233,15 +233,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</div>
 
 			<div class="entry-footer">
-				<div class="entry-author">
-					<liferay-ui:user-display
-						userId="<%= entry.getUserId() %>"
-						userName="<%= entry.getUserName() %>"
-					>
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</liferay-ui:user-display>
-				</div>
-
 				<div class="entry-social">
 					<c:if test="<%= blogsPortletInstanceSettings.isEnableRatings() %>">
 						<div class="ratings">
@@ -279,35 +270,25 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</div>
 
 			<div class="entry-metadata">
-				<liferay-ui:asset-categories-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
-					<h2><liferay-ui:message key="categories" /></h2>
+				<h2><liferay-ui:message key="categories" /></h2>
 
-					<div class="entry-categories">
-						<liferay-ui:asset-categories-summary
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-							portletURL="<%= renderResponse.createRenderURL() %>"
-						/>
-					</div>
-				</liferay-ui:asset-categories-available>
+				<div class="entry-categories">
+					<liferay-ui:asset-categories-summary
+						className="<%= BlogsEntry.class.getName() %>"
+						classPK="<%= entry.getEntryId() %>"
+						portletURL="<%= renderResponse.createRenderURL() %>"
+					/>
+				</div>
 
-				<liferay-ui:asset-tags-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
-					<div class="entry-tags">
-						<h2><liferay-ui:message key="tags" /></h2>
+				<div class="entry-tags">
+					<h2><liferay-ui:message key="tags" /></h2>
 
-						<liferay-ui:asset-tags-summary
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-							portletURL="<%= renderResponse.createRenderURL() %>"
-						/>
-					</div>
-				</liferay-ui:asset-tags-available>
+					<liferay-ui:asset-tags-summary
+						className="<%= BlogsEntry.class.getName() %>"
+						classPK="<%= entry.getEntryId() %>"
+						portletURL="<%= renderResponse.createRenderURL() %>"
+					/>
+				</div>
 
 				<c:if test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry") %>'>
 					<c:if test="<%= blogsPortletInstanceSettings.isEnableRelatedAssets() %>">
