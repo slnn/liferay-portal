@@ -1030,13 +1030,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				return value;
 			}
 
-			UserPermissionCheckerBag userPermissionCheckerBag =
-				PermissionCacheUtil.getUserBag(userId);
+			value = PermissionCacheUtil.getHasUserRole(userId, role);
 
-			if (userPermissionCheckerBag != null) {
-				value = userPermissionCheckerBag.hasRole(role);
-			}
-			else {
+			if (value == null) {
 				int count = roleFinder.countByR_U(role.getRoleId(), userId);
 
 				if (count > 0) {
@@ -1045,6 +1041,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				else {
 					value = false;
 				}
+
+				PermissionCacheUtil.putHasUserRole(userId, role, value);
 			}
 
 			threadLocalCache.put(key, value);
