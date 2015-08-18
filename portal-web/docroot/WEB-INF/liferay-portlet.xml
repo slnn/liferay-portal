@@ -83,6 +83,17 @@
 		<css-class-wrapper>portlet-hello-world</css-class-wrapper>
 	</portlet>
 	<portlet>
+		<portlet-name>hi</portlet-name>
+		<icon>/html/icons/default.png</icon>
+		<struts-path>hi</struts-path>
+		 <instanceable>true</instanceable>
+		<remoteable>true</remoteable>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<css-class-wrapper>portlet-hello-world</css-class-wrapper>
+	</portlet>
+	<portlet>
 		<portlet-name>58</portlet-name>
 		<icon>/html/icons/login.png</icon>
 		<configuration-action-class>com.liferay.portlet.login.action.ConfigurationActionImpl</configuration-action-class>
