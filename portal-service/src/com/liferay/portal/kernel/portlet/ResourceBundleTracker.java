@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -32,7 +33,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import java.io.Closeable;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -94,15 +94,68 @@ public class ResourceBundleTracker implements Closeable {
 			languageId = StringPool.BLANK;
 		}
 
-		ResourceBundle resourceBundle = _resourceBundles.get(languageId);
+		AggregateResourceBundle resourceBundle = _resourceBundles.get(
+			languageId);
 
-		if (resourceBundle != null) {
+		if (resourceBundle == null) {
+			resourceBundle = createAggregateResourceBundle(languageId);
+		}
+
+		if (resourceBundle.getResourceBundles().size() > 0) {
 			return resourceBundle;
 		}
 
-		return ResourceBundleUtil.getBundle(
+		ResourceBundle staticResourceBundle = ResourceBundleUtil.getBundle(
 			_portlet.getResourceBundle(), LocaleUtil.fromLanguageId(languageId),
 			_classLoader);
+
+		resourceBundle.add(staticResourceBundle);
+
+		return resourceBundle;
+	}
+
+	protected AggregateResourceBundle createAggregateResourceBundle(
+		String languageId) {
+
+		synchronized (_resourceBundles) {
+			AggregateResourceBundle result = _resourceBundles.get(languageId);
+
+			if (result != null) {
+				return result;
+			}
+
+			result = new AggregateResourceBundle(languageId);
+			_resourceBundles.put(languageId, result);
+
+			AggregateResourceBundle aggregateResourceBundle = result;
+
+			while (!languageId.isEmpty()) {
+				int pos = languageId.lastIndexOf(CharPool.UNDERLINE);
+
+				if (pos > 0) {
+					languageId = languageId.substring(0, pos);
+				}
+				else {
+					languageId = StringPool.BLANK;
+				}
+
+				AggregateResourceBundle parent = _resourceBundles.get(
+					languageId);
+
+				if (parent != null) {
+					aggregateResourceBundle.setParent(parent);
+					return result;
+				}
+
+				parent = new AggregateResourceBundle(languageId);
+				_resourceBundles.put(languageId, parent);
+				aggregateResourceBundle.setParent(parent);
+
+				aggregateResourceBundle = parent;
+			}
+
+			return result;
+		}
 	}
 
 	private final ClassLoader _classLoader;
@@ -133,15 +186,11 @@ public class ResourceBundleTracker implements Closeable {
 				_resourceBundles.get(languageId);
 
 			if (aggregateResourceBundle == null) {
-				aggregateResourceBundle = new AggregateResourceBundle();
-
-				_resourceBundles.put(languageId, aggregateResourceBundle);
+				aggregateResourceBundle = createAggregateResourceBundle(
+					languageId);
 			}
 
-			List<ResourceBundle> resourceBundles =
-				aggregateResourceBundle.getResourceBundles();
-
-			resourceBundles.add(resourceBundle);
+			aggregateResourceBundle.add(resourceBundle);
 
 			return resourceBundle;
 		}
@@ -171,10 +220,7 @@ public class ResourceBundleTracker implements Closeable {
 			AggregateResourceBundle aggregateResourceBundle =
 				_resourceBundles.get(languageId);
 
-			List<ResourceBundle> resourceBundles =
-				aggregateResourceBundle.getResourceBundles();
-
-			resourceBundles.remove(resourceBundle);
+			aggregateResourceBundle.remove(resourceBundle);
 		}
 
 	}
