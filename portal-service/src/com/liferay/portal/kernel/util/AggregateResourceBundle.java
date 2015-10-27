@@ -16,8 +16,9 @@ package com.liferay.portal.kernel.util;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,18 +31,22 @@ public class AggregateResourceBundle extends ResourceBundle {
 
 	public AggregateResourceBundle(ResourceBundle... resourceBundles) {
 		for (int i = resourceBundles.length - 1; i >= 0; i--) {
-			add(resourceBundles[i]);
+			_resourceBundles.add(resourceBundles[i]);
 		}
 
 		_languageId = null;
+
+		rebuild();
 	}
 
 	public AggregateResourceBundle(String languageId) {
 		_languageId = languageId;
 	}
 
-	public void add(ResourceBundle resourceBundle) {
+	public synchronized void add(ResourceBundle resourceBundle) {
 		_resourceBundles.add(resourceBundle);
+
+		rebuild();
 	}
 
 	@Override
@@ -53,8 +58,10 @@ public class AggregateResourceBundle extends ResourceBundle {
 		return Collections.unmodifiableList(_resourceBundles);
 	}
 
-	public void remove(ResourceBundle resourceBundle) {
+	public synchronized void remove(ResourceBundle resourceBundle) {
 		_resourceBundles.remove(resourceBundle);
+
+		rebuild();
 	}
 
 	public void setParent(ResourceBundle parent) {
@@ -71,30 +78,29 @@ public class AggregateResourceBundle extends ResourceBundle {
 
 	@Override
 	protected Object handleGetObject(String key) {
-		for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
-			ResourceBundle resourceBundle = _resourceBundles.get(i);
-
-			if (resourceBundle.containsKey(key)) {
-				return resourceBundle.getObject(key);
-			}
-		}
-
-		return null;
+		return _content.get(key);
 	}
 
 	@Override
 	protected Set<String> handleKeySet() {
-		Set<String> keySet = new HashSet<>();
-
-		for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
-			ResourceBundle resourceBundle = _resourceBundles.get(i);
-
-			keySet.addAll(resourceBundle.keySet());
-		}
-
-		return Collections.unmodifiableSet(keySet);
+		return _content.keySet();
 	}
 
+	protected void rebuild() {
+		Map<String, Object> content = new HashMap<>();
+
+		for (int i = 0; i < _resourceBundles.size(); i++) {
+			ResourceBundle resourceBundle = _resourceBundles.get(i);
+
+			for (String key : resourceBundle.keySet()) {
+				content.put(key, resourceBundle.getObject(key));
+			}
+		}
+
+		_content = content;
+	}
+
+	private volatile Map<String, Object> _content = new HashMap<>();
 	private final String _languageId;
 	private final List<ResourceBundle> _resourceBundles =
 		new CopyOnWriteArrayList<>();
