@@ -39,12 +39,6 @@ LPS-30525.
 	</#if>
 </#function>
 
-<#macro breadcrumbs
-	default_preferences = ""
->
-	${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}
-</#macro>
-
 <#macro control_menu>
 	<#if is_setup_complete && is_signed_in>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", portletProviderAction.VIEW)}
@@ -93,12 +87,6 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", portletProviderAction.VIEW, "", default_preferences)}
 </#macro>
 
-<#macro navigation_menu
-	default_preferences = ""
->
-	${theme.runtime("com.liferay.portal.theme.NavItem", portletProviderAction.VIEW, "", default_preferences)}
-</#macro>
-
 <#macro product_menu>
 	<#if is_setup_complete && is_signed_in>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", portletProviderAction.VIEW)}
@@ -123,20 +111,8 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	${theme.quickAccess(content_id)}
 </#macro>
 
-<#macro search
-	default_preferences = ""
->
-	<#if is_setup_complete>
-		${theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", portletProviderAction.VIEW, "", default_preferences)}
-	</#if>
-</#macro>
-
 <#macro silently
 	foo
 >
 	<#assign foo = foo />
-</#macro>
-
-<#macro user_personal_bar>
-	${theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", portletProviderAction.VIEW)}
 </#macro>
