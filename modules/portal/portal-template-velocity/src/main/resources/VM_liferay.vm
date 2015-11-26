@@ -14,12 +14,6 @@
 	#set ($is_setup_complete = $user.isSetupComplete())
 #end
 
-#macro (control_menu)
-	#if ($is_setup_complete && $is_signed_in)
-		$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
-	#end
-#end
-
 #macro (css $file_name)
 	#if ($file_name == $css_main_file)
 		<link class="lfr-css-file" href="$file_name" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
@@ -55,22 +49,6 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	$menu_tag.setMenu($menu)
 
 	$menu_tag.runTag()
-#end
-
-#macro (product_menu)
-	#if ($is_setup_complete && $is_signed_in)
-		$theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", $portletProviderAction.VIEW)
-	#end
-#end
-
-#macro (product_menu_sidebar $state)
-	#if ($is_setup_complete && $is_signed_in)
-		<div class="$state lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
-			<div class="product-menu sidebar sidenav-menu">
-				#product_menu()
-			</div>
-		</div>
-	#end
 #end
 
 #macro (quick_access $content_id)
