@@ -33,3 +33,23 @@ StringBundler bodyTopSB = OutputTag.getData(request, WebKeys.PAGE_BODY_TOP);
 <%@ include file="/html/common/themes/top_messages.jsp" %>
 
 <liferay-util:include page="/html/common/themes/body_top-ext.jsp" />
+
+<c:if test="<%= themeDisplay.isSignedIn() && user.isSetupComplete() %>">
+	<%
+	String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
+	%>
+
+	<div class="<%= productMenuState %> lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
+		<div class="product-menu sidebar sidenav-menu">
+			<liferay-portlet:runtime
+				portletProviderClassName="com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu"
+				portletProviderAction="<%= PortletProvider.Action.VIEW %>"
+			/>
+		</div>
+	</div>
+
+	<liferay-portlet:runtime
+		portletProviderClassName="com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu"
+		portletProviderAction="<%= PortletProvider.Action.VIEW %>"
+	/>
+</c:if>
