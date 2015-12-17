@@ -68,6 +68,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1508,6 +1509,28 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public List<Layout> getScopeGroupLayouts(
 		long groupId, boolean privateLayout) {
+
+		if (_layoutClassNameId == null) {
+			_layoutClassNameId = Long.valueOf(
+				PortalUtil.getClassNameId(Layout.class));
+		}
+
+		Group group = groupPersistence.fetchByPrimaryKey(groupId);
+
+		if (group.getClassNameId() != _layoutClassNameId.longValue()) {
+			return Collections.emptyList();
+		}
+
+		List<Layout> layouts = layoutPersistence.findByG_P(
+			groupId, privateLayout);
+
+		for (Layout layout : layouts) {
+			if ((layout.getCompanyId() != group.getCompanyId()) ||
+				(layout.getPlid() != group.getClassPK())) {
+
+				layouts.remove(layout);
+			}
+		}
 
 		return layoutFinder.findByScopeGroup(groupId, privateLayout);
 	}
@@ -3088,5 +3111,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@BeanReference(type = LayoutLocalServiceHelper.class)
 	protected LayoutLocalServiceHelper layoutLocalServiceHelper;
+
+	private volatile Long _layoutClassNameId;
 
 }
