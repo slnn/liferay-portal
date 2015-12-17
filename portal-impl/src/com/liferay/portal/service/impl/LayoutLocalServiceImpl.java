@@ -1532,7 +1532,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			}
 		}
 
-		return layoutFinder.findByScopeGroup(groupId, privateLayout);
+		return layouts;
 	}
 
 	@Override
