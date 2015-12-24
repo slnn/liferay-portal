@@ -341,24 +341,12 @@ public class RuntimePageImpl implements RuntimePage {
 		TemplateProcessor processor = new TemplateProcessor(
 			request, response, portletId);
 
-		TemplateManager templateManager =
-			TemplateManagerUtil.getTemplateManager(
-				TemplateConstants.LANG_TYPE_VM);
-
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
 
 		template.put("processor", processor);
 
-		// Velocity variables
-
-		template.prepare(request);
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request,
-			new PipingServletResponse(response, unsyncStringWriter));
 
 		try {
 			template.processTemplate(unsyncStringWriter);
