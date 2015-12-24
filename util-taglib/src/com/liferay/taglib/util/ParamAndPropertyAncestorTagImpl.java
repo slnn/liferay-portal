@@ -173,6 +173,12 @@ public class ParamAndPropertyAncestorTagImpl
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		if (pageContext == null) {
+			servletContext = null;
+
+			return;
+		}
+
 		request = (HttpServletRequest)pageContext.getRequest();
 
 		servletContext = (ServletContext)request.getAttribute(WebKeys.CTX);
