@@ -173,6 +173,8 @@ public class JspServlet extends HttpServlet {
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put("keepgenerated", "false");
 		defaults.put("logVerbosityLevel", "NONE");
+		defaults.put("trimSpaces", "true");
+		defaults.put("enablePooling", "false");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
 		Set<String> nameSet = new HashSet<>(Collections.list(names));
