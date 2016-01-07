@@ -14,7 +14,11 @@
 
 package com.liferay.portal.template.freemarker.util;
 
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.taglib.portletext.RuntimeTag;
 
 import java.util.Map;
 
@@ -22,6 +26,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspFactory;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author ChemaBalsas
@@ -36,6 +42,12 @@ public class FreeMarkerThemeUtilImpl implements FreeMarkerThemeUtil {
 		_request = request;
 		_response = response;
 		_contextObjects = contextObjects;
+
+		JspFactory jspFactory = JspFactory.getDefaultFactory();
+
+		_pageContext = jspFactory.getPageContext(
+			new JSPSupportServlet(_servletContext), _request, _response, null,
+			false, 0, false);
 	}
 
 	@Override
@@ -57,7 +69,31 @@ public class FreeMarkerThemeUtilImpl implements FreeMarkerThemeUtil {
 		requestDispatcher.include(_request, _response);
 	}
 
+	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletProviderClassName, portletProviderAction, StringPool.BLANK,
+			null, null, _pageContext, _request, _response);
+	}
+
+	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction, String instanceId,
+			String defaultPreferences)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletProviderClassName, portletProviderAction, instanceId, null,
+			defaultPreferences, _pageContext, _request, _response);
+	}
+
 	private final Map<String, Object> _contextObjects;
+	private final PageContext _pageContext;
 	private final HttpServletRequest _request;
 	private final HttpServletResponse _response;
 	private final ServletContext _servletContext;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template.freemarker.util;
 
+import com.liferay.portal.kernel.portlet.PortletProvider;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -26,4 +28,14 @@ public interface FreeMarkerThemeUtil {
 
 	public void include(String page) throws Exception;
 
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
+		throws Exception;
+
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction, String instanceId,
+			String defaultPreferences)
+		throws Exception;
 }
