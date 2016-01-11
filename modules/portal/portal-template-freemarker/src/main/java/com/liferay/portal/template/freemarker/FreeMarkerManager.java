@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
-
-import freemarker.cache.TemplateCache;
 
 import freemarker.core.TemplateClassResolver;
 
@@ -52,7 +49,6 @@ import freemarker.template.TemplateModelException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -193,20 +189,25 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		_configuration = new Configuration(Configuration.VERSION_2_3_23);
 
-		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				Configuration.class, "cache");
+//		try {
+//			Field field = ReflectionUtil.getDeclaredField(
+//				Configuration.class, "cache");
+//
+//			TemplateCache templateCache = new LiferayTemplateCache(
+//				_configuration, _freemarkerEngineConfiguration,
+//				templateResourceLoader);
+//
+//			field.set(_configuration, templateCache);
+//		}
+//		catch (Exception e) {
+//			throw new TemplateException(
+//				"Unable to Initialize FreeMarker manager");
+//		}
 
-			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freemarkerEngineConfiguration,
-				templateResourceLoader);
-
-			field.set(_configuration, templateCache);
-		}
-		catch (Exception e) {
-			throw new TemplateException(
-				"Unable to Initialize FreeMarker manager");
-		}
+		_configuration.setCacheStorage(new LiferayConcurrentCacheStorage());
+		_configuration.setTemplateLoader(
+			new LiferayTemplateLoader(
+				_freemarkerEngineConfiguration, templateResourceLoader));
 
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
