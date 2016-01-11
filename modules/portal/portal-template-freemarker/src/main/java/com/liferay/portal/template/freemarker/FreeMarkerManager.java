@@ -204,7 +204,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 //				"Unable to Initialize FreeMarker manager");
 //		}
 
-		_configuration.setCacheStorage(new LiferayConcurrentCacheStorage());
+//		_configuration.setCacheStorage(new LiferayConcurrentCacheStorage());
 		_configuration.setTemplateLoader(
 			new LiferayTemplateLoader(
 				_freemarkerEngineConfiguration, templateResourceLoader));
