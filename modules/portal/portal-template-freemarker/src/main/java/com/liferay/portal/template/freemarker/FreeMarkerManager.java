@@ -455,6 +455,9 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public TaglibFactoryWrapper(ServletContext servletContext) {
 			_taglibFactory = new TaglibFactory(
 				getServletContextWrapper(servletContext));
+
+			_taglibFactory.setObjectWrapper(
+				FreemarkerWrapperUtil.getBeansWrapper());
 		}
 
 		@Override
