@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
-
-import freemarker.cache.TemplateCache;
 
 import freemarker.core.TemplateClassResolver;
 
@@ -45,7 +42,6 @@ import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.Configuration;
-import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -53,7 +49,6 @@ import freemarker.template.TemplateModelException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -102,7 +97,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		Class<?> variableClass) {
 
 		try {
-			BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
+			BeansWrapper beansWrapper = FreemarkerWrapperUtil.getBeansWrapper();
 
 			TemplateHashModel templateHashModel =
 				beansWrapper.getStaticModels();
@@ -145,7 +140,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		contextObjects.put(
 			applicationName,
 			new HttpRequestHashModel(
-				request, response, ObjectWrapper.DEFAULT_WRAPPER));
+				request, response, FreemarkerWrapperUtil.getObjectWrapper()));
 	}
 
 	@Override
@@ -192,22 +187,27 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			return;
 		}
 
-		_configuration = new Configuration();
+		_configuration = new Configuration(Configuration.VERSION_2_3_23);
 
-		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				Configuration.class, "cache");
+//		try {
+//			Field field = ReflectionUtil.getDeclaredField(
+//				Configuration.class, "cache");
+//
+//			TemplateCache templateCache = new LiferayTemplateCache(
+//				_configuration, _freemarkerEngineConfiguration,
+//				templateResourceLoader);
+//
+//			field.set(_configuration, templateCache);
+//		}
+//		catch (Exception e) {
+//			throw new TemplateException(
+//				"Unable to Initialize FreeMarker manager");
+//		}
 
-			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freemarkerEngineConfiguration,
-				templateResourceLoader);
-
-			field.set(_configuration, templateCache);
-		}
-		catch (Exception e) {
-			throw new TemplateException(
-				"Unable to Initialize FreeMarker manager");
-		}
+//		_configuration.setCacheStorage(new LiferayConcurrentCacheStorage());
+		_configuration.setTemplateLoader(
+			new LiferayTemplateLoader(
+				_freemarkerEngineConfiguration, templateResourceLoader));
 
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
@@ -297,7 +297,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		return new ServletContextHashModel(
-			genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
+			genericServlet, FreemarkerWrapperUtil.getObjectWrapper());
 	}
 
 	protected ServletContext getServletContextWrapper(
@@ -456,6 +456,9 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public TaglibFactoryWrapper(ServletContext servletContext) {
 			_taglibFactory = new TaglibFactory(
 				getServletContextWrapper(servletContext));
+
+			_taglibFactory.setObjectWrapper(
+				FreemarkerWrapperUtil.getBeansWrapper());
 		}
 
 		@Override
