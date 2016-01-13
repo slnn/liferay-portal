@@ -66,6 +66,8 @@ public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 
 	@Override
 	public void reuse(Tag tag) {
+		tag.setPageContext(null);
+
 		if (_counter.get() < _maxSize) {
 			_counter.getAndIncrement();
 
