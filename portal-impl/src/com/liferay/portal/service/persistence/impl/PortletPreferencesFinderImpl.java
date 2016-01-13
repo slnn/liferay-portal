@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -59,6 +60,20 @@ public class PortletPreferencesFinderImpl
 
 	public static final String FIND_BY_C_G_O_O_P_P =
 		PortletPreferencesFinder.class.getName() + ".findByC_G_O_O_P_P";
+
+	public static final FinderPath FINDER_PATH_COUNT_BY_O_O_P_P_P=
+		new FinderPath(
+			PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			Long.class,
+			COUNT_BY_O_O_P_P_P,
+			"countByO_O_P_P_P",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			}
+		);
 
 	public static final FinderPath FINDER_PATH_FIND_BY_C_G_O_O_P_P =
 		new FinderPath(
@@ -142,75 +157,94 @@ public class PortletPreferencesFinderImpl
 		long ownerId, int ownerType, long plid, String portletId,
 		boolean excludeDefaultPreferences) {
 
-		Session session = null;
+		Object[] finderArgs =
+			new Object[] {
+				ownerId, ownerType, plid, portletId, excludeDefaultPreferences};
 
-		try {
-			session = openSession();
+		Integer count = (Integer)finderCache.getResult(
+			FINDER_PATH_COUNT_BY_O_O_P_P_P, finderArgs, this);
 
-			String sql = CustomSQLUtil.get(COUNT_BY_O_O_P_P_P);
+		if (count == null) {
+			Session session = null;
 
-			if (ownerId == -1) {
-				sql = StringUtil.replace(sql, _OWNER_ID_SQL, StringPool.BLANK);
-			}
+			try {
+				session = openSession();
 
-			if (plid == -1) {
-				sql = StringUtil.replace(sql, _PLID_SQL, StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, _PORTLET_ID_INSTANCE_SQL, StringPool.BLANK);
-			}
+				String sql = CustomSQLUtil.get(COUNT_BY_O_O_P_P_P);
 
-			if (excludeDefaultPreferences) {
-				sql = StringUtil.replace(
-					sql, "[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]",
-					PortletConstants.DEFAULT_PREFERENCES);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, _PREFERENCES_SQL, StringPool.BLANK);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			if (ownerId != -1) {
-				qPos.add(ownerId);
-			}
-
-			qPos.add(ownerType);
-			qPos.add(portletId);
-
-			if (plid != -1) {
-				qPos.add(plid);
-			}
-			else {
-				qPos.add(portletId.concat("%_INSTANCE_%"));
-			}
-
-			int count = 0;
-
-			Iterator<Long> itr = q.iterate();
-
-			while (itr.hasNext()) {
-				Long l = itr.next();
-
-				if (l != null) {
-					count += l.intValue();
+				if (ownerId == -1) {
+					sql = StringUtil.replace(
+						sql, _OWNER_ID_SQL, StringPool.BLANK);
 				}
-			}
 
-			return count;
+				if (plid == -1) {
+					sql = StringUtil.replace(sql, _PLID_SQL, StringPool.BLANK);
+				}
+				else {
+					sql = StringUtil.replace(
+						sql, _PORTLET_ID_INSTANCE_SQL, StringPool.BLANK);
+				}
+
+				if (excludeDefaultPreferences) {
+					sql = StringUtil.replace(
+						sql, "[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]",
+						PortletConstants.DEFAULT_PREFERENCES);
+				}
+				else {
+					sql = StringUtil.replace(
+						sql, _PREFERENCES_SQL, StringPool.BLANK);
+				}
+
+				SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+				q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (ownerId != -1) {
+					qPos.add(ownerId);
+				}
+
+				qPos.add(ownerType);
+				qPos.add(portletId);
+
+				if (plid != -1) {
+					qPos.add(plid);
+				}
+				else {
+					qPos.add(portletId.concat("%_INSTANCE_%"));
+				}
+
+				count = 0;
+
+				Iterator<Long> itr = q.iterate();
+
+				while (itr.hasNext()) {
+					Long l = itr.next();
+
+					if (l != null) {
+						count += l.intValue();
+					}
+				}
+
+				finderCache.putResult(
+					FINDER_PATH_COUNT_BY_O_O_P_P_P, finderArgs, (Integer)count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					FINDER_PATH_COUNT_BY_O_O_P_P_P, finderArgs);
+
+				throw new SystemException(e);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		else {
+			System.out.println(portletId);
 		}
-		finally {
-			closeSession(session);
-		}
+
+		return count;
 	}
 
 	@Override
@@ -333,6 +367,8 @@ public class PortletPreferencesFinderImpl
 
 		return portletInstance.hasIdenticalPortletName(portletId);
 	}
+
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 
 	private static final String _OWNER_ID_SQL =
 		"(PortletPreferences.ownerId = ?) AND";
