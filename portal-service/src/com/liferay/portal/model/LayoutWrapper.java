@@ -1502,6 +1502,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.isNew();
 	}
 
+	@Override
+	public boolean isPortletEmbedded(java.lang.String targetPorltetId) {
+		return _layout.isPortletEmbedded(targetPorltetId);
+	}
+
 	/**
 	* Returns <code>true</code> if this layout is private layout.
 	*
