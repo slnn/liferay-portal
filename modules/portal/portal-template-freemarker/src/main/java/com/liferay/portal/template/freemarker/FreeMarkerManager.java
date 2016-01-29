@@ -293,7 +293,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				"Unable to Initialize FreeMarker manager");
 		}
 
-		_configuration.setObjectWrapper(new LiferayObjectWrapper());
+		_configuration.setObjectWrapper(liferayObjectWrapper);
 
 		try {
 			_configuration.setSetting(
