@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -22,11 +22,13 @@ import freemarker.ext.util.ModelCache;
 import freemarker.ext.util.ModelFactory;
 
 import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelAdapter;
 
 import java.lang.reflect.Method;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -44,32 +46,56 @@ public class LiferayBeansModelCache extends ModelCache {
 		_method = ReflectionUtil.getDeclaredMethod(
 			BeansWrapper.class, "getModelFactory", Class.class);
 
+		Map<Object, TemplateModel> helperUtilityCache = new HashMap<>();
+
 		for (Object object : helperUtilities.values()) {
 			if ((object instanceof Map)) {
 				continue;
 			}
 
 			try {
-				_acceptedObjects.add(object);
+				helperUtilityCache.put(object, getInstance(object));
 			}
 			catch (NullPointerException e) {
+
 				// Sliently bypass object that can't be added into the hashset
+
 			}
 		}
+
+		_helperUtilityCache = Collections.unmodifiableMap(helperUtilityCache);
 
 		setUseCache(true);
 	}
 
 	@Override
 	public TemplateModel getInstance(Object object) {
-		TemplateModel templateModel = _modelCache.get(object);
+		if (object instanceof TemplateModel) {
+			return (TemplateModel)object;
+		}
 
-		if (templateModel == null) {
-			templateModel = create(object);
+		if (object instanceof TemplateModelAdapter) {
+			return ((TemplateModelAdapter)object).getTemplateModel();
+		}
 
-			if (isCacheable(object)) {
+		// Level 1: cache for helper utilities
+
+		TemplateModel templateModel = _helperUtilityCache.get(object);
+
+		if ((templateModel == null) && isCacheable(object)) {
+
+			// Level 2: least frequently used cache for all cacheable objects
+
+			templateModel = _modelCache.get(object);
+
+			if (templateModel == null) {
+				templateModel = create(object);
+
 				_modelCache.put(object, templateModel);
 			}
+		}
+		else {
+			return create(object);
 		}
 
 		return templateModel;
@@ -93,20 +119,38 @@ public class LiferayBeansModelCache extends ModelCache {
 			}
 		}
 
+		// TODO: class reloading???
+
+		//if (factory == null) {
+		//	synchronized(classToFactory) {
+		//		factory = (ModelFactory)classToFactory.get(clazz);
+		//		if(factory == null) {
+		//			String className = clazz.getName();
+		//			// clear mappings when class reloading is detected
+		//			if(!mappedClassNames.add(className)) {
+		//				classToFactory.clear();
+		//				mappedClassNames.clear();
+		//				mappedClassNames.add(className);
+		//			}
+		//			factory = wrapper.getModelFactory(clazz);
+		//			classToFactory.put(clazz, factory);
+		//		}
+		//	}
+		//}
+
 		return modelFactory.create(object, _beansWrapper);
 	}
 
 	@Override
 	protected boolean isCacheable(Object object) {
-		return (object.getClass() != Boolean.class) &&
-			_acceptedObjects.contains(object);
+		return (object.getClass() != Boolean.class);
 	}
 
-	private final Set<Object> _acceptedObjects = new ConcurrentHashSet<>();
 	private final BeansWrapper _beansWrapper;
+	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final Method _method;
-	private final ConcurrentMap<Object, TemplateModel> _modelCache =
-		new ConcurrentHashMap<>();
+	private final ConcurrentLFUCache<Object, TemplateModel> _modelCache =
+		new ConcurrentLFUCache<>(1000);
 	private final ConcurrentMap<Class, ModelFactory> _modelFactories =
 		new ConcurrentHashMap<>();
 
