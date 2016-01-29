@@ -26,11 +26,14 @@ import freemarker.template.TemplateModelAdapter;
 
 import java.lang.reflect.Method;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.ResourceBundle;
 
 /**
  * @author Dante Wang
@@ -49,7 +52,7 @@ public class LiferayBeansModelCache extends ModelCache {
 		Map<Object, TemplateModel> helperUtilityCache = new HashMap<>();
 
 		for (Object object : helperUtilities.values()) {
-			if ((object instanceof Map)) {
+			if (object == null) {
 				continue;
 			}
 
@@ -105,45 +108,33 @@ public class LiferayBeansModelCache extends ModelCache {
 	protected TemplateModel create(Object object) {
 		Class clazz = object.getClass();
 
-		ModelFactory modelFactory = _modelFactories.get(clazz);
+		try {
+			ModelFactory modelFactory = (ModelFactory)_method.invoke(
+				_beansWrapper, clazz);
 
-		if (modelFactory == null) {
-			try {
-				modelFactory = (ModelFactory)_method.invoke(
-					_beansWrapper, clazz);
-
-				_modelFactories.put(clazz, modelFactory);
-			}
-			catch (ReflectiveOperationException e) {
-				throw new RuntimeException(e);
-			}
+			return modelFactory.create(object, _beansWrapper);
 		}
-
-		// TODO: class reloading???
-
-		//if (factory == null) {
-		//	synchronized(classToFactory) {
-		//		factory = (ModelFactory)classToFactory.get(clazz);
-		//		if(factory == null) {
-		//			String className = clazz.getName();
-		//			// clear mappings when class reloading is detected
-		//			if(!mappedClassNames.add(className)) {
-		//				classToFactory.clear();
-		//				mappedClassNames.clear();
-		//				mappedClassNames.add(className);
-		//			}
-		//			factory = wrapper.getModelFactory(clazz);
-		//			classToFactory.put(clazz, factory);
-		//		}
-		//	}
-		//}
-
-		return modelFactory.create(object, _beansWrapper);
+		catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
 	protected boolean isCacheable(Object object) {
-		return (object.getClass() != Boolean.class);
+		Class clazz = object.getClass();
+
+		if (Map.class.isAssignableFrom(clazz) ||
+				Collection.class.isAssignableFrom(clazz) ||
+				Number.class.isAssignableFrom(clazz) ||
+				Date.class.isAssignableFrom(clazz) || Boolean.class == clazz ||
+				ResourceBundle.class.isAssignableFrom(clazz) ||
+				Iterator.class.isAssignableFrom(clazz) ||
+				Enumeration.class.isAssignableFrom(clazz) || clazz.isArray()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private final BeansWrapper _beansWrapper;
@@ -151,7 +142,5 @@ public class LiferayBeansModelCache extends ModelCache {
 	private final Method _method;
 	private final ConcurrentLFUCache<Object, TemplateModel> _modelCache =
 		new ConcurrentLFUCache<>(1000);
-	private final ConcurrentMap<Class, ModelFactory> _modelFactories =
-		new ConcurrentHashMap<>();
 
 }
