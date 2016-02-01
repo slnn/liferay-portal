@@ -135,17 +135,6 @@ public class ConcurrentLFUCache<K, V> {
 		return _putCount.get();
 	}
 
-	public void remove(K key) {
-		_writeLock.lock();
-
-		try {
-			_cache.remove(key);
-		}
-		finally {
-			_writeLock.unlock();
-		}
-	}
-
 	public int size() {
 		_readLock.lock();
 
