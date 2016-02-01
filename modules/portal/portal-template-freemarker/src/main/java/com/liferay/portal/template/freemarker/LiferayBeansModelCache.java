@@ -24,6 +24,9 @@ import freemarker.ext.util.ModelFactory;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelAdapter;
 
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
 
 import java.util.Collection;
@@ -89,12 +92,27 @@ public class LiferayBeansModelCache extends ModelCache {
 
 			// Level 2: least frequently used cache for all cacheable objects
 
-			templateModel = _modelCache.get(object);
+			ModelReference modelReference = _modelCache.get(object);
 
 			if (templateModel == null) {
 				templateModel = create(object);
 
-				_modelCache.put(object, templateModel);
+				for (;;) {
+					ModelReference queuedReference =
+						(ModelReference)_referenceQueue.poll();
+
+					if (queuedReference == null) {
+						break;
+					}
+
+					_modelCache.remove(queuedReference.getObject());
+				}
+
+				_modelCache.put(object, new ModelReference(
+					templateModel, object, _referenceQueue));
+			}
+			else {
+				templateModel = modelReference.get();
 			}
 		}
 		else {
@@ -137,10 +155,34 @@ public class LiferayBeansModelCache extends ModelCache {
 		return true;
 	}
 
+	public void clearCache()
+	{
+		_modelCache.clear();
+	}
+
 	private final BeansWrapper _beansWrapper;
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final Method _method;
-	private final ConcurrentLFUCache<Object, TemplateModel> _modelCache =
+	private final ConcurrentLFUCache<Object, ModelReference> _modelCache =
 		new ConcurrentLFUCache<>(1000);
+	private final ReferenceQueue<TemplateModel> _referenceQueue =
+		new ReferenceQueue<>();
+
+	private class ModelReference extends SoftReference<TemplateModel> {
+
+		public ModelReference(
+			TemplateModel templateModel, Object object,
+			ReferenceQueue referenceQueue) {
+
+			super(templateModel, referenceQueue);
+			_object = object;
+		}
+
+		public Object getObject() {
+			return _object;
+		}
+
+		private final Object _object;
+	}
 
 }
