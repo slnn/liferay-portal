@@ -24,7 +24,6 @@ import freemarker.ext.util.ModelFactory;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelAdapter;
 
-import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
@@ -92,24 +91,14 @@ public class LiferayBeansModelCache extends ModelCache {
 
 			// Level 2: least frequently used cache for all cacheable objects
 
-			ModelReference modelReference = _modelCache.get(object);
+			SoftReference<TemplateModel> modelReference = _modelCache.get(
+				object);
 
 			if (templateModel == null) {
 				templateModel = create(object);
 
-				for (;;) {
-					ModelReference queuedReference =
-						(ModelReference)_referenceQueue.poll();
-
-					if (queuedReference == null) {
-						break;
-					}
-
-					_modelCache.remove(queuedReference.getObject());
-				}
-
-				_modelCache.put(object, new ModelReference(
-					templateModel, object, _referenceQueue));
+				_modelCache.put(
+					object, new SoftReference<>(templateModel));
 			}
 			else {
 				templateModel = modelReference.get();
@@ -127,6 +116,10 @@ public class LiferayBeansModelCache extends ModelCache {
 		Class clazz = object.getClass();
 
 		try {
+
+			// ModelFactory is cached in Freemarker's BeansModelCache; TODO:
+			// will add later
+
 			ModelFactory modelFactory = (ModelFactory)_method.invoke(
 				_beansWrapper, clazz);
 
@@ -163,26 +156,7 @@ public class LiferayBeansModelCache extends ModelCache {
 	private final BeansWrapper _beansWrapper;
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final Method _method;
-	private final ConcurrentLFUCache<Object, ModelReference> _modelCache =
-		new ConcurrentLFUCache<>(1000);
-	private final ReferenceQueue<TemplateModel> _referenceQueue =
-		new ReferenceQueue<>();
-
-	private class ModelReference extends SoftReference<TemplateModel> {
-
-		public ModelReference(
-			TemplateModel templateModel, Object object,
-			ReferenceQueue referenceQueue) {
-
-			super(templateModel, referenceQueue);
-			_object = object;
-		}
-
-		public Object getObject() {
-			return _object;
-		}
-
-		private final Object _object;
-	}
+	private final ConcurrentLFUCache<Object, SoftReference<TemplateModel>>
+		_modelCache = new ConcurrentLFUCache<>(1000);
 
 }
