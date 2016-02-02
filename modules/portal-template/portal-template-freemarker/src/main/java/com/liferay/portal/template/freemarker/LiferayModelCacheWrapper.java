@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.freemarker;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
-
 import freemarker.ext.util.ModelCache;
 
 import freemarker.template.TemplateModel;
