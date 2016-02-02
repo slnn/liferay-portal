@@ -17,6 +17,7 @@ package com.liferay.portal.template.freemarker;
 import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 
 import freemarker.ext.util.ModelCache;
+
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelAdapter;
 
@@ -57,7 +58,7 @@ public class LiferayModelCacheWrapper extends ModelCache {
 			}
 
 			try {
-				helperUtilityCache.put(object, getInstance(object));
+				helperUtilityCache.put(object, _modelCache.getInstance(object));
 			}
 			catch (NullPointerException e) {
 
@@ -67,6 +68,10 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		}
 
 		_helperUtilityCache = Collections.unmodifiableMap(helperUtilityCache);
+	}
+
+	public void clearCache() {
+		_templateModelCache.clear();
 	}
 
 	@Override
@@ -136,22 +141,17 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		Class clazz = object.getClass();
 
 		if (Map.class.isAssignableFrom(clazz) ||
-				Collection.class.isAssignableFrom(clazz) ||
-				Number.class.isAssignableFrom(clazz) ||
-				Date.class.isAssignableFrom(clazz) || Boolean.class == clazz ||
-				ResourceBundle.class.isAssignableFrom(clazz) ||
-				Iterator.class.isAssignableFrom(clazz) ||
-				Enumeration.class.isAssignableFrom(clazz) || clazz.isArray()) {
+			Collection.class.isAssignableFrom(clazz) ||
+			Number.class.isAssignableFrom(clazz) ||
+			Date.class.isAssignableFrom(clazz) || (Boolean.class == clazz) ||
+			ResourceBundle.class.isAssignableFrom(clazz) ||
+			Iterator.class.isAssignableFrom(clazz) ||
+			Enumeration.class.isAssignableFrom(clazz) || clazz.isArray()) {
 
 			return false;
 		}
 
 		return true;
-	}
-
-	public void clearCache()
-	{
-		_templateModelCache.clear();
 	}
 
 	private final AtomicInteger _cacheInvocationCount = new AtomicInteger(0);
