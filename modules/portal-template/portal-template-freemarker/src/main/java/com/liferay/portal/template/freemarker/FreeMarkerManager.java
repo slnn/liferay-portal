@@ -48,8 +48,8 @@ import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
-
 import freemarker.ext.util.ModelCache;
+
 import freemarker.template.Configuration;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
@@ -286,7 +286,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 			LiferayModelCacheWrapper modelCacheWrapper =
 				new LiferayModelCacheWrapper(
-					oldModelCache, templateContextHelper.getHelperUtilities(
+					oldModelCache,
+					templateContextHelper.getHelperUtilities(
 						ClassLoaderUtil.getContextClassLoader(), false));
 
 			field.set(liferayObjectWrapper, modelCacheWrapper);

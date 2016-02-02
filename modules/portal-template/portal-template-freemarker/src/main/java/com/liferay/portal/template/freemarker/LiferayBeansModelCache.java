@@ -72,6 +72,10 @@ public class LiferayBeansModelCache extends ModelCache {
 		setUseCache(true);
 	}
 
+	public void clearCache() {
+		_modelCache.clear();
+	}
+
 	@Override
 	public TemplateModel getInstance(Object object) {
 		if (object instanceof TemplateModel) {
@@ -96,8 +100,7 @@ public class LiferayBeansModelCache extends ModelCache {
 			if (templateModel == null) {
 				templateModel = create(object);
 
-				_modelCache.put(
-					object, new SoftReference<>(templateModel));
+				_modelCache.put(object, new SoftReference<>(templateModel));
 			}
 			else {
 				templateModel = modelReference.get();
@@ -134,22 +137,17 @@ public class LiferayBeansModelCache extends ModelCache {
 		Class clazz = object.getClass();
 
 		if (Map.class.isAssignableFrom(clazz) ||
-				Collection.class.isAssignableFrom(clazz) ||
-				Number.class.isAssignableFrom(clazz) ||
-				Date.class.isAssignableFrom(clazz) || Boolean.class == clazz ||
-				ResourceBundle.class.isAssignableFrom(clazz) ||
-				Iterator.class.isAssignableFrom(clazz) ||
-				Enumeration.class.isAssignableFrom(clazz) || clazz.isArray()) {
+			Collection.class.isAssignableFrom(clazz) ||
+			Number.class.isAssignableFrom(clazz) ||
+			Date.class.isAssignableFrom(clazz) || (Boolean.class == clazz) ||
+			ResourceBundle.class.isAssignableFrom(clazz) ||
+			Iterator.class.isAssignableFrom(clazz) ||
+			Enumeration.class.isAssignableFrom(clazz) || clazz.isArray()) {
 
 			return false;
 		}
 
 		return true;
-	}
-
-	public void clearCache()
-	{
-		_modelCache.clear();
 	}
 
 	private final BeansWrapper _beansWrapper;
