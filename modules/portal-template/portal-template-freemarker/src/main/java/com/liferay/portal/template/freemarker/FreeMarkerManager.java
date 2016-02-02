@@ -49,6 +49,7 @@ import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
+import freemarker.ext.util.ModelCache;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
@@ -280,17 +281,19 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			Field field = ReflectionUtil.getDeclaredField(
 				BeansWrapper.class, "modelCache");
 
-			LiferayBeansModelCache beansModelCache = new LiferayBeansModelCache(
-				liferayObjectWrapper,
-				templateContextHelper.getHelperUtilities(
-					ClassLoaderUtil.getContextClassLoader(), false));
+			ModelCache oldModelCache = (ModelCache)field.get(
+				liferayObjectWrapper);
 
-			field.set(liferayObjectWrapper, beansModelCache);
+			LiferayModelCacheWrapper modelCacheWrapper =
+				new LiferayModelCacheWrapper(
+					oldModelCache, templateContextHelper.getHelperUtilities(
+						ClassLoaderUtil.getContextClassLoader(), false));
+
+			field.set(liferayObjectWrapper, modelCacheWrapper);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			throw new TemplateException(
-				"Unable to Initialize FreeMarker manager");
+				"Unable to Initialize FreeMarker manager", e);
 		}
 
 		_configuration.setObjectWrapper(liferayObjectWrapper);
