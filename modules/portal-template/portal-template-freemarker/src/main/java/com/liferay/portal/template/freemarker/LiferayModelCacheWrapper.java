@@ -100,7 +100,7 @@ public class LiferayModelCacheWrapper extends ModelCache {
 			if (templateModel == null) {
 				_cacheMissCount.getAndIncrement();
 
-				templateModel = create(object);
+				templateModel = _modelCache.getInstance(object);
 
 				_templateModelCache.put(
 					object, new SoftReference<>(templateModel));
