@@ -84,33 +84,38 @@ public class LiferayModelCacheWrapper extends ModelCache {
 			return ((TemplateModelAdapter)object).getTemplateModel();
 		}
 
-		// Level 1: cache for helper utilities
-
 		_cacheInvocationCount.getAndIncrement();
+
+		// Level 1: cache for helper utilities
 
 		TemplateModel templateModel = _helperUtilityCache.get(object);
 
-		if ((templateModel == null) && isCacheable(object)) {
+		if (templateModel == null) {
+			_cacheLevel1MissCount.getAndIncrement();
 
-			// Level 2: least frequently used cache for all cacheable objects
+			if (isCacheable(object)) {
 
-			SoftReference<TemplateModel> modelReference =
-				_templateModelCache.get(object);
+				// Level 2: least frequently used cache for all cacheable
+				// objects
 
-			if (templateModel == null) {
-				_cacheMissCount.getAndIncrement();
+				SoftReference<TemplateModel> modelReference =
+					_templateModelCache.get(object);
 
-				templateModel = _modelCache.getInstance(object);
+				if (templateModel == null) {
+					_cacheLevel2MissCount.getAndIncrement();
 
-				_templateModelCache.put(
-					object, new SoftReference<>(templateModel));
+					templateModel = _modelCache.getInstance(object);
+
+					_templateModelCache.put(
+						object, new SoftReference<>(templateModel));
+				}
+				else {
+					templateModel = modelReference.get();
+				}
 			}
 			else {
-				templateModel = modelReference.get();
+				templateModel = _modelCache.getInstance(object);
 			}
-		}
-		else {
-			return _modelCache.getInstance(object);
 		}
 
 		return templateModel;
@@ -155,7 +160,8 @@ public class LiferayModelCacheWrapper extends ModelCache {
 	}
 
 	private final AtomicInteger _cacheInvocationCount = new AtomicInteger(0);
-	private final AtomicInteger _cacheMissCount = new AtomicInteger(0);
+	private final AtomicInteger _cacheLevel1MissCount = new AtomicInteger(0);
+	private final AtomicInteger _cacheLevel2MissCount = new AtomicInteger(0);
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final ModelCache _modelCache;
 	private final ConcurrentLFUCache<Object, SoftReference<TemplateModel>>
