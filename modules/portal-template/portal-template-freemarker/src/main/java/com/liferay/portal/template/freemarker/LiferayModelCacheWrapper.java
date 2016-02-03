@@ -162,7 +162,8 @@ public class LiferayModelCacheWrapper extends ModelCache {
 	private final AtomicInteger _cacheLevel2MissCount = new AtomicInteger(0);
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final ModelCache _modelCache;
-	private final ConcurrentLFUCache<Object, SoftReference<TemplateModel>>
-		_templateModelCache = new ConcurrentLFUCache<>(2000);
+	private final IdentityConcurrentLFUCache<
+		Object, SoftReference<TemplateModel>> _templateModelCache =
+			new IdentityConcurrentLFUCache<>(2000);
 
 }
