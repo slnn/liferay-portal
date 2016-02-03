@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.freemarker;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,6 +28,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author Shuyang Zhou
+ * @author Dante Wang
  */
 public class IdentityConcurrentLFUCache<K, V> {
 
@@ -38,206 +37,193 @@ public class IdentityConcurrentLFUCache<K, V> {
 	}
 
 	public IdentityConcurrentLFUCache(int maxSize, float loadFactor) {
-		if ((maxSize <= 0) || (loadFactor <= 0) || (loadFactor >= 1)) {
-			throw new IllegalArgumentException();
+		this(maxSize, loadFactor, Runtime.getRuntime().availableProcessors());
+	}
+
+	public IdentityConcurrentLFUCache(
+		int maxSize, float loadFactor, int concurrencyLevel) {
+
+		_caches = new LFUCache[concurrencyLevel];
+		_cacheDelegationCounter = new AtomicLong[concurrencyLevel];
+
+		int maxCacheSize = (int)Math.ceil(
+			((double)maxSize) / ((double)concurrencyLevel));
+
+		for (int i = 0; i < concurrencyLevel; i++) {
+			_caches[i] = new LFUCache<>(maxCacheSize, loadFactor);
+			_cacheDelegationCounter[i] = new AtomicLong(0);
 		}
-
-		_maxSize = maxSize;
-		_expectedSize = (int)(maxSize * loadFactor);
-
-		if (_expectedSize == 0) {
-			throw new IllegalArgumentException(
-				"maxSize and loadFactor are too small");
-		}
-
-		_readLock = _readWriteLock.readLock();
-		_writeLock = _readWriteLock.writeLock();
 	}
 
 	public void clear() {
-		_writeLock.lock();
-
-		try {
-			_cache.clear();
+		synchronized (this) {
+			for (int i = 0; i < _caches.length; i++) {
+				_caches[i].clear();
+			}
 		}
-		finally {
-			_writeLock.unlock();
-		}
-	}
-
-	public long evictCount() {
-		return _evictCount.get();
-	}
-
-	public int expectedSize() {
-		return _expectedSize;
 	}
 
 	public V get(K key) {
-		_readLock.lock();
-
-		try {
-			ValueWrapper valueWrapper = _cache.get(key);
-
-			if (valueWrapper != null) {
-				valueWrapper._hitCount.getAndIncrement();
-
-				_hitCount.getAndIncrement();
-
-				return valueWrapper._value;
-			}
-		}
-		finally {
-			_readLock.unlock();
-		}
-
-		_missCount.getAndIncrement();
-
-		return null;
-	}
-
-	public long hitCount() {
-		return _hitCount.get();
-	}
-
-	public int maxSize() {
-		return _maxSize;
-	}
-
-	public long missCount() {
-		return _missCount.get();
+		return _caches[_hash(key)].get(key);
 	}
 
 	public void put(K key, V value) {
-		if (key == null) {
-			throw new NullPointerException("Key is null");
+		_caches[_hash(key)].put(key, value);
+	}
+
+	private int _hash(K object) {
+		int hash = System.identityHashCode(object) * 31;
+
+		hash = Math.abs(hash % _caches.length);
+
+		_cacheDelegationCounter[hash].getAndIncrement();
+
+		return hash;
+	}
+
+	private final AtomicLong[] _cacheDelegationCounter;
+	private final LFUCache<K, V>[] _caches;
+
+	private class LFUCache<K, V> {
+
+		public void clear() {
+			_writeLock.lock();
+
+			try {
+				_cache.clear();
+			}
+			finally {
+				_writeLock.unlock();
+			}
 		}
 
-		ValueWrapper valueWrapper = new ValueWrapper(value);
+		public V get(K key) {
+			_readLock.lock();
 
-		_writeLock.lock();
+			try {
+				ValueWrapper valueWrapper = _cache.get(key);
 
-		try {
-			if (!_cache.containsKey(key) && (_cache.size() >= _maxSize)) {
-				_cleanUp();
+				if (valueWrapper != null) {
+					valueWrapper._hitCount.getAndIncrement();
+
+					_hitCount.getAndIncrement();
+
+					return valueWrapper._value;
+				}
+			}
+			finally {
+				_readLock.unlock();
 			}
 
-			_cache.put(key, valueWrapper);
-		}
-		finally {
-			_writeLock.unlock();
-		}
+			_missCount.getAndIncrement();
 
-		_putCount.getAndIncrement();
-	}
-
-	public long putCount() {
-		return _putCount.get();
-	}
-
-	public int size() {
-		_readLock.lock();
-
-		try {
-			return _cache.size();
-		}
-		finally {
-			_readLock.unlock();
-		}
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{evictCount=");
-		sb.append(_evictCount.get());
-		sb.append(", expectedSize=");
-		sb.append(_expectedSize);
-		sb.append(", hitCount=");
-		sb.append(_hitCount.get());
-		sb.append(", maxSize=");
-		sb.append(_maxSize);
-		sb.append(", missCount=");
-		sb.append(_missCount.get());
-		sb.append(", putCount=");
-		sb.append(_putCount.get());
-		sb.append(", size=");
-		sb.append(size());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	protected void onRemove(K key, V value) {
-	}
-
-	private void _cleanUp() {
-		List<Entry<K, ValueWrapper>> valueWrappers = new ArrayList<>(
-			_cache.entrySet());
-
-		Collections.sort(valueWrappers, _entryComparator);
-
-		int cleanUpSize = _cache.size() - _expectedSize;
-
-		_evictCount.getAndAdd(cleanUpSize);
-
-		Iterator<Entry<K, ValueWrapper>> itr = valueWrappers.iterator();
-
-		while ((cleanUpSize-- > 0) && itr.hasNext()) {
-			Entry<K, ValueWrapper> entry = itr.next();
-
-			K key = entry.getKey();
-
-			V value = entry.getValue()._value;
-
-			_cache.remove(key);
-
-			onRemove(key, value);
-
-			itr.remove();
-		}
-	}
-
-	private final Map<K, ValueWrapper> _cache = new IdentityHashMap<>();
-	private final EntryComparator _entryComparator = new EntryComparator();
-	private final AtomicLong _evictCount = new AtomicLong();
-	private final int _expectedSize;
-	private final AtomicLong _hitCount = new AtomicLong();
-	private final int _maxSize;
-	private final AtomicLong _missCount = new AtomicLong();
-	private final AtomicLong _putCount = new AtomicLong();
-	private final Lock _readLock;
-	private final ReentrantReadWriteLock _readWriteLock =
-		new ReentrantReadWriteLock();
-	private final Lock _writeLock;
-
-	private class EntryComparator
-		implements Comparator<Entry<K, ValueWrapper>> {
-
-		@Override
-		public int compare(
-			Entry<K, ValueWrapper> entry1, Entry<K, ValueWrapper> entry2) {
-
-			ValueWrapper valueWrapper1 = entry1.getValue();
-			ValueWrapper valueWrapper2 = entry2.getValue();
-
-			long hitCount1 = valueWrapper1._hitCount.get();
-			long hitCount2 = valueWrapper2._hitCount.get();
-
-			return (int)(hitCount1 - hitCount2);
+			return null;
 		}
 
-	}
+		public void put(K key, V value) {
+			if (key == null) {
+				throw new NullPointerException("Key is null");
+			}
 
-	private class ValueWrapper {
+			ValueWrapper valueWrapper = new ValueWrapper(value);
 
-		public ValueWrapper(V v) {
-			_value = v;
+			_writeLock.lock();
+
+			try {
+				if (!_cache.containsKey(key) && (_cache.size() >= _maxSize)) {
+					_cleanUp();
+				}
+
+				_cache.put(key, valueWrapper);
+			}
+			finally {
+				_writeLock.unlock();
+			}
+
+			_putCount.getAndIncrement();
 		}
 
+		private LFUCache(int maxSize, float loadFactor) {
+			if ((maxSize <= 0) || (loadFactor <= 0) || (loadFactor >= 1)) {
+				throw new IllegalArgumentException();
+			}
+
+			_maxSize = maxSize;
+			_expectedSize = (int)(maxSize * loadFactor);
+
+			if (_expectedSize == 0) {
+				throw new IllegalArgumentException(
+					"maxSize and loadFactor are too small");
+			}
+
+			_readLock = _readWriteLock.readLock();
+			_writeLock = _readWriteLock.writeLock();
+		}
+
+		private void _cleanUp() {
+			List<Entry<K, ValueWrapper>> valueWrappers = new ArrayList<>(
+				_cache.entrySet());
+
+			Collections.sort(valueWrappers, _entryComparator);
+
+			int cleanUpSize = _cache.size() - _expectedSize;
+
+			_evictCount.getAndAdd(cleanUpSize);
+
+			Iterator<Entry<K, ValueWrapper>> itr = valueWrappers.iterator();
+
+			while ((cleanUpSize-- > 0) && itr.hasNext()) {
+				Entry<K, ValueWrapper> entry = itr.next();
+
+				K key = entry.getKey();
+
+				_cache.remove(key);
+
+				itr.remove();
+			}
+		}
+
+		private final Map<K, ValueWrapper> _cache = new IdentityHashMap<>();
+		private final EntryComparator _entryComparator = new EntryComparator();
+		private final AtomicLong _evictCount = new AtomicLong();
+		private final int _expectedSize;
 		private final AtomicLong _hitCount = new AtomicLong();
-		private final V _value;
+		private final int _maxSize;
+		private final AtomicLong _missCount = new AtomicLong();
+		private final AtomicLong _putCount = new AtomicLong();
+		private final Lock _readLock;
+		private final ReentrantReadWriteLock _readWriteLock =
+			new ReentrantReadWriteLock();
+		private final Lock _writeLock;
+
+		private class EntryComparator
+			implements Comparator<Entry<K, ValueWrapper>> {
+
+			@Override
+			public int compare(
+				Entry<K, ValueWrapper> entry1, Entry<K, ValueWrapper> entry2) {
+
+				ValueWrapper valueWrapper1 = entry1.getValue();
+				ValueWrapper valueWrapper2 = entry2.getValue();
+
+				long hitCount1 = valueWrapper1._hitCount.get();
+				long hitCount2 = valueWrapper2._hitCount.get();
+
+				return (int)(hitCount1 - hitCount2);
+			}
+
+		}
+
+		private class ValueWrapper {
+
+			public ValueWrapper(V v) {
+				_value = v;
+			}
+
+			private final AtomicLong _hitCount = new AtomicLong();
+			private final V _value;
+
+		}
 
 	}
 
