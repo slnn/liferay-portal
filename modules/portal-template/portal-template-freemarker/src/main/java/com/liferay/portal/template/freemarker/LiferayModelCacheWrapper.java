@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A ModelCache wrapper which adds custom implementation of TemplateModel cache
@@ -157,13 +157,13 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		return true;
 	}
 
-	private final AtomicInteger _cacheInvocationCount = new AtomicInteger(0);
-	private final AtomicInteger _cacheLevel1MissCount = new AtomicInteger(0);
-	private final AtomicInteger _cacheLevel2MissCount = new AtomicInteger(0);
+	private final AtomicLong _cacheInvocationCount = new AtomicLong(0);
+	private final AtomicLong _cacheLevel1MissCount = new AtomicLong(0);
+	private final AtomicLong _cacheLevel2MissCount = new AtomicLong(0);
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final ModelCache _modelCache;
-	private final IdentityConcurrentLFUCache<
-		Object, SoftReference<TemplateModel>> _templateModelCache =
-			new IdentityConcurrentLFUCache<>(2000);
+	private final
+		IdentityConcurrentLFUCache<Object, SoftReference<TemplateModel>>
+			_templateModelCache = new IdentityConcurrentLFUCache<>(2000);
 
 }
