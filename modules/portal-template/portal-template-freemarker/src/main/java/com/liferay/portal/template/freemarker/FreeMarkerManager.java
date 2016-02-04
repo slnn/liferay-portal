@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +46,7 @@ import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
+import freemarker.ext.util.ModelCache;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateHashModel;
@@ -258,7 +260,30 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		_configuration.setLocalizedLookup(
 			_freemarkerEngineConfiguration.localizedLookup());
 		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
-		_configuration.setObjectWrapper(new LiferayObjectWrapper());
+
+		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper();
+
+		try {
+			Field field = ReflectionUtil.getDeclaredField(
+				BeansWrapper.class, "modelCache");
+
+			ModelCache oldModelCache = (ModelCache)field.get(
+				liferayObjectWrapper);
+
+			LiferayModelCacheWrapper modelCacheWrapper =
+				new LiferayModelCacheWrapper(
+					oldModelCache,
+					templateContextHelper.getHelperUtilities(
+						ClassLoaderUtil.getContextClassLoader(), false));
+
+			field.set(liferayObjectWrapper, modelCacheWrapper);
+		}
+		catch (Exception e) {
+			throw new TemplateException(
+				"Unable to Initialize FreeMarker manager", e);
+		}
+
+		_configuration.setObjectWrapper(liferayObjectWrapper);
 
 		try {
 			_configuration.setSetting(
