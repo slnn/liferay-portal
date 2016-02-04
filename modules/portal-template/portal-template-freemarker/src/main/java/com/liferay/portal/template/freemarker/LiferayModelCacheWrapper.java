@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import freemarker.ext.util.ModelCache;
 
 import freemarker.template.TemplateModel;
@@ -22,10 +23,8 @@ import freemarker.template.TemplateModelAdapter;
 import java.lang.ref.SoftReference;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A ModelCache wrapper which adds custom implementation of TemplateModel cache
@@ -37,8 +36,17 @@ import java.util.concurrent.atomic.AtomicLong;
 public class LiferayModelCacheWrapper extends ModelCache {
 
 	public LiferayModelCacheWrapper(
+		ModelCache modelCache, Map<String, Object> helperUtilities,
+		int maxSize) throws Exception {
+
+		this(
+			modelCache, helperUtilities, maxSize,
+			Runtime.getRuntime().availableProcessors() * 2);
+	}
+
+	public LiferayModelCacheWrapper(
 			ModelCache modelCache, Map<String, Object> helperUtilities,
-			int maxSize)
+			int maxSize, int concurrencyLevel)
 		throws Exception {
 
 		_modelCache = modelCache;
@@ -64,11 +72,18 @@ public class LiferayModelCacheWrapper extends ModelCache {
 
 		_helperUtilityCache = Collections.unmodifiableMap(helperUtilityCache);
 
-		_templateModelCache = new IdentityConcurrentLFUCache<>(maxSize);
+		_caches = new ConcurrentLFUCache[concurrencyLevel];
+
+		int maxCacheSize = (int)Math.ceil(
+			((double)maxSize) / ((double)concurrencyLevel));
+
+		for (int i = 0; i < concurrencyLevel; i++) {
+			_caches[i] = new ConcurrentLFUCache<>(maxCacheSize);
+		}
 	}
 
 	public void clearCache() {
-		_templateModelCache.clear();
+		_clear();
 	}
 
 	@Override
@@ -91,14 +106,14 @@ public class LiferayModelCacheWrapper extends ModelCache {
 				// Level 2: least frequently used cache for all cacheable
 				// objects
 
-				SoftReference<TemplateModel> modelReference =
-					_templateModelCache.get(object);
+				ObjectKey objectKey = new ObjectKey(object);
+
+				SoftReference<TemplateModel> modelReference = _get(objectKey);
 
 				if (modelReference == null) {
 					templateModel = _modelCache.getInstance(object);
 
-					_templateModelCache.put(
-						object, new SoftReference<>(templateModel));
+					_put(objectKey, new SoftReference<>(templateModel));
 				}
 				else {
 					templateModel = modelReference.get();
@@ -137,10 +152,51 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		return Boolean.class != object.getClass();
 	}
 
+	private void _clear() {
+		synchronized (this) {
+			for (int i = 0; i < _caches.length; i++) {
+				_caches[i].clear();
+			}
+		}
+	}
+
+	private SoftReference<TemplateModel> _get(ObjectKey key) {
+		return _mapToCache(key).get(key);
+	}
+
+	private void _put(ObjectKey key, SoftReference<TemplateModel> value) {
+		_mapToCache(key).put(key, value);
+	}
+
+	private ConcurrentLFUCache<ObjectKey, SoftReference<TemplateModel>>
+		_mapToCache(ObjectKey objectKey) {
+
+		int hash = objectKey.hashCode() * 31;
+
+		hash = Math.abs(hash % _caches.length);
+
+		return _caches[hash];
+	}
+
+	private final ConcurrentLFUCache<ObjectKey, SoftReference<TemplateModel>>[]
+		_caches;
+
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final ModelCache _modelCache;
-	private final
-		IdentityConcurrentLFUCache<Object, SoftReference<TemplateModel>>
-			_templateModelCache;
+
+	public class ObjectKey {
+
+		private ObjectKey(Object object) {
+			_hashCode = System.identityHashCode(object);
+		}
+
+		@Override
+		public int hashCode() {
+			return _hashCode;
+		}
+
+		private final int _hashCode;
+
+	}
 
 }
