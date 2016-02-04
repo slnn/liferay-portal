@@ -81,15 +81,11 @@ public class LiferayModelCacheWrapper extends ModelCache {
 			return ((TemplateModelAdapter)object).getTemplateModel();
 		}
 
-		_cacheInvocationCount.getAndIncrement();
-
 		// Level 1: cache for helper utilities
 
 		TemplateModel templateModel = _helperUtilityCache.get(object);
 
 		if (templateModel == null) {
-			_cacheLevel1MissCount.getAndIncrement();
-
 			if (isCacheable(object)) {
 
 				// Level 2: least frequently used cache for all cacheable
@@ -99,8 +95,6 @@ public class LiferayModelCacheWrapper extends ModelCache {
 					_templateModelCache.get(object);
 
 				if (modelReference == null) {
-					_cacheLevel2MissCount.getAndIncrement();
-
 					templateModel = _modelCache.getInstance(object);
 
 					_templateModelCache.put(
@@ -143,9 +137,6 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		return Boolean.class != object.getClass();
 	}
 
-	private final AtomicLong _cacheInvocationCount = new AtomicLong(0);
-	private final AtomicLong _cacheLevel1MissCount = new AtomicLong(0);
-	private final AtomicLong _cacheLevel2MissCount = new AtomicLong(0);
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final ModelCache _modelCache;
 	private final
