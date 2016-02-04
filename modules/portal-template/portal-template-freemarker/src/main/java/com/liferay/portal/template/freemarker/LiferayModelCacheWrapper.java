@@ -23,6 +23,7 @@ import java.lang.ref.SoftReference;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -44,7 +45,7 @@ public class LiferayModelCacheWrapper extends ModelCache {
 
 		modelCache.setUseCache(false);
 
-		Map<Object, TemplateModel> helperUtilityCache = new HashMap<>();
+		Map<Object, TemplateModel> helperUtilityCache = new IdentityHashMap<>();
 
 		for (Object object : helperUtilities.values()) {
 			if (object == null) {
