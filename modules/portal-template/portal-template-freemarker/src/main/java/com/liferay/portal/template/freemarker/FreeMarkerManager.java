@@ -274,7 +274,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				new LiferayModelCacheWrapper(
 					oldModelCache,
 					templateContextHelper.getHelperUtilities(
-						ClassLoaderUtil.getContextClassLoader(), false), 4800);
+						ClassLoaderUtil.getContextClassLoader(), false),
+					4800);
 
 			field.set(liferayObjectWrapper, modelCacheWrapper);
 		}

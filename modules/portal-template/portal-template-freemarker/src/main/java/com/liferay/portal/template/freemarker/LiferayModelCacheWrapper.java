@@ -15,6 +15,7 @@
 package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
+
 import freemarker.ext.util.ModelCache;
 
 import freemarker.template.TemplateModel;
@@ -56,17 +57,10 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		Map<Object, TemplateModel> helperUtilityCache = new IdentityHashMap<>();
 
 		for (Object object : helperUtilities.values()) {
-			if (object == null) {
-				continue;
-			}
-
 			try {
 				helperUtilityCache.put(object, _modelCache.getInstance(object));
 			}
-			catch (NullPointerException e) {
-
-				// Sliently bypass object that can't be added into the hashset
-
+			catch (NullPointerException npe) {
 			}
 		}
 
@@ -83,7 +77,11 @@ public class LiferayModelCacheWrapper extends ModelCache {
 	}
 
 	public void clearCache() {
-		_clear();
+		synchronized (this) {
+			for (int i = 0; i < _caches.length; i++) {
+				_caches[i].clear();
+			}
+		}
 	}
 
 	@Override
@@ -139,6 +137,21 @@ public class LiferayModelCacheWrapper extends ModelCache {
 
 	}
 
+	public class ObjectKey {
+
+		@Override
+		public int hashCode() {
+			return _hashCode;
+		}
+
+		private ObjectKey(Object object) {
+			_hashCode = System.identityHashCode(object);
+		}
+
+		private final int _hashCode;
+
+	}
+
 	@Override
 	protected TemplateModel create(Object object) {
 
@@ -152,20 +165,8 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		return Boolean.class != object.getClass();
 	}
 
-	private void _clear() {
-		synchronized (this) {
-			for (int i = 0; i < _caches.length; i++) {
-				_caches[i].clear();
-			}
-		}
-	}
-
 	private SoftReference<TemplateModel> _get(ObjectKey key) {
 		return _mapToCache(key).get(key);
-	}
-
-	private void _put(ObjectKey key, SoftReference<TemplateModel> value) {
-		_mapToCache(key).put(key, value);
 	}
 
 	private ConcurrentLFUCache<ObjectKey, SoftReference<TemplateModel>>
@@ -178,25 +179,13 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		return _caches[hash];
 	}
 
+	private void _put(ObjectKey key, SoftReference<TemplateModel> value) {
+		_mapToCache(key).put(key, value);
+	}
+
 	private final ConcurrentLFUCache<ObjectKey, SoftReference<TemplateModel>>[]
 		_caches;
-
 	private final Map<Object, TemplateModel> _helperUtilityCache;
 	private final ModelCache _modelCache;
-
-	public class ObjectKey {
-
-		private ObjectKey(Object object) {
-			_hashCode = System.identityHashCode(object);
-		}
-
-		@Override
-		public int hashCode() {
-			return _hashCode;
-		}
-
-		private final int _hashCode;
-
-	}
 
 }
