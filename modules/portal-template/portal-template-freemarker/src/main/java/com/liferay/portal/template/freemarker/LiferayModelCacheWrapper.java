@@ -21,14 +21,9 @@ import freemarker.template.TemplateModelAdapter;
 
 import java.lang.ref.SoftReference;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -41,7 +36,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class LiferayModelCacheWrapper extends ModelCache {
 
 	public LiferayModelCacheWrapper(
-			ModelCache modelCache, Map<String, Object> helperUtilities)
+			ModelCache modelCache, Map<String, Object> helperUtilities,
+			int maxSize)
 		throws Exception {
 
 		_modelCache = modelCache;
@@ -66,6 +62,8 @@ public class LiferayModelCacheWrapper extends ModelCache {
 		}
 
 		_helperUtilityCache = Collections.unmodifiableMap(helperUtilityCache);
+
+		_templateModelCache = new IdentityConcurrentLFUCache<>(maxSize);
 	}
 
 	public void clearCache() {
@@ -141,20 +139,7 @@ public class LiferayModelCacheWrapper extends ModelCache {
 
 	@Override
 	protected boolean isCacheable(Object object) {
-		Class clazz = object.getClass();
-
-		if (Map.class.isAssignableFrom(clazz) ||
-			Collection.class.isAssignableFrom(clazz) ||
-			Number.class.isAssignableFrom(clazz) ||
-			Date.class.isAssignableFrom(clazz) || (Boolean.class == clazz) ||
-			ResourceBundle.class.isAssignableFrom(clazz) ||
-			Iterator.class.isAssignableFrom(clazz) ||
-			Enumeration.class.isAssignableFrom(clazz) || clazz.isArray()) {
-
-			return false;
-		}
-
-		return true;
+		return Boolean.class != object.getClass();
 	}
 
 	private final AtomicLong _cacheInvocationCount = new AtomicLong(0);
@@ -164,6 +149,6 @@ public class LiferayModelCacheWrapper extends ModelCache {
 	private final ModelCache _modelCache;
 	private final
 		IdentityConcurrentLFUCache<Object, SoftReference<TemplateModel>>
-			_templateModelCache = new IdentityConcurrentLFUCache<>(2000);
+			_templateModelCache;
 
 }
