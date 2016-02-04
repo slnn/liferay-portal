@@ -37,21 +37,21 @@ public class IdentityConcurrentLFUCache<K, V> {
 	}
 
 	public IdentityConcurrentLFUCache(int maxSize, float loadFactor) {
-		this(maxSize, loadFactor, Runtime.getRuntime().availableProcessors());
+		this(
+			maxSize, loadFactor,
+			Runtime.getRuntime().availableProcessors() * 2);
 	}
 
 	public IdentityConcurrentLFUCache(
 		int maxSize, float loadFactor, int concurrencyLevel) {
 
 		_caches = new LFUCache[concurrencyLevel];
-		_cacheDelegationCounter = new AtomicLong[concurrencyLevel];
 
 		int maxCacheSize = (int)Math.ceil(
 			((double)maxSize) / ((double)concurrencyLevel));
 
 		for (int i = 0; i < concurrencyLevel; i++) {
 			_caches[i] = new LFUCache<>(maxCacheSize, loadFactor);
-			_cacheDelegationCounter[i] = new AtomicLong(0);
 		}
 	}
 
@@ -76,12 +76,9 @@ public class IdentityConcurrentLFUCache<K, V> {
 
 		hash = Math.abs(hash % _caches.length);
 
-		_cacheDelegationCounter[hash].getAndIncrement();
-
 		return hash;
 	}
 
-	private final AtomicLong[] _cacheDelegationCounter;
 	private final LFUCache<K, V>[] _caches;
 
 	private class LFUCache<K, V> {
