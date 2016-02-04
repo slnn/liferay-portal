@@ -140,6 +140,15 @@ public class LiferayModelCacheWrapper extends ModelCache {
 	public class ObjectKey {
 
 		@Override
+		public boolean equals(Object object) {
+			if (object instanceof ObjectKey) {
+				return _hashCode == object.hashCode();
+			}
+
+			return false;
+		}
+
+		@Override
 		public int hashCode() {
 			return _hashCode;
 		}
