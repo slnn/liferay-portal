@@ -5,7 +5,24 @@
 	<import class="com.liferay.announcements.kernel.model.AnnouncementsDelivery" />
 	<import class="com.liferay.announcements.kernel.model.AnnouncementsEntry" />
 	<import class="com.liferay.announcements.kernel.model.AnnouncementsFlag" />
-	<import class="com.liferay.counter.model.Counter" />
+	<import class="com.liferay.blogs.kernel.model.BlogsEntry" />
+	<import class="com.liferay.blogs.kernel.model.BlogsStatsUser" />
+	<import class="com.liferay.counter.kernel.model.Counter" />
+	<import class="com.liferay.expando.kernel.model.ExpandoColumn" />
+	<import class="com.liferay.expando.kernel.model.ExpandoRow" />
+	<import class="com.liferay.expando.kernel.model.ExpandoTable" />
+	<import class="com.liferay.expando.kernel.model.ExpandoValue" />
+	<import class="com.liferay.exportimport.kernel.model.ExportImport" />
+	<import class="com.liferay.exportimport.kernel.model.ExportImportConfiguration" />
+	<import class="com.liferay.exportimport.kernel.model.Staging" />
+	<import class="com.liferay.message.boards.kernel.model.MBBan" />
+	<import class="com.liferay.message.boards.kernel.model.MBCategory" />
+	<import class="com.liferay.message.boards.kernel.model.MBDiscussion" />
+	<import class="com.liferay.message.boards.kernel.model.MBMailingList" />
+	<import class="com.liferay.message.boards.kernel.model.MBMessage" />
+	<import class="com.liferay.message.boards.kernel.model.MBStatsUser" />
+	<import class="com.liferay.message.boards.kernel.model.MBThread" />
+	<import class="com.liferay.message.boards.kernel.model.MBThreadFlag" />
 	<import class="com.liferay.portal.model.Account" />
 	<import class="com.liferay.portal.model.Address" />
 	<import class="com.liferay.portal.model.BrowserTracker" />
@@ -76,46 +93,28 @@
 	<import class="com.liferay.portal.model.Website" />
 	<import class="com.liferay.portal.model.WorkflowDefinitionLink" />
 	<import class="com.liferay.portal.model.WorkflowInstanceLink" />
-	<import class="com.liferay.portlet.asset.model.AssetCategory" />
-	<import class="com.liferay.portlet.asset.model.AssetCategoryProperty" />
-	<import class="com.liferay.portlet.asset.model.AssetEntry" />
-	<import class="com.liferay.portlet.asset.model.AssetLink" />
-	<import class="com.liferay.portlet.asset.model.AssetTag" />
-	<import class="com.liferay.portlet.asset.model.AssetTagStats" />
-	<import class="com.liferay.portlet.asset.model.AssetVocabulary" />
-	<import class="com.liferay.portlet.blogs.model.BlogsEntry" />
-	<import class="com.liferay.portlet.blogs.model.BlogsStatsUser" />
-	<import class="com.liferay.portlet.calendar.model.CalEvent" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLApp" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLAppHelper" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLContent" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileEntry" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileEntryType" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileRank" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileShortcut" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileVersion" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFolder" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLSyncEvent" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLTrash" />
-	<import class="com.liferay.portlet.expando.model.ExpandoColumn" />
-	<import class="com.liferay.portlet.expando.model.ExpandoRow" />
-	<import class="com.liferay.portlet.expando.model.ExpandoTable" />
-	<import class="com.liferay.portlet.expando.model.ExpandoValue" />
-	<import class="com.liferay.portlet.exportimport.model.ExportImport" />
-	<import class="com.liferay.portlet.exportimport.model.ExportImportConfiguration" />
-	<import class="com.liferay.portlet.exportimport.model.Staging" />
+	<import class="com.liferay.asset.kernel.model.AssetCategory" />
+	<import class="com.liferay.asset.kernel.model.AssetCategoryProperty" />
+	<import class="com.liferay.asset.kernel.model.AssetEntry" />
+	<import class="com.liferay.asset.kernel.model.AssetLink" />
+	<import class="com.liferay.asset.kernel.model.AssetTag" />
+	<import class="com.liferay.asset.kernel.model.AssetTagStats" />
+	<import class="com.liferay.asset.kernel.model.AssetVocabulary" />
+	<import class="com.liferay.document.library.kernel.model.DLApp" />
+	<import class="com.liferay.document.library.kernel.model.DLAppHelper" />
+	<import class="com.liferay.document.library.kernel.model.DLContent" />
+	<import class="com.liferay.document.library.kernel.model.DLFileEntry" />
+	<import class="com.liferay.document.library.kernel.model.DLFileEntryMetadata" />
+	<import class="com.liferay.document.library.kernel.model.DLFileEntryType" />
+	<import class="com.liferay.document.library.kernel.model.DLFileRank" />
+	<import class="com.liferay.document.library.kernel.model.DLFileShortcut" />
+	<import class="com.liferay.document.library.kernel.model.DLFileVersion" />
+	<import class="com.liferay.document.library.kernel.model.DLFolder" />
+	<import class="com.liferay.document.library.kernel.model.DLSyncEvent" />
+	<import class="com.liferay.document.library.kernel.model.DLTrash" />
 	<import class="com.liferay.portlet.flags.model.FlagsEntry" />
-	<import class="com.liferay.portlet.messageboards.model.MBBan" />
-	<import class="com.liferay.portlet.messageboards.model.MBCategory" />
-	<import class="com.liferay.portlet.messageboards.model.MBDiscussion" />
-	<import class="com.liferay.portlet.messageboards.model.MBMailingList" />
-	<import class="com.liferay.portlet.messageboards.model.MBMessage" />
-	<import class="com.liferay.portlet.messageboards.model.MBStatsUser" />
-	<import class="com.liferay.portlet.messageboards.model.MBThread" />
-	<import class="com.liferay.portlet.messageboards.model.MBThreadFlag" />
-	<import class="com.liferay.portlet.ratings.model.RatingsEntry" />
-	<import class="com.liferay.portlet.ratings.model.RatingsStats" />
+	<import class="com.liferay.ratings.kernel.model.RatingsEntry" />
+	<import class="com.liferay.ratings.kernel.model.RatingsStats" />
 	<import class="com.liferay.social.kernel.model.SocialActivity" />
 	<import class="com.liferay.social.kernel.model.SocialActivityAchievement" />
 	<import class="com.liferay.social.kernel.model.SocialActivityCounter" />
@@ -347,8 +346,6 @@
 		<property name="iconImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="layoutPrototypeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -432,8 +429,6 @@
 		<property name="iconImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -453,8 +448,6 @@
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="pageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="settings_" />
@@ -479,8 +472,6 @@
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="settings_" />
 		<property name="layoutSetPrototypeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -981,6 +972,7 @@
 		<property name="screenName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="facebookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="googleUserId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="ldapServerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="openId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="portraitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1380,33 +1372,6 @@
 		<property name="ratingsTotalScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="ratingsAverageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
-	<class name="com.liferay.portlet.calendar.model.impl.CalEventImpl" table="CalEvent">
-		<id name="eventId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="startDate" type="org.hibernate.type.TimestampType" />
-		<property name="endDate" type="org.hibernate.type.TimestampType" />
-		<property name="durationHour" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="durationMinute" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="allDay" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="timeZoneSensitive" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="repeating" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="recurrence" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="remindBy" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="firstReminder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="secondReminder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" table="DLContent">
 		<id name="contentId" type="long">
 			<generator class="assigned" />
@@ -1416,10 +1381,10 @@
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" column="path_" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<one-to-one name="dataBlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" cascade="save-update" outer-join="false" constrained="true" />
+		<one-to-one name="dataBlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="com.liferay.document.library.kernel.model.DLContentDataBlobModel" cascade="save-update" outer-join="false" constrained="true" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" table="DLContent" lazy="true">
+	<class name="com.liferay.document.library.kernel.model.DLContentDataBlobModel" table="DLContent" lazy="true">
 		<id name="contentId" column="contentId">
 			<generator class="foreign">
 				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>

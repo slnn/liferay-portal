@@ -62,12 +62,20 @@ update Group_ set groupKey = name;
 alter table Group_ add inheritContent BOOLEAN;
 
 alter table Layout drop column iconImage;
+alter table Layout drop column wapThemeId;
+alter table Layout drop column wapColorSchemeId;
 
 alter table LayoutRevision drop column iconImage;
+alter table LayoutRevision drop column wapThemeId;
+alter table LayoutRevision drop column wapColorSchemeId;
 
 alter table LayoutSet drop column logo;
+alter table LayoutSet drop column wapThemeId;
+alter table LayoutSet drop column wapColorSchemeId;
 
 alter table LayoutSetBranch drop column logo;
+alter table LayoutSetBranch drop column wapThemeId;
+alter table LayoutSetBranch drop column wapColorSchemeId;
 
 alter table Organization_ add logoId LONG;
 
@@ -124,6 +132,8 @@ alter table ResourcePermission add viewActionId BOOLEAN;
 alter table Subscription add groupId LONG;
 
 alter table Team add uuid_ VARCHAR(75);
+
+alter table User_ add googleUserId VARCHAR(75) null;
 
 alter table UserNotificationEvent add deliveryType INTEGER;
 alter table UserNotificationEvent add actionRequired BOOLEAN;
