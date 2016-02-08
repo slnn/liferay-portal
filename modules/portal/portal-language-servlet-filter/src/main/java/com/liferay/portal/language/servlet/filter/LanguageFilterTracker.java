@@ -16,6 +16,7 @@ package com.liferay.portal.language.servlet.filter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.CachingResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -31,7 +32,6 @@ import javax.servlet.Filter;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
@@ -50,9 +50,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class LanguageFilterTracker {
 
 	@Activate
-	protected void activate(final BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(final BundleContext bundleContext) {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextHelper.class,
 			new ServletContextHelperServiceTrackerCustomizer(bundleContext));
@@ -111,77 +109,73 @@ public class LanguageFilterTracker {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			try {
-				List<ServiceRegistration<?>> serviceRegistrations =
-					new ArrayList<>();
+			List<ServiceRegistration<?>> serviceRegistrations =
+				new ArrayList<>();
 
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-				ClassLoader classLoader = bundleWiring.getClassLoader();
+			ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				ResourceBundleLoader resourceBundleLoader =
+			Object contextName = serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
+
+			ResourceBundleLoader resourceBundleLoader =
+				new CachingResourceBundleLoader(
 					new AggregateResourceBundleLoader(
 						ResourceBundleUtil.getResourceBundleLoader(
 							"content.Language", classLoader),
-						LanguageResources.RESOURCE_BUNDLE_LOADER);
+						LanguageResources.RESOURCE_BUNDLE_LOADER));
 
-				Dictionary<String, Object> properties = new Hashtable<>();
+			Dictionary<String, Object> properties = new Hashtable<>();
 
-				properties.put(
-					"bundle.symbolic.name", bundle.getSymbolicName());
-				properties.put("service.ranking", Integer.MIN_VALUE);
+			properties.put("bundle.symbolic.name", bundle.getSymbolicName());
+			properties.put("servlet.context.name", contextName);
+			properties.put("service.ranking", Integer.MIN_VALUE);
 
-				serviceRegistrations.add(
-					_bundleContext.registerService(
-						ResourceBundleLoader.class, resourceBundleLoader,
-						properties));
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					ResourceBundleLoader.class, resourceBundleLoader,
+					properties));
 
-				String filterString =
-					"(&(bundle.symbolic.name=" + bundle.getSymbolicName() +
-						")(objectClass=" +
-							ResourceBundleLoader.class.getName() + "))";
+			String filterString =
+				"(&(bundle.symbolic.name=" + bundle.getSymbolicName() +
+					")(objectClass=" +
+						ResourceBundleLoader.class.getName() + "))";
 
-				ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-					serviceTracker = ServiceTrackerFactory.open(
-						_bundleContext, filterString);
+			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
+				serviceTracker = ServiceTrackerFactory.open(
+					_bundleContext, filterString);
 
-				Filter filter = new LanguageFilter(
-					new ServiceTrackerResourceBundleLoader(serviceTracker));
+			Filter filter = new LanguageFilter(
+				new ServiceTrackerResourceBundleLoader(serviceTracker));
 
-				properties = new Hashtable<>();
+			properties = new Hashtable<>();
 
-				Object contextName = serviceReference.getProperty(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				contextName);
 
-				properties.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					contextName);
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
+				new String[] {
+					DispatcherType.ASYNC.toString(),
+					DispatcherType.FORWARD.toString(),
+					DispatcherType.INCLUDE.toString(),
+					DispatcherType.REQUEST.toString()
+				});
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
+				"Language Filter");
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
+				new String[] {"*.css", "*.js"});
 
-				properties.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
-					new String[] {
-						DispatcherType.ASYNC.toString(),
-						DispatcherType.FORWARD.toString(),
-						DispatcherType.INCLUDE.toString(),
-						DispatcherType.REQUEST.toString()
-					});
-				properties.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-					"Language Filter");
-				properties.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
-					new String[] {"*.css", "*.js"});
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					Filter.class, filter, properties));
 
-				serviceRegistrations.add(
-					_bundleContext.registerService(
-						Filter.class, filter, properties));
-
-				return new TrackedServletContextHelper(
-					serviceTracker, serviceRegistrations);
-			}
-			catch (InvalidSyntaxException ise) {
-				throw new RuntimeException(ise);
-			}
+			return new TrackedServletContextHelper(
+				serviceTracker, serviceRegistrations);
 		}
 
 		@Override

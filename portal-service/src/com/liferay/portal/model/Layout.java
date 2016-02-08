@@ -294,12 +294,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public java.lang.String getTypeSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue);
 
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
 	* Returns <code>true</code> if the given layout ID matches one of the
 	* current layout's hierarchical parents.
@@ -379,8 +373,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public boolean isInheritLookAndFeel();
 
-	public boolean isInheritWapLookAndFeel();
-
 	/**
 	* Returns <code>true</code> if the current layout is built from a layout
 	* template and still maintains an active connection to it.
@@ -391,7 +383,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public boolean isLayoutPrototypeLinkActive();
 
-	public boolean isPortletEmbedded(java.lang.String portletId);
+	public boolean isPortletEmbedded(java.lang.String portletId, long groupId);
 
 	/**
 	* Returns <code>true</code> if the current layout is part of the public
