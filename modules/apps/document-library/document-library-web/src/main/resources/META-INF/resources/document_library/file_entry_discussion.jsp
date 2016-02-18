@@ -19,18 +19,7 @@
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
-FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
-
-if (fileVersion == null) {
-	if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-		fileVersion = fileEntry.getLatestFileVersion();
-	}
-	else {
-		fileVersion = fileEntry.getFileVersion();
-	}
-}
-
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (DLViewFileVersionDisplayContext)request.getAttribute("file_entry_discussion.jsp-dlViewFileVersionDisplayContext");
 %>
 
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/file_entry_discussion.jsp#pre" />

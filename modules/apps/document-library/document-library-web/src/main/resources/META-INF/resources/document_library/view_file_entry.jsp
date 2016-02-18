@@ -515,6 +515,11 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
+
+				<%
+				request.setAttribute("file_entry_discussion.jsp-dlViewFileVersionDisplayContext", dlViewFileVersionDisplayContext);
+				%>
+
 				<liferay-util:include page="/document_library/file_entry_discussion.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>
