@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group group = layoutsAdminDisplayContext.getGroup();
@@ -64,6 +66,11 @@ if (layoutRevision != null) {
 
 		layoutSetBranchName = layoutSetBranch.getName();
 	}
+}
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
 }
 
 renderResponse.setTitle(selLayout.getName(locale));
