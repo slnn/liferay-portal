@@ -25,8 +25,6 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
-MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
-
 Set<Long> categorySubscriptionClassPKs = null;
 Set<Long> threadSubscriptionClassPKs = null;
 
@@ -52,16 +50,12 @@ if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
-request.setAttribute("view.jsp-categoryDisplay", categoryDisplay);
-
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);
 
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
-
-MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 %>
 
 <portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
@@ -87,6 +81,8 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 	<c:when test='<%= mbListDisplayContext.isShowSearch() || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>'>
 
 		<%
+		MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
+
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 		entriesSearchContainer.setId("mbEntries");
@@ -163,54 +159,11 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 								<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
 							</c:if>
 						</aui:button-row>
-
-						<%@ include file="/message_boards/category_subscriptions.jspf" %>
 					</c:if>
 
+					<%@ include file="/message_boards/category_subscriptions.jspf" %>
+
 					<c:if test="<%= category != null %>">
-						<div class="category-subscription category-subscription-types">
-							<c:if test="<%= enableRSS %>">
-								<liferay-ui:rss
-									delta="<%= rssDelta %>"
-									displayStyle="<%= rssDisplayStyle %>"
-									feedType="<%= rssFeedType %>"
-									url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
-								/>
-							</c:if>
-
-							<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
-								<c:choose>
-									<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(category.getCategoryId()) %>">
-										<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
-											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-											<portlet:param name="redirect" value="<%= currentURL %>" />
-											<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
-										</portlet:actionURL>
-
-										<liferay-ui:icon
-											iconCssClass="icon-remove-sign"
-											label="<%= true %>"
-											message="unsubscribe"
-											url="<%= unsubscribeURL %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
-											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-											<portlet:param name="redirect" value="<%= currentURL %>" />
-											<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
-										</portlet:actionURL>
-
-										<liferay-ui:icon
-											iconCssClass="icon-ok-sign"
-											label="<%= true %>"
-											message="subscribe"
-											url="<%= subscribeURL %>"
-										/>
-									</c:otherwise>
-								</c:choose>
-							</c:if>
-						</div>
 
 						<%
 						long parentCategoryId = category.getParentCategoryId();
@@ -281,14 +234,6 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 					</c:if>
 
 					<%
-					String entriesEmptyResultsMessage = "you-do-not-have-any-posts";
-
-					if (mbListDisplayContext.isShowRecentPosts()) {
-						entriesEmptyResultsMessage = "there-are-no-recent-posts";
-					}
-
-					entriesSearchContainer.setEmptyResultsMessage(entriesEmptyResultsMessage);
-
 					request.setAttribute("view.jsp-displayStyle", "descriptive");
 					request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
 					%>
