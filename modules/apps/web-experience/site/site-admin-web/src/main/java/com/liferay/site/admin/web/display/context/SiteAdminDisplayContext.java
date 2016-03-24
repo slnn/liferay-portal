@@ -100,21 +100,11 @@ public class SiteAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
-
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = portalPreferences.getValue(
-				SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
-		}
-		else {
-			portalPreferences.setValue(
-				SiteAdminPortletKeys.SITE_ADMIN, "display-style", displayStyle);
-		}
-
-		_displayStyle = displayStyle;
+		_displayStyle = portalPreferences.getValue(
+			SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
 
 		return _displayStyle;
 	}
@@ -203,25 +193,6 @@ public class SiteAdminDisplayContext {
 		portletURL.setParameter("displayStyle", getDisplayStyle());
 
 		return portletURL;
-	}
-
-	public String getRowURL(Group group) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		PortletURL siteAdministrationURL = getSiteAdministrationURL(
-			group.getGroupId());
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
-
-			return siteAdministrationURL.toString();
-		}
-
-		return null;
 	}
 
 	public GroupSearch getSearchContainer() throws PortalException {
