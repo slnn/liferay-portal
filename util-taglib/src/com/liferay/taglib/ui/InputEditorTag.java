@@ -43,10 +43,12 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -417,7 +419,8 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:toolbarSet", getToolbarSet());
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 
-		request.setAttribute("liferay-ui:input-editor:data", getData());
+		request.setAttribute(
+			"liferay-ui:input-editor:data", new LazyLoadingData());
 	}
 
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
@@ -473,5 +476,81 @@ public class InputEditorTag extends IncludeTag {
 	private boolean _skipEditorLoading;
 	private String _toolbarSet = _TOOLBAR_SET_DEFAULT;
 	private String _width;
+
+	private class LazyLoadingData implements Map<String, Object> {
+
+		@Override
+		public void clear() {
+			_getData().clear();
+		}
+
+		@Override
+		public boolean containsKey(Object key) {
+			return _getData().containsKey(key);
+		}
+
+		@Override
+		public boolean containsValue(Object value) {
+			return _getData().containsValue(value);
+		}
+
+		@Override
+		public Set<Entry<String, Object>> entrySet() {
+			return _getData().entrySet();
+		}
+
+		@Override
+		public Object get(Object key) {
+			return _getData().get(key);
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return _getData().isEmpty();
+		}
+
+		@Override
+		public Set<String> keySet() {
+			return _getData().keySet();
+		}
+
+		@Override
+		public Object put(String key, Object value) {
+			return _getData().put(key, value);
+		}
+
+		@Override
+		public void putAll(Map<? extends String, ? extends Object> m) {
+			_getData().putAll(m);
+		}
+
+		@Override
+		public Object remove(Object key) {
+			return _getData().remove(key);
+		}
+
+		@Override
+		public int size() {
+			return _getData().size();
+		}
+
+		@Override
+		public Collection<Object> values() {
+			return _getData().values();
+		}
+
+		private Map<String, Object> _getData() {
+			if (_data != null) {
+				return _data;
+			}
+
+			_data = getData();
+
+			return _data;
+		}
+
+		private Map<String, Object> _data;
+
+	}
 
 }
