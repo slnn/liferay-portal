@@ -54,22 +54,24 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
+	<%
+	long categoryId = (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+	%>
+
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= message.getSubject() %>"
 	/>
-</c:if>
 
-<c:if test="<%= !portletTitleBasedNavigation %>">
 	<div class="thread-controls">
 		<div class="thread-actions">
 			<liferay-ui:icon-list>
-				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.ADD_MESSAGE) %>">
+				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_MESSAGE) %>">
 					<portlet:renderURL var="addMessageURL">
 						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
@@ -149,7 +151,7 @@ if (portletTitleBasedNavigation) {
 					</c:choose>
 				</c:if>
 
-				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.LOCK_THREAD) %>">
+				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.LOCK_THREAD) %>">
 					<c:choose>
 						<c:when test="<%= thread.isLocked() %>">
 							<portlet:actionURL name="/message_boards/edit_message" var="unlockThreadURL">
@@ -180,11 +182,11 @@ if (portletTitleBasedNavigation) {
 					</c:choose>
 				</c:if>
 
-				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
+				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.MOVE_THREAD) %>">
 					<portlet:renderURL var="editThreadURL">
 						<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 						<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 					</portlet:renderURL>
 
@@ -196,21 +198,25 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
-					<portlet:renderURL var="parentCategoryURL">
-						<c:choose>
-							<c:when test="<%= ((category == null) || (category.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) %>">
-								<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-							</c:when>
-							<c:otherwise>
-								<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
-								<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
-							</c:otherwise>
-						</c:choose>
-					</portlet:renderURL>
+					<%
+					if (backURL == null) {
+						PortletURL backPortletURL = renderResponse.createRenderURL();
+
+						if ((category == null) || (category.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {
+							backPortletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+						}
+						else {
+							backPortletURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
+							backPortletURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+						}
+
+						backURL = backPortletURL.toString();
+					}
+					%>
 
 					<portlet:actionURL name="/message_boards/delete_thread" var="deleteURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= parentCategoryURL %>" />
+						<portlet:param name="redirect" value="<%= backURL %>" />
 						<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 					</portlet:actionURL>
 
