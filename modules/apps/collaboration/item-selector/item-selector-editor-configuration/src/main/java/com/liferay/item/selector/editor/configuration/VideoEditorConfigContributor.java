@@ -36,7 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Lancha
  */
-@Component(service = EditorConfigContributor.class)
+@Component(
+	property = {
+		"editor.name=ckeditor"
+	},
+	service = EditorConfigContributor.class
+)
 public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
