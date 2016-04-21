@@ -130,6 +130,8 @@ public class DefineObjectsTag extends TagSupport {
 
 		Locale locale = PortalUtil.getLocale(request);
 
+		request.setAttribute("resourceBundle.locale", locale);
+
 		return TagResourceBundleUtil.getResourceBundle(request, locale);
 	}
 

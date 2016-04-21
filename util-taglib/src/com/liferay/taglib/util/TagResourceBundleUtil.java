@@ -65,14 +65,27 @@ public class TagResourceBundleUtil {
 		ResourceBundle resourceBundle =
 			(ResourceBundle)pageContext.getAttribute("resourceBundle");
 
+		if (resourceBundle != null) {
+			if (resourceBundle instanceof AggregateResourceBundle) {
+				return resourceBundle;
+			}
+
+			resourceBundle = new AggregateResourceBundle(
+				resourceBundle, PortalUtil.getResourceBundle(
+					resourceBundle.getLocale()));
+
+			pageContext.setAttribute("resourceBundle", resourceBundle);
+
+			return resourceBundle;
+		}
+
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		Locale locale = PortalUtil.getLocale(request);
+		Locale locale = (Locale)request.getAttribute("resourceBundle.locale");
 
-		if (resourceBundle != null) {
-			return new AggregateResourceBundle(
-				resourceBundle, PortalUtil.getResourceBundle(locale));
+		if (locale == null) {
+			locale = PortalUtil.getLocale(request);
 		}
 
 		return getResourceBundle(request, locale);
