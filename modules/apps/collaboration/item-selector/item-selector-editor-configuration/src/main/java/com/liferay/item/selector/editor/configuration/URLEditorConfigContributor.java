@@ -45,7 +45,7 @@ public class URLEditorConfigContributor extends BaseEditorConfigContributor {
 			new URLItemSelectorCriterion());
 
 		if (itemSelectorURL != null) {
-			jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
+			jsonObject.put("filebrowserBrowseUrl", itemSelectorURL);
 		}
 	}
 

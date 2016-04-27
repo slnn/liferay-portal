@@ -64,9 +64,9 @@ public class AudioEditorConfigContributor extends BaseEditorConfigContributor {
 
 		if (itemSelectorURL != null) {
 			jsonObject.put(
-				"filebrowserAudioBrowseLinkUrl", itemSelectorURL.toString());
+				"filebrowserAudioBrowseLinkUrl", itemSelectorURL);
 			jsonObject.put(
-				"filebrowserAudioBrowseUrl", itemSelectorURL.toString());
+				"filebrowserAudioBrowseUrl", itemSelectorURL);
 		}
 	}
 
