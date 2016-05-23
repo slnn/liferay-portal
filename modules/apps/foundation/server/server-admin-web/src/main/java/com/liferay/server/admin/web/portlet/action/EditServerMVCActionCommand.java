@@ -383,6 +383,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 				String name = message.getString("name");
 
+				System.out.println("######" + status + " - " + name);
+
 				if ((name == null) || !name.contains(uuid)) {
 					return;
 				}
