@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_1_0;
+package com.liferay.social.networking.web.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public class UpgradeSchema extends UpgradeProcess {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		runSQLTemplate("update-6.0.6-6.1.0.sql", false);
-
-		upgrade(UpgradeMVCCVersion.class);
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.social.networking.web", "0.0.1", "1.0.4",
+			new DummyUpgradeStep());
 	}
 
 }

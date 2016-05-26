@@ -12,21 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_1_0;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v6_1_0.util.LockTable;
+import com.liferay.portal.upgrade.v7_0_0.util.UserNotificationEventTable;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public class UpgradeLock extends UpgradeProcess {
+public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+
+		// Check the column type because this class is also used in
+		// UpgradeProcess_7_0_1
+
+		if (hasColumnType(
+				UserNotificationEventTable.class, "type_",
+				"VARCHAR(200) null")) {
+
+			return;
+		}
+
 		alter(
-			LockTable.class,
-			new AlterColumnType("owner", "VARCHAR(300) null"));
+			UserNotificationEventTable.class,
+			new AlterColumnType("type_", "VARCHAR(200) null"));
 	}
 
 }
