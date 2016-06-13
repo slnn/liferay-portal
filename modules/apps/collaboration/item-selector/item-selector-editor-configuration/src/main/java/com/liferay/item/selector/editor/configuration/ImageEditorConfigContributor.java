@@ -64,9 +64,9 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 
 		if (itemSelectorURL != null) {
 			jsonObject.put(
-				"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
+				"filebrowserImageBrowseLinkUrl", itemSelectorURL);
 			jsonObject.put(
-				"filebrowserImageBrowseUrl", itemSelectorURL.toString());
+				"filebrowserImageBrowseUrl", itemSelectorURL);
 		}
 	}
 
