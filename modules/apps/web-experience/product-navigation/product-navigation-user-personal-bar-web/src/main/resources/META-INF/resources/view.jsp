@@ -16,6 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-ui:simple-include />
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
