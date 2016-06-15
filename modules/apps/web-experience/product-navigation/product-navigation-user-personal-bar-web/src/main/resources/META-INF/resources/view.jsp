@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <% for (int i = 0; i < 100; i++) { %>
-<liferay-ui:liferay-tag-support />
+<liferay-ui:javax-tag-support />
 <% } %>
 
 <c:choose>
