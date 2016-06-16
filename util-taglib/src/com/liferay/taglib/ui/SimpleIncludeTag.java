@@ -23,7 +23,7 @@ public class SimpleIncludeTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		return null;
 	}
 
 	private static final String _PAGE =

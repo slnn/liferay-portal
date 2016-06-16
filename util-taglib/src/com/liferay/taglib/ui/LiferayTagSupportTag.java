@@ -23,19 +23,4 @@ import javax.servlet.jsp.JspWriter;
  * @author Dante Wang
  */
 public class LiferayTagSupportTag extends TagSupport {
-
-	@Override
-	public int doEndTag() throws JspException {
-		try {
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write("<p>Hello World!</p>");
-
-			return EVAL_PAGE;
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
 }
