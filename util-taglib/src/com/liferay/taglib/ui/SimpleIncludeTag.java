@@ -16,10 +16,11 @@ package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.AttributesTagSupport;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 /**
  * @author Dante Wang
  */
-public class SimpleIncludeTag extends AttributesTagSupport {
+public class SimpleIncludeTag extends ParamAndPropertyAncestorTagImpl {
 
 }
