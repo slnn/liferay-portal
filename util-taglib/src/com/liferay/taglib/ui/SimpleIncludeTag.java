@@ -14,19 +14,12 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.taglib.util.AttributesTagSupport;
 import com.liferay.taglib.util.IncludeTag;
 
 /**
  * @author Dante Wang
  */
-public class SimpleIncludeTag extends IncludeTag {
-
-	@Override
-	protected String getPage() {
-		return null;
-	}
-
-	private static final String _PAGE =
-		"/html/taglib/ui/simple_portlet/page.jsp";
+public class SimpleIncludeTag extends AttributesTagSupport {
 
 }
