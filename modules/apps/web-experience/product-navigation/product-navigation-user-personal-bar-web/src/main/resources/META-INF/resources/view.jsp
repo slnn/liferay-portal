@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<% for(int i = 0; i < 500; i++) {%>
+	<liferay-frontend:module-include-test />
+<% } %>
+
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
