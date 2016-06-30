@@ -21,7 +21,7 @@ public class PropertiesSettingsLocator implements SettingsLocator {
 
 	@Override
 	public Settings getSettings() throws SettingsException {
-		return _settingsLocatorHelper.getPortalPropertiesSettings();
+		return _settingsHelper.getPortalPropertiesSettings();
 	}
 
 	@Override
@@ -29,7 +29,6 @@ public class PropertiesSettingsLocator implements SettingsLocator {
 		return "portal_properties";
 	}
 
-	private final SettingsLocatorHelper _settingsLocatorHelper =
-		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
+	private final SettingsHelper _settingsHelper = SettingsHelperUtil.getSettingsHelper();
 
 }
