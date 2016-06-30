@@ -108,6 +108,15 @@ public class PortletURLImpl
 	}
 
 	public PortletURLImpl(
+		HttpServletRequest request, String portletId, long plid,
+		String lifecycle, String layoutFriendlyURL) {
+
+		this(request, portletId, null, plid, lifecycle);
+		
+		_layoutFriendlyURL = layoutFriendlyURL;
+	}
+
+	public PortletURLImpl(
 		PortletRequest portletRequest, String portletId, Layout layout,
 		String lifecycle) {
 
@@ -125,6 +134,17 @@ public class PortletURLImpl
 		this(
 			PortalUtil.getHttpServletRequest(portletRequest), portletId,
 			portletRequest, plid, lifecycle);
+	}
+
+	public PortletURLImpl(
+		PortletRequest portletRequest, String portletId, long plid,
+		String lifecycle, String layoutFriendlyURL) {
+
+		this(
+			PortalUtil.getHttpServletRequest(portletRequest), portletId,
+			portletRequest, plid, lifecycle);
+
+		_layoutFriendlyURL = layoutFriendlyURL;
 	}
 
 	@Override
