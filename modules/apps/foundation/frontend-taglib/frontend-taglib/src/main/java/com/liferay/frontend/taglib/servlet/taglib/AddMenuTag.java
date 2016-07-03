@@ -79,7 +79,7 @@ public class AddMenuTag extends IncludeTag {
 				"liferay-frontend:add-menu:addMenuItems");
 
 		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
+			"AddMenuTag", addMenuItems);
 	}
 
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
