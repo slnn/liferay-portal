@@ -17,6 +17,15 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
+String layoutFriendlyURL = GetterUtil.getString(
+	PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
+
+if (PortalUtil.isSecure(request)) {
+	layoutFriendlyURL = HttpUtil.protocolize(
+		layoutFriendlyURL,
+		PropsValues.WEB_SERVER_HTTPS_PORT, true);
+}
+
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
@@ -513,7 +522,7 @@ if (urlConfiguration != null) {
 }
 // URL edit
 
-PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 if (portletDisplay.isModeEdit()) {
 	urlEdit.setWindowState(WindowState.NORMAL);
@@ -536,7 +545,7 @@ portletDisplay.setURLEdit(urlEdit.toString());
 
 // URL edit defaults
 
-PortletURLImpl urlEditDefaults = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlEditDefaults = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 if (portletDisplay.isModeEditDefaults()) {
 	urlEditDefaults.setWindowState(WindowState.NORMAL);
@@ -559,7 +568,7 @@ portletDisplay.setURLEditDefaults(urlEditDefaults.toString());
 
 // URL edit guest
 
-PortletURLImpl urlEditGuest = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlEditGuest = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 if (portletDisplay.isModeEditGuest()) {
 	urlEditGuest.setWindowState(WindowState.NORMAL);
@@ -582,7 +591,7 @@ portletDisplay.setURLEditGuest(urlEditGuest.toString());
 
 // URL export / import
 
-PortletURLImpl urlExportImport = new PortletURLImpl(request, PortletKeys.EXPORT_IMPORT, plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlExportImport = new PortletURLImpl(request, PortletKeys.EXPORT_IMPORT, plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 urlExportImport.setWindowState(LiferayWindowState.POP_UP);
 
@@ -597,7 +606,7 @@ portletDisplay.setURLExportImport(urlExportImport.toString() + "&" + PortalUtil.
 
 // URL help
 
-PortletURLImpl urlHelp = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlHelp = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 if (portletDisplay.isModeHelp()) {
 	urlHelp.setWindowState(WindowState.NORMAL);
@@ -626,7 +635,7 @@ if (!portletDisplay.isRestoreCurrentView()) {
 	lifecycle = PortletRequest.ACTION_PHASE;
 }
 
-PortletURLImpl urlMax = new PortletURLImpl(request, portletDisplay.getId(), plid, lifecycle);
+PortletURLImpl urlMax = new PortletURLImpl(request, portletDisplay.getId(), plid, lifecycle, layoutFriendlyURL);
 
 if (portletDisplay.isStateMax()) {
 	urlMax.setWindowState(WindowState.NORMAL);
@@ -708,7 +717,7 @@ portletDisplay.setURLPortletCss(urlPortletCss.toString());
 
 // URL print
 
-PortletURLImpl urlPrint = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlPrint = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 if (portletDisplay.isModePrint()) {
 	urlPrint.setWindowState(WindowState.NORMAL);
@@ -737,7 +746,7 @@ portletDisplay.setURLRefresh(urlRefresh);
 
 // URL staging
 
-PortletURLImpl urlStaging = new PortletURLImpl(request, PortletKeys.EXPORT_IMPORT, plid, PortletRequest.RENDER_PHASE);
+PortletURLImpl urlStaging = new PortletURLImpl(request, PortletKeys.EXPORT_IMPORT, plid, PortletRequest.RENDER_PHASE, layoutFriendlyURL);
 
 urlStaging.setWindowState(LiferayWindowState.POP_UP);
 
