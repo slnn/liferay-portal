@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.settings;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface SettingsLocatorHelper {
 
 	public Settings getCompanyPortletPreferencesSettings(
