@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.PropertiesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
@@ -80,6 +81,16 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	@Override
+	public Settings getCompanyPortletPreferencesSettings(
+		long companyId, String settingsId,
+		SettingsLocator parentSettingsLocator) {
+
+		return new PortletPreferencesSettings(
+			getCompanyPortletPreferences(companyId, settingsId),
+			parentSettingsLocator);
+	}
+
+	@Override
 	public Settings getConfigurationBeanSettings(
 		String configurationPid, Settings parentSettings) {
 
@@ -88,6 +99,17 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 				getResourceManager(configurationPid),
 				SettingsFactoryUtil.getSettingsFactory()),
 			getConfigurationBean(configurationPid), parentSettings);
+	}
+
+	@Override
+	public Settings getConfigurationBeanSettings(
+		String configurationPid, SettingsLocator parentSettingsLocator) {
+
+		return new ConfigurationBeanSettings(
+			new LocationVariableResolver(
+				getResourceManager(configurationPid),
+				SettingsFactoryUtil.getSettingsFactory()),
+			getConfigurationBean(configurationPid), parentSettingsLocator);
 	}
 
 	public PortletPreferences getGroupPortletPreferences(
@@ -113,6 +135,16 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			getGroupPortletPreferences(groupId, settingsId), parentSettings);
 	}
 
+	@Override
+	public Settings getGroupPortletPreferencesSettings(
+		long groupId, String settingsId,
+		SettingsLocator parentSettingsLocator) {
+
+		return new PortletPreferencesSettings(
+			getGroupPortletPreferences(groupId, settingsId),
+			parentSettingsLocator);
+	}
+
 	public PortletPreferences getPortalPreferences(long companyId) {
 		return _portalPreferencesLocalService.getPreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
@@ -124,6 +156,14 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		return new PortletPreferencesSettings(
 			getPortalPreferences(companyId), parentSettings);
+	}
+
+	@Override
+	public Settings getPortalPreferencesSettings(
+		long companyId, SettingsLocator parentSettingsLocator) {
+
+		return new PortletPreferencesSettings(
+			getPortalPreferences(companyId), parentSettingsLocator);
 	}
 
 	public Properties getPortalProperties() {
@@ -174,11 +214,32 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getPortletInstancePortletPreferencesSettings(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, SettingsLocator parentSettingsLocator) {
+
+		return new PortletPreferencesSettings(
+			getPortletInstancePortletPreferences(
+				companyId, ownerId, ownerType, plid, portletId),
+			parentSettingsLocator);
+	}
+
+	@Override
+	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long plid, String portletId, Settings parentSettings) {
 
 		return new PortletPreferencesSettings(
 			getPortletInstancePortletPreferences(companyId, plid, portletId),
 			parentSettings);
+	}
+
+	@Override
+	public Settings getPortletInstancePortletPreferencesSettings(
+		long companyId, long plid, String portletId,
+		SettingsLocator parentSettingsLocator) {
+
+		return new PortletPreferencesSettings(
+			getPortletInstancePortletPreferences(companyId, plid, portletId),
+			parentSettingsLocator);
 	}
 
 	@Activate

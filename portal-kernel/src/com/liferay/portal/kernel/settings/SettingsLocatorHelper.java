@@ -22,14 +22,27 @@ public interface SettingsLocatorHelper {
 	public Settings getCompanyPortletPreferencesSettings(
 		long companyId, String settingsId, Settings parentSettings);
 
+	public Settings getCompanyPortletPreferencesSettings(
+		long companyId, String settingsId,
+		SettingsLocator parentSettingsLocator);
+
 	public Settings getConfigurationBeanSettings(
 		String configurationPid, Settings parentSettings);
+
+	public Settings getConfigurationBeanSettings(
+		String configurationPid, SettingsLocator parentSettingsLocator);
 
 	public Settings getGroupPortletPreferencesSettings(
 		long groupId, String settingsId, Settings parentSettings);
 
+	public Settings getGroupPortletPreferencesSettings(
+		long groupId, String settingsId, SettingsLocator parentSettingsLocator);
+
 	public Settings getPortalPreferencesSettings(
 		long companyId, Settings parentSettings);
+
+	public Settings getPortalPreferencesSettings(
+		long companyId, SettingsLocator parentSettingsLocator);
 
 	public Settings getPortalPropertiesSettings();
 
@@ -38,6 +51,14 @@ public interface SettingsLocatorHelper {
 		String portletId, Settings parentSettings);
 
 	public Settings getPortletInstancePortletPreferencesSettings(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, SettingsLocator parentSettingsLocator);
+
+	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long plid, String portletId, Settings parentSettings);
+
+	public Settings getPortletInstancePortletPreferencesSettings(
+		long companyId, long plid, String portletId,
+		SettingsLocator parentSettingsLocator);
 
 }
