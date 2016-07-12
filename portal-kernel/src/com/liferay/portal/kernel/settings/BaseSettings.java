@@ -15,7 +15,11 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,6 +32,13 @@ public abstract class BaseSettings implements Settings {
 
 	public BaseSettings(Settings parentSettings) {
 		this.parentSettings = parentSettings;
+	}
+
+	public BaseSettings(SettingsLocator parentSettingsLocator) {
+		this.parentSettings = (Settings)ProxyUtil.newProxyInstance(
+			BaseSettings.class.getClassLoader(),
+			new Class<?>[] {Settings.class},
+			new LazySettingsHandler(parentSettingsLocator));
 	}
 
 	@Override
@@ -91,5 +102,31 @@ public abstract class BaseSettings implements Settings {
 	protected abstract String[] doGetValues(String key);
 
 	protected Settings parentSettings;
+
+	private class LazySettingsHandler implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws ReflectiveOperationException, SettingsException {
+
+			if (_settings == null) {
+				if (_settingsLocator == null) {
+					throw new NullPointerException("Unable to get Settings");
+				}
+
+				_settings = _settingsLocator.getSettings();
+			}
+
+			return method.invoke(_settings, args);
+		}
+
+		private LazySettingsHandler(SettingsLocator settingsLocator) {
+			_settingsLocator = settingsLocator;
+		}
+
+		private volatile Settings _settings;
+		private final SettingsLocator _settingsLocator;
+
+	}
 
 }
