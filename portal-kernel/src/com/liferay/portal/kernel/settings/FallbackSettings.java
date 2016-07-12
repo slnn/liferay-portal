@@ -27,6 +27,14 @@ public class FallbackSettings extends BaseSettings {
 		_fallbackKeys = fallbackKeys;
 	}
 
+	public FallbackSettings(
+		SettingsLocator parentSettingsLocator, FallbackKeys fallbackKeys) {
+
+		super(parentSettingsLocator);
+
+		_fallbackKeys = fallbackKeys;
+	}
+
 	@Override
 	protected String doGetValue(String key) {
 		String value = parentSettings.getValue(key, null);

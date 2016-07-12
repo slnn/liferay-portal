@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.FallbackSettings;
 import com.liferay.portal.kernel.settings.PortalSettings;
+import com.liferay.portal.kernel.settings.PropertiesSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
@@ -100,11 +101,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getServerSettings(String settingsId) {
-		Settings portalPropertiesSettings =
-			_settingsLocatorHelper.getPortalPropertiesSettings();
-
 		return _settingsLocatorHelper.getConfigurationBeanSettings(
-			settingsId, portalPropertiesSettings);
+			settingsId, new PropertiesSettingsLocator());
 	}
 
 	@Override
