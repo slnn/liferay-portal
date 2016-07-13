@@ -354,12 +354,12 @@ public class ServicePreAction extends Action {
 			long sourceGroupId = ParamUtil.getLong(request, "p_v_l_s_g_id");
 
 			if ((sourceGroupId > 0) && (sourceGroupId != layout.getGroupId())) {
-				Group sourceGroup = GroupLocalServiceUtil.getGroup(
-					sourceGroupId);
-
 				if (layout.isTypeControlPanel() || layout.isPublicLayout() ||
 					SitesUtil.isUserGroupLayoutSetViewable(
 						permissionChecker, layout.getGroup())) {
+
+					Group sourceGroup = GroupLocalServiceUtil.getGroup(
+						sourceGroupId);
 
 					layout = new VirtualLayout(layout, sourceGroup);
 				}
