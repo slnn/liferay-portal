@@ -25,10 +25,12 @@
 				</c:if>
 
 				<span class="user-avatar-image">
+				<% for (int i = 0; i < 27; i++) { %>
 					<liferay-ui:user-portrait
 						imageCssClass="user-icon-lg"
 						userId="<%= user.getUserId() %>"
 					/>
+				<% } %>
 				</span>
 
 				<span class="user-full-name">
