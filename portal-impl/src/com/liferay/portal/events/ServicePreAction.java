@@ -484,7 +484,6 @@ public class ServicePreAction extends Action {
 
 		LayoutSet layoutSet = null;
 
-		boolean hasCustomizeLayoutPermission = false;
 		boolean hasUpdateLayoutPermission = false;
 
 		boolean customizedView = SessionParamUtil.getBoolean(
@@ -496,9 +495,6 @@ public class ServicePreAction extends Action {
 			LayoutTypeAccessPolicy layoutTypeAccessPolicy =
 				layoutType.getLayoutTypeAccessPolicy();
 
-			hasCustomizeLayoutPermission =
-				layoutTypeAccessPolicy.isCustomizeLayoutAllowed(
-					permissionChecker, layout);
 			hasUpdateLayoutPermission =
 				layoutTypeAccessPolicy.isUpdateLayoutAllowed(
 					permissionChecker, layout);
@@ -566,7 +562,8 @@ public class ServicePreAction extends Action {
 			layoutTypePortlet.setUpdatePermission(hasUpdateLayoutPermission);
 
 			if (signedIn && customizable && customizedView &&
-				hasCustomizeLayoutPermission) {
+				layoutTypeAccessPolicy.isCustomizeLayoutAllowed(
+					permissionChecker, layout)) {
 
 				PortalPreferences portalPreferences =
 					PortletPreferencesFactoryUtil.getPortalPreferences(
