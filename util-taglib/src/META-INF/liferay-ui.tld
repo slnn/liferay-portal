@@ -3262,6 +3262,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>liferay-tag-support</name>
+		<tag-class>com.liferay.taglib.ui.LiferayTagSupportTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>javax-tag-support</name>
+		<tag-class>com.liferay.taglib.ui.JavaxTagSupportTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>my-sites</name>
 		<tag-class>com.liferay.taglib.ui.MySitesTag</tag-class>
 		<body-content>JSP</body-content>
@@ -5509,6 +5519,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+    <tag>
+        <name>simple-include</name>
+        <tag-class>com.liferay.taglib.ui.SimpleIncludeTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 	<tag>
 		<name>user-search</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchTag</tag-class>

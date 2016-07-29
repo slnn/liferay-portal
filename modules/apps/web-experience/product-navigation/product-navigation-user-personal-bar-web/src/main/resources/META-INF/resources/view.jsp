@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<% for (int i = 0; i < 100; i++) { %>
+<liferay-ui:javax-tag-support />
+<% } %>
+
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
