@@ -805,12 +805,6 @@ if (group.isControlPanel()) {
 	}
 }
 
-// Portlet decorator
-
-String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
-
-PortletDecorator portletDecorator = ThemeLocalServiceUtil.getPortletDecorator(company.getCompanyId(), theme.getThemeId(), portletDecoratorId);
-
 // Make sure the Tiles context is reset for the next portlet
 
 if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
@@ -920,6 +914,12 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 			cssClasses += " portlet-static portlet-static-end";
 		}
 	}
+
+	// Portlet decorator
+
+	String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
+
+	PortletDecorator portletDecorator = ThemeLocalServiceUtil.getPortletDecorator(company.getCompanyId(), theme.getThemeId(), portletDecoratorId);
 
 	if ((portletDecorator != null) && portletDisplay.isPortletDecorate()) {
 		portletDisplay.setPortletDecoratorId(portletDecorator.getPortletDecoratorId());
