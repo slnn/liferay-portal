@@ -1704,6 +1704,7 @@ public class DataFactory {
 			_counter.get());
 		journalArticleLocalizationModel.setCompanyId(
 			journalArticleModel.getCompanyId());
+		journalArticleLocalizationModel.setArticlePK(_counter.get());
 		journalArticleLocalizationModel.setTitle(sb.toString());
 		journalArticleLocalizationModel.setLanguageId(
 			journalArticleModel.getDefaultLanguageId());
