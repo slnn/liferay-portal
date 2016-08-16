@@ -43,6 +43,7 @@ public class PQLOperatorFactoryTest extends TestCase {
 		operators.add(null);
 		operators.add("bad");
 		operators.add("bad value");
+		operators.addAll(PQLModifier.getAvailableModifiers());
 
 		for (String operator : operators) {
 			_validateNewPQLOperatorError(
