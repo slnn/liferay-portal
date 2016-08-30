@@ -257,6 +257,7 @@ public class InitDataFactoryUtil {
 	public static GroupModel initGroupModel(
 		long groupId, long classNameId, long classPK, String name, boolean site,
 		long companyId, long sampleUserId) throws Exception {
+
 		GroupModel globalGroupModel = newGroupModel(
 			groupId, classNameId, classPK, name, site, companyId, sampleUserId);
 		return globalGroupModel;
@@ -283,8 +284,8 @@ public class InitDataFactoryUtil {
 		return roleModel;
 	}
 
-	public static long getClassNameId(Class<?> clazz,
-		Map<String, ClassNameModel> classNameModels) {
+	public static long getClassNameId(
+		Class<?> clazz, Map<String, ClassNameModel> classNameModels) {
 
 		ClassNameModel classNameModel = classNameModels.get(clazz.getName());
 
@@ -368,15 +369,14 @@ public class InitDataFactoryUtil {
 		return userModel;
 	}
 
-	public static VirtualHostModel initVirtualHostModel(String hostname,
-		long virtualHostId, long companyId) {
+	public static VirtualHostModel initVirtualHostModel(
+		String hostname, long virtualHostId, long companyId) {
 
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
 		virtualHostModel.setVirtualHostId(virtualHostId);
 		virtualHostModel.setCompanyId(companyId);
 		virtualHostModel.setHostname(hostname);
-
 		return virtualHostModel;
 	}
 
@@ -423,8 +423,8 @@ public class InitDataFactoryUtil {
 		};
 	}
 
-	public static String getClassName(long classNameId,
-		Map<String, ClassNameModel> classNameModels) {
+	public static String getClassName(
+		long classNameId, Map<String, ClassNameModel> classNameModels) {
 
 		for (ClassNameModel classNameModel : classNameModels.values()) {
 			if (classNameModel.getClassNameId() == classNameId) {
