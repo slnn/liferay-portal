@@ -86,6 +86,10 @@ public class JournalDataFactory {
 		return InitDataFactoryContext.getMaxJournalArticlePageCount();
 	}
 
+	public static int getMaxJournalArticleVersionCount() {
+		return InitDataFactoryContext.getMaxJournalArticleVersionCount();
+	}
+
 	public static DDMStorageLinkModel newDDMStorageLinkModel(
 		JournalArticleModel journalArticleModel, long structureId) {
 
@@ -271,10 +275,6 @@ public class JournalDataFactory {
 		return InitDataFactoryUtil.newPortletPreferencesModel(
 			plid, portletId,
 			portletPreferencesFactory.toXML(jxPortletPreferences));
-	}
-
-	public static int getMaxJournalArticleVersionCount() {
-		return InitDataFactoryContext.getMaxJournalArticleVersionCount();
 	}
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
