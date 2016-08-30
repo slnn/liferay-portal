@@ -137,9 +137,11 @@ public class AssetDataFactory {
 
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
+			blogsEntryModel.getModifiedDate(), 
+			InitDataFactoryUtil.getClassNameId(
 			BlogsEntry.class,
-			InitDataFactoryContext.getClassNameModels()), blogsEntryModel.getEntryId(),
+			InitDataFactoryContext.getClassNameModels()), 
+			blogsEntryModel.getEntryId(),
 			blogsEntryModel.getUuid(), 0, true, true, ContentTypes.TEXT_HTML,
 			blogsEntryModel.getTitle());
 	}
@@ -164,7 +166,8 @@ public class AssetDataFactory {
 			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
 			dLFolderModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
 			DLFolder.class,
-			InitDataFactoryContext.getClassNameModels()), dLFolderModel.getFolderId(),
+			InitDataFactoryContext.getClassNameModels()), 
+			dLFolderModel.getFolderId(),
 			dLFolderModel.getUuid(), 0, true, true, null,
 			dLFolderModel.getName());
 	}
@@ -203,7 +206,8 @@ public class AssetDataFactory {
 			mbThreadModel.getGroupId(), mbThreadModel.getCreateDate(),
 			mbThreadModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
 			MBThread.class,
-			InitDataFactoryContext.getClassNameModels()), mbThreadModel.getThreadId(),
+			InitDataFactoryContext.getClassNameModels()), 
+			mbThreadModel.getThreadId(),
 			mbThreadModel.getUuid(), 0, true, false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
 	}
@@ -227,7 +231,8 @@ public class AssetDataFactory {
 			InitDataFactoryUtil.getClassNameId(
 			JournalArticle.class, InitDataFactoryContext.getClassNameModels()),
 			resourcePrimKey, resourceUUID,
-			InitDataFactoryContext.getDefaultJournalDDMStructureModel().getStructureId(),
+			InitDataFactoryContext.getDefaultJournalDDMStructureModel()
+					.getStructureId(),
 			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
 			journalArticleLocalizationModel.getTitle());
 	}
@@ -239,7 +244,8 @@ public class AssetDataFactory {
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
 			wikiPageModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
 			WikiPage.class,
-			InitDataFactoryContext.getClassNameModels()), wikiPageModel.getResourcePrimKey(),
+			InitDataFactoryContext.getClassNameModels()), 
+			wikiPageModel.getResourcePrimKey(),
 			wikiPageModel.getUuid(), 0, true, true, ContentTypes.TEXT_HTML,
 			wikiPageModel.getTitle());
 	}

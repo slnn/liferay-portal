@@ -39,8 +39,10 @@ import javax.portlet.PortletPreferences;
  */
 public class JournalDataFactory {
 
-	public static DDMStructureLayoutModel getDefaultJournalDDMStructureLayoutModel() {
-		return InitDataFactoryContext.getDefaultJournalDDMStructureLayoutModel();
+	public static DDMStructureLayoutModel
+		 getDefaultJournalDDMStructureLayoutModel() {
+			 return InitDataFactoryContext.
+				getDefaultJournalDDMStructureLayoutModel();
 	}
 
 	public static DDMStructureModel getDefaultJournalDDMStructureModel() {
@@ -49,8 +51,8 @@ public class JournalDataFactory {
 
 	public static DDMStructureVersionModel
 		getDefaultJournalDDMStructureVersionModel() {
-
-		return InitDataFactoryContext.getDefaultJournalDDMStructureVersionModel();
+			return InitDataFactoryContext.
+					getDefaultJournalDDMStructureVersionModel();
 	}
 
 	public static DDMTemplateModel getDefaultJournalDDMTemplateModel() {
@@ -128,31 +130,32 @@ public class JournalDataFactory {
 		return ddmTemplateLinkModel;
 	}
 
-	public static JournalArticleLocalizationModel newJournalArticleLocalizationModel(
-		JournalArticleModel journalArticleModel, int articleIndex,
-		int versionIndex) {
-
-		JournalArticleLocalizationModel journalArticleLocalizationModel =
+	public static JournalArticleLocalizationModel 
+		newJournalArticleLocalizationModel(
+				JournalArticleModel journalArticleModel, int articleIndex,
+				int versionIndex) {
+			
+			JournalArticleLocalizationModel journalArticleLocalizationModel =
 			new JournalArticleLocalizationModelImpl();
+			
+			StringBundler sb = new StringBundler(4);
+			
+			sb.append("TestJournalArticle_");
+			sb.append(articleIndex);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(versionIndex);
 
-		StringBundler sb = new StringBundler(4);
+			journalArticleLocalizationModel.setArticleLocalizationId(
+				InitDataFactoryContext.getCounter().get());
+			journalArticleLocalizationModel.setCompanyId(
+				journalArticleModel.getCompanyId());
+			journalArticleLocalizationModel.setArticlePK(
+				journalArticleModel.getId());
+			journalArticleLocalizationModel.setTitle(sb.toString());
+			journalArticleLocalizationModel.setLanguageId(
+				journalArticleModel.getDefaultLanguageId());
 
-		sb.append("TestJournalArticle_");
-		sb.append(articleIndex);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(versionIndex);
-
-		journalArticleLocalizationModel.setArticleLocalizationId(
-			InitDataFactoryContext.getCounter().get());
-		journalArticleLocalizationModel.setCompanyId(
-			journalArticleModel.getCompanyId());
-		journalArticleLocalizationModel.setArticlePK(
-			journalArticleModel.getId());
-		journalArticleLocalizationModel.setTitle(sb.toString());
-		journalArticleLocalizationModel.setLanguageId(
-			journalArticleModel.getDefaultLanguageId());
-
-		return journalArticleLocalizationModel;
+			return journalArticleLocalizationModel;
 	}
 
 	public static JournalArticleModel newJournalArticleModel(
@@ -194,9 +197,11 @@ public class JournalDataFactory {
 			InitDataFactoryContext.getJournalArticleContent());
 		journalArticleModel.setDefaultLanguageId("en_US");
 		journalArticleModel.setDDMStructureKey(
-			InitDataFactoryContext.getDefaultJournalDDMStructureModel().getStructureKey());
+			InitDataFactoryContext.getDefaultJournalDDMStructureModel().
+					getStructureKey());
 		journalArticleModel.setDDMTemplateKey(
-			InitDataFactoryContext.getDefaultJournalDDMTemplateModel().getTemplateKey());
+			InitDataFactoryContext.getDefaultJournalDDMTemplateModel().
+					getTemplateKey());
 		journalArticleModel.setDisplayDate(new Date());
 		journalArticleModel.setExpirationDate(
 				InitDataFactoryUtil.nextFutureDate(
