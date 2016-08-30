@@ -40,8 +40,9 @@ import javax.portlet.PortletPreferences;
 public class JournalDataFactory {
 
 	public static DDMStructureLayoutModel
-		 getDefaultJournalDDMStructureLayoutModel() {
-			 return InitDataFactoryContext.
+		getDefaultJournalDDMStructureLayoutModel() {
+
+			return InitDataFactoryContext.
 				getDefaultJournalDDMStructureLayoutModel();
 	}
 
@@ -51,8 +52,9 @@ public class JournalDataFactory {
 
 	public static DDMStructureVersionModel
 		getDefaultJournalDDMStructureVersionModel() {
+
 			return InitDataFactoryContext.
-					getDefaultJournalDDMStructureVersionModel();
+				getDefaultJournalDDMStructureVersionModel();
 	}
 
 	public static DDMTemplateModel getDefaultJournalDDMTemplateModel() {
@@ -130,16 +132,16 @@ public class JournalDataFactory {
 		return ddmTemplateLinkModel;
 	}
 
-	public static JournalArticleLocalizationModel 
+	public static JournalArticleLocalizationModel
 		newJournalArticleLocalizationModel(
-				JournalArticleModel journalArticleModel, int articleIndex,
-				int versionIndex) {
-			
+			JournalArticleModel journalArticleModel, int articleIndex,
+			int versionIndex) {
+
 			JournalArticleLocalizationModel journalArticleLocalizationModel =
 			new JournalArticleLocalizationModelImpl();
-			
+
 			StringBundler sb = new StringBundler(4);
-			
+
 			sb.append("TestJournalArticle_");
 			sb.append(articleIndex);
 			sb.append(StringPool.UNDERLINE);
@@ -198,10 +200,10 @@ public class JournalDataFactory {
 		journalArticleModel.setDefaultLanguageId("en_US");
 		journalArticleModel.setDDMStructureKey(
 			InitDataFactoryContext.getDefaultJournalDDMStructureModel().
-					getStructureKey());
+				getStructureKey());
 		journalArticleModel.setDDMTemplateKey(
 			InitDataFactoryContext.getDefaultJournalDDMTemplateModel().
-					getTemplateKey());
+				getTemplateKey());
 		journalArticleModel.setDisplayDate(new Date());
 		journalArticleModel.setExpirationDate(
 				InitDataFactoryUtil.nextFutureDate(

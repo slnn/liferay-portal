@@ -258,7 +258,6 @@ public class InitDataFactoryUtil {
 	public static GroupModel initGroupModel(long groupId,
 			long classNameId, long classPK, String name,
 			boolean site,long companyId,long sampleUserId) throws Exception{
-
 		GroupModel globalGroupModel = newGroupModel(
 				groupId,classNameId,classPK,name,site,companyId,sampleUserId);
 		return globalGroupModel;

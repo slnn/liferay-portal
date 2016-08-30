@@ -137,13 +137,11 @@ public class AssetDataFactory {
 
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), 
+			blogsEntryModel.getModifiedDate(),
 			InitDataFactoryUtil.getClassNameId(
-			BlogsEntry.class,
-			InitDataFactoryContext.getClassNameModels()), 
-			blogsEntryModel.getEntryId(),
-			blogsEntryModel.getUuid(), 0, true, true, ContentTypes.TEXT_HTML,
-			blogsEntryModel.getTitle());
+			BlogsEntry.class, InitDataFactoryContext.getClassNameModels()),
+			blogsEntryModel.getEntryId(), blogsEntryModel.getUuid(), 0, true,
+			true, ContentTypes.TEXT_HTML, blogsEntryModel.getTitle());
 	}
 
 	public static AssetEntryModel newAssetEntryModel(
@@ -165,11 +163,9 @@ public class AssetDataFactory {
 		return newAssetEntryModel(
 			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
 			dLFolderModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
-			DLFolder.class,
-			InitDataFactoryContext.getClassNameModels()), 
-			dLFolderModel.getFolderId(),
-			dLFolderModel.getUuid(), 0, true, true, null,
-			dLFolderModel.getName());
+			DLFolder.class, InitDataFactoryContext.getClassNameModels()),
+			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
+			null, dLFolderModel.getName());
 	}
 
 	public static AssetEntryModel newAssetEntryModel(
@@ -205,10 +201,9 @@ public class AssetDataFactory {
 		return newAssetEntryModel(
 			mbThreadModel.getGroupId(), mbThreadModel.getCreateDate(),
 			mbThreadModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
-			MBThread.class,
-			InitDataFactoryContext.getClassNameModels()), 
-			mbThreadModel.getThreadId(),
-			mbThreadModel.getUuid(), 0, true, false, StringPool.BLANK,
+			MBThread.class, InitDataFactoryContext.getClassNameModels()),
+			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
+			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
 	}
 
@@ -243,11 +238,9 @@ public class AssetDataFactory {
 		return newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
 			wikiPageModel.getModifiedDate(), InitDataFactoryUtil.getClassNameId(
-			WikiPage.class,
-			InitDataFactoryContext.getClassNameModels()), 
-			wikiPageModel.getResourcePrimKey(),
-			wikiPageModel.getUuid(), 0, true, true, ContentTypes.TEXT_HTML,
-			wikiPageModel.getTitle());
+			WikiPage.class, InitDataFactoryContext.getClassNameModels()),
+			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
+			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
 	public static List<PortletPreferencesModel>
