@@ -189,8 +189,8 @@ public class InitDataFactoryUtil {
 		return sb.toString();
 	}
 
-		public static String getResourcePermissionModelName(
-			String... classNames) {
+	public static String getResourcePermissionModelName(String... classNames) {
+
 		if (ArrayUtil.isEmpty(classNames)) {
 			return StringPool.BLANK;
 		}
@@ -223,9 +223,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static GroupModel newGroupModel(
-			long groupId, long classNameId, long classPK, String name,
-			boolean site,long companyId,long sampleUserId)
-		throws Exception {
+		long groupId, long classNameId, long classPK, String name, boolean site,
+		long companyId, long sampleUserId)throws Exception {
 
 		GroupModel groupModel = new GroupModelImpl();
 
@@ -255,17 +254,18 @@ public class InitDataFactoryUtil {
 		return new Date(_FUTURE_TIME + (futureDateCounter.get() * Time.SECOND));
 	}
 
-	public static GroupModel initGroupModel(long groupId,
-			long classNameId, long classPK, String name,
-			boolean site,long companyId,long sampleUserId) throws Exception{
+	public static GroupModel initGroupModel(
+		long groupId, long classNameId, long classPK, String name, boolean site,
+		long companyId, long sampleUserId) throws Exception {
 		GroupModel globalGroupModel = newGroupModel(
-				groupId,classNameId,classPK,name,site,companyId,sampleUserId);
+			groupId, classNameId, classPK, name, site, companyId, sampleUserId);
 		return globalGroupModel;
 	}
 
-	public static RoleModel newRoleModel(String name, int type,long roleId,
-			long companyId,long sampleUserId,String sampleUserName,
-			long classNameId) {
+	public static RoleModel newRoleModel(
+		String name, int type, long roleId, long companyId, long sampleUserId,
+		String sampleUserName, long classNameId) {
+
 		RoleModel roleModel = new RoleModelImpl();
 
 		roleModel.setUuid(SequentialUUID.generate());
@@ -284,7 +284,7 @@ public class InitDataFactoryUtil {
 	}
 
 	public static long getClassNameId(Class<?> clazz,
-			Map<String, ClassNameModel> classNameModels) {
+		Map<String, ClassNameModel> classNameModels) {
 
 		ClassNameModel classNameModel = classNameModels.get(clazz.getName());
 
@@ -293,11 +293,12 @@ public class InitDataFactoryUtil {
 
 	public static List<String> initUserFirstNames(Class<?> clazz)
 		throws IOException {
+
 		List<String> firstNames = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream(
-					clazz, "first_names.txt")));
+			new InputStreamReader(
+				getResourceInputStream(clazz, "first_names.txt")));
 
 		String line = null;
 
@@ -316,8 +317,8 @@ public class InitDataFactoryUtil {
 		List<String> lastNames = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream(
-					clazz, "last_names.txt")));
+			new InputStreamReader(
+				getResourceInputStream(clazz, "last_names.txt")));
 
 		String line = null;
 
@@ -332,7 +333,7 @@ public class InitDataFactoryUtil {
 
 	public static UserModel newUserModel(
 		long userId, String firstName, String lastName, String screenName,
-		boolean defaultUser,long contactId,long companyId) {
+		boolean defaultUser, long contactId, long companyId) {
 
 		if (Validator.isNull(screenName)) {
 			screenName = String.valueOf(userId);
@@ -368,7 +369,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static VirtualHostModel initVirtualHostModel(String hostname,
-			long virtualHostId,long companyId) {
+		long virtualHostId, long companyId) {
+
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
 		virtualHostModel.setVirtualHostId(virtualHostId);
@@ -422,7 +424,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static String getClassName(long classNameId,
-			Map<String, ClassNameModel> classNameModels) {
+		Map<String, ClassNameModel> classNameModels) {
+
 		for (ClassNameModel classNameModel : classNameModels.values()) {
 			if (classNameModel.getClassNameId() == classNameId) {
 				return classNameModel.getValue();
@@ -434,9 +437,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static AssetCategoryModel newAssetCategoryModel(
-		long groupId, long lastRightCategoryId, String name,
-		long vocabularyId,long categoryId,long companyId,
-		long userId,String userName) {
+		long groupId, long lastRightCategoryId, String name, long vocabularyId,
+		long categoryId, long companyId, long userId, String userName) {
 
 		AssetCategoryModel assetCategoryModel = new AssetCategoryModelImpl();
 
@@ -470,9 +472,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static AssetVocabularyModel newAssetVocabularyModel(
-		long grouId, long userId, String userName,
-		String name,
-			long vocabularyId,long companyId) {
+		long grouId, long userId, String userName, String name,
+		long vocabularyId, long companyId) {
 
 		AssetVocabularyModel assetVocabularyModel =
 			new AssetVocabularyModelImpl();
@@ -516,8 +517,9 @@ public class InitDataFactoryUtil {
 	}
 
 	public static BlogsEntryModel newBlogsEntryModel(
-			long groupId, int index,long entryId,long companyId,
-			long sampleUserId, String userName) {
+		long groupId, int index, long entryId, long companyId,
+		long sampleUserId, String userName) {
+
 		BlogsEntryModel blogsEntryModel = new BlogsEntryModelImpl();
 
 		blogsEntryModel.setUuid(SequentialUUID.generate());
@@ -540,10 +542,9 @@ public class InitDataFactoryUtil {
 	}
 
 	public static DDMStructureLayoutModel newDDMStructureLayoutModel(
-		long groupId, long userId, long structureVersionId,
-		String definition,
-			long structureLayoutId,long companyId,String userName,
-			SimpleCounter futureDateCounter) {
+		long groupId, long userId, long structureVersionId, String definition,
+		long structureLayoutId, long companyId, String userName,
+		SimpleCounter futureDateCounter) {
 
 		DDMStructureLayoutModel ddmStructureLayoutModel =
 			new DDMStructureLayoutModelImpl();
@@ -566,7 +567,7 @@ public class InitDataFactoryUtil {
 
 	public static DDMStructureModel newDDMStructureModel(
 		long groupId, long userId, long classNameId, String structureKey,
-		String definition,long structureId,long companyId,String userName,
+		String definition, long structureId, long companyId, String userName,
 		SimpleCounter futureDateCounter) {
 
 		DDMStructureModel ddmStructureModel = new DDMStructureModelImpl();
@@ -580,9 +581,9 @@ public class InitDataFactoryUtil {
 		ddmStructureModel.setVersionUserId(userId);
 		ddmStructureModel.setVersionUserName(userName);
 		ddmStructureModel.setCreateDate(
-				InitDataFactoryUtil.nextFutureDate(futureDateCounter));
+			InitDataFactoryUtil.nextFutureDate(futureDateCounter));
 		ddmStructureModel.setModifiedDate(
-				InitDataFactoryUtil.nextFutureDate(futureDateCounter));
+			InitDataFactoryUtil.nextFutureDate(futureDateCounter));
 		ddmStructureModel.setClassNameId(classNameId);
 		ddmStructureModel.setStructureKey(structureKey);
 		ddmStructureModel.setVersion(DDMStructureConstants.VERSION_DEFAULT);
@@ -599,15 +600,15 @@ public class InitDataFactoryUtil {
 		ddmStructureModel.setDefinition(definition);
 		ddmStructureModel.setStorageType(StorageType.JSON.toString());
 		ddmStructureModel.setLastPublishDate(
-				InitDataFactoryUtil.nextFutureDate(futureDateCounter));
+			InitDataFactoryUtil.nextFutureDate(futureDateCounter));
 
 		return ddmStructureModel;
 	}
 
 	public static DDMTemplateModel newDDMTemplateModel(
 		long groupId, long userId, long structureId, long sourceClassNameId,
-		long templateId,long companyId,SimpleCounter futureDateCounter,
-		Map<String, ClassNameModel> classNameModels,long templateKey,
+		long templateId, long companyId, SimpleCounter futureDateCounter,
+		Map<String, ClassNameModel> classNameModels, long templateKey,
 		String versionUserName) {
 
 		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
@@ -619,8 +620,8 @@ public class InitDataFactoryUtil {
 		ddmTemplateModel.setUserId(userId);
 		ddmTemplateModel.setCreateDate(nextFutureDate(futureDateCounter));
 		ddmTemplateModel.setModifiedDate(nextFutureDate(futureDateCounter));
-		ddmTemplateModel.setClassNameId(getClassNameId(
-				DDMStructure.class,classNameModels));
+		ddmTemplateModel.setClassNameId(
+			getClassNameId(DDMStructure.class, classNameModels));
 		ddmTemplateModel.setClassPK(structureId);
 		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
 		ddmTemplateModel.setTemplateKey(String.valueOf(templateKey));
@@ -648,9 +649,9 @@ public class InitDataFactoryUtil {
 	}
 
 	public static DLFileEntryModel newDlFileEntryModel(
-		DLFolderModel dlFolerModel, int index, long fileEntryId,long companyId,
-			long userId,String userName, SimpleCounter futureDateCounter,
-			int size) {
+		DLFolderModel dlFolerModel, int index, long fileEntryId, long companyId,
+		long userId, String userName, SimpleCounter futureDateCounter,
+		int size) {
 
 		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
 
@@ -661,9 +662,9 @@ public class InitDataFactoryUtil {
 		dlFileEntryModel.setUserId(userId);
 		dlFileEntryModel.setUserName(userName);
 		dlFileEntryModel.setCreateDate(
-				InitDataFactoryUtil.nextFutureDate(futureDateCounter));
+			InitDataFactoryUtil.nextFutureDate(futureDateCounter));
 		dlFileEntryModel.setModifiedDate(
-				InitDataFactoryUtil.nextFutureDate(futureDateCounter));
+			InitDataFactoryUtil.nextFutureDate(futureDateCounter));
 		dlFileEntryModel.setRepositoryId(dlFolerModel.getRepositoryId());
 		dlFileEntryModel.setFolderId(dlFolerModel.getFolderId());
 		dlFileEntryModel.setName("TestFile" + index);
@@ -676,15 +677,16 @@ public class InitDataFactoryUtil {
 		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntryModel.setSize(size);
 		dlFileEntryModel.setLastPublishDate(
-				InitDataFactoryUtil.nextFutureDate(futureDateCounter));
+			InitDataFactoryUtil.nextFutureDate(futureDateCounter));
 
 		return dlFileEntryModel;
 	}
 
 	public static DLFolderModel newDLFolderModel(
-		long groupId, long parentFolderId, int index,long folderId,long companyId,
-			long sampleUserId,String userName,SimpleCounter futureDateCounter,
-			DLFileEntryTypeModel defaultDLFileEntryTypeModel) {
+		long groupId, long parentFolderId, int index, long folderId,
+		long companyId, long sampleUserId, String userName,
+		SimpleCounter futureDateCounter,
+		DLFileEntryTypeModel defaultDLFileEntryTypeModel) {
 
 		DLFolderModel dlFolderModel = new DLFolderModelImpl();
 
@@ -709,8 +711,9 @@ public class InitDataFactoryUtil {
 	}
 
 	public static MBCategoryModel newMBCategoryModel(
-			long groupId, int index,long categoryId,long companyId,
-			long userId,String userName,int threadCount, int messageCount) {
+		long groupId, int index, long categoryId, long companyId, long userId,
+		String userName, int threadCount, int messageCount) {
+
 		MBCategoryModel mbCategoryModel = new MBCategoryModelImpl();
 
 		mbCategoryModel.setUuid(SequentialUUID.generate());
@@ -736,8 +739,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static LayoutSetModel newLayoutSetModel(
-		long groupId, boolean privateLayout, int pageCount,
-			long layoutSetId,long companyId) {
+		long groupId, boolean privateLayout, int pageCount, long layoutSetId,
+		long companyId) {
 
 		LayoutSetModel layoutSetModel = new LayoutSetModelImpl();
 
@@ -756,7 +759,7 @@ public class InitDataFactoryUtil {
 
 	public static ResourcePermissionModel newResourcePermissionModel(
 		String name, String primKey, long roleId, long ownerId,
-			long resourcePermissionId,long companyId) {
+		long resourcePermissionId, long companyId) {
 
 		ResourcePermissionModel resourcePermissionModel =
 			new ResourcePermissionModelImpl();
@@ -775,9 +778,10 @@ public class InitDataFactoryUtil {
 		return resourcePermissionModel;
 	}
 
-	public static  WikiNodeModel newWikiNodeModel(
-			long groupId, int index,long nodeId,long companyId,long userId,
-			String userName) {
+	public static WikiNodeModel newWikiNodeModel(
+		long groupId, int index, long nodeId, long companyId, long userId,
+		String userName) {
+
 		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
 
 		wikiNodeModel.setUuid(SequentialUUID.generate());
@@ -797,8 +801,8 @@ public class InitDataFactoryUtil {
 	}
 
 	public static WikiPageModel newWikiPageModel(
-		WikiNodeModel wikiNodeModel, int index,long pageId,long resourcePrimKey,
-			long companyId,long userId,String userName) {
+		WikiNodeModel wikiNodeModel, int index, long pageId,
+		long resourcePrimKey, long companyId, long userId, String userName) {
 
 		WikiPageModel wikiPageModel = new WikiPageModelImpl();
 
@@ -823,7 +827,7 @@ public class InitDataFactoryUtil {
 	}
 
 	public static DDMStructureVersionModel newDDMStructureVersionModel(
-		DDMStructureModel ddmStructureModel,String userName) {
+		DDMStructureModel ddmStructureModel, String userName) {
 
 		DDMStructureVersionModel ddmStructureVersionModel =
 			new DDMStructureVersionModelImpl();
@@ -836,8 +840,8 @@ public class InitDataFactoryUtil {
 		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
 		ddmStructureVersionModel.setUserName(userName);
 		ddmStructureVersionModel.setCreateDate(
-				InitDataFactoryUtil.nextFutureDate(
-					InitDataFactoryContext.getFutureDateCounter()));
+			InitDataFactoryUtil.nextFutureDate(
+				InitDataFactoryContext.getFutureDateCounter()));
 		ddmStructureVersionModel.setStructureId(
 			ddmStructureModel.getStructureId());
 		ddmStructureVersionModel.setVersion(
@@ -859,8 +863,8 @@ public class InitDataFactoryUtil {
 			ddmStructureModel.getUserId());
 		ddmStructureVersionModel.setStatusByUserName(userName);
 		ddmStructureVersionModel.setStatusDate(
-				InitDataFactoryUtil.nextFutureDate(
-					InitDataFactoryContext.getFutureDateCounter()));
+			InitDataFactoryUtil.nextFutureDate(
+				InitDataFactoryContext.getFutureDateCounter()));
 
 		return ddmStructureVersionModel;
 	}
@@ -885,12 +889,13 @@ public class InitDataFactoryUtil {
 
 	public static String[] nextUserName(long index) {
 		String[] userName = new String[2];
+		int firstNameSize = InitDataFactoryContext.getFirstNames().size();
+		int lastNameSize = InitDataFactoryContext.getLastNames().size();
 
 		userName[0] = InitDataFactoryContext.getFirstNames().get(
-			(int)(index / InitDataFactoryContext.getLastNames().size()) % InitDataFactoryContext.getFirstNames().size());
-		userName[1] =
-			InitDataFactoryContext.getLastNames().get(
-					(int)(index % InitDataFactoryContext.getLastNames().size()));
+			(int)(index / lastNameSize) % firstNameSize);
+		userName[1] = InitDataFactoryContext.getLastNames().get(
+			(int)(index % lastNameSize));
 
 		return userName;
 	}
