@@ -1680,7 +1680,7 @@ public class DataFactory {
 		return dlFolderModels;
 	}
 
-	public FriendlyURLModel newLayoutFriendlyURLModel(
+	public FriendlyURLModel newFriendlyURLModel(
 		BlogsEntryModel blogsEntryModel) {
 
 		FriendlyURLModel friendlyURLModel =

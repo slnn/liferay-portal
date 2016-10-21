@@ -154,7 +154,7 @@
 <#macro insertFriendlyURL
 	_entry
 >
-	<#local friendlyURLModel = dataFactory.newLayoutFriendlyURLModel(_entry)>
+	<#local friendlyURLModel = dataFactory.newFriendlyURLModel(_entry)>
 		insert into FriendlyURL values ('${friendlyURLModel.uuid}', ${friendlyURLModel.friendlyURLId}, ${friendlyURLModel.groupId}, ${friendlyURLModel.companyId}, '${dataFactory.getDateString(friendlyURLModel.createDate)}', '${dataFactory.getDateString(friendlyURLModel.modifiedDate)}', ${friendlyURLModel.classNameId}, ${friendlyURLModel.classPK},' ${friendlyURLModel.urlTitle}', ${friendlyURLModel.main?string});
 </#macro>
 
