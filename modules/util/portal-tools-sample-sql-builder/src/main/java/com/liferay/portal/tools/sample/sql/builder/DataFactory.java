@@ -41,6 +41,8 @@ public class DataFactory extends BaseDataFactory {
 			initContext);
 
 		_portletPreferenceDataFactory.setAssetDataFactory(_assetDataFactory);
+		
+		_releaseDataFactory = new ReleaseDataFactory(initContext);
 
 		_resourcePermissionDataFactory = new ResourcePermissionDataFactory(
 			initContext);
@@ -69,6 +71,7 @@ public class DataFactory extends BaseDataFactory {
 		_dataFactorys.put("messageBoardDataFactory", _messageBoardDataFactory);
 		_dataFactorys.put(
 			"portletPreferenceDataFactory", _portletPreferenceDataFactory);
+		_dataFactorys.put("releaseDataFactory", _releaseDataFactory);
 		_dataFactorys.put(
 			"resourcePermissionDataFactory", _resourcePermissionDataFactory);
 		_dataFactorys.put(
@@ -92,6 +95,7 @@ public class DataFactory extends BaseDataFactory {
 	private final LayoutDataFactory _layoutDataFactory;
 	private final MessageBoardDataFactory _messageBoardDataFactory;
 	private final PortletPreferenceDataFactory _portletPreferenceDataFactory;
+	private final ReleaseDataFactory _releaseDataFactory;
 	private final ResourcePermissionDataFactory _resourcePermissionDataFactory;
 	private final SocialActivityDataFactory _socialActivityDataFactory;
 	private final SubscriptionDataFactory _subscriptionDataFactory;
