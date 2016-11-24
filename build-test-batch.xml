@@ -1612,7 +1612,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<gradle-execute dir="modules" task="assemble">
 					<arg value="--continue" />
 					<arg value="--parallel" />
-					<arg value="-Dbuild.exclude.dirs=private/apps/saml,third-party" />
+					<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs,private/apps/saml,third-party" />
 				</gradle-execute>
 			</test-action>
 
@@ -2412,7 +2412,14 @@ ${output.content}</echo>
 	<target name="wsdd-builder-jdk8">
 		<run-batch-test>
 			<test-action>
-				<ant dir="portal-impl" target="build-wsdds" />
+				<ant dir="portal-impl">
+					<target name="build-wsdd-portal" />
+					<target name="build-wsdd-portlets" />
+				</ant>
+
+				<gradle-execute dir="modules" task="buildWSDD">
+					<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs" />
+				</gradle-execute>
 			</test-action>
 
 			<test-set-up>
