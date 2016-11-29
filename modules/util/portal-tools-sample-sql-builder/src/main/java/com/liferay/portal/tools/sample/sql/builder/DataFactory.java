@@ -20,10 +20,9 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DataFactory extends BaseDataFactory {
+public class DataFactory {
 
 	public DataFactory(InitContext initContext) throws Exception {
-		super(initContext);
 
 		_userDataFactory = new UserDataFactory(initContext);
 
