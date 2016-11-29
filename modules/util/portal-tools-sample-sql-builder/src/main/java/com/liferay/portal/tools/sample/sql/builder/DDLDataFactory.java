@@ -45,7 +45,7 @@ import java.util.Date;
 /**
  * @author Lily Chi
  */
-public class DDLDataFactory extends BaseDataFactory {
+public class DDLDataFactory extends DDMBaseDataFactory {
 
 	public DDLDataFactory(InitContext initContext) {
 		super(initContext);

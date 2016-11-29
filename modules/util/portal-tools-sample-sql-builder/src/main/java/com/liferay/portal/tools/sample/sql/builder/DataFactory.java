@@ -23,7 +23,6 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(InitContext initContext) throws Exception {
-
 		_userDataFactory = new UserDataFactory(initContext);
 
 		_journalDataFactory = new JournalDataFactory(
