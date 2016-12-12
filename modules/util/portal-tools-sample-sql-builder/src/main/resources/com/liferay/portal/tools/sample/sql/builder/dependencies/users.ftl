@@ -26,4 +26,6 @@
 		_roleIds = roleIds
 		_userModel = userModel
 	/>
+
+	${userCSVWriter.write(userModel.screenName + "=" + userModel.firstName + " " + userModel.lastName + "\n")}
 </#list>
