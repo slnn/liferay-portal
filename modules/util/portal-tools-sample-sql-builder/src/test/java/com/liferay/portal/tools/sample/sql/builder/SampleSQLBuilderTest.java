@@ -132,7 +132,7 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			"sample.sql.output.csv.file.names",
 			"assetPublisher,blog,company,documentLibrary,dynamicDataList," +
-				"layout,messageBoard,repository,wiki");
+				"layout,messageBoard,repository,user,wiki");
 		properties.put("sample.sql.output.dir", outputDir);
 		properties.put("sample.sql.output.merge", "true");
 		properties.put(
