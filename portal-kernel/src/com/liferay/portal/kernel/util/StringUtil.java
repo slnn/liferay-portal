@@ -478,6 +478,10 @@ public class StringUtil {
 		}
 	}
 
+	public static boolean equals(String s1, String s2) {
+		return s1.equals(s2);
+	}
+
 	/**
 	 * Returns <code>true</code> if the strings are equal, ignoring new line
 	 * characters.
