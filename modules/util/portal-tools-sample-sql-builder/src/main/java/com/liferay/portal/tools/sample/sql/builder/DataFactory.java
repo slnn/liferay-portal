@@ -592,10 +592,11 @@ public class DataFactory {
 	}
 
 	public String getJournalArticleLayoutColumn(String portletPrefix) {
-		StringBundler sb = new StringBundler(3 * _maxJournalArticleCount);
+		StringBundler sb = new StringBundler(4 * _maxJournalArticleCount);
 
 		for (int i = 1; i <= _maxJournalArticleCount; i++) {
-			sb.append(portletPrefix);
+			sb.append(getPortletId(portletPrefix));
+			sb.append(StringPool.UNDERLINE);
 			sb.append(i);
 			sb.append(StringPool.COMMA);
 		}
@@ -661,6 +662,17 @@ public class DataFactory {
 		}
 
 		return groupIds;
+	}
+
+	public String getPortletId(String portletPrefix) {
+		int length = portletPrefix.length();
+
+		StringBundler sb = new StringBundler(length + 12);
+
+		sb.append(portletPrefix);
+		sb.append(PortletConstants.generateInstanceId());
+
+		return sb.toString();
 	}
 
 	public RoleModel getPowerUserRoleModel() {

@@ -22,7 +22,7 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
 <#list journalArticlePageCounts as journalArticlePageCount>
 	<#assign
-		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_"
+		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"
 
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
