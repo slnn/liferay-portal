@@ -100,7 +100,6 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 			WebKeys.THEME_DISPLAY);
 
 		contextObjects.put("locale", themeDisplay.getLocale());
-		contextObjects.put("themeDisplay", themeDisplay);
 
 		// Custom template context contributors
 
