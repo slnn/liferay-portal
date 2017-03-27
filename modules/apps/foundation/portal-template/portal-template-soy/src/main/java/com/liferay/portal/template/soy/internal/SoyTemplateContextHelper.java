@@ -153,10 +153,4 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();
 
-	@Reference(
-		target = "(lang.type=" + TemplateConstants.LANG_TYPE_SOY + ")",
-		unbind = "-"
-	)
-	private TemplateResourceParser _templateResourceParser;
-
 }
