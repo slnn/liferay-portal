@@ -14,6 +14,11 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
+
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +59,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 		Bundle bundle, BundleEvent bundleEvent,
 		List<BundleCapability> bundleCapabilities) {
 
+		removeCachedTemplateResources(bundle);
+
 		removedBundle(bundle, bundleEvent, bundleCapabilities);
 
 		List<BundleCapability> newBundleCapabilities = addingBundle(
@@ -69,7 +76,24 @@ public class SoyCapabilityBundleTrackerCustomizer
 		Bundle bundle, BundleEvent bundleEvent,
 		List<BundleCapability> bundleCapabilities) {
 
+		removeCachedTemplateResources(bundle);
+
 		_bundleMap.remove(bundle.getBundleId());
+	}
+
+	protected void removeCachedTemplateResources(Bundle bundle) {
+		SoyTemplateResourcesCollector soyTemplateResourceCollector =
+			new SoyTemplateResourcesCollector(bundle, StringPool.SLASH);
+
+		try {
+			List<TemplateResource> templateResources =
+				soyTemplateResourceCollector.getTemplateResources();
+
+			SoyTofuCache.removeIfAny(templateResources);
+		}
+		catch (TemplateException te) {
+			te.printStackTrace();
+		}
 	}
 
 	private final Map<Long, Bundle> _bundleMap;
