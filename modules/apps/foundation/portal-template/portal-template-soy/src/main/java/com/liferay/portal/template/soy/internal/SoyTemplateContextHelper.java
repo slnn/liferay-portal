@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.template.TemplateResourceParser;
 
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +70,7 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 		return SetUtil.fromArray(new String[] {TemplateConstants.NAMESPACE});
 	}
 
-	public Bundle getTemplateBundle(String templateId) {
+	public Bundle getTemplateBundle(String templateId) throws Exception {
 		int pos = templateId.indexOf(TemplateConstants.BUNDLE_SEPARATOR);
 
 		if (pos == -1) {

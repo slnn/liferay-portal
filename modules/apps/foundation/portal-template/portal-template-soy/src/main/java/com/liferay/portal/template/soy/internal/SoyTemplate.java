@@ -25,6 +25,8 @@ import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
 import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
@@ -221,16 +224,27 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
 		for (TemplateResource templateResource : templateResources) {
-			Bundle templateResourceBundle =
-				_templateContextHelper.getTemplateBundle(
-					templateResource.getTemplateId());
+			String templateId = templateResource.getTemplateId();
 
-			BundleWiring bundleWiring = templateResourceBundle.adapt(
-				BundleWiring.class);
+			try {
+				Bundle templateResourceBundle =
+					_templateContextHelper.getTemplateBundle(templateId);
 
-			resourceBundleLoaders.add(
-				new ClassResourceBundleLoader(
-					"content.Language", bundleWiring.getClassLoader()));
+				BundleWiring bundleWiring = templateResourceBundle.adapt(
+					BundleWiring.class);
+
+				resourceBundleLoaders.add(
+					new ClassResourceBundleLoader(
+						"content.Language", bundleWiring.getClassLoader()));
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Could not get language resource bundle for template " +
+							StringUtil.quote(templateId),
+						e);
+				}
+			}
 		}
 
 		resourceBundleLoaders.add(LanguageUtil.getPortalResourceBundleLoader());
@@ -243,6 +257,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return aggregateResourceBundleLoader.loadResourceBundle(
 			LanguageUtil.getLanguageId(locale));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
 	private final boolean _privileged;
 	private final SoyTemplateContextHelper _templateContextHelper;
