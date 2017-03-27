@@ -23,6 +23,7 @@ import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
+import com.google.template.soy.tofu.SoyTofuOptions;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -75,6 +76,20 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
+	}
+
+	protected SoyMsgBundleBridge createSoyMsgBundleBridge(
+		SoyFileSet soyFileSet, Locale locale) {
+
+		SoyMsgBundle soyMsgBundle = soyFileSet.extractMsgs();
+
+		ResourceBundle languageResourceBundle = _getLanguageResourceBundle(
+			locale);
+
+		SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
+			soyMsgBundle, locale, languageResourceBundle);
+
+		return soyMsgBundleBridge;
 	}
 
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
@@ -181,9 +196,19 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				throw new TemplateException("No namespace specified.");
 			}
 
+			SoyTofu soyTofu = SoyTofuCache.get(templateResources);
+
 			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
 
-			SoyTofu soyTofu = soyFileSet.compileToTofu();
+			if (soyTofu == null) {
+				SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
+
+				soyTofuOptions.setUseCaching(true);
+
+				soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
+
+				SoyTofuCache.add(templateResources, soyTofu);
+			}
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
@@ -192,13 +217,10 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			Locale locale = (Locale)get("locale");
 
 			if (locale != null) {
-				SoyMsgBundle soyMsgBundle = soyFileSet.extractMsgs();
+				SoyMsgBundleBridge soyMsgBundleBridge =
+					createSoyMsgBundleBridge(soyFileSet, locale);
 
-				ResourceBundle languageResourceBundle =
-					_getLanguageResourceBundle(locale);
-
-				SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
-					soyMsgBundle, locale, languageResourceBundle);
+				soyTofu.addToCache(soyMsgBundleBridge, null);
 
 				renderer.setMsgBundle(soyMsgBundleBridge);
 			}
