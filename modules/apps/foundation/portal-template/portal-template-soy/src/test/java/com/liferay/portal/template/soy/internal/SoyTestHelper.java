@@ -29,14 +29,11 @@ import java.util.List;
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
-public class SoyManagerTestHelper {
+public class SoyTestHelper {
 
 	public Template getTemplate(List<String> fileNames) {
-		List<TemplateResource> templateResources = new ArrayList<>();
-
-		for (String fileName : fileNames) {
-			templateResources.add(getTemplateResource(fileName));
-		}
+		List<TemplateResource> templateResources = getTemplateResources(
+			fileNames);
 
 		return _soyManager.getTemplate(templateResources, false);
 	}
@@ -75,6 +72,18 @@ public class SoyManagerTestHelper {
 		}
 
 		return templateResource;
+	}
+
+	protected List<TemplateResource> getTemplateResources(
+		List<String> fileNames) {
+
+		List<TemplateResource> templateResources = new ArrayList<>();
+
+		for (String fileName : fileNames) {
+			templateResources.add(getTemplateResource(fileName));
+		}
+
+		return templateResources;
 	}
 
 	protected void setUpSoyManager() throws Exception {
