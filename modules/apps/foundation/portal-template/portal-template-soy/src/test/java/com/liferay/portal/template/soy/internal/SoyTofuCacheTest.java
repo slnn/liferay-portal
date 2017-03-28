@@ -17,7 +17,6 @@ package com.liferay.portal.template.soy.internal;
 import com.google.template.soy.tofu.SoyTofu;
 
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.soy.internal.SoyTofuCache.SoyTemplateResource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -118,61 +117,6 @@ public class SoyTofuCacheTest {
 
 		Assert.assertNull(SoyTofuCache.get(cachedTemplateResourcesB));
 		Assert.assertNotNull(SoyTofuCache.get(cachedTemplateResourcesA));
-	}
-
-	@Test
-	public void testSoyTemplateResourceEquals() throws Exception {
-		List<TemplateResource> cachedTemplateResourcesA =
-			_soyTestHelper.getTemplateResources(Arrays.asList("simple.soy"));
-
-		TemplateResource templateResource = cachedTemplateResourcesA.get(0);
-
-		SoyTemplateResource soyTemplateResourceA = new SoyTemplateResource(
-			templateResource);
-
-		SoyTemplateResource soyTemplateResourceB = new SoyTemplateResource(
-			templateResource);
-
-		Assert.assertEquals(soyTemplateResourceA, soyTemplateResourceB);
-	}
-
-	@Test
-	public void testSoyTemplateResourceHashcode() throws Exception {
-		List<TemplateResource> cachedTemplateResourcesA =
-			_soyTestHelper.getTemplateResources(Arrays.asList("simple.soy"));
-
-		TemplateResource templateResource = cachedTemplateResourcesA.get(0);
-
-		SoyTemplateResource soyTemplateResourceA = new SoyTemplateResource(
-			templateResource);
-
-		SoyTemplateResource soyTemplateResourceB = new SoyTemplateResource(
-			templateResource);
-
-		Assert.assertEquals(
-			soyTemplateResourceA.hashCode(), soyTemplateResourceB.hashCode());
-	}
-
-	@Test
-	public void testSoyTemplateResourceHashcodeDifferent() throws Exception {
-		List<TemplateResource> cachedTemplateResourcesA =
-			_soyTestHelper.getTemplateResources(Arrays.asList("simple.soy"));
-
-		TemplateResource templateResourceA = cachedTemplateResourcesA.get(0);
-
-		SoyTemplateResource soyTemplateResourceA = new SoyTemplateResource(
-			templateResourceA);
-
-		List<TemplateResource> cachedTemplateResourcesB =
-			_soyTestHelper.getTemplateResources(Arrays.asList("context.soy"));
-
-		TemplateResource templateResourceB = cachedTemplateResourcesB.get(0);
-
-		SoyTemplateResource soyTemplateResourceB = new SoyTemplateResource(
-			templateResourceB);
-
-		Assert.assertNotEquals(
-			soyTemplateResourceA.hashCode(), soyTemplateResourceB.hashCode());
 	}
 
 	private final SoyTestHelper _soyTestHelper = new SoyTestHelper();

@@ -17,12 +17,11 @@ package com.liferay.portal.template.soy.internal;
 import com.google.template.soy.tofu.SoyTofu;
 
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * @author Bruno Basto
@@ -32,80 +31,36 @@ public class SoyTofuCache {
 	public static SoyTofu add(
 		List<TemplateResource> templateResources, SoyTofu soyTofu) {
 
-		Set<SoyTemplateResource> key = _getKey(templateResources);
+		Set<TemplateResource> key = _getKey(templateResources);
 
 		return _tofuCache.put(key, soyTofu);
 	}
 
 	public static SoyTofu get(List<TemplateResource> templateResources) {
-		Set<SoyTemplateResource> key = _getKey(templateResources);
+		Set<TemplateResource> key = _getKey(templateResources);
 
 		return _tofuCache.get(key);
 	}
 
 	public static void removeIfAny(List<TemplateResource> templateResources) {
 		for (TemplateResource templateResource : templateResources) {
-			SoyTemplateResource soyTemplateResource = new SoyTemplateResource(
-				templateResource);
+			Set<Set<TemplateResource>> keys = _tofuCache.keySet();
 
-			Set<Set<SoyTemplateResource>> keys = _tofuCache.keySet();
-
-			for (Set<SoyTemplateResource> key : keys) {
-				if (key.contains(soyTemplateResource)) {
+			for (Set<TemplateResource> key : keys) {
+				if (key.contains(templateResource)) {
 					_tofuCache.remove(key);
 				}
 			}
 		}
 	}
 
-	protected static class SoyTemplateResource {
-
-		public SoyTemplateResource(TemplateResource templateResource) {
-			_templateResource = templateResource;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof SoyTemplateResource)) {
-				return false;
-			}
-
-			SoyTemplateResource soyTemplateResource = (SoyTemplateResource)obj;
-
-			if (_templateResource.equals(
-					soyTemplateResource._templateResource) &&
-				(_templateResource.getLastModified() ==
-					soyTemplateResource._templateResource.getLastModified())) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int hash = HashUtil.hash(0, _templateResource.hashCode());
-
-			return HashUtil.hash(hash, _templateResource.getLastModified());
-		}
-
-		private final TemplateResource _templateResource;
-
-	}
-
-	private static Set<SoyTemplateResource> _getKey(
+	private static Set<TemplateResource> _getKey(
 		List<TemplateResource> templateResources) {
 
-		return templateResources.stream().map(SoyTemplateResource::new).collect(
-			Collectors.toSet());
+		return SetUtil.fromList(templateResources);
 	}
 
-	private static final ConcurrentHashMap<Set<SoyTemplateResource>, SoyTofu>
+	private static final ConcurrentHashMap<Set<TemplateResource>, SoyTofu>
 		_tofuCache = new ConcurrentHashMap<>();
 
 }
