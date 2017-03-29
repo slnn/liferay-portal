@@ -25,6 +25,8 @@ import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
 import com.google.template.soy.tofu.SoyTofuOptions;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,6 +53,7 @@ import java.security.PrivilegedExceptionAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -76,6 +79,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
+		_soyTofuCacheHandler = new SoyTofuCacheHandler(_portalCache);
 	}
 
 	protected SoyMsgBundleBridge createSoyMsgBundleBridge(
@@ -196,7 +200,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				throw new TemplateException("No namespace specified.");
 			}
 
-			SoyTofu soyTofu = SoyTofuCache.get(templateResources);
+			SoyTofu soyTofu = _soyTofuCacheHandler.get(templateResources);
 
 			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
 
@@ -207,7 +211,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 				soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
 
-				SoyTofuCache.add(templateResources, soyTofu);
+				_soyTofuCacheHandler.add(templateResources, soyTofu);
 			}
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
@@ -282,7 +286,10 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
+	private final PortalCache<HashSet<TemplateResource>, SoyTofu> _portalCache =
+		SingleVMPoolUtil.getPortalCache(SoyTemplate.class.getName());
 	private final boolean _privileged;
+	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 
 	private class TemplatePrivilegedExceptionAction

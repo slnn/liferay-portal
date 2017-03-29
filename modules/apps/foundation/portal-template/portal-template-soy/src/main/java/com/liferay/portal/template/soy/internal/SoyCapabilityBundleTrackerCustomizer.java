@@ -14,11 +14,16 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.google.template.soy.tofu.SoyTofu;
+
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +43,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 		String namespace, Map<Long, Bundle> bundleMap) {
 
 		_bundleMap = bundleMap;
+		_soyTofuCacheHandler = new SoyTofuCacheHandler(_portalCache);
 	}
 
 	@Override
@@ -89,7 +95,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 			List<TemplateResource> templateResources =
 				soyTemplateResourceCollector.getTemplateResources();
 
-			SoyTofuCache.removeIfAny(templateResources);
+			_soyTofuCacheHandler.removeIfAny(templateResources);
 		}
 		catch (TemplateException te) {
 			te.printStackTrace();
@@ -97,5 +103,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 	}
 
 	private final Map<Long, Bundle> _bundleMap;
+	private final PortalCache<HashSet<TemplateResource>, SoyTofu> _portalCache =
+		SingleVMPoolUtil.getPortalCache(SoyTemplate.class.getName());
+	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 
 }
