@@ -36,6 +36,8 @@ public class SoyTofuCacheTest {
 	@Before
 	public void setUp() throws Exception {
 		_soyTestHelper.setUp();
+		_soyTofuCacheHandler = new SoyTofuCacheHandler(
+			_soyTestHelper.mockPortalCache());
 	}
 
 	@After
@@ -51,9 +53,9 @@ public class SoyTofuCacheTest {
 
 		SoyTofu soyTofu = Mockito.mock(SoyTofu.class);
 
-		SoyTofuCache.add(templateResources, soyTofu);
+		_soyTofuCacheHandler.add(templateResources, soyTofu);
 
-		Assert.assertNotNull(SoyTofuCache.get(templateResources));
+		Assert.assertNotNull(_soyTofuCacheHandler.get(templateResources));
 	}
 
 	@Test
@@ -64,12 +66,12 @@ public class SoyTofuCacheTest {
 
 		SoyTofu soyTofu = Mockito.mock(SoyTofu.class);
 
-		SoyTofuCache.add(templateResources, soyTofu);
+		_soyTofuCacheHandler.add(templateResources, soyTofu);
 
 		List<TemplateResource> templateResourcesA =
 			_soyTestHelper.getTemplateResources(Arrays.asList("context.soy"));
 
-		Assert.assertNull(SoyTofuCache.get(templateResourcesA));
+		Assert.assertNull(_soyTofuCacheHandler.get(templateResourcesA));
 	}
 
 	@Test
@@ -81,14 +83,14 @@ public class SoyTofuCacheTest {
 
 		SoyTofu soyTofu = Mockito.mock(SoyTofu.class);
 
-		SoyTofuCache.add(cachedTemplateResources, soyTofu);
+		_soyTofuCacheHandler.add(cachedTemplateResources, soyTofu);
 
 		List<TemplateResource> templateResources =
 			_soyTestHelper.getTemplateResources(Arrays.asList("context.soy"));
 
-		SoyTofuCache.removeIfAny(templateResources);
+		_soyTofuCacheHandler.removeIfAny(templateResources);
 
-		Assert.assertNull(SoyTofuCache.get(templateResources));
+		Assert.assertNull(_soyTofuCacheHandler.get(templateResources));
 	}
 
 	@Test
@@ -98,9 +100,10 @@ public class SoyTofuCacheTest {
 
 		SoyTofu soyTofuA = Mockito.mock(SoyTofu.class);
 
-		SoyTofuCache.add(cachedTemplateResourcesA, soyTofuA);
+		_soyTofuCacheHandler.add(cachedTemplateResourcesA, soyTofuA);
 
-		Assert.assertNotNull(SoyTofuCache.get(cachedTemplateResourcesA));
+		Assert.assertNotNull(
+			_soyTofuCacheHandler.get(cachedTemplateResourcesA));
 
 		List<TemplateResource> cachedTemplateResourcesB =
 			_soyTestHelper.getTemplateResources(
@@ -108,17 +111,19 @@ public class SoyTofuCacheTest {
 
 		SoyTofu soyTofuB = Mockito.mock(SoyTofu.class);
 
-		SoyTofuCache.add(cachedTemplateResourcesB, soyTofuB);
+		_soyTofuCacheHandler.add(cachedTemplateResourcesB, soyTofuB);
 
 		List<TemplateResource> templateResources =
 			_soyTestHelper.getTemplateResources(Arrays.asList("context.soy"));
 
-		SoyTofuCache.removeIfAny(templateResources);
+		_soyTofuCacheHandler.removeIfAny(templateResources);
 
-		Assert.assertNull(SoyTofuCache.get(cachedTemplateResourcesB));
-		Assert.assertNotNull(SoyTofuCache.get(cachedTemplateResourcesA));
+		Assert.assertNull(_soyTofuCacheHandler.get(cachedTemplateResourcesB));
+		Assert.assertNotNull(
+			_soyTofuCacheHandler.get(cachedTemplateResourcesA));
 	}
 
 	private final SoyTestHelper _soyTestHelper = new SoyTestHelper();
+	private SoyTofuCacheHandler _soyTofuCacheHandler;
 
 }

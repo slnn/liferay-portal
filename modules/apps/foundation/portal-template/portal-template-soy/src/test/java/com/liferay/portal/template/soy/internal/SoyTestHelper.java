@@ -14,7 +14,10 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.google.template.soy.tofu.SoyTofu;
+
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -23,7 +26,15 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Marcellus Tavares
@@ -84,6 +95,105 @@ public class SoyTestHelper {
 		}
 
 		return templateResources;
+	}
+
+	protected PortalCache mockPortalCache() {
+		PortalCache portalCache = Mockito.mock(PortalCache.class);
+
+		Map<HashSet<TemplateResource>, SoyTofu> cache = new HashMap<>();
+
+		Mockito.when(
+			portalCache.get(Matchers.any())
+		).then(
+			new Answer<SoyTofu>() {
+
+				@Override
+				public SoyTofu answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					HashSet<TemplateResource> key =
+						(HashSet<TemplateResource>)args[0];
+
+					return cache.get(key);
+				}
+
+			}
+		);
+
+		Mockito.when(
+			portalCache.getKeys()
+		).then(
+			new Answer<List<HashSet<TemplateResource>>>() {
+
+				@Override
+				public List<HashSet<TemplateResource>> answer(
+						InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					List<HashSet<TemplateResource>> list = new ArrayList<>(
+						cache.keySet());
+
+					return list;
+				}
+
+			}
+		);
+
+		Mockito.doAnswer(
+			new Answer<Void>() {
+
+				@Override
+				public Void answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					HashSet<TemplateResource> key =
+						(HashSet<TemplateResource>)args[0];
+
+					SoyTofu value = (SoyTofu)args[1];
+
+					cache.put(key, value);
+
+					System.out.println("Putted");
+
+					return null;
+				}
+
+			}
+		).when(
+			portalCache
+		).put(
+			Mockito.any(), Mockito.any()
+		);
+
+		Mockito.doAnswer(
+			new Answer<Void>() {
+
+				@Override
+				public Void answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					HashSet<TemplateResource> key =
+						(HashSet<TemplateResource>)args[0];
+
+					cache.remove(key);
+
+					return null;
+				}
+
+			}
+		).when(
+			portalCache
+		).remove(
+			Mockito.any()
+		);
+
+		return portalCache;
 	}
 
 	protected void setUpSoyManager() throws Exception {
