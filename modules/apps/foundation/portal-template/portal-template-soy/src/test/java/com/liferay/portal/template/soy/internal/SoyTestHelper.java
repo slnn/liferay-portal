@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.soy.internal;
 
-import com.google.template.soy.tofu.SoyTofu;
-
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -100,15 +98,15 @@ public class SoyTestHelper {
 	protected PortalCache mockPortalCache() {
 		PortalCache portalCache = Mockito.mock(PortalCache.class);
 
-		Map<HashSet<TemplateResource>, SoyTofu> cache = new HashMap<>();
+		Map<HashSet<TemplateResource>, SoyTofuCache> cache = new HashMap<>();
 
 		Mockito.when(
 			portalCache.get(Matchers.any())
 		).then(
-			new Answer<SoyTofu>() {
+			new Answer<SoyTofuCache>() {
 
 				@Override
-				public SoyTofu answer(InvocationOnMock invocationOnMock)
+				public SoyTofuCache answer(InvocationOnMock invocationOnMock)
 					throws Throwable {
 
 					Object[] args = invocationOnMock.getArguments();
@@ -153,7 +151,7 @@ public class SoyTestHelper {
 					HashSet<TemplateResource> key =
 						(HashSet<TemplateResource>)args[0];
 
-					SoyTofu value = (SoyTofu)args[1];
+					SoyTofuCache value = (SoyTofuCache)args[1];
 
 					cache.put(key, value);
 
