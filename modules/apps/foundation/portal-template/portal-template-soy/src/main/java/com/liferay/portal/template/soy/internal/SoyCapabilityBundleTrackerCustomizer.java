@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.soy.internal;
 
-import com.google.template.soy.tofu.SoyTofu;
-
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -103,8 +101,9 @@ public class SoyCapabilityBundleTrackerCustomizer
 	}
 
 	private final Map<Long, Bundle> _bundleMap;
-	private final PortalCache<HashSet<TemplateResource>, SoyTofu> _portalCache =
-		SingleVMPoolUtil.getPortalCache(SoyTemplate.class.getName());
+	private final PortalCache<HashSet<TemplateResource>, SoyTofuCache>
+		_portalCache = SingleVMPoolUtil.getPortalCache(
+			SoyTemplate.class.getName());
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 
 }

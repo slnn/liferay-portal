@@ -200,18 +200,25 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				throw new TemplateException("No namespace specified.");
 			}
 
-			SoyTofu soyTofu = _soyTofuCacheHandler.get(templateResources);
+			SoyTofuCache soyTofuCache = _soyTofuCacheHandler.get(
+				templateResources);
 
 			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
 
-			if (soyTofu == null) {
+			final SoyTofu soyTofu;
+
+			if (soyTofuCache == null) {
 				SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
 
 				soyTofuOptions.setUseCaching(true);
 
 				soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
 
-				_soyTofuCacheHandler.add(templateResources, soyTofu);
+				soyTofuCache = _soyTofuCacheHandler.add(
+					templateResources, soyTofu);
+			}
+			else {
+				soyTofu = soyTofuCache.getSoyTofu();
 			}
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
@@ -221,12 +228,18 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			Locale locale = (Locale)get("locale");
 
 			if (locale != null) {
-				SoyMsgBundleBridge soyMsgBundleBridge =
-					createSoyMsgBundleBridge(soyFileSet, locale);
+				SoyMsgBundle soyMsgBundle = soyTofuCache.getMessageBundle(
+					locale);
 
-				soyTofu.addToCache(soyMsgBundleBridge, null);
+				if (soyMsgBundle == null) {
+					soyMsgBundle = createSoyMsgBundleBridge(soyFileSet, locale);
 
-				renderer.setMsgBundle(soyMsgBundleBridge);
+					soyTofu.addToCache(soyMsgBundle, null);
+
+					soyTofuCache.putMessageBundle(locale, soyMsgBundle);
+				}
+
+				renderer.setMsgBundle(soyMsgBundle);
 			}
 
 			boolean renderStrict = GetterUtil.getBoolean(
@@ -286,8 +299,9 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
-	private final PortalCache<HashSet<TemplateResource>, SoyTofu> _portalCache =
-		SingleVMPoolUtil.getPortalCache(SoyTemplate.class.getName());
+	private final PortalCache<HashSet<TemplateResource>, SoyTofuCache>
+		_portalCache = SingleVMPoolUtil.getPortalCache(
+			SoyTemplate.class.getName());
 	private final boolean _privileged;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;

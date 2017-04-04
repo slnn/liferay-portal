@@ -28,31 +28,38 @@ import java.util.List;
 public class SoyTofuCacheHandler {
 
 	public SoyTofuCacheHandler(
-		PortalCache<HashSet<TemplateResource>, SoyTofu> portalCache) {
+		PortalCache<HashSet<TemplateResource>, SoyTofuCache> portalCache) {
 
 		_portalCache = portalCache;
 	}
 
-	public void add(List<TemplateResource> templateResources, SoyTofu soyTofu) {
+	public SoyTofuCache add(
+		List<TemplateResource> templateResources, SoyTofu soyTofu) {
+
 		HashSet<TemplateResource> key = getKeySet(templateResources);
 
-		_portalCache.put(key, soyTofu);
+		SoyTofuCache soyTofuCache = new SoyTofuCache(soyTofu);
+
+		_portalCache.put(key, soyTofuCache);
+
+		return soyTofuCache;
 	}
 
-	public SoyTofu get(List<TemplateResource> templateResources) {
+	public SoyTofuCache get(List<TemplateResource> templateResources) {
 		HashSet<TemplateResource> key = getKeySet(templateResources);
 
 		return _portalCache.get(key);
 	}
 
+	public SoyTofu getSoyTofu(List<TemplateResource> templateResources) {
+		SoyTofuCache soyTofuCache = get(templateResources);
+
+		return soyTofuCache.getSoyTofu();
+	}
+
 	public void removeIfAny(List<TemplateResource> templateResources) {
 		for (TemplateResource templateResource : templateResources) {
 			for (HashSet<TemplateResource> key : _portalCache.getKeys()) {
-				System.out.println(key.size());
-				System.out.println(templateResource.getTemplateId());
-				System.out.println(
-					"Confains: " + key.contains(templateResource));
-
 				if (key.contains(templateResource)) {
 					_portalCache.remove(key);
 				}
@@ -66,6 +73,7 @@ public class SoyTofuCacheHandler {
 		return new HashSet<>(templateResources);
 	}
 
-	private final PortalCache<HashSet<TemplateResource>, SoyTofu> _portalCache;
+	private final PortalCache<HashSet<TemplateResource>, SoyTofuCache>
+		_portalCache;
 
 }
