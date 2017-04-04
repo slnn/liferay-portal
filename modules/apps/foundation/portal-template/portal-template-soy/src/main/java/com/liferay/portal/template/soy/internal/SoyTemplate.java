@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -149,6 +150,44 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return soyMapData;
 	}
 
+	protected Optional<SoyMsgBundle> getSoyMsgBundle(
+		SoyFileSet soyFileSet, SoyTofuCache soyTofuCache) {
+
+		Locale locale = (Locale)get("locale");
+
+		if (locale != null) {
+			SoyMsgBundle soyMsgBundle = soyTofuCache.getMessageBundle(locale);
+
+			if (soyMsgBundle == null) {
+				soyMsgBundle = createSoyMsgBundleBridge(soyFileSet, locale);
+
+				soyTofuCache.putMessageBundle(locale, soyMsgBundle);
+			}
+
+			return Optional.of(soyMsgBundle);
+		}
+
+		return Optional.empty();
+	}
+
+	protected SoyTofuCache getSoyTofuCache(
+		SoyFileSet soyFileSet, List<TemplateResource> templateResources) {
+
+		SoyTofuCache soyTofuCache = _soyTofuCacheHandler.get(templateResources);
+
+		if (soyTofuCache == null) {
+			SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
+
+			soyTofuOptions.setUseCaching(true);
+
+			SoyTofu soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
+
+			soyTofuCache = _soyTofuCacheHandler.add(templateResources, soyTofu);
+		}
+
+		return soyTofuCache;
+	}
+
 	protected String getTemplateContent(TemplateResource templateResource)
 		throws Exception {
 
@@ -200,46 +239,22 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				throw new TemplateException("No namespace specified.");
 			}
 
-			SoyTofuCache soyTofuCache = _soyTofuCacheHandler.get(
-				templateResources);
-
 			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
 
-			final SoyTofu soyTofu;
+			SoyTofuCache soyTofuCache = getSoyTofuCache(
+				soyFileSet, templateResources);
 
-			if (soyTofuCache == null) {
-				SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
-
-				soyTofuOptions.setUseCaching(true);
-
-				soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
-
-				soyTofuCache = _soyTofuCacheHandler.add(
-					templateResources, soyTofu);
-			}
-			else {
-				soyTofu = soyTofuCache.getSoyTofu();
-			}
+			SoyTofu soyTofu = soyTofuCache.getSoyTofu();
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
 			renderer.setData(getSoyMapData());
 
-			Locale locale = (Locale)get("locale");
+			Optional<SoyMsgBundle> soyMsgBundle = getSoyMsgBundle(
+				soyFileSet, soyTofuCache);
 
-			if (locale != null) {
-				SoyMsgBundle soyMsgBundle = soyTofuCache.getMessageBundle(
-					locale);
-
-				if (soyMsgBundle == null) {
-					soyMsgBundle = createSoyMsgBundleBridge(soyFileSet, locale);
-
-					soyTofu.addToCache(soyMsgBundle, null);
-
-					soyTofuCache.putMessageBundle(locale, soyMsgBundle);
-				}
-
-				renderer.setMsgBundle(soyMsgBundle);
+			if (soyMsgBundle.isPresent()) {
+				renderer.setMsgBundle(soyMsgBundle.get());
 			}
 
 			boolean renderStrict = GetterUtil.getBoolean(
