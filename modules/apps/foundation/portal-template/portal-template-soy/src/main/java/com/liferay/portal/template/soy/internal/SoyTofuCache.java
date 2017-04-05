@@ -13,6 +13,7 @@
  */
 package com.liferay.portal.template.soy.internal;
 
+import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 
@@ -25,12 +26,17 @@ import java.util.Map;
  */
 public class SoyTofuCache {
 
-	public SoyTofuCache(SoyTofu soyTofu) {
+	public SoyTofuCache(SoyFileSet soyFileSet, SoyTofu soyTofu) {
+		_soyFileSet = soyFileSet;
 		_soyTofu = soyTofu;
 	}
 
 	public SoyMsgBundle getMessageBundle(Locale locale) {
 		return _soyMsgBundleCache.get(locale);
+	}
+
+	public SoyFileSet getSoyFileSet() {
+		return _soyFileSet;
 	}
 
 	public SoyTofu getSoyTofu() {
@@ -43,6 +49,7 @@ public class SoyTofuCache {
 		_soyMsgBundleCache.put(locale, soyMsgBundle);
 	}
 
+	private final SoyFileSet _soyFileSet;
 	private final Map<Locale, SoyMsgBundle> _soyMsgBundleCache =
 		new HashMap<>();
 	private final SoyTofu _soyTofu;

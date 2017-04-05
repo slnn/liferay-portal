@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.tofu.SoyTofu;
 
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -34,11 +35,12 @@ public class SoyTofuCacheHandler {
 	}
 
 	public SoyTofuCache add(
-		List<TemplateResource> templateResources, SoyTofu soyTofu) {
+		List<TemplateResource> templateResources, SoyFileSet soyFileSet,
+		SoyTofu soyTofu) {
 
 		HashSet<TemplateResource> key = getKeySet(templateResources);
 
-		SoyTofuCache soyTofuCache = new SoyTofuCache(soyTofu);
+		SoyTofuCache soyTofuCache = new SoyTofuCache(soyFileSet, soyTofu);
 
 		_portalCache.put(key, soyTofuCache);
 

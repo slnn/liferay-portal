@@ -171,7 +171,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	}
 
 	protected SoyTofuCache getSoyTofuCache(
-		SoyFileSet soyFileSet, List<TemplateResource> templateResources) {
+			List<TemplateResource> templateResources)
+		throws Exception {
 
 		SoyTofuCache soyTofuCache = _soyTofuCacheHandler.get(templateResources);
 
@@ -180,9 +181,12 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			soyTofuOptions.setUseCaching(true);
 
+			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
+
 			SoyTofu soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
 
-			soyTofuCache = _soyTofuCacheHandler.add(templateResources, soyTofu);
+			soyTofuCache = _soyTofuCacheHandler.add(
+				templateResources, soyFileSet, soyTofu);
 		}
 
 		return soyTofuCache;
@@ -239,16 +243,15 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				throw new TemplateException("No namespace specified.");
 			}
 
-			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
-
-			SoyTofuCache soyTofuCache = getSoyTofuCache(
-				soyFileSet, templateResources);
+			SoyTofuCache soyTofuCache = getSoyTofuCache(templateResources);
 
 			SoyTofu soyTofu = soyTofuCache.getSoyTofu();
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
 			renderer.setData(getSoyMapData());
+
+			SoyFileSet soyFileSet = soyTofuCache.getSoyFileSet();
 
 			Optional<SoyMsgBundle> soyMsgBundle = getSoyMsgBundle(
 				soyFileSet, soyTofuCache);
