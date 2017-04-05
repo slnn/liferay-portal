@@ -14,12 +14,18 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.google.common.io.CharStreams;
+import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.SoyFileSet.Builder;
+
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+
+import java.io.Reader;
 
 import java.net.URL;
 
@@ -63,6 +69,21 @@ public class SoyTestHelper {
 
 	public void tearDown() {
 		_soyManager.destroy();
+	}
+
+	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
+		throws Exception {
+
+		Builder builder = SoyFileSet.builder();
+
+		for (TemplateResource templateResource : templateResources) {
+			Reader reader = templateResource.getReader();
+
+			builder.add(
+				CharStreams.toString(reader), templateResource.getTemplateId());
+		}
+
+		return builder.build();
 	}
 
 	protected TemplateResource getTemplateResource(String name) {
