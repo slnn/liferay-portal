@@ -14,7 +14,9 @@
 
 package com.liferay.hello.soy.web.internal.portlet;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
 import java.io.IOException;
@@ -62,6 +64,11 @@ public class HelloSoyPortlet extends SoyPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		template.put("themeDisplay", themeDisplay);
 
 		PortletURL navigationURL = renderResponse.createRenderURL();
 
