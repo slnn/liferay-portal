@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,6 +88,23 @@ public class SoyPortlet extends MVCPortlet {
 		return Collections.emptySet();
 	}
 
+	protected Writer getResponseWriter(PortletResponse portletResponse)
+		throws IOException {
+
+		Writer writer = null;
+
+		if (portletResponse instanceof MimeResponse) {
+			MimeResponse mimeResponse = (MimeResponse)portletResponse;
+
+			writer = UnsyncPrintWriterPool.borrow(mimeResponse.getWriter());
+		}
+		else {
+			writer = new UnsyncStringWriter();
+		}
+
+		return writer;
+	}
+
 	@Override
 	protected void include(
 			String namespace, PortletRequest portletRequest,
@@ -108,16 +126,7 @@ public class SoyPortlet extends MVCPortlet {
 				propagateRequestParameters(portletRequest);
 			}
 
-			Writer writer = null;
-
-			if (portletResponse instanceof MimeResponse) {
-				MimeResponse mimeResponse = (MimeResponse)portletResponse;
-
-				writer = UnsyncPrintWriterPool.borrow(mimeResponse.getWriter());
-			}
-			else {
-				writer = new UnsyncStringWriter();
-			}
+			Writer writer = getResponseWriter(portletResponse);
 
 			populateJavaScriptTemplateContext(
 				template, portletResponse.getNamespace());
@@ -129,11 +138,8 @@ public class SoyPortlet extends MVCPortlet {
 
 			template.processTemplate(writer);
 
-			String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
-				template, path, portletResponse.getNamespace(),
-				getJavaScriptRequiredModules(path));
-
-			writer.write(portletJavaScript);
+			_writePortletJavaScript(
+				portletRequest, portletResponse, path, writer);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
@@ -181,6 +187,25 @@ public class SoyPortlet extends MVCPortlet {
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY,
 			soyTemplateResourcesCollector.getTemplateResources(), false);
+	}
+
+	private void _writePortletJavaScript(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String path, Writer writer)
+		throws IOException {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<script>");
+
+		String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
+			template, path, portletResponse.getNamespace(),
+			getJavaScriptRequiredModules(path));
+
+		sb.append(portletJavaScript);
+		sb.append("</script>");
+
+		writer.write(sb.toString());
 	}
 
 	private Bundle _bundle;
