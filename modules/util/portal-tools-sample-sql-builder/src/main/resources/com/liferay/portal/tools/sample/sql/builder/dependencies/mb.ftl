@@ -25,6 +25,7 @@
 			/>
 
 			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
+			${dataFactory.toInsertSQL(dataFactory.newRatingsStatsModel(mbMessageModel))}
 		</#list>
 
 		${dataFactory.getCSVWriter("messageBoard").write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
