@@ -25,6 +25,8 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 
+import java.util.BitSet;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
@@ -144,7 +146,7 @@ public class URLCodec {
 		for (int i = 0; i < rawURLString.length(); i++) {
 			char c = rawURLString.charAt(i);
 
-			if ((c < 128) && _validChars[c]) {
+			if ((c < 256) && _validChars[c]) {
 				if (sb != null) {
 					sb.append(c);
 				}
@@ -301,7 +303,7 @@ public class URLCodec {
 		for (int i = start; i < rawString.length(); i++) {
 			char rawChar = rawString.charAt(i);
 
-			if (((rawChar >= 128) || !_validChars[rawChar]) &&
+			if ((rawChar < 256) && !_validChars[rawChar] &&
 				(escapeSpaces || (rawChar != CharPool.SPACE))) {
 
 				count++;
@@ -325,7 +327,7 @@ public class URLCodec {
 
 	private static final Log _log = LogFactoryUtil.getLog(URLCodec.class);
 
-	private static final boolean[] _validChars = new boolean[128];
+	private static final boolean[] _validChars = new boolean[256];
 
 	static {
 		for (int i = 'a'; i <= 'z'; i++) {
