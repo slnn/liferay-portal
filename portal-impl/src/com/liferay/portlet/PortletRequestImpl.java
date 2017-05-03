@@ -365,8 +365,13 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		if (lifecycle.equals(PortletRequest.RENDER_PHASE) &&
 			PropsValues.PORTLET_PREFERENCES_STRICT_STORE) {
 
-			return DoPrivilegedUtil.wrap(
-				new PortletPreferencesPrivilegedAction());
+			if (System.getSecurityManager() == null) {
+				return new PortletPreferencesWrapper(getPreferencesImpl());
+			}
+			else {
+				return DoPrivilegedUtil.wrap(
+					new PortletPreferencesPrivilegedAction());
+			}
 		}
 
 		return getPreferencesImpl();

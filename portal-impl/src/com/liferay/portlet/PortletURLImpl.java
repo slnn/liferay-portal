@@ -687,7 +687,17 @@ public class PortletURLImpl
 			return _toString;
 		}
 
-		_toString = DoPrivilegedUtil.wrap(new ToStringPrivilegedAction());
+		if (System.getSecurityManager() == null) {
+			if (_wsrp) {
+				_toString = generateWSRPToString();
+			}
+			else {
+				_toString = generateToString();
+			}
+		}
+		else {
+			_toString = DoPrivilegedUtil.wrap(new ToStringPrivilegedAction());
+		}
 
 		return _toString;
 	}

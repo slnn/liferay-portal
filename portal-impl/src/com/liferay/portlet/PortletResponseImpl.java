@@ -266,9 +266,15 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		long plid, String portletName, String lifecycle,
 		boolean includeLinkToLayoutUuid) {
 
-		return DoPrivilegedUtil.wrap(
-			new LiferayPortletURLPrivilegedAction(
-				plid, portletName, lifecycle, includeLinkToLayoutUuid));
+		if (System.getSecurityManager() == null) {
+			return doCreateLiferayPortletURL(
+				plid, portletName, lifecycle, includeLinkToLayoutUuid);
+		}
+		else {
+			return DoPrivilegedUtil.wrap(
+				new LiferayPortletURLPrivilegedAction(
+					plid, portletName, lifecycle, includeLinkToLayoutUuid));
+		}
 	}
 
 	@Override

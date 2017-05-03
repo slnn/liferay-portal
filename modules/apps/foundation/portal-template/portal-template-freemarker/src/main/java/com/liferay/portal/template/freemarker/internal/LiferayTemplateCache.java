@@ -92,13 +92,18 @@ public class LiferayTemplateCache extends TemplateCache {
 				// This template is provided by the portal, so invoke it from an
 				// access controller
 
-				try {
-					return AccessController.doPrivileged(
-						new TemplatePrivilegedExceptionAction(
-							macroTemplateId, locale, encoding));
+				if (System.getSecurityManager() == null) {
+					return _getTemplate(templateId, locale, encoding);
 				}
-				catch (PrivilegedActionException pae) {
-					throw (IOException)pae.getException();
+				else {
+					try {
+						return AccessController.doPrivileged(
+							new TemplatePrivilegedExceptionAction(
+								macroTemplateId, locale, encoding));
+					}
+					catch (PrivilegedActionException pae) {
+						throw (IOException)pae.getException();
+					}
 				}
 			}
 		}
