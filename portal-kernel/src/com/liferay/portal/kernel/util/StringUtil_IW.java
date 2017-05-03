@@ -25,6 +25,10 @@ public class StringUtil_IW {
 	public java.lang.String add(java.lang.String s, java.lang.String add) {
 		return StringUtil.add(s, add);
 	}
+	
+	public boolean equals(java.lang.String s1, java.lang.String s2) {
+		return StringUtil.equals(s1, s2);
+	}
 
 	public java.lang.String add(java.lang.String s, java.lang.String add,
 		java.lang.String delimiter) {
