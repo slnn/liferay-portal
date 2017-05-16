@@ -121,7 +121,13 @@ public class SearchEngineInitializer implements Runnable {
 
 						@Override
 						public Void call() throws Exception {
-							reindex(indexer);
+							try {
+								reindex(indexer);
+							}
+							catch (Exception e) {
+								_log.error(
+									"Error encountered while reindexing", e);
+							}
 
 							return null;
 						}
