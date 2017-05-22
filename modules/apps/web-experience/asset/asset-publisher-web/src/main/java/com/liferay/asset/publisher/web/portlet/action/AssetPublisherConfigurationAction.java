@@ -20,16 +20,15 @@ import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetQueryRule;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -62,7 +63,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -75,9 +75,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -125,10 +123,6 @@ public class AssetPublisherConfigurationAction
 			AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
 			assetPublisherCustomizer);
 
-		request.setAttribute(
-			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
-			assetPublisherWebConfiguration);
-
 		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 
 		super.include(portletConfig, request, response);
@@ -136,13 +130,25 @@ public class AssetPublisherConfigurationAction
 
 	@Override
 	public void postProcess(
-		long companyId, PortletRequest portletRequest,
-		PortletPreferences portletPreferences) {
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws ConfigurationException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		AssetPublisherPortletInstanceConfiguration
+			assetPublisherPortletInstanceConfiguration =
+				portletDisplay.getPortletInstanceConfiguration(
+					AssetPublisherPortletInstanceConfiguration.class);
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 		LocalizedValuesMap emailAssetEntryAddedBodyMap =
-			assetPublisherWebConfiguration.emailAssetEntryAddedBody();
+			assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedBody();
 
 		removeDefaultValue(
 			portletRequest, portletPreferences,
@@ -150,7 +156,8 @@ public class AssetPublisherConfigurationAction
 			emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault()));
 
 		LocalizedValuesMap emailAssetEntryAddedSubjectMap =
-			assetPublisherWebConfiguration.emailAssetEntryAddedSubject();
+			assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedSubject();
 
 		removeDefaultValue(
 			portletRequest, portletPreferences,
@@ -262,13 +269,6 @@ public class AssetPublisherConfigurationAction
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	protected void addScope(
@@ -762,7 +762,6 @@ public class AssetPublisherConfigurationAction
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
-	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 	protected AssetTagLocalService assetTagLocalService;
 	protected GroupLocalService groupLocalService;
 	protected ItemSelector itemSelector;
