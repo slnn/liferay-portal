@@ -200,7 +200,9 @@ import com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
+import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
+import com.liferay.ratings.kernel.model.RatingsStatsModel;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityModel;
@@ -2394,6 +2396,15 @@ public class DataFactory {
 		return layoutModels;
 	}
 
+	public RatingsStatsModel newRatingsStatsModel(
+		MBMessageModel mbMessageModel) {
+
+		long classNameId = mbMessageModel.getClassNameId();
+		long classPK = mbMessageModel.getMessageId();
+
+		return newRatingsStatsModel(classNameId, classPK);
+	}
+
 	public List<ReleaseModel> newReleaseModels() throws IOException {
 		List<ReleaseModel> releases = new ArrayList<>();
 
@@ -3383,6 +3394,19 @@ public class DataFactory {
 		portletPreferencesModel.setPreferences(preferences);
 
 		return portletPreferencesModel;
+	}
+
+	protected RatingsStatsModel newRatingsStatsModel(
+		long classNameId, long classPK) {
+
+		RatingsStatsModel ratingsStatsModel = new RatingsStatsModelImpl();
+
+		ratingsStatsModel.setStatsId(_counter.get());
+		ratingsStatsModel.setCompanyId(_companyId);
+		ratingsStatsModel.setClassNameId(classNameId);
+		ratingsStatsModel.setClassPK(classPK);
+
+		return ratingsStatsModel;
 	}
 
 	protected ReleaseModelImpl newReleaseModel(
