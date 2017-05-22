@@ -41,7 +41,9 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest request) {
-		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
+		if (!assetPublisherPortletInstanceConfiguration.
+				permissionCheckingConfigurable()) {
+
 			return true;
 		}
 
@@ -60,7 +62,7 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!assetPublisherPortletInstanceConfiguration.searchWithIndex()) {
 			return false;
 		}
 
@@ -96,7 +98,7 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!assetPublisherPortletInstanceConfiguration.searchWithIndex()) {
 			return false;
 		}
 

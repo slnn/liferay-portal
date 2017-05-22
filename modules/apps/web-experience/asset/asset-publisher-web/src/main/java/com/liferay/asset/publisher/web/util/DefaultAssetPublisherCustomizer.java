@@ -16,10 +16,11 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
-import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -47,9 +48,12 @@ public class DefaultAssetPublisherCustomizer
 
 	@Activate
 	@Modified
-	public void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
+	public void activate(Map<String, Object> properties)
+		throws ConfigurationException {
+
+		assetPublisherPortletInstanceConfiguration =
+			ConfigurationProviderUtil.getSystemConfiguration(
+				AssetPublisherPortletInstanceConfiguration.class);
 	}
 
 	@Override
@@ -70,11 +74,13 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest request) {
-		if (assetPublisherWebConfiguration.searchWithIndex()) {
+		if (assetPublisherPortletInstanceConfiguration.searchWithIndex()) {
 			return true;
 		}
 
-		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
+		if (!assetPublisherPortletInstanceConfiguration.
+				permissionCheckingConfigurable()) {
+
 			return true;
 		}
 
@@ -93,7 +99,7 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!assetPublisherPortletInstanceConfiguration.searchWithIndex()) {
 			return false;
 		}
 
@@ -129,7 +135,7 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!assetPublisherPortletInstanceConfiguration.searchWithIndex()) {
 			return false;
 		}
 
@@ -176,6 +182,7 @@ public class DefaultAssetPublisherCustomizer
 		return null;
 	}
 
-	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
+	protected AssetPublisherPortletInstanceConfiguration
+		assetPublisherPortletInstanceConfiguration;
 
 }

@@ -56,7 +56,7 @@ public class RecentContentAssetPublisherCustomizer
 
 	@Override
 	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!assetPublisherPortletInstanceConfiguration.searchWithIndex()) {
 			return false;
 		}
 
