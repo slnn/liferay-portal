@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.configuration;
+package com.liferay.asset.publisher.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -20,28 +20,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
- * @author Pavel Savinov
+ * @author Juergen Kappler
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
-@Meta.OCD(
-	id = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
-	localization = "content/Language",
-	name = "asset.publisher.web.configuration.name"
+@ExtendedObjectClassDefinition(
+	category = "web-experience",
+	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
-public interface AssetPublisherWebConfiguration {
-
-	/**
-	 * Set the interval in hours on how often CheckAssetEntryMessageListener
-	 * will run to check for new assets. Users will be notified via email of
-	 * new assets.
-	 *
-	 * @return interval in hours on how often to check for new assets.
-	 */
-	@Meta.AD(
-		deflt = "24", description = "check.interval.key.description",
-		required = false
-	)
-	public int checkInterval();
+@Meta.OCD(
+	id = "com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "asset.publisher.portlet.instance.configuration.name"
+)
+public interface AssetPublisherPortletInstanceConfiguration {
 
 	/**
 	 * Set the name of the display style which will be used by default.
@@ -66,43 +56,6 @@ public interface AssetPublisherWebConfiguration {
 	)
 	public String[] displayStyles();
 
-	/**
-	 * Set this to true to enable exporting contents related to asset entries
-	 * for dynamic selection.
-	 *
-	 * @return <code>true</code> if dynamic export is enabled.
-	 */
-	@Meta.AD(
-		deflt = "true", description = "dynamic.export.enabled.key.description",
-		required = false
-	)
-	public boolean dynamicExportEnabled();
-
-	/**
-	 * Set the maximum number of entries to export for dynamic selection. Set
-	 * this property to 0 if there is no limit.
-	 *
-	 * @return maximum number of entries to export for dynamic selection.
-	 */
-	@Meta.AD(
-		deflt = "20", description = "dynamic.export.limit.key.description",
-		required = false
-	)
-	public int dynamicExportLimit();
-
-	/**
-	 * Set the maximum number of new entries to notify subscribers of Asset
-	 * Publisher portlets. Set this property to 0 if there is no limit.
-	 *
-	 * @return maximum number of new entries to notify subscribers.
-	 */
-	@Meta.AD(
-		deflt = "20",
-		description = "dynamic.subscription.limit.key.description",
-		required = false
-	)
-	public int dynamicSubscriptionLimit();
-
 	@Meta.AD(
 		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_body.tmpl}",
 		required = false
@@ -125,16 +78,16 @@ public interface AssetPublisherWebConfiguration {
 	public String emailFromName();
 
 	/**
-	 * Set this to true to enable exporting contents related to asset entries
-	 * for manual selection.
+	 * Set this to true to search assets in Asset Publisher from the index. Set
+	 * this to false to search assets in Asset Publisher from the database.
 	 *
-	 * @return <code>true</code> if manual export is enabled.
+	 * @return <code>true</code> search with index is enabled.
 	 */
 	@Meta.AD(
-		deflt = "true", description = "manual.export.enabled.key.description",
+		deflt = "true", description = "search.with.index.key.description",
 		required = false
 	)
-	public boolean manualExportEnabled();
+	public boolean searchWithIndex();
 
 	/**
 	 * Set this to true to allow users to configure Asset Publisher, Most Viewed
@@ -150,17 +103,5 @@ public interface AssetPublisherWebConfiguration {
 		required = false
 	)
 	public boolean permissionCheckingConfigurable();
-
-	/**
-	 * Set this to true to search assets in Asset Publisher from the index. Set
-	 * this to false to search assets in Asset Publisher from the database.
-	 *
-	 * @return <code>true</code> search with index is enabled.
-	 */
-	@Meta.AD(
-		deflt = "true", description = "search.with.index.key.description",
-		required = false
-	)
-	public boolean searchWithIndex();
 
 }
