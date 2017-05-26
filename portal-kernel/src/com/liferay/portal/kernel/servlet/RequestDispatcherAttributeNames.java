@@ -27,6 +27,10 @@ import javax.portlet.MimeResponse;
 public class RequestDispatcherAttributeNames {
 
 	public static boolean contains(String name) {
+		if (!name.startsWith("javax")) {
+			return false;
+		}
+
 		return _attributeNames.contains(name);
 	}
 
