@@ -79,6 +79,10 @@ public class SoyPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		Template template = getTemplate(renderRequest);
+
+		renderRequest.setAttribute(WebKeys.TEMPLATE, template);
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -106,21 +110,16 @@ public class SoyPortlet extends MVCPortlet {
 	protected Template getTemplate(PortletRequest portletRequest)
 		throws PortletException {
 
-		Template template = (Template)portletRequest.getAttribute(
-			WebKeys.TEMPLATE);
-
-		if (template == null) {
+		if (_template == null) {
 			try {
-				template = _createTemplate();
+				_template = _createTemplate();
 			}
 			catch (TemplateException te) {
 				throw new PortletException("Unable to create template", te);
 			}
-
-			portletRequest.setAttribute(WebKeys.TEMPLATE, template);
 		}
 
-		return template;
+		return _template;
 	}
 
 	@Override
@@ -251,9 +250,9 @@ public class SoyPortlet extends MVCPortlet {
 		writer.write(sb.toString());
 	}
 
-	private static List<TemplateResource> _templateResources;
-
 	private Bundle _bundle;
 	private SoyPortletHelper _soyPortletHelper;
+	private Template _template;
+	private List<TemplateResource> _templateResources;
 
 }

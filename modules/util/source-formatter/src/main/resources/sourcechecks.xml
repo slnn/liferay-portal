@@ -17,7 +17,7 @@
 
 		<!-- Module checks -->
 
-		<check name="BNDBundleNameCheck" />
+		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
 		<check name="BNDExportsCheck" />
 		<check name="BNDIncludeResourceCheck" />
@@ -37,6 +37,7 @@
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">
 		<check name="GradleDependenciesCheck" />
+		<check name="GradleImportsCheck" />
 		<check name="GradleVersionCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>
