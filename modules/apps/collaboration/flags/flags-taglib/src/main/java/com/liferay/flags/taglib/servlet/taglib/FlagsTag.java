@@ -22,7 +22,9 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of 2.0.0, with no direct replacement
  */
+@Deprecated
 public class FlagsTag extends IncludeTag {
 
 	public void setClassName(String className) {
@@ -97,7 +99,7 @@ public class FlagsTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _contentTitle;
-	private boolean _enabled = true;
+	private boolean _enabled;
 	private boolean _label = true;
 	private String _message;
 	private long _reportedUserId;

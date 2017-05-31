@@ -1520,6 +1520,22 @@ version 1.1.7.
 ### Changed
 - [LPS-71722]: Update the [Liferay Gradle Plugins] dependency to version 3.3.19.
 
+## 3.6.24 - 2017-05-25
+
+### Changed
+- [LPS-72750]: Update the [Liferay Gradle Plugins] dependency to version 3.3.20.
+
+## 3.6.25 - 2017-05-25
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.21.
+
+## 3.7.0 - 2017-05-30
+
+### Added
+- [LPS-72830]: Add task `checkOSGiBundleState` to fail the build if the state of
+the deployed OSGi bundle is not `ACTIVE`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1676,7 +1692,10 @@ version 1.1.7.
 [LPS-72562]: https://issues.liferay.com/browse/LPS-72562
 [LPS-72572]: https://issues.liferay.com/browse/LPS-72572
 [LPS-72656]: https://issues.liferay.com/browse/LPS-72656
+[LPS-72705]: https://issues.liferay.com/browse/LPS-72705
 [LPS-72723]: https://issues.liferay.com/browse/LPS-72723
+[LPS-72750]: https://issues.liferay.com/browse/LPS-72750
+[LPS-72830]: https://issues.liferay.com/browse/LPS-72830
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981
