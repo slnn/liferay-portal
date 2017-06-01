@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.portal.search.web.internal.search.insights.constants;
+
+/**
+ * @author André de Oliveira
+*/
+public class SearchInsightsWebKeys {
+
+	public static final String DISPLAY_CONTEXT =
+		"SEARCH_INSIGHTS_PORTLET_DISPLAY_CONTEXT";
+
+}
