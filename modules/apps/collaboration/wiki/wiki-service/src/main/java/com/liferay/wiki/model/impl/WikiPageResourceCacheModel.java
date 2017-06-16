@@ -64,7 +64,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -78,6 +78,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		sb.append(nodeId);
 		sb.append(", title=");
 		sb.append(title);
+		sb.append(", headPageId=");
+		sb.append(headPageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,6 +108,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 			wikiPageResourceImpl.setTitle(title);
 		}
 
+		wikiPageResourceImpl.setHeadPageId(headPageId);
+
 		wikiPageResourceImpl.resetOriginalValues();
 
 		return wikiPageResourceImpl;
@@ -123,6 +127,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 
 		nodeId = objectInput.readLong();
 		title = objectInput.readUTF();
+
+		headPageId = objectInput.readLong();
 	}
 
 	@Override
@@ -149,6 +155,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		else {
 			objectOutput.writeUTF(title);
 		}
+
+		objectOutput.writeLong(headPageId);
 	}
 
 	public String uuid;
@@ -157,4 +165,5 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 	public long companyId;
 	public long nodeId;
 	public String title;
+	public long headPageId;
 }

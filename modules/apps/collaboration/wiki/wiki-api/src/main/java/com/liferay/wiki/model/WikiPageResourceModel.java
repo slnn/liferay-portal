@@ -150,6 +150,20 @@ public interface WikiPageResourceModel extends BaseModel<WikiPageResource>,
 	 */
 	public void setTitle(String title);
 
+	/**
+	 * Returns the head page ID of this wiki page resource.
+	 *
+	 * @return the head page ID of this wiki page resource
+	 */
+	public long getHeadPageId();
+
+	/**
+	 * Sets the head page ID of this wiki page resource.
+	 *
+	 * @param headPageId the head page ID of this wiki page resource
+	 */
+	public void setHeadPageId(long headPageId);
+
 	@Override
 	public boolean isNew();
 

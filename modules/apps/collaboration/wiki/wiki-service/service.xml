@@ -312,6 +312,7 @@
 
 		<column name="nodeId" type="long" />
 		<column name="title" type="String" />
+		<column name="headPageId" type="long" />
 
 		<!-- Finder methods -->
 

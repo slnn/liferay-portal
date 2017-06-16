@@ -50,6 +50,11 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradePortletPreferences(),
 			new UpgradePortletSettings(_settingsFactory),
 			new UpgradeWikiPageResource());
+
+		registry.register(
+			"com.liferay.wiki.service", "1.0.0", "1.1.0",
+			new com.liferay.wiki.internal.upgrade.v1_1_0.
+				UpgradeWikiPageResource());
 	}
 
 	@Reference(unbind = "-")

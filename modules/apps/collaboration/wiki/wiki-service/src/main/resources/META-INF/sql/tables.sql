@@ -50,5 +50,6 @@ create table WikiPageResource (
 	groupId LONG,
 	companyId LONG,
 	nodeId LONG,
-	title VARCHAR(255) null
+	title VARCHAR(255) null,
+	headPageId LONG
 );

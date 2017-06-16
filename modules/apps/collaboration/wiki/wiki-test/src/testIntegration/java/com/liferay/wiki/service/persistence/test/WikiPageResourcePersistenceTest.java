@@ -134,6 +134,8 @@ public class WikiPageResourcePersistenceTest {
 
 		newWikiPageResource.setTitle(RandomTestUtil.randomString());
 
+		newWikiPageResource.setHeadPageId(RandomTestUtil.nextLong());
+
 		_wikiPageResources.add(_persistence.update(newWikiPageResource));
 
 		WikiPageResource existingWikiPageResource = _persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
@@ -150,6 +152,8 @@ public class WikiPageResourcePersistenceTest {
 			newWikiPageResource.getNodeId());
 		Assert.assertEquals(existingWikiPageResource.getTitle(),
 			newWikiPageResource.getTitle());
+		Assert.assertEquals(existingWikiPageResource.getHeadPageId(),
+			newWikiPageResource.getHeadPageId());
 	}
 
 	@Test
@@ -213,7 +217,7 @@ public class WikiPageResourcePersistenceTest {
 	protected OrderByComparator<WikiPageResource> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WikiPageResource", "uuid",
 			true, "resourcePrimKey", true, "groupId", true, "companyId", true,
-			"nodeId", true, "title", true);
+			"nodeId", true, "title", true, "headPageId", true);
 	}
 
 	@Test
@@ -447,6 +451,8 @@ public class WikiPageResourcePersistenceTest {
 		wikiPageResource.setNodeId(RandomTestUtil.nextLong());
 
 		wikiPageResource.setTitle(RandomTestUtil.randomString());
+
+		wikiPageResource.setHeadPageId(RandomTestUtil.nextLong());
 
 		_wikiPageResources.add(_persistence.update(wikiPageResource));
 

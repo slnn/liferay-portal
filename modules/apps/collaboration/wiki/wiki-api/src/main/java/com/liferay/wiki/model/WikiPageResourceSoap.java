@@ -38,6 +38,7 @@ public class WikiPageResourceSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setNodeId(model.getNodeId());
 		soapModel.setTitle(model.getTitle());
+		soapModel.setHeadPageId(model.getHeadPageId());
 
 		return soapModel;
 	}
@@ -140,10 +141,19 @@ public class WikiPageResourceSoap implements Serializable {
 		_title = title;
 	}
 
+	public long getHeadPageId() {
+		return _headPageId;
+	}
+
+	public void setHeadPageId(long headPageId) {
+		_headPageId = headPageId;
+	}
+
 	private String _uuid;
 	private long _resourcePrimKey;
 	private long _groupId;
 	private long _companyId;
 	private long _nodeId;
 	private String _title;
+	private long _headPageId;
 }

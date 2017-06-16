@@ -66,7 +66,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "nodeId", Types.BIGINT },
-			{ "title", Types.VARCHAR }
+			{ "title", Types.VARCHAR },
+			{ "headPageId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -77,9 +78,10 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("nodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("headPageId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WikiPageResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,nodeId LONG,title VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table WikiPageResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,nodeId LONG,title VARCHAR(255) null,headPageId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table WikiPageResource";
 	public static final String ORDER_BY_JPQL = " ORDER BY wikiPageResource.resourcePrimKey ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WikiPageResource.resourcePrimKey ASC";
@@ -147,6 +149,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
+		attributes.put("headPageId", getHeadPageId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -190,6 +193,12 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		Long headPageId = (Long)attributes.get("headPageId");
+
+		if (headPageId != null) {
+			setHeadPageId(headPageId);
 		}
 	}
 
@@ -317,6 +326,16 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		return GetterUtil.getString(_originalTitle);
 	}
 
+	@Override
+	public long getHeadPageId() {
+		return _headPageId;
+	}
+
+	@Override
+	public void setHeadPageId(long headPageId) {
+		_headPageId = headPageId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -354,6 +373,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		wikiPageResourceImpl.setCompanyId(getCompanyId());
 		wikiPageResourceImpl.setNodeId(getNodeId());
 		wikiPageResourceImpl.setTitle(getTitle());
+		wikiPageResourceImpl.setHeadPageId(getHeadPageId());
 
 		wikiPageResourceImpl.resetOriginalValues();
 
@@ -463,12 +483,14 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 			wikiPageResourceCacheModel.title = null;
 		}
 
+		wikiPageResourceCacheModel.headPageId = getHeadPageId();
+
 		return wikiPageResourceCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -482,6 +504,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		sb.append(getNodeId());
 		sb.append(", title=");
 		sb.append(getTitle());
+		sb.append(", headPageId=");
+		sb.append(getHeadPageId());
 		sb.append("}");
 
 		return sb.toString();
@@ -489,7 +513,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.wiki.model.WikiPageResource");
@@ -519,6 +543,10 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>headPageId</column-name><column-value><![CDATA[");
+		sb.append(getHeadPageId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -543,6 +571,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private boolean _setOriginalNodeId;
 	private String _title;
 	private String _originalTitle;
+	private long _headPageId;
 	private long _columnBitmask;
 	private WikiPageResource _escapedModel;
 }

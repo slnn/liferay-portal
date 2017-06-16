@@ -63,6 +63,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
+		attributes.put("headPageId", getHeadPageId());
 
 		return attributes;
 	}
@@ -103,6 +104,12 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		Long headPageId = (Long)attributes.get("headPageId");
+
+		if (headPageId != null) {
+			setHeadPageId(headPageId);
 		}
 	}
 
@@ -212,6 +219,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	}
 
 	/**
+	* Returns the head page ID of this wiki page resource.
+	*
+	* @return the head page ID of this wiki page resource
+	*/
+	@Override
+	public long getHeadPageId() {
+		return _wikiPageResource.getHeadPageId();
+	}
+
+	/**
 	* Returns the node ID of this wiki page resource.
 	*
 	* @return the node ID of this wiki page resource
@@ -285,6 +302,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	@Override
 	public void setGroupId(long groupId) {
 		_wikiPageResource.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the head page ID of this wiki page resource.
+	*
+	* @param headPageId the head page ID of this wiki page resource
+	*/
+	@Override
+	public void setHeadPageId(long headPageId) {
+		_wikiPageResource.setHeadPageId(headPageId);
 	}
 
 	@Override

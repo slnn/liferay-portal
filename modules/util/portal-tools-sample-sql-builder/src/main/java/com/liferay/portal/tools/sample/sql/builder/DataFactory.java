@@ -2782,6 +2782,10 @@ public class DataFactory {
 		wikiPageResourceModel.setNodeId(wikiPageModel.getNodeId());
 		wikiPageResourceModel.setTitle(wikiPageModel.getTitle());
 
+		if (wikiPageModel.isHead()) {
+			wikiPageResourceModel.setHeadPageId(wikiPageModel.getPageId());
+		}
+
 		return wikiPageResourceModel;
 	}
 

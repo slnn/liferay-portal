@@ -2159,6 +2159,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		wikiPageResourceImpl.setCompanyId(wikiPageResource.getCompanyId());
 		wikiPageResourceImpl.setNodeId(wikiPageResource.getNodeId());
 		wikiPageResourceImpl.setTitle(wikiPageResource.getTitle());
+		wikiPageResourceImpl.setHeadPageId(wikiPageResource.getHeadPageId());
 
 		return wikiPageResourceImpl;
 	}

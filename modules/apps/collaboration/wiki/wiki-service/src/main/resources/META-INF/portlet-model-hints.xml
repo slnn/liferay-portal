@@ -74,5 +74,6 @@
 		<field name="title" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="headPageId" type="long" />
 	</model>
 </model-hints>
