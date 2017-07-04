@@ -26,10 +26,11 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.CachedSupplier;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -64,8 +65,9 @@ public class KBAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
@@ -81,9 +83,12 @@ public class KBAttachmentEditorConfigContributor
 			(Map<String, String>)inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:fileBrowserParams");
 
-		long resourcePrimKey = 0;
+		final long resourcePrimKey;
 
-		if (fileBrowserParamsMap != null) {
+		if (fileBrowserParamsMap == null) {
+			resourcePrimKey = 0;
+		}
+		else {
 			resourcePrimKey = GetterUtil.getLong(
 				fileBrowserParamsMap.get("resourcePrimKey"));
 		}
@@ -92,41 +97,56 @@ public class KBAttachmentEditorConfigContributor
 			return;
 		}
 
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
+		CachedSupplier<String> cachedSupplier = new CachedSupplier<String>() {
 
-		desiredItemSelectorReturnTypes.add(
-			new FileEntryItemSelectorReturnType());
-		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+			@Override
+			protected String doGet() {
+				List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+					new ArrayList<>(3);
 
-		ItemSelectorCriterion kbAttachmentsItemSelectorCriterion =
-			getKBAttachmentItemSelectorCriterion(
-				resourcePrimKey, desiredItemSelectorReturnTypes);
+				desiredItemSelectorReturnTypes.add(
+					new FileEntryItemSelectorReturnType());
+				desiredItemSelectorReturnTypes.add(
+					new URLItemSelectorReturnType());
 
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
+				ItemSelectorCriterion kbAttachmentsItemSelectorCriterion =
+					getKBAttachmentItemSelectorCriterion(
+						resourcePrimKey, desiredItemSelectorReturnTypes);
 
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			getURLItemSelectorCriterion();
+				ItemSelectorCriterion imageItemSelectorCriterion =
+					getImageItemSelectorCriterion(
+						desiredItemSelectorReturnTypes);
 
-		ItemSelectorCriterion uploadItemSelectorCriterion =
-			getUploadItemSelectorCriterion(
-				resourcePrimKey, themeDisplay, requestBackedPortletURLFactory);
+				ItemSelectorCriterion urlItemSelectorCriterion =
+					getURLItemSelectorCriterion();
 
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+				ItemSelectorCriterion uploadItemSelectorCriterion =
+					getUploadItemSelectorCriterion(
+						resourcePrimKey, themeDisplay,
+						requestBackedPortletURLFactory);
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, namespace + name + "selectItem",
-			kbAttachmentsItemSelectorCriterion, imageItemSelectorCriterion,
-			urlItemSelectorCriterion, uploadItemSelectorCriterion);
+				String namespace = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:namespace"));
+				String name = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
 
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+				PortletURL itemSelectorPortletURL =
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						namespace + name + "selectItem",
+						kbAttachmentsItemSelectorCriterion,
+						imageItemSelectorCriterion, urlItemSelectorCriterion,
+						uploadItemSelectorCriterion);
+
+				return itemSelectorPortletURL.toString();
+			}
+
+		};
+
+		collector.collect("filebrowserImageBrowseLinkUrl", cachedSupplier);
+		collector.collect("filebrowserImageBrowseUrl", cachedSupplier);
 	}
 
 	@Reference(unbind = "-")

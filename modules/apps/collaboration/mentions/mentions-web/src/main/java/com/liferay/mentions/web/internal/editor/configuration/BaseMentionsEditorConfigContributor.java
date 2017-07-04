@@ -17,6 +17,7 @@ package com.liferay.mentions.web.internal.editor.configuration;
 import com.liferay.mentions.matcher.MentionsMatcherUtil;
 import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,67 +38,80 @@ public class BaseMentionsEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONObject autoCompleteConfigJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		collector.collect(
+			"autocomplete",
+			() -> {
+				JSONObject autoCompleteConfigJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-		autoCompleteConfigJSONObject.put("requestTemplate", "query={query}");
+				autoCompleteConfigJSONObject.put(
+					"requestTemplate", "query={query}");
 
-		JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
+				JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject triggerJSONObject = JSONFactoryUtil.createJSONObject();
+				JSONObject triggerJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-		triggerJSONObject.put(
-			"regExp",
-			"(?:\\strigger|^trigger)(" +
-				MentionsMatcherUtil.getScreenNameRegularExpression() + ")");
-		triggerJSONObject.put(
-			"resultFilters", "function(query, results) {return results;}");
-		triggerJSONObject.put("resultTextLocator", "screenName");
-		triggerJSONObject.put("term", "@");
-		triggerJSONObject.put("tplReplace", "{mention}");
+				triggerJSONObject.put(
+					"regExp",
+					"(?:\\strigger|^trigger)(" +
+						MentionsMatcherUtil.getScreenNameRegularExpression() +
+							")");
+				triggerJSONObject.put(
+					"resultFilters",
+					"function(query, results) {return results;}");
+				triggerJSONObject.put("resultTextLocator", "screenName");
+				triggerJSONObject.put("term", "@");
+				triggerJSONObject.put("tplReplace", "{mention}");
 
-		StringBundler sb = new StringBundler(5);
+				StringBundler sb = new StringBundler(6);
 
-		sb.append("<div class=\"nameplate\"><div class=\"nameplate-field\">");
-		sb.append("<div class=\"user-icon\"><img class=\"img-circle\" ");
-		sb.append("src=\"{portraitURL}\" height=\"32px\" width=\"32px\">");
-		sb.append("</img></div></div><div class=\"nameplate-content\"><h4>");
-		sb.append("{fullName} <small>@{screenName}</small></h4></div></div>");
+				sb.append("<div class=\"nameplate\"><div class=\"");
+				sb.append("nameplate-field\"><div class=\"user-icon\">");
+				sb.append("<img class=\"img-circle\" src=\"{portraitURL}\" ");
+				sb.append("height=\"32px\" width=\"32px\"></img></div></div>");
+				sb.append("<div class=\"nameplate-content\"><h4>{fullName} ");
+				sb.append("<small>@{screenName}</small></h4></div></div>");
 
-		triggerJSONObject.put("tplResults", sb.toString());
+				triggerJSONObject.put("tplResults", sb.toString());
 
-		PortletURL autoCompleteUserURL =
-			requestBackedPortletURLFactory.createResourceURL(
-				MentionsPortletKeys.MENTIONS);
+				PortletURL autoCompleteUserURL =
+					requestBackedPortletURLFactory.createResourceURL(
+						MentionsPortletKeys.MENTIONS);
 
-		String source =
-			autoCompleteUserURL.toString() + "&" +
-				PortalUtil.getPortletNamespace(MentionsPortletKeys.MENTIONS);
+				String source =
+					autoCompleteUserURL.toString() + "&" +
+						PortalUtil.getPortletNamespace(
+							MentionsPortletKeys.MENTIONS);
 
-		triggerJSONObject.put("source", source);
+				triggerJSONObject.put("source", source);
 
-		triggerJSONArray.put(triggerJSONObject);
+				triggerJSONArray.put(triggerJSONObject);
 
-		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
+				autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 
-		jsonObject.put("autocomplete", autoCompleteConfigJSONObject);
+				return autoCompleteConfigJSONObject;
+			});
+		collector.collect(
+			"extraPlugins",
+			(String extraPlugins) -> {
+				if (Validator.isNotNull(extraPlugins)) {
+					extraPlugins += ",autocomplete";
+				}
+				else {
+					extraPlugins =
+						"autocomplete,ae_placeholder,ae_selectionregion," +
+							"ae_uicore";
+				}
 
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",autocomplete";
-		}
-		else {
-			extraPlugins =
-				"autocomplete,ae_placeholder,ae_selectionregion,ae_uicore";
-		}
-
-		jsonObject.put("extraPlugins", extraPlugins);
+				return extraPlugins;
+			});
 	}
 
 }

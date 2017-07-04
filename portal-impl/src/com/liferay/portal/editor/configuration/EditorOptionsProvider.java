@@ -39,7 +39,7 @@ public class EditorOptionsProvider
 
 		EditorOptions editorOptions = new EditorOptions();
 
-		visitEditorContributors(
+		filterEditorContributors(
 			editorOptionsContributor ->
 				editorOptionsContributor.populateEditorOptions(
 					editorOptions, inputEditorTaglibAttributes, themeDisplay,

@@ -24,9 +24,10 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CachedSupplier;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
@@ -54,24 +55,37 @@ public class MBAttachmentHTMLEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+		CachedSupplier<String> cachedSupplier = new CachedSupplier<String>() {
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, namespace + name + "selectItem",
-			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
+			@Override
+			protected String doGet() {
+				String namespace = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:namespace"));
+				String name = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
 
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+				PortletURL itemSelectorPortletURL =
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						namespace + name + "selectItem",
+						getImageItemSelectorCriterion(),
+						getURLItemSelectorCriterion());
+
+				return itemSelectorPortletURL.toString();
+			}
+
+		};
+
+		collector.collect("filebrowserImageBrowseLinkUrl", cachedSupplier);
+		collector.collect("filebrowserImageBrowseUrl", cachedSupplier);
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {

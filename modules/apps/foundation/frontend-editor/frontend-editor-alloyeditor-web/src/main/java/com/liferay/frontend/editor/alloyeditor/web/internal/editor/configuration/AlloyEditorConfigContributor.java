@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,28 +48,30 @@ public class AlloyEditorConfigContributor
 	extends BaseAlloyEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		String extraPlugins = jsonObject.getString("extraPlugins");
+		collector.collect(
+			"extraPlugins",
+			(String extraPlugins) -> {
+				if (Validator.isNotNull(extraPlugins)) {
+					extraPlugins += ",itemselector,media";
+				}
+				else {
+					extraPlugins = "itemselector,media";
+				}
 
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",itemselector,media";
-		}
-		else {
-			extraPlugins = "itemselector,media";
-		}
-
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+				return extraPlugins;
+			});
+		collector.collect(
+			"toolbars", () -> getToolbarsJSONObject(themeDisplay.getLocale()));
 	}
 
 	protected JSONObject getStyleFormatJSONObject(

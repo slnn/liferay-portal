@@ -16,6 +16,7 @@ package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,56 +41,65 @@ public class CKEditorBBCodeConfigContributor
 	extends BaseCKEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("allowedContent", Boolean.TRUE);
-		jsonObject.put("enterMode", 2);
-		jsonObject.put(
-			"extraPlugins", "a11yhelpbtn,bbcode,itemselector,wikilink");
-		jsonObject.put("fontSize_defaultLabel", "14");
-		jsonObject.put(
+		collector.collect("allowedContent", () -> Boolean.TRUE);
+		collector.collect("enterMode", () -> 2);
+		collector.collect(
+			"extraPlugins", () -> "a11yhelpbtn,bbcode,itemselector,wikilink");
+		collector.collect("fontSize_defaultLabel", () -> "14");
+		collector.collect(
 			"fontSize_sizes",
-			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px");
-		jsonObject.put("format_tags", "p;pre");
-		jsonObject.put(
+			() ->
+				"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48" +
+					"/48px");
+		collector.collect("format_tags", () -> "p;pre");
+		collector.collect(
 			"imagesPath",
-			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
-				"/message_boards/");
-		jsonObject.put("lang", getLangJSONObject(inputEditorTaglibAttributes));
-		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
-		jsonObject.put(
+			() ->
+				HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
+					"/message_boards/");
+		collector.collect(
+			"lang", () -> getLangJSONObject(inputEditorTaglibAttributes));
+		collector.collect(
+			"newThreadURL", () -> MBThreadConstants.NEW_THREAD_URL);
+		collector.collect(
 			"removePlugins",
-			"bidi,div,elementspath,flash,forms,indentblock,keystrokes,link," +
-				"maximize,newpage,pagebreak,preview,print,save,showblocks," +
-					"templates,video");
-		jsonObject.put(
+			() ->
+				"bidi,div,elementspath,flash,forms,indentblock,keystrokes," +
+					"link,maximize,newpage,pagebreak,preview,print,save," +
+						"showblocks,templates,video");
+		collector.collect(
 			"smiley_descriptions",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonDescriptions()));
-		jsonObject.put(
+			() -> toJSONArray(BBCodeTranslatorUtil.getEmoticonDescriptions()));
+		collector.collect(
 			"smiley_images",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles()));
-		jsonObject.put(
+			() -> toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles()));
+		collector.collect(
 			"smiley_path",
-			HtmlUtil.escape(themeDisplay.getPathThemeImages()) + "/emoticons/");
-		jsonObject.put(
+			() ->
+				HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
+					"/emoticons/");
+		collector.collect(
 			"smiley_symbols",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols()));
-		jsonObject.put(
+			() -> toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols()));
+		collector.collect(
 			"toolbar_bbcode",
-			getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_phone",
-			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_tablet",
-			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
+			() -> getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
 	}
 
 	protected JSONObject getLangJSONObject(

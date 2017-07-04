@@ -15,7 +15,7 @@
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -34,34 +34,42 @@ public class TinyMCESimpleEditorConfigContributor
 	extends BaseTinyMCEEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		String plugins = "contextmenu preview print";
+		collector.collect(
+			"plugins",
+			() -> {
+				String plugins = "contextmenu preview print";
 
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			plugins += " code";
-		}
+				if (isShowSource(inputEditorTaglibAttributes)) {
+					plugins += " code";
+				}
 
-		jsonObject.put("plugins", plugins);
+				return plugins;
+			});
+		collector.collect(
+			"toolbar",
+			() -> {
+				String toolbar =
+					"bold italic underline | alignleft aligncenter " +
+						"alignright alignjustify | ";
 
-		String toolbar =
-			"bold italic underline | alignleft aligncenter alignright " +
-				"alignjustify | ";
+				if (isShowSource(inputEditorTaglibAttributes)) {
+					toolbar += "code ";
+				}
 
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			toolbar += "code ";
-		}
+				toolbar += "preview print";
 
-		toolbar += "preview print";
-
-		jsonObject.put("toolbar", toolbar);
+				return toolbar;
+			});
 	}
 
 }

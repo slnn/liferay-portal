@@ -2,6 +2,9 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import com.liferay.gradle.util.tasks.ConcatenateTask
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 task buildCKEditorBBCode(type: ConcatenateTask)
 task buildCKEditor(type: Copy)
 

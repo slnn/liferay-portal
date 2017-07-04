@@ -22,6 +22,7 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -54,71 +55,80 @@ public class AlloyEditorLinkBrowseConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONObject buttonCfgJSONObject = jsonObject.getJSONObject("buttonCfg");
-
-		if (buttonCfgJSONObject != null) {
-			jsonObject.put(
-				"buttonCfg", updateButtonCfgJSONObject(buttonCfgJSONObject));
-		}
-
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
-
-		if (toolbarsJSONObject == null) {
-			toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
-		}
-
-		JSONObject stylesJSONObject = toolbarsJSONObject.getJSONObject(
-			"styles");
-
-		if (stylesJSONObject == null) {
-			stylesJSONObject = JSONFactoryUtil.createJSONObject();
-		}
-
-		JSONArray selectionsJSONArray = stylesJSONObject.getJSONArray(
-			"selections");
-
-		if (selectionsJSONArray != null) {
-			for (int i = 0; i < selectionsJSONArray.length(); i++) {
-				JSONObject selectionJSONObject =
-					selectionsJSONArray.getJSONObject(i);
-
-				String name = selectionJSONObject.getString("name");
-
-				if (name.equals("text") || name.equals("link")) {
-					JSONArray buttonsJSONArray =
-						selectionJSONObject.getJSONArray("buttons");
-
-					selectionJSONObject.put(
-						"buttons", updateButtonsJSONArray(buttonsJSONArray));
+		collector.collect(
+			"buttonCfg",
+			(JSONObject buttonCfgJSONObject) -> {
+				if (buttonCfgJSONObject == null) {
+					return null;
 				}
-			}
 
-			stylesJSONObject.put("selections", selectionsJSONArray);
-		}
+				return updateButtonCfgJSONObject(buttonCfgJSONObject);
+			});
+		collector.collect(
+			"toolbars",
+			(JSONObject toolbarsJSONObject) -> {
+				if (toolbarsJSONObject == null) {
+					toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+				}
 
-		toolbarsJSONObject.put("styles", stylesJSONObject);
+				JSONObject stylesJSONObject = toolbarsJSONObject.getJSONObject(
+					"styles");
 
-		jsonObject.put("toolbars", toolbarsJSONObject);
+				if (stylesJSONObject == null) {
+					stylesJSONObject = JSONFactoryUtil.createJSONObject();
+				}
 
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
+				JSONArray selectionsJSONArray = stylesJSONObject.getJSONArray(
+					"selections");
 
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+				if (selectionsJSONArray != null) {
+					for (int i = 0; i < selectionsJSONArray.length(); i++) {
+						JSONObject selectionJSONObject =
+							selectionsJSONArray.getJSONObject(i);
 
-		populateFileBrowserURL(
-			jsonObject, requestBackedPortletURLFactory,
-			namespace + name + "selectDocument");
+						String name = selectionJSONObject.getString("name");
+
+						if (name.equals("text") || name.equals("link")) {
+							JSONArray buttonsJSONArray =
+								selectionJSONObject.getJSONArray("buttons");
+
+							selectionJSONObject.put(
+								"buttons",
+								updateButtonsJSONArray(buttonsJSONArray));
+						}
+					}
+
+					stylesJSONObject.put("selections", selectionsJSONArray);
+				}
+
+				toolbarsJSONObject.put("styles", stylesJSONObject);
+
+				return toolbarsJSONObject;
+			});
+		collector.collect(
+			"documentBrowseLinkUrl",
+			() -> {
+				String namespace = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:namespace"));
+
+				String name = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
+
+				return getFileBrowserURL(
+					requestBackedPortletURLFactory,
+					namespace + name + "selectDocument");
+			});
 	}
 
-	protected void populateFileBrowserURL(
-		JSONObject jsonObject,
+	protected String getFileBrowserURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 
@@ -143,7 +153,7 @@ public class AlloyEditorLinkBrowseConfigContributor
 			requestBackedPortletURLFactory, eventName,
 			fileItemSelectorCriterion, layoutItemSelectorCriterion);
 
-		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
+		return itemSelectorURL.toString();
 	}
 
 	@Reference(unbind = "-")

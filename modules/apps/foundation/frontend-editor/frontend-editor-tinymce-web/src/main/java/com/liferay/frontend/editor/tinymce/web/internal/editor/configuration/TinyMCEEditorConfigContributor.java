@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,24 +46,26 @@ public class TinyMCEEditorConfigContributor
 	extends BaseTinyMCEEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("mode", "exact");
-		jsonObject.put(
-			"plugins", getPluginsJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+		collector.collect("mode", () -> "exact");
+		collector.collect(
+			"plugins", () -> getPluginsJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"style_formats",
-			getStyleFormatsJSONArray(themeDisplay.getLocale()));
-		jsonObject.put(
+			() -> getStyleFormatsJSONArray(themeDisplay.getLocale()));
+		collector.collect(
 			"toolbar",
-			getToolbarJSONArray(inputEditorTaglibAttributes, themeDisplay));
+			() -> getToolbarJSONArray(
+				inputEditorTaglibAttributes, themeDisplay));
 	}
 
 	protected JSONArray getPluginsJSONArray(

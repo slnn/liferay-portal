@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,19 +48,21 @@ public class AlloyEditorCreoleConfigContributor
 	extends BaseAlloyEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put(
+		collector.collect(
 			"allowedContent",
-			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
-				"img a[*]");
+			() ->
+				"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr " +
+					"th; img a[*]");
 
 		Map<String, String> fileBrowserParams =
 			(Map<String, String>)inputEditorTaglibAttributes.get(
@@ -70,46 +73,50 @@ public class AlloyEditorCreoleConfigContributor
 				"attachmentURLPrefix");
 
 			if (Validator.isNotNull(attachmentURLPrefix)) {
-				jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
+				collector.collect(
+					"attachmentURLPrefix", () -> attachmentURLPrefix);
 			}
 		}
 
-		JSONObject buttonCfgJSONObject = JSONFactoryUtil.createJSONObject();
+		collector.collect(
+			"buttonCfg",
+			() -> {
+				JSONObject buttonCfgJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
+				JSONObject linkEditJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-		linkEditJSONObject.put("appendProtocol", false);
-		linkEditJSONObject.put("showTargetSelector", false);
+				linkEditJSONObject.put("appendProtocol", false);
+				linkEditJSONObject.put("showTargetSelector", false);
 
-		buttonCfgJSONObject.put("linkEdit", linkEditJSONObject);
+				buttonCfgJSONObject.put("linkEdit", linkEditJSONObject);
 
-		jsonObject.put("buttonCfg", buttonCfgJSONObject);
+				return buttonCfgJSONObject;
+			});
+		collector.collect("decodeLinks", () -> Boolean.TRUE);
+		collector.collect("disableObjectResizing", () -> Boolean.TRUE);
+		collector.collect(
+			"extraPlugins",
+			(String extraPlugins) -> extraPlugins.concat(
+				",creole,itemselector,media"));
+		collector.collect("format_tags", () -> "p;h1;h2;h3;h4;h5;h6;pre");
+		collector.collect(
+			"removePlugins",
+			(String removePlugins) -> {
+				StringBundler sb = new StringBundler(6);
 
-		jsonObject.put("decodeLinks", Boolean.TRUE);
-		jsonObject.put("disableObjectResizing", Boolean.TRUE);
+				sb.append(removePlugins);
+				sb.append(",ae_dragresize,ae_tableresize,bidi,colorbutton,");
+				sb.append("colordialog,div,flash,font,forms,indentblock,");
+				sb.append("justify,keystrokes,maximize,newpage,pagebreak,");
+				sb.append("preview,print,save,showblocks,smiley,stylescombo,");
+				sb.append("templates,video");
 
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		extraPlugins = extraPlugins.concat(",creole,itemselector,media");
-
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
-
-		String removePlugins = jsonObject.getString("removePlugins");
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("ae_dragresize,ae_tableresize,bidi,colorbutton,colordialog,");
-		sb.append("div,flash,font,forms,indentblock,justify,keystrokes,");
-		sb.append("maximize,newpage,pagebreak,preview,print,save,showblocks,");
-		sb.append("smiley,stylescombo,templates,video");
-
-		jsonObject.put(
-			"removePlugins", removePlugins.concat(",").concat(sb.toString()));
-
-		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+				return sb.toString();
+			});
+		collector.collect(
+			"toolbars", () -> getToolbarsJSONObject(themeDisplay.getLocale()));
 	}
 
 	protected JSONObject getStyleFormatJSONObject(

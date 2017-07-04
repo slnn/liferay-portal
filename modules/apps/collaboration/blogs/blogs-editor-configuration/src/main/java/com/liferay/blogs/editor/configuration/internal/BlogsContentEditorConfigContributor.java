@@ -26,10 +26,11 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CachedSupplier;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -62,31 +63,47 @@ public class BlogsContentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(6);
+		collector.collect(
+			"allowedContent",
+			() -> {
+				StringBundler sb = new StringBundler(6);
 
-		sb.append("a[*](*); ");
-		sb.append(getAllowedContentText());
-		sb.append(" div(*); img[*] {height, width}; ");
-		sb.append(getAllowedContentLists());
-		sb.append(" p {text-align}; ");
-		sb.append(getAllowedContentTable());
+				sb.append("a[*](*); ");
+				sb.append(getAllowedContentText());
+				sb.append(" div(*); img[*] {height, width}; ");
+				sb.append(getAllowedContentLists());
+				sb.append(" p {text-align}; ");
+				sb.append(getAllowedContentTable());
 
-		jsonObject.put("allowedContent", sb.toString());
+				return sb.toString();
+			});
 
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+		CachedSupplier<String> cachedSupplier = new CachedSupplier<String>() {
 
-		populateFileBrowserURL(
-			jsonObject, themeDisplay, requestBackedPortletURLFactory,
-			namespace + name + "selectItem");
+			@Override
+			protected String doGet() {
+				String namespace = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:namespace"));
+				String name = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
+
+				return getFileBrowserURL(
+					themeDisplay, requestBackedPortletURLFactory,
+					namespace + name + "selectItem");
+			}
+
+		};
+
+		collector.collect("filebrowserImageBrowseLinkUrl", cachedSupplier);
+		collector.collect("filebrowserImageBrowseUrl", cachedSupplier);
 	}
 
 	@Reference(unbind = "-")
@@ -107,8 +124,8 @@ public class BlogsContentEditorConfigContributor
 		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
-	protected void populateFileBrowserURL(
-		JSONObject jsonObject, ThemeDisplay themeDisplay,
+	protected String getFileBrowserURL(
+		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 
@@ -174,9 +191,7 @@ public class BlogsContentEditorConfigContributor
 			blogsItemSelectorCriterion, imageItemSelectorCriterion,
 			urlItemSelectorCriterion, uploadItemSelectorCriterion);
 
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+		return itemSelectorURL.toString();
 	}
 
 	private ItemSelector _itemSelector;

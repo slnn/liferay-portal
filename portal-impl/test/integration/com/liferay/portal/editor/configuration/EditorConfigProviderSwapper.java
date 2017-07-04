@@ -36,12 +36,12 @@ public class EditorConfigProviderSwapper implements Closeable {
 			new EditorConfigProvider() {
 
 				@Override
-				protected void visitEditorContributors(
+				protected void filterEditorContributors(
 					final Consumer<EditorConfigContributor> consumer,
 					String portletName, String editorConfigKey,
 					String editorName) {
 
-					super.visitEditorContributors(
+					super.filterEditorContributors(
 						(editorConfigContributor) -> {
 							if (classes.contains(
 									editorConfigContributor.getClass())) {

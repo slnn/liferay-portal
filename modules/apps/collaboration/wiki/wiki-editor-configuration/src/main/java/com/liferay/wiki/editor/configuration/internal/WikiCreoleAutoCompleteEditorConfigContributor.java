@@ -16,6 +16,7 @@ package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,67 +51,82 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONObject autoCompleteConfigJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		collector.collect(
+			"autocomplete",
+			() -> {
+				JSONObject autoCompleteConfigJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-		autoCompleteConfigJSONObject.put("requestTemplate", "query={query}");
+				autoCompleteConfigJSONObject.put(
+					"requestTemplate", "query={query}");
 
-		JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
+				JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject triggerJSONObject = JSONFactoryUtil.createJSONObject();
+				JSONObject triggerJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-		triggerJSONObject.put(
-			"resultFilters", "function(query, results) {return results;}");
-		triggerJSONObject.put("resultTextLocator", "title");
+				triggerJSONObject.put(
+					"resultFilters",
+					"function(query, results) {return results;}");
+				triggerJSONObject.put("resultTextLocator", "title");
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
 
-		ResourceURL autoCompletePageTitleURL =
-			(ResourceURL)requestBackedPortletURLFactory.createResourceURL(
-				portletDisplay.getId());
+				ResourceURL autoCompletePageTitleURL =
+					(ResourceURL)
+						requestBackedPortletURLFactory.createResourceURL(
+							portletDisplay.getId());
 
-		Map<String, String> fileBrowserParams =
-			(Map<String, String>)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:fileBrowserParams");
+				Map<String, String> fileBrowserParams =
+					(Map<String, String>)inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:fileBrowserParams");
 
-		autoCompletePageTitleURL.setParameter(
-			"nodeId", fileBrowserParams.get("nodeId"));
+				autoCompletePageTitleURL.setParameter(
+					"nodeId", fileBrowserParams.get("nodeId"));
 
-		autoCompletePageTitleURL.setResourceID("/wiki/autocomplete_page_title");
+				autoCompletePageTitleURL.setResourceID(
+					"/wiki/autocomplete_page_title");
 
-		String source =
-			autoCompletePageTitleURL.toString() + "&" +
-				_portal.getPortletNamespace(portletDisplay.getId());
+				String source =
+					autoCompletePageTitleURL.toString() + "&" +
+						_portal.getPortletNamespace(portletDisplay.getId());
 
-		triggerJSONObject.put("source", source);
+				triggerJSONObject.put("source", source);
 
-		triggerJSONObject.put("term", "[");
-		triggerJSONObject.put("tplReplace", "<a href=\"{title}\">{title}</a>");
-		triggerJSONObject.put(
-			"tplResults", "<span class=\"h5 truncate-text\">{title}</span>");
+				triggerJSONObject.put("term", "[");
+				triggerJSONObject.put(
+					"tplReplace", "<a href=\"{title}\">{title}</a>");
+				triggerJSONObject.put(
+					"tplResults",
+					"<span class=\"h5 truncate-text\">{title}</span>");
 
-		triggerJSONArray.put(triggerJSONObject);
+				triggerJSONArray.put(triggerJSONObject);
 
-		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
+				autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 
-		jsonObject.put("autocomplete", autoCompleteConfigJSONObject);
+				return autoCompleteConfigJSONObject;
+			});
+		collector.collect(
+			"extraPlugins",
+			(String extraPlugins) -> {
+				if (Validator.isNotNull(extraPlugins)) {
+					extraPlugins += ",autocomplete";
+				}
+				else {
+					extraPlugins =
+						"autocomplete,ae_placeholder,ae_selectionregion," +
+							"ae_uicore";
+				}
 
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",autocomplete";
-		}
-		else {
-			extraPlugins =
-				"autocomplete,ae_placeholder,ae_selectionregion,ae_uicore";
-		}
-
-		jsonObject.put("extraPlugins", extraPlugins);
+				return extraPlugins;
+			});
 	}
 
 	@Reference

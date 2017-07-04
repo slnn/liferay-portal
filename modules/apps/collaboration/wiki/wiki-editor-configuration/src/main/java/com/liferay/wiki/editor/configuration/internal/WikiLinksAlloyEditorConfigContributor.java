@@ -16,6 +16,7 @@ package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,41 +44,46 @@ public class WikiLinksAlloyEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
+		collector.collect(
+			"toolbars",
+			(JSONObject toolbarsJSONObject) -> {
+				if (toolbarsJSONObject == null) {
+					return null;
+				}
 
-		if (toolbarsJSONObject == null) {
-			return;
-		}
+				JSONObject stylesToolbarJSONObject =
+					toolbarsJSONObject.getJSONObject("styles");
 
-		JSONObject stylesToolbarJSONObject = toolbarsJSONObject.getJSONObject(
-			"styles");
+				if (stylesToolbarJSONObject == null) {
+					return toolbarsJSONObject;
+				}
 
-		if (stylesToolbarJSONObject == null) {
-			return;
-		}
+				JSONArray selectionsJSONArray =
+					stylesToolbarJSONObject.getJSONArray("selections");
 
-		JSONArray selectionsJSONArray = stylesToolbarJSONObject.getJSONArray(
-			"selections");
+				if (selectionsJSONArray == null) {
+					return toolbarsJSONObject;
+				}
 
-		if (selectionsJSONArray == null) {
-			return;
-		}
+				for (int i = 0; i < selectionsJSONArray.length(); i++) {
+					JSONObject selectionJSONObject =
+						selectionsJSONArray.getJSONObject(i);
 
-		for (int i = 0; i < selectionsJSONArray.length(); i++) {
-			JSONObject selectionJSONObject = selectionsJSONArray.getJSONObject(
-				i);
+					JSONArray buttonsJSONArray =
+						selectionJSONObject.getJSONArray("buttons");
 
-			JSONArray buttonsJSONArray = selectionJSONObject.getJSONArray(
-				"buttons");
+					selectionJSONObject.put(
+						"buttons", updateButtonsJSONArray(buttonsJSONArray));
+				}
 
-			selectionJSONObject.put(
-				"buttons", updateButtonsJSONArray(buttonsJSONArray));
-		}
+				return toolbarsJSONObject;
+			});
 	}
 
 	protected JSONObject getWikiLinkButtonJSONObject(String buttonName) {

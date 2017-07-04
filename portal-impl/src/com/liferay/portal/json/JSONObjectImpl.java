@@ -85,7 +85,17 @@ public class JSONObjectImpl implements JSONObject {
 
 	@Override
 	public Object get(String key) {
-		return _jsonObject.opt(key);
+		Object object = _jsonObject.opt(key);
+
+		if (object instanceof org.json.JSONArray) {
+			return new JSONArrayImpl((org.json.JSONArray)object);
+		}
+
+		if (object instanceof org.json.JSONObject) {
+			return new JSONObjectImpl((org.json.JSONObject)object);
+		}
+
+		return object;
 	}
 
 	@Override

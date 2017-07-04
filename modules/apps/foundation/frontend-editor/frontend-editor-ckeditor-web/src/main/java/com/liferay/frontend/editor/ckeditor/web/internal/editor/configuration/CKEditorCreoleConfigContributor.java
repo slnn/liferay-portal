@@ -15,9 +15,9 @@
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,19 +39,21 @@ public class CKEditorCreoleConfigContributor
 	extends BaseCKEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put(
+		collector.collect(
 			"allowedContent",
-			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
-				"img a[*]");
+			() ->
+				"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr " +
+					"th; img a[*]");
 
 		Map<String, String> fileBrowserParams =
 			(Map<String, String>)inputEditorTaglibAttributes.get(
@@ -62,38 +64,43 @@ public class CKEditorCreoleConfigContributor
 				"attachmentURLPrefix");
 
 			if (Validator.isNotNull(attachmentURLPrefix)) {
-				jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
+				collector.collect(
+					"attachmentURLPrefix", () -> attachmentURLPrefix);
 			}
 		}
 
-		jsonObject.put("decodeLinks", Boolean.TRUE);
-		jsonObject.put("disableObjectResizing", Boolean.TRUE);
-		jsonObject.put(
+		collector.collect("decodeLinks", () -> Boolean.TRUE);
+		collector.collect("disableObjectResizing", () -> Boolean.TRUE);
+		collector.collect(
 			"extraPlugins",
-			"a11yhelpbtn,creole,itemselector,lfrpopup,wikilink");
-		jsonObject.put(
+			() -> "a11yhelpbtn,creole,itemselector,lfrpopup,wikilink");
+		collector.collect(
 			"filebrowserWindowFeatures",
-			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse"));
-		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
+			() ->
+				"title=" +
+					LanguageUtil.get(themeDisplay.getLocale(), "browse"));
+		collector.collect("format_tags", () -> "p;h1;h2;h3;h4;h5;h6;pre");
+		collector.collect(
+			"removePlugins",
+			() -> {
+				StringBundler sb = new StringBundler(4);
 
-		StringBundler sb = new StringBundler();
+				sb.append("bidi,colorbutton,colordialog,div,elementspath,");
+				sb.append("flash,font,forms,indentblock,justify,keystrokes,");
+				sb.append("link,maximize,newpage,pagebreak,preview,print,");
+				sb.append("save,showblocks,smiley,stylescombo,templates,video");
 
-		sb.append("bidi,colorbutton,colordialog,div,elementspath,flash,font,");
-		sb.append("forms,indentblock,justify,keystrokes,link,maximize,");
-		sb.append("newpage,pagebreak,preview,print,save,showblocks,smiley,");
-		sb.append("stylescombo,templates,video");
-
-		jsonObject.put("removePlugins", sb.toString());
-
-		jsonObject.put(
+				return sb.toString();
+			});
+		collector.collect(
 			"toolbar_creole",
-			getToolbarsCreoleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarsCreoleJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_phone",
-			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_tablet",
-			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
+			() -> getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
 	}
 
 	protected JSONArray getToolbarsCreoleJSONArray(

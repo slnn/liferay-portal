@@ -22,10 +22,11 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CachedSupplier;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -47,8 +48,9 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
@@ -64,47 +66,60 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 			(Map<String, String>)inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:fileBrowserParams");
 
-		long wikiPageResourcePrimKey = 0;
+		final long wikiPageResourcePrimKey;
 
-		if (fileBrowserParamsMap != null) {
+		if (fileBrowserParamsMap == null) {
+			wikiPageResourcePrimKey = 0;
+		}
+		else {
 			wikiPageResourcePrimKey = GetterUtil.getLong(
 				fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
 		}
 
 		if (wikiPageResourcePrimKey == 0) {
-			String removePlugins = jsonObject.getString("removePlugins");
+			collector.collect(
+				"removePlugins",
+				(String removePlugins) -> {
+					if (Validator.isNotNull(removePlugins)) {
+						removePlugins += ",ae_addimages";
+					}
+					else {
+						removePlugins = "ae_addimages";
+					}
 
-			if (Validator.isNotNull(removePlugins)) {
-				removePlugins += ",ae_addimages";
-			}
-			else {
-				removePlugins = "ae_addimages";
-			}
-
-			jsonObject.put("removePlugins", removePlugins);
+					return removePlugins;
+				});
 		}
 
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+		CachedSupplier<String> cachedSupplier = new CachedSupplier<String>() {
 
-		boolean inlineEdit = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:inlineEdit"));
+			@Override
+			protected String doGet() {
+				String name = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
 
-		if (!inlineEdit) {
-			String namespace = GetterUtil.getString(
-				inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:namespace"));
+				boolean inlineEdit = GetterUtil.getBoolean(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:inlineEdit"));
 
-			name = namespace + name;
-		}
+				if (!inlineEdit) {
+					String namespace = GetterUtil.getString(
+						inputEditorTaglibAttributes.get(
+							"liferay-ui:input-editor:namespace"));
 
-		String itemSelectorURL = getItemSelectorURL(
-			requestBackedPortletURLFactory, name + "selectItem",
-			wikiPageResourcePrimKey, themeDisplay);
+					name = namespace + name;
+				}
 
-		jsonObject.put("filebrowserImageBrowseLinkUrl", itemSelectorURL);
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL);
+				return getItemSelectorURL(
+					requestBackedPortletURLFactory, name + "selectItem",
+					wikiPageResourcePrimKey, themeDisplay);
+			}
+
+		};
+
+		collector.collect("filebrowserImageBrowseLinkUrl", cachedSupplier);
+		collector.collect("filebrowserImageBrowseUrl", cachedSupplier);
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion(

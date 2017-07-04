@@ -19,9 +19,10 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CachedSupplier;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
@@ -40,34 +41,42 @@ import org.osgi.service.component.annotations.Reference;
 public class AudioEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+		CachedSupplier<String> cachedSupplier = new CachedSupplier<String>() {
 
-		boolean allowBrowseDocuments = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:allowBrowseDocuments"));
+			@Override
+			protected String doGet() {
+				List<ItemSelectorCriterion> itemSelectorCriteria =
+					new ArrayList<>(2);
 
-		if (allowBrowseDocuments) {
-			itemSelectorCriteria.add(new AudioItemSelectorCriterion());
-		}
+				boolean allowBrowseDocuments = GetterUtil.getBoolean(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:allowBrowseDocuments"));
 
-		itemSelectorCriteria.add(new URLItemSelectorCriterion());
+				if (allowBrowseDocuments) {
+					itemSelectorCriteria.add(new AudioItemSelectorCriterion());
+				}
 
-		PortletURL itemSelectorURL = getItemSelectorPortletURL(
-			inputEditorTaglibAttributes, requestBackedPortletURLFactory,
-			itemSelectorCriteria.toArray(
-				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
+				itemSelectorCriteria.add(new URLItemSelectorCriterion());
 
-		if (itemSelectorURL != null) {
-			jsonObject.put(
-				"filebrowserAudioBrowseLinkUrl", itemSelectorURL.toString());
-			jsonObject.put(
-				"filebrowserAudioBrowseUrl", itemSelectorURL.toString());
-		}
+				PortletURL itemSelectorURL = getItemSelectorPortletURL(
+					inputEditorTaglibAttributes, requestBackedPortletURLFactory,
+					itemSelectorCriteria.toArray(
+						new ItemSelectorCriterion[
+							itemSelectorCriteria.size()]));
+
+				return itemSelectorURL.toString();
+			}
+
+		};
+
+		collector.collect("filebrowserAudioBrowseLinkUrl", cachedSupplier);
+		collector.collect("filebrowserAudioBrowseUrl", cachedSupplier);
 	}
 
 	@Reference(unbind = "-")

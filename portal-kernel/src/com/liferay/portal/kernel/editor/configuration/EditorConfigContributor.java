@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Provides an interface for setting the editor's configuration. Editor options
@@ -104,6 +106,13 @@ import java.util.Map;
  */
 public interface EditorConfigContributor {
 
+	public default void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+	}
+
 	/**
 	 * Updates the original configuration JSON object with some new
 	 * configuration. It can even update or delete the original configuration,
@@ -122,9 +131,47 @@ public interface EditorConfigContributor {
 	 *        taglib tag that renders the editor
 	 * @param themeDisplay the theme display
 	 */
-	public void populateConfigJSONObject(
+	public default void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		collectEditorConfigElementContributors(
+			new EditorConfigElementContributorCollector() {
+
+				@Override
+				public <T> void collect(
+					String key, Function<T, T> elementFunction) {
+
+					T object = (T)jsonObject.get(key);
+
+					object = elementFunction.apply(object);
+
+					if (object == null) {
+						jsonObject.remove(key);
+					}
+					else {
+						jsonObject.put(key, object);
+					}
+				}
+
+				@Override
+				public <T> void collect(
+					String key, Supplier<T> elementSupplier) {
+
+					T object = elementSupplier.get();
+
+					if (object == null) {
+						jsonObject.remove(key);
+					}
+					else {
+						jsonObject.put(key, object);
+					}
+				}
+
+			},
+			inputEditorTaglibAttributes, themeDisplay,
+			requestBackedPortletURLFactory);
+	}
 
 }

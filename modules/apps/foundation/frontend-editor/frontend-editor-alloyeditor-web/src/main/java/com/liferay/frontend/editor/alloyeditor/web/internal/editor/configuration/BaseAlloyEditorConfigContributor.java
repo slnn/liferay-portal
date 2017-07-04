@@ -15,7 +15,7 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,55 +31,61 @@ public class BaseAlloyEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", Boolean.TRUE);
+		collector.collect("allowedContent", () -> Boolean.TRUE);
+		collector.collect(
+			"contentsLangDirection",
+			() -> {
+				String contentsLanguageDir = getContentsLanguageDir(
+					inputEditorTaglibAttributes);
 
-		String contentsLanguageDir = getContentsLanguageDir(
-			inputEditorTaglibAttributes);
+				return HtmlUtil.escapeJS(contentsLanguageDir);
+			});
+		collector.collect(
+			"contentsLanguage",
+			() -> {
+				String contentsLanguageId = getContentsLanguageId(
+					inputEditorTaglibAttributes);
 
-		jsonObject.put(
-			"contentsLangDirection", HtmlUtil.escapeJS(contentsLanguageDir));
-
-		String contentsLanguageId = getContentsLanguageId(
-			inputEditorTaglibAttributes);
-
-		jsonObject.put(
-			"contentsLanguage", contentsLanguageId.replace("iw_", "he_"));
-
-		jsonObject.put("disableNativeSpellChecker", Boolean.FALSE);
-
-		jsonObject.put(
+				return contentsLanguageId.replace("iw_", "he_");
+			});
+		collector.collect("disableNativeSpellChecker", () -> Boolean.FALSE);
+		collector.collect(
 			"extraPlugins",
-			"ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
-				"ae_placeholder,ae_selectionregion,ae_tableresize," +
-					"ae_tabletools,ae_uicore");
+			() ->
+				"ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
+					"ae_placeholder,ae_selectionregion,ae_tableresize," +
+						"ae_tabletools,ae_uicore");
+		collector.collect("imageScaleResize", () -> "scale");
+		collector.collect(
+			"language",
+			() -> {
+				String languageId = getLanguageId(themeDisplay);
 
-		jsonObject.put("imageScaleResize", "scale");
-
-		String languageId = getLanguageId(themeDisplay);
-
-		jsonObject.put("language", languageId.replace("iw_", "he_"));
-
-		jsonObject.put(
+				return languageId.replace("iw_", "he_");
+			});
+		collector.collect(
 			"removePlugins",
-			"contextmenu,elementspath,image,link,liststyle,magicline,resize," +
-				"tabletools,toolbar");
-
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
-
-		String name =
-			namespace +
-				GetterUtil.getString(
+			() ->
+				"contextmenu,elementspath,image,link,liststyle,magicline," +
+					"resize,tabletools,toolbar");
+		collector.collect(
+			"srcNode",
+			() -> {
+				String namespace = GetterUtil.getString(
 					inputEditorTaglibAttributes.get(
-						"liferay-ui:input-editor:name"));
+						"liferay-ui:input-editor:namespace"));
 
-		jsonObject.put("srcNode", name);
+				return namespace +
+					GetterUtil.getString(
+						inputEditorTaglibAttributes.get(
+							"liferay-ui:input-editor:name"));
+			});
 	}
 
 }

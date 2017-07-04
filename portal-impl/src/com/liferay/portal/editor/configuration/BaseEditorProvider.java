@@ -51,7 +51,7 @@ public abstract class BaseEditorProvider<T> {
 		_serviceTracker.close();
 	}
 
-	protected void visitEditorContributors(
+	protected void filterEditorContributors(
 		Consumer<T> consumer, String portletName, String editorConfigKey,
 		String editorName) {
 

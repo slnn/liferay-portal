@@ -17,6 +17,7 @@ package com.liferay.blogs.editor.configuration.internal;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,16 +43,18 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", "a");
-		jsonObject.put("disallowedContent", "br");
-		jsonObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
-		jsonObject.put("toolbars", getToolbarsJSONObject());
+		collector.collect("allowedContent", () -> "a");
+		collector.collect("disallowedContent", () -> "br");
+		collector.collect(
+			"extraPlugins",
+			() -> "ae_placeholder,ae_selectionregion,ae_uicore");
+		collector.collect("toolbars", () -> getToolbarsJSONObject());
 	}
 
 	protected JSONObject getToolbarsJSONObject() {

@@ -16,6 +16,7 @@ package com.liferay.frontend.editor.alloyeditor.accessibility.web.internal.edito
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,42 +39,45 @@ public class AlloyEditorAccessibilityConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
+		collector.collect(
+			"toolbars",
+			(JSONObject toolbarsJSONObject) -> {
+				if (toolbarsJSONObject == null) {
+					toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
+				}
 
-		if (toolbarsJSONObject == null) {
-			toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
-		}
+				JSONObject stylesJSONObject = toolbarsJSONObject.getJSONObject(
+					"styles");
 
-		JSONObject stylesJSONObject = toolbarsJSONObject.getJSONObject(
-			"styles");
+				if (stylesJSONObject == null) {
+					stylesJSONObject = JSONFactoryUtil.createJSONObject();
+				}
 
-		if (stylesJSONObject == null) {
-			stylesJSONObject = JSONFactoryUtil.createJSONObject();
-		}
+				JSONArray selectionsJSONArray = stylesJSONObject.getJSONArray(
+					"selections");
 
-		JSONArray selectionsJSONArray = stylesJSONObject.getJSONArray(
-			"selections");
+				for (int i = 0; i < selectionsJSONArray.length(); i++) {
+					JSONObject selection = selectionsJSONArray.getJSONObject(i);
 
-		for (int i = 0; i < selectionsJSONArray.length(); i++) {
-			JSONObject selection = selectionsJSONArray.getJSONObject(i);
+					if (Objects.equals(selection.get("name"), "image")) {
+						JSONArray buttons = selection.getJSONArray("buttons");
 
-			if (Objects.equals(selection.get("name"), "image")) {
-				JSONArray buttons = selection.getJSONArray("buttons");
+						buttons.put("imageAlt");
+					}
+				}
 
-				buttons.put("imageAlt");
-			}
-		}
+				stylesJSONObject.put("selections", selectionsJSONArray);
 
-		stylesJSONObject.put("selections", selectionsJSONArray);
+				toolbarsJSONObject.put("styles", stylesJSONObject);
 
-		toolbarsJSONObject.put("styles", stylesJSONObject);
-
-		jsonObject.put("toolbars", toolbarsJSONObject);
+				return toolbarsJSONObject;
+			});
 	}
 
 }

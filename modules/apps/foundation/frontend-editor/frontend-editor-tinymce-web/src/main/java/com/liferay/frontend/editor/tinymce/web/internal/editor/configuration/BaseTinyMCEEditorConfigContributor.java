@@ -15,7 +15,7 @@
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,55 +37,67 @@ public class BaseTinyMCEEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(3);
+		collector.collect(
+			"content_css",
+			() -> {
+				StringBundler sb = new StringBundler(3);
 
-		sb.append(
-			HtmlUtil.escape(
-				PortalUtil.getStaticResourceURL(
-					themeDisplay.getRequest(),
-					themeDisplay.getPathThemeCss() + "/aui.css")));
-		sb.append(StringPool.COMMA);
-		sb.append(
-			HtmlUtil.escape(
-				PortalUtil.getStaticResourceURL(
-					themeDisplay.getRequest(),
-					themeDisplay.getPathThemeCss() + "/main.css")));
+				sb.append(
+					HtmlUtil.escape(
+						PortalUtil.getStaticResourceURL(
+							themeDisplay.getRequest(),
+							themeDisplay.getPathThemeCss() + "/aui.css")));
+				sb.append(StringPool.COMMA);
+				sb.append(
+					HtmlUtil.escape(
+						PortalUtil.getStaticResourceURL(
+							themeDisplay.getRequest(),
+							themeDisplay.getPathThemeCss() + "/main.css")));
 
-		jsonObject.put("content_css", sb.toString());
+				return sb.toString();
+			});
+		collector.collect("convert_urls", () -> Boolean.FALSE);
+		collector.collect(
+			"extended_valid_elements", () -> _EXTENDED_VALID_ELEMENTS);
+		collector.collect("invalid_elements", () -> "script");
+		collector.collect(
+			"language",
+			() -> {
+				String contentsLanguageId =
+					(String)inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:contentsLanguageId");
 
-		jsonObject.put("convert_urls", Boolean.FALSE);
-		jsonObject.put("extended_valid_elements", _EXTENDED_VALID_ELEMENTS);
-		jsonObject.put("invalid_elements", "script");
+				return getTinyMCELanguage(contentsLanguageId);
+			});
+		collector.collect("menubar", () -> Boolean.FALSE);
+		collector.collect("mode", () -> "textareas");
+		collector.collect("relative_urls", () -> Boolean.FALSE);
+		collector.collect("remove_script_host", () -> Boolean.FALSE);
+		collector.collect(
+			"selector",
+			() -> {
+				String namespace = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:namespace"));
 
-		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
-			"liferay-ui:input-editor:contentsLanguageId");
+				String name = GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
 
-		jsonObject.put("language", getTinyMCELanguage(contentsLanguageId));
-
-		jsonObject.put("menubar", Boolean.FALSE);
-		jsonObject.put("mode", "textareas");
-		jsonObject.put("relative_urls", Boolean.FALSE);
-		jsonObject.put("remove_script_host", Boolean.FALSE);
-
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
-
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
-
-		jsonObject.put("selector", "#" + namespace + name);
-
-		jsonObject.put(
+				return "#" + namespace + name;
+			});
+		collector.collect(
 			"toolbar",
-			"bold italic underline | alignleft aligncenter alignright | " +
-				"preview print");
-		jsonObject.put("toolbar_items_size", "small");
+			() ->
+				"bold italic underline | alignleft aligncenter alignright | " +
+					"preview print");
+		collector.collect("toolbar_items_size", () -> "small");
 	}
 
 	protected String getTinyMCELanguage(String contentsLanguageId) {

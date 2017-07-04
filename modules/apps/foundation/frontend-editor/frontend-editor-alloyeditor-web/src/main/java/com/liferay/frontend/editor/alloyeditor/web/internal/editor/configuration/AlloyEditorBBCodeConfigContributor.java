@@ -16,6 +16,7 @@ package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuratio
 
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,53 +51,54 @@ public class AlloyEditorBBCodeConfigContributor
 	extends BaseAlloyEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("allowedContent", Boolean.TRUE);
-		jsonObject.put("enterMode", 1);
+		collector.collect("allowedContent", () -> Boolean.TRUE);
+		collector.collect("enterMode", () -> 1);
+		collector.collect(
+			"extraPlugins",
+			(String extraPlugins) -> extraPlugins.concat(
+				",bbcode,itemselector"));
+		collector.collect("forceEnterMode", () -> Boolean.TRUE);
+		collector.collect("format_tags", () -> "p;pre");
+		collector.collect(
+			"lang", () -> getLangJSONObject(inputEditorTaglibAttributes));
+		collector.collect(
+			"newThreadURL", () -> MBThreadConstants.NEW_THREAD_URL);
+		collector.collect(
+			"removePlugins",
+			(String removePlugins) -> {
+				StringBundler sb = new StringBundler(5);
 
-		String extraPlugins = jsonObject.getString("extraPlugins");
+				sb.append(removePlugins);
+				sb.append(",bidi,colorbutton,colordialog,div,flash,font,");
+				sb.append("forms,indentblock,keystrokes,maximize,newpage,");
+				sb.append("pagebreak,preview,print,save,showblocks,");
+				sb.append("smiley,stylescombo,templates,video");
 
-		extraPlugins = extraPlugins.concat(",bbcode,itemselector");
-
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		jsonObject.put("forceEnterMode", Boolean.TRUE);
-		jsonObject.put("format_tags", "p;pre");
-		jsonObject.put("lang", getLangJSONObject(inputEditorTaglibAttributes));
-		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
-
-		String removePlugins = jsonObject.getString("removePlugins");
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("bidi,colorbutton,colordialog,div,flash,font,forms,");
-		sb.append("indentblock,keystrokes,maximize,newpage,pagebreak,");
-		sb.append("preview,print,save,showblocks,smiley,stylescombo,");
-		sb.append("templates,video");
-
-		jsonObject.put(
-			"removePlugins", removePlugins.concat(",").concat(sb.toString()));
-
-		jsonObject.put(
+				return sb.toString();
+			});
+		collector.collect(
 			"smiley_images",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles()));
-		jsonObject.put(
+			() -> toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles()));
+		collector.collect(
 			"smiley_path",
-			HtmlUtil.escape(themeDisplay.getPathThemeImages()) + "/emoticons/");
-		jsonObject.put(
+			() ->
+				HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
+					"/emoticons/");
+		collector.collect(
 			"smiley_symbols",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols()));
-
-		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+			() -> toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols()));
+		collector.collect(
+			"toolbars", () -> getToolbarsJSONObject(themeDisplay.getLocale()));
 	}
 
 	protected JSONObject getLangJSONObject(

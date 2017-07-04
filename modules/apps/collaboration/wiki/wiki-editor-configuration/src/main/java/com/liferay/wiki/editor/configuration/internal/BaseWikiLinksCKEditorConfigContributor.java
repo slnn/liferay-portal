@@ -20,7 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,8 +44,9 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
@@ -57,38 +58,41 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 			return;
 		}
 
-		String filebrowserBrowseUrl = jsonObject.getString(
-			"filebrowserBrowseUrl");
+		collector.collect(
+			"filebrowserBrowseUrl",
+			(String filebrowserBrowseUrl) -> {
+				String itemSelectedEventName =
+					itemSelector.getItemSelectedEventName(filebrowserBrowseUrl);
 
-		String itemSelectedEventName = itemSelector.getItemSelectedEventName(
-			filebrowserBrowseUrl);
+				List<ItemSelectorCriterion> itemSelectorCriteria =
+					itemSelector.getItemSelectorCriteria(filebrowserBrowseUrl);
 
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			itemSelector.getItemSelectorCriteria(filebrowserBrowseUrl);
+				long wikiPageResourcePrimKey = GetterUtil.getLong(
+					fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
 
-		long wikiPageResourcePrimKey = GetterUtil.getLong(
-			fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
+				if (wikiPageResourcePrimKey != 0) {
+					itemSelectorCriteria.add(
+						0,
+						getWikiAttachmentItemSelectorCriterion(
+							wikiPageResourcePrimKey));
+				}
 
-		if (wikiPageResourcePrimKey != 0) {
-			itemSelectorCriteria.add(
-				0,
-				getWikiAttachmentItemSelectorCriterion(
-					wikiPageResourcePrimKey));
-		}
+				long nodeId = GetterUtil.getLong(
+					fileBrowserParamsMap.get("nodeId"));
 
-		long nodeId = GetterUtil.getLong(fileBrowserParamsMap.get("nodeId"));
+				if (nodeId != 0) {
+					itemSelectorCriteria.add(
+						0, getWikiPageItemSelectorCriterion(nodeId));
+				}
 
-		if (nodeId != 0) {
-			itemSelectorCriteria.add(
-				0, getWikiPageItemSelectorCriterion(nodeId));
-		}
+				PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+					requestBackedPortletURLFactory, itemSelectedEventName,
+					itemSelectorCriteria.toArray(
+						new ItemSelectorCriterion[
+							itemSelectorCriteria.size()]));
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			itemSelectorCriteria.toArray(
-				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
-
-		jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
+				return itemSelectorURL.toString();
+			});
 	}
 
 	protected abstract ItemSelectorReturnType getItemSelectorReturnType();

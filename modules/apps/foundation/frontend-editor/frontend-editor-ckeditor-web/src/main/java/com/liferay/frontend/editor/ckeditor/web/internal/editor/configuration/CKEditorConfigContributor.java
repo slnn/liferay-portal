@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,71 +49,79 @@ import org.osgi.service.component.annotations.Reference;
 public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+		super.collectEditorConfigElementContributors(
+			collector, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("autoParagraph", Boolean.FALSE);
-		jsonObject.put("autoSaveTimeout", 3000);
-
-		ColorScheme colorScheme = themeDisplay.getColorScheme();
-
-		String cssClasses = (String)inputEditorTaglibAttributes.get(
-			"liferay-ui:input-editor:cssClasses");
-
-		jsonObject.put(
+		collector.collect("autoParagraph", () -> Boolean.FALSE);
+		collector.collect("autoSaveTimeout", () -> 3000);
+		collector.collect(
 			"bodyClass",
-			"html-editor " + HtmlUtil.escape(colorScheme.getCssClass()) + " " +
-				HtmlUtil.escape(cssClasses));
+			() -> {
+				ColorScheme colorScheme = themeDisplay.getColorScheme();
 
-		jsonObject.put("closeNoticeTimeout", 8000);
-		jsonObject.put("entities", Boolean.FALSE);
+				String cssClasses = (String)inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:cssClasses");
 
-		String extraPlugins = "a11yhelpbtn,itemselector,lfrpopup,media";
+				return "html-editor " +
+					HtmlUtil.escape(colorScheme.getCssClass()) + " " +
+						HtmlUtil.escape(cssClasses);
+			});
+		collector.collect("closeNoticeTimeout", () -> 8000);
+		collector.collect("entities", () -> Boolean.FALSE);
+		collector.collect(
+			"extraPlugins",
+			() -> {
+				String extraPlugins = "a11yhelpbtn,itemselector,lfrpopup,media";
 
-		boolean inlineEdit = GetterUtil.getBoolean(
-			(String)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:inlineEdit"));
+				boolean inlineEdit = GetterUtil.getBoolean(
+					(String)inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:inlineEdit"));
 
-		if (inlineEdit) {
-			extraPlugins += ",ajaxsave,restore";
-		}
+				if (inlineEdit) {
+					extraPlugins += ",ajaxsave,restore";
+				}
 
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		jsonObject.put(
+				return extraPlugins;
+			});
+		collector.collect(
 			"filebrowserWindowFeatures",
-			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse"));
-		jsonObject.put("pasteFromWordRemoveFontStyles", Boolean.FALSE);
-		jsonObject.put("pasteFromWordRemoveStyles", Boolean.FALSE);
-		jsonObject.put(
-			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale()));
-		jsonObject.put(
+			() ->
+				"title=" +
+					LanguageUtil.get(themeDisplay.getLocale(), "browse"));
+		collector.collect("pasteFromWordRemoveFontStyles", () -> Boolean.FALSE);
+		collector.collect("pasteFromWordRemoveStyles", () -> Boolean.FALSE);
+		collector.collect(
+			"stylesSet",
+			() -> getStyleFormatsJSONArray(themeDisplay.getLocale()));
+		collector.collect(
 			"toolbar_editInPlace",
-			getToolbarEditInPlaceJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarEditInPlaceJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_email",
-			getToolbarEmailJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarEmailJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_liferay",
-			getToolbarLiferayJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarLiferayJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_liferayArticle",
-			getToolbarLiferayArticleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarLiferayArticleJSONArray(
+				inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_phone",
-			getToolbarPhoneJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarPhoneJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_simple",
-			getToolbarSimpleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			() -> getToolbarSimpleJSONArray(inputEditorTaglibAttributes));
+		collector.collect(
 			"toolbar_tablet",
-			getToolbarTabletJSONArray(inputEditorTaglibAttributes));
+			() -> getToolbarTabletJSONArray(inputEditorTaglibAttributes));
 	}
 
 	protected JSONObject getStyleFormatJSONObject(

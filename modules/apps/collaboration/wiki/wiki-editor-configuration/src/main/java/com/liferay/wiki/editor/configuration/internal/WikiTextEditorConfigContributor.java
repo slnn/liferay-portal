@@ -16,8 +16,8 @@ package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigElementContributorCollector;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -41,16 +41,18 @@ public class WikiTextEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void collectEditorConfigElementContributors(
+		EditorConfigElementContributorCollector collector,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", "p");
-		jsonObject.put("disallowedContent", "br");
-		jsonObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+		collector.collect("allowedContent", () -> "p");
+		collector.collect("disallowedContent", () -> "br");
+		collector.collect(
+			"extraPlugins",
+			() -> "ae_placeholder,ae_selectionregion,ae_uicore");
+		collector.collect("toolbars", () -> JSONFactoryUtil.createJSONObject());
 	}
 
 }
