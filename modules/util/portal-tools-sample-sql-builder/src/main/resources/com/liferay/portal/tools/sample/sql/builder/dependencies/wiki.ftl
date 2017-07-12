@@ -1,16 +1,16 @@
-<#assign wikiNodeModels = dataFactory.newWikiNodeModels(groupId) />
+<#assign wikiNodeModels = wikiDataFactory.newWikiNodeModels(groupId) />
 
 <#list wikiNodeModels as wikiNodeModel>
-	${dataFactory.toInsertSQL(wikiNodeModel)}
+	${initContext.toInsertSQL(wikiNodeModel)}
 
-	<#assign wikiPageModels = dataFactory.newWikiPageModels(wikiNodeModel) />
+	<#assign wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel) />
 
 	<#list wikiPageModels as wikiPageModel>
-		${dataFactory.toInsertSQL(wikiPageModel)}
+		${initContext.toInsertSQL(wikiPageModel)}
 
-		${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(wikiPageModel))}
+		${initContext.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel))}
 
-		${dataFactory.toInsertSQL(dataFactory.newWikiPageResourceModel(wikiPageModel))}
+		${initContext.toInsertSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry
 			_categoryAndTag=true
@@ -18,19 +18,19 @@
 		/>
 
 		<#assign
-			mbRootMessageId = dataFactory.getCounterNext()
-			mbThreadId = dataFactory.getCounterNext()
+			mbRootMessageId = counterDataFactory.getCounterNext()
+			mbThreadId = counterDataFactory.getCounterNext()
 		/>
 
 		<@insertMBDiscussion
-			_classNameId=dataFactory.wikiPageClassNameId
+			_classNameId=wikiDataFactory.wikiPageClassNameId
 			_classPK=wikiPageModel.resourcePrimKey
 			_groupId=groupId
-			_maxCommentCount=dataFactory.maxWikiPageCommentCount
+			_maxCommentCount=initContext.maxWikiPageCommentCount
 			_mbRootMessageId=mbRootMessageId
 			_mbThreadId=mbThreadId
 		/>
 
-		${dataFactory.getCSVWriter("wiki").write(wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
+		${initContext.getCSVWriter("wiki").write(wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 	</#list>
 </#list>

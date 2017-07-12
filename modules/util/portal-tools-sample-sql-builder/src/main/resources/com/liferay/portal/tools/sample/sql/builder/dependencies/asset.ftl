@@ -1,15 +1,15 @@
-<#list dataFactory.assetVocabularyModels as assetVocabularyModel>
-	${dataFactory.toInsertSQL(assetVocabularyModel)}
+<#list assetDataFactory.assetVocabularyModels as assetVocabularyModel>
+	${initContext.toInsertSQL(assetVocabularyModel)}
 </#list>
 
-<#list dataFactory.assetCategoryModels as assetCategoryModel>
-	${dataFactory.toInsertSQL(assetCategoryModel)}
+<#list assetDataFactory.assetCategoryModels as assetCategoryModel>
+	${initContext.toInsertSQL(assetCategoryModel)}
 </#list>
 
-<#list dataFactory.assetTagModels as assetTagModel>
-	${dataFactory.toInsertSQL(assetTagModel)}
+<#list assetDataFactory.assetTagModels as assetTagModel>
+	${initContext.toInsertSQL(assetTagModel)}
 </#list>
 
-<#list dataFactory.assetTagStatsModels as assetTagStatsModel>
-	${dataFactory.toInsertSQL(assetTagStatsModel)}
+<#list assetDataFactory.assetTagStatsModels as assetTagStatsModel>
+	${initContext.toInsertSQL(assetTagStatsModel)}
 </#list>
