@@ -37,6 +37,10 @@ public class WikiDataFactory extends BaseDataFactory {
 		super(initContext);
 	}
 
+	public long getWikiPageClassNameId() {
+		return getClassNameId(WikiPage.class, initContext.getClassNameModels());
+	}
+
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
 		int maxWikiNodeCount = initContext.getMaxWikiNodeCount();
 
@@ -51,6 +55,7 @@ public class WikiDataFactory extends BaseDataFactory {
 
 	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel)
 	{
+
 		int maxWikiPageCount = initContext.getMaxWikiPageCount();
 
 		List<WikiPageModel> wikiPageModels = new ArrayList<>(maxWikiPageCount);
@@ -77,8 +82,26 @@ public class WikiDataFactory extends BaseDataFactory {
 		return wikiPageResourceModel;
 	}
 
-	public long getWikiPageClassNameId() {
-		return getClassNameId(WikiPage.class, initContext.getClassNameModels());
+	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
+		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
+
+		SimpleCounter counter = initContext.getCounter();
+
+		wikiNodeModel.setUuid(SequentialUUID.generate());
+		wikiNodeModel.setNodeId(counter.get());
+		wikiNodeModel.setGroupId(groupId);
+		wikiNodeModel.setCompanyId(initContext.getCompanyId());
+		wikiNodeModel.setUserId(initContext.getSampleUserId());
+		wikiNodeModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
+		wikiNodeModel.setCreateDate(new Date());
+		wikiNodeModel.setModifiedDate(new Date());
+		wikiNodeModel.setName(
+			DataFactoryConstants.WIKI_NODE_NAME_PREFIX + index);
+		wikiNodeModel.setLastPostDate(new Date());
+		wikiNodeModel.setLastPublishDate(new Date());
+		wikiNodeModel.setStatusDate(new Date());
+
+		return wikiNodeModel;
 	}
 
 	protected WikiPageModel newWikiPageModel(
@@ -108,29 +131,6 @@ public class WikiDataFactory extends BaseDataFactory {
 		wikiPageModel.setLastPublishDate(new Date());
 
 		return wikiPageModel;
-	}
-
-	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
-
-		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
-
-		SimpleCounter counter = initContext.getCounter();
-
-		wikiNodeModel.setUuid(SequentialUUID.generate());
-		wikiNodeModel.setNodeId(counter.get());
-		wikiNodeModel.setGroupId(groupId);
-		wikiNodeModel.setCompanyId(initContext.getCompanyId());
-		wikiNodeModel.setUserId(initContext.getSampleUserId());
-		wikiNodeModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
-		wikiNodeModel.setCreateDate(new Date());
-		wikiNodeModel.setModifiedDate(new Date());
-		wikiNodeModel.setName(
-			DataFactoryConstants.WIKI_NODE_NAME_PREFIX + index);
-		wikiNodeModel.setLastPostDate(new Date());
-		wikiNodeModel.setLastPublishDate(new Date());
-		wikiNodeModel.setStatusDate(new Date());
-
-		return wikiNodeModel;
 	}
 
 }

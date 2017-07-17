@@ -46,6 +46,7 @@ public class SubscriptionDataFactory extends BaseDataFactory {
 
 	public SubscriptionModel newSubscriptionModel(MBThreadModel mBThreadModel)
 	{
+
 		return newSubscriptionModel(
 			getClassNameId(MBThread.class, initContext.getClassNameModels()),
 			mBThreadModel.getThreadId());
@@ -53,6 +54,7 @@ public class SubscriptionDataFactory extends BaseDataFactory {
 
 	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel)
 	{
+
 		return newSubscriptionModel(
 			getClassNameId(WikiPage.class, initContext.getClassNameModels()),
 			wikiPageModel.getResourcePrimKey());

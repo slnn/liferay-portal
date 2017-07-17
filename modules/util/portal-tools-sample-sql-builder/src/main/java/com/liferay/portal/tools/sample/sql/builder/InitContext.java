@@ -16,31 +16,20 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.model.ResourcePermissionModel;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.util.SimpleCounter;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
-
-import java.sql.Types;
 
 import java.text.Format;
 
@@ -254,109 +243,6 @@ public class InitContext {
 	public String getVirtualHostname() {
 		return _virtualHostname;
 	}
-	
-	public String toInsertSQL(BaseModel<?> baseModel) {
-		try {
-			StringBundler sb = new StringBundler();
-
-			toInsertSQL(sb, baseModel);
-
-			Class<?> clazz = baseModel.getClass();
-
-			for (Class<?> modelClass : clazz.getInterfaces()) {
-				try {
-					Method method = InitContext.class.getMethod(
-						"newResourcePermissionModels", modelClass);
-
-					for (ResourcePermissionModel resourcePermissionModel :
-							(List<ResourcePermissionModel>)method.invoke(
-								this, baseModel)) {
-
-						sb.append("\n");
-
-						toInsertSQL(sb, resourcePermissionModel);
-					}
-				}
-				catch (NoSuchMethodException nsme) {
-				}
-			}
-
-			return sb.toString();
-		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
-		}
-	}
-	
-	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
-		try {
-			sb.append("insert into ");
-
-			Class<?> clazz = baseModel.getClass();
-
-			Field tableNameField = clazz.getField("TABLE_NAME");
-
-			sb.append(tableNameField.get(null));
-
-			sb.append(" values (");
-
-			Field tableColumnsField = clazz.getField("TABLE_COLUMNS");
-
-			for (Object[] tableColumn :
-					(Object[][])tableColumnsField.get(null)) {
-
-				String name = TextFormatter.format(
-					(String)tableColumn[0], TextFormatter.G);
-
-				if (name.endsWith(StringPool.UNDERLINE)) {
-					name = name.substring(0, name.length() - 1);
-				}
-
-				int type = (int)tableColumn[1];
-
-				if (type == Types.TIMESTAMP) {
-					Method method = clazz.getMethod("get".concat(name));
-
-					Date date = (Date)method.invoke(baseModel);
-
-					if (date == null) {
-						sb.append("null");
-					}
-					else {
-						sb.append("'");
-						sb.append(getDateString(date));
-						sb.append("'");
-					}
-				}
-				else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
-					Method method = clazz.getMethod("get".concat(name));
-
-					sb.append("'");
-					sb.append(method.invoke(baseModel));
-					sb.append("'");
-				}
-				else if (type == Types.BOOLEAN) {
-					Method method = clazz.getMethod("is".concat(name));
-
-					sb.append(method.invoke(baseModel));
-				}
-				else {
-					Method method = clazz.getMethod("get".concat(name));
-
-					sb.append(method.invoke(baseModel));
-				}
-
-				sb.append(", ");
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(");");
-		}
-		catch (ReflectiveOperationException roe) {
-			ReflectionUtil.throwException(roe);
-		}
-	}
 
 	private Map<String, ClassNameModel> _initClassNameModels() {
 		Map<String, ClassNameModel> classNameModels = new HashMap<>();
@@ -377,7 +263,9 @@ public class InitContext {
 		return classNameModels;
 	}
 
-	private void _initContextValue(Properties properties) throws FileNotFoundException {
+	private void _initContextValue(Properties properties)
+		throws FileNotFoundException {
+
 		String timeZoneId = properties.getProperty("sample.sql.db.time.zone");
 
 		if (Validator.isNotNull(timeZoneId)) {
@@ -455,7 +343,7 @@ public class InitContext {
 			properties.getProperty("sample.sql.max.wiki.page.count"));
 		_virtualHostname = GetterUtil.getString(
 			properties.getProperty("sample.sql.virtual.hostname"));
-		
+
 		File outputDir = new File(
 			properties.getProperty("sample.sql.output.dir"));
 
@@ -484,10 +372,12 @@ public class InitContext {
 	}
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
+
 	private final long _accountId;
 	private final Map<String, ClassNameModel> _classNameModels;
 	private final long _companyId;
 	private final SimpleCounter _counter;
+	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final long _defaultUserId;
 	private final SimpleCounter _futureDateCounter = new SimpleCounter();
 	private int _maxAssetCategoryCount;
@@ -519,7 +409,6 @@ public class InitContext {
 	private int _maxWikiPageCommentCount;
 	private int _maxWikiPageCount;
 	private final long _sampleUserId;
-	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private String _virtualHostname;

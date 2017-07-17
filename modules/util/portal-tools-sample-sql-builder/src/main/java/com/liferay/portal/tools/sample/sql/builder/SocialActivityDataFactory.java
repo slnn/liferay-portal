@@ -16,6 +16,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
+import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.journal.model.JournalArticle;
@@ -26,7 +27,6 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageModel;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;

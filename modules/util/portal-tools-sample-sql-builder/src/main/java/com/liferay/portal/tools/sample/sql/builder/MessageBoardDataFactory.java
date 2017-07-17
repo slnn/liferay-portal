@@ -210,6 +210,7 @@ public class MessageBoardDataFactory extends BaseDataFactory {
 
 	public MBThreadFlagModel newMBThreadFlagModel(MBThreadModel mbThreadModel)
 	{
+
 		MBThreadFlagModel mbThreadFlagModel = new MBThreadFlagModelImpl();
 
 		SimpleCounter counter = initContext.getCounter();

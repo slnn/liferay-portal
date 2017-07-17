@@ -71,9 +71,9 @@ public class LayoutDataFactory extends BaseDataFactory {
 		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
 		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
 		layoutFriendlyURLEntryModel.setFriendlyURL(
-				layoutModel.getFriendlyURL());
+			layoutModel.getFriendlyURL());
 		layoutFriendlyURLEntryModel.setLanguageId(
-				DataFactoryConstants.LANGUAGE_ID);
+			DataFactoryConstants.LANGUAGE_ID);
 		layoutFriendlyURLEntryModel.setLastPublishDate(new Date());
 
 		return layoutFriendlyURLEntryModel;

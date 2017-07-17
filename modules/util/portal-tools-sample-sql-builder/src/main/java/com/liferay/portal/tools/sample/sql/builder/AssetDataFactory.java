@@ -75,16 +75,15 @@ public class AssetDataFactory extends BaseDataFactory {
 		_userDataFactory = userDataFactory;
 
 		_assetClassNameIds = new long[] {
-			getClassNameId(BlogsEntry.class,initContext.getClassNameModels()),
+			getClassNameId(BlogsEntry.class, initContext.getClassNameModels()),
 			getClassNameId(
-					JournalArticle.class,initContext.getClassNameModels()), 
-			getClassNameId(WikiPage.class,initContext.getClassNameModels())
+					JournalArticle.class, initContext.getClassNameModels()),
+			getClassNameId(WikiPage.class, initContext.getClassNameModels())
 		};
 
 		_initAssetCategoryModels();
 		_initAssetTagModels();
 		_initAssetPublisherPortletPreference();
-
 	}
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
@@ -176,7 +175,7 @@ public class AssetDataFactory extends BaseDataFactory {
 		}
 
 		List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
-				assetEntryModel.getClassNameId());
+			assetEntryModel.getClassNameId());
 
 		if ((assetTagModels == null) || assetTagModels.isEmpty()) {
 			return Collections.emptyList();
@@ -189,7 +188,7 @@ public class AssetDataFactory extends BaseDataFactory {
 
 		SimpleCounter counter = getSimpleCounter(
 			_assetTagCounters, assetEntryModel.getGroupId(),
-				assetEntryModel.getClassNameId());
+			assetEntryModel.getClassNameId());
 
 		List<Long> assetTagIds = new ArrayList<>(maxAssetEntryToAssetTagCount);
 
@@ -271,7 +270,7 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetVocabularyModel getDefaultAssetVocabularyModel() {
 		return _defaultAssetVocabularyModel;
 	}
-	
+
 	public long getNextAssetClassNameId(long groupId) {
 		Integer index = _assetClassNameIdsIndexes.get(groupId);
 
@@ -602,6 +601,7 @@ public class AssetDataFactory extends BaseDataFactory {
 					assetCategoryModels.add(assetCategoryModel);
 				}
 			}
+
 			_assetCategoryModelsArray[i - 1] = assetCategoryModels;
 			_assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
 
@@ -723,9 +723,9 @@ public class AssetDataFactory extends BaseDataFactory {
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private List<AssetCategoryModel>[] _assetCategoryModelsArray;
 	private Map<Long, List<AssetCategoryModel>>[] _assetCategoryModelsMaps;
-	private final Map<Long, Integer> _assetClassNameIdsIndexes =
-			new HashMap<>();
 	private final long[] _assetClassNameIds;
+	private final Map<Long, Integer> _assetClassNameIdsIndexes =
+		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;

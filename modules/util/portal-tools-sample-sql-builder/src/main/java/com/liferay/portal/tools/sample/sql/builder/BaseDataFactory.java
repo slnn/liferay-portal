@@ -14,14 +14,22 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.util.SimpleCounter;
 
 import java.io.InputStream;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import java.sql.Types;
 
 import java.util.Date;
 import java.util.Map;
@@ -42,7 +50,7 @@ public abstract class BaseDataFactory {
 	public InitContext getInitContext() {
 		return initContext;
 	}
-	
+
 	public String getPortletId(String portletPrefix) {
 		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
 	}
@@ -56,6 +64,80 @@ public abstract class BaseDataFactory {
 
 	public Date nextFutureDate(SimpleCounter futureDateCounter) {
 		return new Date(_FUTURE_TIME + (futureDateCounter.get() * Time.SECOND));
+	}
+
+	public String toInsertSQL(BaseModel<?> baseModel) {
+		try {
+			StringBundler sb = new StringBundler();
+			
+			sb.append("insert into ");
+
+			Class<?> clazz = baseModel.getClass();
+
+			Field tableNameField = clazz.getField("TABLE_NAME");
+
+			sb.append(tableNameField.get(null));
+
+			sb.append(" values (");
+
+			Field tableColumnsField = clazz.getField("TABLE_COLUMNS");
+
+			for (Object[] tableColumn :
+					(Object[][])tableColumnsField.get(null)) {
+
+				String name = TextFormatter.format(
+					(String)tableColumn[0], TextFormatter.G);
+
+				if (name.endsWith(StringPool.UNDERLINE)) {
+					name = name.substring(0, name.length() - 1);
+				}
+
+				int type = (int)tableColumn[1];
+
+				if (type == Types.TIMESTAMP) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					Date date = (Date)method.invoke(baseModel);
+
+					if (date == null) {
+						sb.append("null");
+					}
+					else {
+						sb.append("'");
+						sb.append(initContext.getDateString(date));
+						sb.append("'");
+					}
+				}
+				else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append("'");
+					sb.append(method.invoke(baseModel));
+					sb.append("'");
+				}
+				else if (type == Types.BOOLEAN) {
+					Method method = clazz.getMethod("is".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+				else {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+
+				sb.append(", ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(");");
+			
+			return sb.toString();
+		}
+		catch (ReflectiveOperationException roe) {
+			return ReflectionUtil.throwException(roe);
+		}
 	}
 
 	protected BaseDataFactory(InitContext initContext) {

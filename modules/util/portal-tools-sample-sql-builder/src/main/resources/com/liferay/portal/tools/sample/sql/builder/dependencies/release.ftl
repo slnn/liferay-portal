@@ -1,5 +1,5 @@
 <#assign releaseModels = releaseDataFactory.newReleaseModels() />
 
 <#list releaseModels as releaseModel>
-	${initContext.toInsertSQL(releaseModel)}
+	${releaseDataFactory.toInsertSQL(releaseModel)}
 </#list>

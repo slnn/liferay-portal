@@ -30,7 +30,7 @@
 	<#include "wiki.ftl">
 
 	<@insertDLFolder
-		_ddmStructureId= dLDataFactory.defaultDLDDMStructureId
+		_ddmStructureId=dLDataFactory.defaultDLDDMStructureId
 		_dlFolderDepth=1
 		_groupId=groupId
 		_parentDLFolderId=0

@@ -21,22 +21,23 @@
 		layoutModel = layoutDataFactory.newLayoutModel(groupId, layoutName, "", portletId)
 	/>
 
-	<@insertLayout _layoutModel=layoutModel/>
+	<@insertLayout _layoutModel=layoutModel />
 
 	<#assign ddlRecordSetModel = dDLDataFactory.newDDLRecordSetModel(ddmStructureModel, ddlRecordSetCount) />
 
-	${initContext.toInsertSQL(ddlRecordSetModel)}
+	${dDLDataFactory.toInsertSQL(ddlRecordSetModel)}
 
-	${initContext.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
+	${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(ddlRecordSetModel)}
 
 	<#assign ddlRecordCounts = counterDataFactory.getSequence(initContext.maxDDLRecordCount) />
 
 	<#list ddlRecordCounts as ddlRecordCount>
 		<#assign ddlRecordModel = dDLDataFactory.newDDLRecordModel(ddlRecordSetModel) />
 
-		${initContext.toInsertSQL(ddlRecordModel)}
+		${dDLDataFactory.toInsertSQL(ddlRecordModel)}
 
-		${initContext.toInsertSQL(dDLDataFactory.newDDLRecordVersionModel(ddlRecordModel))}
+		${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDLRecordVersionModel(ddlRecordModel))}
 
 		<@insertDDMContent
 			_currentIndex=ddlRecordCount
@@ -48,11 +49,16 @@
 		${initContext.getCSVWriter("dynamicDataList").write(ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
 	</#list>
 
-	${initContext.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, ddlRecordSetModel))}
+	<#assign portletPreferencesModel = portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, ddlRecordSetModel) />
+
+	${dDLDataFactory.toInsertSQL(portletPreferencesModel)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(portletPreferencesModel)}
 
 	<#assign portletPreferencesModels = portletPreferenceDataFactory.newDDLPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
-		${initContext.toInsertSQL(portletPreferencesModel)}
+		${dDLDataFactory.toInsertSQL(portletPreferencesModel)}
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(portletPreferencesModel)}
 	</#list>
 </#list>

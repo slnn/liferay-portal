@@ -1,15 +1,18 @@
 <#list assetDataFactory.assetVocabularyModels as assetVocabularyModel>
-	${initContext.toInsertSQL(assetVocabularyModel)}
+	${assetDataFactory.toInsertSQL(assetVocabularyModel)}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(assetVocabularyModel)}
 </#list>
 
 <#list assetDataFactory.assetCategoryModels as assetCategoryModel>
-	${initContext.toInsertSQL(assetCategoryModel)}
+	${assetDataFactory.toInsertSQL(assetCategoryModel)}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(assetCategoryModel)}
 </#list>
 
 <#list assetDataFactory.assetTagModels as assetTagModel>
-	${initContext.toInsertSQL(assetTagModel)}
+	${assetDataFactory.toInsertSQL(assetTagModel)}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(assetTagModel)}
 </#list>
 
 <#list assetDataFactory.assetTagStatsModels as assetTagStatsModel>
-	${initContext.toInsertSQL(assetTagStatsModel)}
+	${assetDataFactory.toInsertSQL(assetTagStatsModel)}
 </#list>

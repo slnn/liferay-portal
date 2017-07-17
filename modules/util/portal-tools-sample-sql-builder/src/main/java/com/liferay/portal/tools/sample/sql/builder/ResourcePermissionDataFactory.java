@@ -38,6 +38,7 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryModel;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageModel;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupModel;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
@@ -61,6 +63,8 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
+
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +79,38 @@ public class ResourcePermissionDataFactory extends BaseDataFactory {
 
 	public ResourcePermissionDataFactory(InitContext initContext) {
 		super(initContext);
+	}
+
+	public String generateResourcePermissionSQL(BaseModel<?> baseModel) {
+		try {
+			StringBundler sb = new StringBundler();
+
+			Class<?> clazz = baseModel.getClass();
+
+			for (Class<?> modelClass : clazz.getInterfaces()) {
+				try {
+					Method method =
+						ResourcePermissionDataFactory.class.getMethod(
+							"newResourcePermissionModels", modelClass);
+
+					for (ResourcePermissionModel resourcePermissionModel :
+							(List<ResourcePermissionModel>)method.invoke(
+								this, baseModel)) {
+
+						sb.append("\n");
+
+						sb.append(toInsertSQL(resourcePermissionModel));
+					}
+				}
+				catch (NoSuchMethodException nsme) {
+				}
+			}
+
+			return sb.toString();
+		}
+		catch (ReflectiveOperationException roe) {
+			return ReflectionUtil.throwException(roe);
+		}
 	}
 
 	public SimpleCounter getResourcePermissionCounter() {

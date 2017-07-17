@@ -53,7 +53,7 @@
 />
 
 <#list groupIds as groupId>
-	${initContext.toInsertSQL(blogDataFactory.newBlogsStatsUserModel(groupId))}
+	${userDataFactory.toInsertSQL(blogDataFactory.newBlogsStatsUserModel(groupId))}
 
-	${initContext.toInsertSQL(messageBoardDataFactory.newMBStatsUserModel(groupId))}
+	${userDataFactory.toInsertSQL(messageBoardDataFactory.newMBStatsUserModel(groupId))}
 </#list>

@@ -129,14 +129,14 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMapArray =
-					_assetDataFactory.getAssetCategoryModelsMaps();
+				_assetDataFactory.getAssetCategoryModelsMaps();
 
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
 				assetCategoryModelsMapArray[(int)groupId - 1];
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(
-						_assetDataFactory.getNextAssetClassNameId(groupId));
+					_assetDataFactory.getNextAssetClassNameId(groupId));
 
 			if ((assetCategoryModels == null) ||
 				assetCategoryModels.isEmpty()) {
@@ -147,13 +147,13 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 			int maxAssetEntryToAssetCategoryCount =
 				initContext.getMaxAssetEntryToAssetCategoryCount();
-			
+
 			objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
 				assetCategoryModels, startIndex,maxAssetEntryToAssetCategoryCount);
 		}
 		else {
 			Map<Long, List<AssetTagModel>>[] assetTagModelsMapArray =
-					_assetDataFactory.getAssetTagModelsMaps();
+				_assetDataFactory.getAssetTagModelsMaps();
 
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
 				assetTagModelsMapArray[(int)groupId - 1];
@@ -165,10 +165,10 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 				return newPortletPreferencesModel(
 					plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
 			}
-			
-			int maxAssetEntryToAssetTagCount = 
+
+			int maxAssetEntryToAssetTagCount =
 				initContext.getMaxAssetEntryToAssetTagCount();
-			
+
 			objectValuePair = getAssetPublisherAssetTagsQueryValues(
 				assetTagModels, startIndex, maxAssetEntryToAssetTagCount);
 		}
@@ -176,7 +176,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 		String[] assetPublisherQueryValues = objectValuePair.getKey();
 
 		assetPublisherQueryStartIndexes.put(
-			   groupId, objectValuePair.getValue());
+			groupId, objectValuePair.getValue());
 
 		PortletPreferences jxPortletPreferences =
 			(PortletPreferences)_assetDataFactory.
@@ -249,8 +249,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 	protected ObjectValuePair<String[], Integer>
 			getAssetPublisherAssetCategoriesQueryValues(
-					 List<AssetCategoryModel> assetCategoryModels, int index,
-					 int maxAssetEntryToAssetCategoryCount) {
+				List<AssetCategoryModel> assetCategoryModels, int index,
+				int maxAssetEntryToAssetCategoryCount) {
 
 			AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
 				index % assetCategoryModels.size());
@@ -263,7 +263,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 			int lastIndex =
 					(index + maxAssetEntryToAssetCategoryCount * 3) %
-							assetCategoryModels.size();
+						assetCategoryModels.size();
 
 			AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
 			lastIndex);
@@ -280,8 +280,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 	protected ObjectValuePair<String[], Integer>
 			getAssetPublisherAssetTagsQueryValues(
-					 List<AssetTagModel> assetTagModels, int index,
-					 int maxAssetEntryToAssetTagCount) {
+				List<AssetTagModel> assetTagModels, int index,
+				int maxAssetEntryToAssetTagCount) {
 
 			AssetTagModel assetTagModel0 = assetTagModels.get(
 				index % assetTagModels.size());
@@ -291,7 +291,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 				(index + maxAssetEntryToAssetTagCount * 2) % assetTagModels.size());
 
 			int lastIndex =
-					(index + maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
+				(index + maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
 
 			AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
 

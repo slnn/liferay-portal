@@ -1,9 +1,9 @@
 <#assign blogsEntryModels = blogDataFactory.newBlogsEntryModels(groupId) />
 
 <#list blogsEntryModels as blogsEntryModel>
-	${initContext.toInsertSQL(blogsEntryModel)}
-
-	${initContext.toInsertSQL(blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel))}
+	${blogDataFactory.toInsertSQL(blogsEntryModel)}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(blogsEntryModel)}
+	${blogDataFactory.toInsertSQL(blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel))}
 
 	<@insertAssetEntry
 		_categoryAndTag=true
@@ -24,9 +24,9 @@
 		_mbThreadId=mbThreadId
 	/>
 
-	${initContext.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel))}
+	${blogDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel))}
 
-	${initContext.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
+	${blogDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
 
 	${initContext.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 </#list>

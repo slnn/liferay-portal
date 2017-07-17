@@ -6,7 +6,7 @@
 >
 	<#local assetEntryModel = assetDataFactory.newAssetEntryModel(_entry)>
 
-	${initContext.toInsertSQL(assetEntryModel)}
+	${assetDataFactory.toInsertSQL(assetEntryModel)}
 
 	<#if _categoryAndTag>
 		<#local assetCategoryIds = assetDataFactory.getAssetCategoryIds(assetEntryModel)>
@@ -35,9 +35,9 @@
 		<#local ddmContentModel = dDLDataFactory.newDDMContentModel(_entry, _currentIndex)>
 	</#if>
 
-	${initContext.toInsertSQL(ddmContentModel)}
+	${dDLDataFactory.toInsertSQL(ddmContentModel)}
 
-	${initContext.toInsertSQL(dDLDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
+	${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
 </#macro>
 
 <#macro insertDDMStructure
@@ -45,11 +45,13 @@
 	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
 >
-	${initContext.toInsertSQL(_ddmStructureModel)}
+	${dDLDataFactory.toInsertSQL(_ddmStructureModel)}
 
-	${initContext.toInsertSQL(_ddmStructureLayoutModel)}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_ddmStructureModel)}
 
-	${initContext.toInsertSQL(_ddmStructureVersionModel)}
+	${dDLDataFactory.toInsertSQL(_ddmStructureLayoutModel)}
+
+	${dDLDataFactory.toInsertSQL(_ddmStructureVersionModel)}
 </#macro>
 
 <#macro insertDLFolder
@@ -62,18 +64,22 @@
 		<#local dlFolderModels = dLDataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
 
 		<#list dlFolderModels as dlFolderModel>
-			${initContext.toInsertSQL(dlFolderModel)}
+			${dLDataFactory.toInsertSQL(dlFolderModel)}
+
+			${resourcePermissionDataFactory.generateResourcePermissionSQL(dlFolderModel)}
 
 			<@insertAssetEntry _entry=dlFolderModel />
 
 			<#local dlFileEntryModels = dLDataFactory.newDlFileEntryModels(dlFolderModel)>
 
 			<#list dlFileEntryModels as dlFileEntryModel>
-				${initContext.toInsertSQL(dlFileEntryModel)}
+				${dLDataFactory.toInsertSQL(dlFileEntryModel)}
 
 				<#local dlFileVersionModel = dLDataFactory.newDLFileVersionModel(dlFileEntryModel)>
 
-				${initContext.toInsertSQL(dlFileVersionModel)}
+				${dLDataFactory.toInsertSQL(dlFileVersionModel)}
+
+				${resourcePermissionDataFactory.generateResourcePermissionSQL(dlFileEntryModel)}
 
 				<@insertAssetEntry _entry=dlFileEntryModel />
 
@@ -90,17 +96,17 @@
 					_classPK=dlFileEntryModel.fileEntryId
 					_groupId=dlFileEntryModel.groupId
 					_maxCommentCount=0
-					_mbRootMessageId= counterDataFactory.getCounterNext()
-					_mbThreadId= counterDataFactory.getCounterNext()
+					_mbRootMessageId=counterDataFactory.getCounterNext()
+					_mbThreadId=counterDataFactory.getCounterNext()
 				/>
 
-				${initContext.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel))}
+				${dLDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel))}
 
 				<#local dlFileEntryMetadataModel = dLDataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
-				${initContext.toInsertSQL(dlFileEntryMetadataModel)}
+				${dLDataFactory.toInsertSQL(dlFileEntryMetadataModel)}
 
-				${initContext.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
+				${dLDataFactory.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
 				${initContext.getCSVWriter("documentLibrary").write(dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + initContext.getDateLong(dlFileEntryModel.createDate) + "," + initContext.getDateLong(dlFolderModel.createDate) + "\n")}
 			</#list>
@@ -119,21 +125,25 @@
 	_groupModel
 	_publicPageCount
 >
-	${initContext.toInsertSQL(_groupModel)}
+	${userDataFactory.toInsertSQL(_groupModel)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_groupModel)}
 
 	<#local layoutSetModels = layoutDataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
-		${initContext.toInsertSQL(layoutSetModel)}
+		${userDataFactory.toInsertSQL(layoutSetModel)}
 	</#list>
 </#macro>
 
 <#macro insertLayout
 	_layoutModel
 >
-	${initContext.toInsertSQL(_layoutModel)}
+	${layoutDataFactory.toInsertSQL(_layoutModel)}
 
-	${initContext.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_layoutModel)}
+
+	${layoutDataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 </#macro>
 
 <#macro insertMBDiscussion
@@ -146,7 +156,7 @@
 >
 	<#local mbThreadModel = messageBoardDataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId, _maxCommentCount)>
 
-	${initContext.toInsertSQL(mbThreadModel)}
+	${messageBoardDataFactory.toInsertSQL(mbThreadModel)}
 
 	<#local mbRootMessageModel = messageBoardDataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
@@ -157,16 +167,18 @@
 	<#list mbMessageModels as mbMessageModel>
 		<@insertMBMessage _mbMessageModel=mbMessageModel />
 
-		${initContext.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel))}
+		${messageBoardDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel))}
 	</#list>
 
-	${initContext.toInsertSQL(messageBoardDataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
+	${messageBoardDataFactory.toInsertSQL(messageBoardDataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
 </#macro>
 
 <#macro insertMBMessage
 	_mbMessageModel
 >
-	${initContext.toInsertSQL(_mbMessageModel)}
+	${messageBoardDataFactory.toInsertSQL(_mbMessageModel)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_mbMessageModel)}
 
 	<@insertAssetEntry _entry=_mbMessageModel />
 </#macro>
@@ -176,9 +188,9 @@
 	_groupIds = []
 	_roleIds = []
 >
-	${initContext.toInsertSQL(_userModel)}
+	${userDataFactory.toInsertSQL(_userModel)}
 
-	${initContext.toInsertSQL(userDataFactory.newContactModel(_userModel))}
+	${userDataFactory.toInsertSQL(userDataFactory.newContactModel(_userModel))}
 
 	<#list _roleIds as roleId>
 		insert into Users_Roles values (0, ${roleId}, ${_userModel.userId});
