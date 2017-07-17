@@ -14,7 +14,11 @@
 
 		${wikiDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel))}
 
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel))}
+
 		${wikiDataFactory.toInsertSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
+
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry
 			_categoryAndTag=true

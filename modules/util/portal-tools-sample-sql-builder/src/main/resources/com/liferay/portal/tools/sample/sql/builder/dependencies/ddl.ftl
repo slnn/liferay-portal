@@ -27,8 +27,11 @@
 
 	${dDLDataFactory.toInsertSQL(ddlRecordSetModel)}
 
-	${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
 	${resourcePermissionDataFactory.generateResourcePermissionSQL(ddlRecordSetModel)}
+
+	${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
 
 	<#assign ddlRecordCounts = counterDataFactory.getSequence(initContext.maxDDLRecordCount) />
 
@@ -37,7 +40,11 @@
 
 		${dDLDataFactory.toInsertSQL(ddlRecordModel)}
 
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(ddlRecordModel)}
+
 		${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDLRecordVersionModel(ddlRecordModel))}
+
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(dDLDataFactory.newDDLRecordVersionModel(ddlRecordModel))}
 
 		<@insertDDMContent
 			_currentIndex=ddlRecordCount
@@ -59,6 +66,7 @@
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		${dDLDataFactory.toInsertSQL(portletPreferencesModel)}
+
 		${resourcePermissionDataFactory.generateResourcePermissionSQL(portletPreferencesModel)}
 	</#list>
 </#list>

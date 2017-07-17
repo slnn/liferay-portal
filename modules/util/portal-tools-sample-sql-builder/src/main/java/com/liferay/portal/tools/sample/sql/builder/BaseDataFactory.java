@@ -69,7 +69,7 @@ public abstract class BaseDataFactory {
 	public String toInsertSQL(BaseModel<?> baseModel) {
 		try {
 			StringBundler sb = new StringBundler();
-			
+
 			sb.append("insert into ");
 
 			Class<?> clazz = baseModel.getClass();
@@ -132,7 +132,7 @@ public abstract class BaseDataFactory {
 			sb.setIndex(sb.index() - 1);
 
 			sb.append(");");
-			
+
 			return sb.toString();
 		}
 		catch (ReflectiveOperationException roe) {

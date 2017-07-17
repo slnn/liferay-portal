@@ -5,5 +5,7 @@
 		update Counter set currentId = ${counterModel.currentId} where name = '${counterModel.name}';
 	<#else>
 		${counterDataFactory.toInsertSQL(counterModel)}
+
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(counterModel)}
 	</#if>
 </#list>
