@@ -110,16 +110,12 @@ public class SoyPortlet extends MVCPortlet {
 	protected Template getTemplate(PortletRequest portletRequest)
 		throws PortletException {
 
-		if (_template == null) {
-			try {
-				_template = _createTemplate();
-			}
-			catch (TemplateException te) {
-				throw new PortletException("Unable to create template", te);
-			}
+		try {
+			return _createTemplate();
 		}
-
-		return _template;
+		catch (TemplateException te) {
+			throw new PortletException("Unable to create template", te);
+		}
 	}
 
 	@Override
@@ -252,7 +248,6 @@ public class SoyPortlet extends MVCPortlet {
 
 	private Bundle _bundle;
 	private SoyPortletHelper _soyPortletHelper;
-	private Template _template;
 	private List<TemplateResource> _templateResources;
 
 }
