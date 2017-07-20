@@ -77,7 +77,7 @@ public class AssetDataFactory extends BaseDataFactory {
 		_assetClassNameIds = new long[] {
 			getClassNameId(BlogsEntry.class, initContext.getClassNameModels()),
 			getClassNameId(
-					JournalArticle.class, initContext.getClassNameModels()),
+				JournalArticle.class, initContext.getClassNameModels()),
 			getClassNameId(WikiPage.class, initContext.getClassNameModels())
 		};
 
@@ -314,8 +314,8 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetEntryModel newAssetEntryModel(DLFolderModel dLFolderModel) {
 		return newAssetEntryModel(
 			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
-			dLFolderModel.getModifiedDate(), getClassNameId(
-				DLFolder.class, initContext.getClassNameModels()),
+			dLFolderModel.getModifiedDate(),
+			getClassNameId(DLFolder.class, initContext.getClassNameModels()),
 			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
 			null, dLFolderModel.getName());
 	}
@@ -346,11 +346,11 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetEntryModel newAssetEntryModel(MBThreadModel mbThreadModel) {
 		return newAssetEntryModel(
 			mbThreadModel.getGroupId(), mbThreadModel.getCreateDate(),
-			mbThreadModel.getModifiedDate(), getClassNameId(
-				MBThread.class, initContext.getClassNameModels()),
+			mbThreadModel.getModifiedDate(),
+			getClassNameId(MBThread.class, initContext.getClassNameModels()),
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
-			false, StringPool.BLANK, String.valueOf(
-				mbThreadModel.getRootMessageId()));
+			false, StringPool.BLANK,
+			String.valueOf(mbThreadModel.getRootMessageId()));
 	}
 
 	public AssetEntryModel newAssetEntryModel(
@@ -386,8 +386,8 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
 		return newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), getClassNameId(
-				WikiPage.class, initContext.getClassNameModels()),
+			wikiPageModel.getModifiedDate(),
+			getClassNameId(WikiPage.class, initContext.getClassNameModels()),
 			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
@@ -677,20 +677,23 @@ public class AssetDataFactory extends BaseDataFactory {
 				assetTagModels.add(assetTagModel);
 
 				AssetTagStatsModel assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(), getClassNameId(
+					assetTagModel.getTagId(),
+					getClassNameId(
 						BlogsEntry.class, initContext.getClassNameModels()));
 
 				assetTagStatsModels.add(assetTagStatsModel);
 
 				assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(), getClassNameId(
+					assetTagModel.getTagId(),
+					getClassNameId(
 						JournalArticle.class,
 						initContext.getClassNameModels()));
 
 				assetTagStatsModels.add(assetTagStatsModel);
 
 				assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(), getClassNameId(
+					assetTagModel.getTagId(),
+					getClassNameId(
 						WikiPage.class, initContext.getClassNameModels()));
 
 				assetTagStatsModels.add(assetTagStatsModel);

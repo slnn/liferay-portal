@@ -209,8 +209,8 @@ public class UserDataFactory extends BaseDataFactory {
 		SimpleCounter counter = initContext.getCounter();
 
 		return _newGroupModel(
-			counter.get(), getClassNameId(
-				User.class, initContext.getClassNameModels()),
+			counter.get(),
+			getClassNameId(User.class, initContext.getClassNameModels()),
 			userModel.getUserId(), userModel.getScreenName(), false);
 	}
 

@@ -149,7 +149,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 				initContext.getMaxAssetEntryToAssetCategoryCount();
 
 			objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
-				assetCategoryModels, startIndex,maxAssetEntryToAssetCategoryCount);
+				assetCategoryModels, startIndex,
+				maxAssetEntryToAssetCategoryCount);
 		}
 		else {
 			Map<Long, List<AssetTagModel>>[] assetTagModelsMapArray =
@@ -248,59 +249,59 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 	}
 
 	protected ObjectValuePair<String[], Integer>
-			getAssetPublisherAssetCategoriesQueryValues(
-				List<AssetCategoryModel> assetCategoryModels, int index,
-				int maxAssetEntryToAssetCategoryCount) {
+		getAssetPublisherAssetCategoriesQueryValues(
+			List<AssetCategoryModel> assetCategoryModels, int index,
+			int maxAssetEntryToAssetCategoryCount) {
 
-			AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
-				index % assetCategoryModels.size());
-			AssetCategoryModel assetCategoryModel1 = assetCategoryModels.get(
-				(index + maxAssetEntryToAssetCategoryCount) %
-					assetCategoryModels.size());
-			AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
-				(index + maxAssetEntryToAssetCategoryCount * 2) %
-					assetCategoryModels.size());
+		AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
+			index % assetCategoryModels.size());
+		AssetCategoryModel assetCategoryModel1 = assetCategoryModels.get(
+			(index + maxAssetEntryToAssetCategoryCount) %
+				assetCategoryModels.size());
+		AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
+			(index + maxAssetEntryToAssetCategoryCount * 2) %
+				assetCategoryModels.size());
 
-			int lastIndex =
-					(index + maxAssetEntryToAssetCategoryCount * 3) %
-						assetCategoryModels.size();
+		int lastIndex =
+			(index + maxAssetEntryToAssetCategoryCount * 3) %
+				assetCategoryModels.size();
 
-			AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
+		AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
 			lastIndex);
 
-			return new ObjectValuePair<>(
-				new String[] {
-					String.valueOf(assetCategoryModel0.getCategoryId()),
-					String.valueOf(assetCategoryModel1.getCategoryId()),
-					String.valueOf(assetCategoryModel2.getCategoryId()),
-					String.valueOf(assetCategoryModel3.getCategoryId())
-				},
-				lastIndex + maxAssetEntryToAssetCategoryCount);
+		return new ObjectValuePair<>(
+			new String[] {
+				String.valueOf(assetCategoryModel0.getCategoryId()),
+				String.valueOf(assetCategoryModel1.getCategoryId()),
+				String.valueOf(assetCategoryModel2.getCategoryId()),
+				String.valueOf(assetCategoryModel3.getCategoryId())
+			},
+			lastIndex + maxAssetEntryToAssetCategoryCount);
 	}
 
 	protected ObjectValuePair<String[], Integer>
-			getAssetPublisherAssetTagsQueryValues(
-				List<AssetTagModel> assetTagModels, int index,
-				int maxAssetEntryToAssetTagCount) {
+		getAssetPublisherAssetTagsQueryValues(
+			List<AssetTagModel> assetTagModels, int index,
+			int maxAssetEntryToAssetTagCount) {
 
-			AssetTagModel assetTagModel0 = assetTagModels.get(
-				index % assetTagModels.size());
-			AssetTagModel assetTagModel1 = assetTagModels.get(
-				(index + maxAssetEntryToAssetTagCount) % assetTagModels.size());
-			AssetTagModel assetTagModel2 = assetTagModels.get(
-				(index + maxAssetEntryToAssetTagCount * 2) % assetTagModels.size());
+		AssetTagModel assetTagModel0 = assetTagModels.get(
+			index % assetTagModels.size());
+		AssetTagModel assetTagModel1 = assetTagModels.get(
+			(index + maxAssetEntryToAssetTagCount) % assetTagModels.size());
+		AssetTagModel assetTagModel2 = assetTagModels.get(
+			(index + maxAssetEntryToAssetTagCount * 2) % assetTagModels.size());
 
-			int lastIndex =
-				(index + maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
+		int lastIndex =
+			(index + maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
 
-			AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
+		AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
 
-			return new ObjectValuePair<>(
-				new String[] {
-						assetTagModel0.getName(), assetTagModel1.getName(),
-						assetTagModel2.getName(), assetTagModel3.getName()
-				},
-				lastIndex + maxAssetEntryToAssetTagCount);
+		return new ObjectValuePair<>(
+			new String[] {
+				assetTagModel0.getName(), assetTagModel1.getName(),
+				assetTagModel2.getName(), assetTagModel3.getName()
+			},
+			lastIndex + maxAssetEntryToAssetTagCount);
 	}
 
 	protected PortletPreferencesModel newPortletPreferencesModel(
