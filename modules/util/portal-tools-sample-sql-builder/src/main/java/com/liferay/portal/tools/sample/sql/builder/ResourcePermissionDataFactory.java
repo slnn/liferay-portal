@@ -210,7 +210,8 @@ public class ResourcePermissionDataFactory extends BaseDataFactory {
 			new ArrayList<>(3);
 
 		String name = _getResourcePermissionModelName(
-			DDMTemplate.class.getName(), getClassName(
+			DDMTemplate.class.getName(),
+			getClassName(
 				ddmTemplateModel.getResourceClassNameId(),
 				initContext.getClassNameModels()));
 		String primKey = String.valueOf(ddmTemplateModel.getTemplateId());

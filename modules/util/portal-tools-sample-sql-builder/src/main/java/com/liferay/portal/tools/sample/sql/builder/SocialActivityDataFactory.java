@@ -53,8 +53,8 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		BlogsEntryModel blogsEntryModel) {
 
 		return newSocialActivityModel(
-			blogsEntryModel.getGroupId(), getClassNameId(
-				BlogsEntry.class, initContext.getClassNameModels()),
+			blogsEntryModel.getGroupId(),
+			getClassNameId(BlogsEntry.class, initContext.getClassNameModels()),
 			blogsEntryModel.getEntryId(), BlogsActivityKeys.ADD_ENTRY,
 			"{\"title\":\"" + blogsEntryModel.getTitle() + "\"}");
 	}
@@ -63,8 +63,8 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		DLFileEntryModel dlFileEntryModel) {
 
 		return newSocialActivityModel(
-			dlFileEntryModel.getGroupId(), getClassNameId(
-				DLFileEntry.class, initContext.getClassNameModels()),
+			dlFileEntryModel.getGroupId(),
+			getClassNameId(DLFileEntry.class, initContext.getClassNameModels()),
 			dlFileEntryModel.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
 			StringPool.BLANK);
 	}

@@ -369,8 +369,8 @@ public class JournalDataFactory extends DDMBaseDataFactory {
 			initContext.getClassNameModels();
 
 		_defaultJournalDDMStructureModel = newDDMStructureModel(
-			groupId, userId, getClassNameId(
-				JournalArticle.class, classNameModels),
+			groupId, userId,
+			getClassNameId(JournalArticle.class, classNameModels),
 			DataFactoryConstants.JOURNAL_STRUCTURE_KEY,
 			_journalDDMStructureContent);
 
