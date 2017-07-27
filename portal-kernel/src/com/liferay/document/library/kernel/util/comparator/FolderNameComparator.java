@@ -22,6 +22,11 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  * @author Alexander Chow
  */
 public class FolderNameComparator extends OrderByComparator<Folder> {
+	public static FolderNameComparator INSTANCE_ASCENDING =
+		new FolderNameComparator(Boolean.TRUE);
+
+	public static FolderNameComparator INSTANCE_DESCENDING =
+		new FolderNameComparator(Boolean.FALSE);
 
 	public static final String ORDER_BY_ASC = "name ASC";
 
@@ -29,10 +34,24 @@ public class FolderNameComparator extends OrderByComparator<Folder> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
+	public static FolderNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return INSTANCE_ASCENDING;
+		}
+
+		return INSTANCE_DESCENDING;
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #INSTANCE_DESCENDING}
+	 */
 	public FolderNameComparator() {
 		this(false);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #getInstance(boolean)}
+	 */
 	public FolderNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
@@ -70,6 +89,10 @@ public class FolderNameComparator extends OrderByComparator<Folder> {
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	private FolderNameComparator(Boolean ascending) {
+		_ascending = ascending;
 	}
 
 	private final boolean _ascending;
