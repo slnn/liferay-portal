@@ -25,9 +25,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.blogs.model.BlogsStatsUserModel;
-import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
-import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.counter.kernel.model.Counter;
@@ -78,8 +75,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.friendly.url.model.FriendlyURLEntryModel;
-import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -316,6 +311,10 @@ public class DataFactory extends BaseDataFactory {
 		initUserNames();
 		initUserModels();
 		initVirtualHostModel(_initContext.getVirtualHostname());
+
+		_blogDataFactory = new BlogDataFactory(initContext);
+
+		_dataFactories.put("blogDataFactory", _blogDataFactory);
 	}
 
 	public AccountModel getAccountModel() {
@@ -472,10 +471,6 @@ public class DataFactory extends BaseDataFactory {
 		return allAssetVocabularyModels;
 	}
 
-	public long getBlogsEntryClassNameId() {
-		return getClassNameId(BlogsEntry.class);
-	}
-
 	public CompanyModel getCompanyModel() {
 		return _companyModel;
 	}
@@ -484,6 +479,10 @@ public class DataFactory extends BaseDataFactory {
 		SimpleCounter counter = _initContext.getCounter();
 
 		return counter.get();
+	}
+
+	public Map<String, Object> getDataFactories() {
+		return _dataFactories;
 	}
 
 	public long getDDLRecordSetClassNameId() {
@@ -1185,36 +1184,6 @@ public class DataFactory extends BaseDataFactory {
 		return portletPreferencesModels;
 	}
 
-	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
-		int maxBlogsEntryCount = _initContext.getMaxBlogsEntryCount();
-
-		List<BlogsEntryModel> blogEntryModels = new ArrayList<>(
-			maxBlogsEntryCount);
-
-		for (int i = 1; i <= maxBlogsEntryCount; i++) {
-			blogEntryModels.add(newBlogsEntryModel(groupId, i));
-		}
-
-		return blogEntryModels;
-	}
-
-	public BlogsStatsUserModel newBlogsStatsUserModel(long groupId) {
-		int maxBlogsEntryCount = _initContext.getMaxBlogsEntryCount();
-		SimpleCounter counter = _initContext.getCounter();
-		long sampleUserId = _initContext.getSampleUserId();
-
-		BlogsStatsUserModel blogsStatsUserModel = new BlogsStatsUserModelImpl();
-
-		blogsStatsUserModel.setStatsUserId(counter.get());
-		blogsStatsUserModel.setGroupId(groupId);
-		blogsStatsUserModel.setCompanyId(_initContext.getCompanyId());
-		blogsStatsUserModel.setUserId(sampleUserId);
-		blogsStatsUserModel.setEntryCount(maxBlogsEntryCount);
-		blogsStatsUserModel.setLastPostDate(new Date());
-
-		return blogsStatsUserModel;
-	}
-
 	public ContactModel newContactModel(UserModel userModel) {
 		ContactModel contactModel = new ContactModelImpl();
 
@@ -1701,28 +1670,6 @@ public class DataFactory extends BaseDataFactory {
 		}
 
 		return dlFolderModels;
-	}
-
-	public FriendlyURLEntryModel newFriendlyURLEntryModel(
-		BlogsEntryModel blogsEntryModel) {
-
-		SimpleCounter counter = _initContext.getCounter();
-
-		FriendlyURLEntryModel friendlyURLEntryModel =
-			new FriendlyURLEntryModelImpl();
-
-		friendlyURLEntryModel.setUuid(SequentialUUID.generate());
-		friendlyURLEntryModel.setFriendlyURLEntryId(counter.get());
-		friendlyURLEntryModel.setGroupId(blogsEntryModel.getGroupId());
-		friendlyURLEntryModel.setCompanyId(_initContext.getCompanyId());
-		friendlyURLEntryModel.setCreateDate(new Date());
-		friendlyURLEntryModel.setModifiedDate(new Date());
-		friendlyURLEntryModel.setClassNameId(getClassNameId(BlogsEntry.class));
-		friendlyURLEntryModel.setClassPK(blogsEntryModel.getEntryId());
-		friendlyURLEntryModel.setUrlTitle(blogsEntryModel.getUrlTitle());
-		friendlyURLEntryModel.setMain(true);
-
-		return friendlyURLEntryModel;
 	}
 
 	public GroupModel newGroupModel(UserModel userModel) throws Exception {
@@ -2976,36 +2923,6 @@ public class DataFactory extends BaseDataFactory {
 		return assetVocabularyModel;
 	}
 
-	protected BlogsEntryModel newBlogsEntryModel(long groupId, int index) {
-		BlogsEntryModel blogsEntryModel = new BlogsEntryModelImpl();
-
-		long sampleUserId = _initContext.getSampleUserId();
-		SimpleCounter counter = _initContext.getCounter();
-
-		blogsEntryModel.setUuid(SequentialUUID.generate());
-		blogsEntryModel.setEntryId(counter.get());
-		blogsEntryModel.setGroupId(groupId);
-		blogsEntryModel.setCompanyId(_initContext.getCompanyId());
-		blogsEntryModel.setUserId(sampleUserId);
-		blogsEntryModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
-		blogsEntryModel.setCreateDate(new Date());
-		blogsEntryModel.setModifiedDate(new Date());
-		blogsEntryModel.setTitle(
-			DataFactoryConstants.BLOG_ENTRY_TITLE_PREFIX + index);
-		blogsEntryModel.setSubtitle(
-			DataFactoryConstants.BLOG_ENTRY_SUBTITLE_PREFIX + index);
-		blogsEntryModel.setUrlTitle(
-			DataFactoryConstants.BLOG_URL_TITLE_PREFIX + index);
-		blogsEntryModel.setContent(
-			DataFactoryConstants.BLOG_CONTENT_PREFIX + index + ".");
-		blogsEntryModel.setDisplayDate(new Date());
-		blogsEntryModel.setLastPublishDate(new Date());
-		blogsEntryModel.setStatusByUserId(sampleUserId);
-		blogsEntryModel.setStatusDate(new Date());
-
-		return blogsEntryModel;
-	}
-
 	protected DDMContentModel newDDMContentModel(
 		long contentId, long groupId, String data) {
 
@@ -3723,7 +3640,9 @@ public class DataFactory extends BaseDataFactory {
 	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
 	private List<AssetTagStatsModel>[] _assetTagStatsModelsArray;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
+	private final BlogDataFactory _blogDataFactory;
 	private CompanyModel _companyModel;
+	private final Map<String, Object> _dataFactories = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreference;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
