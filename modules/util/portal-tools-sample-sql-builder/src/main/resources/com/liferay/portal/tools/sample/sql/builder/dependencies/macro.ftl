@@ -121,7 +121,7 @@
 >
 	${dataFactory.toInsertSQL(_groupModel)}
 
-	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
+	<#local layoutSetModels = layoutDataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
 		${dataFactory.toInsertSQL(layoutSetModel)}
@@ -131,9 +131,9 @@
 <#macro insertLayout
 	_layoutModel
 >
-	${dataFactory.toInsertSQL(_layoutModel)}
+	${layoutDataFactory.toInsertSQL(_layoutModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	${layoutDataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 </#macro>
 
 <#macro insertMBDiscussion

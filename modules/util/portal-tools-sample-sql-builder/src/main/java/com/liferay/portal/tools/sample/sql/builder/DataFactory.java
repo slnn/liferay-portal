@@ -40,7 +40,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
 import com.liferay.document.library.kernel.model.DLFileVersionModel;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderModel;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordModel;
@@ -87,7 +86,6 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
-import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBCategoryModel;
@@ -101,7 +99,6 @@ import com.liferay.message.boards.kernel.model.MBStatsUserModel;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadFlagModel;
 import com.liferay.message.boards.kernel.model.MBThreadModel;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -116,11 +113,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
-import com.liferay.portal.kernel.model.LayoutSetModel;
-import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ReleaseModel;
@@ -151,16 +144,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.AccountModelImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
-import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
-import com.liferay.portal.model.impl.LayoutModelImpl;
-import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
@@ -313,8 +302,10 @@ public class DataFactory extends BaseDataFactory {
 		initVirtualHostModel(_initContext.getVirtualHostname());
 
 		_blogDataFactory = new BlogDataFactory(initContext);
+		_layoutDataFactory = new LayoutDataFactory(initContext);
 
 		_dataFactories.put("blogDataFactory", _blogDataFactory);
+		_dataFactories.put("layoutDataFactory", _layoutDataFactory);
 	}
 
 	public AccountModel getAccountModel() {
@@ -571,10 +562,6 @@ public class DataFactory extends BaseDataFactory {
 		}
 
 		return sb.toString();
-	}
-
-	public long getLayoutClassNameId() {
-		return getClassNameId(Layout.class);
 	}
 
 	public List<Long> getNewUserGroupIds(long groupId) {
@@ -1816,92 +1803,6 @@ public class DataFactory extends BaseDataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 	}
 
-	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(
-		LayoutModel layoutModel) {
-
-		long sampleUserId = _initContext.getSampleUserId();
-		SimpleCounter counter = _initContext.getCounter();
-
-		LayoutFriendlyURLModel layoutFriendlyURLEntryModel =
-			new LayoutFriendlyURLModelImpl();
-
-		layoutFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
-		layoutFriendlyURLEntryModel.setLayoutFriendlyURLId(counter.get());
-		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
-		layoutFriendlyURLEntryModel.setCompanyId(_initContext.getCompanyId());
-		layoutFriendlyURLEntryModel.setUserId(sampleUserId);
-		layoutFriendlyURLEntryModel.setUserName(
-			DataFactoryConstants.SAMPLE_USER_NAME);
-		layoutFriendlyURLEntryModel.setCreateDate(new Date());
-		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
-		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
-		layoutFriendlyURLEntryModel.setFriendlyURL(
-			layoutModel.getFriendlyURL());
-		layoutFriendlyURLEntryModel.setLanguageId(
-			DataFactoryConstants.LANGUAGE_ID);
-		layoutFriendlyURLEntryModel.setLastPublishDate(new Date());
-
-		return layoutFriendlyURLEntryModel;
-	}
-
-	public LayoutModel newLayoutModel(
-		long groupId, String name, String column1, String column2) {
-
-		long sampleUserId = _initContext.getSampleUserId();
-		SimpleCounter counter = _initContext.getCounter();
-		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
-
-		if (simpleCounter == null) {
-			simpleCounter = new SimpleCounter();
-
-			_layoutCounters.put(groupId, simpleCounter);
-		}
-
-		LayoutModel layoutModel = new LayoutModelImpl();
-
-		layoutModel.setUuid(SequentialUUID.generate());
-		layoutModel.setPlid(counter.get());
-		layoutModel.setGroupId(groupId);
-		layoutModel.setCompanyId(_initContext.getCompanyId());
-		layoutModel.setUserId(sampleUserId);
-		layoutModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
-		layoutModel.setCreateDate(new Date());
-		layoutModel.setModifiedDate(new Date());
-		layoutModel.setLayoutId(simpleCounter.get());
-		layoutModel.setName(
-			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
-		layoutModel.setType(LayoutConstants.TYPE_PORTLET);
-		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.setProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "2_columns_ii");
-		typeSettingsProperties.setProperty("column-1", column1);
-		typeSettingsProperties.setProperty("column-2", column2);
-
-		String typeSettings = StringUtil.replace(
-			typeSettingsProperties.toString(), '\n', "\\n");
-
-		layoutModel.setTypeSettings(typeSettings);
-
-		layoutModel.setLastPublishDate(new Date());
-
-		return layoutModel;
-	}
-
-	public List<LayoutSetModel> newLayoutSetModels(
-		long groupId, int publicLayoutSetPageCount) {
-
-		List<LayoutSetModel> layoutSetModels = new ArrayList<>(2);
-
-		layoutSetModels.add(newLayoutSetModel(groupId, true, 0));
-		layoutSetModels.add(
-			newLayoutSetModel(groupId, false, publicLayoutSetPageCount));
-
-		return layoutSetModels;
-	}
-
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
 		int maxMBCategoryCount = _initContext.getMaxMBCategoryCount();
 
@@ -2236,33 +2137,6 @@ public class DataFactory extends BaseDataFactory {
 		return newPortletPreferencesModel(
 			plid, portletId,
 			_portletPreferencesFactory.toXML(jxPortletPreferences));
-	}
-
-	public List<LayoutModel> newPublicLayoutModels(long groupId) {
-		List<LayoutModel> layoutModels = new ArrayList<>();
-
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "welcome", LoginPortletKeys.LOGIN + ",",
-				DataFactoryConstants.HELLO_WORLD_PORTLET_ID + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, DataFactoryConstants.BLOG_LAYOUT_NAME, "",
-				BlogsPortletKeys.BLOGS + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, DataFactoryConstants.DL_LAYOUT_NAME, "",
-				DLPortletKeys.DOCUMENT_LIBRARY + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, DataFactoryConstants.FORUMS_LAYOUT_NAME, "",
-				MBPortletKeys.MESSAGE_BOARDS + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, DataFactoryConstants.WIKI_LAYOUT_NAME, "",
-				WikiPortletKeys.WIKI + ","));
-
-		return layoutModels;
 	}
 
 	public List<ReleaseModel> newReleaseModels() throws IOException {
@@ -3163,28 +3037,6 @@ public class DataFactory extends BaseDataFactory {
 		return groupModel;
 	}
 
-	protected LayoutSetModel newLayoutSetModel(
-		long groupId, boolean privateLayout, int pageCount) {
-
-		LayoutSetModel layoutSetModel = new LayoutSetModelImpl();
-
-		SimpleCounter counter = _initContext.getCounter();
-
-		layoutSetModel.setLayoutSetId(counter.get());
-
-		layoutSetModel.setGroupId(groupId);
-		layoutSetModel.setCompanyId(_initContext.getCompanyId());
-		layoutSetModel.setCreateDate(new Date());
-		layoutSetModel.setModifiedDate(new Date());
-		layoutSetModel.setPrivateLayout(privateLayout);
-		layoutSetModel.setThemeId(DataFactoryConstants.LAYOUT_THEME_ID);
-		layoutSetModel.setColorSchemeId(
-			DataFactoryConstants.LAYOUT_COLOR_THEME_ID);
-		layoutSetModel.setPageCount(pageCount);
-
-		return layoutSetModel;
-	}
-
 	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {
 		long sampleUserId = _initContext.getSampleUserId();
 		int maxMBMessageCount = _initContext.getMaxMBMessageCount();
@@ -3672,7 +3524,7 @@ public class DataFactory extends BaseDataFactory {
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
-	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
+	private final LayoutDataFactory _layoutDataFactory;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionCounter;
