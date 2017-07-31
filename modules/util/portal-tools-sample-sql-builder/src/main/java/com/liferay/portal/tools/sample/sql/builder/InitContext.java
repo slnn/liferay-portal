@@ -34,7 +34,6 @@ import java.io.Writer;
 import java.text.Format;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,18 +93,6 @@ public class InitContext {
 		}
 
 		return writer;
-	}
-
-	public String getDateLong(Date date) {
-		return String.valueOf(date.getTime());
-	}
-
-	public String getDateString(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return _simpleDateFormat.format(date);
 	}
 
 	public long getDefaultUserId() {

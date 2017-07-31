@@ -138,7 +138,6 @@ import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.VirtualHostModel;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
@@ -157,7 +156,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -239,9 +237,11 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DataFactory {
+public class DataFactory extends BaseDataFactory {
 
 	public DataFactory(InitContext initContext) throws Exception {
+		super(initContext);
+
 		_initContext = initContext;
 
 		_timeCounter = new SimpleCounter();
@@ -476,13 +476,6 @@ public class DataFactory {
 		return getClassNameId(BlogsEntry.class);
 	}
 
-	public long getClassNameId(Class<?> clazz) {
-		ClassNameModel classNameModel =
-			_initContext.getClassNameModels().get(clazz.getName());
-
-		return classNameModel.getClassNameId();
-	}
-
 	public CompanyModel getCompanyModel() {
 		return _companyModel;
 	}
@@ -618,10 +611,6 @@ public class DataFactory {
 		_assetClassNameIdsIndexes.put(groupId, ++index);
 
 		return classNameId;
-	}
-
-	public String getPortletId(String portletPrefix) {
-		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
 	}
 
 	public RoleModel getPowerUserRoleModel() {
@@ -2770,39 +2759,6 @@ public class DataFactory {
 		return userName;
 	}
 
-	public String toInsertSQL(BaseModel<?> baseModel) {
-		try {
-			StringBundler sb = new StringBundler();
-
-			toInsertSQL(sb, baseModel);
-
-			Class<?> clazz = baseModel.getClass();
-
-			for (Class<?> modelClass : clazz.getInterfaces()) {
-				try {
-					Method method = DataFactory.class.getMethod(
-						"newResourcePermissionModels", modelClass);
-
-					for (ResourcePermissionModel resourcePermissionModel :
-							(List<ResourcePermissionModel>)method.invoke(
-								this, baseModel)) {
-
-						sb.append("\n");
-
-						toInsertSQL(sb, resourcePermissionModel);
-					}
-				}
-				catch (NoSuchMethodException nsme) {
-				}
-			}
-
-			return sb.toString();
-		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
-		}
-	}
-
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
@@ -2874,15 +2830,6 @@ public class DataFactory {
 
 		throw new RuntimeException(
 			"Unable to find class name for id " + classNameId);
-	}
-
-	protected InputStream getResourceInputStream(String resourceName) {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		return classLoader.getResourceAsStream(
-			_DEPENDENCIES_DIR + resourceName);
 	}
 
 	protected SimpleCounter getSimpleCounter(
@@ -3667,12 +3614,6 @@ public class DataFactory {
 		return sb.toString();
 	}
 
-	protected Date nextFutureDate() {
-		SimpleCounter futureDateCounter = _initContext.getFutureDateCounter();
-
-		return new Date(_FUTURE_TIME + (futureDateCounter.get() * Time.SECOND));
-	}
-
 	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
 		try {
 			sb.append("insert into ");
@@ -3709,7 +3650,7 @@ public class DataFactory {
 					}
 					else {
 						sb.append("'");
-						sb.append(_initContext.getDateString(date));
+						sb.append(getDateString(date));
 						sb.append("'");
 					}
 				}
@@ -3763,14 +3704,6 @@ public class DataFactory {
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
-
-	private static final String _DEPENDENCIES_DIR =
-		"com/liferay/portal/tools/sample/sql/builder/dependencies/";
-
-	private static final long _FUTURE_TIME =
-		System.currentTimeMillis() + Time.YEAR;
-
-	private static final String _SAMPLE_USER_NAME = "Sample";
 
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
