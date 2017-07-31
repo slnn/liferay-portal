@@ -53,7 +53,7 @@
 />
 
 <#list groupIds as groupId>
-	${dataFactory.toInsertSQL(dataFactory.newBlogsStatsUserModel(groupId))}
+	${dataFactory.toInsertSQL(blogDataFactory.newBlogsStatsUserModel(groupId))}
 
 	${dataFactory.toInsertSQL(dataFactory.newMBStatsUserModel(groupId))}
 </#list>

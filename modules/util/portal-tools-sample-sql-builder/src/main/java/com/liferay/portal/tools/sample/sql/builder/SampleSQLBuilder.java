@@ -304,12 +304,14 @@ public class SampleSQLBuilder {
 			@Override
 			public void run() {
 				Writer sampleSQLWriter = null;
-				Map<String, Object> context = new HashMap<>();
+				Map<String, Object> context = null;
 
 				try {
 					sampleSQLWriter = new UnsyncTeeWriter(
 						createUnsyncBufferedWriter(charPipe.getWriter()),
 						createFileWriter(new File(_outputDir, "sample.sql")));
+
+					context = _dataFactory.getDataFactories();
 
 					context.put("dataFactory", _dataFactory);
 
