@@ -1,3 +1,3 @@
 <#list initContext.classNameModelValues as classNameModelValue>
-	${dataFactory.toInsertSQL(classNameModelValue)}
+	${userDataFactory.toInsertSQL(classNameModelValue)}
 </#list>

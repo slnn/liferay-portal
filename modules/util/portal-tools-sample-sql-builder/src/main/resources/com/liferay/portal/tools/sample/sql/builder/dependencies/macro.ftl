@@ -119,12 +119,12 @@
 	_groupModel
 	_publicPageCount
 >
-	${dataFactory.toInsertSQL(_groupModel)}
+	${userDataFactory.toInsertSQL(_groupModel)}
 
 	<#local layoutSetModels = layoutDataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
-		${dataFactory.toInsertSQL(layoutSetModel)}
+		${userDataFactory.toInsertSQL(layoutSetModel)}
 	</#list>
 </#macro>
 
@@ -176,9 +176,9 @@
 	_groupIds = []
 	_roleIds = []
 >
-	${dataFactory.toInsertSQL(_userModel)}
+	${userDataFactory.toInsertSQL(_userModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newContactModel(_userModel))}
+	${userDataFactory.toInsertSQL(userDataFactory.newContactModel(_userModel))}
 
 	<#list _roleIds as roleId>
 		insert into Users_Roles values (0, ${roleId}, ${_userModel.userId});
