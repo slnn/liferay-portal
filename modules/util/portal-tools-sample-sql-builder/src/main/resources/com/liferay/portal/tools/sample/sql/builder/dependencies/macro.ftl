@@ -30,14 +30,14 @@
 	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
-		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry)>
+		<#local ddmContentModel = dDLDataFactory.newDDMContentModel(_entry)>
 	<#else>
-		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry, _currentIndex)>
+		<#local ddmContentModel = dDLDataFactory.newDDMContentModel(_entry, _currentIndex)>
 	</#if>
 
-	${dataFactory.toInsertSQL(ddmContentModel)}
+	${dDLDataFactory.toInsertSQL(ddmContentModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
+	${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
 </#macro>
 
 <#macro insertDDMStructure
@@ -45,11 +45,11 @@
 	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
 >
-	${dataFactory.toInsertSQL(_ddmStructureModel)}
+	${dDLDataFactory.toInsertSQL(_ddmStructureModel)}
 
-	${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
+	${dDLDataFactory.toInsertSQL(_ddmStructureLayoutModel)}
 
-	${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
+	${dDLDataFactory.toInsertSQL(_ddmStructureVersionModel)}
 </#macro>
 
 <#macro insertDLFolder
@@ -59,21 +59,21 @@
 	_parentDLFolderId
 >
 	<#if _dlFolderDepth <= initContext.maxDLFolderDepth>
-		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
+		<#local dlFolderModels = dLDataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
 
 		<#list dlFolderModels as dlFolderModel>
-			${dataFactory.toInsertSQL(dlFolderModel)}
+			${dLDataFactory.toInsertSQL(dlFolderModel)}
 
 			<@insertAssetEntry _entry=dlFolderModel />
 
-			<#local dlFileEntryModels = dataFactory.newDlFileEntryModels(dlFolderModel)>
+			<#local dlFileEntryModels = dLDataFactory.newDlFileEntryModels(dlFolderModel)>
 
 			<#list dlFileEntryModels as dlFileEntryModel>
-				${dataFactory.toInsertSQL(dlFileEntryModel)}
+				${dLDataFactory.toInsertSQL(dlFileEntryModel)}
 
-				<#local dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)>
+				<#local dlFileVersionModel = dLDataFactory.newDLFileVersionModel(dlFileEntryModel)>
 
-				${dataFactory.toInsertSQL(dlFileVersionModel)}
+				${dLDataFactory.toInsertSQL(dlFileVersionModel)}
 
 				<@insertAssetEntry _entry=dlFileEntryModel />
 
@@ -86,7 +86,7 @@
 				/>
 
 				<@insertMBDiscussion
-					_classNameId=dataFactory.DLFileEntryClassNameId
+					_classNameId=dLDataFactory.DLFileEntryClassNameId
 					_classPK=dlFileEntryModel.fileEntryId
 					_groupId=dlFileEntryModel.groupId
 					_maxCommentCount=0
@@ -94,15 +94,15 @@
 					_mbThreadId=dataFactory.getCounterNext()
 				/>
 
-				${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel))}
+				${dLDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel))}
 
-				<#local dlFileEntryMetadataModel = dataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
+				<#local dlFileEntryMetadataModel = dLDataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
-				${dataFactory.toInsertSQL(dlFileEntryMetadataModel)}
+				${dLDataFactory.toInsertSQL(dlFileEntryMetadataModel)}
 
-				${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
+				${dLDataFactory.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
-				${initContext.getCSVWriter("documentLibrary").write(dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dataFactory.getDateLong(dlFileEntryModel.createDate) + "," + dataFactory.getDateLong(dlFolderModel.createDate) + "\n")}
+				${initContext.getCSVWriter("documentLibrary").write(dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dLDataFactory.getDateLong(dlFileEntryModel.createDate) + "," + dLDataFactory.getDateLong(dlFolderModel.createDate) + "\n")}
 			</#list>
 
 			<@insertDLFolder
