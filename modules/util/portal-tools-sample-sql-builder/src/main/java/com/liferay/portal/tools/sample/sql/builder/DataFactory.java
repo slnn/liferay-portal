@@ -173,9 +173,6 @@ import com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
-import com.liferay.subscription.model.SubscriptionConstants;
-import com.liferay.subscription.model.SubscriptionModel;
-import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -291,12 +288,14 @@ public class DataFactory extends BaseDataFactory {
 		_layoutDataFactory = new LayoutDataFactory(initContext);
 		_releaseDataFactory = new ReleaseDataFactory(initContext);
 		_socialActivityDataFactory = new SocialActivityDataFactory(initContext);
+		_subscriptionDataFactory = new SubscriptionDataFactory(initContext);
 
 		_dataFactories.put("blogDataFactory", _blogDataFactory);
 		_dataFactories.put("layoutDataFactory", _layoutDataFactory);
 		_dataFactories.put("releaseDataFactory", _releaseDataFactory);
 		_dataFactories.put(
 			"socialActivityDataFactory", _socialActivityDataFactory);
+		_dataFactories.put("subscriptionDataFactory", _subscriptionDataFactory);
 	}
 
 	public AccountModel getAccountModel() {
@@ -2383,23 +2382,6 @@ public class DataFactory extends BaseDataFactory {
 			String.valueOf(wikiPageModel.getResourcePrimKey()), sampleUserId);
 	}
 
-	public SubscriptionModel newSubscriptionModel(
-		BlogsEntryModel blogsEntryModel) {
-
-		return newSubscriptionModel(
-			getClassNameId(BlogsEntry.class), blogsEntryModel.getEntryId());
-	}
-
-	public SubscriptionModel newSubscriptionModel(MBThreadModel mBThreadModel) {
-		return newSubscriptionModel(
-			getClassNameId(MBThread.class), mBThreadModel.getThreadId());
-	}
-
-	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
-		return newSubscriptionModel(
-			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
-	}
-
 	public List<UserModel> newUserModels() {
 		int maxUserCount = _initContext.getMaxUserCount();
 
@@ -3100,28 +3082,6 @@ public class DataFactory extends BaseDataFactory {
 		return roleModel;
 	}
 
-	protected SubscriptionModel newSubscriptionModel(
-		long classNameId, long classPK) {
-
-		long sampleUserId = _initContext.getSampleUserId();
-
-		SimpleCounter counter = _initContext.getCounter();
-
-		SubscriptionModel subscriptionModel = new SubscriptionModelImpl();
-
-		subscriptionModel.setSubscriptionId(counter.get());
-		subscriptionModel.setCompanyId(_initContext.getCompanyId());
-		subscriptionModel.setUserId(sampleUserId);
-		subscriptionModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
-		subscriptionModel.setCreateDate(new Date());
-		subscriptionModel.setModifiedDate(new Date());
-		subscriptionModel.setClassNameId(classNameId);
-		subscriptionModel.setClassPK(classPK);
-		subscriptionModel.setFrequency(SubscriptionConstants.FREQUENCY_INSTANT);
-
-		return subscriptionModel;
-	}
-
 	protected UserModel newUserModel(
 		long userId, String firstName, String lastName, String screenName,
 		boolean defaultUser) {
@@ -3380,6 +3340,7 @@ public class DataFactory extends BaseDataFactory {
 	private UserModel _sampleUserModel;
 	private RoleModel _siteMemberRoleModel;
 	private final SocialActivityDataFactory _socialActivityDataFactory;
+	private final SubscriptionDataFactory _subscriptionDataFactory;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 	private VirtualHostModel _virtualHostModel;

@@ -24,7 +24,7 @@
 		_mbThreadId=mbThreadId
 	/>
 
-	${blogDataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel))}
+	${blogDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel))}
 
 	${blogDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
 
