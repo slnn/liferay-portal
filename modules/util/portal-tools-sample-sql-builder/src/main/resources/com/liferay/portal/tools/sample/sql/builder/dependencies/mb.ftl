@@ -1,26 +1,26 @@
-<#assign mbCategoryModels = dataFactory.newMBCategoryModels(groupId) />
+<#assign mbCategoryModels = messageBoardDataFactory.newMBCategoryModels(groupId) />
 
 <#list mbCategoryModels as mbCategoryModel>
-	${dataFactory.toInsertSQL(mbCategoryModel)}
-	${dataFactory.toInsertSQL(dataFactory.newMBMailingListModel(mbCategoryModel))}
+	${messageBoardDataFactory.toInsertSQL(mbCategoryModel)}
+	${messageBoardDataFactory.toInsertSQL(messageBoardDataFactory.newMBMailingListModel(mbCategoryModel))}
 
-	<#assign mbThreadModels = dataFactory.newMBThreadModels(mbCategoryModel) />
+	<#assign mbThreadModels = messageBoardDataFactory.newMBThreadModels(mbCategoryModel) />
 
 	<#list mbThreadModels as mbThreadModel>
-		${dataFactory.toInsertSQL(mbThreadModel)}
+		${messageBoardDataFactory.toInsertSQL(mbThreadModel)}
 
-		${dataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(mbThreadModel))}
+		${messageBoardDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(mbThreadModel))}
 
 		<@insertAssetEntry _entry=mbThreadModel />
 
-		${dataFactory.toInsertSQL(dataFactory.newMBThreadFlagModel(mbThreadModel))}
+		${messageBoardDataFactory.toInsertSQL(messageBoardDataFactory.newMBThreadFlagModel(mbThreadModel))}
 
-		<#assign mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel) />
+		<#assign mbMessageModels = messageBoardDataFactory.newMBMessageModels(mbThreadModel) />
 
 		<#list mbMessageModels as mbMessageModel>
 			<@insertMBMessage _mbMessageModel=mbMessageModel />
 
-			${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel))}
+			${messageBoardDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel))}
 		</#list>
 
 		${initContext.getCSVWriter("messageBoard").write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}

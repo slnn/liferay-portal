@@ -55,5 +55,5 @@
 <#list groupIds as groupId>
 	${userDataFactory.toInsertSQL(blogDataFactory.newBlogsStatsUserModel(groupId))}
 
-	${userDataFactory.toInsertSQL(dataFactory.newMBStatsUserModel(groupId))}
+	${userDataFactory.toInsertSQL(messageBoardDataFactory.newMBStatsUserModel(groupId))}
 </#list>
