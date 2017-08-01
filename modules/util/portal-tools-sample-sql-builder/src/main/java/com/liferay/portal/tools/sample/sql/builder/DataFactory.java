@@ -116,7 +116,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
-import com.liferay.portal.kernel.model.ReleaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -151,7 +150,6 @@ import com.liferay.portal.model.impl.CompanyModelImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
-import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
@@ -199,9 +197,7 @@ import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -303,9 +299,11 @@ public class DataFactory extends BaseDataFactory {
 
 		_blogDataFactory = new BlogDataFactory(initContext);
 		_layoutDataFactory = new LayoutDataFactory(initContext);
+		_releaseDataFactory = new ReleaseDataFactory(initContext);
 
 		_dataFactories.put("blogDataFactory", _blogDataFactory);
 		_dataFactories.put("layoutDataFactory", _layoutDataFactory);
+		_dataFactories.put("releaseDataFactory", _releaseDataFactory);
 	}
 
 	public AccountModel getAccountModel() {
@@ -2139,33 +2137,6 @@ public class DataFactory extends BaseDataFactory {
 			_portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
-	public List<ReleaseModel> newReleaseModels() throws IOException {
-		List<ReleaseModel> releases = new ArrayList<>();
-
-		try (InputStream is = DataFactory.class.getResourceAsStream(
-				"dependencies/releases.txt");
-			Reader reader = new InputStreamReader(is);
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(reader)) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				String[] parts = StringUtil.split(line, CharPool.COLON);
-
-				if (parts.length > 0) {
-					String servletContextName = parts[0];
-					String schemaVersion = parts[1];
-
-					releases.add(
-						newReleaseModel(servletContextName, schemaVersion));
-				}
-			}
-		}
-
-		return releases;
-	}
-
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetCategoryModel assetCategoryModel) {
 
@@ -3148,26 +3119,6 @@ public class DataFactory extends BaseDataFactory {
 		return portletPreferencesModel;
 	}
 
-	protected ReleaseModelImpl newReleaseModel(
-			String servletContextName, String schemaVersion)
-		throws IOException {
-
-		ReleaseModelImpl releaseModel = new ReleaseModelImpl();
-
-		SimpleCounter counter = _initContext.getCounter();
-
-		releaseModel.setReleaseId(counter.get());
-
-		releaseModel.setCreateDate(new Date());
-		releaseModel.setModifiedDate(new Date());
-		releaseModel.setServletContextName(servletContextName);
-		releaseModel.setSchemaVersion(schemaVersion);
-		releaseModel.setBuildDate(new Date());
-		releaseModel.setVerified(true);
-
-		return releaseModel;
-	}
-
 	protected ResourcePermissionModel newResourcePermissionModel(
 		String name, String primKey, long roleId, long ownerId) {
 
@@ -3527,6 +3478,7 @@ public class DataFactory extends BaseDataFactory {
 	private final LayoutDataFactory _layoutDataFactory;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
+	private final ReleaseDataFactory _releaseDataFactory;
 	private final SimpleCounter _resourcePermissionCounter;
 	private List<RoleModel> _roleModels;
 	private UserModel _sampleUserModel;
