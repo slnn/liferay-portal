@@ -1,3 +1,3 @@
-<#list dataFactory.roleModels as roleModel>
-	${dataFactory.toInsertSQL(roleModel)}
+<#list userDataFactory.roleModels as roleModel>
+	${userDataFactory.toInsertSQL(roleModel)}
 </#list>

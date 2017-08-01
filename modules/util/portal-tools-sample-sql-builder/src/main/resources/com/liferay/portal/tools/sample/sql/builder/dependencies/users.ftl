@@ -1,13 +1,13 @@
 <#assign
-	groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId)
-	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
+	groupIds = userDataFactory.getNewUserGroupIds(groupModel.groupId)
+	roleIds = [userDataFactory.administratorRoleModel.roleId, userDataFactory.powerUserRoleModel.roleId, userDataFactory.userRoleModel.roleId]
 
-	userModels = dataFactory.newUserModels()
+	userModels = userDataFactory.newUserModels()
 />
 
 <#list userModels as userModel>
 	<#assign
-		userGroupModel = dataFactory.newGroupModel(userModel)
+		userGroupModel = userDataFactory.newGroupModel(userModel)
 
 		layoutModel = layoutDataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
 	/>
