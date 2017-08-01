@@ -1,14 +1,14 @@
-<#assign ddmStructureModel = dataFactory.defaultJournalDDMStructureModel />
+<#assign ddmStructureModel = journalDataFactory.defaultJournalDDMStructureModel />
 
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.defaultJournalDDMStructureLayoutModel
+	_ddmStructureLayoutModel=journalDataFactory.defaultJournalDDMStructureLayoutModel
 	_ddmStructureModel=ddmStructureModel
-	_ddmStructureVersionModel=dataFactory.defaultJournalDDMStructureVersionModel
+	_ddmStructureVersionModel=journalDataFactory.defaultJournalDDMStructureVersionModel
 />
 
-<#assign ddmTemplateModel = dataFactory.defaultJournalDDMTemplateModel />
+<#assign ddmTemplateModel = journalDataFactory.defaultJournalDDMTemplateModel />
 
-${dataFactory.toInsertSQL(ddmTemplateModel)}
+${journalDataFactory.toInsertSQL(ddmTemplateModel)}
 
 <#assign
 	journalArticlePageCounts = dataFactory.getSequence(initContext.maxJournalArticlePageCount)
@@ -17,14 +17,14 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 />
 
 <#list resourcePermissionModels as resourcePermissionModel>
-	${dataFactory.toInsertSQL(resourcePermissionModel)}
+	${journalDataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>
 
 <#list journalArticlePageCounts as journalArticlePageCount>
 	<#assign
 		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_"
 
-		layoutModel = layoutDataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
+		layoutModel = layoutDataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", journalDataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
 	${initContext.getCSVWriter("layout").write(layoutModel.friendlyURL + "\n")}
@@ -34,43 +34,43 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 	<#assign portletPreferencesModels = dataFactory.newJournalPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
-		${dataFactory.toInsertSQL(portletPreferencesModel)}
+		${journalDataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
 	<#assign journalArticleCounts = dataFactory.getSequence(initContext.maxJournalArticleCount) />
 
 	<#list journalArticleCounts as journalArticleCount>
-		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
+		<#assign journalArticleResourceModel = journalDataFactory.newJournalArticleResourceModel(groupId) />
 
 		${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
 		<#assign versionCounts = dataFactory.getSequence(initContext.maxJournalArticleVersionCount) />
 
 		<#list versionCounts as versionCount>
-			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
+			<#assign journalArticleModel = journalDataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
 
-			${dataFactory.toInsertSQL(journalArticleModel)}
+			${journalDataFactory.toInsertSQL(journalArticleModel)}
 
-			<#assign journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, journalArticleCount, versionCount) />
+			<#assign journalArticleLocalizationModel = journalDataFactory.newJournalArticleLocalizationModel(journalArticleModel, journalArticleCount, versionCount) />
 
-			${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+			${journalDataFactory.toInsertSQL(journalArticleLocalizationModel)}
 
-			${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
+			${journalDataFactory.toInsertSQL(dDLDataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
 
-			${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId))}
+			${journalDataFactory.toInsertSQL(dDLDataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId))}
 
-			${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(journalArticleModel))}
+			${journalDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(journalArticleModel))}
 
 			<#if versionCount = initContext.maxJournalArticleVersionCount>
 				<@insertAssetEntry
 					_categoryAndTag=true
-					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+					_entry=journalDataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
 				/>
 			</#if>
 		</#list>
 
 		<@insertMBDiscussion
-			_classNameId=dataFactory.journalArticleClassNameId
+			_classNameId=journalDataFactory.journalArticleClassNameId
 			_classPK=journalArticleResourceModel.resourcePrimKey
 			_groupId=groupId
 			_maxCommentCount=0
@@ -78,8 +78,8 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 			_mbThreadId=dataFactory.getCounterNext()
 		/>
 
-		${dataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
+		${journalDataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
 
-		${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid))}
+		${journalDataFactory.toInsertSQL(journalDataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid))}
 	</#list>
 </#list>
