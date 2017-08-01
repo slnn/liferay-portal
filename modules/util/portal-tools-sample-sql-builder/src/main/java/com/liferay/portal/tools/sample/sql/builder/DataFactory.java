@@ -178,12 +178,7 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.model.WikiPageModel;
-import com.liferay.wiki.model.WikiPageResourceModel;
-import com.liferay.wiki.model.impl.WikiNodeModelImpl;
-import com.liferay.wiki.model.impl.WikiPageModelImpl;
-import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -289,6 +284,7 @@ public class DataFactory extends BaseDataFactory {
 		_releaseDataFactory = new ReleaseDataFactory(initContext);
 		_socialActivityDataFactory = new SocialActivityDataFactory(initContext);
 		_subscriptionDataFactory = new SubscriptionDataFactory(initContext);
+		_wikiDataFactory = new WikiDataFactory(initContext);
 
 		_dataFactories.put("blogDataFactory", _blogDataFactory);
 		_dataFactories.put("layoutDataFactory", _layoutDataFactory);
@@ -296,6 +292,7 @@ public class DataFactory extends BaseDataFactory {
 		_dataFactories.put(
 			"socialActivityDataFactory", _socialActivityDataFactory);
 		_dataFactories.put("subscriptionDataFactory", _subscriptionDataFactory);
+		_dataFactories.put("wikiDataFactory", _wikiDataFactory);
 	}
 
 	public AccountModel getAccountModel() {
@@ -617,10 +614,6 @@ public class DataFactory extends BaseDataFactory {
 
 	public VirtualHostModel getVirtualHostModel() {
 		return _virtualHostModel;
-	}
-
-	public long getWikiPageClassNameId() {
-		return getClassNameId(WikiPage.class);
 	}
 
 	public void initAssetCategoryModels() {
@@ -2403,45 +2396,6 @@ public class DataFactory extends BaseDataFactory {
 		return userModels;
 	}
 
-	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
-		int maxWikiNodeCount = _initContext.getMaxWikiNodeCount();
-
-		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(maxWikiNodeCount);
-
-		for (int i = 1; i <= maxWikiNodeCount; i++) {
-			wikiNodeModels.add(newWikiNodeModel(groupId, i));
-		}
-
-		return wikiNodeModels;
-	}
-
-	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel) {
-		int maxWikiPageCount = _initContext.getMaxWikiPageCount();
-
-		List<WikiPageModel> wikiPageModels = new ArrayList<>(maxWikiPageCount);
-
-		for (int i = 1; i <= maxWikiPageCount; i++) {
-			wikiPageModels.add(newWikiPageModel(wikiNodeModel, i));
-		}
-
-		return wikiPageModels;
-	}
-
-	public WikiPageResourceModel newWikiPageResourceModel(
-		WikiPageModel wikiPageModel) {
-
-		WikiPageResourceModel wikiPageResourceModel =
-			new WikiPageResourceModelImpl();
-
-		wikiPageResourceModel.setUuid(SequentialUUID.generate());
-		wikiPageResourceModel.setResourcePrimKey(
-			wikiPageModel.getResourcePrimKey());
-		wikiPageResourceModel.setNodeId(wikiPageModel.getNodeId());
-		wikiPageResourceModel.setTitle(wikiPageModel.getTitle());
-
-		return wikiPageResourceModel;
-	}
-
 	public String[] nextUserName(long index) {
 		String[] userName = new String[2];
 
@@ -3125,60 +3079,6 @@ public class DataFactory extends BaseDataFactory {
 		return userModel;
 	}
 
-	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
-		long sampleUserId = _initContext.getSampleUserId();
-		SimpleCounter counter = _initContext.getCounter();
-
-		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
-
-		wikiNodeModel.setUuid(SequentialUUID.generate());
-		wikiNodeModel.setNodeId(counter.get());
-		wikiNodeModel.setGroupId(groupId);
-		wikiNodeModel.setCompanyId(_initContext.getCompanyId());
-		wikiNodeModel.setUserId(sampleUserId);
-		wikiNodeModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
-		wikiNodeModel.setCreateDate(new Date());
-		wikiNodeModel.setModifiedDate(new Date());
-		wikiNodeModel.setName(
-			DataFactoryConstants.WIKI_NODE_NAME_PREFIX + index);
-		wikiNodeModel.setLastPostDate(new Date());
-		wikiNodeModel.setLastPublishDate(new Date());
-		wikiNodeModel.setStatusDate(new Date());
-
-		return wikiNodeModel;
-	}
-
-	protected WikiPageModel newWikiPageModel(
-		WikiNodeModel wikiNodeModel, int index) {
-
-		long sampleUserId = _initContext.getSampleUserId();
-
-		SimpleCounter counter = _initContext.getCounter();
-
-		WikiPageModel wikiPageModel = new WikiPageModelImpl();
-
-		wikiPageModel.setUuid(SequentialUUID.generate());
-		wikiPageModel.setPageId(counter.get());
-		wikiPageModel.setResourcePrimKey(counter.get());
-		wikiPageModel.setGroupId(wikiNodeModel.getGroupId());
-		wikiPageModel.setCompanyId(_initContext.getCompanyId());
-		wikiPageModel.setUserId(sampleUserId);
-		wikiPageModel.setUserName(DataFactoryConstants.SAMPLE_USER_NAME);
-		wikiPageModel.setCreateDate(new Date());
-		wikiPageModel.setModifiedDate(new Date());
-		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
-		wikiPageModel.setTitle(
-			DataFactoryConstants.WIKI_PAGE_TITLE_PREFIX + index);
-		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
-		wikiPageModel.setContent(
-			DataFactoryConstants.WIKI_PAGE_CONTENT_PREFIX + index + ".");
-		wikiPageModel.setFormat(DataFactoryConstants.WIKI_PAGE_FORMAT);
-		wikiPageModel.setHead(true);
-		wikiPageModel.setLastPublishDate(new Date());
-
-		return wikiPageModel;
-	}
-
 	protected String nextDDLCustomFieldName(
 		long groupId, int customFieldIndex) {
 
@@ -3344,5 +3244,6 @@ public class DataFactory extends BaseDataFactory {
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 	private VirtualHostModel _virtualHostModel;
+	private final WikiDataFactory _wikiDataFactory;
 
 }
