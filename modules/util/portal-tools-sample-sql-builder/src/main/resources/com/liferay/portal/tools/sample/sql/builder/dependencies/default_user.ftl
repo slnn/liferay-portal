@@ -1,19 +1,19 @@
 <#-- Default user -->
 
-<@insertUser _userModel=dataFactory.defaultUserModel />
+<@insertUser _userModel=userDataFactory.defaultUserModel />
 
 <#-- Guest user -->
 
-<#assign userModel = dataFactory.guestUserModel />
+<#assign userModel = userDataFactory.guestUserModel />
 
 <@insertGroup
-	_groupModel=dataFactory.newGroupModel(userModel)
+	_groupModel=userDataFactory.newGroupModel(userModel)
 	_publicPageCount=0
 />
 
 <#assign
-	groupIds = [dataFactory.guestGroupModel.groupId]
-	roleIds = [dataFactory.administratorRoleModel.roleId]
+	groupIds = [userDataFactory.guestGroupModel.groupId]
+	roleIds = [userDataFactory.administratorRoleModel.roleId]
 />
 
 <@insertUser
@@ -25,11 +25,11 @@
 <#-- Sample user -->
 
 <#assign
-	userModel = dataFactory.sampleUserModel
+	userModel = userDataFactory.sampleUserModel
 
 	sampleUserId = userModel.userId
 
-	userGroupModel = dataFactory.newGroupModel(userModel)
+	userGroupModel = userDataFactory.newGroupModel(userModel)
 
 	layoutModel = layoutDataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
 />
@@ -43,7 +43,7 @@
 
 <#assign
 	groupIds = dataFactory.getSequence(initContext.maxGroupsCount)
-	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
+	roleIds = [userDataFactory.administratorRoleModel.roleId, userDataFactory.powerUserRoleModel.roleId, userDataFactory.userRoleModel.roleId]
 />
 
 <@insertUser
@@ -53,7 +53,7 @@
 />
 
 <#list groupIds as groupId>
-	${dataFactory.toInsertSQL(blogDataFactory.newBlogsStatsUserModel(groupId))}
+	${userDataFactory.toInsertSQL(blogDataFactory.newBlogsStatsUserModel(groupId))}
 
-	${dataFactory.toInsertSQL(dataFactory.newMBStatsUserModel(groupId))}
+	${userDataFactory.toInsertSQL(dataFactory.newMBStatsUserModel(groupId))}
 </#list>

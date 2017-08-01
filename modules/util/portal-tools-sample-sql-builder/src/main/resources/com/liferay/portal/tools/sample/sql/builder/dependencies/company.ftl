@@ -1,7 +1,7 @@
-${dataFactory.toInsertSQL(dataFactory.companyModel)}
+${userDataFactory.toInsertSQL(userDataFactory.companyModel)}
 
-${dataFactory.toInsertSQL(dataFactory.accountModel)}
+${userDataFactory.toInsertSQL(userDataFactory.accountModel)}
 
-${dataFactory.toInsertSQL(dataFactory.virtualHostModel)}
+${userDataFactory.toInsertSQL(userDataFactory.virtualHostModel)}
 
-${initContext.getCSVWriter("company").write(dataFactory.companyModel.companyId + "\n")}
+${initContext.getCSVWriter("company").write(userDataFactory.companyModel.companyId + "\n")}
