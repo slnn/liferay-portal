@@ -4,4 +4,4 @@ ${dataFactory.toInsertSQL(dataFactory.accountModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.virtualHostModel)}
 
-${dataFactory.getCSVWriter("company").write(dataFactory.companyModel.companyId + "\n")}
+${initContext.getCSVWriter("company").write(dataFactory.companyModel.companyId + "\n")}

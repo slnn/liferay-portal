@@ -19,7 +19,7 @@
 		_classNameId=dataFactory.blogsEntryClassNameId
 		_classPK=blogsEntryModel.entryId
 		_groupId=groupId
-		_maxCommentCount=dataFactory.maxBlogsEntryCommentCount
+		_maxCommentCount=initContext.maxBlogsEntryCommentCount
 		_mbRootMessageId=mbRootMessageId
 		_mbThreadId=mbThreadId
 	/>
@@ -28,5 +28,5 @@
 
 	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(blogsEntryModel))}
 
-	${dataFactory.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
+	${initContext.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 </#list>
