@@ -26,7 +26,7 @@
 
 	${blogDataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel))}
 
-	${blogDataFactory.toInsertSQL(dataFactory.newSocialActivityModel(blogsEntryModel))}
+	${blogDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
 
 	${initContext.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 </#list>
