@@ -4,18 +4,18 @@
 	_entry
 	_categoryAndTag = false
 >
-	<#local assetEntryModel = dataFactory.newAssetEntryModel(_entry)>
+	<#local assetEntryModel = assetDataFactory.newAssetEntryModel(_entry)>
 
-	${dataFactory.toInsertSQL(assetEntryModel)}
+	${assetDataFactory.toInsertSQL(assetEntryModel)}
 
 	<#if _categoryAndTag>
-		<#local assetCategoryIds = dataFactory.getAssetCategoryIds(assetEntryModel)>
+		<#local assetCategoryIds = assetDataFactory.getAssetCategoryIds(assetEntryModel)>
 
 		<#list assetCategoryIds as assetCategoryId>
 			insert into AssetEntries_AssetCategories values (${assetEntryModel.companyId}, ${assetCategoryId}, ${assetEntryModel.entryId});
 		</#list>
 
-		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel)>
+		<#local assetTagIds = assetDataFactory.getAssetTagIds(assetEntryModel)>
 
 		<#list assetTagIds as assetTagId>
 			insert into AssetEntries_AssetTags values (${assetEntryModel.companyId}, ${assetEntryModel.entryId}, ${assetTagId});
