@@ -27,7 +27,11 @@
 
 	${dDLDataFactory.toInsertSQL(ddlRecordSetModel)}
 
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(ddlRecordSetModel)}
+
 	${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
 
 	<#assign ddlRecordCounts = dataFactory.getSequence(initContext.maxDDLRecordCount) />
 
@@ -36,7 +40,11 @@
 
 		${dDLDataFactory.toInsertSQL(ddlRecordModel)}
 
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(ddlRecordModel)}
+
 		${dDLDataFactory.toInsertSQL(dDLDataFactory.newDDLRecordVersionModel(ddlRecordModel))}
+
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(dDLDataFactory.newDDLRecordVersionModel(ddlRecordModel))}
 
 		<@insertDDMContent
 			_currentIndex=ddlRecordCount
@@ -48,11 +56,17 @@
 		${initContext.getCSVWriter("dynamicDataList").write(ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
 	</#list>
 
-	${dDLDataFactory.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, ddlRecordSetModel))}
+	<#assign portletPreferencesModel = portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, ddlRecordSetModel) />
+
+	${dDLDataFactory.toInsertSQL(portletPreferencesModel)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(portletPreferencesModel)}
 
 	<#assign portletPreferencesModels = portletPreferenceDataFactory.newDDLPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
-		${dataFactory.toInsertSQL(portletPreferencesModel)}
+		${dDLDataFactory.toInsertSQL(portletPreferencesModel)}
+
+		${resourcePermissionDataFactory.generateResourcePermissionSQL(portletPreferencesModel)}
 	</#list>
 </#list>
