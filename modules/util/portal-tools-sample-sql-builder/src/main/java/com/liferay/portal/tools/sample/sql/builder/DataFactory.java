@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
@@ -85,7 +84,6 @@ import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
-import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBCategoryModel;
@@ -167,7 +165,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
-import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl;
@@ -175,11 +172,7 @@ import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
-import com.liferay.portlet.messageboards.social.MBActivityKeys;
-import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
-import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.social.kernel.model.SocialActivityModel;
 import com.liferay.subscription.model.SubscriptionConstants;
 import com.liferay.subscription.model.SubscriptionModel;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
@@ -194,7 +187,6 @@ import com.liferay.wiki.model.WikiPageResourceModel;
 import com.liferay.wiki.model.impl.WikiNodeModelImpl;
 import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
-import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -224,9 +216,7 @@ public class DataFactory extends BaseDataFactory {
 
 		_initContext = initContext;
 
-		_timeCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
-		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
 
 		_assetClassNameIds = new long[] {
@@ -300,10 +290,13 @@ public class DataFactory extends BaseDataFactory {
 		_blogDataFactory = new BlogDataFactory(initContext);
 		_layoutDataFactory = new LayoutDataFactory(initContext);
 		_releaseDataFactory = new ReleaseDataFactory(initContext);
+		_socialActivityDataFactory = new SocialActivityDataFactory(initContext);
 
 		_dataFactories.put("blogDataFactory", _blogDataFactory);
 		_dataFactories.put("layoutDataFactory", _layoutDataFactory);
 		_dataFactories.put("releaseDataFactory", _releaseDataFactory);
+		_dataFactories.put(
+			"socialActivityDataFactory", _socialActivityDataFactory);
 	}
 
 	public AccountModel getAccountModel() {
@@ -1203,6 +1196,8 @@ public class DataFactory extends BaseDataFactory {
 
 	public List<CounterModel> newCounterModels() {
 		SimpleCounter counter = _initContext.getCounter();
+		SimpleCounter socialActivityCounter =
+			_socialActivityDataFactory.getSocialActivityCounter();
 
 		List<CounterModel> counterModels = new ArrayList<>();
 
@@ -1229,7 +1224,7 @@ public class DataFactory extends BaseDataFactory {
 		counterModel = new CounterModelImpl();
 
 		counterModel.setName(SocialActivity.class.getName());
-		counterModel.setCurrentId(_socialActivityCounter.get());
+		counterModel.setCurrentId(socialActivityCounter.get());
 
 		counterModels.add(counterModel);
 
@@ -2388,82 +2383,6 @@ public class DataFactory extends BaseDataFactory {
 			String.valueOf(wikiPageModel.getResourcePrimKey()), sampleUserId);
 	}
 
-	public SocialActivityModel newSocialActivityModel(
-		BlogsEntryModel blogsEntryModel) {
-
-		return newSocialActivityModel(
-			blogsEntryModel.getGroupId(), getClassNameId(BlogsEntry.class),
-			blogsEntryModel.getEntryId(), BlogsActivityKeys.ADD_ENTRY,
-			"{\"title\":\"" + blogsEntryModel.getTitle() + "\"}");
-	}
-
-	public SocialActivityModel newSocialActivityModel(
-		DLFileEntryModel dlFileEntryModel) {
-
-		return newSocialActivityModel(
-			dlFileEntryModel.getGroupId(), getClassNameId(DLFileEntry.class),
-			dlFileEntryModel.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
-			StringPool.BLANK);
-	}
-
-	public SocialActivityModel newSocialActivityModel(
-		JournalArticleModel journalArticleModel) {
-
-		int type = JournalActivityKeys.UPDATE_ARTICLE;
-
-		if (journalArticleModel.getVersion() ==
-				JournalArticleConstants.VERSION_DEFAULT) {
-
-			type = JournalActivityKeys.ADD_ARTICLE;
-		}
-
-		return newSocialActivityModel(
-			journalArticleModel.getGroupId(),
-			getClassNameId(JournalArticle.class),
-			journalArticleModel.getResourcePrimKey(), type,
-			"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}");
-	}
-
-	public SocialActivityModel newSocialActivityModel(
-		MBMessageModel mbMessageModel) {
-
-		long classNameId = mbMessageModel.getClassNameId();
-		long classPK = mbMessageModel.getClassPK();
-
-		int type = 0;
-		String extraData = null;
-
-		if (classNameId == getClassNameId(WikiPage.class)) {
-			extraData = "{\"version\":1}";
-
-			type = WikiActivityKeys.ADD_PAGE;
-		}
-		else if (classNameId == 0) {
-			extraData = "{\"title\":\"" + mbMessageModel.getSubject() + "\"}";
-
-			type = MBActivityKeys.ADD_MESSAGE;
-
-			classNameId = getClassNameId(MBMessage.class);
-			classPK = mbMessageModel.getMessageId();
-		}
-		else {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{\"messageId\": \"");
-			sb.append(mbMessageModel.getMessageId());
-			sb.append("\", \"title\": ");
-			sb.append(mbMessageModel.getSubject());
-			sb.append("}");
-
-			extraData = sb.toString();
-
-			type = SocialActivityConstants.TYPE_ADD_COMMENT;
-		}
-
-		return newSocialActivityModel(
-			mbMessageModel.getGroupId(), classNameId, classPK, type, extraData);
-	}
-
 	public SubscriptionModel newSubscriptionModel(
 		BlogsEntryModel blogsEntryModel) {
 
@@ -3181,27 +3100,6 @@ public class DataFactory extends BaseDataFactory {
 		return roleModel;
 	}
 
-	protected SocialActivityModel newSocialActivityModel(
-		long groupId, long classNameId, long classPK, int type,
-		String extraData) {
-
-		long sampleUserId = _initContext.getSampleUserId();
-
-		SocialActivityModel socialActivityModel = new SocialActivityModelImpl();
-
-		socialActivityModel.setActivityId(_socialActivityCounter.get());
-		socialActivityModel.setGroupId(groupId);
-		socialActivityModel.setCompanyId(_initContext.getCompanyId());
-		socialActivityModel.setUserId(sampleUserId);
-		socialActivityModel.setCreateDate(_CURRENT_TIME + _timeCounter.get());
-		socialActivityModel.setClassNameId(classNameId);
-		socialActivityModel.setClassPK(classPK);
-		socialActivityModel.setType(type);
-		socialActivityModel.setExtraData(extraData);
-
-		return socialActivityModel;
-	}
-
 	protected SubscriptionModel newSubscriptionModel(
 		long classNameId, long classPK) {
 
@@ -3423,8 +3321,6 @@ public class DataFactory extends BaseDataFactory {
 		return sb.toString();
 	}
 
-	private static final long _CURRENT_TIME = System.currentTimeMillis();
-
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
@@ -3483,8 +3379,7 @@ public class DataFactory extends BaseDataFactory {
 	private List<RoleModel> _roleModels;
 	private UserModel _sampleUserModel;
 	private RoleModel _siteMemberRoleModel;
-	private final SimpleCounter _socialActivityCounter;
-	private final SimpleCounter _timeCounter;
+	private final SocialActivityDataFactory _socialActivityDataFactory;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 	private VirtualHostModel _virtualHostModel;
