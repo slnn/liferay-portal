@@ -42,12 +42,12 @@
 		<@insertLayout _layoutModel=publicLayoutModel />
 	</#list>
 
-	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount />
+	<#assign publicPageCount = publicLayoutModels?size + initContext.maxDDLRecordSetCount + initContext.maxJournalArticleCount />
 
 	<@insertGroup
 		_groupModel=groupModel
 		_publicPageCount=publicPageCount
 	/>
 
-	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
+	${initContext.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>
