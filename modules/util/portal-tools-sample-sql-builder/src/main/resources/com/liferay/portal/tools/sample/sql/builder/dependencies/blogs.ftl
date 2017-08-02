@@ -15,8 +15,8 @@
 	/>
 
 	<#assign
-		mbThreadId = dataFactory.getCounterNext()
-		mbRootMessageId = dataFactory.getCounterNext()
+		mbThreadId = counterDataFactory.getCounterNext()
+		mbRootMessageId = counterDataFactory.getCounterNext()
 	/>
 
 	<@insertMBDiscussion

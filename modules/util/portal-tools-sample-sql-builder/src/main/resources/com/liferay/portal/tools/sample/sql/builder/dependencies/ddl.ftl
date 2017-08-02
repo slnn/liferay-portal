@@ -1,4 +1,4 @@
-<#assign ddlRecordSetCounts = dataFactory.getSequence(initContext.maxDDLRecordSetCount) />
+<#assign ddlRecordSetCounts = counterDataFactory.getSequence(initContext.maxDDLRecordSetCount) />
 
 <#list ddlRecordSetCounts as ddlRecordSetCount>
 	<#if ddlRecordSetCount = 1>
@@ -33,7 +33,7 @@
 
 	${resourcePermissionDataFactory.generateResourcePermissionSQL(dDLDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
 
-	<#assign ddlRecordCounts = dataFactory.getSequence(initContext.maxDDLRecordCount) />
+	<#assign ddlRecordCounts = counterDataFactory.getSequence(initContext.maxDDLRecordCount) />
 
 	<#list ddlRecordCounts as ddlRecordCount>
 		<#assign ddlRecordModel = dDLDataFactory.newDDLRecordModel(ddlRecordSetModel) />
@@ -48,7 +48,7 @@
 
 		<@insertDDMContent
 			_currentIndex=ddlRecordCount
-			_ddmStorageLinkId=dataFactory.getCounterNext()
+			_ddmStorageLinkId=counterDataFactory.getCounterNext()
 			_ddmStructureId=ddmStructureModel.structureId
 			_entry=ddlRecordModel
 		/>
