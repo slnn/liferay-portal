@@ -14,17 +14,9 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.counter.kernel.model.Counter;
-import com.liferay.counter.kernel.model.CounterModel;
-import com.liferay.counter.model.impl.CounterModelImpl;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.social.kernel.model.SocialActivity;
-import com.liferay.util.SimpleCounter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,6 +37,7 @@ public class DataFactory extends BaseDataFactory {
 		_assetDataFactory = new AssetDataFactory(initContext, _userDataFactory);
 
 		_blogDataFactory = new BlogDataFactory(initContext);
+		_counterDataFactory = new CounterDataFactory(initContext);
 		_dDLDataFactory = new DDLDataFactory(initContext);
 		_dLDataFactory = new DLDataFactory(initContext, _userDataFactory);
 		_layoutDataFactory = new LayoutDataFactory(initContext);
@@ -65,11 +58,16 @@ public class DataFactory extends BaseDataFactory {
 		_wikiDataFactory = new WikiDataFactory(initContext);
 
 		_assetDataFactory.setJournalDataFactory(_journalDataFactory);
+		_counterDataFactory.setResourcePermissionDataFactory(
+			_resourcePermissionDataFactory);
+		_counterDataFactory.setSocialActivityDataFactory(
+			_socialActivityDataFactory);
 		_dDLDataFactory.setUserDataFactory(_userDataFactory);
 		_messageBoardDataFactory.setUserDataFactory(_userDataFactory);
 
 		_dataFactories.put("assetDataFactory", _assetDataFactory);
 		_dataFactories.put("blogDataFactory", _blogDataFactory);
+		_dataFactories.put("counterDataFactory", _counterDataFactory);
 		_dataFactories.put("dDLDataFactory", _dDLDataFactory);
 		_dataFactories.put("dLDataFactory", _dLDataFactory);
 		_dataFactories.put("journalDataFactory", _journalDataFactory);
@@ -87,63 +85,8 @@ public class DataFactory extends BaseDataFactory {
 		_dataFactories.put("wikiDataFactory", _wikiDataFactory);
 	}
 
-	public long getCounterNext() {
-		SimpleCounter counter = _initContext.getCounter();
-
-		return counter.get();
-	}
-
 	public Map<String, Object> getDataFactories() {
 		return _dataFactories;
-	}
-
-	public List<Integer> getSequence(int size) {
-		List<Integer> sequence = new ArrayList<>(size);
-
-		for (int i = 1; i <= size; i++) {
-			sequence.add(i);
-		}
-
-		return sequence;
-	}
-
-	public List<CounterModel> newCounterModels() {
-		SimpleCounter counter = _initContext.getCounter();
-		SimpleCounter socialActivityCounter =
-			_socialActivityDataFactory.getSocialActivityCounter();
-		SimpleCounter resourcePermissionCounter = 
-			_resourcePermissionDataFactory.getResourcePermissionCounter();
-
-		List<CounterModel> counterModels = new ArrayList<>();
-
-		// Counter
-
-		CounterModel counterModel = new CounterModelImpl();
-
-		counterModel.setName(Counter.class.getName());
-		counterModel.setCurrentId(counter.get());
-
-		counterModels.add(counterModel);
-
-		// ResourcePermission
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(ResourcePermission.class.getName());
-		counterModel.setCurrentId(resourcePermissionCounter.get());
-
-		counterModels.add(counterModel);
-
-		// SocialActivity
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(SocialActivity.class.getName());
-		counterModel.setCurrentId(socialActivityCounter.get());
-
-		counterModels.add(counterModel);
-
-		return counterModels;
 	}
 
 	public IntegerWrapper newInteger() {
@@ -152,6 +95,7 @@ public class DataFactory extends BaseDataFactory {
 
 	private final AssetDataFactory _assetDataFactory;
 	private final BlogDataFactory _blogDataFactory;
+	private final CounterDataFactory _counterDataFactory;
 	private final Map<String, Object> _dataFactories = new HashMap<>();
 	private final DDLDataFactory _dDLDataFactory;
 	private final DLDataFactory _dLDataFactory;
