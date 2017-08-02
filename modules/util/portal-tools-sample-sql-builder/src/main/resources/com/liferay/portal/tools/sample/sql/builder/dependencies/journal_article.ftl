@@ -13,7 +13,7 @@ ${journalDataFactory.toInsertSQL(ddmTemplateModel)}
 ${resourcePermissionDataFactory.generateResourcePermissionSQL(ddmTemplateModel)}
 
 <#assign
-	journalArticlePageCounts = dataFactory.getSequence(initContext.maxJournalArticlePageCount)
+	journalArticlePageCounts = counterDataFactory.getSequence(initContext.maxJournalArticlePageCount)
 
 	resourcePermissionModels = resourcePermissionDataFactory.newResourcePermissionModels("com.liferay.journal", groupId)
 />
@@ -43,7 +43,7 @@ ${resourcePermissionDataFactory.generateResourcePermissionSQL(ddmTemplateModel)}
 		${resourcePermissionDataFactory.generateResourcePermissionSQL(portletPreferencesModel)}
 	</#list>
 
-	<#assign journalArticleCounts = dataFactory.getSequence(initContext.maxJournalArticleCount) />
+	<#assign journalArticleCounts = counterDataFactory.getSequence(initContext.maxJournalArticleCount) />
 
 	<#list journalArticleCounts as journalArticleCount>
 		<#assign journalArticleResourceModel = journalDataFactory.newJournalArticleResourceModel(groupId) />
@@ -52,7 +52,7 @@ ${resourcePermissionDataFactory.generateResourcePermissionSQL(ddmTemplateModel)}
 
 		${resourcePermissionDataFactory.generateResourcePermissionSQL(journalArticleResourceModel)}
 
-		<#assign versionCounts = dataFactory.getSequence(initContext.maxJournalArticleVersionCount) />
+		<#assign versionCounts = counterDataFactory.getSequence(initContext.maxJournalArticleVersionCount) />
 
 		<#list versionCounts as versionCount>
 			<#assign journalArticleModel = journalDataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
@@ -92,8 +92,8 @@ ${resourcePermissionDataFactory.generateResourcePermissionSQL(ddmTemplateModel)}
 			_classPK=journalArticleResourceModel.resourcePrimKey
 			_groupId=groupId
 			_maxCommentCount=0
-			_mbRootMessageId=dataFactory.getCounterNext()
-			_mbThreadId=dataFactory.getCounterNext()
+			_mbRootMessageId=counterDataFactory.getCounterNext()
+			_mbThreadId=counterDataFactory.getCounterNext()
 		/>
 
 		<#assign portletPreferencesModel = portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel) />

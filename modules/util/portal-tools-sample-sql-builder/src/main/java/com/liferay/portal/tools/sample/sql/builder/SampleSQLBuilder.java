@@ -313,8 +313,6 @@ public class SampleSQLBuilder {
 
 					context = _dataFactory.getDataFactories();
 
-					context.put("dataFactory", _dataFactory);
-
 					context.put("initContext", _initContext);
 
 					FreeMarkerUtil.process(_script, context, sampleSQLWriter);

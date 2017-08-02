@@ -83,7 +83,7 @@
 
 				<@insertAssetEntry _entry=dlFileEntryModel />
 
-				<#local ddmStorageLinkId = dataFactory.getCounterNext()>
+				<#local ddmStorageLinkId = counterDataFactory.getCounterNext()>
 
 				<@insertDDMContent
 					_ddmStorageLinkId=ddmStorageLinkId
@@ -96,8 +96,8 @@
 					_classPK=dlFileEntryModel.fileEntryId
 					_groupId=dlFileEntryModel.groupId
 					_maxCommentCount=0
-					_mbRootMessageId=dataFactory.getCounterNext()
-					_mbThreadId=dataFactory.getCounterNext()
+					_mbRootMessageId=counterDataFactory.getCounterNext()
+					_mbThreadId=counterDataFactory.getCounterNext()
 				/>
 
 				${dLDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel))}
