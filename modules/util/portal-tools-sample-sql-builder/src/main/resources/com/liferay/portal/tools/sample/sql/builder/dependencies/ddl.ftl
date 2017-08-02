@@ -48,9 +48,9 @@
 		${initContext.getCSVWriter("dynamicDataList").write(ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
 	</#list>
 
-	${dDLDataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, ddlRecordSetModel))}
+	${dDLDataFactory.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, ddlRecordSetModel))}
 
-	<#assign portletPreferencesModels = dataFactory.newDDLPortletPreferencesModels(layoutModel.plid) />
+	<#assign portletPreferencesModels = portletPreferenceDataFactory.newDDLPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}

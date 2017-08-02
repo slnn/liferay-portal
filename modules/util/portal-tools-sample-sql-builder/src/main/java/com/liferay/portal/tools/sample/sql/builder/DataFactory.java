@@ -23,7 +23,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -31,15 +30,12 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderModel;
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetModel;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.message.boards.kernel.model.MBCategory;
@@ -52,7 +48,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutModel;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -61,24 +56,18 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
-import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.util.SimpleCounter;
-import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.model.WikiPage;
@@ -96,8 +85,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Brian Wing Shun Chan
@@ -123,6 +110,11 @@ public class DataFactory extends BaseDataFactory {
 		_dLDataFactory = new DLDataFactory(initContext, _userDataFactory);
 		_layoutDataFactory = new LayoutDataFactory(initContext);
 		_messageBoardDataFactory = new MessageBoardDataFactory(initContext);
+		_portletPreferenceDataFactory = new PortletPreferenceDataFactory(
+			initContext);
+
+		_portletPreferenceDataFactory.setAssetDataFactory(_assetDataFactory);
+
 		_releaseDataFactory = new ReleaseDataFactory(initContext);
 		_socialActivityDataFactory = new SocialActivityDataFactory(initContext);
 		_subscriptionDataFactory = new SubscriptionDataFactory(initContext);
@@ -139,6 +131,8 @@ public class DataFactory extends BaseDataFactory {
 		_dataFactories.put("journalDataFactory", _journalDataFactory);
 		_dataFactories.put("layoutDataFactory", _layoutDataFactory);
 		_dataFactories.put("messageBoardDataFactory", _messageBoardDataFactory);
+		_dataFactories.put(
+			"portletPreferenceDataFactory", _portletPreferenceDataFactory);
 		_dataFactories.put("releaseDataFactory", _releaseDataFactory);
 		_dataFactories.put(
 			"socialActivityDataFactory", _socialActivityDataFactory);
@@ -165,28 +159,6 @@ public class DataFactory extends BaseDataFactory {
 		}
 
 		return sequence;
-	}
-
-	public List<PortletPreferencesModel>
-		newAssetPublisherPortletPreferencesModels(long plid) {
-
-		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<>(3);
-
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, BlogsPortletKeys.BLOGS,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, JournalPortletKeys.JOURNAL,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, WikiPortletKeys.WIKI,
-				PortletConstants.DEFAULT_PREFERENCES));
-
-		return portletPreferencesModels;
 	}
 
 	public List<CounterModel> newCounterModels() {
@@ -226,178 +198,8 @@ public class DataFactory extends BaseDataFactory {
 		return counterModels;
 	}
 
-	public List<PortletPreferencesModel>
-		newDDLPortletPreferencesModels(long plid) {
-
-		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<>(3);
-
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, DDLPortletKeys.DYNAMIC_DATA_LISTS,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
-				PortletConstants.DEFAULT_PREFERENCES));
-
-		return portletPreferencesModels;
-	}
-
 	public IntegerWrapper newInteger() {
 		return new IntegerWrapper();
-	}
-
-	public List<PortletPreferencesModel>
-		newJournalPortletPreferencesModels(long plid) {
-
-		return Collections.singletonList(
-			newPortletPreferencesModel(
-				plid, JournalPortletKeys.JOURNAL,
-				PortletConstants.DEFAULT_PREFERENCES));
-	}
-
-	public PortletPreferencesModel newPortletPreferencesModel(
-			long plid, long groupId, String portletId, int currentIndex)
-		throws Exception {
-
-		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps =
-			_assetDataFactory.getAssetCategoryModelsMaps();
-		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps =
-			_assetDataFactory.getAssetTagModelsMaps();
-
-		PortletPreferencesFactory portletPreferencesFactory =
-			_assetDataFactory.getPortletPreferencesFactory();
-
-		if (currentIndex == 1) {
-			return newPortletPreferencesModel(
-				plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
-		}
-
-		String assetPublisherQueryName = "assetCategories";
-
-		if ((currentIndex % 2) == 0) {
-			assetPublisherQueryName = "assetTags";
-		}
-
-		ObjectValuePair<String[], Integer> objectValuePair = null;
-
-		Map<Long, Integer> assetPublisherQueryStartIndexes =
-			_assetDataFactory.getAssetPublisherQueryStartIndexes();
-
-		Integer startIndex = assetPublisherQueryStartIndexes.get(groupId);
-
-		if (startIndex == null) {
-			startIndex = 0;
-		}
-
-		if (assetPublisherQueryName.equals("assetCategories")) {
-			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				assetCategoryModelsMaps[(int)groupId - 1];
-
-			List<AssetCategoryModel> assetCategoryModels =
-				assetCategoryModelsMap.get(
-					_assetDataFactory.getNextAssetClassNameId(groupId));
-
-			if ((assetCategoryModels == null) ||
-				assetCategoryModels.isEmpty()) {
-
-				return newPortletPreferencesModel(
-					plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
-			}
-
-			objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
-				assetCategoryModels, startIndex);
-		}
-		else {
-			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				assetTagModelsMaps[(int)groupId - 1];
-
-			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
-				_assetDataFactory.getNextAssetClassNameId(groupId));
-
-			if ((assetTagModels == null) || assetTagModels.isEmpty()) {
-				return newPortletPreferencesModel(
-					plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
-			}
-
-			objectValuePair = getAssetPublisherAssetTagsQueryValues(
-				assetTagModels, startIndex);
-		}
-
-		String[] assetPublisherQueryValues = objectValuePair.getKey();
-
-		assetPublisherQueryStartIndexes.put(
-			groupId, objectValuePair.getValue());
-
-		PortletPreferencesImpl defaultAssetPublisherPortletPreference =
-			_assetDataFactory.getDefaultAssetPublisherPortletPreference();
-
-		PortletPreferences jxPortletPreferences =
-			(PortletPreferences)defaultAssetPublisherPortletPreference.clone();
-
-		jxPortletPreferences.setValue("queryAndOperator0", "false");
-		jxPortletPreferences.setValue("queryContains0", "true");
-		jxPortletPreferences.setValue("queryName0", assetPublisherQueryName);
-		jxPortletPreferences.setValues(
-			"queryValues0",
-			new String[] {
-				assetPublisherQueryValues[0], assetPublisherQueryValues[1],
-				assetPublisherQueryValues[2]
-			});
-		jxPortletPreferences.setValue("queryAndOperator1", "false");
-		jxPortletPreferences.setValue("queryContains1", "false");
-		jxPortletPreferences.setValue("queryName1", assetPublisherQueryName);
-		jxPortletPreferences.setValue(
-			"queryValues1", assetPublisherQueryValues[3]);
-
-		return newPortletPreferencesModel(
-			plid, portletId,
-			portletPreferencesFactory.toXML(jxPortletPreferences));
-	}
-
-	public PortletPreferencesModel newPortletPreferencesModel(
-			long plid, String portletId, DDLRecordSetModel ddlRecordSetModel)
-		throws Exception {
-
-		PortletPreferencesFactory portletPreferencesFactory =
-			_assetDataFactory.getPortletPreferencesFactory();
-
-		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
-
-		jxPortletPreferences.setValue("editable", "true");
-		jxPortletPreferences.setValue(
-			"recordSetId", String.valueOf(ddlRecordSetModel.getRecordSetId()));
-		jxPortletPreferences.setValue("spreadsheet", "false");
-
-		return newPortletPreferencesModel(
-			plid, portletId,
-			portletPreferencesFactory.toXML(jxPortletPreferences));
-	}
-
-	public PortletPreferencesModel newPortletPreferencesModel(
-			long plid, String portletId,
-			JournalArticleResourceModel journalArticleResourceModel)
-		throws Exception {
-
-		PortletPreferencesFactory portletPreferencesFactory =
-			_assetDataFactory.getPortletPreferencesFactory();
-
-		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
-
-		jxPortletPreferences.setValue(
-			"articleId", journalArticleResourceModel.getArticleId());
-		jxPortletPreferences.setValue(
-			"groupId",
-			String.valueOf(journalArticleResourceModel.getGroupId()));
-
-		return newPortletPreferencesModel(
-			plid, portletId,
-			portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -671,66 +473,6 @@ public class DataFactory extends BaseDataFactory {
 			String.valueOf(wikiPageModel.getResourcePrimKey()), sampleUserId);
 	}
 
-	protected ObjectValuePair<String[], Integer>
-		getAssetPublisherAssetCategoriesQueryValues(
-			List<AssetCategoryModel> assetCategoryModels, int index) {
-
-		int maxAssetEntryToAssetCategoryCount =
-			_initContext.getMaxAssetEntryToAssetCategoryCount();
-
-		AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
-			index % assetCategoryModels.size());
-		AssetCategoryModel assetCategoryModel1 = assetCategoryModels.get(
-			(index + maxAssetEntryToAssetCategoryCount) %
-				assetCategoryModels.size());
-		AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
-			(index + maxAssetEntryToAssetCategoryCount * 2) %
-				assetCategoryModels.size());
-
-		int lastIndex =
-			(index + maxAssetEntryToAssetCategoryCount * 3) %
-				assetCategoryModels.size();
-
-		AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
-			lastIndex);
-
-		return new ObjectValuePair<>(
-			new String[] {
-				String.valueOf(assetCategoryModel0.getCategoryId()),
-				String.valueOf(assetCategoryModel1.getCategoryId()),
-				String.valueOf(assetCategoryModel2.getCategoryId()),
-				String.valueOf(assetCategoryModel3.getCategoryId())
-			},
-			lastIndex + maxAssetEntryToAssetCategoryCount);
-	}
-
-	protected ObjectValuePair<String[], Integer>
-		getAssetPublisherAssetTagsQueryValues(
-			List<AssetTagModel> assetTagModels, int index) {
-
-		int maxAssetEntryToAssetTagCount =
-			_initContext.getMaxAssetEntryToAssetTagCount();
-
-		AssetTagModel assetTagModel0 = assetTagModels.get(
-			index % assetTagModels.size());
-		AssetTagModel assetTagModel1 = assetTagModels.get(
-			(index + maxAssetEntryToAssetTagCount) % assetTagModels.size());
-		AssetTagModel assetTagModel2 = assetTagModels.get(
-			(index + maxAssetEntryToAssetTagCount * 2) % assetTagModels.size());
-
-		int lastIndex =
-			(index + maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
-
-		AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
-
-		return new ObjectValuePair<>(
-			new String[] {
-				assetTagModel0.getName(), assetTagModel1.getName(),
-				assetTagModel2.getName(), assetTagModel3.getName()
-			},
-			lastIndex + maxAssetEntryToAssetTagCount);
-	}
-
 	protected String getClassName(long classNameId) {
 		for (ClassNameModel classNameModel :
 				_initContext.getClassNameModelValues()) {
@@ -909,6 +651,7 @@ public class DataFactory extends BaseDataFactory {
 	private final JournalDataFactory _journalDataFactory;
 	private final LayoutDataFactory _layoutDataFactory;
 	private final MessageBoardDataFactory _messageBoardDataFactory;
+	private final PortletPreferenceDataFactory _portletPreferenceDataFactory;
 	private final ReleaseDataFactory _releaseDataFactory;
 	private final SimpleCounter _resourcePermissionCounter;
 	private final SocialActivityDataFactory _socialActivityDataFactory;
