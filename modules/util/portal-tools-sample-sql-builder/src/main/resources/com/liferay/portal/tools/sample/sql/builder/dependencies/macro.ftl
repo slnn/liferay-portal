@@ -47,6 +47,8 @@
 >
 	${dDLDataFactory.toInsertSQL(_ddmStructureModel)}
 
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_ddmStructureModel)}
+
 	${dDLDataFactory.toInsertSQL(_ddmStructureLayoutModel)}
 
 	${dDLDataFactory.toInsertSQL(_ddmStructureVersionModel)}
@@ -64,6 +66,8 @@
 		<#list dlFolderModels as dlFolderModel>
 			${dLDataFactory.toInsertSQL(dlFolderModel)}
 
+			${resourcePermissionDataFactory.generateResourcePermissionSQL(dlFolderModel)}
+
 			<@insertAssetEntry _entry=dlFolderModel />
 
 			<#local dlFileEntryModels = dLDataFactory.newDlFileEntryModels(dlFolderModel)>
@@ -74,6 +78,8 @@
 				<#local dlFileVersionModel = dLDataFactory.newDLFileVersionModel(dlFileEntryModel)>
 
 				${dLDataFactory.toInsertSQL(dlFileVersionModel)}
+
+				${resourcePermissionDataFactory.generateResourcePermissionSQL(dlFileEntryModel)}
 
 				<@insertAssetEntry _entry=dlFileEntryModel />
 
@@ -121,6 +127,8 @@
 >
 	${userDataFactory.toInsertSQL(_groupModel)}
 
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_groupModel)}
+
 	<#local layoutSetModels = layoutDataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
@@ -132,6 +140,8 @@
 	_layoutModel
 >
 	${layoutDataFactory.toInsertSQL(_layoutModel)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_layoutModel)}
 
 	${layoutDataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 </#macro>
@@ -167,6 +177,8 @@
 	_mbMessageModel
 >
 	${messageBoardDataFactory.toInsertSQL(_mbMessageModel)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(_mbMessageModel)}
 
 	<@insertAssetEntry _entry=_mbMessageModel />
 </#macro>
