@@ -3,7 +3,11 @@
 <#list blogsEntryModels as blogsEntryModel>
 	${blogDataFactory.toInsertSQL(blogsEntryModel)}
 
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(blogsEntryModel)}
+
 	${blogDataFactory.toInsertSQL(blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel))}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel))}
 
 	<@insertAssetEntry
 		_categoryAndTag=true
@@ -26,7 +30,11 @@
 
 	${blogDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel))}
 
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel))}
+
 	${blogDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
 
 	${initContext.getCSVWriter("blog").write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 </#list>
