@@ -11,7 +11,7 @@
 ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
 <#assign
-	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
+	journalArticlePageCounts = dataFactory.getSequence(initContext.maxJournalArticlePageCount)
 
 	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId)
 />
@@ -27,7 +27,7 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
-	${dataFactory.getCSVWriter("layout").write(layoutModel.friendlyURL + "\n")}
+	${initContext.getCSVWriter("layout").write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 
@@ -37,14 +37,14 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	<#assign journalArticleCounts = dataFactory.getSequence(dataFactory.maxJournalArticleCount) />
+	<#assign journalArticleCounts = dataFactory.getSequence(initContext.maxJournalArticleCount) />
 
 	<#list journalArticleCounts as journalArticleCount>
 		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
 
 		${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
-		<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount) />
+		<#assign versionCounts = dataFactory.getSequence(initContext.maxJournalArticleVersionCount) />
 
 		<#list versionCounts as versionCount>
 			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
@@ -61,7 +61,7 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(journalArticleModel))}
 
-			<#if versionCount = dataFactory.maxJournalArticleVersionCount>
+			<#if versionCount = initContext.maxJournalArticleVersionCount>
 				<@insertAssetEntry
 					_categoryAndTag=true
 					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
