@@ -89,10 +89,6 @@ public class DataFactory extends BaseDataFactory {
 		return _dataFactories;
 	}
 
-	public IntegerWrapper newInteger() {
-		return new IntegerWrapper();
-	}
-
 	private final AssetDataFactory _assetDataFactory;
 	private final BlogDataFactory _blogDataFactory;
 	private final CounterDataFactory _counterDataFactory;
