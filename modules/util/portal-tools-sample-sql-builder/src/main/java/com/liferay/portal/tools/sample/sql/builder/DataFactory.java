@@ -22,13 +22,9 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DataFactory extends BaseDataFactory {
+public class DataFactory {
 
 	public DataFactory(InitContext initContext) throws Exception {
-		super(initContext);
-
-		_initContext = initContext;
-
 		_userDataFactory = new UserDataFactory(initContext);
 
 		_journalDataFactory = new JournalDataFactory(
@@ -95,7 +91,6 @@ public class DataFactory extends BaseDataFactory {
 	private final Map<String, Object> _dataFactories = new HashMap<>();
 	private final DDLDataFactory _dDLDataFactory;
 	private final DLDataFactory _dLDataFactory;
-	private final InitContext _initContext;
 	private final JournalDataFactory _journalDataFactory;
 	private final LayoutDataFactory _layoutDataFactory;
 	private final MessageBoardDataFactory _messageBoardDataFactory;
