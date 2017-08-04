@@ -269,9 +269,6 @@ public class JournalDataFactory extends DDLDataFactory {
 		long groupId = _userDataFactory.getGlobalGroupId();
 		long userId = initContext.getDefaultUserId();
 
-		Map<String, ClassNameModel> classNameModels =
-			initContext.getClassNameModels();
-
 		_defaultJournalDDMStructureModel = newDDMStructureModel(
 			groupId, userId, getClassNameId(JournalArticle.class),
 			DataFactoryConstants.JOURNAL_STRUCTURE_KEY,

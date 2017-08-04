@@ -328,9 +328,6 @@ public class UserDataFactory extends BaseDataFactory {
 	private void _initGroupModels() throws Exception {
 		int maxGroupsCount = initContext.getMaxGroupsCount();
 
-		Map<String, ClassNameModel> classNameModels =
-			initContext.getClassNameModels();
-
 		_globalGroupModel = _initGroupModel(
 			_globalGroupId, getClassNameId(Company.class),
 			initContext.getCompanyId(), GroupConstants.GLOBAL, false);
