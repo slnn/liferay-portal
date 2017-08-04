@@ -29,7 +29,6 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -268,9 +267,6 @@ public class JournalDataFactory extends DDLDataFactory {
 	private void _initJournalTypeModel() {
 		long groupId = _userDataFactory.getGlobalGroupId();
 		long userId = initContext.getDefaultUserId();
-
-		Map<String, ClassNameModel> classNameModels =
-			initContext.getClassNameModels();
 
 		_defaultJournalDDMStructureModel = newDDMStructureModel(
 			groupId, userId, getClassNameId(JournalArticle.class),

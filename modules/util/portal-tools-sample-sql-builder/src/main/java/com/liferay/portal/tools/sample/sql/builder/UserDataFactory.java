@@ -16,7 +16,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.model.AccountModel;
-import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.ContactConstants;
@@ -50,7 +49,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Lily Chi
@@ -327,9 +325,6 @@ public class UserDataFactory extends BaseDataFactory {
 
 	private void _initGroupModels() throws Exception {
 		int maxGroupsCount = initContext.getMaxGroupsCount();
-
-		Map<String, ClassNameModel> classNameModels =
-			initContext.getClassNameModels();
 
 		_globalGroupModel = _initGroupModel(
 			_globalGroupId, getClassNameId(Company.class),
