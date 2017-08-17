@@ -1,4 +1,4 @@
-<#assign pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount) />
+<#assign pageCounts = dataFactory.getSequence(initPropertiesContext.maxAssetPublisherPageCount) />
 
 <#list pageCounts as pageCount>
 	<#assign
@@ -7,15 +7,15 @@
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
 
-	${dataFactory.getCSVWriter("assetPublisher").write(layoutModel.friendlyURL + "\n")}
+	${initRuntimeContext.getCSVWriter("assetPublisher").write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 
 	<#assign portletPreferencesModels = dataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
-		${dataFactory.toInsertSQL(portletPreferencesModel)}
+		${resourcePermissionDataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	${dataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount))}
+	${resourcePermissionDataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount))}
 </#list>
