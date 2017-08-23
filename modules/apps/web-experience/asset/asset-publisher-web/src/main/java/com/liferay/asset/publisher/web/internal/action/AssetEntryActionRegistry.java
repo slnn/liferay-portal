@@ -21,7 +21,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -43,6 +45,17 @@ public class AssetEntryActionRegistry {
 		}
 
 		return Collections.emptyList();
+	}
+
+	public Map<String, List<AssetEntryAction>> getAssetEntryActionsMap() {
+		Map<String, List<AssetEntryAction>> assetEntryActions = new HashMap<>();
+
+		for (String className : _assetEntryActionsMap.keySet()) {
+			assetEntryActions.put(
+				className, _assetEntryActionsMap.getService(className));
+		}
+
+		return Collections.unmodifiableMap(assetEntryActions);
 	}
 
 	@Activate
