@@ -130,6 +130,9 @@ public class AssetPublisherDisplayContext {
 			(AssetPublisherWebConfiguration)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
+		_assetEntryActionsMap =
+			_assetEntryActionRegistry.getAssetEntryActionsMap();
 	}
 
 	/**
@@ -218,7 +221,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<AssetEntryAction> getAssetEntryActions(String className) {
-		return _assetEntryActionRegistry.getAssetEntryActions(className);
+		return _assetEntryActionsMap.get(className);
 	}
 
 	public AssetEntryQuery getAssetEntryQuery() throws Exception {
@@ -1479,6 +1482,7 @@ public class AssetPublisherDisplayContext {
 	private String[] _allAssetTagNames;
 	private Boolean _anyAssetType;
 	private final AssetEntryActionRegistry _assetEntryActionRegistry;
+	private final Map<String, List<AssetEntryAction>> _assetEntryActionsMap;
 	private AssetEntryQuery _assetEntryQuery;
 	private String _assetLinkBehavior;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
