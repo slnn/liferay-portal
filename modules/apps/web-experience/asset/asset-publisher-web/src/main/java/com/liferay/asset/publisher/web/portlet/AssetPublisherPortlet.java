@@ -14,10 +14,10 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
-import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -320,23 +319,17 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
 				assetPublisherWebConfiguration);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			AssetPublisherPortletInstanceConfiguration
-				assetPublisherPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						AssetPublisherPortletInstanceConfiguration.class);
-
-			renderRequest.setAttribute(
-				AssetPublisherWebKeys.
-					ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
-				assetPublisherPortletInstanceConfiguration);
-
 			renderRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+
+			AssetPublisherDisplayContext assetPublisherDisplayContext =
+				new AssetPublisherDisplayContext(
+					assetPublisherCustomizer, renderRequest, renderResponse,
+					renderRequest.getPreferences());
+
+			renderRequest.setAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
+				assetPublisherDisplayContext);
 		}
 		catch (Exception e) {
 			_log.error("Unable to get asset publisher customizer", e);
