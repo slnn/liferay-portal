@@ -24,6 +24,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstan
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
@@ -49,11 +50,11 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -74,6 +75,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -136,20 +139,20 @@ public class AssetPublisherConfigurationAction
 
 		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		AssetPublisherPortletInstanceConfiguration
-			assetPublisherPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					AssetPublisherPortletInstanceConfiguration.class);
+		AssetPublisherDisplayContext assetPublisherDisplayContext =
+			new AssetPublisherDisplayContext(
+				assetPublisherCustomizer, renderRequest, renderResponse,
+				renderRequest.getPreferences());
 
-		request.setAttribute(
-			AssetPublisherWebKeys.
-				ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
-			assetPublisherPortletInstanceConfiguration);
+		renderRequest.setAttribute(
+			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
+			assetPublisherDisplayContext);
 
 		super.include(portletConfig, request, response);
 	}

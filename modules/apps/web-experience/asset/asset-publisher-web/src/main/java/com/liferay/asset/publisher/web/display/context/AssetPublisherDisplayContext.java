@@ -126,15 +126,13 @@ public class AssetPublisherDisplayContext {
 		_assetEntryActionRegistry =
 			(AssetEntryActionRegistry)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY);
-		_assetPublisherPortletInstanceConfiguration =
-			(AssetPublisherPortletInstanceConfiguration)
-				portletRequest.getAttribute(
-					AssetPublisherWebKeys.
-						ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION);
 		_assetPublisherWebConfiguration =
 			(AssetPublisherWebConfiguration)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
+		_assetEntryActionsMap =
+			_assetEntryActionRegistry.getAssetEntryActionsMap();
 	}
 
 	/**
@@ -223,7 +221,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<AssetEntryAction> getAssetEntryActions(String className) {
-		return _assetEntryActionRegistry.getAssetEntryActions(className);
+		return _assetEntryActionsMap.get(className);
 	}
 
 	public AssetEntryQuery getAssetEntryQuery() throws Exception {
@@ -274,7 +272,21 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public AssetPublisherPortletInstanceConfiguration
-		getAssetPublisherPortletInstanceConfiguration() {
+			getAssetPublisherPortletInstanceConfiguration()
+		throws ConfigurationException {
+
+		if (_assetPublisherPortletInstanceConfiguration != null) {
+			return _assetPublisherPortletInstanceConfiguration;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_assetPublisherPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				AssetPublisherPortletInstanceConfiguration.class);
 
 		return _assetPublisherPortletInstanceConfiguration;
 	}
@@ -521,14 +533,20 @@ public class AssetPublisherDisplayContext {
 		return _assetPublisherCustomizer.getDelta(_request);
 	}
 
-	public String getDisplayStyle() {
-		if (_displayStyle == null) {
-			_displayStyle = GetterUtil.getString(
-				_portletPreferences.getValue(
-					"displayStyle",
-					_assetPublisherPortletInstanceConfiguration.
-						defaultDisplayStyle()));
+	public String getDisplayStyle() throws ConfigurationException {
+		if (_displayStyle != null) {
+			return _displayStyle;
 		}
+
+		AssetPublisherPortletInstanceConfiguration
+			assetPublisherPortletInstanceConfiguration =
+				getAssetPublisherPortletInstanceConfiguration();
+
+		_displayStyle = GetterUtil.getString(
+			_portletPreferences.getValue(
+				"displayStyle",
+				assetPublisherPortletInstanceConfiguration.
+					defaultDisplayStyle()));
 
 		return _displayStyle;
 	}
@@ -1464,10 +1482,11 @@ public class AssetPublisherDisplayContext {
 	private String[] _allAssetTagNames;
 	private Boolean _anyAssetType;
 	private final AssetEntryActionRegistry _assetEntryActionRegistry;
+	private final Map<String, List<AssetEntryAction>> _assetEntryActionsMap;
 	private AssetEntryQuery _assetEntryQuery;
 	private String _assetLinkBehavior;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
-	private final AssetPublisherPortletInstanceConfiguration
+	private AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
 	private final AssetPublisherWebConfiguration
 		_assetPublisherWebConfiguration;
