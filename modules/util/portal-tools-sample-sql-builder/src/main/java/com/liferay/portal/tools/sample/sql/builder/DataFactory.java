@@ -14,14 +14,11 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntryModel;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetTagStatsModel;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
@@ -62,7 +59,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
@@ -90,7 +86,6 @@ import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBCategoryModel;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
@@ -107,9 +102,6 @@ import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
@@ -119,27 +111,16 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ReleaseModel;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermissionModel;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
@@ -147,7 +128,6 @@ import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
-import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -178,7 +158,6 @@ import com.liferay.subscription.model.SubscriptionModel;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
@@ -194,13 +173,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
-import java.sql.Types;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -212,7 +185,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DataFactory extends UserDataFactory {
+public class DataFactory extends ResourcePermissionDataFactory {
 
 	public DataFactory(
 			InitRuntimeContext initRuntimeContext,
@@ -2031,258 +2004,6 @@ public class DataFactory extends UserDataFactory {
 		return releases;
 	}
 
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AssetCategoryModel assetCategoryModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			AssetCategory.class.getName(),
-			String.valueOf(assetCategoryModel.getCategoryId()), sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AssetTagModel assetTagModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			AssetTag.class.getName(), String.valueOf(assetTagModel.getTagId()),
-			sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AssetVocabularyModel assetVocabularyModel) {
-
-		long defaultUserId = initRuntimeContext.getDefaultUserId();
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		if (assetVocabularyModel.getUserId() == defaultUserId) {
-			return Collections.singletonList(
-				newResourcePermissionModel(
-					AssetVocabulary.class.getName(),
-					String.valueOf(assetVocabularyModel.getVocabularyId()),
-					ownerRoleModel.getRoleId(), defaultUserId));
-		}
-
-		return newResourcePermissionModels(
-			AssetVocabulary.class.getName(),
-			String.valueOf(assetVocabularyModel.getVocabularyId()),
-			sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		BlogsEntryModel blogsEntryModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			BlogsEntry.class.getName(),
-			String.valueOf(blogsEntryModel.getEntryId()), sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		DDLRecordSetModel ddlRecordSetModel) {
-
-		long defaultUserId = initRuntimeContext.getDefaultUserId();
-
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				DDLRecordSet.class.getName(),
-				String.valueOf(ddlRecordSetModel.getRecordSetId()),
-				ownerRoleModel.getRoleId(), defaultUserId));
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		DDMStructureModel ddmStructureModel) {
-
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(3);
-
-		String name = _getResourcePermissionModelName(
-			DDMStructure.class.getName(),
-			getClassName(ddmStructureModel.getClassNameId()));
-		String primKey = String.valueOf(ddmStructureModel.getStructureId());
-
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, guestRoleModel.getRoleId(), 0));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, ownerRoleModel.getRoleId(),
-				ddmStructureModel.getUserId()));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, userRoleModel.getRoleId(), 0));
-
-		return resourcePermissionModels;
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		DDMTemplateModel ddmTemplateModel) {
-
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(3);
-
-		String name = _getResourcePermissionModelName(
-			DDMTemplate.class.getName(),
-			getClassName(ddmTemplateModel.getResourceClassNameId()));
-		String primKey = String.valueOf(ddmTemplateModel.getTemplateId());
-
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, guestRoleModel.getRoleId(), 0));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, ownerRoleModel.getRoleId(),
-				ddmTemplateModel.getUserId()));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, userRoleModel.getRoleId(), 0));
-
-		return resourcePermissionModels;
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		DLFileEntryModel dlFileEntryModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			DLFileEntry.class.getName(),
-			String.valueOf(dlFileEntryModel.getFileEntryId()), sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		DLFolderModel dlFolderModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			DLFolder.class.getName(),
-			String.valueOf(dlFolderModel.getFolderId()), sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		GroupModel groupModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				Group.class.getName(), String.valueOf(groupModel.getGroupId()),
-				ownerRoleModel.getRoleId(), sampleUserId));
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		JournalArticleResourceModel journalArticleResourceModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			JournalArticle.class.getName(),
-			String.valueOf(journalArticleResourceModel.getResourcePrimKey()),
-			sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		LayoutModel layoutModel) {
-
-		return newResourcePermissionModels(
-			Layout.class.getName(), String.valueOf(layoutModel.getPlid()), 0);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		MBCategoryModel mbCategoryModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			MBCategory.class.getName(),
-			String.valueOf(mbCategoryModel.getCategoryId()), sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		MBMessageModel mbMessageModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				MBMessage.class.getName(),
-				String.valueOf(mbMessageModel.getMessageId()),
-				ownerRoleModel.getRoleId(), sampleUserId));
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		PortletPreferencesModel portletPreferencesModel) {
-
-		String portletId = portletPreferencesModel.getPortletId();
-
-		String name = portletId;
-
-		int index = portletId.indexOf(StringPool.UNDERLINE);
-
-		if (index > 0) {
-			name = portletId.substring(0, index);
-		}
-
-		String primKey = PortletPermissionUtil.getPrimaryKey(
-			portletPreferencesModel.getPlid(), portletId);
-
-		return newResourcePermissionModels(name, primKey, 0);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		RoleModel roleModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				Role.class.getName(), String.valueOf(roleModel.getRoleId()),
-				ownerRoleModel.getRoleId(), sampleUserId));
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		String name, long primKey) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			name, String.valueOf(primKey), sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		UserModel userModel) {
-
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				User.class.getName(), String.valueOf(userModel.getUserId()),
-				ownerRoleModel.getRoleId(), userModel.getUserId()));
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		WikiNodeModel wikiNodeModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			WikiNode.class.getName(), String.valueOf(wikiNodeModel.getNodeId()),
-			sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		WikiPageModel wikiPageModel) {
-
-		long sampleUserId = initRuntimeContext.getSampleUserId();
-
-		return newResourcePermissionModels(
-			WikiPage.class.getName(),
-			String.valueOf(wikiPageModel.getResourcePrimKey()), sampleUserId);
-	}
-
 	public SocialActivityModel newSocialActivityModel(
 		BlogsEntryModel blogsEntryModel) {
 
@@ -2413,39 +2134,6 @@ public class DataFactory extends UserDataFactory {
 		wikiPageResourceModel.setTitle(wikiPageModel.getTitle());
 
 		return wikiPageResourceModel;
-	}
-
-	public String toInsertSQL(BaseModel<?> baseModel) {
-		try {
-			StringBundler sb = new StringBundler();
-
-			toInsertSQL(sb, baseModel);
-
-			Class<?> clazz = baseModel.getClass();
-
-			for (Class<?> modelClass : clazz.getInterfaces()) {
-				try {
-					Method method = DataFactory.class.getMethod(
-						"newResourcePermissionModels", modelClass);
-
-					for (ResourcePermissionModel resourcePermissionModel :
-							(List<ResourcePermissionModel>)method.invoke(
-								this, baseModel)) {
-
-						sb.append("\n");
-
-						toInsertSQL(sb, resourcePermissionModel);
-					}
-				}
-				catch (NoSuchMethodException nsme) {
-				}
-			}
-
-			return sb.toString();
-		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
-		}
 	}
 
 	protected ObjectValuePair<String[], Integer>
@@ -3050,51 +2738,6 @@ public class DataFactory extends UserDataFactory {
 		return releaseModel;
 	}
 
-	protected ResourcePermissionModel newResourcePermissionModel(
-		String name, String primKey, long roleId, long ownerId) {
-
-		long companyId = initRuntimeContext.getCompanyId();
-
-		SimpleCounter resourcePermissionCounter =
-			initRuntimeContext.getResourcePermissionCounter();
-
-		ResourcePermissionModel resourcePermissionModel =
-			new ResourcePermissionModelImpl();
-
-		resourcePermissionModel.setResourcePermissionId(
-			resourcePermissionCounter.get());
-		resourcePermissionModel.setCompanyId(companyId);
-		resourcePermissionModel.setName(name);
-		resourcePermissionModel.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resourcePermissionModel.setPrimKey(primKey);
-		resourcePermissionModel.setPrimKeyId(GetterUtil.getLong(primKey));
-		resourcePermissionModel.setRoleId(roleId);
-		resourcePermissionModel.setOwnerId(ownerId);
-		resourcePermissionModel.setActionIds(1);
-		resourcePermissionModel.setViewActionId(true);
-
-		return resourcePermissionModel;
-	}
-
-	protected List<ResourcePermissionModel> newResourcePermissionModels(
-		String name, String primKey, long ownerId) {
-
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(3);
-
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, guestRoleModel.getRoleId(), 0));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, ownerRoleModel.getRoleId(), ownerId));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, siteMemberRoleModel.getRoleId(), 0));
-
-		return resourcePermissionModels;
-	}
-
 	protected SocialActivityModel newSocialActivityModel(
 		long groupId, long classNameId, long classPK, int type,
 		String extraData) {
@@ -3215,95 +2858,6 @@ public class DataFactory extends UserDataFactory {
 		sb.append(groupId);
 		sb.append("_");
 		sb.append(customFieldIndex);
-
-		return sb.toString();
-	}
-
-	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
-		try {
-			sb.append("insert into ");
-
-			Class<?> clazz = baseModel.getClass();
-
-			Field tableNameField = clazz.getField("TABLE_NAME");
-
-			sb.append(tableNameField.get(null));
-
-			sb.append(" values (");
-
-			Field tableColumnsField = clazz.getField("TABLE_COLUMNS");
-
-			for (Object[] tableColumn :
-					(Object[][])tableColumnsField.get(null)) {
-
-				String name = TextFormatter.format(
-					(String)tableColumn[0], TextFormatter.G);
-
-				if (name.endsWith(StringPool.UNDERLINE)) {
-					name = name.substring(0, name.length() - 1);
-				}
-
-				int type = (int)tableColumn[1];
-
-				if (type == Types.TIMESTAMP) {
-					Method method = clazz.getMethod("get".concat(name));
-
-					Date date = (Date)method.invoke(baseModel);
-
-					if (date == null) {
-						sb.append("null");
-					}
-					else {
-						sb.append("'");
-						sb.append(getDateString(date));
-						sb.append("'");
-					}
-				}
-				else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
-					Method method = clazz.getMethod("get".concat(name));
-
-					sb.append("'");
-					sb.append(method.invoke(baseModel));
-					sb.append("'");
-				}
-				else if (type == Types.BOOLEAN) {
-					Method method = clazz.getMethod("is".concat(name));
-
-					sb.append(method.invoke(baseModel));
-				}
-				else {
-					Method method = clazz.getMethod("get".concat(name));
-
-					sb.append(method.invoke(baseModel));
-				}
-
-				sb.append(", ");
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(");");
-		}
-		catch (ReflectiveOperationException roe) {
-			ReflectionUtil.throwException(roe);
-		}
-	}
-
-	private String _getResourcePermissionModelName(String... classNames) {
-		if (ArrayUtil.isEmpty(classNames)) {
-			return StringPool.BLANK;
-		}
-
-		Arrays.sort(classNames);
-
-		StringBundler sb = new StringBundler(classNames.length * 2);
-
-		for (String className : classNames) {
-			sb.append(className);
-			sb.append(StringPool.DASH);
-		}
-
-		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
