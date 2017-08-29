@@ -1,0 +1,274 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.tools.sample.sql.builder;
+
+import com.liferay.counter.kernel.model.Counter;
+import com.liferay.counter.kernel.model.CounterModel;
+import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ClassNameModel;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.util.SimpleCounter;
+
+import java.io.InputStream;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import java.sql.Types;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author Lily Chi
+ */
+public abstract class BaseDataFactory {
+
+	public String getClassName(long classNameId) {
+		for (ClassNameModel classNameModel :
+				initRuntimeContext.getClassNameModelValues()) {
+
+			if (classNameModel.getClassNameId() == classNameId) {
+				return classNameModel.getValue();
+			}
+		}
+
+		throw new RuntimeException(
+			"Unable to find class name for id " + classNameId);
+	}
+
+	public long getClassNameId(Class<?> clazz) {
+		ClassNameModel classNameModel =
+			initRuntimeContext.getClassNameModels().get(clazz.getName());
+
+		return classNameModel.getClassNameId();
+	}
+
+	public long getCounterNext() {
+		SimpleCounter counter = initRuntimeContext.getCounter();
+
+		return counter.get();
+	}
+
+	public String getDateLong(Date date) {
+		return String.valueOf(date.getTime());
+	}
+
+	public String getDateString(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return initPropertiesContext.getSimpleDateFormat().format(date);
+	}
+
+	public String getPortletId(String portletPrefix) {
+		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
+	}
+
+	public InputStream getResourceInputStream(String resourceName) {
+		ClassLoader classLoader = _clazz.getClassLoader();
+
+		return classLoader.getResourceAsStream(
+			_DEPENDENCIES_DIR + resourceName);
+	}
+
+	public List<Integer> getSequence(int size) {
+		List<Integer> sequence = new ArrayList<>(size);
+
+		for (int i = 1; i <= size; i++) {
+			sequence.add(i);
+		}
+
+		return sequence;
+	}
+
+	public SimpleCounter getSimpleCounter(
+		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
+		long classNameId) {
+
+		Map<Long, SimpleCounter> simpleCounters =
+			simpleCountersArray[(int)groupId - 1];
+
+		if (simpleCounters == null) {
+			simpleCounters = new HashMap<>();
+
+			simpleCountersArray[(int)groupId - 1] = simpleCounters;
+		}
+
+		SimpleCounter simpleCounter = simpleCounters.get(classNameId);
+
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter(0);
+
+			simpleCounters.put(classNameId, simpleCounter);
+		}
+
+		return simpleCounter;
+	}
+
+	public List<CounterModel> newCounterModels() {
+		SimpleCounter counter = initRuntimeContext.getCounter();
+		SimpleCounter resourcePermissionCounter =
+			initRuntimeContext.getResourcePermissionCounter();
+		SimpleCounter socialActivityCounter =
+			initRuntimeContext.getSocialActivityCounter();
+
+		List<CounterModel> counterModels = new ArrayList<>();
+
+		// Counter
+
+		CounterModel counterModel = new CounterModelImpl();
+
+		counterModel.setName(Counter.class.getName());
+		counterModel.setCurrentId(counter.get());
+
+		counterModels.add(counterModel);
+
+		// ResourcePermission
+
+		counterModel = new CounterModelImpl();
+
+		counterModel.setName(ResourcePermission.class.getName());
+		counterModel.setCurrentId(resourcePermissionCounter.get());
+
+		counterModels.add(counterModel);
+
+		// SocialActivity
+
+		counterModel = new CounterModelImpl();
+
+		counterModel.setName(SocialActivity.class.getName());
+		counterModel.setCurrentId(socialActivityCounter.get());
+
+		counterModels.add(counterModel);
+
+		return counterModels;
+	}
+
+	public String toInsertSQL(BaseModel<?> baseModel) {
+		try {
+			StringBundler sb = new StringBundler();
+
+			sb.append("insert into ");
+
+			Class<?> clazz = baseModel.getClass();
+
+			Field tableNameField = clazz.getField("TABLE_NAME");
+
+			sb.append(tableNameField.get(null));
+
+			sb.append(" values (");
+
+			Field tableColumnsField = clazz.getField("TABLE_COLUMNS");
+
+			for (Object[] tableColumn :
+					(Object[][])tableColumnsField.get(null)) {
+
+				String name = TextFormatter.format(
+					(String)tableColumn[0], TextFormatter.G);
+
+				if (name.endsWith(StringPool.UNDERLINE)) {
+					name = name.substring(0, name.length() - 1);
+				}
+
+				int type = (int)tableColumn[1];
+
+				if (type == Types.TIMESTAMP) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					Date date = (Date)method.invoke(baseModel);
+
+					if (date == null) {
+						sb.append("null");
+					}
+					else {
+						sb.append("'");
+						sb.append(getDateString(date));
+						sb.append("'");
+					}
+				}
+				else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append("'");
+					sb.append(method.invoke(baseModel));
+					sb.append("'");
+				}
+				else if (type == Types.BOOLEAN) {
+					Method method = clazz.getMethod("is".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+				else {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+
+				sb.append(", ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(");");
+
+			return sb.toString();
+		}
+		catch (ReflectiveOperationException roe) {
+			return ReflectionUtil.throwException(roe);
+		}
+	}
+
+	public final InitPropertiesContext initPropertiesContext;
+	public final InitRuntimeContext initRuntimeContext;
+
+	protected BaseDataFactory(
+		InitRuntimeContext initRuntimeContext,
+		InitPropertiesContext initPropertiesContext) {
+
+		this.initRuntimeContext = initRuntimeContext;
+		this.initPropertiesContext = initPropertiesContext;
+	}
+
+	protected Date nextFutureDate() {
+		SimpleCounter futureDateCounter =
+			initRuntimeContext.getFutureDateCounter();
+
+		return new Date(_FUTURE_TIME + (futureDateCounter.get() * Time.SECOND));
+	}
+
+	protected static final long CURRENT_TIME = System.currentTimeMillis();
+
+	private static final String _DEPENDENCIES_DIR =
+		"com/liferay/portal/tools/sample/sql/builder/dependencies/";
+
+	private static final long _FUTURE_TIME =
+		System.currentTimeMillis() + Time.YEAR;
+
+	private final Class<?> _clazz = getClass();
+
+}

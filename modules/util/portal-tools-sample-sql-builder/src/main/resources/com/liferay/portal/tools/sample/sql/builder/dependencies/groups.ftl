@@ -1,18 +1,18 @@
-<#assign layoutModel = dataFactory.newLayoutModel(dataFactory.guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
+<#assign layoutModel = dataFactory.newLayoutModel(userDataFactory.guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
 
 <@insertLayout _layoutModel=layoutModel />
 
 <@insertGroup
-	_groupModel=dataFactory.globalGroupModel
+	_groupModel=userDataFactory.globalGroupModel
 	_publicPageCount=1
 />
 
 <@insertGroup
-	_groupModel=dataFactory.guestGroupModel
+	_groupModel=userDataFactory.guestGroupModel
 	_publicPageCount=1
 />
 
-<#list dataFactory.groupModels as groupModel>
+<#list userDataFactory.groupModels as groupModel>
 	<#assign groupId = groupModel.groupId />
 
 	<#include "asset_publisher.ftl">
@@ -42,12 +42,12 @@
 		<@insertLayout _layoutModel=publicLayoutModel />
 	</#list>
 
-	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount />
+	<#assign publicPageCount = publicLayoutModels?size + initPropertiesContext.maxDDLRecordSetCount + initPropertiesContext.maxJournalArticleCount />
 
 	<@insertGroup
 		_groupModel=groupModel
 		_publicPageCount=publicPageCount
 	/>
 
-	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
+	${initRuntimeContext.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>

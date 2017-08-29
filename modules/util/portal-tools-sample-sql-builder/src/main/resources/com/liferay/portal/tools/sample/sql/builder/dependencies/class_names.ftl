@@ -1,3 +1,5 @@
-<#list dataFactory.classNameModels as classNameModel>
-	${dataFactory.toInsertSQL(classNameModel)}
+<#list initRuntimeContext.classNameModelValues as classNameModelValue>
+	${userDataFactory.toInsertSQL(classNameModelValue)}
+
+	${resourcePermissionDataFactory.generateResourcePermissionSQL(classNameModelValue)}
 </#list>
