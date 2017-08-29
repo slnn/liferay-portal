@@ -30,9 +30,6 @@ import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.counter.kernel.model.Counter;
-import com.liferay.counter.kernel.model.CounterModel;
-import com.liferay.counter.model.impl.CounterModelImpl;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -108,13 +105,10 @@ import com.liferay.message.boards.kernel.model.MBThreadFlagModel;
 import com.liferay.message.boards.kernel.model.MBThreadModel;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.ContactConstants;
@@ -132,7 +126,6 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ReleaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -140,7 +133,6 @@ import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.VirtualHostModel;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
@@ -159,7 +151,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -199,7 +190,6 @@ import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
-import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityModel;
 import com.liferay.subscription.model.SubscriptionConstants;
@@ -218,14 +208,10 @@ import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.Writer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -245,17 +231,14 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DataFactory {
+public class DataFactory extends BaseDataFactory {
 
 	public DataFactory(
 			InitRuntimeContext initRuntimeContext,
 			InitPropertiesContext initPropertiesContext)
 		throws Exception {
 
-		this.initPropertiesContext = initPropertiesContext;
-		this.initRuntimeContext = initRuntimeContext;
-
-		initCsvWriters();
+		super(initRuntimeContext, initPropertiesContext);
 
 		SimpleCounter counter = initRuntimeContext.getCounter();
 
@@ -330,12 +313,6 @@ public class DataFactory {
 		initUserNames();
 		initUserModels();
 		initVirtualHostModel(initPropertiesContext.getVirtualHostname());
-	}
-
-	public void closeCSVWriters() throws IOException {
-		for (Writer writer : _csvWriters.values()) {
-			writer.close();
-		}
 	}
 
 	public AccountModel getAccountModel() {
@@ -496,46 +473,8 @@ public class DataFactory {
 		return getClassNameId(BlogsEntry.class);
 	}
 
-	public long getClassNameId(Class<?> clazz) {
-		Map<String, ClassNameModel> classNameModels =
-			initRuntimeContext.getClassNameModels();
-
-		ClassNameModel classNameModel = classNameModels.get(clazz.getName());
-
-		return classNameModel.getClassNameId();
-	}
-
 	public CompanyModel getCompanyModel() {
 		return _companyModel;
-	}
-
-	public long getCounterNext() {
-		SimpleCounter counter = initRuntimeContext.getCounter();
-
-		return counter.get();
-	}
-
-	public Writer getCSVWriter(String csvFileName) {
-		Writer writer = _csvWriters.get(csvFileName);
-
-		if (writer == null) {
-			throw new IllegalArgumentException(
-				"Unknown CSV file name: " + csvFileName);
-		}
-
-		return writer;
-	}
-
-	public String getDateLong(Date date) {
-		return String.valueOf(date.getTime());
-	}
-
-	public String getDateString(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return initPropertiesContext.getSimpleDateFormat().format(date);
 	}
 
 	public long getDDLRecordSetClassNameId() {
@@ -667,10 +606,6 @@ public class DataFactory {
 		return classNameId;
 	}
 
-	public String getPortletId(String portletPrefix) {
-		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
-	}
-
 	public RoleModel getPowerUserRoleModel() {
 		return _powerUserRoleModel;
 	}
@@ -681,16 +616,6 @@ public class DataFactory {
 
 	public UserModel getSampleUserModel() {
 		return _sampleUserModel;
-	}
-
-	public List<Integer> getSequence(int size) {
-		List<Integer> sequence = new ArrayList<>(size);
-
-		for (int i = 1; i <= size; i++) {
-			sequence.add(i);
-		}
-
-		return sequence;
 	}
 
 	public RoleModel getUserRoleModel() {
@@ -905,33 +830,6 @@ public class DataFactory {
 		_accountModel.setModifiedDate(new Date());
 		_accountModel.setName(DataFactoryConstants.ACCOUNT_NAME);
 		_accountModel.setLegalName(DataFactoryConstants.ACCOUNT_LEGAL_NAME);
-	}
-
-	public void initCsvWriters() throws FileNotFoundException {
-		File outputDir = initPropertiesContext.getOutputDir();
-
-		outputDir.mkdirs();
-
-		String csvFileNames = initPropertiesContext.getCsvFileNames();
-
-		for (String csvFileName : StringUtil.split(csvFileNames)) {
-			_csvWriters.put(
-				csvFileName,
-				new UnsyncBufferedWriter(
-					new OutputStreamWriter(
-						new FileOutputStream(
-							new File(outputDir, csvFileName.concat(".csv")))),
-					_WRITER_BUFFER_SIZE) {
-
-					@Override
-					public void flush() {
-
-						// Disable FreeMarker from flushing
-
-					}
-
-				});
-		}
 	}
 
 	public void initDLFileEntryTypeModel() {
@@ -1357,47 +1255,6 @@ public class DataFactory {
 		contactModel.setBirthday(new Date());
 
 		return contactModel;
-	}
-
-	public List<CounterModel> newCounterModels() {
-		SimpleCounter counter = initRuntimeContext.getCounter();
-
-		SimpleCounter resourcePermissionCounter =
-			initRuntimeContext.getResourcePermissionCounter();
-
-		SimpleCounter socialActivityCounter =
-			initRuntimeContext.getSocialActivityCounter();
-
-		List<CounterModel> counterModels = new ArrayList<>();
-
-		// Counter
-
-		CounterModel counterModel = new CounterModelImpl();
-
-		counterModel.setName(Counter.class.getName());
-		counterModel.setCurrentId(counter.get());
-
-		counterModels.add(counterModel);
-
-		// ResourcePermission
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(ResourcePermission.class.getName());
-		counterModel.setCurrentId(resourcePermissionCounter.get());
-
-		counterModels.add(counterModel);
-
-		// SocialActivity
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(SocialActivity.class.getName());
-		counterModel.setCurrentId(socialActivityCounter.get());
-
-		counterModels.add(counterModel);
-
-		return counterModels;
 	}
 
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
@@ -2963,9 +2820,6 @@ public class DataFactory {
 		}
 	}
 
-	public final InitPropertiesContext initPropertiesContext;
-	public final InitRuntimeContext initRuntimeContext;
-
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
@@ -3024,53 +2878,6 @@ public class DataFactory {
 				assetTagModel2.getName(), assetTagModel3.getName()
 			},
 			lastIndex + maxAssetEntryToAssetTagCount);
-	}
-
-	protected String getClassName(long classNameId) {
-		Map<String, ClassNameModel> classNameModels =
-			initRuntimeContext.getClassNameModels();
-
-		for (ClassNameModel classNameModel : classNameModels.values()) {
-			if (classNameModel.getClassNameId() == classNameId) {
-				return classNameModel.getValue();
-			}
-		}
-
-		throw new RuntimeException(
-			"Unable to find class name for id " + classNameId);
-	}
-
-	protected InputStream getResourceInputStream(String resourceName) {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		return classLoader.getResourceAsStream(
-			_DEPENDENCIES_DIR + resourceName);
-	}
-
-	protected SimpleCounter getSimpleCounter(
-		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
-		long classNameId) {
-
-		Map<Long, SimpleCounter> simpleCounters =
-			simpleCountersArray[(int)groupId - 1];
-
-		if (simpleCounters == null) {
-			simpleCounters = new HashMap<>();
-
-			simpleCountersArray[(int)groupId - 1] = simpleCounters;
-		}
-
-		SimpleCounter simpleCounter = simpleCounters.get(classNameId);
-
-		if (simpleCounter == null) {
-			simpleCounter = new SimpleCounter(0);
-
-			simpleCounters.put(classNameId, simpleCounter);
-		}
-
-		return simpleCounter;
 	}
 
 	protected AssetCategoryModel newAssetCategoryModel(
@@ -3886,13 +3693,6 @@ public class DataFactory {
 		return sb.toString();
 	}
 
-	protected Date nextFutureDate() {
-		SimpleCounter futureDateCounter =
-			initRuntimeContext.getFutureDateCounter();
-
-		return new Date(_FUTURE_TIME + (futureDateCounter.get() * Time.SECOND));
-	}
-
 	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
 		try {
 			sb.append("insert into ");
@@ -3982,16 +3782,6 @@ public class DataFactory {
 		return sb.toString();
 	}
 
-	private static final long _CURRENT_TIME = System.currentTimeMillis();
-
-	private static final String _DEPENDENCIES_DIR =
-		"com/liferay/portal/tools/sample/sql/builder/dependencies/";
-
-	private static final long _FUTURE_TIME =
-		System.currentTimeMillis() + Time.YEAR;
-
-	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
-
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
@@ -4011,7 +3801,6 @@ public class DataFactory {
 	private List<AssetTagStatsModel>[] _assetTagStatsModelsArray;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private CompanyModel _companyModel;
-	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreference;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
