@@ -42,7 +42,7 @@
 />
 
 <#assign
-	groupIds = dataFactory.getSequence(dataFactory.maxGroupCount)
+	groupIds = dataFactory.getSequence(initPropertiesContext.maxGroupCount)
 	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
 />
 

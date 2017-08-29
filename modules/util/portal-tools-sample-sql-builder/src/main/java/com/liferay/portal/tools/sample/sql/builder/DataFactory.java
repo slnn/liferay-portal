@@ -150,7 +150,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -235,8 +234,6 @@ import java.lang.reflect.Method;
 
 import java.sql.Types;
 
-import java.text.Format;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -245,8 +242,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
 
@@ -255,10 +250,17 @@ import javax.portlet.PortletPreferences;
  */
 public class DataFactory {
 
-	public DataFactory(Properties properties) throws Exception {
-		initContext(properties);
+	public DataFactory(InitPropertiesContext initPropertiesContext)
+		throws Exception {
 
-		_counter = new SimpleCounter(_maxGroupsCount + 1);
+		this.initPropertiesContext = initPropertiesContext;
+
+		initCsvWriters();
+
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
+		_counter = new SimpleCounter(maxGroupsCount + 1);
+
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
@@ -340,16 +342,15 @@ public class DataFactory {
 		initDLFileEntryTypeModel();
 		initGroupModels();
 
-		int maxJournalArticleSize = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.journal.article.size"));
+		int maxJournalArticleSize = 
+			initPropertiesContext.getMaxJournalArticleSize();
 
 		initJournalArticleContent(maxJournalArticleSize);
 
 		initRoleModels();
 		initUserNames();
 		initUserModels();
-		initVirtualHostModel(
-			properties.getProperty("sample.sql.virtual.hostname"));
+		initVirtualHostModel(initPropertiesContext.getVirtualHostname());
 	}
 
 	public void closeCSVWriters() throws IOException {
@@ -367,6 +368,11 @@ public class DataFactory {
 	}
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
+		int maxAssetEntryToAssetCategoryCount =
+			InitPropertiesContext.getMaxAssetEntryToAssetCategoryCount();
+
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
 		Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
 			_assetCategoryModelsMaps[(int)assetEntryModel.getGroupId() - 1];
 
@@ -385,7 +391,7 @@ public class DataFactory {
 
 		if (_assetCategoryCounters == null) {
 			_assetCategoryCounters =
-				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[_maxGroupsCount];
+				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[maxGroupsCount];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -393,9 +399,9 @@ public class DataFactory {
 			assetEntryModel.getClassNameId());
 
 		List<Long> assetCategoryIds = new ArrayList<>(
-			_maxAssetEntryToAssetCategoryCount);
+			maxAssetEntryToAssetCategoryCount);
 
-		for (int i = 0; i < _maxAssetEntryToAssetCategoryCount; i++) {
+		for (int i = 0; i < maxAssetEntryToAssetCategoryCount; i++) {
 			int index = (int)counter.get() % assetCategoryModels.size();
 
 			AssetCategoryModel assetCategoryModel = assetCategoryModels.get(
@@ -424,6 +430,11 @@ public class DataFactory {
 	}
 
 	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
+		int maxAssetEntryToAssetTagCount =
+			initPropertiesContext.getMaxAssetEntryToAssetTagCount();
+
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
 		Map<Long, List<AssetTagModel>> assetTagModelsMap =
 			_assetTagModelsMaps[(int)assetEntryModel.getGroupId() - 1];
 
@@ -440,16 +451,16 @@ public class DataFactory {
 
 		if (_assetTagCounters == null) {
 			_assetTagCounters =
-				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[_maxGroupsCount];
+				(Map<Long, SimpleCounter>[])new HashMap<?, ?>[maxGroupsCount];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
 			_assetTagCounters, assetEntryModel.getGroupId(),
 			assetEntryModel.getClassNameId());
 
-		List<Long> assetTagIds = new ArrayList<>(_maxAssetEntryToAssetTagCount);
+		List<Long> assetTagIds = new ArrayList<>(maxAssetEntryToAssetTagCount);
 
-		for (int i = 0; i < _maxAssetEntryToAssetTagCount; i++) {
+		for (int i = 0; i < maxAssetEntryToAssetTagCount; i++) {
 			int index = (int)counter.get() % assetTagModels.size();
 
 			AssetTagModel assetTagModel = assetTagModels.get(index);
@@ -548,7 +559,7 @@ public class DataFactory {
 			return null;
 		}
 
-		return _simpleDateFormat.format(date);
+		return initPropertiesContext.getSimpleDateFormat().format(date);
 	}
 
 	public long getDDLRecordSetClassNameId() {
@@ -626,9 +637,12 @@ public class DataFactory {
 	}
 
 	public String getJournalArticleLayoutColumn(String portletPrefix) {
-		StringBundler sb = new StringBundler(3 * _maxJournalArticleCount);
+		int maxJournalArticleCount =
+			initPropertiesContext.getMaxJournalArticleCount();
 
-		for (int i = 1; i <= _maxJournalArticleCount; i++) {
+		StringBundler sb = new StringBundler(3 * maxJournalArticleCount);
+
+		for (int i = 1; i <= maxJournalArticleCount; i++) {
 			sb.append(portletPrefix);
 			sb.append(i);
 			sb.append(StringPool.COMMA);
@@ -641,56 +655,21 @@ public class DataFactory {
 		return getClassNameId(Layout.class);
 	}
 
-	public int getMaxAssetPublisherPageCount() {
-		return _maxAssetPublisherPageCount;
-	}
-
-	public int getMaxBlogsEntryCommentCount() {
-		return _maxBlogsEntryCommentCount;
-	}
-
-	public int getMaxDDLRecordCount() {
-		return _maxDDLRecordCount;
-	}
-
-	public int getMaxDDLRecordSetCount() {
-		return _maxDDLRecordSetCount;
-	}
-
-	public int getMaxDLFolderDepth() {
-		return _maxDLFolderDepth;
-	}
-
-	public int getMaxGroupCount() {
-		return _maxGroupsCount;
-	}
-
-	public int getMaxJournalArticleCount() {
-		return _maxJournalArticleCount;
-	}
-
-	public int getMaxJournalArticlePageCount() {
-		return _maxJournalArticlePageCount;
-	}
-
-	public int getMaxJournalArticleVersionCount() {
-		return _maxJournalArticleVersionCount;
-	}
-
-	public int getMaxWikiPageCommentCount() {
-		return _maxWikiPageCommentCount;
-	}
-
 	public List<Long> getNewUserGroupIds(long groupId) {
-		List<Long> groupIds = new ArrayList<>(_maxUserToGroupCount + 1);
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
+		int maxUserToGroupCount =
+			initPropertiesContext.getMaxUserToGroupCount();
+
+		List<Long> groupIds = new ArrayList<>(maxUserToGroupCount + 1);
 
 		groupIds.add(_guestGroupModel.getGroupId());
 
-		if ((groupId + _maxUserToGroupCount) > _maxGroupsCount) {
-			groupId = groupId - _maxUserToGroupCount + 1;
+		if ((groupId + maxUserToGroupCount) > maxGroupsCount) {
+			groupId = groupId - maxUserToGroupCount + 1;
 		}
 
-		for (int i = 0; i < _maxUserToGroupCount; i++) {
+		for (int i = 0; i < maxUserToGroupCount; i++) {
 			groupIds.add(groupId + i);
 		}
 
@@ -751,28 +730,37 @@ public class DataFactory {
 	}
 
 	public void initAssetCategoryModels() {
+		int maxAssetCategoryCount =
+			initPropertiesContext.getMaxAssetCategoryCount();
+
+		int maxAssetVocabularyCount =
+			initPropertiesContext.getMaxAssetVocabularyCount();
+
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
 		_assetCategoryModelsArray =
-			(List<AssetCategoryModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetCategoryModel>[])new List<?>[maxGroupsCount];
 		_assetCategoryModelsMaps =
 			(Map<Long, List<AssetCategoryModel>>[])
-				new HashMap<?, ?>[_maxGroupsCount];
+				new HashMap<?, ?>[maxGroupsCount];
 		_assetVocabularyModelsArray =
-			(List<AssetVocabularyModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetVocabularyModel>[])new List<?>[maxGroupsCount];
+
 		_defaultAssetVocabularyModel = newAssetVocabularyModel(
 			_globalGroupId, _defaultUserId, null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
 
 		StringBundler sb = new StringBundler(4);
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
+		for (int i = 1; i <= maxGroupsCount; i++) {
 			List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>(
-				_maxAssetVocabularyCount);
+				maxAssetVocabularyCount);
 			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
-				_maxAssetVocabularyCount * _maxAssetCategoryCount);
+				maxAssetVocabularyCount * maxAssetCategoryCount);
 
 			long lastRightCategoryId = 2;
 
-			for (int j = 0; j < _maxAssetVocabularyCount; j++) {
+			for (int j = 0; j < maxAssetVocabularyCount; j++) {
 				sb.setIndex(0);
 
 				sb.append("TestVocabulary_");
@@ -786,7 +774,7 @@ public class DataFactory {
 
 				assetVocabularyModels.add(assetVocabularyModel);
 
-				for (int k = 0; k < _maxAssetCategoryCount; k++) {
+				for (int k = 0; k < maxAssetCategoryCount; k++) {
 					sb.setIndex(0);
 
 					sb.append("TestCategory_");
@@ -832,21 +820,25 @@ public class DataFactory {
 	}
 
 	public void initAssetTagModels() {
+		int maxAssetTagCount = initPropertiesContext.getMaxAssetTagCount();
+
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
 		_assetTagModelsArray =
-			(List<AssetTagModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetTagModel>[])new List<?>[maxGroupsCount];
 		_assetTagModelsMaps =
 			(Map<Long, List<AssetTagModel>>[])
-				new HashMap<?, ?>[_maxGroupsCount];
+				new HashMap<?, ?>[maxGroupsCount];
 		_assetTagStatsModelsArray =
-			(List<AssetTagStatsModel>[])new List<?>[_maxGroupsCount];
+			(List<AssetTagStatsModel>[])new List<?>[maxGroupsCount];
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
+		for (int i = 1; i <= maxGroupsCount; i++) {
 			List<AssetTagModel> assetTagModels = new ArrayList<>(
-				_maxAssetTagCount);
+				maxAssetTagCount);
 			List<AssetTagStatsModel> assetTagStatsModels = new ArrayList<>(
-				_maxAssetTagCount * 3);
+				maxAssetTagCount * 3);
 
-			for (int j = 0; j < _maxAssetTagCount; j++) {
+			for (int j = 0; j < maxAssetTagCount; j++) {
 				AssetTagModel assetTagModel = new AssetTagModelImpl();
 
 				assetTagModel.setUuid(SequentialUUID.generate());
@@ -922,91 +914,14 @@ public class DataFactory {
 		_accountModel.setLegalName("Liferay, Inc.");
 	}
 
-	public void initContext(Properties properties)
-		throws FileNotFoundException {
-
-		String timeZoneId = properties.getProperty("sample.sql.db.time.zone");
-
-		if (Validator.isNotNull(timeZoneId)) {
-			TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-
-			if (timeZone != null) {
-				TimeZone.setDefault(timeZone);
-
-				_simpleDateFormat =
-					FastDateFormatFactoryUtil.getSimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", timeZone);
-			}
-		}
-
-		_maxAssetCategoryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.asset.category.count"));
-		_maxAssetEntryToAssetCategoryCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.entry.to.asset.category.count"));
-		_maxAssetEntryToAssetTagCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.entry.to.asset.tag.count"));
-		_maxAssetPublisherPageCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.publisher.page.count"));
-		_maxAssetTagCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.asset.tag.count"));
-		_maxAssetVocabularyCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.asset.vocabulary.count"));
-		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
-		_maxBlogsEntryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.blogs.entry.count"));
-		_maxDDLCustomFieldCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
-		_maxDDLRecordCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.ddl.record.count"));
-		_maxDDLRecordSetCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.ddl.record.set.count"));
-		_maxDLFileEntryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.file.entry.count"));
-		_maxDLFileEntrySize = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.file.entry.size"));
-		_maxDLFolderCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.folder.count"));
-		_maxDLFolderDepth = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.folder.depth"));
-		_maxGroupsCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.group.count"));
-		_maxJournalArticleCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.journal.article.count"));
-		_maxJournalArticlePageCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.journal.article.page.count"));
-		_maxJournalArticleVersionCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.journal.article.version.count"));
-		_maxMBCategoryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.mb.category.count"));
-		_maxMBMessageCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.mb.message.count"));
-		_maxMBThreadCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.mb.thread.count"));
-		_maxUserCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.user.count"));
-		_maxUserToGroupCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.user.to.group.count"));
-		_maxWikiNodeCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.wiki.node.count"));
-		_maxWikiPageCommentCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
-		_maxWikiPageCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.wiki.page.count"));
-
-		File outputDir = new File(
-			properties.getProperty("sample.sql.output.dir"));
+	public void initCsvWriters() throws FileNotFoundException {
+		File outputDir = initPropertiesContext.getOutputDir();
 
 		outputDir.mkdirs();
 
-		for (String csvFileName : StringUtil.split(
-				properties.getProperty("sample.sql.output.csv.file.names"))) {
+		String csvFileNames = initPropertiesContext.getCsvFileNames();
 
+		for (String csvFileName : StringUtil.split(csvFileNames)) {
 			_csvWriters.put(
 				csvFileName,
 				new UnsyncBufferedWriter(
@@ -1081,6 +996,8 @@ public class DataFactory {
 	}
 
 	public void initGroupModels() throws Exception {
+		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
+
 		long groupClassNameId = getGroupClassNameId();
 
 		_globalGroupModel = newGroupModel(
@@ -1091,9 +1008,9 @@ public class DataFactory {
 			_guestGroupId, groupClassNameId, _guestGroupId,
 			GroupConstants.GUEST, true);
 
-		_groupModels = new ArrayList<>(_maxGroupsCount);
+		_groupModels = new ArrayList<>(maxGroupsCount);
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
+		for (int i = 1; i <= maxGroupsCount; i++) {
 			GroupModel groupModel = newGroupModel(
 				i, groupClassNameId, i, "Site " + i, true);
 
@@ -1364,10 +1281,12 @@ public class DataFactory {
 	}
 
 	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
-		List<BlogsEntryModel> blogEntryModels = new ArrayList<>(
-			_maxBlogsEntryCount);
+		int maxBlogsEntryCount = initPropertiesContext.getMaxBlogsEntryCount();
 
-		for (int i = 1; i <= _maxBlogsEntryCount; i++) {
+		List<BlogsEntryModel> blogEntryModels = new ArrayList<>(
+			maxBlogsEntryCount);
+
+		for (int i = 1; i <= maxBlogsEntryCount; i++) {
 			blogEntryModels.add(newBlogsEntryModel(groupId, i));
 		}
 
@@ -1375,13 +1294,15 @@ public class DataFactory {
 	}
 
 	public BlogsStatsUserModel newBlogsStatsUserModel(long groupId) {
+		int maxBlogsEntryCount = initPropertiesContext.getMaxBlogsEntryCount();
+
 		BlogsStatsUserModel blogsStatsUserModel = new BlogsStatsUserModelImpl();
 
 		blogsStatsUserModel.setStatsUserId(_counter.get());
 		blogsStatsUserModel.setGroupId(groupId);
 		blogsStatsUserModel.setCompanyId(_companyId);
 		blogsStatsUserModel.setUserId(_sampleUserId);
-		blogsStatsUserModel.setEntryCount(_maxBlogsEntryCount);
+		blogsStatsUserModel.setEntryCount(maxBlogsEntryCount);
 		blogsStatsUserModel.setLastPostDate(new Date());
 
 		return blogsStatsUserModel;
@@ -1455,19 +1376,22 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(4 + _maxDDLCustomFieldCount * 4);
+		int maxDDLCustomFieldCount =
+			initPropertiesContext.getMaxDDLCustomFieldCount();
+
+		StringBundler sb = new StringBundler(4 + maxDDLCustomFieldCount * 4);
 
 		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
 		sb.append("[");
 
-		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
+		for (int i = 0; i < maxDDLCustomFieldCount; i++) {
 			sb.append("{\"columns\": [{\"fieldNames\": [\"");
 			sb.append(nextDDLCustomFieldName(groupId, i));
 			sb.append("\"], \"size\": 12}]}");
 			sb.append(", ");
 		}
 
-		if (_maxDDLCustomFieldCount > 0) {
+		if (maxDDLCustomFieldCount > 0) {
 			sb.setIndex(sb.index() - 1);
 		}
 
@@ -1480,12 +1404,15 @@ public class DataFactory {
 	}
 
 	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 9);
+		int maxDDLCustomFieldCount =
+			initPropertiesContext.getMaxDDLCustomFieldCount();
+
+		StringBundler sb = new StringBundler(3 + maxDDLCustomFieldCount * 9);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
 
-		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
+		for (int i = 0; i < maxDDLCustomFieldCount; i++) {
 			sb.append(
 				"{\"dataType\": \"string\", \"indexType\": \"keyword\", ");
 			sb.append("\"label\": {\"en_US\": \"Text");
@@ -1498,7 +1425,7 @@ public class DataFactory {
 			sb.append(",");
 		}
 
-		if (_maxDDLCustomFieldCount > 0) {
+		if (maxDDLCustomFieldCount > 0) {
 			sb.setIndex(sb.index() - 1);
 		}
 
@@ -1618,12 +1545,15 @@ public class DataFactory {
 	public DDMContentModel newDDMContentModel(
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 7);
+		int maxDDLCustomFieldCount =
+			initPropertiesContext.getMaxDDLCustomFieldCount();
+
+		StringBundler sb = new StringBundler(3 + maxDDLCustomFieldCount * 7);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
 
-		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
+		for (int i = 0; i < maxDDLCustomFieldCount; i++) {
 			sb.append("{\"instanceId\": \"");
 			sb.append(StringUtil.randomId());
 			sb.append("\", \"name\": \"");
@@ -1633,7 +1563,7 @@ public class DataFactory {
 			sb.append("\"}},");
 		}
 
-		if (_maxDDLCustomFieldCount > 0) {
+		if (maxDDLCustomFieldCount > 0) {
 			sb.setIndex(sb.index() - 1);
 		}
 
@@ -1783,10 +1713,13 @@ public class DataFactory {
 	public List<DLFileEntryModel> newDlFileEntryModels(
 		DLFolderModel dlFolerModel) {
 
-		List<DLFileEntryModel> dlFileEntryModels = new ArrayList<>(
-			_maxDLFileEntryCount);
+		int maxDLFileEntryCount =
+			initPropertiesContext.getMaxDLFileEntryCount();
 
-		for (int i = 1; i <= _maxDLFileEntryCount; i++) {
+		List<DLFileEntryModel> dlFileEntryModels = new ArrayList<>(
+			maxDLFileEntryCount);
+
+		for (int i = 1; i <= maxDLFileEntryCount; i++) {
 			dlFileEntryModels.add(newDlFileEntryModel(dlFolerModel, i));
 		}
 
@@ -1825,9 +1758,11 @@ public class DataFactory {
 	public List<DLFolderModel> newDLFolderModels(
 		long groupId, long parentFolderId) {
 
-		List<DLFolderModel> dlFolderModels = new ArrayList<>(_maxDLFolderCount);
+		int maxDLFolderCount = initPropertiesContext.getMaxDLFolderCount();
 
-		for (int i = 1; i <= _maxDLFolderCount; i++) {
+		List<DLFolderModel> dlFolderModels = new ArrayList<>(maxDLFolderCount);
+
+		for (int i = 1; i <= maxDLFolderCount; i++) {
 			dlFolderModels.add(newDLFolderModel(groupId, parentFolderId, i));
 		}
 
@@ -2068,10 +2003,12 @@ public class DataFactory {
 	}
 
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
-		List<MBCategoryModel> mbCategoryModels = new ArrayList<>(
-			_maxMBCategoryCount);
+		int maxMBCategoryCount = initPropertiesContext.getMaxMBCategoryCount();
 
-		for (int i = 1; i <= _maxMBCategoryCount; i++) {
+		List<MBCategoryModel> mbCategoryModels = new ArrayList<>(
+			maxMBCategoryCount);
+
+		for (int i = 1; i <= maxMBCategoryCount; i++) {
 			mbCategoryModels.add(newMBCategoryModel(groupId, i));
 		}
 
@@ -2155,8 +2092,10 @@ public class DataFactory {
 	public List<MBMessageModel> newMBMessageModels(
 		MBThreadModel mbThreadModel) {
 
+		int maxMBMessageCount = initPropertiesContext.getMaxMBMessageCount();
+
 		List<MBMessageModel> mbMessageModels = new ArrayList<>(
-			_maxMBMessageCount);
+			maxMBMessageCount);
 
 		mbMessageModels.add(
 			newMBMessageModel(
@@ -2166,7 +2105,7 @@ public class DataFactory {
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, "Test Message 1",
 				"This is test message 1."));
 
-		for (int i = 2; i <= _maxMBMessageCount; i++) {
+		for (int i = 2; i <= maxMBMessageCount; i++) {
 			mbMessageModels.add(
 				newMBMessageModel(
 					mbThreadModel.getGroupId(), 0, 0,
@@ -2194,13 +2133,19 @@ public class DataFactory {
 	}
 
 	public MBStatsUserModel newMBStatsUserModel(long groupId) {
+		int maxMBCategoryCount = initPropertiesContext.getMaxMBCategoryCount();
+
+		int maxMBMessageCount = initPropertiesContext.getMaxMBMessageCount();
+
+		int maxMBThreadCount = initPropertiesContext.getMaxMBThreadCount();
+
 		MBStatsUserModel mbStatsUserModel = new MBStatsUserModelImpl();
 
 		mbStatsUserModel.setStatsUserId(_counter.get());
 		mbStatsUserModel.setGroupId(groupId);
 		mbStatsUserModel.setUserId(_sampleUserId);
 		mbStatsUserModel.setMessageCount(
-			_maxMBCategoryCount * _maxMBThreadCount * _maxMBMessageCount);
+			maxMBCategoryCount * maxMBThreadCount * maxMBMessageCount);
 		mbStatsUserModel.setLastPostDate(new Date());
 
 		return mbStatsUserModel;
@@ -2238,14 +2183,18 @@ public class DataFactory {
 	public List<MBThreadModel> newMBThreadModels(
 		MBCategoryModel mbCategoryModel) {
 
-		List<MBThreadModel> mbThreadModels = new ArrayList<>(_maxMBThreadCount);
+		int maxMBMessageCount = initPropertiesContext.getMaxMBMessageCount();
 
-		for (int i = 0; i < _maxMBThreadCount; i++) {
+		int maxMBThreadCount = initPropertiesContext.getMaxMBThreadCount();
+
+		List<MBThreadModel> mbThreadModels = new ArrayList<>(maxMBThreadCount);
+
+		for (int i = 0; i < maxMBThreadCount; i++) {
 			mbThreadModels.add(
 				newMBThreadModel(
 					_counter.get(), mbCategoryModel.getGroupId(),
 					mbCategoryModel.getCategoryId(), _counter.get(),
-					_maxMBMessageCount));
+					maxMBMessageCount));
 		}
 
 		return mbThreadModels;
@@ -2736,9 +2685,11 @@ public class DataFactory {
 	}
 
 	public List<UserModel> newUserModels() {
-		List<UserModel> userModels = new ArrayList<>(_maxUserCount);
+		int maxUserCount = initPropertiesContext.getMaxUserCount();
 
-		for (int i = 0; i < _maxUserCount; i++) {
+		List<UserModel> userModels = new ArrayList<>(maxUserCount);
+
+		for (int i = 0; i < maxUserCount; i++) {
 			String[] userName = nextUserName(i);
 
 			userModels.add(
@@ -2751,9 +2702,11 @@ public class DataFactory {
 	}
 
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
-		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(_maxWikiNodeCount);
+		int maxWikiNodeCount = initPropertiesContext.getMaxWikiNodeCount();
 
-		for (int i = 1; i <= _maxWikiNodeCount; i++) {
+		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(maxWikiNodeCount);
+
+		for (int i = 1; i <= maxWikiNodeCount; i++) {
 			wikiNodeModels.add(newWikiNodeModel(groupId, i));
 		}
 
@@ -2761,9 +2714,11 @@ public class DataFactory {
 	}
 
 	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel) {
-		List<WikiPageModel> wikiPageModels = new ArrayList<>(_maxWikiPageCount);
+		int maxWikiPageCount = initPropertiesContext.getMaxWikiPageCount();
 
-		for (int i = 1; i <= _maxWikiPageCount; i++) {
+		List<WikiPageModel> wikiPageModels = new ArrayList<>(maxWikiPageCount);
+
+		for (int i = 1; i <= maxWikiPageCount; i++) {
 			wikiPageModels.add(newWikiPageModel(wikiNodeModel, i));
 		}
 
@@ -2828,21 +2783,26 @@ public class DataFactory {
 		}
 	}
 
+	public final InitPropertiesContext initPropertiesContext;
+
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
 
+		int maxAssetEntryToAssetCategoryCount =
+			InitPropertiesContext.getMaxAssetEntryToAssetCategoryCount();
+
 		AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
 			index % assetCategoryModels.size());
 		AssetCategoryModel assetCategoryModel1 = assetCategoryModels.get(
-			(index + _maxAssetEntryToAssetCategoryCount) %
+			(index + maxAssetEntryToAssetCategoryCount) %
 				assetCategoryModels.size());
 		AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
-			(index + _maxAssetEntryToAssetCategoryCount * 2) %
+			(index + maxAssetEntryToAssetCategoryCount * 2) %
 				assetCategoryModels.size());
 
 		int lastIndex =
-			(index + _maxAssetEntryToAssetCategoryCount * 3) %
+			(index + maxAssetEntryToAssetCategoryCount * 3) %
 				assetCategoryModels.size();
 
 		AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
@@ -2855,23 +2815,25 @@ public class DataFactory {
 				String.valueOf(assetCategoryModel2.getCategoryId()),
 				String.valueOf(assetCategoryModel3.getCategoryId())
 			},
-			lastIndex + _maxAssetEntryToAssetCategoryCount);
+			lastIndex + maxAssetEntryToAssetCategoryCount);
 	}
 
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetTagsQueryValues(
 			List<AssetTagModel> assetTagModels, int index) {
 
+		int maxAssetEntryToAssetTagCount =
+			initPropertiesContext.getMaxAssetEntryToAssetTagCount();
+
 		AssetTagModel assetTagModel0 = assetTagModels.get(
 			index % assetTagModels.size());
 		AssetTagModel assetTagModel1 = assetTagModels.get(
-			(index + _maxAssetEntryToAssetTagCount) % assetTagModels.size());
+			(index + maxAssetEntryToAssetTagCount) % assetTagModels.size());
 		AssetTagModel assetTagModel2 = assetTagModels.get(
-			(index + _maxAssetEntryToAssetTagCount * 2) %
-				assetTagModels.size());
+			(index + maxAssetEntryToAssetTagCount * 2) % assetTagModels.size());
 
 		int lastIndex =
-			(index + _maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
+			(index + maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
 
 		AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
 
@@ -2880,7 +2842,7 @@ public class DataFactory {
 				assetTagModel0.getName(), assetTagModel1.getName(),
 				assetTagModel2.getName(), assetTagModel3.getName()
 			},
-			lastIndex + _maxAssetEntryToAssetTagCount);
+			lastIndex + maxAssetEntryToAssetTagCount);
 	}
 
 	protected String getClassName(long classNameId) {
@@ -3190,6 +3152,8 @@ public class DataFactory {
 	protected DLFileEntryModel newDlFileEntryModel(
 		DLFolderModel dlFolerModel, int index) {
 
+		int maxDLFileEntrySize = initPropertiesContext.getMaxDLFileEntrySize();
+
 		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
 
 		dlFileEntryModel.setUuid(SequentialUUID.generate());
@@ -3210,7 +3174,7 @@ public class DataFactory {
 		dlFileEntryModel.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
-		dlFileEntryModel.setSize(_maxDLFileEntrySize);
+		dlFileEntryModel.setSize(maxDLFileEntrySize);
 		dlFileEntryModel.setLastPublishDate(nextFutureDate());
 
 		return dlFileEntryModel;
@@ -3289,6 +3253,10 @@ public class DataFactory {
 	}
 
 	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {
+		int maxMBMessageCount = initPropertiesContext.getMaxMBMessageCount();
+
+		int maxMBThreadCount = initPropertiesContext.getMaxMBThreadCount();
+
 		MBCategoryModel mbCategoryModel = new MBCategoryModelImpl();
 
 		mbCategoryModel.setUuid(SequentialUUID.generate());
@@ -3304,8 +3272,8 @@ public class DataFactory {
 		mbCategoryModel.setName("Test Category " + index);
 		mbCategoryModel.setDisplayStyle(
 			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategoryModel.setThreadCount(_maxMBThreadCount);
-		mbCategoryModel.setMessageCount(_maxMBThreadCount * _maxMBMessageCount);
+		mbCategoryModel.setThreadCount(maxMBThreadCount);
+		mbCategoryModel.setMessageCount(maxMBThreadCount * maxMBMessageCount);
 		mbCategoryModel.setLastPostDate(new Date());
 		mbCategoryModel.setLastPublishDate(new Date());
 		mbCategoryModel.setStatusDate(new Date());
@@ -3754,41 +3722,12 @@ public class DataFactory {
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
-	private int _maxAssetCategoryCount;
-	private int _maxAssetEntryToAssetCategoryCount;
-	private int _maxAssetEntryToAssetTagCount;
-	private int _maxAssetPublisherPageCount;
-	private int _maxAssetTagCount;
-	private int _maxAssetVocabularyCount;
-	private int _maxBlogsEntryCommentCount;
-	private int _maxBlogsEntryCount;
-	private int _maxDDLCustomFieldCount;
-	private int _maxDDLRecordCount;
-	private int _maxDDLRecordSetCount;
-	private int _maxDLFileEntryCount;
-	private int _maxDLFileEntrySize;
-	private int _maxDLFolderCount;
-	private int _maxDLFolderDepth;
-	private int _maxGroupsCount;
-	private int _maxJournalArticleCount;
-	private int _maxJournalArticlePageCount;
-	private int _maxJournalArticleVersionCount;
-	private int _maxMBCategoryCount;
-	private int _maxMBMessageCount;
-	private int _maxMBThreadCount;
-	private int _maxUserCount;
-	private int _maxUserToGroupCount;
-	private int _maxWikiNodeCount;
-	private int _maxWikiPageCommentCount;
-	private int _maxWikiPageCount;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionCounter;
 	private List<RoleModel> _roleModels;
 	private final long _sampleUserId;
 	private UserModel _sampleUserModel;
-	private Format _simpleDateFormat =
-		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityCounter;
 	private final SimpleCounter _timeCounter;
