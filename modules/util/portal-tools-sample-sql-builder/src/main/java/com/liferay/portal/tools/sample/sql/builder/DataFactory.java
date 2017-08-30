@@ -755,7 +755,6 @@ public class DataFactory extends ResourcePermissionDataFactory {
 		_journalArticleContent = sb.toString();
 	}
 
-
 	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
