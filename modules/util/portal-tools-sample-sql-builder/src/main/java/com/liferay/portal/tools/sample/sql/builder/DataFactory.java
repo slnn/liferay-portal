@@ -259,7 +259,7 @@ public class DataFactory extends ResourcePermissionDataFactory {
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
 		int maxAssetEntryToAssetCategoryCount =
-			InitPropertiesContext.getMaxAssetEntryToAssetCategoryCount();
+			initPropertiesContext.getMaxAssetEntryToAssetCategoryCount();
 
 		int maxGroupsCount = initPropertiesContext.getMaxGroupsCount();
 
