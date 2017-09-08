@@ -17,16 +17,21 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.BaseBodyTagSupport;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Eduardo Lundgren
+ * @author Roberto Díaz
  */
 public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 
@@ -68,49 +73,63 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		String position = _position;
-
 		String fragmentId = ParamUtil.getString(request, "p_f_id");
 
 		if (Validator.isNotNull(fragmentId)) {
-			position = _POSITION_INLINE;
+			return _POSITION_INLINE;
 		}
 
-		if (Validator.isNull(position)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (Validator.isNotNull(_position)) {
+			return _position;
+		}
 
-			if (themeDisplay.isIsolated() ||
-				themeDisplay.isLifecycleResource() ||
-				themeDisplay.isStateExclusive()) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-				position = _POSITION_INLINE;
-			}
-			else {
-				position = _POSITION_AUTO;
-			}
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive()) {
 
-			Layout layout = themeDisplay.getLayout();
-
+			return _POSITION_INLINE;
+		}
+		else {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			String portletId = portletDisplay.getId();
 
-			if (Validator.isNotNull(portletId) &&
-				layout.isPortletEmbedded(
-					portletId, themeDisplay.getScopeGroupId())) {
+			if (Validator.isNotNull(portletId)) {
+				Map<String, String> portletPosition = _portletPosition.get();
 
-				position = _POSITION_INLINE;
+				String position = portletPosition.get(portletId);
+
+				if (Validator.isNull(position)) {
+					Layout layout = themeDisplay.getLayout();
+
+					if (layout.isPortletEmbedded(
+						portletId, themeDisplay.getScopeGroupId())) {
+
+						position = _POSITION_INLINE;
+					}
+					else {
+						position = _POSITION_AUTO;
+					}
+
+					portletPosition.put(portletId, position);
+				}
+
+				return position;
 			}
-		}
 
-		return position;
+			return _POSITION_AUTO;
+		}
 	}
 
 	private static final String _POSITION_AUTO = "auto";
 
 	private static final String _POSITION_INLINE = "inline";
 
+	private final ThreadLocal<Map<String, String>> _portletPosition =
+		new AutoResetThreadLocal<>(
+			PositionTagSupport.class + "._portletPosition", HashMap::new);
 	private String _position;
 
 }
