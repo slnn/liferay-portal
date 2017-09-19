@@ -1054,6 +1054,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isPortletEmbedded(String portletId, long groupId) {
+		if (_embeddedPortletIds == null) {
+			_embeddedPortletIds = new ArrayList<>();
+		}
+
+		if (_embeddedPortletIds.contains(portletId)) {
+			return true;
+		}
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
@@ -1098,6 +1106,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			return false;
 		}
+
+		_embeddedPortletIds.add(portletId);
 
 		return true;
 	}
@@ -1523,6 +1533,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_initFriendlyURLKeywords();
 	}
 
+	private transient List<String> _embeddedPortletIds;
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
 	private UnicodeProperties _typeSettingsProperties;
