@@ -1701,33 +1701,16 @@ rerun your task.
 		<if>
 			<isset property="jacoco.merged.jar" />
 			<then>
-				<if>
-					<isset property="class.name" />
-					<then>
-						<jacoco-report
-						exec.file="${exec.file}"
-						>
-							<class.files>
-								<fileset refid="classSet" />
-							</class.files>
-							<source.files>
-								<dirset refid="srcSet" />
-							</source.files>
-						</jacoco-report>
-					</then>
-					<else>
-						<jacoco-report
-						exec.file="${exec.file}"
-						>
-							<class.files>
-								<file file="${jacoco.merged.jar}" />
-							</class.files>
-							<source.files>
-								<dirset refid="srcSet" />
-							</source.files>
-						</jacoco-report>
-					</else>
-				</if>
+				<jacoco-report
+					exec.file="${exec.file}"
+				>
+					<class.files>
+						<file file="${jacoco.merged.jar}" />
+					</class.files>
+					<source.files>
+						<dirset refid="srcSet" />
+					</source.files>
+				</jacoco-report>
 			</then>
 			<else>
 				<jacoco-report
