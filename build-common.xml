@@ -10,6 +10,7 @@
 	xmlns:sonar="antlib:org.sonar.ant"
 	xmlns:unless="ant:unless"
 >
+	<!--test ci-->
 	<dirname file="${ant.file.build-common}" property="project.dir.native" />
 
 	<pathconvert property="project.dir" targetos="unix">
