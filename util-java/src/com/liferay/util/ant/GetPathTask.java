@@ -106,29 +106,28 @@ public class GetPathTask extends Task {
 		if (!baseDir.exists() || !baseDir.isDirectory()) {
 			return;
 		}
-		else {
-			String[] baseDirfileList = baseDir.list();
 
-			File readfile = null;
+		String[] baseDirfileList = baseDir.list();
 
-			for (int i = 0; i < baseDirfileList.length; i++) {
-				readfile = new File(baseDirPath, baseDirfileList[i]);
+		File readfile = null;
 
-				if (!readfile.isDirectory()) {
-					tempName = readfile.getName();
+		for (int i = 0; i < baseDirfileList.length; i++) {
+			readfile = new File(baseDirPath, baseDirfileList[i]);
 
-					if (wildcardMatch(targetFileName, tempName)) {
-						fileList.add(readfile.getAbsoluteFile());
-					}
+			if (!readfile.isDirectory()) {
+				tempName = readfile.getName();
+
+				if (wildcardMatch(targetFileName, tempName)) {
+					fileList.add(readfile.getAbsoluteFile());
 				}
-				else if (readfile.isDirectory()) {
-					String subdirpath = null;
+			}
+			else if (readfile.isDirectory()) {
+				String subdirpath = null;
 
-					subdirpath =
-						baseDirPath + File.separator + baseDirfileList[i];
+				subdirpath =
+					baseDirPath + File.separator + baseDirfileList[i];
 
-					findFiles(subdirpath, targetFileName, fileList);
-				}
+				findFiles(subdirpath, targetFileName, fileList);
 			}
 		}
 	}
