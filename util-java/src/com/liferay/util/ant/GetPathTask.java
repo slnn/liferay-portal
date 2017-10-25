@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -35,7 +36,7 @@ public class GetPathTask extends Task {
 
 		if (_includeClassFile) {
 			String[] classNames = _classNames.split(",");
-			StringBuilder classPropertyValue = new StringBuilder();
+			StringBundler classPropertyValue = new StringBundler();
 			List classResultList = new ArrayList();
 
 			for (String className : classNames) {
@@ -61,8 +62,7 @@ public class GetPathTask extends Task {
 					classPropertyValue.append(",");
 				}
 
-				classPropertyValue = classPropertyValue.deleteCharAt(
-					classPropertyValue.lastIndexOf(","));
+				classPropertyValue.setIndex(classPropertyValue.index() - 1);
 
 				getProject().setProperty(
 					_classFiles, classPropertyValue.toString());
@@ -72,7 +72,7 @@ public class GetPathTask extends Task {
 		if (_includeSrcFile) {
 			_srcFileName = _srcFileName + ".java";
 			List srcResultList = new ArrayList();
-			StringBuilder srcPropertyValue = new StringBuilder();
+			StringBundler srcPropertyValue = new StringBundler();
 
 			findFiles(baseDIR, _srcFileName, srcResultList);
 
