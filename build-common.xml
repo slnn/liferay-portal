@@ -1636,7 +1636,7 @@ rerun your task.
 		<if>
 			<isset property="class.names" />
 			<then>
-				<getPath classFiles="class.files" classNames="${class.names}" includeClassFile="true" rootDir="${project.dir}" />
+				<getPath classFiles="class.files" classNames="${class.names}" rootDir="${project.dir}" />
 
 				<for list="${class.files}" param="class.file">
 					<sequential>

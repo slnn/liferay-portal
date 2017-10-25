@@ -42,39 +42,37 @@ public class GetPathTask extends Task {
 	public void execute() throws BuildException {
 		String baseDIR = _rootDir;
 
-		if (_includeClassFile) {
-			String[] classNames = _classNames.split(",");
-			StringBundler classPropertyValue = new StringBundler();
-			List classResultList = new ArrayList();
+		String[] classNames = _classNames.split(",");
+		StringBundler classPropertyValue = new StringBundler();
+		List classResultList = new ArrayList();
 
-			for (String className : classNames) {
-				String classFileName = className + ".class";
+		for (String className : classNames) {
+			String classFileName = className + ".class";
 
-				findFiles(baseDIR, classFileName, classResultList);
+			findFiles(baseDIR, classFileName, classResultList);
 
-				if (classResultList.isEmpty()) {
-					_LOGGER.log(
-						Level.WARNING, "{0} does not exist!", classFileName);
-				}
-				else {
-					_classResultList.addAll(classResultList);
-				}
-
-				classResultList.removeAll(classResultList);
+			if (classResultList.isEmpty()) {
+				_LOGGER.log(
+					Level.WARNING, "{0} does not exist!", classFileName);
+			}
+			else {
+				_classResultList.addAll(classResultList);
 			}
 
-			if (!_classResultList.isEmpty()) {
-				for (int i = 0; i < _classResultList.size(); i++) {
-					classPropertyValue.append(
-						String.valueOf(_classResultList.get(i)));
-					classPropertyValue.append(",");
-				}
+			classResultList.removeAll(classResultList);
+		}
 
-				classPropertyValue.setIndex(classPropertyValue.index() - 1);
-
-				getProject().setProperty(
-					_classFiles, classPropertyValue.toString());
+		if (!_classResultList.isEmpty()) {
+			for (int i = 0; i < _classResultList.size(); i++) {
+				classPropertyValue.append(
+					String.valueOf(_classResultList.get(i)));
+				classPropertyValue.append(",");
 			}
+
+			classPropertyValue.setIndex(classPropertyValue.index() - 1);
+
+			getProject().setProperty(
+				_classFiles, classPropertyValue.toString());
 		}
 
 		if (_includeSrcFile) {
@@ -152,10 +150,6 @@ public class GetPathTask extends Task {
 
 	public void setclassNames(String classNames) {
 		_classNames = classNames;
-	}
-
-	public void setIncludeClassFile(boolean includeClassFile) {
-		_includeClassFile = includeClassFile;
 	}
 
 	public void setIncludeSrcFile(boolean includeSrcFile) {
@@ -274,7 +268,6 @@ public class GetPathTask extends Task {
 	private String _classFiles;
 	private String _classNames;
 	private final List _classResultList = new ArrayList();
-	private boolean _includeClassFile;
 	private boolean _includeSrcFile;
 	private String _rootDir;
 	private String _srcFileBaseDir;
