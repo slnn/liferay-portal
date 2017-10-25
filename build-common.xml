@@ -1513,7 +1513,6 @@ rerun your task.
 					<include name="**/src/main/java" />
 				</dirset>
 			</then>
-
 			<else>
 				<fileset dir="${project.dir}" id="classSet">
 					<include name="**/classes/com/liferay/**/*.class" />
@@ -1636,7 +1635,6 @@ rerun your task.
 
 		<if>
 			<isset property="class.names" />
-
 			<then>
 				<getPath classFiles="class.files" classNames="${class.names}" includeClassFile="true" rootDir="${project.dir}" />
 
@@ -1648,7 +1646,6 @@ rerun your task.
 					</sequential>
 				</for>
 			</then>
-
 			<else>
 				<antcall target="-code-coverage-report" />
 			</else>
