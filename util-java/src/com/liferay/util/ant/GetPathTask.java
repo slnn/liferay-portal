@@ -30,6 +30,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -42,7 +44,8 @@ public class GetPathTask extends Task {
 	public void execute() throws BuildException {
 		String baseDIR = _rootDir;
 
-		String[] classNames = _classNames.split(",");
+		String[] classNames = StringUtil.split(_classNames);
+
 		StringBundler classPropertyValue = new StringBundler();
 		List classResultList = new ArrayList();
 
