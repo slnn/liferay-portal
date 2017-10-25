@@ -14,8 +14,10 @@
 
 package com.liferay.util.ant;
 
-import java.io.File;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
@@ -28,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -138,6 +137,7 @@ public class GetPathTask extends Task {
 
 						return FileVisitResult.CONTINUE;
 					}
+
 				});
 		}
 		catch (IOException ioe) {
