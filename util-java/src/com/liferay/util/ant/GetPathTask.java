@@ -16,6 +16,14 @@ package com.liferay.util.ant;
 
 import java.io.File;
 
+import java.io.IOException;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -109,26 +117,28 @@ public class GetPathTask extends Task {
 
 		String[] baseDirfileList = baseDir.list();
 
-		File readfile = null;
+		try {
+			Files.walkFileTree(
+				baseDir.toPath(),
+				new SimpleFileVisitor<Path>() {
 
-		for (int i = 0; i < baseDirfileList.length; i++) {
-			readfile = new File(baseDirPath, baseDirfileList[i]);
+					@Override
+					public FileVisitResult visitFile(
+							Path file, BasicFileAttributes attrs)
+						throws IOException {
 
-			if (!readfile.isDirectory()) {
-				tempName = readfile.getName();
+						String fileName = file.toString();
 
-				if (wildcardMatch(targetFileName, tempName)) {
-					fileList.add(readfile.getAbsoluteFile());
-				}
-			}
-			else if (readfile.isDirectory()) {
-				String subdirpath = null;
+						if (wildcardMatch(targetFileName, fileName)) {
+							fileList.add(file.toFile());
+						}
 
-				subdirpath =
-					baseDirPath + File.separator + baseDirfileList[i];
-
-				findFiles(subdirpath, targetFileName, fileList);
-			}
+						return FileVisitResult.CONTINUE;
+					}
+				});
+		}
+		catch (IOException ioe) {
+			throw new BuildException(ioe);
 		}
 	}
 
