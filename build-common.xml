@@ -1489,7 +1489,7 @@ rerun your task.
 		</sequential>
 	</macrodef>
 
-	<target name="code-coverage-report">
+	<target name="-code-coverage-report">
 		<if>
 			<and>
 				<isset property="class.file" />
@@ -1642,7 +1642,7 @@ rerun your task.
 
 				<for list="${class.files}" param="class.file">
 					<sequential>
-						<antcall target="code-coverage-report">
+						<antcall target="-code-coverage-report">
 							<param name="class.file" value="@{class.file}" />
 						</antcall>
 					</sequential>
@@ -1650,7 +1650,7 @@ rerun your task.
 			</then>
 
 			<else>
-				<antcall target="code-coverage-report" />
+				<antcall target="-code-coverage-report" />
 			</else>
 		</if>
 	</target>
