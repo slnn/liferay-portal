@@ -128,9 +128,11 @@ public class GetPathTask extends Task {
 							Path file, BasicFileAttributes attrs)
 						throws IOException {
 
-						String fileName = file.toString();
+						Path fileNamePath = file.getFileName();
 
-						if (wildcardMatch(targetFileName, fileName)) {
+						String fileName = fileNamePath.toString();
+
+						if (fileName.equals(targetFileName)) {
 							fileList.add(file.toFile());
 						}
 
@@ -169,49 +171,6 @@ public class GetPathTask extends Task {
 
 	public void setSrcFileName(String srcFileName) {
 		_srcFileName = srcFileName;
-	}
-
-	public boolean wildcardMatch(String targetFileName, String fileName) {
-		int patternLength = targetFileName.length();
-		int strLength = fileName.length();
-		int strIndex = 0;
-		char ch;
-
-		for (int patternIndex = 0; patternIndex < patternLength;
-			patternIndex++) {
-
-			ch = targetFileName.charAt(patternIndex);
-
-			if (ch == '*') {
-				while (strIndex < strLength) {
-					String subpattern = targetFileName.substring(
-						patternIndex + 1);
-
-					if (wildcardMatch(
-							subpattern, fileName.substring(strIndex))) {
-
-						return true;
-					}
-
-					strIndex++;
-				}
-			}
-			else {
-				if ((strIndex >= strLength) ||
-					(ch != fileName.charAt(strIndex))) {
-
-					return false;
-				}
-
-				strIndex++;
-			}
-		}
-
-		if (strIndex == strLength) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _ifMathch(String srcPath, String classPath) {
