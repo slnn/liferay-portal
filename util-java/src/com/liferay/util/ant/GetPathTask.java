@@ -112,8 +112,7 @@ public class GetPathTask extends Task {
 			File readfile = null;
 
 			for (int i = 0; i < baseDirfileList.length; i++) {
-				readfile = new File(
-					baseDirPath + File.separator + baseDirfileList[i]);
+				readfile = new File(baseDirPath, baseDirfileList[i]);
 
 				if (!readfile.isDirectory()) {
 					tempName = readfile.getName();
