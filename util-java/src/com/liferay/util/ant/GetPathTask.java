@@ -97,7 +97,7 @@ public class GetPathTask extends Task {
 	}
 
 	public void findFiles(
-		String baseDirPath, String targetFileName, List fileList) {
+		String baseDirPath, String targetFileName, List<File> fileList) {
 
 		String tempName = null;
 
