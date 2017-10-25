@@ -61,16 +61,13 @@ public class GetPathTask extends Task {
 			_LOGGER.log(
 				Level.WARNING, "{0} does not exist!", classNames);
 		}
-		else {
-			_classResultList.addAll(classResultList);
-		}
 
 		classResultList.removeAll(classResultList);
 
-		if (!_classResultList.isEmpty()) {
-			for (int i = 0; i < _classResultList.size(); i++) {
+		if (!classResultList.isEmpty()) {
+			for (int i = 0; i < classResultList.size(); i++) {
 				classPropertyValue.append(
-					String.valueOf(_classResultList.get(i)));
+					String.valueOf(classResultList.get(i)));
 				classPropertyValue.append(",");
 			}
 
@@ -238,7 +235,6 @@ public class GetPathTask extends Task {
 	private String _absolutePathClassFile;
 	private String _classFiles;
 	private String _classNames;
-	private final List _classResultList = new ArrayList();
 	private boolean _includeSrcFile;
 	private String _rootDir;
 	private String _srcFileBaseDir;
