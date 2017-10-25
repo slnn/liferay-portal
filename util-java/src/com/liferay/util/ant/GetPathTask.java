@@ -46,23 +46,26 @@ public class GetPathTask extends Task {
 		String[] classNames = StringUtil.split(_classNames);
 
 		StringBundler classPropertyValue = new StringBundler();
+
+		List<String> classFiles = new ArrayList<>();
+
 		List classResultList = new ArrayList();
 
 		for (String className : classNames) {
-			String classFileName = className + ".class";
-
-			findFiles(baseDIR, classFileName, classResultList);
-
-			if (classResultList.isEmpty()) {
-				_LOGGER.log(
-					Level.WARNING, "{0} does not exist!", classFileName);
-			}
-			else {
-				_classResultList.addAll(classResultList);
-			}
-
-			classResultList.removeAll(classResultList);
+			classFiles.add(className + ".class");
 		}
+
+		findFiles(baseDIR, classFiles, classResultList);
+
+		if (classResultList.isEmpty()) {
+			_LOGGER.log(
+				Level.WARNING, "{0} does not exist!", classNames);
+		}
+		else {
+			_classResultList.addAll(classResultList);
+		}
+
+		classResultList.removeAll(classResultList);
 
 		if (!_classResultList.isEmpty()) {
 			for (int i = 0; i < _classResultList.size(); i++) {
@@ -78,11 +81,17 @@ public class GetPathTask extends Task {
 		}
 
 		if (_includeSrcFile) {
-			_srcFileName = _srcFileName + ".java";
+			List<String> srcFiles = new ArrayList<>();
+
+			for (String className : classNames) {
+				srcFiles.add(_srcFileName + ".java");
+			}
+
 			List srcResultList = new ArrayList();
+
 			StringBundler srcPropertyValue = new StringBundler();
 
-			findFiles(baseDIR, _srcFileName, srcResultList);
+			findFiles(baseDIR, srcFiles, srcResultList);
 
 			if (srcResultList.isEmpty()) {
 				_LOGGER.log(Level.WARNING, "Java File does not exist!");
@@ -105,7 +114,7 @@ public class GetPathTask extends Task {
 	}
 
 	public void findFiles(
-		String baseDirPath, String targetFileName, List<File> fileList) {
+		String baseDirPath, List<String> classFileNames, List<File> fileList) {
 
 		String tempName = null;
 
@@ -131,7 +140,7 @@ public class GetPathTask extends Task {
 
 						String fileName = fileNamePath.toString();
 
-						if (fileName.equals(targetFileName)) {
+						if (classFileNames.contains(fileName)) {
 							fileList.add(file.toFile());
 						}
 
