@@ -26,7 +26,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.tools.ant.BuildException;
@@ -42,7 +44,12 @@ public class GetPathTask extends Task {
 		String baseDIR = _rootDir;
 		String[] classNames = _classNames.split(",");
 		StringBuilder filePropertyValue = new StringBuilder();
-		List<String> names = Arrays.asList(classNames);
+		List<String> names = new ArrayList<>();
+
+		for (String name : classNames) {
+			names.add(name);
+		}
+
 		List classResultList = new ArrayList();
 		List srcResultList = new ArrayList();
 
@@ -74,6 +81,26 @@ public class GetPathTask extends Task {
 				filePropertyValue.lastIndexOf(","));
 
 			getProject().setProperty(_filePaths, filePropertyValue.toString());
+		}
+
+		HashSet<String> srcFileNames = new HashSet<>();
+
+		for (int i = 0; i < srcResultList.size(); i++) {
+			String srcResult = String.valueOf(srcResultList.get(i));
+
+			int startIndex = srcResult.lastIndexOf(File.separator);
+			int endIndex = srcResult.lastIndexOf(".");
+
+			srcFileNames.add(srcResult.substring(startIndex + 1, endIndex));
+		}
+
+		if (srcFileNames.size() < names.size()) {
+			names.removeAll(srcFileNames);
+
+			for (int i = 0; i < names.size(); i++) {
+				_LOGGER.log(
+					Level.WARNING, "{0}.java did not be found!", names.get(i));
+			}
 		}
 	}
 
