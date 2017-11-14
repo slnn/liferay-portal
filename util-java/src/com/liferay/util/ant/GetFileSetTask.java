@@ -44,16 +44,17 @@ public class GetFileSetTask extends Task {
 	public void execute() throws BuildException {
 		File baseDir = new File(_rootDir);
 
-		List<String> names = Arrays.asList(_classNames.split(","));
+		List<String> classNames = Arrays.asList(_classNames.split(","));
 
 		List classResultList = new ArrayList();
 		List srcResultList = new ArrayList();
 
-		findFiles(baseDir, names, classResultList, srcResultList);
+		findFiles(baseDir, classNames, classResultList, srcResultList);
 
 		if (srcResultList.isEmpty()) {
-			for (String name : names) {
-				_LOGGER.log(Level.WARNING, "{0}.java did not be found!", name);
+			for (String className : classNames) {
+				_LOGGER.log(
+					Level.WARNING, "{0}.java did not be found!", className);
 			}
 
 			return;
@@ -77,12 +78,13 @@ public class GetFileSetTask extends Task {
 			srcFileNames.add(srcResult.substring(startIndex + 1, endIndex));
 		}
 
-		if (srcFileNames.size() < names.size()) {
-			names.removeAll(srcFileNames);
+		if (srcFileNames.size() < classNames.size()) {
+			classNames.removeAll(srcFileNames);
 
-			for (int i = 0; i < names.size(); i++) {
+			for (int i = 0; i < classNames.size(); i++) {
 				_LOGGER.log(
-					Level.WARNING, "{0}.java did not be found!", names.get(i));
+					Level.WARNING, "{0}.java did not be found!",
+					classNames.get(i));
 			}
 		}
 
