@@ -54,7 +54,7 @@ public class GetFileSetTask extends Task {
 		if (srcResultList.isEmpty()) {
 			for (String className : classNames) {
 				_LOGGER.log(
-					Level.WARNING, "{0}.java did not be found!", className);
+					Level.WARNING, "{0}.java was not found!", className);
 			}
 
 			return;
@@ -83,7 +83,7 @@ public class GetFileSetTask extends Task {
 
 			for (int i = 0; i < classNames.size(); i++) {
 				_LOGGER.log(
-					Level.WARNING, "{0}.java did not be found!",
+					Level.WARNING, "{0}.java was not found!",
 					classNames.get(i));
 			}
 		}
@@ -147,8 +147,11 @@ public class GetFileSetTask extends Task {
 						String fileName = fileNamePath.toString();
 
 						for (String targetFileName : targetNames) {
-							String targetClassName = targetFileName + ".class";
-							String targetSrcName = targetFileName + ".java";
+							String targetClassName = targetFileName.concat(
+								".class");
+
+							String targetSrcName = targetFileName.concat(
+								".java");
 
 							if (targetClassName.equals(fileName)) {
 								classFileList.add(file.toFile());
