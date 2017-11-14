@@ -43,12 +43,8 @@ public class GetFileSetTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		File baseDir = new File(_rootDir);
-		String[] classNames = _classNames.split(",");
-		List<String> names = new ArrayList<>();
 
-		for (String name : classNames) {
-			names.add(name);
-		}
+		List<String> names = Arrays.asList(_classNames.split(","));
 
 		List classResultList = new ArrayList();
 		List srcResultList = new ArrayList();
