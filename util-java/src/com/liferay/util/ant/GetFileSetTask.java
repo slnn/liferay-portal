@@ -46,8 +46,8 @@ public class GetFileSetTask extends Task {
 
 		List<String> classNames = Arrays.asList(_classNames.split(","));
 
-		List classResultList = new ArrayList();
-		List srcResultList = new ArrayList();
+		List<Path> classResultList = new ArrayList();
+		List<Path> srcResultList = new ArrayList();
 
 		findFiles(baseDir, classNames, classResultList, srcResultList);
 
@@ -108,8 +108,8 @@ public class GetFileSetTask extends Task {
 	}
 
 	public void findFiles(
-		File baseDir, List<String> targetNames, List<File> classFileList,
-		List<File> srcFileList) {
+		File baseDir, List<String> targetNames, List<Path> classFileList,
+		List<Path> srcFileList) {
 
 		if (!baseDir.exists() || !baseDir.isDirectory()) {
 			return;
@@ -154,10 +154,10 @@ public class GetFileSetTask extends Task {
 								".java");
 
 							if (targetClassName.equals(fileName)) {
-								classFileList.add(file.toFile());
+								classFileList.add(file);
 							}
 							else if (targetSrcName.equals(fileName)) {
-								srcFileList.add(file.toFile());
+								srcFileList.add(file);
 							}
 						}
 
