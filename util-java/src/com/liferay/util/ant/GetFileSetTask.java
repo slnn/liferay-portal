@@ -194,7 +194,7 @@ public class GetFileSetTask extends Task {
 	private static final Logger _LOGGER = Logger.getLogger(
 		GetFileSetTask.class.getName());
 
-	private static final List _SKIP_LIST = Arrays.asList(
+	private static final List<String> _SKIP_LIST = Arrays.asList(
 		"node_modules", "benchmarks", "definitions", "gradle", "lib",
 		"nbproject", "oss-licenses", "portal-client", "readme", "sql", "tools");
 
