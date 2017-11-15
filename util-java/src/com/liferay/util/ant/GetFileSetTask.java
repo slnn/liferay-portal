@@ -67,8 +67,8 @@ public class GetFileSetTask extends Task {
 		srcDirSet.setProject(getProject());
 		srcDirSet.setDir(baseDir);
 
-		for (int i = 0; i < srcResultList.size(); i++) {
-			String srcResult = String.valueOf(srcResultList.get(i));
+		for (Path srcFilePath : srcResultList) {
+			String srcResult = String.valueOf(srcFilePath);
 
 			srcDirSet.setIncludes(srcResult);
 
@@ -81,10 +81,9 @@ public class GetFileSetTask extends Task {
 		if (srcFileNames.size() < classNames.size()) {
 			classNames.removeAll(srcFileNames);
 
-			for (int i = 0; i < classNames.size(); i++) {
+			for (String className : classNames) {
 				_LOGGER.log(
-					Level.WARNING, "{0}.java was not found!",
-					classNames.get(i));
+					Level.WARNING, "{0}.java was not found!", className);
 			}
 		}
 
@@ -96,8 +95,8 @@ public class GetFileSetTask extends Task {
 
 		classFileSet.setDir(baseDir);
 
-		for (int i = 0; i < classResultList.size(); i++) {
-			String filePath = String.valueOf(classResultList.get(i));
+		for (Path classFilePath : classResultList) {
+			String filePath = String.valueOf(classFilePath);
 
 			filePath = filePath.substring(_rootDir.length() + 1);
 
