@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.DirSet;
 import org.apache.tools.ant.types.FileSet;
@@ -44,6 +45,8 @@ public class GetFileSetTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		File baseDir = new File(_rootDir);
+
+		Project project = getProject();
 
 		List<String> classNames = Arrays.asList(_classNames.split(","));
 
@@ -88,7 +91,7 @@ public class GetFileSetTask extends Task {
 			}
 		}
 
-		getProject().addReference("srcSet", srcDirSet);
+		project.addReference("srcSet", srcDirSet);
 
 		FileSet classFileSet = new FileSet();
 
@@ -104,7 +107,7 @@ public class GetFileSetTask extends Task {
 			classFileSet.setIncludes(filePath);
 		}
 
-		getProject().addReference("classSet", classFileSet);
+		project.addReference("classSet", classFileSet);
 	}
 
 	public void findFiles(
