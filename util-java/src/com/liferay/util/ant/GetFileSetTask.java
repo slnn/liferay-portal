@@ -171,7 +171,7 @@ public class GetFileSetTask extends Task {
 		}
 	}
 
-	public void setclassNames(String classNames) {
+	public void setClassNames(String classNames) {
 		_classNames = classNames;
 	}
 
