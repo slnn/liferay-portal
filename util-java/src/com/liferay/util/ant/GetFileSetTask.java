@@ -132,7 +132,7 @@ public class GetFileSetTask extends Task {
 
 						String fileName = absoluteNamePath.toString();
 
-						if (_ifSkipDirectory(fileName)) {
+						if (_skipDirectory(fileName)) {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 						else {
@@ -182,7 +182,7 @@ public class GetFileSetTask extends Task {
 		_rootDir = rootDir;
 	}
 
-	private boolean _ifSkipDirectory(String fileName) {
+	private boolean _skipDirectory(String fileName) {
 		if (_SKIP_LIST.contains(fileName) || fileName.contains(".")) {
 			return true;
 		}
