@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,7 +61,7 @@ public class GetFileSetTask extends Task {
 			return;
 		}
 
-		HashSet<String> srcFileNames = new HashSet<>();
+		Set<String> srcFileNames = new HashSet<>();
 
 		DirSet srcDirSet = new DirSet();
 
