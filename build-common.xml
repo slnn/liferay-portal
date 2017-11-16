@@ -1709,6 +1709,9 @@ rerun your task.
 					<class.files>
 						<file file="${jacoco.merged.jar}" />
 					</class.files>
+					<source.files>
+						<dirset refid="srcSet" />
+					</source.files>
 				</jacoco-report>
 			</then>
 			<else>
