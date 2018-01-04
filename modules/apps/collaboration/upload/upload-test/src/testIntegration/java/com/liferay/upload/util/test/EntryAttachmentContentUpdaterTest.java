@@ -116,7 +116,7 @@ public class EntryAttachmentContentUpdaterTest {
 			_getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String content = _attachmentContentUpdater.updateContent(
-			originalContent, ContentTypes.TEXT_HTML,
+			originalContent,
 			fileEntry -> {
 				if (fileEntry.getFileEntryId() ==
 						tempFileEntry.getFileEntryId()) {
@@ -161,7 +161,7 @@ public class EntryAttachmentContentUpdaterTest {
 			_getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String content = _attachmentContentUpdater.updateContent(
-			sb.toString(), ContentTypes.TEXT_HTML,
+			sb.toString(),
 			fileEntry -> {
 				if (fileEntry.getFileEntryId() ==
 						tempFileEntry.getFileEntryId()) {
@@ -203,7 +203,7 @@ public class EntryAttachmentContentUpdaterTest {
 				tempFileEntryImgTag + "<span></a>";
 
 		_attachmentContentUpdater.updateContent(
-			originalContent, ContentTypes.TEXT_HTML, tempFileEntry -> null);
+			originalContent, tempFileEntry -> null);
 	}
 
 	@Test
@@ -212,7 +212,7 @@ public class EntryAttachmentContentUpdaterTest {
 			"<p>Sample Text</p><a href=\"www.liferay.com\"><span></a>";
 
 		String content = _attachmentContentUpdater.updateContent(
-			originalContent, ContentTypes.TEXT_HTML, tempFileEntry -> null);
+			originalContent, tempFileEntry -> null);
 
 		String expectedContent = originalContent;
 
@@ -239,7 +239,7 @@ public class EntryAttachmentContentUpdaterTest {
 			_getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String content = _attachmentContentUpdater.updateContent(
-			originalContent, ContentTypes.TEXT_HTML,
+			originalContent,
 			fileEntry -> {
 				if (fileEntry.getFileEntryId() ==
 						tempFileEntry.getFileEntryId()) {
@@ -268,7 +268,7 @@ public class EntryAttachmentContentUpdaterTest {
 		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");
 
 		String content = _attachmentContentUpdater.updateContent(
-			sb.toString(), ContentTypes.TEXT_HTML, tempFileEntry -> null);
+			sb.toString(), tempFileEntry -> null);
 
 		String expectedContent = sb.toString();
 

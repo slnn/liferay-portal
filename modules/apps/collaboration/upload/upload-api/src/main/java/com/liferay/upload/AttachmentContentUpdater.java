@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public interface AttachmentContentUpdater {
 
 	public String updateContent(
-			String content, String contentType,
+			String content,
 			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException;
 
