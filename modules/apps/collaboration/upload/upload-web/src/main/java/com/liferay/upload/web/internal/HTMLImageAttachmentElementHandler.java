@@ -59,8 +59,7 @@ public class HTMLImageAttachmentElementHandler
 	@Override
 	public String replaceAttachmentElements(
 			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException>
-				saveTempFileUnsafeFunction)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveTempFile)
 		throws PortalException {
 
 		Matcher matcher = _TEMP_ATTACHMENT_PATTERN.matcher(content);
@@ -70,7 +69,7 @@ public class HTMLImageAttachmentElementHandler
 		while (matcher.find()) {
 			FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
 
-			FileEntry attachmentFileEntry = saveTempFileUnsafeFunction.apply(
+			FileEntry attachmentFileEntry = saveTempFile.apply(
 				tempAttachmentFileEntry);
 
 			matcher.appendReplacement(
