@@ -473,7 +473,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
-		BlogsEntry entry = null;
+		BlogsEntry entry;
 
 		if (entryId <= 0) {
 
