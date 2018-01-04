@@ -27,10 +27,6 @@ import com.liferay.upload.AttachmentElementHandler;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -41,16 +37,11 @@ import org.osgi.service.component.annotations.Component;
 public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 
 	@Override
-	public String getElementTag(String originalImgTag, FileEntry fileEntry) {
+	public String getElementTag(FileEntry fileEntry) {
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
 			null, fileEntry, StringPool.BLANK);
 
-		Element image = _parseImgTag(originalImgTag);
-
-		image.attr("src", fileEntryURL);
-		image.removeAttr(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-
-		return image.toString();
+		return "<img src=\"" + fileEntryURL + "\" />";
 	}
 
 	@Override
@@ -71,8 +62,7 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 
 			matcher.appendReplacement(
 				sb,
-				Matcher.quoteReplacement(
-					getElementTag(matcher.group(0), attachmentFileEntry)));
+				Matcher.quoteReplacement(getElementTag(attachmentFileEntry)));
 		}
 
 		matcher.appendTail(sb);
@@ -84,19 +74,6 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 		long fileEntryId = GetterUtil.getLong(matcher.group(1));
 
 		return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
-	}
-
-	private Element _parseImgTag(String originalImgTag) {
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-		outputSettings.syntax(Document.OutputSettings.Syntax.xml);
-
-		Document document = Jsoup.parseBodyFragment(originalImgTag);
-
-		document.outputSettings(outputSettings);
-
-		return document.body().child(0);
 	}
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =
