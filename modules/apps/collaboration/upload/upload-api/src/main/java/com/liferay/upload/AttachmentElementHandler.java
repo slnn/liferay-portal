@@ -24,12 +24,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
  */
 public interface AttachmentElementHandler {
 
-	public String getAttachmentElement(
-		String originalElement, FileEntry fileEntry);
+	public String getElementTag(String originalTag, FileEntry fileEntry);
 
-	public String replaceAttachmentElements(
+	public String replaceContentElements(
 			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException> saveTempFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException;
 
 }
