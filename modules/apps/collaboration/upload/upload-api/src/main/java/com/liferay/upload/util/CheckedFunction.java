@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.upload;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.upload.util.CheckedFunction;
+package com.liferay.upload.util;
 
 /**
- * @author Alejandro Tardín
- * @author Jürgen Kappler
+ * @author Adolfo Pérez
  */
-public interface AttachmentElementHandler {
+@FunctionalInterface
+public interface CheckedFunction<S, T, E extends Exception> {
 
-	public String getElementTag(FileEntry fileEntry);
-
-	public String replaceContentElements(
-			String content,
-			CheckedFunction<FileEntry, FileEntry, PortalException> saveFile)
-		throws PortalException;
+	public T apply(S s) throws E;
 
 }
