@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.User;
 
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowStateException;
@@ -41,6 +42,15 @@ public class EventResponseImpl
 
 	@Override
 	public void setRenderParameters(EventRequest eventRequest) {
+		if (eventRequest == null) {
+			throw new IllegalArgumentException();
+		}
+
+		MutableRenderParameters renderParameters = getRenderParameters();
+
+		renderParameters.clear();
+
+		renderParameters.set(eventRequest.getRenderParameters());
 	}
 
 	/**
