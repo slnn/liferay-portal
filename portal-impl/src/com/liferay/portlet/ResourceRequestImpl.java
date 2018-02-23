@@ -26,6 +26,8 @@ import com.liferay.portlet.internal.ResourceParametersImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +89,7 @@ public class ResourceRequestImpl
 
 	@Override
 	public Map<String, String[]> getPrivateRenderParameterMap() {
-		return null;
+		return Collections.unmodifiableMap(_privateRenderParameterMap);
 	}
 
 	@Override
@@ -162,6 +164,8 @@ public class ResourceRequestImpl
 		if (!PortalUtil.isValidResourceId(_resourceID)) {
 			_resourceID = StringPool.BLANK;
 		}
+
+		_privateRenderParameterMap = new HashMap<>();
 
 		Map<String, String[]> resourceParameterMap = new LinkedHashMap<>();
 		RenderParameters renderParameters = getRenderParameters();
@@ -238,6 +242,12 @@ public class ResourceRequestImpl
 							"!@#$ NOT COUNTING AS RESOURCE PARAM name=" + name);
 					}
 				}
+				else if (renderParameterNames.contains(name) &&
+						 !renderParameters.isPublic(name)) {
+
+					_privateRenderParameterMap.put(
+						name, renderParameters.getValues(name));
+				}
 			}
 		}
 
@@ -246,6 +256,7 @@ public class ResourceRequestImpl
 	}
 
 	private String _cacheablity;
+	private Map<String, String[]> _privateRenderParameterMap;
 	private String _resourceID;
 	private ResourceParameters _resourceParameters;
 
