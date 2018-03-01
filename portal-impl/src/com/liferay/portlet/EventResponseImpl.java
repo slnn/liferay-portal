@@ -14,11 +14,14 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowStateException;
@@ -28,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class EventResponseImpl
 	extends StateAwareResponseImpl implements EventResponse {
 
@@ -38,6 +42,15 @@ public class EventResponseImpl
 
 	@Override
 	public void setRenderParameters(EventRequest eventRequest) {
+		if (eventRequest == null) {
+			throw new IllegalArgumentException();
+		}
+
+		MutableRenderParameters renderParameters = getRenderParameters();
+
+		renderParameters.clear();
+
+		renderParameters.set(eventRequest.getRenderParameters());
 	}
 
 	/**
