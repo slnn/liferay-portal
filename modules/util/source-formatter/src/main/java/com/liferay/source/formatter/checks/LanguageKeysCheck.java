@@ -26,7 +26,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -136,36 +135,36 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				Properties bndLanguageProperties = _getBNDLanguageProperties(
-					fileName);
+				Properties langModuleLanguageProperties =
+					_getLangModuleLanguageProperties(absolutePath);
 
-				if ((bndLanguageProperties != null) &&
-					bndLanguageProperties.containsKey(languageKey)) {
+				if ((langModuleLanguageProperties != null) &&
+					langModuleLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
 
-				Properties langModuleLanguageProperties =
-					_getLangModuleLanguageProperties(absolutePath);
+				BNDSettings bndSettings = getBNDSettings(fileName);
 
-				if ((langModuleLanguageProperties == null) ||
-					!langModuleLanguageProperties.containsKey(languageKey)) {
+				if (bndSettings != null) {
+					Properties bndLanguageProperties =
+						_getBNDLanguageProperties(bndSettings);
 
-					addMessage(
-						fileName, "Missing language key '" + languageKey + "'");
+					if ((bndLanguageProperties == null) ||
+						bndLanguageProperties.containsKey(languageKey)) {
+
+						continue;
+					}
 				}
+
+				addMessage(
+					fileName, "Missing language key '" + languageKey + "'");
 			}
 		}
 	}
 
-	private Properties _getBNDLanguageProperties(String fileName)
+	private Properties _getBNDLanguageProperties(BNDSettings bndSettings)
 		throws Exception {
-
-		BNDSettings bndSettings = getBNDSettings(fileName);
-
-		if (bndSettings == null) {
-			return null;
-		}
 
 		Properties bndFileLanguageProperties =
 			bndSettings.getLanguageProperties();
@@ -284,17 +283,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 			File directory = new File(fileLocation);
 
-			File[] subdirectories = directory.listFiles(
-				new FileFilter() {
-
-					@Override
-					public boolean accept(File file) {
-						return file.isDirectory();
-					}
-
-				});
-
-			for (File subdirectory : subdirectories) {
+			for (File subdirectory : directory.listFiles(File::isDirectory)) {
 				String subdirectoryPath = subdirectory.getAbsolutePath();
 
 				if (subdirectoryPath.endsWith("-lang")) {

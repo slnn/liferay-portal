@@ -14,10 +14,13 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
@@ -39,24 +42,32 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class DeactivateUserMVCActionCommand extends BaseMVCActionCommand {
+public class DeactivateUserMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		_userService.updateStatus(
+		_userLocalService.updateStatus(
 			selUserId, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		User user = _userLocalService.getUser(selUserId);
 
-		sendRedirect(actionRequest, actionResponse, redirect);
+		Group group = user.getGroup();
+
+		group.setActive(true);
+
+		_groupLocalService.updateGroup(group);
 	}
 
 	@Reference
-	private UserService _userService;
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

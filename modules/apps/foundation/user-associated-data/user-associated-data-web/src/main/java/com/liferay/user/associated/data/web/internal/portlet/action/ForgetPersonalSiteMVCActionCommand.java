@@ -14,14 +14,25 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.RequiredUserException;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author William Newbury
@@ -34,12 +45,36 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class ForgetPersonalSiteMVCActionCommand extends BaseMVCActionCommand {
+public class ForgetPersonalSiteMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
+
+		User selUser = _userLocalService.getUserById(selUserId);
+
+		if (selUser.isDefaultUser()) {
+			throw new RequiredUserException();
+		}
+
+		_groupLocalService.deleteGroup(selUser.getGroup());
+
+		_groupLocalService.addGroup(
+			selUser.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			User.class.getName(), selUser.getUserId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, (Map<Locale, String>)null,
+			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + selUser.getScreenName(), false, true, null);
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

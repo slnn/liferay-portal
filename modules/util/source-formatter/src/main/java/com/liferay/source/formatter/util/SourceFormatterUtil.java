@@ -54,7 +54,7 @@ public class SourceFormatterUtil {
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes,
-		boolean forceIncludeSourceFormatterExcludes) {
+		boolean forceIncludeAllFiles) {
 
 		List<String> excludeRegexList = new ArrayList<>();
 		Map<String, List<String>> excludeRegexMap = new HashMap<>();
@@ -81,7 +81,7 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		if (!forceIncludeSourceFormatterExcludes) {
+		if (!forceIncludeAllFiles) {
 			Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
 				sourceFormatterExcludes.getExcludeSyntaxPatternsMap();
 
@@ -192,30 +192,38 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<File> getSuppressionsFiles(
-		String basedir, String fileName, List<String> allFileNames,
-		SourceFormatterExcludes sourceFormatterExcludes) {
+		String basedir, List<String> allFileNames,
+		SourceFormatterExcludes sourceFormatterExcludes, String... fileNames) {
 
 		List<File> suppressionsFiles = new ArrayList<>();
 
-		// Find suppressions files in any parent directory
+		String[] includes = new String[fileNames.length];
 
-		String parentDirName = basedir;
+		for (int i = 0; i < fileNames.length; i++) {
+			String fileName = fileNames[i];
 
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
-			File suppressionsFile = new File(parentDirName + fileName);
+			includes[i] = "**/" + fileName;
 
-			if (suppressionsFile.exists()) {
-				suppressionsFiles.add(suppressionsFile);
+			// Find suppressions files in any parent directory
+
+			String parentDirName = basedir;
+
+			for (int j = 0; j < ToolsUtil.PORTAL_MAX_DIR_LEVEL; j++) {
+				File suppressionsFile = new File(parentDirName + fileName);
+
+				if (suppressionsFile.exists()) {
+					suppressionsFiles.add(suppressionsFile);
+				}
+
+				parentDirName += "../";
 			}
-
-			parentDirName += "../";
 		}
 
 		// Find suppressions files in any child directory
 
 		List<String> moduleSuppressionsFileNames = filterFileNames(
-			allFileNames, new String[0], new String[] {"**/" + fileName},
-			sourceFormatterExcludes, true);
+			allFileNames, new String[0], includes, sourceFormatterExcludes,
+			true);
 
 		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
 			moduleSuppressionsFileName = StringUtil.replace(
