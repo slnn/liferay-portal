@@ -18,6 +18,10 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -49,6 +53,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.impl.PortletPreferencesPersistenceImpl;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
@@ -595,6 +600,18 @@ public class PortletPreferencesLocalServiceImpl
 					String.valueOf(ownerType), ", plid=", String.valueOf(plid),
 					", portletId=", portletId, ", xml=", xml, "}"));
 		}
+
+		EntityCache entityCache = EntityCacheUtil.getEntityCache();
+
+		entityCache.removeCache(PortletPreferencesImpl.class.getName());
+
+		FinderCache finderCache = FinderCacheUtil.getFinderCache();
+
+		Object[] args = {ownerId, ownerType, plid, portletId};
+
+		finderCache.removeResult(
+			PortletPreferencesPersistenceImpl.FINDER_PATH_COUNT_BY_O_O_P_P,
+			args);
 
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
