@@ -71,6 +71,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -418,6 +420,15 @@ public class JournalTransformer {
 		try {
 			long companyId = CompanyThreadLocal.getCompanyId();
 
+			String key = companyId + "-" + langType;
+
+			StringTemplateResource errorTemplateResource =
+				_errorTemplates.get(key);
+
+			if (errorTemplateResource != null) {
+				return errorTemplateResource;
+			}
+
 			JournalServiceConfiguration journalServiceConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
 					JournalServiceConfiguration.class, companyId);
@@ -437,7 +448,12 @@ public class JournalTransformer {
 				return null;
 			}
 
-			return new StringTemplateResource(langType, template);
+			errorTemplateResource = new StringTemplateResource(
+				langType, template);
+
+			_errorTemplates.putIfAbsent(key, errorTemplateResource);
+
+			return errorTemplateResource;
 		}
 		catch (Exception e) {
 		}
@@ -714,6 +730,9 @@ public class JournalTransformer {
 		JournalTransformer.class.getName() + ".XmlAfterListener");
 	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		JournalTransformer.class.getName() + ".XmlBeforeListener");
+
+	private static final ConcurrentMap<String, StringTemplateResource>
+		_errorTemplates = new ConcurrentHashMap<>();
 
 	private final Map<String, String> _errorTemplateIds = new HashMap<>();
 	private final boolean _restricted;
