@@ -451,9 +451,7 @@ public class JournalTransformer {
 			errorTemplateResource = new StringTemplateResource(
 				langType, template);
 
-			_errorTemplates.putIfAbsent(key, errorTemplateResource);
-
-			return errorTemplateResource;
+			return _errorTemplates.putIfAbsent(key, errorTemplateResource);
 		}
 		catch (Exception e) {
 		}
