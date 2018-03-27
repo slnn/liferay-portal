@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-dyanmic-insert</short-name>
+	<uri>http://liferay.com/tld/dynamic-insert</uri>
+	<tag>
+		<description></description>
+		<name>dynamic-insert</name>
+		<tag-class>com.liferay.dynamic.insert.taglib.servlet.taglib.DynamicInsertTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Name for Dynamic Insert</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Service Ranking Threshold for Dynamic Insert</description>
+			<name>serviceRankingThreshold</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>
