@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Dynamic Insert Taglib
+Bundle-SymbolicName: com.liferay.dynamic.insert.taglib
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.dynamic.insert.taglib,\
+	com.liferay.dynamic.insert.taglib.servlet.taglib
+
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/dynamic-insert";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /dynamic-insert-taglib
