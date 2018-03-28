@@ -97,9 +97,13 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-dynamic-insert:dynamic-insert
+	name="testDI"
+>
+	<liferay-trash:undo
+		portletURL="<%= restoreTrashEntriesURL %>"
+	/>
+</liferay-dynamic-insert:dynamic-insert>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
