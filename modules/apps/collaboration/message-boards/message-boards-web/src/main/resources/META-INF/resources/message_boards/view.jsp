@@ -76,13 +76,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 %>
 
-<portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
+<liferay-dynamic-section:dynamic-section
+	name="MBViewTestDI"
+>
+	<portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+	</portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+	<liferay-trash:undo
+		portletURL="<%= restoreTrashEntriesURL %>"
+	/>
+</liferay-dynamic-section:dynamic-section>
 
 <liferay-util:include page="/message_boards/nav.jsp" servletContext="<%= application %>" />
 
