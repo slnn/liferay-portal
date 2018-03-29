@@ -77,7 +77,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 %>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="MBViewTestDI"
 >
 	<portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

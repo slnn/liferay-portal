@@ -133,7 +133,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 </div>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="DLSelectFileEntryTestDI"
 >
 	<aui:script>
 		Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFileEntryFm', '<%= HtmlUtil.escapeJS(eventName) %>');

@@ -16,7 +16,7 @@
 
 <%@ include file="/blogs_admin/init.jsp" %>
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="BlogAdminViewTestDI"
 >
 
 	<%

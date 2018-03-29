@@ -98,7 +98,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 </portlet:actionURL>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="DLVieweTestDI"
 >
 	<liferay-trash:undo
 		portletURL="<%= restoreTrashEntriesURL %>"

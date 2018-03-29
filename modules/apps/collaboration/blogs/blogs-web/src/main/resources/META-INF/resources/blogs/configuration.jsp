@@ -21,7 +21,7 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 %>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="BlogConfigurationTestDI"
 >
 	<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 

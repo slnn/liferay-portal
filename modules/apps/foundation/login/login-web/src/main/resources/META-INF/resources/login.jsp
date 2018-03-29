@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="LoginTestDI"
 >
 	<c:choose>
 		<c:when test="<%= themeDisplay.isSignedIn() %>">

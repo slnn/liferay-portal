@@ -137,7 +137,7 @@ else {
 </aui:form>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="MBSelectCategoryTestDI"
 >
 	<aui:script>
 		Liferay.Util.selectEntityHandler('#<portlet:namespace />selectCategoryFm', '<%= HtmlUtil.escapeJS(eventName) %>');

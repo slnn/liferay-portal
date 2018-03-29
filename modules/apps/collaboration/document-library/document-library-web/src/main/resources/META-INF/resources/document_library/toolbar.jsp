@@ -35,7 +35,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="DLToolbarTestDI"
 >
 	<liferay-frontend:management-bar
 		disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"

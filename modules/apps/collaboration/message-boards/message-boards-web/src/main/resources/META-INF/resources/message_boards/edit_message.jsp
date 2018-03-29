@@ -115,7 +115,7 @@ if (portletTitleBasedNavigation) {
 %>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="MBEditMessageestestDI"
 >
 	<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> id='<%= renderResponse.getNamespace() + "mbEditPageContainer" %>'>
 		<c:if test="<%= !portletTitleBasedNavigation %>">

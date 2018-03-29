@@ -32,7 +32,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 </portlet:actionURL>
 
 <liferay-dynamic-insert:dynamic-insert
-	name="testDI"
+	name="BlogViewTestDI"
 >
 	<liferay-trash:undo
 		portletURL="<%= restoreTrashEntriesURL %>"
