@@ -52,17 +52,7 @@
 			</a>
 		</#if>
 
-		<div class="autofit-row autofit-float portlet-header">
-			<div class="autofit-col autofit-col-expand">
-				<h2 class="portlet-title-text">${portlet_title}</h2>
-			</div>
-
-			<div class="autofit-col autofit-col-end">
-				<div class="autofit-section">
-					<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
-				</div>
-			</div>
-		</div>
+		<h2 class="portlet-title-text">${portlet_title}</h2>
 
 		${portlet_display.writeContent(writer)}
 	</div>
