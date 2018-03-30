@@ -31,17 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SocialBookmarkRegistryUtil {
 
 	public static SocialBookmark getSocialBookmark(String type) {
-		SocialBookmarkRegistry socialBookmarkRegistry =
-			_instance._socialBookmarkRegistry;
-
-		return socialBookmarkRegistry.getSocialBookmark(type);
+		return _instance._socialBookmarkRegistry.getSocialBookmark(type);
 	}
 
 	public static List<String> getSocialBookmarkTypes() {
-		SocialBookmarkRegistry socialBookmarkRegistry =
-			_instance._socialBookmarkRegistry;
-
-		return socialBookmarkRegistry.getSocialBookmarkTypes();
+		return _instance._socialBookmarkRegistry.getSocialBookmarkTypes();
 	}
 
 	@Activate
