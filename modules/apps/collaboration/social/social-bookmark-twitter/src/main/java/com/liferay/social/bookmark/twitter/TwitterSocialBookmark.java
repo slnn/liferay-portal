@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, property = "social.bookmarks.type=twitter")
+@Component(immediate = true, property = "social.bookmark.type=twitter")
 public class TwitterSocialBookmark implements SocialBookmark {
 
 	@Override
