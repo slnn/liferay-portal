@@ -14,10 +14,7 @@
 
 package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRegistryUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -57,15 +54,7 @@ public class SocialBookmarksTag extends IncludeTag {
 	}
 
 	public void setDisplayStyle(String displayStyle) {
-		if (Validator.isNull(displayStyle)) {
-			String[] socialBookmarksDisplayStyles = PropsUtil.getArray(
-				PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
-
-			_displayStyle = socialBookmarksDisplayStyles[0];
-		}
-		else {
-			_displayStyle = displayStyle;
-		}
+		_displayStyle = displayStyle;
 	}
 
 	@Override
