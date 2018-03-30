@@ -58,6 +58,11 @@ public class DeprecatedSocialBookmark implements SocialBookmark {
 	}
 
 	@Override
+	public String getType() {
+		return _type;
+	}
+
+	@Override
 	public void render(
 			String target, String title, String url, HttpServletRequest request,
 			HttpServletResponse response)
