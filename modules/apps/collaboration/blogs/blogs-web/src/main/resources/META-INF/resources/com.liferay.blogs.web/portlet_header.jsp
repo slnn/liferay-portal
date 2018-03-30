@@ -20,7 +20,7 @@
 BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
 %>
 
-<div class="btn-group">
+<div class="btn-goup">
 	<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>">
 
 		<%
@@ -30,6 +30,7 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 		<div class="btn-group-item">
 			<clay:link buttonStyle="borderless" elementClasses="btn-sm" href="<%= rssURL %>" icon="rss" label='<%= LanguageUtil.get(request, "rss") %>' />
 		</div>
+
 
 		<liferay-util:html-top>
 			<link href="<%= HtmlUtil.escapeAttribute(rssURL) %>" rel="alternate" title="RSS" type="application/rss+xml" />
