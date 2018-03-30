@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.social.bookmarks.SocialBookmark;
-import com.liferay.social.bookmarks.SocialBookmarksRegistry;
+import com.liferay.social.bookmarks.SocialBookmarkRegistry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alejandro Tardín
  */
 @Component(immediate = true)
-public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
+public class SocialBookmarkRegistryImpl implements SocialBookmarkRegistry {
 
 	@Override
 	public SocialBookmark getSocialBookmark(String type) {
@@ -77,17 +77,17 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	}
 
 	@Override
-	public List<String> getSocialBookmarksTypes() {
-		Set<String> socialBookmarksTypes = new LinkedHashSet<>();
+	public List<String> getSocialBookmarkTypes() {
+		Set<String> socialBookmarkTypes = new LinkedHashSet<>();
 
-		socialBookmarksTypes.addAll(_serviceTrackerMap.keySet());
+		socialBookmarkTypes.addAll(_serviceTrackerMap.keySet());
 
 		Map<String, SocialBookmark> deprecatedSocialBookmarks =
 			_getDeprecatedSocialBookmarks();
 
-		socialBookmarksTypes.addAll(deprecatedSocialBookmarks.keySet());
+		socialBookmarkTypes.addAll(deprecatedSocialBookmarks.keySet());
 
-		return new ArrayList<>(socialBookmarksTypes);
+		return new ArrayList<>(socialBookmarkTypes);
 	}
 
 	@Activate
@@ -113,7 +113,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SocialBookmarksRegistryImpl.class);
+		SocialBookmarkRegistryImpl.class);
 
 	private ServiceTrackerMap<String, SocialBookmark> _serviceTrackerMap;
 
