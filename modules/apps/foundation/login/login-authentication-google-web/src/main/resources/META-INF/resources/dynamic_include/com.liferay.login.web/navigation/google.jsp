@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/dynamic_include/init.jsp" %>
+<%@ include file="/com.liferay.login.web/navigation/init.jsp" %>
 
 <%
 String googleAuthURL = PortalUtil.getPathContext() + "/c/portal/google_login?cmd=login";
