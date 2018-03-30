@@ -65,7 +65,7 @@ public class JournalAnalyticsViewJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/view.jsp";
+		return "/view.jsp";
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class CommentAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/analytics.jsp";
+		return "/analytics.jsp";
 	}
 
 	@Override

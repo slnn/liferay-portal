@@ -39,7 +39,7 @@ public class BlogsAnalyticsViewEntryJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/view_entry.jsp";
+		return "/view_entry.jsp";
 	}
 
 	@Override
