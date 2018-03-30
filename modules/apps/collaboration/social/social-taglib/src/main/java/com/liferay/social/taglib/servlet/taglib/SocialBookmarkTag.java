@@ -162,7 +162,8 @@ public class SocialBookmarkTag extends IncludeTag {
 		request.setAttribute("liferay-ui:social-bookmark:url", _url);
 	}
 
-	private static final String _PAGE = "/bookmark/page.jsp";
+	private static final String _PAGE =
+		"/html/taglib/ui/social_bookmark/page.jsp";
 
 	private static final Map<String, String> _jspPaths = new HashMap<>();
 
