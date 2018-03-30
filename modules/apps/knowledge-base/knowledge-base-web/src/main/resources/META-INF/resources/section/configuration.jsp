@@ -96,7 +96,7 @@ kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSecti
 								<liferay-ui:message key="social-bookmarks" />
 							</h4>
 
-							<liferay-social-bookmarks:bookmarks-settings
+							<liferay-social:bookmarks-settings
 								displayStyle="<%= kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 								types="<%= kbSectionPortletInstanceConfiguration.socialBookmarksTypes() %>"
 							/>
