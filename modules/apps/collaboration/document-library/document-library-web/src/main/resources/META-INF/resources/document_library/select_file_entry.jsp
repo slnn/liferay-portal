@@ -132,6 +132,10 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 	</aui:form>
 </div>
 
-<aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFileEntryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
-</aui:script>
+<liferay-dynamic-section:dynamic-section
+	name="DLSelectFileEntryTestDI"
+>
+	<aui:script>
+		Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFileEntryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	</aui:script>
+</liferay-dynamic-section:dynamic-section>

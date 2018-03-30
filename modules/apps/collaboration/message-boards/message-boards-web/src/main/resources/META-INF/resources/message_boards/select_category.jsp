@@ -136,6 +136,10 @@ else {
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectCategoryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
-</aui:script>
+<liferay-dynamic-section:dynamic-section
+	name="MBSelectCategoryTestDI"
+>
+	<aui:script>
+		Liferay.Util.selectEntityHandler('#<portlet:namespace />selectCategoryFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	</aui:script>
+</liferay-dynamic-section:dynamic-section>

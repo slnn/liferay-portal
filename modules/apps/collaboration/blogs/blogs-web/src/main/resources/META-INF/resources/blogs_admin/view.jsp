@@ -15,44 +15,48 @@
 --%>
 
 <%@ include file="/blogs_admin/init.jsp" %>
+<liferay-dynamic-section:dynamic-section
+	name="BlogAdminViewTestDI"
+>
 
-<%
-final String navigation = ParamUtil.getString(request, "navigation", "entries");
+	<%
+	final String navigation = ParamUtil.getString(request, "navigation", "entries");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+	PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
-portletURL.setParameter("navigation", navigation);
-%>
+	portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
+	portletURL.setParameter("navigation", navigation);
+	%>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-				navigationItem -> {
-					navigationItem.setActive(navigation.equals("entries"));
-					navigationItem.setHref(renderResponse.createRenderURL());
-					navigationItem.setLabel(LanguageUtil.get(request, "entries"));
-				});
+	<clay:navigation-bar
+		inverted="<%= true %>"
+		items="<%=
+			new JSPNavigationItemList(pageContext) {
+				{
+					add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("entries"));
+						navigationItem.setHref(renderResponse.createRenderURL());
+						navigationItem.setLabel(LanguageUtil.get(request, "entries"));
+					});
 
-				add(
-				navigationItem -> {
-					navigationItem.setActive(navigation.equals("images"));
-					navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "images");
-					navigationItem.setLabel(LanguageUtil.get(request, "images"));
-				});
+					add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("images"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "images");
+						navigationItem.setLabel(LanguageUtil.get(request, "images"));
+					});
+				}
 			}
-		}
-	%>"
-/>
+		%>"
+	/>
 
-<c:choose>
-	<c:when test='<%= navigation.equals("entries") %>'>
-		<liferay-util:include page="/blogs_admin/view_entries.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/blogs_admin/view_images.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+	<c:choose>
+		<c:when test='<%= navigation.equals("entries") %>'>
+			<liferay-util:include page="/blogs_admin/view_entries.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-util:include page="/blogs_admin/view_images.jsp" servletContext="<%= application %>" />
+		</c:otherwise>
+	</c:choose>
+</liferay-dynamic-section:dynamic-section>

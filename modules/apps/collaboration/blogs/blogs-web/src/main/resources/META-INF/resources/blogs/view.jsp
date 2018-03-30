@@ -31,9 +31,13 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-dynamic-section:dynamic-section
+	name="BlogViewTestDI"
+>
+	<liferay-trash:undo
+		portletURL="<%= restoreTrashEntriesURL %>"
+	/>
+</liferay-dynamic-section:dynamic-section>
 
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
