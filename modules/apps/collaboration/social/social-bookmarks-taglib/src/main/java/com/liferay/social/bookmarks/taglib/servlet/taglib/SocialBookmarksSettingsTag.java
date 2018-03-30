@@ -14,12 +14,8 @@
 
 package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkRegistryUtil;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -42,15 +38,7 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	}
 
 	public void setTypes(String types) {
-		if (types != null) {
-			_types = StringUtil.split(types);
-		}
-		else {
-			List<String> allTypes =
-				SocialBookmarkRegistryUtil.getSocialBookmarkTypes();
-
-			_types = allTypes.toArray(new String[0]);
-		}
+		_types = types;
 	}
 
 	@Override
@@ -78,6 +66,6 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	private static final String _PAGE = "/bookmarks_settings/page.jsp";
 
 	private String _displayStyle;
-	private String[] _types;
+	private String _types;
 
 }
