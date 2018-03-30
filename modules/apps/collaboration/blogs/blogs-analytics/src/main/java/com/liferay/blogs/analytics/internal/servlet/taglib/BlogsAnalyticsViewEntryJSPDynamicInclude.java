@@ -39,7 +39,7 @@ public class BlogsAnalyticsViewEntryJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/view_entry.jsp";
+		return "/com.liferay.blogs.analytics/view_entry.jsp";
 	}
 
 	@Override

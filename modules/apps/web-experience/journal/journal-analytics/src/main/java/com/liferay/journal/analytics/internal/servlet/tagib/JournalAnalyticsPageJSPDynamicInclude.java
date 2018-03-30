@@ -65,7 +65,7 @@ public class JournalAnalyticsPageJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/view.jsp";
+		return "/com.liferay.journal.analytics/view.jsp";
 	}
 
 	@Override
