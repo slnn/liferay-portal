@@ -16,7 +16,7 @@ package com.liferay.login.authentication.google.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,7 +24,9 @@ import com.liferay.portal.security.sso.google.GoogleAuthorization;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class GoogleNavigationPreJSPDynamicInclude
-	extends BaseJSPDynamicInclude {
+public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -51,7 +52,17 @@ public class GoogleNavigationPreJSPDynamicInclude
 			return;
 		}
 
-		super.include(request, response, key);
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_JSP_PATH);
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			_log.error("Unable to include JSP " + _JSP_PATH, se);
+
+			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+		}
 	}
 
 	@Override
@@ -60,28 +71,18 @@ public class GoogleNavigationPreJSPDynamicInclude
 			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
-	@Override
-	protected String getJspPath() {
-		return "/html/portlet/login/navigation/google.jsp";
-	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	private static final String _JSP_PATH =
+		"/html/portlet/login/navigation/google.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleNavigationPreJSPDynamicInclude.class);
+		GoogleNavigationPreDynamicInclude.class);
 
 	@Reference
 	private GoogleAuthorization _googleAuthorization;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)"
+	)
+	private ServletContext _servletContext;
 
 }

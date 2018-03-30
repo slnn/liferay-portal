@@ -17,7 +17,7 @@ package com.liferay.blogs.web.internal.servlet.taglib;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,7 +27,9 @@ import java.io.IOException;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class BlogsPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class BlogsPortletHeaderDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -59,7 +61,17 @@ public class BlogsPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		super.include(request, response, key);
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_JSP_PATH);
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			_log.error("Unable to include JSP " + _JSP_PATH, se);
+
+			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+		}
 	}
 
 	@Override
@@ -68,25 +80,13 @@ public class BlogsPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"portlet_header_" + BlogsPortletKeys.BLOGS);
 	}
 
-	@Override
-	protected String getJspPath() {
-		return "/com.liferay.blogs.web/portlet_header.jsp";
-	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.blogs.web)", unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	private static final String _JSP_PATH =
+		"/com.liferay.blogs.web/portlet_header.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsPortletHeaderJSPDynamicInclude.class);
+		BlogsPortletHeaderDynamicInclude.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.blogs.web)")
+	private ServletContext _servletContext;
 
 }

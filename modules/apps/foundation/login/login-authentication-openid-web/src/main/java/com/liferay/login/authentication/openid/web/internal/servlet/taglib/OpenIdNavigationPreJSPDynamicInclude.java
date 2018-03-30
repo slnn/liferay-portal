@@ -17,7 +17,7 @@ package com.liferay.login.authentication.openid.web.internal.servlet.taglib;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class OpenIdNavigationPreJSPDynamicInclude
-	extends BaseJSPDynamicInclude {
+public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -62,7 +63,17 @@ public class OpenIdNavigationPreJSPDynamicInclude
 			return;
 		}
 
-		super.include(request, response, key);
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_JSP_PATH);
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			_log.error("Unable to include JSP " + _JSP_PATH, se);
+
+			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+		}
 	}
 
 	@Override
@@ -71,16 +82,6 @@ public class OpenIdNavigationPreJSPDynamicInclude
 
 		dynamicIncludeRegistry.register(
 			"com.liferay.login.web#/navigation.jsp#pre");
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/com.liferay.login.web/navigation/openid.jsp";
-	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
 	}
 
 	@Reference(unbind = "-")
@@ -93,12 +94,16 @@ public class OpenIdNavigationPreJSPDynamicInclude
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		_servletContext = servletContext;
 	}
 
+	private static final String _JSP_PATH =
+		"/com.liferay.login.web/navigation/openid.jsp";
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdNavigationPreJSPDynamicInclude.class);
+		OpenIdNavigationPreDynamicInclude.class);
 
 	private OpenId _openId;
+	private ServletContext _servletContext;
 
 }
