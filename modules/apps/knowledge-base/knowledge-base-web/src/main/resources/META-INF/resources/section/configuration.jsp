@@ -98,7 +98,7 @@ kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSecti
 
 							<liferay-social-bookmarks:bookmarks-settings
 								displayStyle="<%= kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-								types="<%= SocialBookmarksUtil.getSocialBookmarkTypes(kbSectionPortletInstanceConfiguration.socialBookmarksTypes()) %>"
+								types="<%= kbSectionPortletInstanceConfiguration.socialBookmarksTypes() %>"
 							/>
 						</aui:fieldset>
 					</aui:fieldset-group>
