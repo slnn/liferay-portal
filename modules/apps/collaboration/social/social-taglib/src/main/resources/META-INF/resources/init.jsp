@@ -24,6 +24,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
