@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = BlogsEntryPermission.class)
+@Component(immediate = true)
 public class BlogsEntryPermission {
 
 	public static boolean contains(

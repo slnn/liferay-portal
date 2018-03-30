@@ -20,12 +20,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = BlogsEntryUtil.class)
 public class BlogsEntryUtil {
 
 	public static String getDisplayTitle(
