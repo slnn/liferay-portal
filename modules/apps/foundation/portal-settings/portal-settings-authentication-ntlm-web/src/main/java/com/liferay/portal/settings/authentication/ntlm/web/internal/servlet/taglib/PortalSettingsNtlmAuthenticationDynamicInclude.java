@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.ntlm.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,22 +25,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds an OpenID tab to the Authentication section of the Portal Settings user
+ * Adds an NTLM tab to the Authentication section of the Portal Settings user
  * interface in the Control Panel.
  *
- * @author Stian Sigvartsen
+ * @author Phililp Jones
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=openid"},
+	property = {"portal.settings.authentication.tabs.name=ntlm"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsOpenIdAuthenticationJSPDynamicInclude
+public class PortalSettingsNtlmAuthenticationDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/openid.jsp";
+		return "/com.liferay.portal.settings.web/ntlm.jsp";
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class PortalSettingsOpenIdAuthenticationJSPDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ntlm.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -58,6 +58,6 @@ public class PortalSettingsOpenIdAuthenticationJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsOpenIdAuthenticationJSPDynamicInclude.class);
+		PortalSettingsNtlmAuthenticationDynamicInclude.class);
 
 }

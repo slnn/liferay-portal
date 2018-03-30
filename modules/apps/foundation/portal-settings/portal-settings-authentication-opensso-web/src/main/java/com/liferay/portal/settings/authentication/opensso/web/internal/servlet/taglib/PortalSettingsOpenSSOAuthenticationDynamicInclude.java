@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.ntlm.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.opensso.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,22 +25,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds an NTLM tab to the Authentication section of the Portal Settings user
+ * Adds an OpenSSO tab to the Authentication section of the Portal Settings user
  * interface in the Control Panel.
  *
- * @author Phililp Jones
+ * @author Philip Jones
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=ntlm"},
+	property = {"portal.settings.authentication.tabs.name=opensso"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsNtlmAuthenticationJSPDynamicInclude
+public class PortalSettingsOpenSSOAuthenticationDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/ntlm.jsp";
+		return "/com.liferay.portal.settings.web/opensso.jsp";
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class PortalSettingsNtlmAuthenticationJSPDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ntlm.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.opensso.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -58,6 +58,6 @@ public class PortalSettingsNtlmAuthenticationJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsNtlmAuthenticationJSPDynamicInclude.class);
+		PortalSettingsOpenSSOAuthenticationDynamicInclude.class);
 
 }

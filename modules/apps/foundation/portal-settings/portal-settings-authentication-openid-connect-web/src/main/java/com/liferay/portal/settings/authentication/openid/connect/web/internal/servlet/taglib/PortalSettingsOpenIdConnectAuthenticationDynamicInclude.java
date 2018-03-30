@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.google.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.openid.connect.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +25,19 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Edward C. Han
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=google"},
+	property = {"portal.settings.authentication.tabs.name=openid-connect"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsGoogleAuthenticationJSPDynamicInclude
+public class PortalSettingsOpenIdConnectAuthenticationDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/google.jsp";
+		return "/com.liferay.portal.settings.web/openid_connect.jsp";
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class PortalSettingsGoogleAuthenticationJSPDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.google.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.connect.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -55,6 +55,6 @@ public class PortalSettingsGoogleAuthenticationJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsGoogleAuthenticationJSPDynamicInclude.class);
+		PortalSettingsOpenIdConnectAuthenticationDynamicInclude.class);
 
 }

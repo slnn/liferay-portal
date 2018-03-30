@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"portal.settings.authentication.tabs.name=facebook"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude
+public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -58,6 +58,6 @@ public class PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude.class);
+		PortalSettingsFacebookConnectAuthenticationDynamicInclude.class);
 
 }
