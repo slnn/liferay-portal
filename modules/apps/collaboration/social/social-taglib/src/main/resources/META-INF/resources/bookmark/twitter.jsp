@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/bookmark/init.jsp" %>
+<%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
 <%
 String twitterDisplayStyle = "none";

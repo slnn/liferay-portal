@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 String displayStyle = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:displayStyle");
