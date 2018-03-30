@@ -34,9 +34,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Alejandro Tardín
  */
-public class DeprecatedSocialBookmark implements SocialBookmark {
+public class BackwardsCompatibleSocialBookmark implements SocialBookmark {
 
-	public DeprecatedSocialBookmark(String type) {
+	public BackwardsCompatibleSocialBookmark(String type) {
 		_type = type;
 	}
 
@@ -69,7 +69,7 @@ public class DeprecatedSocialBookmark implements SocialBookmark {
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/bookmark/deprecated_bookmark.jsp");
+			"/bookmark/backwards.jsp");
 
 		requestDispatcher.include(request, response);
 	}

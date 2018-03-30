@@ -103,7 +103,8 @@ public class SocialBookmarkUtil {
 		String[] oldTypes = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
 		for (String type : oldTypes) {
-			oldSocialBookmarks.put(type, new DeprecatedSocialBookmark(type));
+			oldSocialBookmarks.put(
+				type, new BackwardsCompatibleSocialBookmark(type));
 		}
 
 		return oldSocialBookmarks;
