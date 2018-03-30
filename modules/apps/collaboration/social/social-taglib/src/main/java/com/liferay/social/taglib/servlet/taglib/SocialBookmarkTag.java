@@ -14,16 +14,20 @@
 
 package com.liferay.social.taglib.servlet.taglib;
 
-import com.liferay.social.bookmarks.SocialBookmark;
-import com.liferay.social.taglib.internal.api.SocialBookmarkUtil;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -39,6 +43,10 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setIcon(String icon) {
+		_icon = icon;
 	}
 
 	@Override
@@ -58,6 +66,9 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	public void setType(String type) {
 		_type = type;
+
+		_postURL = PropsUtil.get(
+			PropsKeys.SOCIAL_BOOKMARK_POST_URL, new Filter(_type));
 	}
 
 	public void setUrl(String url) {
@@ -75,45 +86,99 @@ public class SocialBookmarkTag extends IncludeTag {
 		_url = null;
 	}
 
-	@Override
-	protected String getPage() {
-		return "/bookmark/page.jsp";
+	protected String getDisplayStyle() {
+		String displayStyle = _displayStyle;
+
+		if (Validator.isNull(displayStyle)) {
+			String[] displayStyles = PropsUtil.getArray(
+				PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
+			displayStyle = displayStyles[0];
+		}
+
+		return displayStyle;
 	}
 
 	@Override
-	protected void includePage(String page, HttpServletResponse response)
-		throws IOException, ServletException {
+	protected String getPage() {
+		String[] socialTypes = PropsUtil.getArray(
+			PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
-		SocialBookmark socialBookmark = _getSocialBookmark();
+		if (ArrayUtil.contains(socialTypes, _type)) {
+			String displayStyle = getDisplayStyle();
 
-		if (socialBookmark != null) {
-			if (_displayStyle.equals("menu")) {
-				super.includePage(page, response);
+			if (!displayStyle.equals("menu") && Validator.isNotNull(_jspPath)) {
+				return _jspPath;
 			}
 			else {
-				socialBookmark.render(_target, _title, _url, request, response);
+				return _PAGE;
 			}
 		}
+		else {
+			return null;
+		}
+	}
+
+	protected String getPostUrl() {
+		return StringUtil.replace(
+			_postURL,
+			new String[] {
+				"${liferay:social-bookmark:title}",
+				"${liferay:social-bookmark:url}"
+			},
+			new String[] {URLCodec.encodeURL(_title), _url});
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String jspPath = _jspPaths.get(_type);
+
+		if (jspPath == null) {
+			jspPath = PropsUtil.get(
+				PropsKeys.SOCIAL_BOOKMARK_JSP, new Filter(_type));
+
+			_jspPaths.put(_type, jspPath);
+		}
+
+		_jspPath = jspPath;
+
+		String icon = _icon;
+
+		String displayStyle = getDisplayStyle();
+
+		if (displayStyle.equals("menu") || Validator.isNull(_jspPath)) {
+			if (Validator.isNull(icon)) {
+				icon = PropsUtil.get(
+					PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(_type));
+
+				if (Validator.isNull(icon)) {
+					icon = "../aui/share-sign";
+				}
+			}
+
+			request.setAttribute("liferay-social:bookmark:icon", icon);
+			request.setAttribute(
+				"liferay-social:bookmark:postUrl", getPostUrl());
+		}
+
 		request.setAttribute("liferay-social:bookmark:contentId", _contentId);
 		request.setAttribute(
 			"liferay-social:bookmark:displayStyle", _displayStyle);
-		request.setAttribute(
-			"liferay-social:bookmark:socialBookmark", _getSocialBookmark());
 		request.setAttribute("liferay-social:bookmark:target", _target);
 		request.setAttribute("liferay-social:bookmark:title", _title);
+		request.setAttribute("liferay-social:bookmark:type", _type);
 		request.setAttribute("liferay-social:bookmark:url", _url);
 	}
 
-	private SocialBookmark _getSocialBookmark() {
-		return SocialBookmarkUtil.getSocialBookmark(_type);
-	}
+	private static final String _PAGE = "/bookmark/page.jsp";
+
+	private static final Map<String, String> _jspPaths = new HashMap<>();
 
 	private String _contentId;
 	private String _displayStyle;
+	private String _icon;
+	private String _jspPath;
+	private String _postURL;
 	private String _target;
 	private String _title;
 	private String _type;
