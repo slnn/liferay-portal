@@ -62,7 +62,7 @@ public class GoogleNavigationPreJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.login.web/navigation/google.jsp";
+		return "/html/portlet/login/navigation/google.jsp";
 	}
 
 	@Override
