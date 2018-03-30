@@ -33,11 +33,9 @@ List leftList = new ArrayList();
 String[] typesArray = StringUtil.split(types);
 
 for (int i = 0; i < typesArray.length; i++) {
-	SocialBookmark socialBookmark = SocialBookmarkUtil.getSocialBookmark(typesArray[i]);
+	String type = typesArray[i];
 
-	if (socialBookmark != null) {
-		leftList.add(new KeyValuePair(socialBookmark.getType(), socialBookmark.getName(locale)));
-	}
+	leftList.add(new KeyValuePair(type, LanguageUtil.get(request, type)));
 }
 
 // Right list
@@ -46,11 +44,11 @@ List rightList = new ArrayList();
 
 Arrays.sort(typesArray);
 
-for (SocialBookmark socialBookmark : SocialBookmarkUtil.getSocialBookmarks()) {
-	String curType = socialBookmark.getType();
+String[] allTypes = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
+for (String curType : allTypes) {
 	if (Arrays.binarySearch(typesArray, curType) < 0) {
-		rightList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
+		rightList.add(new KeyValuePair(curType, LanguageUtil.get(request, curType)));
 	}
 }
 
