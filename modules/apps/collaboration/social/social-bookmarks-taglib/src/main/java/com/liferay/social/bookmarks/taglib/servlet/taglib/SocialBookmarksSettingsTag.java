@@ -57,10 +57,8 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-social-bookmarks:bookmarks-settings:displayStyle",
-			_displayStyle);
-		request.setAttribute(
-			"liferay-social-bookmarks:bookmarks-settings:types", _types);
+			"liferay-social:bookmarks-settings:displayStyle", _displayStyle);
+		request.setAttribute("liferay-social:bookmarks-settings:types", _types);
 	}
 
 	private static final String _PAGE = "/bookmarks_settings/page.jsp";
