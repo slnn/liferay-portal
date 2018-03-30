@@ -40,7 +40,7 @@ public class PortalSettingsOpenIdAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/com.liferay.portal.settings.web/openid.jsp";
+		return "/com.liferay.portal.settings.web/openid.jsp";
 	}
 
 	@Override
