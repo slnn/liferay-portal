@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/dynamic_include/init.jsp" %>
+<%@ include file="/com.liferay.document.library.analytics/init.jsp" %>
 
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
