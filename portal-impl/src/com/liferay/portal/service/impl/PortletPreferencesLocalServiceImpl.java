@@ -595,7 +595,7 @@ public class PortletPreferencesLocalServiceImpl
 					String.valueOf(ownerType), ", plid=", String.valueOf(plid),
 					", portletId=", portletId, ", xml=", xml, "}"));
 		}
-
+		System.out.println("@@@@Hit PortletPreferencesLocalServiceImpl.updatePreferences()####");
 		portletPreferencesPersistence.clearCache();
 
 		PortletPreferences portletPreferences =
