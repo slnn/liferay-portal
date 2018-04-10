@@ -27,8 +27,6 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
-	${dataFactory.getCSVWriter("layout").write(layoutModel.friendlyURL + "\n")}
-
 	<@insertLayout _layoutModel=layoutModel />
 
 	<#assign portletPreferencesModels = dataFactory.newJournalPortletPreferencesModels(layoutModel.plid) />
@@ -67,6 +65,9 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
 				/>
 			</#if>
+			<#assign assetEntryModel = dataFactory.newAssetEntryModel(dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel))/>
+
+			${dataFactory.getCSVWriter("layout").write(layoutModel.friendlyURL + "," + ddmTemplateModel.templateKey + "," + assetEntryModel.entryId + "\n")}
 		</#list>
 
 		<@insertMBDiscussion
