@@ -65,9 +65,7 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
 				/>
 			</#if>
-			<#assign assetEntryModel = dataFactory.newAssetEntryModel(dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel))/>
 
-			${dataFactory.getCSVWriter("layout").write(layoutModel.friendlyURL + "," + ddmTemplateModel.templateKey + "," + assetEntryModel.entryId + "\n")}
 		</#list>
 
 		<@insertMBDiscussion
@@ -79,8 +77,14 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 			_mbThreadId=dataFactory.getCounterNext()
 		/>
 
-		${dataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
+		<#assign portletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel)/>
+
+		${dataFactory.toInsertSQL(portletPreferencesModel)}
 
 		${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid))}
+
+		<#assign assetEntryModel = dataFactory.newAssetEntryModel(dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel))/>
+
+		${dataFactory.getCSVWriter("layout").write(layoutModel.friendlyURL + "," + ddmTemplateModel.templateKey + "," + assetEntryModel.entryId + "," + portletPreferencesModel.portletId + "," + portletPreferencesModel.plid + "\n")}
 	</#list>
 </#list>
