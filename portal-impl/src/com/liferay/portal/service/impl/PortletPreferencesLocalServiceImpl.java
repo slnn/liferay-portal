@@ -596,6 +596,8 @@ public class PortletPreferencesLocalServiceImpl
 					", portletId=", portletId, ", xml=", xml, "}"));
 		}
 
+		portletPreferencesPersistence.clearCache();
+
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
 				ownerId, ownerType, plid, portletId);
