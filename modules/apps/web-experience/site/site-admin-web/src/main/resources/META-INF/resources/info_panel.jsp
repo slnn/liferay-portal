@@ -37,6 +37,17 @@ if (ListUtil.isEmpty(groups)) {
 	}
 }
 
+List<NavigationItem> navigationItems = new JSPNavigationItemList(pageContext) {
+	{
+		add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(currentURL);
+				navigationItem.setLabel(LanguageUtil.get(request, "details"));
+			});
+	}
+};
+
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 %>
 
@@ -54,18 +65,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				</div>
 
 				<clay:navigation-bar
-					items="<%=
-						new JSPNavigationItemList(pageContext) {
-							{
-								add(
-									navigationItem -> {
-										navigationItem.setActive(true);
-										navigationItem.setHref(currentURL);
-										navigationItem.setLabel(LanguageUtil.get(request, "details"));
-									});
-							}
-						}
-					%>"
+					items="<%= navigationItems %>"
 				/>
 
 				<div class="sidebar-body">

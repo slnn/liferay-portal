@@ -17,10 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "my-sites");
+final String tabs1;
 
-if (!tabs1.equals("my-sites") && !tabs1.equals("available-sites")) {
+String tempTabs1 = ParamUtil.getString(request, "tabs1", "my-sites");
+
+if (!tempTabs1.equals("my-sites") && !tempTabs1.equals("available-sites")) {
 	tabs1 = "my-sites";
+}
+else {
+	tabs1 = tempTabs1;
 }
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
