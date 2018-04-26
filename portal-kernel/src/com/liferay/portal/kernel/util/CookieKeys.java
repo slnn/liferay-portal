@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -332,9 +331,7 @@ public class CookieKeys {
 
 	private static final boolean _SESSION_COOKIE_USE_FULL_HOSTNAME =
 		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME,
-				new Filter(ServerDetector.getServerId())));
+			PropsUtil.get(PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME));
 
 	private static final boolean _SESSION_ENABLE_PERSISTENT_COOKIES =
 		GetterUtil.getBoolean(
