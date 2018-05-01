@@ -31,7 +31,7 @@ dependencies {
 	compile project(":apps:web-experience:journal:journal-api")
 	compile project(":apps:web-experience:journal:journal-service")
 
-	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
+	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-5"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":core:petra:petra-reflect")
