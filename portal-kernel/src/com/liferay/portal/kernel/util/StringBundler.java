@@ -267,28 +267,6 @@ public class StringBundler implements Serializable {
 		_array = newArray;
 	}
 
-	private static String _toString(String[] array, int arrayIndex) {
-		if (arrayIndex == 0) {
-			return StringPool.BLANK;
-		}
-
-		if (arrayIndex == 1) {
-			return array[0];
-		}
-
-		if (arrayIndex == 2) {
-			return array[0].concat(array[1]);
-		}
-
-		if (arrayIndex == 3) {
-			return array[0].concat(array[1]).concat(array[2]);
-		}
-
-		UnsafeStringBuilder usb = _getUnsafeStringBuilder(array, arrayIndex);
-
-		return usb.toString();
-	}
-
 	private static UnsafeStringBuilder _getUnsafeStringBuilder(
 		String[] array, int arrayIndex) {
 
@@ -326,6 +304,28 @@ public class StringBundler implements Serializable {
 		}
 
 		return usb;
+	}
+
+	private static String _toString(String[] array, int arrayIndex) {
+		if (arrayIndex == 0) {
+			return StringPool.BLANK;
+		}
+
+		if (arrayIndex == 1) {
+			return array[0];
+		}
+
+		if (arrayIndex == 2) {
+			return array[0].concat(array[1]);
+		}
+
+		if (arrayIndex == 3) {
+			return array[0].concat(array[1]).concat(array[2]);
+		}
+
+		UnsafeStringBuilder usb = _getUnsafeStringBuilder(array, arrayIndex);
+
+		return usb.toString();
 	}
 
 	private static final int _DEFAULT_ARRAY_CAPACITY = 16;
