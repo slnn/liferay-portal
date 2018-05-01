@@ -245,8 +245,17 @@ public class StringBundler implements Serializable {
 	}
 
 	public void writeTo(Writer writer) throws IOException {
-		for (int i = 0; i < _arrayIndex; i++) {
-			writer.write(_array[i]);
+		if (_arrayIndex > 3) {
+			UnsafeStringBuilder unsafeStringBuilder = _getUnsafeStringBuilder(
+				_array, _arrayIndex);
+
+			writer.write(
+				unsafeStringBuilder._value, 0, unsafeStringBuilder._count);
+		}
+		else {
+			for (int i = 0; i < _arrayIndex; i++) {
+				writer.write(_array[i]);
+			}
 		}
 	}
 
