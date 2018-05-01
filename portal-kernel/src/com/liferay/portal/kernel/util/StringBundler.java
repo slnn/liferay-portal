@@ -102,19 +102,19 @@ public class StringBundler implements Serializable {
 	}
 
 	public StringBundler append(double d) {
-		return append(Double.toString(d));
+		return append(String.valueOf(d));
 	}
 
 	public StringBundler append(float f) {
-		return append(Float.toString(f));
+		return append(String.valueOf(f));
 	}
 
 	public StringBundler append(int i) {
-		return append(Integer.toString(i));
+		return append(String.valueOf(i));
 	}
 
 	public StringBundler append(long l) {
-		return append(Long.toString(l));
+		return append(String.valueOf(l));
 	}
 
 	public StringBundler append(Object obj) {
@@ -245,8 +245,17 @@ public class StringBundler implements Serializable {
 	}
 
 	public void writeTo(Writer writer) throws IOException {
-		for (int i = 0; i < _arrayIndex; i++) {
-			writer.write(_array[i]);
+		if (_arrayIndex > 3) {
+			UnsafeStringBuilder unsafeStringBuilder = _getUnsafeStringBuilder(
+				_array, _arrayIndex);
+
+			writer.write(
+				unsafeStringBuilder._value, 0, unsafeStringBuilder._count);
+		}
+		else {
+			for (int i = 0; i < _arrayIndex; i++) {
+				writer.write(_array[i]);
+			}
 		}
 	}
 
@@ -258,22 +267,8 @@ public class StringBundler implements Serializable {
 		_array = newArray;
 	}
 
-	private static String _toString(String[] array, int arrayIndex) {
-		if (arrayIndex == 0) {
-			return StringPool.BLANK;
-		}
-
-		if (arrayIndex == 1) {
-			return array[0];
-		}
-
-		if (arrayIndex == 2) {
-			return array[0].concat(array[1]);
-		}
-
-		if (arrayIndex == 3) {
-			return array[0].concat(array[1]).concat(array[2]);
-		}
+	private static UnsafeStringBuilder _getUnsafeStringBuilder(
+		String[] array, int arrayIndex) {
 
 		int length = 0;
 
@@ -307,6 +302,28 @@ public class StringBundler implements Serializable {
 		for (int i = 0; i < arrayIndex; i++) {
 			usb.append(array[i]);
 		}
+
+		return usb;
+	}
+
+	private static String _toString(String[] array, int arrayIndex) {
+		if (arrayIndex == 0) {
+			return StringPool.BLANK;
+		}
+
+		if (arrayIndex == 1) {
+			return array[0];
+		}
+
+		if (arrayIndex == 2) {
+			return array[0].concat(array[1]);
+		}
+
+		if (arrayIndex == 3) {
+			return array[0].concat(array[1]).concat(array[2]);
+		}
+
+		UnsafeStringBuilder usb = _getUnsafeStringBuilder(array, arrayIndex);
 
 		return usb.toString();
 	}

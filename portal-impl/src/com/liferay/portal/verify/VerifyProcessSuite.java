@@ -23,10 +23,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verify(new VerifyProperties());
 
-		verify(new VerifyMySQL());
-
-		verify(new VerifyUUID());
-
 		verify(new VerifyPermission());
 		verify(new VerifyGroup());
 		verify(new VerifyRole());
@@ -35,7 +31,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 		verify(new VerifyLayout());
 		verify(new VerifyResourceActions());
 		verify(new VerifyResourcePermissions());
-		verify(new VerifySocial());
 		verify(new VerifyUser());
 		verify(new VerifyWorkflow());
 	}
