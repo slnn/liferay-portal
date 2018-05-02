@@ -94,6 +94,8 @@ AUI.add(
 
 						instance._changeFieldTypeMenu(fieldType);
 
+						instance._hideCurrentFieldTypeFromList(field.get('type'));
+
 						settingsRetriever.getSettingsContext(field).then(
 							function(settingsContext) {
 								field.saveSettings();
@@ -206,6 +208,8 @@ AUI.add(
 						var field = instance.get('field');
 						var fieldType = FieldTypes.get(field.get('type'));
 						var toolbar = instance.get('toolbar');
+
+						instance._hideCurrentFieldTypeFromList(field.get('type'));
 
 						instance.set('description', fieldType.get('label'));
 						instance.set('title', field.get('context.label'));
@@ -321,6 +325,18 @@ AUI.add(
 						return '<div>' + Liferay.Util.getLexiconIconTpl(fieldType.get('icon')) + '</div><span>' + fieldType.get('label') + '</span>' + Liferay.Util.getLexiconIconTpl('caret-bottom');
 					},
 
+					_hideCurrentFieldTypeFromList: function(fieldTypeName) {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var toolbarFieldTypeList = contentBox.one('.lfr-ddm-toolbar-field-type');
+
+						toolbarFieldTypeList.all('.dropdown-item').show();
+
+						toolbarFieldTypeList.one('[data-name="' + fieldTypeName + '"]').hide();
+					},
+
 					_hideSidebarContent: function() {
 						var instance = this;
 
@@ -395,6 +411,8 @@ AUI.add(
 
 						var FormBuilderUtil = Liferay.DDM.FormBuilderUtil;
 
+						var ignoredFieldNames = ['dataType', 'type', 'validation'];
+
 						FormBuilderUtil.visitLayout(
 							newSettingsContext.pages,
 							function(settingsFormFieldContext) {
@@ -407,7 +425,7 @@ AUI.add(
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if (!(fieldName === 'type') && !(fieldName === 'dataType') && (fieldName === previousFieldName)) {
+										if ((ignoredFieldNames.indexOf(fieldName) === -1) && (fieldName === previousFieldName)) {
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}
