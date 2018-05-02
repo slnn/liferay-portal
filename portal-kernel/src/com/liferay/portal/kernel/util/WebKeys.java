@@ -411,9 +411,15 @@ public interface WebKeys {
 
 	public static final String PORTLET_CONFIGURATOR_VISIBILITY = "PORTLET_CONFIGURATOR_VISIBILITY";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #PORTLET_CONTENT_WRITER}
+	 */
+	@Deprecated
 	public static final String PORTLET_CONTENT = "PORTLET_CONTENT";
 
 	public static final String PORTLET_CONTENT_JSP = "PORTLET_CONTENT_JSP";
+
+	public static final String PORTLET_CONTENT_WRITER = "PORTLET_CONTENT_WRITER";
 
 	public static final String PORTLET_DECORATE = "PORTLET_DECORATE";
 
