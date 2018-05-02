@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -361,6 +362,48 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 	public void setString(String string) {
 		setCharBuffer(CharBuffer.wrap(string));
+	}
+
+	public void write(Writer writer) throws IOException {
+		if (_charBuffer != null) {
+			writer.write(_charBuffer.toString());
+
+			return;
+		}
+
+		if (_byteBuffer != null) {
+			CharBuffer charBuffer = CharsetDecoderUtil.decode(
+				getCharacterEncoding(), _byteBuffer.duplicate());
+
+			writer.write(charBuffer.toString());
+
+			return;
+		}
+
+		_flushInternalBuffer();
+
+		if (_unsyncStringWriter != null) {
+			StringBundler sb = _unsyncStringWriter.getStringBundler();
+
+			if (sb == null) {
+				writer.write(_unsyncStringWriter.toString());
+			}
+			else {
+				sb.writeTo(writer);
+			}
+
+			return;
+		}
+
+		if (_unsyncByteArrayOutputStream != null) {
+			ByteBuffer byteBuffer =
+				_unsyncByteArrayOutputStream.unsafeGetByteBuffer();
+
+			CharBuffer charBuffer = CharsetDecoderUtil.decode(
+				getCharacterEncoding(), byteBuffer);
+
+			writer.write(charBuffer.toString());
+		}
 	}
 
 	@Override
