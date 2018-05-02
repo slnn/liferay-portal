@@ -85,7 +85,14 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 				<c:otherwise>
 
 					<%
-					pageContext.getOut().print(renderRequest.getAttribute(WebKeys.PORTLET_CONTENT));
+					PortletContentWriter portletContentWriter = (PortletContentWriter)renderRequest.getAttribute(WebKeys.PORTLET_CONTENT_WRITER);
+
+					if (portletContentWriter == null) {
+						pageContext.getOut().print("null");
+					}
+					else {
+						portletContentWriter.write(pageContext.getOut());
+					}
 					%>
 
 				</c:otherwise>
