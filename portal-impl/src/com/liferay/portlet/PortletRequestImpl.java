@@ -127,7 +127,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_request.removeAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
 		_request.removeAttribute(PortletRequest.LIFECYCLE_PHASE);
 		_request.removeAttribute(WebKeys.PORTLET_ID);
-		_request.removeAttribute(WebKeys.PORTLET_CONTENT);
+		_request.removeAttribute(WebKeys.PORTLET_CONTENT_WRITER);
 	}
 
 	@Override

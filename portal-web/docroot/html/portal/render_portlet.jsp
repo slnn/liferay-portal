@@ -1031,7 +1031,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 			}
 			else {
 				if (useDefaultTemplate || !portlet.isActive()) {
-					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
+					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT_WRITER, new PortletContentWriter(bufferCacheServletResponse));
 
 					request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, StringPool.BLANK);
 			%>
@@ -1041,12 +1041,12 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		<%
 				}
 				else {
-					pageContext.getOut().write(bufferCacheServletResponse.getString());
+					bufferCacheServletResponse.write(pageContext.getOut());
 				}
 			}
 		}
 		else {
-			renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
+			renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT_WRITER, new PortletContentWriter(bufferCacheServletResponse));
 
 			String portletContentJSP = StringPool.BLANK;
 
@@ -1070,7 +1070,18 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
 				</c:when>
 				<c:otherwise>
-					<%= renderRequestImpl.getAttribute(WebKeys.PORTLET_CONTENT) %>
+
+					<%
+					PortletContentWriter portletContentWriter = (PortletContentWriter)renderRequestImpl.getAttribute(WebKeys.PORTLET_CONTENT_WRITER);
+
+					if (portletContentWriter == null) {
+						pageContext.getOut().print("null");
+					}
+					else {
+						portletContentWriter.write(pageContext.getOut());
+					}
+					%>
+
 				</c:otherwise>
 			</c:choose>
 

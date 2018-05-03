@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,24 +11,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<c:choose>
-	<c:when test="<%= Validator.isNull(tilesPortletContent) %>">
+package com.liferay.portal.kernel.servlet;
 
-		<%
-		PortletContentWriter portletContentWriter = (PortletContentWriter)renderRequest.getAttribute(WebKeys.PORTLET_CONTENT_WRITER);
+import java.io.IOException;
+import java.io.Writer;
 
-		if (portletContentWriter == null) {
-			pageContext.getOut().print("null");
-		}
-		else {
-			portletContentWriter.write(pageContext.getOut());
-		}
-		%>
+/**
+ * @author Preston Crary
+ */
+public class PortletContentWriter {
 
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + tilesPortletContent %>" />
-	</c:otherwise>
-</c:choose>
+	public PortletContentWriter(
+		BufferCacheServletResponse bufferCacheServletResponse) {
+
+		_bufferCacheServletResponse = bufferCacheServletResponse;
+	}
+
+	public void write(Writer writer) throws IOException {
+		_bufferCacheServletResponse.write(writer);
+	}
+
+	private final BufferCacheServletResponse _bufferCacheServletResponse;
+
+}

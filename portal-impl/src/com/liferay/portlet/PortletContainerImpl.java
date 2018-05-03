@@ -806,7 +806,7 @@ public class PortletContainerImpl implements PortletContainer {
 			if (writeOutput) {
 				Writer writer = response.getWriter();
 
-				writer.write(bufferCacheServletResponse.getString());
+				bufferCacheServletResponse.write(writer);
 			}
 		}
 		finally {
