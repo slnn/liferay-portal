@@ -10,11 +10,23 @@
 
 ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
+<#assign ddmTemplateVersionModel = dataFactory.defaultJournalDDMTemplateVersionModel />
+
+${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
+
 <#assign
 	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
 
 	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId)
+
+	journalDefaultDLFolderModel = dataFactory.newDefaultJournalDLFolderModel(groupId)
+
+	journalRepositoryModel = dataFactory.newRepositoryModel(journalDefaultDLFolderModel)
 />
+
+${dataFactory.toInsertSQL(journalDefaultDLFolderModel)}
+
+${dataFactory.toInsertSQL(journalRepositoryModel)}
 
 <#list resourcePermissionModels as resourcePermissionModel>
 	${dataFactory.toInsertSQL(resourcePermissionModel)}
@@ -50,6 +62,10 @@ ${dataFactory.toInsertSQL(ddmTemplateModel)}
 			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
 
 			${dataFactory.toInsertSQL(journalArticleModel)}
+
+			<#assign journalDLFolderModel = dataFactory.newJournalDLFolderModel(journalArticleResourceModel, journalDefaultDLFolderModel) />
+
+			${dataFactory.toInsertSQL(journalDLFolderModel)}
 
 			<#assign journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, journalArticleCount, versionCount) />
 

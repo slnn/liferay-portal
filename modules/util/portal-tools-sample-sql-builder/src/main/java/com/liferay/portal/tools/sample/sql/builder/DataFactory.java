@@ -69,6 +69,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
 import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
@@ -77,6 +78,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
@@ -147,6 +149,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ReleaseModel;
+import com.liferay.portal.kernel.model.RepositoryModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -190,11 +193,13 @@ import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
+import com.liferay.portal.model.impl.RepositoryModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
+import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -274,6 +279,11 @@ public class DataFactory {
 		_userScreenNameCounter = new SimpleCounter();
 
 		List<String> models = ModelHintsUtil.getModels();
+
+		String value =
+			"com.liferay.portal.repository.portletrepository.PortletRepository";
+
+		models.add(value);
 
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
@@ -599,6 +609,10 @@ public class DataFactory {
 
 	public DDMTemplateModel getDefaultJournalDDMTemplateModel() {
 		return _defaultJournalDDMTemplateModel;
+	}
+
+	public DDMTemplateVersionModel getDefaultJournalDDMTemplateVersionModel() {
+		return _defaultJournalDDMTemplateVersionModel;
 	}
 
 	public UserModel getDefaultUserModel() {
@@ -1089,6 +1103,9 @@ public class DataFactory {
 			_globalGroupId, _defaultUserId,
 			_defaultJournalDDMStructureModel.getStructureId(),
 			getClassNameId(JournalArticle.class));
+
+		_defaultJournalDDMTemplateVersionModel = newDDMTemplateVersionModel(
+			_defaultJournalDDMTemplateModel);
 	}
 
 	public void initGroupModels() throws Exception {
@@ -1784,6 +1801,58 @@ public class DataFactory {
 		return ddmTemplateLinkModel;
 	}
 
+	public DDMTemplateVersionModel newDDMTemplateVersionModel(
+		DDMTemplateModel ddmTemplateModel) {
+
+		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
+			new DDMTemplateVersionModelImpl();
+
+		ddmTemplateVersionModelImpl.setTemplateVersionId(_counter.get());
+		ddmTemplateVersionModelImpl.setGroupId(ddmTemplateModel.getGroupId());
+		ddmTemplateVersionModelImpl.setCompanyId(_companyId);
+		ddmTemplateVersionModelImpl.setUserId(ddmTemplateModel.getUserId());
+		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
+		ddmTemplateVersionModelImpl.setTemplateId(
+			ddmTemplateModel.getTemplateId());
+		ddmTemplateVersionModelImpl.setClassPK(ddmTemplateModel.getClassPK());
+		ddmTemplateVersionModelImpl.setClassNameId(
+			ddmTemplateModel.getClassNameId());
+		ddmTemplateVersionModelImpl.setVersion(
+			DDMTemplateConstants.VERSION_DEFAULT);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(ddmTemplateModel.getTemplateKey());
+		sb.append("</name></root>");
+
+		ddmTemplateVersionModelImpl.setName(sb.toString());
+
+		ddmTemplateVersionModelImpl.setStatusByUserId(
+			ddmTemplateModel.getUserId());
+		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
+
+		return ddmTemplateVersionModelImpl;
+	}
+
+	public DLFolderModel newDefaultJournalDLFolderModel(long groupId) {
+		long dLFolderId = _counter.get();
+		long repositoryId = _counter.get();
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("/");
+		sb.append(String.valueOf(dLFolderId));
+		sb.append("/");
+
+		String name = "com.liferay.journal";
+
+		return newJournalDLFolderModel(
+			dLFolderId, repositoryId, _defaultUserId, "", true, 0,
+			sb.toString(), name, true, groupId);
+	}
+
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
 		long ddmStorageLinkId, long ddmStructureId,
 		DLFileVersionModel dlFileVersionModel) {
@@ -1985,6 +2054,7 @@ public class DataFactory {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT);
 		journalArticleModel.setArticleId(
 			journalArticleResourceModel.getArticleId());
+		journalArticleModel.setTreePath("/");
 		journalArticleModel.setVersion(versionIndex);
 
 		StringBundler sb = new StringBundler(4);
@@ -2023,6 +2093,7 @@ public class DataFactory {
 		journalArticleResourceModel.setUuid(SequentialUUID.generate());
 		journalArticleResourceModel.setResourcePrimKey(_counter.get());
 		journalArticleResourceModel.setGroupId(groupId);
+		journalArticleResourceModel.setCompanyId(_companyId);
 		journalArticleResourceModel.setArticleId(
 			String.valueOf(_counter.get()));
 
@@ -2049,6 +2120,32 @@ public class DataFactory {
 			journalArticleModel.getArticleId());
 
 		return journalContentSearchModel;
+	}
+
+	public DLFolderModel newJournalDLFolderModel(
+			JournalArticleResourceModel journalArticleResourceModel,
+			DLFolderModel defaultDLFolderModel)
+		throws IOException {
+
+		long dLFolderId = _counter.get();
+		long repositoryId = defaultDLFolderModel.getRepositoryId();
+		long parentFolderId = defaultDLFolderModel.getFolderId();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("/");
+		sb.append(String.valueOf(parentFolderId));
+		sb.append("/");
+		sb.append(String.valueOf(dLFolderId));
+		sb.append("/");
+
+		String name = String.valueOf(
+			journalArticleResourceModel.getResourcePrimKey());
+
+		return newJournalDLFolderModel(
+			dLFolderId, repositoryId, _sampleUserId, _SAMPLE_USER_NAME, false,
+			parentFolderId, sb.toString(), name, false,
+			journalArticleResourceModel.getGroupId());
 	}
 
 	public List<PortletPreferencesModel> newJournalPortletPreferencesModels(
@@ -2493,6 +2590,25 @@ public class DataFactory {
 		}
 
 		return releases;
+	}
+
+	public RepositoryModel newRepositoryModel(DLFolderModel dLFolderModel) {
+		RepositoryModelImpl repositoryModelImpl = new RepositoryModelImpl();
+
+		repositoryModelImpl.setRepositoryId(dLFolderModel.getRepositoryId());
+		repositoryModelImpl.setGroupId(dLFolderModel.getGroupId());
+		repositoryModelImpl.setCompanyId(_companyId);
+		repositoryModelImpl.setUserId(dLFolderModel.getUserId());
+		repositoryModelImpl.setCreateDate(nextFutureDate());
+		repositoryModelImpl.setModifiedDate(nextFutureDate());
+		repositoryModelImpl.setClassNameId(
+			getClassNameId(PortletRepository.class));
+
+		repositoryModelImpl.setName(dLFolderModel.getName());
+		repositoryModelImpl.setPortletId(dLFolderModel.getName());
+		repositoryModelImpl.setDlFolderId(dLFolderModel.getFolderId());
+
+		return repositoryModelImpl;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3254,7 +3370,7 @@ public class DataFactory {
 		ddmTemplateModel.setClassNameId(getClassNameId(DDMStructure.class));
 		ddmTemplateModel.setClassPK(structureId);
 		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
-		ddmTemplateModel.setTemplateKey(String.valueOf(_counter.get()));
+		ddmTemplateModel.setTemplateKey("BASIC-WEB-CONTENT");
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 		ddmTemplateModel.setVersionUserId(userId);
 		ddmTemplateModel.setVersionUserName(_SAMPLE_USER_NAME);
@@ -3359,6 +3475,35 @@ public class DataFactory {
 		groupModel.setActive(true);
 
 		return groupModel;
+	}
+
+	protected DLFolderModel newJournalDLFolderModel(
+		long folderId, long repositoryId, long userId, String userName,
+		boolean mountPoint, long parentFolderId, String treePath, String name,
+		boolean hidden, long groupId) {
+
+		DLFolderModel dlFolderModel = new DLFolderModelImpl();
+
+		dlFolderModel.setUuid(SequentialUUID.generate());
+		dlFolderModel.setFolderId(folderId);
+		dlFolderModel.setGroupId(groupId);
+		dlFolderModel.setCompanyId(_companyId);
+		dlFolderModel.setUserId(userId);
+		dlFolderModel.setUserName(userName);
+		dlFolderModel.setCreateDate(nextFutureDate());
+		dlFolderModel.setModifiedDate(nextFutureDate());
+		dlFolderModel.setRepositoryId(repositoryId);
+		dlFolderModel.setMountPoint(mountPoint);
+		dlFolderModel.setParentFolderId(parentFolderId);
+		dlFolderModel.setTreePath(treePath);
+		dlFolderModel.setName(name);
+		dlFolderModel.setLastPostDate(nextFutureDate());
+		dlFolderModel.setDefaultFileEntryTypeId(
+			_defaultDLFileEntryTypeModel.getFileEntryTypeId());
+		dlFolderModel.setHidden(hidden);
+		dlFolderModel.setRestrictionType(0);
+
+		return dlFolderModel;
 	}
 
 	protected LayoutSetModel newLayoutSetModel(
@@ -3825,6 +3970,7 @@ public class DataFactory {
 	private DDMStructureModel _defaultJournalDDMStructureModel;
 	private DDMStructureVersionModel _defaultJournalDDMStructureVersionModel;
 	private DDMTemplateModel _defaultJournalDDMTemplateModel;
+	private DDMTemplateVersionModel _defaultJournalDDMTemplateVersionModel;
 	private final long _defaultUserId;
 	private UserModel _defaultUserModel;
 	private final String _dlDDMStructureContent;
