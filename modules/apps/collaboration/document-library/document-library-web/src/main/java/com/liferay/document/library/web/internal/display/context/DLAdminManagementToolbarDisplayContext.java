@@ -108,9 +108,12 @@ public class DLAdminManagementToolbarDisplayContext {
 										_liferayPortletResponse.getNamespace(),
 										"editEntry', {action: 'download'});",
 										"void(0);"));
+
 								dropdownItem.setIcon("download");
+
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "download"));
+
 								dropdownItem.setQuickAction(true);
 							}));
 
@@ -123,12 +126,14 @@ public class DLAdminManagementToolbarDisplayContext {
 										_liferayPortletResponse.getNamespace(),
 										"editEntry', {action: '",
 										Constants.CHECKIN, "'}); void(0);"));
+
 								dropdownItem.setIcon("unlock");
+
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "unlock"));
+
 								dropdownItem.setQuickAction(true);
 							}));
-
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
@@ -138,12 +143,14 @@ public class DLAdminManagementToolbarDisplayContext {
 										_liferayPortletResponse.getNamespace(),
 										"editEntry', {action: '",
 										Constants.CHECKOUT, "'}); void(0);"));
+
 								dropdownItem.setIcon("lock");
+
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "lock"));
+
 								dropdownItem.setQuickAction(true);
 							}));
-
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
@@ -153,9 +160,12 @@ public class DLAdminManagementToolbarDisplayContext {
 										_liferayPortletResponse.getNamespace(),
 										"editEntry', {action: '",
 										Constants.MOVE, "'}); void(0);"));
+
 								dropdownItem.setIcon("change");
+
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "move"));
+
 								dropdownItem.setQuickAction(true);
 							}));
 				}
