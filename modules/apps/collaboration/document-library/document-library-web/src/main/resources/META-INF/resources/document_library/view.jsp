@@ -107,7 +107,6 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
-	filterItems="<%= dlAdminDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
 	searchContainerId="entries"
