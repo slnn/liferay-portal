@@ -280,8 +280,8 @@ public class DLAdminDisplayContext {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Unable to get folder ",
-								String.valueOf(_folderId)),
+								"Could not find folder {folderId=",
+								String.valueOf(_folderId), "}"),
 							nsfe);
 					}
 				}
