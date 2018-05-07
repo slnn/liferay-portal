@@ -29,8 +29,6 @@ import javax.portlet.PortletURL;
  */
 public interface DLAdminDisplayContext {
 
-	public List<DropdownItem> getActionDropdownItems();
-
 	public String getClearResultsURL() throws Exception;
 
 	public CreationMenu getCreationMenu();
