@@ -99,7 +99,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="descriptive" />
 		</execute>
 	</set-up>
 
@@ -179,7 +179,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="descriptive" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoRepository">
