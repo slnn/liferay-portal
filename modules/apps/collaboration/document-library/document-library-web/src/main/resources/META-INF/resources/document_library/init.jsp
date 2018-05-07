@@ -40,12 +40,13 @@ if (dlAdminDisplayContext == null) {
 	request.setAttribute(DLWebKeys.DOCUMENT_LIBRARY_ADMIN_DISPLAY_CONTEXT, dlAdminDisplayContext);
 }
 
-DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
 DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
+DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
 
 long rootFolderId = dlAdminDisplayContext.getRootFolderId();
 String rootFolderName = dlAdminDisplayContext.getRootFolderName();
+
+DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 
 boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
