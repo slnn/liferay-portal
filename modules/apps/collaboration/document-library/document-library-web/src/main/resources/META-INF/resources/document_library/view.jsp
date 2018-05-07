@@ -57,7 +57,7 @@ request.setAttribute("view.jsp-displayStyle", displayStyle);
 
 <liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 
-<c:if test="<%= dlAdminDisplayContext.isShowSearchInfo() %>">
+<c:if test='<%= ParamUtil.getBoolean(request, "showSearchInfo") %>'>
 	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
 </c:if>
 

@@ -66,6 +66,4 @@ public interface DLAdminDisplayContext {
 
 	public boolean isDefaultFolderView();
 
-	public boolean isShowSearchInfo();
-
 }
