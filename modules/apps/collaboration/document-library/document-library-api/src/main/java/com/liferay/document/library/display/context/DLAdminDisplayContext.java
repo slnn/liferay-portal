@@ -50,6 +50,8 @@ public interface DLAdminDisplayContext {
 
 	public String getOrderByType();
 
+	public PortletURL getPortletURL();
+
 	public long getRepositoryId();
 
 	public long getRootFolderId();
