@@ -46,7 +46,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -146,7 +145,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
 
 		_computeFolder();
-		_computeRootFolder();
 	}
 
 	@Override
@@ -482,16 +480,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public long getRootFolderId() {
-		return _rootFolderId;
-	}
-
-	@Override
-	public String getRootFolderName() {
-		return _rootFolderName;
-	}
-
-	@Override
 	public SearchContainer getSearchContainer() {
 		if (_searchContainer == null) {
 			try {
@@ -708,7 +696,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 				WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 			_folderId = BeanPropertiesUtil.getLong(
-				_folder, "folderId", getRootFolderId());
+				_folder, "folderId", _getRootFolderId());
 
 			_defaultFolderView = false;
 
@@ -729,33 +717,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
-		}
-	}
-
-	private void _computeRootFolder() {
-		_rootFolderId = _dlPortletInstanceSettings.getRootFolderId();
-		_rootFolderName = StringPool.BLANK;
-
-		if (_rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				Folder rootFolder = DLAppLocalServiceUtil.getFolder(
-					_rootFolderId);
-
-				_rootFolderName = rootFolder.getName();
-
-				if (rootFolder.getGroupId() !=
-						_themeDisplay.getScopeGroupId()) {
-
-					_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-					_rootFolderName = StringPool.BLANK;
-				}
-			}
-			catch (NoSuchFolderException | PrincipalException e) {
-				_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
-			}
 		}
 	}
 
@@ -997,7 +958,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		long folderId = getFolderId();
 		final String navigation = ParamUtil.getString(
 			_request, "navigation", "home");
-		final long rootFolderId = getRootFolderId();
+		final long rootFolderId = _getRootFolderId();
 
 		return new DropdownItemList() {
 			{
@@ -1132,6 +1093,31 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	}
+
+	private long _getRootFolderId() {
+		long rootFolderId = _dlPortletInstanceSettings.getRootFolderId();
+
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			try {
+				Folder rootFolder = DLAppLocalServiceUtil.getFolder(
+					rootFolderId);
+
+				if (rootFolder.getGroupId() !=
+						_themeDisplay.getScopeGroupId()) {
+
+					rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				}
+			}
+			catch (NoSuchFolderException | PrincipalException e) {
+				rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
+		}
+
+		return rootFolderId;
 	}
 
 	private List _getSearchResults(SearchContainer searchContainer)
@@ -1327,8 +1313,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	private final PermissionChecker _permissionChecker;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
-	private long _rootFolderId;
-	private String _rootFolderName;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 
