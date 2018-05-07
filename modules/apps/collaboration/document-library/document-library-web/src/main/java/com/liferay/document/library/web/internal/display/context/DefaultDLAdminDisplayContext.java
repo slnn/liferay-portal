@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -85,9 +86,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class DLAdminDisplayContext {
+public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
-	public DLAdminDisplayContext(
+	public DefaultDLAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -116,6 +117,7 @@ public class DLAdminDisplayContext {
 		_computeRootFolder();
 	}
 
+	@Override
 	public String getDisplayStyle() {
 		String displayStyle = ParamUtil.getString(_request, "displayStyle");
 
@@ -144,10 +146,12 @@ public class DLAdminDisplayContext {
 		return displayStyle;
 	}
 
+	@Override
 	public Folder getFolder() {
 		return _folder;
 	}
 
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -156,6 +160,7 @@ public class DLAdminDisplayContext {
 		return ParamUtil.getString(_request, "navigation", "home");
 	}
 
+	@Override
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(_request, "orderByCol");
 
@@ -171,6 +176,7 @@ public class DLAdminDisplayContext {
 		return orderByCol;
 	}
 
+	@Override
 	public String getOrderByType() {
 		String orderByType = ParamUtil.getString(_request, "orderByType");
 
@@ -186,6 +192,7 @@ public class DLAdminDisplayContext {
 		return orderByType;
 	}
 
+	@Override
 	public long getRepositoryId() {
 		Folder folder = getFolder();
 
@@ -196,14 +203,17 @@ public class DLAdminDisplayContext {
 		return _themeDisplay.getScopeGroupId();
 	}
 
+	@Override
 	public long getRootFolderId() {
 		return _rootFolderId;
 	}
 
+	@Override
 	public String getRootFolderName() {
 		return _rootFolderName;
 	}
 
+	@Override
 	public SearchContainer getSearchContainer() {
 		if (_searchContainer == null) {
 			try {
@@ -244,10 +254,12 @@ public class DLAdminDisplayContext {
 		return portletURL;
 	}
 
+	@Override
 	public boolean isDefaultFolderView() {
 		return _defaultFolderView;
 	}
 
+	@Override
 	public boolean isSearch() {
 		String mvcRenderCommandName = ParamUtil.getString(
 			_request, "mvcRenderCommandName");
@@ -626,7 +638,7 @@ public class DLAdminDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLAdminDisplayContext.class);
+		DefaultDLAdminDisplayContext.class);
 
 	private boolean _defaultFolderView;
 	private final DLPortletInstanceSettings _dlPortletInstanceSettings;

@@ -34,7 +34,7 @@ String portletResource = dlRequestHelper.getPortletResource();
 
 DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
 DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
-DLAdminDisplayContext dlAdminDisplayContext = new DLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse);
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 long rootFolderId = dlAdminDisplayContext.getRootFolderId();
 String rootFolderName = dlAdminDisplayContext.getRootFolderName();
