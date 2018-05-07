@@ -20,31 +20,25 @@
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
-
-DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = new DLAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, dlAdminDisplayContext);
 %>
 
 <clay:management-toolbar
-	actionItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= dlAdminManagementToolbarDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= dlAdminManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"
-	filterItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	actionItems="<%= dlAdminDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
+	disabled="<%= dlAdminDisplayContext.isDisabled() %>"
+	filterItems="<%= dlAdminDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
-	searchActionURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSearchURL()) %>"
+	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
 	searchContainerId="entries"
-	selectable="<%= dlAdminManagementToolbarDisplayContext.isSelectable() %>"
+	selectable="<%= dlAdminDisplayContext.isSelectable() %>"
 	showInfoButton="<%= true %>"
-	showSearch="<%= dlAdminManagementToolbarDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= dlAdminManagementToolbarDisplayContext.getSortingOrder() %>"
-	sortingURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
-	viewTypes="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
+	showSearch="<%= dlAdminDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= dlAdminDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(dlAdminDisplayContext.getSortingURL()) %>"
+	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
+	viewTypes="<%= dlAdminDisplayContext.getViewTypes() %>"
 />
-
-<c:if test="<%= dlAdminManagementToolbarDisplayContext.isShowSearchInfo() %>">
-	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
