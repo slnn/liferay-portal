@@ -33,7 +33,7 @@ public interface DLAdminDisplayContext {
 
 	public List<DropdownItem> getActionDropdownItems();
 
-	public String getClearResultsURL();
+	public String getClearResultsURL() throws PortalException;
 
 	public CreationMenu getCreationMenu();
 
@@ -41,9 +41,9 @@ public interface DLAdminDisplayContext {
 
 	public List<DropdownItem> getFilterDropdownItems();
 
-	public Folder getFolder();
+	public Folder getFolder() throws PortalException;
 
-	public long getFolderId();
+	public long getFolderId() throws PortalException;
 
 	public List<NavigationItem> getNavigationItems();
 
@@ -51,19 +51,19 @@ public interface DLAdminDisplayContext {
 
 	public String getOrderByType();
 
-	public PortletURL getPortletURL();
+	public PortletURL getPortletURL() throws PortalException;
 
-	public long getRepositoryId();
+	public long getRepositoryId() throws PortalException;
 
 	public SearchContainer getSearchContainer() throws PortalException;
 
-	public PortletURL getSearchURL();
+	public PortletURL getSearchURL() throws PortalException;
 
-	public PortletURL getSortingURL();
+	public PortletURL getSortingURL() throws PortalException;
 
 	public int getTotalItems() throws PortalException;
 
-	public ViewTypeItemList getViewTypes();
+	public ViewTypeItemList getViewTypes() throws PortalException;
 
 	public boolean isDefaultFolderView();
 
