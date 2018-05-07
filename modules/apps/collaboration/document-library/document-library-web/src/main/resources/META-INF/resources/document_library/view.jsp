@@ -89,6 +89,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
+
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request);
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -104,19 +106,14 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	clearResultsURL="<%= dlAdminDisplayContext.getClearResultsURL() %>"
+	clearResultsURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
 	creationMenu="<%= dlAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
-	searchActionURL="<%= String.valueOf(dlAdminDisplayContext.getSearchURL()) %>"
-	searchContainerId="entries"
+	searchActionURL="<%= String.valueOf(renderResponse.createRenderURL()) %>"
+	searchFormName="fm"
 	selectable="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
-	showSearch="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>"
-	totalItems="<%= dlAdminDisplayContext.getTotalItems() %>"
+	totalItems="<%= 0 %>"
 />
-
-<c:if test='<%= ParamUtil.getBoolean(request, "showSearchInfo") %>'>
-	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
-</c:if>
 
 <div id="<portlet:namespace />documentLibraryContainer">
 
@@ -164,7 +161,9 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<div class="document-container">
 					<c:choose>
 						<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="searchContainerId" value="entries" />
+							</liferay-util:include>
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>">

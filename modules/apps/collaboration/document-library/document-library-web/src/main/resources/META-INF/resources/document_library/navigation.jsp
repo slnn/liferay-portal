@@ -17,6 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, request);
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
