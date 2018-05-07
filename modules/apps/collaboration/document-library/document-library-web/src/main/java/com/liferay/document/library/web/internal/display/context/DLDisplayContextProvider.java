@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -41,6 +42,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,10 +65,12 @@ public class DLDisplayContextProvider {
 
 	public DLAdminDisplayContext getDLAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
+		HttpServletRequest request, PermissionChecker permissionChecker) {
 
 		return new DefaultDLAdminDisplayContext(
-			liferayPortletRequest, liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse, currentURLObj,
+			request, permissionChecker);
 	}
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
