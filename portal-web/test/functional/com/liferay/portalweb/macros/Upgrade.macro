@@ -765,7 +765,7 @@
 			<var name="pageName" value="Document" />
 		</execute>
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -975,7 +975,7 @@
 			<var name="pageName" value="Document" />
 		</execute>
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 

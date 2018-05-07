@@ -424,7 +424,7 @@
 	</command>
 
 	<command name="moveToFolderCP">
-		<execute macro="LexiconEntry#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
