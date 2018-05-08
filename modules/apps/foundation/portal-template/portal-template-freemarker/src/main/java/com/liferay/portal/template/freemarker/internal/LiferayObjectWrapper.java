@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 
@@ -112,12 +110,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			return _STRING_MODEL_FACTORY.create(object, this);
 		}
 
-		ModelFactory modelFactory = _modelFactories.get(object.getClass());
-
-		if (modelFactory != null) {
-			return modelFactory.create(object, this);
-		}
-
 		return super.wrap(object);
 	}
 
@@ -146,8 +138,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		if (object instanceof Map) {
 			return _MAP_MODEL_FACTORY.create(object, this);
 		}
-
-		_modelFactories.put(object.getClass(), _STRING_MODEL_FACTORY);
 
 		return _STRING_MODEL_FACTORY.create(object, this);
 	}
@@ -215,9 +205,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	private static final Field _cacheClassNamesField;
 	private static final Field _classIntrospectorField;
-	private static final Map<Class<?>, ModelFactory> _modelFactories =
-		new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 	static {
 		try {
