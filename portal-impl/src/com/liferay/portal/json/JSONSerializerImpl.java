@@ -14,9 +14,13 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.util.JavaDetector;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 import jodd.json.JoddJson;
 import jodd.json.JsonContext;
@@ -57,14 +61,14 @@ public class JSONSerializerImpl implements JSONSerializer {
 
 	@Override
 	public String serialize(Object target) {
-		return _jsonSerializer.serialize(target);
+		return _serialize(_jsonSerializer, target);
 	}
 
 	@Override
 	public String serializeDeep(Object target) {
 		JsonSerializer jsonSerializer = _jsonSerializer.deep(true);
 
-		return jsonSerializer.serialize(target);
+		return _serialize(jsonSerializer, target);
 	}
 
 	@Override
@@ -102,6 +106,32 @@ public class JSONSerializerImpl implements JSONSerializer {
 
 		return this;
 	}
+
+	private String _serialize(JsonSerializer jsonSerializer, Object target) {
+		Queue<StringBuilder> queue = _stringBuilderThreadLocal.get();
+
+		StringBuilder sb = queue.poll();
+
+		if (sb == null) {
+			sb = new StringBuilder();
+		}
+
+		try {
+			jsonSerializer.serialize(target, sb);
+
+			return sb.toString();
+		}
+		finally {
+			if (queue.offer(sb)) {
+				sb.setLength(0);
+			}
+		}
+	}
+
+	private static final ThreadLocal<Queue<StringBuilder>>
+		_stringBuilderThreadLocal = new CentralizedThreadLocal<>(
+			JSONSerializerImpl.class.getName() + "_stringBuilderThreadLocal",
+			() -> new ArrayDeque<>(4));
 
 	private final JsonSerializer _jsonSerializer;
 
