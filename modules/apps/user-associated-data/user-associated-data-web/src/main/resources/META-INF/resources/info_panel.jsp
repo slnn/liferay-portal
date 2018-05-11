@@ -26,7 +26,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
 			<div class="sidebar-header">
 				<h3 class="sidebar-title"><%= uadDisplay.getTypeName(locale) %></h3>
-				<h5 class="sidebar-subtitle"><%= uadDisplay.getApplicationName() %></h5>
+				<h5 class="sidebar-subtitle"><%= UADLanguageUtil.getApplicationName(uadDisplay, locale) %></h5>
 			</div>
 		</c:when>
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
@@ -55,6 +55,8 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 
 			<div class="sidebar-body">
 				<dl class="sidebar-block sidebar-dl sidebar-section">
+					<dt class="sidebar-dt"><%= LanguageUtil.get(request, "primary-key") %></dt>
+					<dd class="sidebar-dd"><%= primaryKey %></dd>
 
 					<%
 					for (Map.Entry<String, Object> entry : displayValues.entrySet()) {
