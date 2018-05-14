@@ -23,6 +23,8 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
+
+String displayStyle = blogsPortletInstanceConfiguration.displayStyle();
 %>
 
 <c:choose>
@@ -50,7 +52,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 					String subtitle = entry.getSubtitle();
 					%>
 
-					<c:if test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) && Validator.isNotNull(subtitle) %>">
+					<c:if test="<%= displayStyle.equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) && Validator.isNotNull(subtitle) %>">
 						<h4 class="sub-title"><%= HtmlUtil.escape(subtitle) %></h4>
 					</c:if>
 				</div>
@@ -120,7 +122,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				</c:if>
 
 				<c:choose>
-					<c:when test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_ABSTRACT) %>">
+					<c:when test="<%= displayStyle.equals(BlogsUtil.DISPLAY_STYLE_ABSTRACT) %>">
 
 						<%
 						String summary = entry.getDescription();
@@ -134,7 +136,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 							<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), pageAbstractLength) %>
 						</p>
 					</c:when>
-					<c:when test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
+					<c:when test="<%= displayStyle.equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
 						<%= entry.getContent() %>
 					</c:when>
 				</c:choose>
@@ -175,7 +177,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						</div>
 					</c:if>
 
-					<c:if test="<%= blogsPortletInstanceConfiguration.enableFlags() && blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
+					<c:if test="<%= blogsPortletInstanceConfiguration.enableFlags() && displayStyle.equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
 						<div class="autofit-col">
 							<div class="flags">
 								<liferay-flags:flags
@@ -210,7 +212,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				</div>
 			</div>
 
-			<c:if test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
+			<c:if test="<%= displayStyle.equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
 				<liferay-asset:asset-tags-available
 					className="<%= BlogsEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
