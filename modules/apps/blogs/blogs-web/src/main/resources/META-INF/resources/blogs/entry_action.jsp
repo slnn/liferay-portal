@@ -19,6 +19,8 @@
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
+boolean isTrashEnabled = (boolean)request.getAttribute("entry_action.jsp-isTrashEnabled");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 if (row != null) {
@@ -71,14 +73,14 @@ if (row != null) {
 		<portlet:renderURL var="viewEntriesURL" />
 
 		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= isTrashEnabled ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
 			label="<%= true %>"
-			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+			trash="<%= isTrashEnabled %>"
 			url="<%= deleteEntryURL %>"
 		/>
 	</c:if>
