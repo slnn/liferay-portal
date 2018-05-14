@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -373,7 +374,16 @@ public class JSONObjectImpl implements JSONObject {
 
 	@Override
 	public String toString() {
-		return _jsonObject.toString();
+		Writer writer = new UnsyncStringWriter();
+
+		try {
+			_jsonObject.write(writer);
+
+			return writer.toString();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
