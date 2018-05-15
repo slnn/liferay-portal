@@ -58,6 +58,8 @@ List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
 
 		int index = 0;
 
+		request.setAttribute("entry_action.jsp-isTrashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
+
 		for (Object result : results) {
 			BlogsEntry entry = blogsEntries.get(index);
 
