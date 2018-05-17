@@ -437,11 +437,14 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:data", _getData());
 		request.setAttribute(
 			"liferay-ui:icon:details", _getDetails(themeDisplay));
+
+		boolean forcePost = isForcePost();
+
 		request.setAttribute(
-			"liferay-ui:icon:forcePost", String.valueOf(isForcePost()));
+			"liferay-ui:icon:forcePost", String.valueOf(forcePost));
+
 		request.setAttribute("liferay-ui:icon:icon", _icon);
 		request.setAttribute("liferay-ui:icon:iconCssClass", _iconCssClass);
-		request.setAttribute("liferay-ui:icon:id", getId());
 		request.setAttribute("liferay-ui:icon:image", _image);
 		request.setAttribute("liferay-ui:icon:imageHover", _imageHover);
 		request.setAttribute(
@@ -455,9 +458,21 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:message", getProcessedMessage());
 		request.setAttribute("liferay-ui:icon:method", getMethod());
 		request.setAttribute("liferay-ui:icon:onClick", getOnClick());
-		request.setAttribute("liferay-ui:icon:src", _getSrc(themeDisplay));
-		request.setAttribute(
-			"liferay-ui:icon:srcHover", _getSrcHover(themeDisplay));
+
+		String src = _getSrc(themeDisplay);
+
+		request.setAttribute("liferay-ui:icon:src", src);
+
+		String srcHover = _getSrcHover(themeDisplay);
+
+		request.setAttribute("liferay-ui:icon:srcHover", srcHover);
+
+		if (Validator.isNotNull(src) || Validator.isNotNull(srcHover) ||
+			forcePost || _useDialog) {
+
+			request.setAttribute("liferay-ui:icon:id", getId());
+		}
+
 		request.setAttribute("liferay-ui:icon:target", _target);
 
 		boolean toolTip = false;
