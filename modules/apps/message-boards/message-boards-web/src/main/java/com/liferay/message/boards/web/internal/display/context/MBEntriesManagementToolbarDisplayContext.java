@@ -63,15 +63,15 @@ public class MBEntriesManagementToolbarDisplayContext {
 
 	public MBEntriesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request, PortletURL currentURLObj,
 		TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
 		_currentURLObj = currentURLObj;
 		_trashHelper = trashHelper;
-
-		_request = _liferayPortletRequest.getHttpServletRequest();
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
@@ -327,13 +327,13 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL currentSortingURL = _getCurrentSortingURL();
+		PortletURL sortingURL = _getCurrentSortingURL();
 
-		currentSortingURL.setParameter(
+		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
-		return currentSortingURL;
+		return sortingURL;
 	}
 
 	public ViewTypeItemList getViewTypes() throws PortletException {

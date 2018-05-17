@@ -42,7 +42,7 @@ announcementsEntriesSearchContainer.setRowChecker(new AnnouncementsEntryChecker(
 announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.getEntriesCount(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts")));
 announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
 
-AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, announcementsEntriesSearchContainer);
+AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, announcementsEntriesSearchContainer);
 %>
 
 <clay:navigation-bar
@@ -151,7 +151,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
-			var form = document.querySelector('#<portlet:namespace />fm);
+			var form = document.querySelector('#<portlet:namespace />fm');
 
 			if (form) {
 				form.setAttribute('method', 'post');
