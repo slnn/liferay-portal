@@ -499,9 +499,15 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleMappeableFieldClicked(event) {
-		this._selectMappingDialogVisible = true;
 		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
 		this._selectMappingDialogEditableId = event.editableId;
+
+		if (this.selectedMappingTypes && this.selectedMappingTypes.type) {
+			this._selectMappingDialogVisible = true;
+		}
+		else {
+			this._handleSelectAssetTypeButtonClick();
+		}
 	}
 
 	/**
@@ -543,6 +549,12 @@ class FragmentsEditor extends Component {
 
 	_handleMappingTypeSelected(event) {
 		this.selectedMappingTypes = event.mappingTypes;
+
+		if (this._selectMappingDialogFragmentEntryLinkId &&
+			this._selectMappingDialogEditableId) {
+
+			this._selectMappingDialogVisible = true;
+		}
 	}
 
 	/**
@@ -585,39 +597,6 @@ class FragmentsEditor extends Component {
 
 	_handleSidebarTabClick(event) {
 		this._sidebarSelectedTab = event.delegateTarget.dataset.tabName;
-	}
-
-	/**
-	 * Callback executed when the publish button is clicked
-	 * @private
-	 * @review
-	 */
-
-	_handlePublishButtonClick() {
-		const formData = new FormData();
-
-		formData.append(
-			`${this.portletNamespace}classPK`,
-			this.classPK
-		);
-
-		fetch(
-			this.publishLayoutPageTemplateEntryURL,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}
-		).then(
-			() => {
-				if (Liferay.SPA) {
-					Liferay.SPA.app.navigate(this.redirectURL);
-				}
-				else {
-					location.href = this.redirectURL;
-				}
-			}
-		);
 	}
 
 	/**
