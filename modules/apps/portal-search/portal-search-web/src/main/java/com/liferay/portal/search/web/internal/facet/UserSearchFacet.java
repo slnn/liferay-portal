@@ -16,11 +16,12 @@ package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.search.facet.MultiValueFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.FacetFactory;
-import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
@@ -72,14 +73,12 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getFacetClassName() {
-		return userFacetFactory.getFacetClassName();
+		return MultiValueFacet.class.getName();
 	}
 
 	@Override
 	public String getFieldName() {
-		Facet facet = userFacetFactory.newInstance(null);
-
-		return facet.getFieldName();
+		return Field.USER_NAME;
 	}
 
 	@Override
@@ -121,10 +120,10 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	protected FacetFactory getFacetFactory() {
-		return userFacetFactory;
+		return multiValueFacetFactory;
 	}
 
 	@Reference
-	protected UserFacetFactory userFacetFactory;
+	protected MultiValueFacetFactory multiValueFacetFactory;
 
 }
