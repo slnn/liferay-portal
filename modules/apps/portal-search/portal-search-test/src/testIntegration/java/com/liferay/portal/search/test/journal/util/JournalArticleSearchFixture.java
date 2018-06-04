@@ -15,15 +15,11 @@
 package com.liferay.portal.search.test.journal.util;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -31,30 +27,11 @@ import java.util.Map;
 public class JournalArticleSearchFixture {
 
 	public JournalArticle addArticle(
-			JournalArticleBlueprint journalArticleBlueprint)
+			JournalArticleBuilder journalArticleBuilder)
 		throws Exception {
 
-		long userId = journalArticleBlueprint.getUserId();
-		long groupId = journalArticleBlueprint.getGroupId();
-		long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		Map<Locale, String> titleMap = journalArticleBlueprint.getTitleMap();
-		Map<Locale, String> descriptionMap = null;
-		String contentString = journalArticleBlueprint.getContentString();
-		String ddmStructureKey = "BASIC-WEB-CONTENT";
-		String ddmTemplateKey = "BASIC-WEB-CONTENT";
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
-
-		if (journalArticleBlueprint.isWorkflowEnabled()) {
-			serviceContext.setWorkflowAction(
-				journalArticleBlueprint.getWorkflowAction());
-		}
-
 		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.addArticle(
-				userId, groupId, folderId, titleMap, descriptionMap,
-				contentString, ddmStructureKey, ddmTemplateKey, serviceContext);
+			journalArticleBuilder.addJournalArticle();
 
 		_journalArticles.add(journalArticle);
 
