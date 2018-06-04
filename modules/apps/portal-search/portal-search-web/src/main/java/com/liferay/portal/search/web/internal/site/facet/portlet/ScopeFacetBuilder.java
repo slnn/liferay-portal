@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.site.facet.portlet;
 
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.FacetFactory;
 
@@ -33,7 +34,7 @@ public class ScopeFacetBuilder {
 
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
-		if (_selectedGroupIds != null) {
+		if (ArrayUtil.isNotEmpty(_selectedGroupIds)) {
 			facet.select(_selectedGroupIds);
 		}
 

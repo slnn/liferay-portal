@@ -1029,12 +1029,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			String keywords)
 		throws Exception {
 
-		for (ExpandoQueryContributor expandoQueryContributor :
-				getExpandoQueryContributors()) {
-
-			expandoQueryContributor.contribute(
-				keywords, searchQuery, getSearchClassNames(), searchContext);
-		}
+		_expandoQueryContributor.contribute(
+			keywords, searchQuery, getSearchClassNames(), searchContext);
 
 		return new HashMap<>();
 	}
@@ -1528,14 +1524,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	protected List<ExpandoQueryContributor> getExpandoQueryContributors() {
-		if (_expandoQueryContributors != null) {
-			return _expandoQueryContributors;
-		}
-
-		_expandoQueryContributors = ServiceTrackerCollections.openList(
-			ExpandoQueryContributor.class);
-
-		return _expandoQueryContributors;
+		return Collections.singletonList(_expandoQueryContributor);
 	}
 
 	protected Locale getLocale(PortletRequest portletRequest) {
@@ -1784,12 +1773,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			SearchContext searchContext)
 		throws Exception {
 
-		for (PreFilterContributor preFilterContributor :
-				_getPreFilterContributors()) {
-
-			preFilterContributor.contribute(
-				queryBooleanFilter, entryClassNameIndexerMap, searchContext);
-		}
+		_preFilterContributor.contribute(
+			queryBooleanFilter, entryClassNameIndexerMap, searchContext);
 	}
 
 	private void _addSearchTerms(
@@ -1831,21 +1816,18 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return entryClassNameIndexerMap;
 	}
 
-	private List<PreFilterContributor> _getPreFilterContributors() {
-		if (_preFilterContributors != null) {
-			return _preFilterContributors;
-		}
-
-		_preFilterContributors = ServiceTrackerCollections.openList(
-			PreFilterContributor.class);
-
-		return _preFilterContributors;
-	}
-
 	private static final long _DEFAULT_FOLDER_ID = 0L;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
+	private static volatile ExpandoQueryContributor _expandoQueryContributor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ExpandoQueryContributor.class, BaseIndexer.class,
+			"_expandoQueryContributor", false);
+	private static volatile PreFilterContributor _preFilterContributor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PreFilterContributor.class, BaseIndexer.class,
+			"_preFilterContributor", false);
 	private static volatile SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory =
 			ServiceProxyFactory.newServiceTrackedInstance(
@@ -1857,13 +1839,11 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private final Document _document = new DocumentImpl();
 	private List<DocumentContributor> _documentContributors;
-	private List<ExpandoQueryContributor> _expandoQueryContributors;
 	private boolean _filterSearch;
 	private Boolean _indexerEnabled;
 	private IndexerPostProcessor[] _indexerPostProcessors =
 		new IndexerPostProcessor[0];
 	private boolean _permissionAware;
-	private List<PreFilterContributor> _preFilterContributors;
 	private String _searchEngineId;
 	private boolean _selectAllLocales;
 	private boolean _stagingAware = true;
