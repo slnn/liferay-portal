@@ -29,10 +29,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 /**
- * @author     Raymond Augé
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Raymond Augé
  */
-@Deprecated
 public class ModifiedFacet extends RangeFacet {
 
 	public ModifiedFacet(SearchContext searchContext) {
