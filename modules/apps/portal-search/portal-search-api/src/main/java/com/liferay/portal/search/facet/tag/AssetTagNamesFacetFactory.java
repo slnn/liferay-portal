@@ -16,7 +16,7 @@ package com.liferay.portal.search.facet.tag;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.search.facet.FacetFactory;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 
 /**
  * @author André de Oliveira
