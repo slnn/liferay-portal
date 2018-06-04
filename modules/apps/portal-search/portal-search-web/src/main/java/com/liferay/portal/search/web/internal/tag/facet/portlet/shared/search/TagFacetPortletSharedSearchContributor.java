@@ -20,9 +20,10 @@ import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetBu
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
+
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,10 +66,12 @@ public class TagFacetPortletSharedSearchContributor
 		assetTagsFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				tagFacetPortletPreferences.getParameterName()),
-			assetTagsFacetBuilder::setSelectedTagNames);
+		Optional<String[]> parameterValuesOptional =
+			portletSharedSearchSettings.getParameterValues(
+				tagFacetPortletPreferences.getParameterName());
+
+		parameterValuesOptional.ifPresent(
+			assetTagsFacetBuilder::setSelectedTags);
 
 		return assetTagsFacetBuilder.build();
 	}
