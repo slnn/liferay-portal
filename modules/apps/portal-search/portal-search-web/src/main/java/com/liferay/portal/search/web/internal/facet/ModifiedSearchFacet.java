@@ -17,12 +17,13 @@ package com.liferay.portal.search.web.internal.facet;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.facet.ModifiedFacet;
+import com.liferay.portal.kernel.search.facet.ModifiedFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
@@ -84,14 +85,12 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getFacetClassName() {
-		return modifiedFacetFactory.getFacetClassName();
+		return ModifiedFacet.class.getName();
 	}
 
 	@Override
 	public String getFieldName() {
-		Facet facet = modifiedFacetFactory.newInstance(null);
-
-		return facet.getFieldName();
+		return Field.MODIFIED_DATE;
 	}
 
 	@Override
