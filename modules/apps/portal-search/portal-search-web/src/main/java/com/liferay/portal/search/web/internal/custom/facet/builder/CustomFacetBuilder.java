@@ -35,7 +35,7 @@ public class CustomFacetBuilder {
 
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
-		facet.select(_selectedValues);
+		facet.select(_selectedFields);
 
 		facet.setAggregationName(_aggregationName);
 
@@ -54,8 +54,8 @@ public class CustomFacetBuilder {
 		_searchContext = searchContext;
 	}
 
-	public void setSelectedValues(String... selectedValues) {
-		_selectedValues = selectedValues;
+	public void setSelectedFields(String... selectedFields) {
+		_selectedFields = selectedFields;
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(Facet facet) {
@@ -73,6 +73,6 @@ public class CustomFacetBuilder {
 	private final CustomFacetFactory _customFacetFactory;
 	private String _fieldToAggregate;
 	private SearchContext _searchContext;
-	private String[] _selectedValues;
+	private String[] _selectedFields;
 
 }
