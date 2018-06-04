@@ -15,10 +15,10 @@
 package com.liferay.portal.search.web.internal.folder.facet.portlet;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.folder.FolderFacetFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Lino Alves
@@ -30,15 +30,22 @@ public class FolderFacetBuilder {
 	}
 
 	public Facet build() {
-		Facet facet = _folderFacetFactory.newInstance(_searchContext);
+		MultiValueFacet multiValueFacet = _folderFacetFactory.newInstance(
+			_searchContext);
 
-		facet.setFacetConfiguration(buildFacetConfiguration(facet));
+		multiValueFacet.setFacetConfiguration(
+			buildFacetConfiguration(multiValueFacet));
 
-		if (_selectedFolderIds != null) {
-			facet.select(ArrayUtil.toStringArray(_selectedFolderIds));
+		if (_selectedFolders != null) {
+			multiValueFacet.setValues(_selectedFolders);
+
+			_searchContext.setAttribute(
+				multiValueFacet.getFieldName(),
+				StringUtil.merge(_selectedFolders));
+			_searchContext.setFolderIds(_selectedFolders);
 		}
 
-		return facet;
+		return multiValueFacet;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -53,8 +60,8 @@ public class FolderFacetBuilder {
 		_searchContext = searchContext;
 	}
 
-	public void setSelectedFolderIds(long... selectedFolderIds) {
-		_selectedFolderIds = selectedFolderIds;
+	public void setSelectedFolders(long... selectedFolders) {
+		_selectedFolders = selectedFolders;
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(Facet facet) {
@@ -79,6 +86,6 @@ public class FolderFacetBuilder {
 	private int _frequencyThreshold;
 	private int _maxTerms;
 	private SearchContext _searchContext;
-	private long[] _selectedFolderIds;
+	private long[] _selectedFolders;
 
 }
