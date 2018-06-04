@@ -15,10 +15,10 @@
 package com.liferay.portal.search.web.internal.category.facet.builder;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.category.CategoryFacetFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Lino Alves
@@ -26,21 +26,27 @@ import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 public class AssetCategoriesFacetBuilder {
 
 	public AssetCategoriesFacetBuilder(
-		CategoryFacetFactory categoryFacetFactory) {
+		AssetCategoriesFacetFactory assetCategoriesFacetFactory) {
 
-		_categoryFacetFactory = categoryFacetFactory;
+		_assetCategoriesFacetFactory = assetCategoriesFacetFactory;
 	}
 
 	public Facet build() {
-		Facet facet = _categoryFacetFactory.newInstance(_searchContext);
+		MultiValueFacet multiValueFacet =
+			_assetCategoriesFacetFactory.newInstance(_searchContext);
 
-		facet.setFacetConfiguration(buildFacetConfiguration(facet));
+		multiValueFacet.setFacetConfiguration(
+			buildFacetConfiguration(multiValueFacet));
 
 		if (_selectedCategoryIds != null) {
-			facet.select(ArrayUtil.toStringArray(_selectedCategoryIds));
+			multiValueFacet.setValues(_selectedCategoryIds);
+
+			_searchContext.setAttribute(
+				multiValueFacet.getFieldName(),
+				StringUtil.merge(_selectedCategoryIds));
 		}
 
-		return facet;
+		return multiValueFacet;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -78,7 +84,7 @@ public class AssetCategoriesFacetBuilder {
 		return facetConfiguration;
 	}
 
-	private final CategoryFacetFactory _categoryFacetFactory;
+	private final AssetCategoriesFacetFactory _assetCategoriesFacetFactory;
 	private int _frequencyThreshold;
 	private int _maxTerms;
 	private SearchContext _searchContext;
