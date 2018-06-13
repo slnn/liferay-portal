@@ -198,6 +198,14 @@ public class StagingImpl implements Staging {
 
 		StagedGroupedModel stagedGroupedModel = (StagedGroupedModel)model;
 
+		if (_stagedModelRepositoryHelper.isStagedModelInTrash(
+				stagedGroupedModel)) {
+
+			removeModelFromChangesetCollection(model);
+
+			return;
+		}
+
 		if (stagedGroupedModel instanceof WorkflowedModel) {
 			WorkflowedModel workflowedModel =
 				(WorkflowedModel)stagedGroupedModel;
@@ -215,14 +223,6 @@ public class StagingImpl implements Staging {
 
 				return;
 			}
-		}
-
-		if (_stagedModelRepositoryHelper.isStagedModelInTrash(
-				stagedGroupedModel)) {
-
-			removeModelFromChangesetCollection(model);
-
-			return;
 		}
 
 		long classNameId = _classNameLocalService.getClassNameId(
@@ -1160,10 +1160,13 @@ public class StagingImpl implements Staging {
 						TYPE_PUBLISH_LAYOUT_LOCAL) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_REMOTE) ||
+						TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_PORTLET_LOCAL))) {
+						TYPE_PUBLISH_PORTLET_LOCAL) ||
+				(exportImportConfiguration.getType() !=
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -1362,10 +1365,13 @@ public class StagingImpl implements Staging {
 						TYPE_PUBLISH_LAYOUT_LOCAL) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_REMOTE) ||
+						TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_PORTLET_LOCAL))) {
+						TYPE_PUBLISH_PORTLET_LOCAL) ||
+				(exportImportConfiguration.getType() !=
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -2690,6 +2696,8 @@ public class StagingImpl implements Staging {
 					publishLayoutRemoteSettingsMap, "remotePathContext");
 				secureConnection = MapUtil.getBoolean(
 					publishLayoutRemoteSettingsMap, "secureConnection");
+				remoteGroupId = MapUtil.getLong(
+					publishLayoutRemoteSettingsMap, "targetGroupId");
 				remotePrivateLayout = MapUtil.getBoolean(
 					publishLayoutRemoteSettingsMap, "remotePrivateLayout");
 
@@ -2911,6 +2919,10 @@ public class StagingImpl implements Staging {
 		int remotePort = 0;
 		String remotePathContext = null;
 		boolean secureConnection = false;
+		long remoteGroupId = ParamUtil.getLong(
+			portletRequest, "remoteGroupId",
+			GetterUtil.getLong(
+				groupTypeSettingsProperties.getProperty("remoteGroupId")));
 		boolean remotePrivateLayout = false;
 
 		long exportImportConfigurationId = ParamUtil.getLong(
@@ -2937,6 +2949,7 @@ public class StagingImpl implements Staging {
 					settingsMap, "remotePathContext");
 				secureConnection = MapUtil.getBoolean(
 					settingsMap, "secureConnection");
+				remoteGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 				remotePrivateLayout = MapUtil.getBoolean(
 					settingsMap, "remotePrivateLayout");
 			}
@@ -2968,10 +2981,6 @@ public class StagingImpl implements Staging {
 		}
 
 		remoteAddress = stripProtocolFromRemoteAddress(remoteAddress);
-		long remoteGroupId = ParamUtil.getLong(
-			portletRequest, "remoteGroupId",
-			GetterUtil.getLong(
-				groupTypeSettingsProperties.getProperty("remoteGroupId")));
 
 		_groupLocalService.validateRemote(
 			groupId, remoteAddress, remotePort, remotePathContext,

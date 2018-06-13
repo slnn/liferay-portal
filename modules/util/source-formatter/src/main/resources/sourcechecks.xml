@@ -2,6 +2,7 @@
 
 <source-formatter>
 	<source-processor name="all">
+		<check name="CDNCheck" />
 		<check name="IncorrectFileLocationCheck" />
 		<check name="ReturnCharacterCheck" />
 	</source-processor>
@@ -314,7 +315,9 @@
 		<check name="PropertiesDependenciesFileCheck" />
 		<check name="PropertiesEmptyLinesCheck" />
 		<check name="PropertiesImportedFilesContentCheck" />
-		<check name="PropertiesLanguageKeysCheck" />
+		<check name="PropertiesLanguageKeysCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
 		<check name="PropertiesLongLinesCheck" />
 		<check name="PropertiesPortalFileCheck" />

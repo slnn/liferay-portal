@@ -465,8 +465,9 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleMappeableFieldClicked(event) {
-		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
 		this._selectMappingDialogEditableId = event.editableId;
+		this._selectMappingDialogEditableType = event.editableType;
+		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
 
 		if (this.selectedMappingTypes && this.selectedMappingTypes.type) {
 			this._selectMappingDialogVisible = true;
@@ -747,7 +748,7 @@ FragmentsEditor.STATE = {
 	classPK: Config.string().required(),
 
 	/**
-	 * Default configuration for AlloyEditor instances.
+	 * Default configurations for AlloyEditor instances.
 	 * @default {}
 	 * @instance
 	 * @memberOf FragmentsEditor
@@ -755,7 +756,7 @@ FragmentsEditor.STATE = {
 	 * @type {object}
 	 */
 
-	defaultEditorConfiguration: Config.object().value({}),
+	defaultEditorConfigurations: Config.object().value({}),
 
 	/**
 	 * Default language id.
@@ -1082,6 +1083,21 @@ FragmentsEditor.STATE = {
 	 */
 
 	_lastSaveDate: Config.string()
+		.internal()
+		.value(''),
+
+	/**
+	 * Editable type of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	_selectMappingDialogEditableType: Config
+		.string()
 		.internal()
 		.value(''),
 

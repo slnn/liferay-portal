@@ -15,6 +15,8 @@
 package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=portlet-fragment-web",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/html2canvas/html2canvas.min.js",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
@@ -76,6 +79,9 @@ public class FragmentPortlet extends MVCPortlet {
 				_log.debug(pe, pe);
 			}
 		}
+
+		renderRequest.setAttribute(
+			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -108,6 +114,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentPortlet.class);
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
