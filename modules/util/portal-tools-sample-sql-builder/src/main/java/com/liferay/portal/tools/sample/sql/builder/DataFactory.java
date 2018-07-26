@@ -2302,7 +2302,7 @@ public class DataFactory {
 		portletPreferencesModel.setPlid(0);
 		portletPreferencesModel.setPortletId(portletId);
 		portletPreferencesModel.setPreferences(
-			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+			_portletPreferencesFactory.toXML(portletPreferences));
 
 		return portletPreferencesModel;
 	}
