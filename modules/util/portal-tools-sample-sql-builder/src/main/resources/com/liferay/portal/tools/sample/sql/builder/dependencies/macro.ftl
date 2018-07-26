@@ -138,7 +138,7 @@
 	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 </#macro>
 
-<#macro inserContentLayout
+<#macro insertContentLayout
 	_layoutModel
 	_fragmentEntryModels
 >
