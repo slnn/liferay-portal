@@ -41,6 +41,19 @@
 		_parentDLFolderId=0
 	/>
 
+	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId) />
+
+	<#list publicLayoutModels as publicLayoutModel>
+		<@insertLayout _layoutModel=publicLayoutModel />
+	</#list>
+
+	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount />
+
+	<@insertGroup
+		_groupModel=groupModel
+		_publicPageCount=publicPageCount
+	/>
+
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
 
 	${dataFactory.toInsertSQL(fragmentCollectionModel)}
@@ -59,13 +72,6 @@
 			_layoutModel=contentLayoutModel
 		/>
 	</#list>
-
-	<#assign publicPageCount = contentLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount />
-
-	<@insertGroup
-		_groupModel=groupModel
-		_publicPageCount=publicPageCount
-	/>
 
 	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>
