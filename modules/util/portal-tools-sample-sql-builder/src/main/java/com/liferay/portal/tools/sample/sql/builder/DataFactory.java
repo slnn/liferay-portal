@@ -2011,7 +2011,7 @@ public class DataFactory {
 		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
 		fragmentEntryLinkModel.setFragmentEntryId(
 			fragmentEntryModel.getFragmentEntryId());
-		fragmentEntryLinkModel.setGroupId(fragmentEntryLinkModel.getGroupId());
+		fragmentEntryLinkModel.setGroupId(fragmentEntryModel.getGroupId());
 		fragmentEntryLinkModel.setCompanyId(_companyId);
 		fragmentEntryLinkModel.setUserId(_sampleUserId);
 		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
