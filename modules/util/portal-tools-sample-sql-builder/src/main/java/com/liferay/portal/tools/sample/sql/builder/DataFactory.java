@@ -2082,8 +2082,7 @@ public class DataFactory {
 		fragmentEntryModel.setName(fragmentName);
 		fragmentEntryModel.setCss(StringPool.BLANK);
 		fragmentEntryModel.setJs(StringPool.BLANK);
-		fragmentEntryModel.setFragmentEntryKey(
-			String.valueOf(fragmentEntryModel.getFragmentEntryId()));
+		fragmentEntryModel.setFragmentEntryKey(fragmentName);
 		fragmentEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		List<String> lines = new ArrayList<>();
