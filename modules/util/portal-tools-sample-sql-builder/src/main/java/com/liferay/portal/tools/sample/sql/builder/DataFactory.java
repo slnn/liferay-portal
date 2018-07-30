@@ -541,6 +541,10 @@ public class DataFactory {
 		return _companyModel;
 	}
 
+	public String getContentPageEnable() {
+		return String.valueOf(_contentPageEnable);
+	}
+
 	public SimpleCounter getCounter() {
 		return _counter;
 	}
@@ -660,10 +664,6 @@ public class DataFactory {
 		}
 
 		return sb.toString();
-	}
-	
-	public String getContentPageEnable(){
-		return String.valueOf(_contentPageEnable);
 	}
 
 	public long getLayoutClassNameId() {
@@ -1514,7 +1514,8 @@ public class DataFactory {
 				"navigation,header,web_content,footer"));
 		layoutModels.add(
 			newContentLayoutModel(
-				groupId, "1_asset_list", "navigation,header,asset_list,footer"));
+				groupId, "1_asset_list",
+				"navigation,header,asset_list,footer"));
 		layoutModels.add(
 			newContentLayoutModel(
 				groupId, "1_media_gallery",
@@ -1987,12 +1988,11 @@ public class DataFactory {
 
 		return dlFolderModels;
 	}
-	
-	public FragmentCollectionModel newFragmentCollectionModel(long groupId){
 
+	public FragmentCollectionModel newFragmentCollectionModel(long groupId) {
 		FragmentCollectionModel fragmentCollectionModel =
 			new FragmentCollectionModelImpl();
-		
+
 		fragmentCollectionModel.setUuid(SequentialUUID.generate());
 		fragmentCollectionModel.setFragmentCollectionId(_counter.get());
 		fragmentCollectionModel.setGroupId(groupId);
@@ -2111,31 +2111,29 @@ public class DataFactory {
 		Map<String, FragmentEntryModel> fragmentEntryModels = new HashMap<>();
 
 		fragmentEntryModels.put(
-			"asset_list", 
+			"asset_list",
 			newFragmentEntryModel(
 				groupId, "asset_list", fragmentCollectionModel));
 		fragmentEntryModels.put(
 			"footer",
-			newFragmentEntryModel(
-				groupId, "footer", fragmentCollectionModel));
+			newFragmentEntryModel(groupId, "footer", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"header", 
-			newFragmentEntryModel(
-				groupId, "header", fragmentCollectionModel));
+			"header",
+			newFragmentEntryModel(groupId, "header", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"media_gallery", 
+			"media_gallery",
 			newFragmentEntryModel(
 				groupId, "media_gallery", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"navigation", 
+			"navigation",
 			newFragmentEntryModel(
 				groupId, "navigation", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"site_map", 
+			"site_map",
 			newFragmentEntryModel(
 				groupId, "site_map", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"web_content", 
+			"web_content",
 			newFragmentEntryModel(
 				groupId, "web_content", fragmentCollectionModel));
 
@@ -4144,6 +4142,7 @@ public class DataFactory {
 		new HashMap<>();
 	private final long _companyId;
 	private CompanyModel _companyModel;
+	private Boolean _contentPageEnable;
 	private final SimpleCounter _counter;
 	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final PortletPreferencesImpl
@@ -4179,7 +4178,6 @@ public class DataFactory {
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
-	private Boolean _contentPageEnable;
 	private int _maxAssetCategoryCount;
 	private int _maxAssetEntryToAssetCategoryCount;
 	private int _maxAssetEntryToAssetTagCount;
