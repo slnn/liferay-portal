@@ -41,7 +41,11 @@
 		_parentDLFolderId=0
 	/>
 
-	<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId) />
+	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
+
+	${dataFactory.toInsertSQL(fragmentCollectionModel)}
+
+	<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId, fragmentCollectionModel) />
 
 	<#list fragmentEntryModels?keys as fragmentEntryModelName>
 		${dataFactory.toInsertSQL(fragmentEntryModels["${fragmentEntryModelName}"])}
