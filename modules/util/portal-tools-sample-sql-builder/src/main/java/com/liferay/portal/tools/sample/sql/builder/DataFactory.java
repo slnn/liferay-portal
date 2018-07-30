@@ -1510,18 +1510,18 @@ public class DataFactory {
 
 		layoutModels.add(
 			newContentLayoutModel(
-				groupId, "web_content",
+				groupId, "1_web_content",
 				"navigation,header,web_content,footer"));
 		layoutModels.add(
 			newContentLayoutModel(
-				groupId, "asset_list", "navigation,header,asset_list,footer"));
+				groupId, "1_asset_list", "navigation,header,asset_list,footer"));
 		layoutModels.add(
 			newContentLayoutModel(
-				groupId, "media_gallery",
+				groupId, "1_media_gallery",
 				"navigation,header,media_gallery,footer"));
 		layoutModels.add(
 			newContentLayoutModel(
-				groupId, "site_map", "navigation,header,site_map,footer"));
+				groupId, "1_site_map", "navigation,header,site_map,footer"));
 
 		return layoutModels;
 	}
