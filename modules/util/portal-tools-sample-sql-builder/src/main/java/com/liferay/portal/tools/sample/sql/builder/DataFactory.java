@@ -79,8 +79,10 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.fragment.model.FragmentCollectionModel;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.fragment.model.FragmentEntryModel;
+import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -1979,6 +1981,24 @@ public class DataFactory {
 
 		return dlFolderModels;
 	}
+	
+	public FragmentCollectionModel newFragmentCollectionModel(long groupId){
+
+		FragmentCollectionModel fragmentCollectionModel =
+			new FragmentCollectionModelImpl();
+		
+		fragmentCollectionModel.setUuid(SequentialUUID.generate());
+		fragmentCollectionModel.setFragmentCollectionId(_counter.get());
+		fragmentCollectionModel.setGroupId(groupId);
+		fragmentCollectionModel.setCompanyId(_companyId);
+		fragmentCollectionModel.setUserId(_sampleUserId);
+		fragmentCollectionModel.setCreateDate(new Date());
+		fragmentCollectionModel.setModifiedDate(new Date());
+		fragmentCollectionModel.setFragmentCollectionKey("fragmentcollection");
+		fragmentCollectionModel.setName("fragmentcollection");
+
+		return fragmentCollectionModel;
+	}
 
 	public FragmentEntryLinkModel newFragmentEntryLinkModel(
 		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel,
@@ -2042,12 +2062,15 @@ public class DataFactory {
 	}
 
 	public FragmentEntryModel newFragmentEntryModel(
-			long groupId, String fragmentName)
+			long groupId, String fragmentName,
+			FragmentCollectionModel fragmentCollectionModel)
 		throws Exception {
 
 		FragmentEntryModel fragmentEntryModel = new FragmentEntryModelImpl();
 
 		fragmentEntryModel.setUuid(SequentialUUID.generate());
+		fragmentEntryModel.setFragmentCollectionId(
+			fragmentCollectionModel.getFragmentCollectionId());
 		fragmentEntryModel.setFragmentEntryId(_counter.get());
 		fragmentEntryModel.setGroupId(groupId);
 		fragmentEntryModel.setCompanyId(_companyId);
@@ -2076,25 +2099,40 @@ public class DataFactory {
 		return fragmentEntryModel;
 	}
 
-	public Map<String, FragmentEntryModel> newFragmentEntryModels(long groupId)
+	public Map<String, FragmentEntryModel> newFragmentEntryModels(
+			long groupId, FragmentCollectionModel fragmentCollectionModel)
 		throws Exception {
 
 		Map<String, FragmentEntryModel> fragmentEntryModels = new HashMap<>();
 
 		fragmentEntryModels.put(
-			"asset_list", newFragmentEntryModel(groupId, "asset_list"));
+			"asset_list", 
+			newFragmentEntryModel(
+				groupId, "asset_list", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"footer", newFragmentEntryModel(groupId, "footer"));
+			"footer",
+			newFragmentEntryModel(
+				groupId, "footer", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"header", newFragmentEntryModel(groupId, "header"));
+			"header", 
+			newFragmentEntryModel(
+				groupId, "header", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"media_gallery", newFragmentEntryModel(groupId, "media_gallery"));
+			"media_gallery", 
+			newFragmentEntryModel(
+				groupId, "media_gallery", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"navigation", newFragmentEntryModel(groupId, "navigation"));
+			"navigation", 
+			newFragmentEntryModel(
+				groupId, "navigation", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"site_map", newFragmentEntryModel(groupId, "site_map"));
+			"site_map", 
+			newFragmentEntryModel(
+				groupId, "site_map", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"web_content", newFragmentEntryModel(groupId, "web_content"));
+			"web_content", 
+			newFragmentEntryModel(
+				groupId, "web_content", fragmentCollectionModel));
 
 		return fragmentEntryModels;
 	}
