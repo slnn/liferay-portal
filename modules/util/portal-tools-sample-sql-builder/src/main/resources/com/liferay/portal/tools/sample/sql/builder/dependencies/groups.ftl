@@ -26,6 +26,8 @@
 
 	<#include "ddl.ftl">
 
+	<#include "fragment.ftl">
+
 	<#include "journal_article.ftl">
 
 	<#include "mb.ftl">
@@ -53,25 +55,6 @@
 		_groupModel=groupModel
 		_publicPageCount=publicPageCount
 	/>
-
-	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
-
-	${dataFactory.toInsertSQL(fragmentCollectionModel)}
-
-	<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId, fragmentCollectionModel) />
-
-	<#list fragmentEntryModels?keys as fragmentEntryModelName>
-		${dataFactory.toInsertSQL(fragmentEntryModels["${fragmentEntryModelName}"])}
-	</#list>
-
-	<#assign contentLayoutModels = dataFactory.newContentLayoutModels(groupId) />
-
-	<#list contentLayoutModels as contentLayoutModel>
-		<@insertContentLayout
-			_fragmentEntryModels=fragmentEntryModels
-			_layoutModel=contentLayoutModel
-		/>
-	</#list>
 
 	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>

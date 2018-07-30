@@ -661,6 +661,10 @@ public class DataFactory {
 
 		return sb.toString();
 	}
+	
+	public String getContentPageEnable(){
+		return String.valueOf(_contentPageEnable);
+	}
 
 	public long getLayoutClassNameId() {
 		return getClassNameId(Layout.class);
@@ -1029,6 +1033,8 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
 		_maxWikiPageCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.wiki.page.count"));
+		_contentPageEnable = GetterUtil.getBoolean(
+			properties.getProperty("sample.sql.content.page.enable"));
 
 		File outputDir = new File(
 			properties.getProperty("sample.sql.output.dir"));
@@ -4173,6 +4179,7 @@ public class DataFactory {
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
+	private Boolean _contentPageEnable;
 	private int _maxAssetCategoryCount;
 	private int _maxAssetEntryToAssetCategoryCount;
 	private int _maxAssetEntryToAssetTagCount;
