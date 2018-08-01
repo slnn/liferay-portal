@@ -1505,28 +1505,6 @@ public class DataFactory {
 		return layoutModel;
 	}
 
-	public List<LayoutModel> newContentLayoutModels(long groupId) {
-		List<LayoutModel> layoutModels = new ArrayList<>();
-
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_web_content",
-				"navigation,header,web_content,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_asset_list",
-				"navigation,header,asset_list,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_media_gallery",
-				"navigation,header,media_gallery,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_site_map", "navigation,header,site_map,footer"));
-
-		return layoutModels;
-	}
-
 	public List<CounterModel> newCounterModels() {
 		List<CounterModel> counterModels = new ArrayList<>();
 
