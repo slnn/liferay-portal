@@ -262,6 +262,8 @@ public class PoshiRunnerExecutor {
 				PoshiRunnerVariablesUtil.putIntoStaticMap(varName, varValue);
 			}
 		}
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runEchoElement(Element element) throws Exception {
@@ -720,6 +722,12 @@ public class PoshiRunnerExecutor {
 			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
 				classCommandName);
 
+		List<Element> executeVarElements = executeElement.elements("var");
+
+		for (Element executeVarElement : executeVarElements) {
+			runExecuteVarElement(executeVarElement, false);
+		}
+
 		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		String namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace(
@@ -731,16 +739,6 @@ public class PoshiRunnerExecutor {
 		for (Element rootVarElement : rootVarElements) {
 			runRootVarElement(rootVarElement, true);
 		}
-
-		PoshiRunnerStackTraceUtil.popStackTrace();
-
-		List<Element> executeVarElements = executeElement.elements("var");
-
-		for (Element executeVarElement : executeVarElements) {
-			runExecuteVarElement(executeVarElement, false);
-		}
-
-		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		SummaryLoggerHandler.startSummary(executeElement);
 
@@ -871,12 +869,7 @@ public class PoshiRunnerExecutor {
 
 		String varName = element.attributeValue("name");
 
-		if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(varName)) {
-			PoshiRunnerVariablesUtil.putIntoExecuteMap(
-				varName,
-				PoshiRunnerVariablesUtil.getStringFromCommandMap(varName));
-		}
-		else {
+		if (!PoshiRunnerVariablesUtil.containsKeyInExecuteMap(varName)) {
 			PoshiRunnerVariablesUtil.putIntoExecuteMap(varName, varValue);
 		}
 
@@ -889,6 +882,8 @@ public class PoshiRunnerExecutor {
 				PoshiRunnerVariablesUtil.putIntoStaticMap(varName, varValue);
 			}
 		}
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runSeleniumElement(Element executeElement)
