@@ -1,5 +1,12 @@
 <#assign contentPageEnable = dataFactory.contentPageEnable />
 <#if contentPageEnable== "true">
+
+	<#assign controlPanelLayoutModel = dataFactory.newControlPanelLayoutModel() />
+
+	${dataFactory.toInsertSQL(controlPanelLayoutModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(controlPanelLayoutModel))}
+
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
 
 	${dataFactory.toInsertSQL(fragmentCollectionModel)}
