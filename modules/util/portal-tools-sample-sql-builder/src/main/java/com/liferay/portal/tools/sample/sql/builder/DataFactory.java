@@ -311,6 +311,7 @@ public class DataFactory {
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 		_userPersonalSiteGroupId = _counter.get();
+		_controlPanelGroupId = _counter.get();
 
 		List<String> lines = new ArrayList<>();
 
@@ -771,6 +772,10 @@ public class DataFactory {
 		return _userPersonalSiteGroupModel;
 	}
 
+	public GroupModel getContronPanelGroupModel(){
+		return _contronPanelGroupModel;
+	}
+
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
 	}
@@ -1123,6 +1128,10 @@ public class DataFactory {
 
 	public void initGroupModels() throws Exception {
 		long groupClassNameId = getGroupClassNameId();
+
+		_contronPanelGroupModel = newGroupModel(
+			_controlPanelGroupId, getClassNameId(Group.class),
+			_controlPanelGroupId, GroupConstants.CONTROL_PANEL, false);
 
 		_globalGroupModel = newGroupModel(
 			_globalGroupId, getClassNameId(Company.class), _companyId,
@@ -1525,6 +1534,47 @@ public class DataFactory {
 				groupId, "1_site_map", "navigation,header,site_map,footer"));
 
 		return layoutModels;
+	}
+
+	public LayoutModel newControlPanelLayoutModel() {
+		SimpleCounter simpleCounter = _layoutCounters.get(_controlPanelGroupId);
+
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(_controlPanelGroupId, simpleCounter);
+		}
+
+		LayoutModel layoutModel = new LayoutModelImpl();
+
+		layoutModel.setUuid(SequentialUUID.generate());
+		layoutModel.setPlid(_counter.get());
+		layoutModel.setGroupId(_controlPanelGroupId);
+		layoutModel.setCompanyId(_companyId);
+		layoutModel.setUserId(_sampleUserId);
+		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setCreateDate(new Date());
+		layoutModel.setModifiedDate(new Date());
+		layoutModel.setLayoutId(simpleCounter.get());
+		layoutModel.setPrivateLayout(true);
+		layoutModel.setName(
+			"<?xml version=\"1.0\"?><root><name>" +
+			LayoutConstants.NAME_CONTROL_PANEL_DEFAULT + "</name></root>");
+		layoutModel.setType(LayoutConstants.TYPE_CONTROL_PANEL);
+		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + "manage");
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.setProperty("privateLayout", "true");
+
+		String typeSettings = StringUtil.replace(
+			typeSettingsProperties.toString(), '\n', "\\n");
+
+		layoutModel.setTypeSettings(typeSettings);
+
+		layoutModel.setLastPublishDate(new Date());
+
+		return layoutModel;
 	}
 
 	public List<CounterModel> newCounterModels() {
@@ -3195,16 +3245,10 @@ public class DataFactory {
 	}
 
 	public String toInsertSQL(BaseModel<?> baseModel) {
-		return toInsertSQL(baseModel, false);
-	}
-
-	public String toInsertSQL(
-		BaseModel<?> baseModel, boolean useControlPanelPlid) {
-
 		try {
 			StringBundler sb = new StringBundler();
 
-			toInsertSQL(sb, baseModel, useControlPanelPlid);
+			toInsertSQL(sb, baseModel);
 
 			Class<?> clazz = baseModel.getClass();
 
@@ -3219,8 +3263,7 @@ public class DataFactory {
 
 						sb.append("\n");
 
-						toInsertSQL(
-							sb, resourcePermissionModel, useControlPanelPlid);
+						toInsertSQL(sb, resourcePermissionModel);
 					}
 				}
 				catch (NoSuchMethodException nsme) {
@@ -4004,12 +4047,6 @@ public class DataFactory {
 	}
 
 	protected void toInsertSQL(StringBundler sb, BaseModel<?> baseModel) {
-		toInsertSQL(sb, baseModel, false);
-	}
-
-	protected void toInsertSQL(
-		StringBundler sb, BaseModel<?> baseModel, boolean useControlPanelPlid) {
-
 		try {
 			sb.append("insert into ");
 
@@ -4033,47 +4070,38 @@ public class DataFactory {
 					name = name.substring(0, name.length() - 1);
 				}
 
-				if (useControlPanelPlid &&
-					StringUtil.equalsIgnoreCase(name, "plid")) {
+				int type = (int)tableColumn[1];
 
-					sb.append("(select plid from Layout where type_ = '");
-					sb.append(LayoutConstants.TYPE_CONTROL_PANEL);
-					sb.append("')");
-				}
-				else {
-					int type = (int)tableColumn[1];
+				if (type == Types.TIMESTAMP) {
+					Method method = clazz.getMethod("get".concat(name));
 
-					if (type == Types.TIMESTAMP) {
-						Method method = clazz.getMethod("get".concat(name));
+					Date date = (Date)method.invoke(baseModel);
 
-						Date date = (Date)method.invoke(baseModel);
-
-						if (date == null) {
-							sb.append("null");
-						}
-						else {
-							sb.append("'");
-							sb.append(getDateString(date));
-							sb.append("'");
-						}
-					}
-					else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
-						Method method = clazz.getMethod("get".concat(name));
-
-						sb.append("'");
-						sb.append(method.invoke(baseModel));
-						sb.append("'");
-					}
-					else if (type == Types.BOOLEAN) {
-						Method method = clazz.getMethod("is".concat(name));
-
-						sb.append(method.invoke(baseModel));
+					if (date == null) {
+						sb.append("null");
 					}
 					else {
-						Method method = clazz.getMethod("get".concat(name));
-
-						sb.append(method.invoke(baseModel));
+						sb.append("'");
+						sb.append(getDateString(date));
+						sb.append("'");
 					}
+				}
+				else if ((type == Types.VARCHAR) || (type == Types.CLOB)) {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append("'");
+					sb.append(method.invoke(baseModel));
+					sb.append("'");
+				}
+				else if (type == Types.BOOLEAN) {
+					Method method = clazz.getMethod("is".concat(name));
+
+					sb.append(method.invoke(baseModel));
+				}
+				else {
+					Method method = clazz.getMethod("get".concat(name));
+
+					sb.append(method.invoke(baseModel));
 				}
 
 				sb.append(", ");
@@ -4166,6 +4194,7 @@ public class DataFactory {
 	private final SimpleCounter _futureDateCounter;
 	private final long _globalGroupId;
 	private GroupModel _globalGroupModel;
+	private GroupModel _contronPanelGroupModel;
 	private List<GroupModel> _groupModels;
 	private final long _guestGroupId;
 	private GroupModel _guestGroupModel;
@@ -4217,6 +4246,7 @@ public class DataFactory {
 	private final SimpleCounter _socialActivityCounter;
 	private final SimpleCounter _timeCounter;
 	private final long _userPersonalSiteGroupId;
+	private final long _controlPanelGroupId;
 	private GroupModel _userPersonalSiteGroupModel;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
