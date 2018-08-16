@@ -102,11 +102,11 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			}
 
 			if (object instanceof Collection) {
-				return _COLLECTION_MODEL_FACTORY.create(object, this);
+				return new SimpleSequence((Collection)object, this);
 			}
 
 			if (object instanceof Map) {
-				return _MAP_MODEL_FACTORY.create(object, this);
+				return new MapModel((Map)object, this);
 			}
 
 			return _STRING_MODEL_FACTORY.create(object, this);
@@ -123,46 +123,24 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	@Override
 	protected TemplateModel handleUnknownType(Object object) {
-		if (object instanceof Node) {
-			return wrapDomNode(object);
-		}
+		ModelFactory modelFactory = _STRING_MODEL_FACTORY;
 
-		if (object instanceof TemplateNode) {
-			return new LiferayTemplateModel((TemplateNode)object, this);
+		if (object instanceof Node) {
+			modelFactory = _NODE_MODEL_FACTORY;
 		}
 
 		if (object instanceof ResourceBundle) {
-			return _RESOURCE_BUNDLE_MODEL_FACTORY.create(object, this);
+			modelFactory = _RESOURCE_BUNDLE_MODEL_FACTORY;
 		}
 
 		if (object instanceof Enumeration) {
-			return _ENUMERATION_MODEL_FACTORY.create(object, this);
+			modelFactory = _ENUMERATION_MODEL_FACTORY;
 		}
 
-		if (object instanceof Collection) {
-			return _COLLECTION_MODEL_FACTORY.create(object, this);
-		}
+		_modelFactories.put(object.getClass(), modelFactory);
 
-		if (object instanceof Map) {
-			return _MAP_MODEL_FACTORY.create(object, this);
-		}
-
-		_modelFactories.put(object.getClass(), _STRING_MODEL_FACTORY);
-
-		return _STRING_MODEL_FACTORY.create(object, this);
+		return modelFactory.create(object, this);
 	}
-
-	private static final ModelFactory _COLLECTION_MODEL_FACTORY =
-		new ModelFactory() {
-
-			@Override
-			public TemplateModel create(
-				Object object, ObjectWrapper objectWrapper) {
-
-				return new SimpleSequence((Collection)object, objectWrapper);
-			}
-
-		};
 
 	private static final ModelFactory _ENUMERATION_MODEL_FACTORY =
 		new ModelFactory() {
@@ -177,13 +155,16 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 		};
 
-	private static final ModelFactory _MAP_MODEL_FACTORY = new ModelFactory() {
+	private static final ModelFactory _NODE_MODEL_FACTORY = new ModelFactory() {
 
 		@Override
 		public TemplateModel create(
 			Object object, ObjectWrapper objectWrapper) {
 
-			return new MapModel((Map)object, (BeansWrapper)objectWrapper);
+			LiferayObjectWrapper liferayObjectWrapper =
+				(LiferayObjectWrapper)objectWrapper;
+
+			return liferayObjectWrapper.wrapDomNode(object);
 		}
 
 	};
