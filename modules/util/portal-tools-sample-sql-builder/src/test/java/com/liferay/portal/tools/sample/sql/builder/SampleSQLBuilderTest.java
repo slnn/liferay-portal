@@ -96,7 +96,7 @@ public class SampleSQLBuilderTest {
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
-		properties.put("sample.sql.content.page.enable", true);
+		properties.put("sample.sql.content.page.enable", "true");
 		properties.put("sample.sql.db.type", "hypersonic");
 		properties.put("sample.sql.max.asset.category.count", "1");
 		properties.put(
