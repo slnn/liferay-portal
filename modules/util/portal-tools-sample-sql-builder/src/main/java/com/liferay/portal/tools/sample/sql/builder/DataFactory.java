@@ -1537,7 +1537,7 @@ public class DataFactory {
 		layoutModel.setPrivateLayout(true);
 		layoutModel.setName(
 			"<?xml version=\"1.0\"?><root><name>" +
-			LayoutConstants.NAME_CONTROL_PANEL_DEFAULT + "</name></root>");
+				LayoutConstants.NAME_CONTROL_PANEL_DEFAULT + "</name></root>");
 		layoutModel.setType(LayoutConstants.TYPE_CONTROL_PANEL);
 		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + "manage");
 
