@@ -546,6 +546,10 @@ public class DataFactory {
 		return String.valueOf(_contentPageEnable);
 	}
 
+	public GroupModel getContronPanelGroupModel() {
+		return _contronPanelGroupModel;
+	}
+
 	public SimpleCounter getCounter() {
 		return _counter;
 	}
@@ -770,10 +774,6 @@ public class DataFactory {
 
 	public GroupModel getUserPersonalSiteGroupModel() {
 		return _userPersonalSiteGroupModel;
-	}
-
-	public GroupModel getContronPanelGroupModel(){
-		return _contronPanelGroupModel;
 	}
 
 	public RoleModel getUserRoleModel() {
@@ -2335,7 +2335,8 @@ public class DataFactory {
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
-			LayoutModel layoutModel, FragmentEntryLinkModel fragmentEntryLinkModel,
+			LayoutModel layoutModel,
+			FragmentEntryLinkModel fragmentEntryLinkModel,
 			JournalArticleResourceModel journalArticleResourceModel)
 		throws Exception {
 
@@ -2363,6 +2364,8 @@ public class DataFactory {
 		PortletPreferencesModel portletPreferencesModel =
 			new PortletPreferencesModelImpl();
 
+		portletPreferencesModel.setCompanyId(
+			fragmentEntryLinkModel.getCompanyId());
 		portletPreferencesModel.setPortletPreferencesId(_counter.get());
 		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 		portletPreferencesModel.setOwnerType(
@@ -2376,7 +2379,7 @@ public class DataFactory {
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
-		LayoutModel layoutModel,	 String portletId) {
+		LayoutModel layoutModel, String portletId) {
 
 		PortletPreferencesModel portletPreferencesModel =
 			new PortletPreferencesModelImpl();
@@ -2391,6 +2394,24 @@ public class DataFactory {
 			PortletConstants.DEFAULT_PREFERENCES);
 
 		return portletPreferencesModel;
+	}
+
+	public JournalContentSearchModel newJournalContentSearchModel(
+		JournalArticleModel journalArticleModel, long layoutId) {
+
+		JournalContentSearchModel journalContentSearchModel =
+			new JournalContentSearchModelImpl();
+
+		journalContentSearchModel.setContentSearchId(_counter.get());
+		journalContentSearchModel.setGroupId(journalArticleModel.getGroupId());
+		journalContentSearchModel.setCompanyId(_companyId);
+		journalContentSearchModel.setLayoutId(layoutId);
+		journalContentSearchModel.setPortletId(
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet");
+		journalContentSearchModel.setArticleId(
+			journalArticleModel.getArticleId());
+
+		return journalContentSearchModel;
 	}
 
 	public JournalContentSearchModel newJournalContentSearchModel(
@@ -2409,24 +2430,6 @@ public class DataFactory {
 		journalContentSearchModel.setCompanyId(_companyId);
 		journalContentSearchModel.setLayoutId(layoutModel.getGroupId());
 		journalContentSearchModel.setPortletId(portletId);
-		journalContentSearchModel.setArticleId(
-			journalArticleModel.getArticleId());
-
-		return journalContentSearchModel;
-	}
-
-	public JournalContentSearchModel newJournalContentSearchModel(
-		JournalArticleModel journalArticleModel, long layoutId) {
-
-		JournalContentSearchModel journalContentSearchModel =
-			new JournalContentSearchModelImpl();
-
-		journalContentSearchModel.setContentSearchId(_counter.get());
-		journalContentSearchModel.setGroupId(journalArticleModel.getGroupId());
-		journalContentSearchModel.setCompanyId(_companyId);
-		journalContentSearchModel.setLayoutId(layoutId);
-		journalContentSearchModel.setPortletId(
-			"com_liferay_journal_content_web_portlet_JournalContentPortlet");
 		journalContentSearchModel.setArticleId(
 			journalArticleModel.getArticleId());
 
@@ -4187,6 +4190,8 @@ public class DataFactory {
 	private final long _companyId;
 	private CompanyModel _companyModel;
 	private Boolean _contentPageEnable;
+	private final long _controlPanelGroupId;
+	private GroupModel _contronPanelGroupModel;
 	private final SimpleCounter _counter;
 	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final PortletPreferencesImpl
@@ -4209,7 +4214,6 @@ public class DataFactory {
 	private final SimpleCounter _futureDateCounter;
 	private final long _globalGroupId;
 	private GroupModel _globalGroupModel;
-	private GroupModel _contronPanelGroupModel;
 	private List<GroupModel> _groupModels;
 	private final long _guestGroupId;
 	private GroupModel _guestGroupModel;
@@ -4261,7 +4265,6 @@ public class DataFactory {
 	private final SimpleCounter _socialActivityCounter;
 	private final SimpleCounter _timeCounter;
 	private final long _userPersonalSiteGroupId;
-	private final long _controlPanelGroupId;
 	private GroupModel _userPersonalSiteGroupModel;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
