@@ -2514,11 +2514,13 @@ public class DataFactory {
 	}
 
 	public List<LayoutSetModel> newLayoutSetModels(
-		long groupId, int publicLayoutSetPageCount, int privateLayoutSetPageCount) {
+		long groupId, int publicLayoutSetPageCount,
+		int privateLayoutSetPageCount) {
 
 		List<LayoutSetModel> layoutSetModels = new ArrayList<>(2);
 
-		layoutSetModels.add(newLayoutSetModel(groupId, true, privateLayoutSetPageCount));
+		layoutSetModels.add(
+			newLayoutSetModel(groupId, true, privateLayoutSetPageCount));
 		layoutSetModels.add(
 			newLayoutSetModel(groupId, false, publicLayoutSetPageCount));
 
