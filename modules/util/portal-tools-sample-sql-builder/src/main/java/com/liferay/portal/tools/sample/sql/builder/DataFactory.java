@@ -1529,17 +1529,18 @@ public class DataFactory {
 		layoutModel.setPlid(_counter.get());
 		layoutModel.setGroupId(_controlPanelGroupId);
 		layoutModel.setCompanyId(_companyId);
-		layoutModel.setUserId(_sampleUserId);
-		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setUserId(_defaultUserId);
 		layoutModel.setCreateDate(new Date());
 		layoutModel.setModifiedDate(new Date());
 		layoutModel.setLayoutId(simpleCounter.get());
 		layoutModel.setPrivateLayout(true);
+		layoutModel.setParentLayoutId(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 		layoutModel.setName(
 			"<?xml version=\"1.0\"?><root><name>" +
 				LayoutConstants.NAME_CONTROL_PANEL_DEFAULT + "</name></root>");
 		layoutModel.setType(LayoutConstants.TYPE_CONTROL_PANEL);
 		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + "manage");
+		layoutModel.setHidden(false);
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
@@ -2455,8 +2456,8 @@ public class DataFactory {
 		layoutFriendlyURLEntryModel.setLayoutFriendlyURLId(_counter.get());
 		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
 		layoutFriendlyURLEntryModel.setCompanyId(_companyId);
-		layoutFriendlyURLEntryModel.setUserId(_sampleUserId);
-		layoutFriendlyURLEntryModel.setUserName(_SAMPLE_USER_NAME);
+		layoutFriendlyURLEntryModel.setUserId(layoutModel.getUserId());
+		layoutFriendlyURLEntryModel.setUserName(layoutModel.getUserName());
 		layoutFriendlyURLEntryModel.setCreateDate(new Date());
 		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
 		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
