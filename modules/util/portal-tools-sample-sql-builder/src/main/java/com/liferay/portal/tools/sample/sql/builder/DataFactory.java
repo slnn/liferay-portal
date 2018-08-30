@@ -1514,28 +1514,6 @@ public class DataFactory {
 		return layoutModel;
 	}
 
-	public List<LayoutModel> newContentLayoutModels(long groupId) {
-		List<LayoutModel> layoutModels = new ArrayList<>();
-
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_web_content",
-				"navigation,header,web_content,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_asset_list",
-				"navigation,header,asset_list,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_media_gallery",
-				"navigation,header,media_gallery,footer"));
-		layoutModels.add(
-			newContentLayoutModel(
-				groupId, "1_site_map", "navigation,header,site_map,footer"));
-
-		return layoutModels;
-	}
-
 	public LayoutModel newControlPanelLayoutModel() {
 		SimpleCounter simpleCounter = _layoutCounters.get(_controlPanelGroupId);
 
@@ -2111,7 +2089,7 @@ public class DataFactory {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, fragmentEntryModels.get(fragmentEntryNames[i]),
-					i));
+					i + 1));
 		}
 
 		return fragmentEntryLinkModels;
@@ -2161,27 +2139,15 @@ public class DataFactory {
 		Map<String, FragmentEntryModel> fragmentEntryModels = new HashMap<>();
 
 		fragmentEntryModels.put(
-			"asset_list",
-			newFragmentEntryModel(
-				groupId, "asset_list", fragmentCollectionModel));
-		fragmentEntryModels.put(
 			"footer",
 			newFragmentEntryModel(groupId, "footer", fragmentCollectionModel));
 		fragmentEntryModels.put(
 			"header",
 			newFragmentEntryModel(groupId, "header", fragmentCollectionModel));
 		fragmentEntryModels.put(
-			"media_gallery",
-			newFragmentEntryModel(
-				groupId, "media_gallery", fragmentCollectionModel));
-		fragmentEntryModels.put(
 			"navigation",
 			newFragmentEntryModel(
 				groupId, "navigation", fragmentCollectionModel));
-		fragmentEntryModels.put(
-			"site_map",
-			newFragmentEntryModel(
-				groupId, "site_map", fragmentCollectionModel));
 		fragmentEntryModels.put(
 			"web_content",
 			newFragmentEntryModel(
@@ -2345,10 +2311,6 @@ public class DataFactory {
 		journalArticleModel.setLastPublishDate(new Date());
 		journalArticleModel.setStatusDate(new Date());
 
-		if (Validator.isNull(_defaultJournalArticleId)) {
-			_defaultJournalArticleId = journalArticleModel.getArticleId();
-		}
-
 		return journalArticleModel;
 	}
 
@@ -2373,7 +2335,8 @@ public class DataFactory {
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
-			FragmentEntryLinkModel fragmentEntryLinkModel)
+			LayoutModel layoutModel, FragmentEntryLinkModel fragmentEntryLinkModel,
+			JournalArticleResourceModel journalArticleResourceModel)
 		throws Exception {
 
 		String portletId = PortletIdCodec.encode(
@@ -2382,7 +2345,20 @@ public class DataFactory {
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		portletPreferences.setValue("articleId", _defaultJournalArticleId);
+		portletPreferences.setValue("ddmTemplateKey", "BASIC-WEB-CONTENT");
+
+		portletPreferences.setValue("userToolAssetAddonEntryKeys", "");
+
+		portletPreferences.setValue("enableViewCountIncrement", "false");
+
+		portletPreferences.setValue("contentMetadataAssetAddonEntryKeys", "");
+
+		portletPreferences.setValue(
+			"articleId", journalArticleResourceModel.getArticleId());
+
+		portletPreferences.setValue(
+			"groupId",
+			String.valueOf(journalArticleResourceModel.getGroupId()));
 
 		PortletPreferencesModel portletPreferencesModel =
 			new PortletPreferencesModelImpl();
@@ -2391,12 +2367,52 @@ public class DataFactory {
 		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 		portletPreferencesModel.setOwnerType(
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		portletPreferencesModel.setPlid(0);
+		portletPreferencesModel.setPlid(layoutModel.getPlid());
 		portletPreferencesModel.setPortletId(portletId);
 		portletPreferencesModel.setPreferences(
 			_portletPreferencesFactory.toXML(portletPreferences));
 
 		return portletPreferencesModel;
+	}
+
+	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
+		LayoutModel layoutModel,	 String portletId) {
+
+		PortletPreferencesModel portletPreferencesModel =
+			new PortletPreferencesModelImpl();
+
+		portletPreferencesModel.setPortletPreferencesId(_counter.get());
+		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		portletPreferencesModel.setOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferencesModel.setPlid(layoutModel.getPlid());
+		portletPreferencesModel.setPortletId(portletId);
+		portletPreferencesModel.setPreferences(
+			PortletConstants.DEFAULT_PREFERENCES);
+
+		return portletPreferencesModel;
+	}
+
+	public JournalContentSearchModel newJournalContentSearchModel(
+		LayoutModel layoutModel, JournalArticleModel journalArticleModel,
+		FragmentEntryLinkModel fragmentEntryLinkModel) {
+
+		JournalContentSearchModel journalContentSearchModel =
+			new JournalContentSearchModelImpl();
+
+		String portletId = PortletIdCodec.encode(
+			JournalContentPortletKeys.JOURNAL_CONTENT,
+			fragmentEntryLinkModel.getNamespace());
+
+		journalContentSearchModel.setContentSearchId(_counter.get());
+		journalContentSearchModel.setGroupId(layoutModel.getGroupId());
+		journalContentSearchModel.setCompanyId(_companyId);
+		journalContentSearchModel.setLayoutId(layoutModel.getGroupId());
+		journalContentSearchModel.setPortletId(portletId);
+		journalContentSearchModel.setArticleId(
+			journalArticleModel.getArticleId());
+
+		return journalContentSearchModel;
 	}
 
 	public JournalContentSearchModel newJournalContentSearchModel(
@@ -4180,7 +4196,6 @@ public class DataFactory {
 	private DDMStructureModel _defaultDLDDMStructureModel;
 	private DDMStructureVersionModel _defaultDLDDMStructureVersionModel;
 	private DLFileEntryTypeModel _defaultDLFileEntryTypeModel;
-	private String _defaultJournalArticleId;
 	private DDMStructureLayoutModel _defaultJournalDDMStructureLayoutModel;
 	private DDMStructureModel _defaultJournalDDMStructureModel;
 	private DDMStructureVersionModel _defaultJournalDDMStructureVersionModel;
