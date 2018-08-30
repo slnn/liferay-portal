@@ -4,26 +4,26 @@
 
 <@insertGroup
 	_groupModel=dataFactory.globalGroupModel
-	_publicPageCount=1
 	_privatePageCount=0
+	_publicPageCount=1
 />
 
 <@insertGroup
 	_groupModel=dataFactory.guestGroupModel
-	_publicPageCount=1
 	_privatePageCount=0
+	_publicPageCount=1
 />
 
 <@insertGroup
 	_groupModel=dataFactory.userPersonalSiteGroupModel
-	_publicPageCount=1
 	_privatePageCount=0
+	_publicPageCount=1
 />
 
 <@insertGroup
 	_groupModel=dataFactory.contronPanelGroupModel
-	_publicPageCount=0
 	_privatePageCount=1
+	_publicPageCount=0
 />
 
 <#list dataFactory.groupModels as groupModel>
@@ -62,8 +62,8 @@
 
 	<@insertGroup
 		_groupModel=groupModel
-		_publicPageCount=publicPageCount
 		_privatePageCount=0
+		_publicPageCount=publicPageCount
 	/>
 
 	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
