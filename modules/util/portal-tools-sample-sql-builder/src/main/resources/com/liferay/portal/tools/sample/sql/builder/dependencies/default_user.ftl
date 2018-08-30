@@ -9,6 +9,7 @@
 <@insertGroup
 	_groupModel=dataFactory.newGroupModel(userModel)
 	_publicPageCount=0
+	_privatePageCount=0
 />
 
 <#assign
@@ -39,6 +40,7 @@
 <@insertGroup
 	_groupModel=userGroupModel
 	_publicPageCount=1
+	_privatePageCount=0
 />
 
 <#assign
