@@ -103,6 +103,7 @@
 				${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 
 				<#if fragmentEntryLinkModel.getHtml()?contains("lfr-widget-web-content")>
+					${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(contentLayoutModel, fragmentEntryLinkModel, journalArticleResourceModel))}
 					${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(controlPanelLayoutModel, fragmentEntryLinkModel, journalArticleResourceModel))}
 					${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(controlPanelLayoutModel, journalArticleModel, fragmentEntryLinkModel))}
 				</#if>
