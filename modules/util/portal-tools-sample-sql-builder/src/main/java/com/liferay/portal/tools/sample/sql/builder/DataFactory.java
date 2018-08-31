@@ -2453,6 +2453,14 @@ public class DataFactory {
 		LayoutFriendlyURLModel layoutFriendlyURLEntryModel =
 			new LayoutFriendlyURLModelImpl();
 
+		String friendlyURL = layoutModel.getFriendlyURL();
+
+		boolean privateLayout = false;
+
+		if (friendlyURL.contains("manage")) {
+			privateLayout = true;
+		}
+
 		layoutFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
 		layoutFriendlyURLEntryModel.setLayoutFriendlyURLId(_counter.get());
 		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
@@ -2462,8 +2470,8 @@ public class DataFactory {
 		layoutFriendlyURLEntryModel.setCreateDate(new Date());
 		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
 		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
-		layoutFriendlyURLEntryModel.setFriendlyURL(
-			layoutModel.getFriendlyURL());
+		layoutFriendlyURLEntryModel.setFriendlyURL(friendlyURL);
+		layoutFriendlyURLEntryModel.setPrivateLayout(privateLayout);
 		layoutFriendlyURLEntryModel.setLanguageId("en_US");
 		layoutFriendlyURLEntryModel.setLastPublishDate(new Date());
 
