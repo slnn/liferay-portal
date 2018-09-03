@@ -64,66 +64,60 @@ public abstract class BaseUpgradePortletPreferences
 	}
 
 	protected void updatePortletPreferences() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String whereClause = getUpdatePortletPreferencesWhereClause();
+		String whereClause = getUpdatePortletPreferencesWhereClause();
 
-			deletePortletPreferencesByOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
-				new String[]{"portletItemId", "PortletItem"});
+		deletePortletPreferencesByOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
+			new String[] {"portletItemId", "PortletItem"});
 
-			deletePortletPreferencesByOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY, whereClause, "ownerId",
-				new String[]{"companyId", "Company"});
+		deletePortletPreferencesByOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY, whereClause, "ownerId",
+			new String[] {"companyId", "Company"});
 
-			deletePortletPreferencesByOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, whereClause, "ownerId",
-				new String[]{"groupId", "Group_"});
+		deletePortletPreferencesByOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, whereClause, "ownerId",
+			new String[] {"groupId", "Group_"});
 
-			deletePortletPreferencesByOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				new String[]{"plid", "Layout"},
-				new String[]{"layoutRevisionId", "LayoutRevision"});
+		deletePortletPreferencesByOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
+			new String[] {"plid", "Layout"},
+			new String[] {"layoutRevisionId", "LayoutRevision"});
 
-			deletePortletPreferencesByOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause,
-				"ownerId",
-				new String[]{"organizationId", "Organization_"});
+		deletePortletPreferencesByOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause, "ownerId",
+			new String[] {"organizationId", "Organization_"});
 
-			deletePortletPreferencesByOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId",
-				new String[]{"userId", "User_"});
+		deletePortletPreferencesByOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId",
+			new String[] {"userId", "User_"});
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
-				"PortletItem", "portletItemId");
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
+			"PortletItem", "portletItemId");
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY, whereClause, "ownerId",
-				"Company", "companyId");
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY, whereClause, "ownerId",
+			"Company", "companyId");
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, whereClause, "ownerId",
-				"Group_", "groupId");
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, whereClause, "ownerId",
+			"Group_", "groupId");
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				"Layout",
-				"plid");
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid", "Layout",
+			"plid");
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				"LayoutRevision", "layoutRevisionId");
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
+			"LayoutRevision", "layoutRevisionId");
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause,
-				"ownerId",
-				"Organization_", "organizationId");
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause, "ownerId",
+			"Organization_", "organizationId");
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId",
-				"User_",
-				"userId");
-		}
+		updatePortletPreferencesWithOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId", "User_",
+			"userId");
 	}
 
 	protected void updatePortletPreferencesWithOwnerType(
