@@ -69,28 +69,29 @@ public abstract class BaseUpgradePortletPreferences
 
 			deletePortletPreferencesByOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
-				new String[] {"portletItemId", "PortletItem"});
+				new String[]{"portletItemId", "PortletItem"});
 
 			deletePortletPreferencesByOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_COMPANY, whereClause, "ownerId",
-				new String[] {"companyId", "Company"});
+				new String[]{"companyId", "Company"});
 
 			deletePortletPreferencesByOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_GROUP, whereClause, "ownerId",
-				new String[] {"groupId", "Group_"});
+				new String[]{"groupId", "Group_"});
 
 			deletePortletPreferencesByOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				new String[] {"plid", "Layout"},
-				new String[] {"layoutRevisionId", "LayoutRevision"});
+				new String[]{"plid", "Layout"},
+				new String[]{"layoutRevisionId", "LayoutRevision"});
 
 			deletePortletPreferencesByOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause,
-				"ownerId", new String[] {"organizationId", "Organization_"});
+				"ownerId",
+				new String[]{"organizationId", "Organization_"});
 
 			deletePortletPreferencesByOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId",
-				new String[] {"userId", "User_"});
+				new String[]{"userId", "User_"});
 
 			updatePortletPreferencesWithOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
@@ -106,7 +107,8 @@ public abstract class BaseUpgradePortletPreferences
 
 			updatePortletPreferencesWithOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				"Layout", "plid");
+				"Layout",
+				"plid");
 
 			updatePortletPreferencesWithOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
@@ -114,11 +116,13 @@ public abstract class BaseUpgradePortletPreferences
 
 			updatePortletPreferencesWithOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause,
-				"ownerId", "Organization_", "organizationId");
+				"ownerId",
+				"Organization_", "organizationId");
 
 			updatePortletPreferencesWithOwnerType(
 				PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId",
-				"User_", "userId");
+				"User_",
+				"userId");
 		}
 	}
 
