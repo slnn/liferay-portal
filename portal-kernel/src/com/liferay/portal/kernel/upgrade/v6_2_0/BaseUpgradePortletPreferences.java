@@ -158,9 +158,10 @@ public abstract class BaseUpgradePortletPreferences
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
 					long portletPreferencesId = rs.getLong(
 						"portletPreferencesId");
-					long companyId = rs.getLong("companyId");
+
 					long ownerId = rs.getLong("ownerId");
 					long plid = rs.getLong("plid");
 					String portletId = rs.getString("portletId");
