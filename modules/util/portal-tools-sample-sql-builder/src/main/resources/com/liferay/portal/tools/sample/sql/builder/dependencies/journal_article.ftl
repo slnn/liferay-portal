@@ -1,3 +1,5 @@
+<#assign contentPageEnable = dataFactory.contentPageEnable />
+<#if contentPageEnable== "false">
 <#assign ddmStructureModel = dataFactory.defaultJournalDDMStructureModel />
 
 <@insertDDMStructure
@@ -87,3 +89,4 @@ ${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
 		${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid))}
 	</#list>
 </#list>
+</#if>

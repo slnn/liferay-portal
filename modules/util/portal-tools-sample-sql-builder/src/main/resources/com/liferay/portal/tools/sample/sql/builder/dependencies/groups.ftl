@@ -17,6 +17,11 @@
 	_publicPageCount=1
 />
 
+<@insertGroup
+	_groupModel=dataFactory.contronPanelGroupModel
+	_publicPageCount=1
+/>
+
 <#list dataFactory.groupModels as groupModel>
 	<#assign groupId = groupModel.groupId />
 
@@ -25,6 +30,8 @@
 	<#include "blogs.ftl">
 
 	<#include "ddl.ftl">
+
+	<#include "fragment.ftl">
 
 	<#include "journal_article.ftl">
 
