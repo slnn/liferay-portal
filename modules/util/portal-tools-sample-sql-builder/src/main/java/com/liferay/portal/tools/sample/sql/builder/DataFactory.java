@@ -2140,16 +2140,6 @@ public class DataFactory {
 		Map<String, FragmentEntryModel> fragmentEntryModels = new HashMap<>();
 
 		fragmentEntryModels.put(
-			"footer",
-			newFragmentEntryModel(groupId, "footer", fragmentCollectionModel));
-		fragmentEntryModels.put(
-			"header",
-			newFragmentEntryModel(groupId, "header", fragmentCollectionModel));
-		fragmentEntryModels.put(
-			"navigation",
-			newFragmentEntryModel(
-				groupId, "navigation", fragmentCollectionModel));
-		fragmentEntryModels.put(
 			"web_content",
 			newFragmentEntryModel(
 				groupId, "web_content", fragmentCollectionModel));
