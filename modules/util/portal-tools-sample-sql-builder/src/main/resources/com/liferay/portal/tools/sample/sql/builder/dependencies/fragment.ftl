@@ -54,7 +54,7 @@
 	</#list>
 
 	<#list journalArticlePageCounts as journalArticlePageCount>
-		<#assign contentLayoutModel = dataFactory.newContentLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "navigation,header,web_content,footer") />
+		<#assign contentLayoutModel = dataFactory.newContentLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "web_content") />
 
 		${dataFactory.getCSVWriter("layout").write(contentLayoutModel.friendlyURL + "\n")}
 
