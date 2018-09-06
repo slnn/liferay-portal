@@ -5,6 +5,12 @@
 
 	${dataFactory.toInsertSQL(controlPanelLayoutModel)}
 
+	<@insertGroup
+		_groupModel=dataFactory.contronPanelGroupModel
+		_privatePageCount=1
+		_publicPageCount=0
+	/>
+
 	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(controlPanelLayoutModel))}
 
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />

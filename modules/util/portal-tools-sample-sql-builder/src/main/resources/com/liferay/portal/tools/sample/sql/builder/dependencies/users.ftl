@@ -17,6 +17,7 @@
 	<@insertGroup
 		_groupModel=userGroupModel
 		_publicPageCount=1
+		_privatePageCount=0
 	/>
 
 	<@insertUser
