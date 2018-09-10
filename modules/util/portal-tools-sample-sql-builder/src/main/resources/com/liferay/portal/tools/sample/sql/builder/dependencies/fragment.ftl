@@ -113,4 +113,3 @@ ${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
 		</#list>
 	</#list>
 </#list>
-

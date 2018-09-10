@@ -96,9 +96,11 @@ public class SampleSQLBuilderTest {
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
-		properties.put("sample.sql.max.content.page.journal.article.count", "1");
+		properties.put(
+			"sample.sql.max.content.page.journal.article.count", "1");
 		properties.put("sample.sql.max.content.page.count", "1");
-		properties.put("sample.sql.max.content.page.journal.article.version.count", "1");
+		properties.put(
+			"sample.sql.max.content.page.journal.article.version.count", "1");
 		properties.put("sample.sql.db.type", "hypersonic");
 		properties.put("sample.sql.max.asset.category.count", "1");
 		properties.put(

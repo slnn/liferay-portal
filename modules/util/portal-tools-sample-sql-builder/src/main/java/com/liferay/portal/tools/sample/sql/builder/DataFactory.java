@@ -683,6 +683,18 @@ public class DataFactory {
 		return _maxBlogsEntryCommentCount;
 	}
 
+	public int getMaxContentPageCount() {
+		return _maxContentPageCount;
+	}
+
+	public int getMaxContentPageJournalArticleCount() {
+		return _maxContentPageJournalArticleCount;
+	}
+
+	public int getMaxContentPageJournalArticleVersionCount() {
+		return _maxContentPageJournalArticleVersionCount;
+	}
+
 	public int getMaxDDLRecordCount() {
 		return _maxDDLRecordCount;
 	}
@@ -702,25 +714,13 @@ public class DataFactory {
 	public int getMaxJournalArticleCount() {
 		return _maxJournalArticleCount;
 	}
-	
-	public int getMaxContentPageJournalArticleCount(){
-		return _maxContentPageJournalArticleCount;
-	}
 
 	public int getMaxJournalArticlePageCount() {
 		return _maxJournalArticlePageCount;
 	}
-	
-	public int getMaxContentPageCount(){
-		return _maxContentPageCount;
-	}
 
 	public int getMaxJournalArticleVersionCount() {
 		return _maxJournalArticleVersionCount;
-	}
-
-	public int getMaxContentPageJournalArticleVersionCount(){
-		return _maxContentPageJournalArticleVersionCount;
 	}
 
 	public int getMaxWikiPageCommentCount() {
@@ -1029,13 +1029,13 @@ public class DataFactory {
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.journal.article.count"));
 		_maxContentPageJournalArticleCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.content.page.journal.article.count"));
+			properties.getProperty(
+				"sample.sql.max.content.page.journal.article.count"));
 		_maxJournalArticlePageCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.journal.article.page.count"));
 		_maxContentPageCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.content.page.count"));		
+			properties.getProperty("sample.sql.max.content.page.count"));
 		_maxJournalArticleVersionCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.journal.article.version.count"));
@@ -4257,6 +4257,9 @@ public class DataFactory {
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
+	private int _maxContentPageCount;
+	private int _maxContentPageJournalArticleCount;
+	private int _maxContentPageJournalArticleVersionCount;
 	private int _maxDDLCustomFieldCount;
 	private int _maxDDLRecordCount;
 	private int _maxDDLRecordSetCount;
@@ -4266,11 +4269,8 @@ public class DataFactory {
 	private int _maxDLFolderDepth;
 	private int _maxGroupsCount;
 	private int _maxJournalArticleCount;
-	private int _maxContentPageJournalArticleCount;
 	private int _maxJournalArticlePageCount;
-	private int _maxContentPageCount;
 	private int _maxJournalArticleVersionCount;
-	private int _maxContentPageJournalArticleVersionCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
 	private int _maxMBThreadCount;
