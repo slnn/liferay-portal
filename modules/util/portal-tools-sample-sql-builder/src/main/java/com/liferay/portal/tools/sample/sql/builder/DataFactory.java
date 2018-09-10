@@ -702,13 +702,25 @@ public class DataFactory {
 	public int getMaxJournalArticleCount() {
 		return _maxJournalArticleCount;
 	}
+	
+	public int getMaxContentPageJournalArticleCount(){
+		return _maxContentPageJournalArticleCount;
+	}
 
 	public int getMaxJournalArticlePageCount() {
 		return _maxJournalArticlePageCount;
 	}
+	
+	public int getMaxContentPageCount(){
+		return _maxContentPageCount;
+	}
 
 	public int getMaxJournalArticleVersionCount() {
 		return _maxJournalArticleVersionCount;
+	}
+
+	public int getMaxContentPageJournalArticleVersionCount(){
+		return _maxContentPageJournalArticleVersionCount;
 	}
 
 	public int getMaxWikiPageCommentCount() {
@@ -1016,12 +1028,20 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.journal.article.count"));
+		_maxContentPageJournalArticleCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.content.page.journal.article.count"));
 		_maxJournalArticlePageCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.journal.article.page.count"));
+		_maxContentPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.content.page.count"));		
 		_maxJournalArticleVersionCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.journal.article.version.count"));
+		_maxContentPageJournalArticleVersionCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.content.page.journal.article.version.count"));
 		_maxMBCategoryCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.mb.category.count"));
 		_maxMBMessageCount = GetterUtil.getInteger(
@@ -4246,8 +4266,11 @@ public class DataFactory {
 	private int _maxDLFolderDepth;
 	private int _maxGroupsCount;
 	private int _maxJournalArticleCount;
+	private int _maxContentPageJournalArticleCount;
 	private int _maxJournalArticlePageCount;
+	private int _maxContentPageCount;
 	private int _maxJournalArticleVersionCount;
+	private int _maxContentPageJournalArticleVersionCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
 	private int _maxMBThreadCount;
