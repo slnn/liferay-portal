@@ -1,123 +1,99 @@
-<#assign contentPageEnable = dataFactory.contentPageEnable />
-<#if contentPageEnable== "true">
+<#assign controlPanelLayoutModel = dataFactory.newControlPanelLayoutModel() />
 
-	<#assign controlPanelLayoutModel = dataFactory.newControlPanelLayoutModel() />
+${dataFactory.toInsertSQL(controlPanelLayoutModel)}
 
-	${dataFactory.toInsertSQL(controlPanelLayoutModel)}
+<@insertGroup
+	_groupModel=dataFactory.contronPanelGroupModel
+	_privatePageCount=1
+	_publicPageCount=0
+/>
 
-	<@insertGroup
-		_groupModel=dataFactory.controlPanelGroupModel
-		_privatePageCount=1
-		_publicPageCount=0
-	/>
+${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(controlPanelLayoutModel))}
 
-	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(controlPanelLayoutModel))}
+<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
 
-	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
+${dataFactory.toInsertSQL(fragmentCollectionModel)}
 
-	${dataFactory.toInsertSQL(fragmentCollectionModel)}
+<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId, fragmentCollectionModel) />
 
-	<#assign fragmentEntryModels = dataFactory.newFragmentEntryModels(groupId, fragmentCollectionModel) />
+<#list fragmentEntryModels?keys as fragmentEntryModelName>
+	${dataFactory.toInsertSQL(fragmentEntryModels["${fragmentEntryModelName}"])}
+</#list>
 
-	<#list fragmentEntryModels?keys as fragmentEntryModelName>
-		${dataFactory.toInsertSQL(fragmentEntryModels["${fragmentEntryModelName}"])}
-	</#list>
+<#assign portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_test" />
 
-	<#assign portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_test" />
+${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(controlPanelLayoutModel, portletIdPrefix))}
 
-	${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(controlPanelLayoutModel, portletIdPrefix))}
+<#assign contentPageCounts = dataFactory.getSequence(dataFactory.maxContentPageCount) />
 
-	<#assign ddmStructureModel = dataFactory.defaultJournalDDMStructureModel />
+<#list contentPageCounts as contentPageCount>
+	<#assign contentLayoutModel = dataFactory.newContentLayoutModel(groupId, groupId + "_content_page_" + contentPageCount, "web_content") />
 
-	<@insertDDMStructure
-		_ddmStructureLayoutModel=dataFactory.defaultJournalDDMStructureLayoutModel
-		_ddmStructureModel=ddmStructureModel
-		_ddmStructureVersionModel=dataFactory.defaultJournalDDMStructureVersionModel
-	/>
+	${dataFactory.getCSVWriter("layout").write(contentLayoutModel.friendlyURL + "\n")}
 
-	<#assign ddmTemplateModel = dataFactory.defaultJournalDDMTemplateModel />
+	<#assign contentPageJournalArticleCounts = dataFactory.getSequence(dataFactory.maxContentPageJournalArticleCount) />
 
-	${dataFactory.toInsertSQL(ddmTemplateModel)}
+	<#list contentPageJournalArticleCounts as contentPagejournalArticleCount>
+		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
 
-	<#assign ddmTemplateVersionModel = dataFactory.defaultJournalDDMTemplateVersionModel />
+		${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
-	${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
+		<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount) />
 
-	<#assign
-		journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
+		<#list versionCounts as versionCount>
+			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, contentPagejournalArticleCount, versionCount) />
 
-		resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId)
-	/>
+			${dataFactory.toInsertSQL(journalArticleModel)}
 
-	<#list resourcePermissionModels as resourcePermissionModel>
-		${dataFactory.toInsertSQL(resourcePermissionModel)}
-	</#list>
+			<#assign journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, contentPagejournalArticleCount, versionCount) />
 
-	<#list journalArticlePageCounts as journalArticlePageCount>
-		<#assign contentLayoutModel = dataFactory.newContentLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "web_content") />
+			${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
 
-		${dataFactory.getCSVWriter("layout").write(contentLayoutModel.friendlyURL + "\n")}
+			<#assign ddmTemplateModel = dataFactory.defaultJournalDDMTemplateModel />
 
-		<#assign journalArticleCounts = dataFactory.getSequence(dataFactory.maxJournalArticleCount) />
+			${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
 
-		<#list journalArticleCounts as journalArticleCount>
-			<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
+			<#assign ddmStructureModel = dataFactory.defaultJournalDDMStructureModel />
 
-			${dataFactory.toInsertSQL(journalArticleResourceModel)}
+			${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId))}
 
-			<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount) />
+			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(journalArticleModel))}
 
-			<#list versionCounts as versionCount>
-				<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
+			<#if versionCount = dataFactory.maxJournalArticleVersionCount>
+				<@insertAssetEntry
+					_categoryAndTag=true
+					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+				/>
+			</#if>
+		</#list>
 
-				${dataFactory.toInsertSQL(journalArticleModel)}
+		<@insertMBDiscussion
+			_classNameId=dataFactory.journalArticleClassNameId
+			_classPK=journalArticleResourceModel.resourcePrimKey
+			_groupId=groupId
+			_maxCommentCount=0
+			_mbRootMessageId=dataFactory.getCounterNext()
+			_mbThreadId=dataFactory.getCounterNext()
+		/>
 
-				<#assign journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(journalArticleModel, journalArticleCount, versionCount) />
+		${dataFactory.toInsertSQL(contentLayoutModel)}
 
-				${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+		${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
 
-				${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
+		<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(contentLayoutModel, fragmentEntryModels) />
 
-				${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId))}
+		<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+			${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 
-				${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(journalArticleModel))}
+			<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel, fragmentEntryLinkModel) />
 
-				<#if versionCount = dataFactory.maxJournalArticleVersionCount>
-					<@insertAssetEntry
-						_categoryAndTag=true
-						_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
-					/>
-				</#if>
-			</#list>
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-			<@insertMBDiscussion
-				_classNameId=dataFactory.journalArticleClassNameId
-				_classPK=journalArticleResourceModel.resourcePrimKey
-				_groupId=groupId
-				_maxCommentCount=0
-				_mbRootMessageId=dataFactory.getCounterNext()
-				_mbThreadId=dataFactory.getCounterNext()
-			/>
-
-			${dataFactory.toInsertSQL(contentLayoutModel)}
-
-			${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
-
-			<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(contentLayoutModel, fragmentEntryModels) />
-
-			<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
-				${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
-
-				<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel, fragmentEntryLinkModel) />
-
-				${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
-				<#if fragmentEntryLinkModel.getHtml()?contains("lfr-widget-web-content")>
-					${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(contentLayoutModel, fragmentEntryLinkModel, journalArticleResourceModel))}
-					${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(controlPanelLayoutModel, fragmentEntryLinkModel, journalArticleResourceModel))}
-					${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(controlPanelLayoutModel, journalArticleModel, fragmentEntryLinkModel))}
-				</#if>
-			</#list>
+			<#if fragmentEntryLinkModel.getHtml()?contains("lfr-widget-web-content")>
+				${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(contentLayoutModel, fragmentEntryLinkModel, journalArticleResourceModel))}
+				${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(controlPanelLayoutModel, fragmentEntryLinkModel, journalArticleResourceModel))}
+				${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(controlPanelLayoutModel, journalArticleModel, fragmentEntryLinkModel))}
+			</#if>
 		</#list>
 	</#list>
-</#if>
+</#list>

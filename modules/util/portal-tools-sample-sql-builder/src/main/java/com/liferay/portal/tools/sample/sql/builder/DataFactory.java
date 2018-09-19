@@ -544,10 +544,6 @@ public class DataFactory {
 		return _companyModel;
 	}
 
-	public String getContentPageEnable() {
-		return String.valueOf(_contentPageEnable);
-	}
-
 	public GroupModel getControlPanelGroupModel() {
 		return _controlPanelGroupModel;
 	}
@@ -705,8 +701,16 @@ public class DataFactory {
 		return _maxJournalArticleCount;
 	}
 
+	public int getMaxContentPageJournalArticleCount(){
+		return _maxContentPageJournalArticleCount;
+	}
+
 	public int getMaxJournalArticlePageCount() {
 		return _maxJournalArticlePageCount;
+	}
+
+	public int getMaxContentPageCount(){
+		return _maxContentPageCount;
 	}
 
 	public int getMaxJournalArticleVersionCount() {
@@ -1018,9 +1022,14 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.journal.article.count"));
+		_maxContentPageJournalArticleCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.content.page.journal.article.count"));
 		_maxJournalArticlePageCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.journal.article.page.count"));
+		_maxContentPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.content.page.count"));
 		_maxJournalArticleVersionCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.journal.article.version.count"));
@@ -1040,8 +1049,6 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
 		_maxWikiPageCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.wiki.page.count"));
-		_contentPageEnable = GetterUtil.getBoolean(
-			properties.getProperty("sample.sql.content.page.enable"));
 
 		File outputDir = new File(
 			properties.getProperty("sample.sql.output.dir"));
@@ -4228,7 +4235,6 @@ public class DataFactory {
 		new HashMap<>();
 	private final long _companyId;
 	private CompanyModel _companyModel;
-	private Boolean _contentPageEnable;
 	private final long _controlPanelGroupId;
 	private GroupModel _controlPanelGroupModel;
 	private final SimpleCounter _counter;
@@ -4282,7 +4288,9 @@ public class DataFactory {
 	private int _maxDLFolderDepth;
 	private int _maxGroupsCount;
 	private int _maxJournalArticleCount;
+	private int _maxContentPageJournalArticleCount;
 	private int _maxJournalArticlePageCount;
+	private int _maxContentPageCount;
 	private int _maxJournalArticleVersionCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
