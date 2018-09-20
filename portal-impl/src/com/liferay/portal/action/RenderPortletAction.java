@@ -112,7 +112,7 @@ public class RenderPortletAction extends Action {
 			decorate);
 
 		PortletContainerUtil.processPublicRenderParameters(
-			request, themeDisplay.getLayout());
+			request, themeDisplay.getLayout(), portlet);
 
 		PortletContainerUtil.render(request, response, portlet);
 
