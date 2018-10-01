@@ -11,12 +11,12 @@
 <#if osgiModule>
 	<#assign
 		entityCache = "entityCache"
-		 finderCache = "finderCache"
+		finderCache = "finderCache"
 	/>
 <#else>
 	<#assign
 		entityCache = "EntityCacheUtil"
-		 finderCache = "FinderCacheUtil"
+		finderCache = "FinderCacheUtil"
 	/>
 </#if>
 
