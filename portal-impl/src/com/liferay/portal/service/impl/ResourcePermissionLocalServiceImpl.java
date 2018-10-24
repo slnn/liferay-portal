@@ -103,7 +103,7 @@ public class ResourcePermissionLocalServiceImpl
 		ModelPermissions modelPermissions =
 			serviceContext.getModelPermissions();
 
-		if (modelPermissions != null) {
+		if ((modelPermissions != null) && !modelPermissions.isEmpty()) {
 			addModelResourcePermissions(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
 				auditedModel.getUserId(), auditedModel.getModelClassName(),
