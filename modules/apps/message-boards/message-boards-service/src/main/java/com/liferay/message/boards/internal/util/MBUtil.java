@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,15 +64,28 @@ public class MBUtil {
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(parentMessage.getMessageId()), actionIds);
 
-		String[] groupPermissions = _getRolePermissions(
-			defaultGroupRole, roleIdsToActionIds);
-		String[] guestPermissions = _getRolePermissions(
-			guestRole, roleIdsToActionIds);
+		Set<String> defaultGroupActionIds = roleIdsToActionIds.get(
+			defaultGroupRole.getRoleId());
 
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			groupPermissions, guestPermissions);
+		if (defaultGroupActionIds == null) {
+			serviceContext.setGroupPermissions(new String[0]);
+		}
+		else {
+			serviceContext.setGroupPermissions(
+				defaultGroupActionIds.toArray(
+					new String[defaultGroupActionIds.size()]));
+		}
 
-		serviceContext.setModelPermissions(modelPermissions);
+		Set<String> guestActionIds = roleIdsToActionIds.get(
+			guestRole.getRoleId());
+
+		if (guestActionIds == null) {
+			serviceContext.setGuestPermissions(new String[0]);
+		}
+		else {
+			serviceContext.setGuestPermissions(
+				guestActionIds.toArray(new String[guestActionIds.size()]));
+		}
 	}
 
 	public static String replaceMessageBodyPaths(
@@ -150,25 +161,6 @@ public class MBUtil {
 		};
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
-	}
-
-	private static String[] _getRolePermissions(
-		Role role, Map<Long, Set<String>> roleIdsToActionIds) {
-
-		String[] rolePermissions = null;
-
-		Set<String> defaultRoleActionIds = roleIdsToActionIds.get(
-			role.getRoleId());
-
-		if (defaultRoleActionIds != null) {
-			rolePermissions = defaultRoleActionIds.toArray(
-				new String[defaultRoleActionIds.size()]);
-		}
-		else {
-			rolePermissions = new String[0];
-		}
-
-		return rolePermissions;
 	}
 
 }

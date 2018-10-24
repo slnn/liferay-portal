@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
@@ -229,7 +228,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addPageResources(page, serviceContext.getModelPermissions());
+			addPageResources(
+				page, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
 		}
 
 		// Node
@@ -406,10 +407,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		addPageResources(page, addGroupPermissions, addGuestPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void addPageResources(
 			long nodeId, String title, String[] groupPermissions,
@@ -433,21 +430,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			addGroupPermissions, addGuestPermissions);
 	}
 
-	@Override
-	public void addPageResources(
-			WikiPage page, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			page.getCompanyId(), page.getGroupId(), page.getUserId(),
-			WikiPage.class.getName(), page.getResourcePrimKey(),
-			modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void addPageResources(
 			WikiPage page, String[] groupPermissions, String[] guestPermissions)
