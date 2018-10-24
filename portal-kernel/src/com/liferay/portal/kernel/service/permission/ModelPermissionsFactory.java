@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service.permission;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,13 +79,46 @@ public class ModelPermissionsFactory {
 	}
 
 	public static ModelPermissions create(HttpServletRequest request) {
-		return _createModelPermissions(request, null);
+		Map<String, String[]> modelPermissionsParameterMap =
+			_getModelPermissionsParameterMap(request.getParameterMap(), null);
+
+		if (!modelPermissionsParameterMap.isEmpty()) {
+			return create(modelPermissionsParameterMap);
+		}
+
+		String[] groupPermissions = request.getParameterValues(
+			"groupPermissions");
+		String[] guestPermissions = request.getParameterValues(
+			"guestPermissions");
+
+		if ((groupPermissions != null) || (guestPermissions != null)) {
+			return create(groupPermissions, guestPermissions);
+		}
+
+		return null;
 	}
 
 	public static ModelPermissions create(
 		HttpServletRequest request, String className) {
 
-		return _createModelPermissions(request, className);
+		Map<String, String[]> modelPermissionsParameterMap =
+			_getModelPermissionsParameterMap(
+				request.getParameterMap(), className);
+
+		if (!modelPermissionsParameterMap.isEmpty()) {
+			return create(modelPermissionsParameterMap);
+		}
+
+		String[] groupPermissions = request.getParameterValues(
+			"groupPermissions_" + className);
+		String[] guestPermissions = request.getParameterValues(
+			"guestPermissions_" + className);
+
+		if ((groupPermissions != null) || (guestPermissions != null)) {
+			return create(groupPermissions, guestPermissions);
+		}
+
+		return createWithDefaultPermissions(className);
 	}
 
 	public static ModelPermissions create(
@@ -131,13 +163,47 @@ public class ModelPermissionsFactory {
 	}
 
 	public static ModelPermissions create(PortletRequest portletRequest) {
-		return _createModelPermissions(portletRequest, null);
+		Map<String, String[]> modelPermissionsParameterMap =
+			_getModelPermissionsParameterMap(
+				portletRequest.getParameterMap(), null);
+
+		if (!modelPermissionsParameterMap.isEmpty()) {
+			return create(modelPermissionsParameterMap);
+		}
+
+		String[] groupPermissions = portletRequest.getParameterValues(
+			"groupPermissions");
+		String[] guestPermissions = portletRequest.getParameterValues(
+			"guestPermissions");
+
+		if ((groupPermissions != null) || (guestPermissions != null)) {
+			return create(groupPermissions, guestPermissions);
+		}
+
+		return null;
 	}
 
 	public static ModelPermissions create(
 		PortletRequest portletRequest, String className) {
 
-		return _createModelPermissions(portletRequest, className);
+		Map<String, String[]> modelPermissionsParameterMap =
+			_getModelPermissionsParameterMap(
+				portletRequest.getParameterMap(), className);
+
+		if (!modelPermissionsParameterMap.isEmpty()) {
+			return create(modelPermissionsParameterMap);
+		}
+
+		String[] groupPermissions = portletRequest.getParameterValues(
+			"groupPermissions_" + className);
+		String[] guestPermissions = portletRequest.getParameterValues(
+			"guestPermissions_" + className);
+
+		if ((groupPermissions != null) || (guestPermissions != null)) {
+			return create(groupPermissions, guestPermissions);
+		}
+
+		return createWithDefaultPermissions(className);
 	}
 
 	public static ModelPermissions create(
@@ -162,70 +228,6 @@ public class ModelPermissionsFactory {
 		String className) {
 
 		return create(true, true, className);
-	}
-
-	private static String _addClassNamePostfix(
-		String parameterName, String className) {
-
-		if (Validator.isNull(className)) {
-			return parameterName;
-		}
-
-		return parameterName + StringPool.UNDERLINE + className;
-	}
-
-	private static ModelPermissions _createModelPermissions(
-		HttpServletRequest request, String className) {
-
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				request.getParameterMap(), className);
-
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = request.getParameterValues(
-			_addClassNamePostfix("groupPermissions", className));
-		String[] guestPermissions = request.getParameterValues(
-			_addClassNamePostfix("guestPermissions", className));
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		return createWithDefaultPermissions(className);
-	}
-
-	private static ModelPermissions _createModelPermissions(
-		PortletRequest portletRequest, String className) {
-
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				portletRequest.getParameterMap(), className);
-
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = portletRequest.getParameterValues(
-			_addClassNamePostfix("groupPermissions", className));
-		String[] guestPermissions = portletRequest.getParameterValues(
-			_addClassNamePostfix("guestPermissions", className));
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		return createWithDefaultPermissions(className);
 	}
 
 	private static Map<String, String[]> _getModelPermissionsParameterMap(
