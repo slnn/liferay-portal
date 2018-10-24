@@ -58,126 +58,6 @@ public class ServiceContextFactory {
 	public static ServiceContext getInstance(HttpServletRequest request)
 		throws PortalException {
 
-		ServiceContext serviceContext = _getInstance(request);
-
-		if (serviceContext.getModelPermissions() == null) {
-			serviceContext.setModelPermissions(new ModelPermissions());
-		}
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(PortletRequest portletRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getInstance(portletRequest);
-
-		if (serviceContext.getModelPermissions() == null) {
-			serviceContext.setModelPermissions(new ModelPermissions());
-		}
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(
-			String className, HttpServletRequest request)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getInstance(request);
-
-		// Permissions
-
-		if (serviceContext.getModelPermissions() == null) {
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				request, className);
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			serviceContext.setModelPermissions(modelPermissions);
-		}
-
-		// Expando
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(), className),
-				request);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(
-			String className, PortletRequest portletRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getInstance(portletRequest);
-
-		// Permissions
-
-		if (serviceContext.getModelPermissions() == null) {
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				portletRequest, className);
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			serviceContext.setModelPermissions(modelPermissions);
-		}
-
-		// Expando
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(), className),
-				portletRequest);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(
-			String className, UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getInstance(uploadPortletRequest);
-
-		// Permissions
-
-		if (serviceContext.getModelPermissions() == null) {
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				uploadPortletRequest, className);
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			serviceContext.setModelPermissions(modelPermissions);
-		}
-
-		// Expando
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(), className),
-				uploadPortletRequest);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-
-		return serviceContext;
-	}
-
-	private static ServiceContext _getInstance(HttpServletRequest request)
-		throws PortalException {
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		// Theme display
@@ -371,7 +251,7 @@ public class ServiceContextFactory {
 		return serviceContext;
 	}
 
-	private static ServiceContext _getInstance(PortletRequest portletRequest)
+	public static ServiceContext getInstance(PortletRequest portletRequest)
 		throws PortalException {
 
 		// Theme display
@@ -537,6 +417,85 @@ public class ServiceContextFactory {
 			portletRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
 		serviceContext.setWorkflowAction(workflowAction);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, HttpServletRequest request)
+		throws PortalException {
+
+		ServiceContext serviceContext = getInstance(request);
+
+		// Permissions
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(request, className));
+		}
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				request);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, PortletRequest portletRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = getInstance(portletRequest);
+
+		// Permissions
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(portletRequest, className));
+		}
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				portletRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, UploadPortletRequest uploadPortletRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = getInstance(uploadPortletRequest);
+
+		// Permissions
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(
+					uploadPortletRequest, className));
+		}
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				uploadPortletRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
 		return serviceContext;
 	}
