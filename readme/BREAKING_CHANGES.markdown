@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `5dda5217372e`.*
+*This document has been reviewed through commit `ef156169d4fa`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1021,27 +1021,30 @@ This change corrects a best practice violation regarding content escaping.
 
 ---------------------------------------
 
-### Changed modelName Attribute to be Mandatory in liferay-ui:input-permissions Taglib
-- **Date:** 2018-Oct-04
+### Mandatory modelName attribute in liferay-ui:input-permissions taglib
+- **Date:** 2018-Oct-4
 - **JIRA Ticket:** LPS-85998
 
 #### What changed?
 
-Previously, the taglib `liferay-ui:input-permissions` could be used without
-providing the attribute `modelName`. Now the attribute `modelName` is mandatory.
+Previously the talib `liferay-ui:input-permissions` could be used
+without providing the attribute `modelName`. Now the attribute
+`modelName` is mandatory.
 
 #### Who is affected?
 
-This affects any developer who used the taglib `liferay-ui:input-permissions` in
-their own portlets and was not setting the `modelName` attribute of the taglib.
+This affects any developer who was using the taglib
+`liferay-ui:input-permissions` in their own portlets and was not setting
+the `modelName` attribute of the taglib.
 
 #### How should I update my code?
 
-You should invoke the taglib providing the model name to which you are assigning
-the permissions.
+You should invoke the taglib providing the model name you are assigning
+the permissions to.
 
 #### Why was this change made?
 
-This change removes old logic that is no longer used in Liferay Portal.
+This change was done to remove some old logic that is not used anywhere
+in Liferay.
 
 ---------------------------------------
