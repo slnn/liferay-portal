@@ -80,13 +80,13 @@ public class ModelPermissionsFactory {
 	}
 
 	public static ModelPermissions create(HttpServletRequest request) {
-		return _createModelPermissions(request.getParameterMap(), null);
+		return _createModelPermissions(request, null);
 	}
 
 	public static ModelPermissions create(
 		HttpServletRequest request, String className) {
 
-		return _createModelPermissions(request.getParameterMap(), className);
+		return _createModelPermissions(request, className);
 	}
 
 	public static ModelPermissions create(
@@ -131,14 +131,13 @@ public class ModelPermissionsFactory {
 	}
 
 	public static ModelPermissions create(PortletRequest portletRequest) {
-		return _createModelPermissions(portletRequest.getParameterMap(), null);
+		return _createModelPermissions(portletRequest, null);
 	}
 
 	public static ModelPermissions create(
 		PortletRequest portletRequest, String className) {
 
-		return _createModelPermissions(
-			portletRequest.getParameterMap(), className);
+		return _createModelPermissions(portletRequest, className);
 	}
 
 	public static ModelPermissions create(
@@ -176,6 +175,12 @@ public class ModelPermissionsFactory {
 	}
 
 	private static ModelPermissions _createModelPermissions(
+		HttpServletRequest request, String className) {
+
+		return _createModelPermissions(request.getParameterMap(), className);
+	}
+
+	private static ModelPermissions _createModelPermissions(
 		Map<String, String[]> parameterMap, String className) {
 
 		Map<String, String[]> modelPermissionsParameterMap =
@@ -199,6 +204,13 @@ public class ModelPermissionsFactory {
 		}
 
 		return createWithDefaultPermissions(className);
+	}
+
+	private static ModelPermissions _createModelPermissions(
+		PortletRequest portletRequest, String className) {
+
+		return _createModelPermissions(
+			portletRequest.getParameterMap(), className);
 	}
 
 	private static Map<String, String[]> _getModelPermissionsParameterMap(
