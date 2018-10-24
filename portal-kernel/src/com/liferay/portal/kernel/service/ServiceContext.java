@@ -124,12 +124,8 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setLanguageId(getLanguageId());
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
 		serviceContext.setLayoutURL(getLayoutURL());
-
-		if (_modelPermissions != null) {
-			serviceContext.setModelPermissions(
-				(ModelPermissions)_modelPermissions.clone());
-		}
-
+		serviceContext.setModelPermissions(
+			(ModelPermissions)_modelPermissions.clone());
 		serviceContext.setModifiedDate(getModifiedDate());
 		serviceContext.setPathFriendlyURLPrivateGroup(
 			getPathFriendlyURLPrivateGroup());
@@ -388,10 +384,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the specific group permissions
 	 */
 	public String[] getGroupPermissions() {
-		if (_modelPermissions == null) {
-			return null;
-		}
-
 		return _modelPermissions.getActionIds(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE);
 	}
@@ -428,10 +420,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the specific guest permissions
 	 */
 	public String[] getGuestPermissions() {
-		if (_modelPermissions == null) {
-			return null;
-		}
-
 		return _modelPermissions.getActionIds(RoleConstants.GUEST);
 	}
 
@@ -1325,10 +1313,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @param groupPermissions the permissions (optionally <code>null</code>)
 	 */
 	public void setGroupPermissions(String[] groupPermissions) {
-		if (_modelPermissions == null) {
-			_modelPermissions = new ModelPermissions();
-		}
-
 		_modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
 	}
@@ -1342,10 +1326,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *        <code>null</code>)
 	 */
 	public void setGuestPermissions(String[] guestPermissions) {
-		if (_modelPermissions == null) {
-			_modelPermissions = new ModelPermissions();
-		}
-
 		_modelPermissions.addRolePermissions(
 			RoleConstants.GUEST, guestPermissions);
 	}
@@ -1637,7 +1617,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _languageId;
 	private String _layoutFullURL;
 	private String _layoutURL;
-	private ModelPermissions _modelPermissions;
+	private ModelPermissions _modelPermissions = new ModelPermissions();
 	private Date _modifiedDate;
 	private String _pathFriendlyURLPrivateGroup;
 	private String _pathFriendlyURLPrivateUser;
