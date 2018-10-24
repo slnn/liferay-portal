@@ -86,8 +86,7 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addKBArticleResources(KBArticle, ModelPermissions)}
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -108,8 +107,7 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addKBArticleResources(KBArticle, ModelPermissions)}
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	@Override

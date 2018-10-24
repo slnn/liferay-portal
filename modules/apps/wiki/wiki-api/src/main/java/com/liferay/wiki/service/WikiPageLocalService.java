@@ -102,8 +102,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addPageResources(WikiPage, ModelPermissions)}
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public void addPageResources(long nodeId, String title,
@@ -117,8 +116,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addPageResources(WikiPage, ModelPermissions)}
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public void addPageResources(WikiPage page, String[] groupPermissions,
