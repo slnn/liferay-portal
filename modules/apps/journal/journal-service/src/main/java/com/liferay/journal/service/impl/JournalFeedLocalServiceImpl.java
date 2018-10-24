@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -135,7 +134,9 @@ public class JournalFeedLocalServiceImpl
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addFeedResources(feed, serviceContext.getModelPermissions());
+			addFeedResources(
+				feed, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
 		}
 
 		return feed;
@@ -153,20 +154,6 @@ public class JournalFeedLocalServiceImpl
 			addGroupPermissions, addGuestPermissions);
 	}
 
-	@Override
-	public void addFeedResources(
-			JournalFeed feed, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			feed.getCompanyId(), feed.getGroupId(), feed.getUserId(),
-			JournalFeed.class.getName(), feed.getId(), modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void addFeedResources(
 			JournalFeed feed, String[] groupPermissions,
@@ -190,10 +177,6 @@ public class JournalFeedLocalServiceImpl
 		addFeedResources(feed, addGroupPermissions, addGuestPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void addFeedResources(
 			long feedId, String[] groupPermissions, String[] guestPermissions)

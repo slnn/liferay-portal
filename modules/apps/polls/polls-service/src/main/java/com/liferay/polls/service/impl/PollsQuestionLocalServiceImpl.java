@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -117,7 +116,8 @@ public class PollsQuestionLocalServiceImpl
 		}
 		else {
 			addQuestionResources(
-				question, serviceContext.getModelPermissions());
+				question, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
 		}
 
 		// Choices
@@ -148,21 +148,6 @@ public class PollsQuestionLocalServiceImpl
 
 	@Override
 	public void addQuestionResources(
-			long questionId, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
-			questionId);
-
-		addQuestionResources(question, modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void addQuestionResources(
 			long questionId, String[] groupPermissions,
 			String[] guestPermissions)
 		throws PortalException {
@@ -186,21 +171,6 @@ public class PollsQuestionLocalServiceImpl
 			addGuestPermissions);
 	}
 
-	@Override
-	public void addQuestionResources(
-			PollsQuestion question, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			question.getCompanyId(), question.getGroupId(),
-			question.getUserId(), PollsQuestion.class.getName(),
-			question.getQuestionId(), modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void addQuestionResources(
 			PollsQuestion question, String[] groupPermissions,
