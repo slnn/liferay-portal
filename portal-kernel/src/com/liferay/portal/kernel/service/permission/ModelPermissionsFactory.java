@@ -20,12 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -39,97 +35,24 @@ public class ModelPermissionsFactory {
 
 	public static final String MODEL_PERMISSIONS_PREFIX = "modelPermissions";
 
-	public static ModelPermissions create(
-		boolean addGroupPermissions, boolean addGuestPermissions,
-		String className) {
+	public static ModelPermissions create(HttpServletRequest request) {
+		Map<String, String[]> parameterMap = request.getParameterMap();
 
+		return create(parameterMap);
+	}
+
+	public static ModelPermissions create(Map<String, String[]> parameterMap) {
 		ModelPermissions modelPermissions = new ModelPermissions();
 
-		if (addGroupPermissions) {
-			List<String> modelResourceGroupDefaultActions =
-				ResourceActionsUtil.getModelResourceGroupDefaultActions(
-					className);
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String parameterName = entry.getKey();
 
-			modelPermissions.addRolePermissions(
-				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
-				modelResourceGroupDefaultActions.toArray(
-					new String[modelResourceGroupDefaultActions.size()]));
-		}
-		else {
-			modelPermissions.addRolePermissions(
-				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, new String[0]);
-		}
+			if (!parameterName.startsWith(MODEL_PERMISSIONS_PREFIX)) {
+				continue;
+			}
 
-		if (addGuestPermissions) {
-			List<String> modelResourceGuestDefaultActions =
-				ResourceActionsUtil.getModelResourceGuestDefaultActions(
-					className);
-
-			modelPermissions.addRolePermissions(
-				RoleConstants.GUEST,
-				modelResourceGuestDefaultActions.toArray(
-					new String[modelResourceGuestDefaultActions.size()]));
-		}
-		else {
-			modelPermissions.addRolePermissions(
-				RoleConstants.GUEST, new String[0]);
-		}
-
-		return modelPermissions;
-	}
-
-	public static ModelPermissions create(HttpServletRequest request) {
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(request.getParameterMap(), null);
-
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = request.getParameterValues(
-			"groupPermissions");
-		String[] guestPermissions = request.getParameterValues(
-			"guestPermissions");
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		return null;
-	}
-
-	public static ModelPermissions create(
-		HttpServletRequest request, String className) {
-
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				request.getParameterMap(), className);
-
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = request.getParameterValues(
-			"groupPermissions_" + className);
-		String[] guestPermissions = request.getParameterValues(
-			"guestPermissions_" + className);
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		return createWithDefaultPermissions(className);
-	}
-
-	public static ModelPermissions create(
-		Map<String, String[]> modelPermissionsParameterMap) {
-
-		ModelPermissions modelPermissions = null;
-
-		for (Map.Entry<String, String[]> entry :
-				modelPermissionsParameterMap.entrySet()) {
-
-			String roleName = entry.getKey();
+			String roleName = parameterName.substring(
+				MODEL_PERMISSIONS_PREFIX.length());
 
 			Role role = null;
 
@@ -151,10 +74,6 @@ public class ModelPermissionsFactory {
 				continue;
 			}
 
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
 			modelPermissions.addRolePermissions(
 				role.getName(), entry.getValue());
 		}
@@ -163,47 +82,9 @@ public class ModelPermissionsFactory {
 	}
 
 	public static ModelPermissions create(PortletRequest portletRequest) {
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				portletRequest.getParameterMap(), null);
+		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = portletRequest.getParameterValues(
-			"groupPermissions");
-		String[] guestPermissions = portletRequest.getParameterValues(
-			"guestPermissions");
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		return null;
-	}
-
-	public static ModelPermissions create(
-		PortletRequest portletRequest, String className) {
-
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				portletRequest.getParameterMap(), className);
-
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = portletRequest.getParameterValues(
-			"groupPermissions_" + className);
-		String[] guestPermissions = portletRequest.getParameterValues(
-			"guestPermissions_" + className);
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		return createWithDefaultPermissions(className);
+		return create(parameterMap);
 	}
 
 	public static ModelPermissions create(
@@ -211,52 +92,17 @@ public class ModelPermissionsFactory {
 
 		ModelPermissions modelPermissions = new ModelPermissions();
 
-		if (groupPermissions != null) {
+		if ((groupPermissions != null) && (groupPermissions.length > 0)) {
 			modelPermissions.addRolePermissions(
 				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
 		}
 
-		if (guestPermissions != null) {
+		if ((guestPermissions != null) && (guestPermissions.length > 0)) {
 			modelPermissions.addRolePermissions(
 				RoleConstants.GUEST, guestPermissions);
 		}
 
 		return modelPermissions;
-	}
-
-	public static ModelPermissions createWithDefaultPermissions(
-		String className) {
-
-		return create(true, true, className);
-	}
-
-	private static Map<String, String[]> _getModelPermissionsParameterMap(
-		Map<String, String[]> parameterMap, String className) {
-
-		Map<String, String[]> modelPermissionsParameterMap = new HashMap<>();
-
-		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String parameterName = entry.getKey();
-
-			if (!parameterName.startsWith(MODEL_PERMISSIONS_PREFIX)) {
-				continue;
-			}
-
-			parameterName = parameterName.substring(
-				MODEL_PERMISSIONS_PREFIX.length());
-
-			if (Validator.isNotNull(className)) {
-				if (!parameterName.startsWith(className)) {
-					continue;
-				}
-
-				parameterName = parameterName.substring(className.length());
-			}
-
-			modelPermissionsParameterMap.put(parameterName, entry.getValue());
-		}
-
-		return modelPermissionsParameterMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
