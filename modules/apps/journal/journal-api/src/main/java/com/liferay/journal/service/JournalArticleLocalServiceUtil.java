@@ -370,8 +370,7 @@ public class JournalArticleLocalServiceUtil {
 	* @param article the web content article to add resources to
 	* @param groupPermissions the group permissions to be added
 	* @param guestPermissions the guest permissions to be added
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addArticleResources(JournalArticle, ModelPermissions)}
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public static void addArticleResources(
@@ -406,8 +405,7 @@ public class JournalArticleLocalServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @param groupPermissions the group permissions to be added
 	* @param guestPermissions the guest permissions to be added
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addArticleResources(JournalArticle, ModelPermissions)}
+	* @deprecated As of Judson (7.1.x), with no direct replacement
 	*/
 	@Deprecated
 	public static void addArticleResources(long groupId, String articleId,
