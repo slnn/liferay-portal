@@ -116,7 +116,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -475,7 +474,9 @@ public class JournalArticleLocalServiceImpl
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addArticleResources(article, serviceContext.getModelPermissions());
+			addArticleResources(
+				article, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
 		}
 
 		// Small image
@@ -731,28 +732,9 @@ public class JournalArticleLocalServiceImpl
 	 * Adds the model resources with the permissions to the web content article.
 	 *
 	 * @param article the web content article to add resources to
-	 * @param modelPermissions the model permissions
-	 */
-	@Override
-	public void addArticleResources(
-			JournalArticle article, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			article.getCompanyId(), article.getGroupId(), article.getUserId(),
-			JournalArticle.class.getName(), article.getResourcePrimKey(),
-			modelPermissions);
-	}
-
-	/**
-	 * Adds the model resources with the permissions to the web content article.
-	 *
-	 * @param article the web content article to add resources to
 	 * @param groupPermissions the group permissions to be added
 	 * @param guestPermissions the guest permissions to be added
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
-	@Deprecated
 	@Override
 	public void addArticleResources(
 			JournalArticle article, String[] groupPermissions,
@@ -792,9 +774,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param articleId the primary key of the web content article
 	 * @param groupPermissions the group permissions to be added
 	 * @param guestPermissions the guest permissions to be added
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
-	@Deprecated
 	@Override
 	public void addArticleResources(
 			long groupId, String articleId, String[] groupPermissions,

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -87,7 +86,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		}
 		else {
 			addKBFolderResources(
-				kbFolder, serviceContext.getModelPermissions());
+				kbFolder, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
 		}
 
 		return kbFolder;
@@ -276,13 +276,14 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 	}
 
 	protected void addKBFolderResources(
-			KBFolder kbFolder, ModelPermissions modelPermissions)
+			KBFolder kbFolder, String[] groupPermissions,
+			String[] guestPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			kbFolder.getCompanyId(), kbFolder.getGroupId(),
 			kbFolder.getUserId(), KBFolder.class.getName(),
-			kbFolder.getKbFolderId(), modelPermissions);
+			kbFolder.getKbFolderId(), groupPermissions, guestPermissions);
 	}
 
 	protected String getUniqueUrlTitle(

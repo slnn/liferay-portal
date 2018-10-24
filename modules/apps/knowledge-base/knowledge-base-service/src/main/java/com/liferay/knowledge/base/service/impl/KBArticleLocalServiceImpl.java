@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -210,7 +209,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 		else {
 			addKBArticleResources(
-				kbArticle, serviceContext.getModelPermissions());
+				kbArticle, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
 		}
 
 		// Asset
@@ -247,21 +247,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void addKBArticleResources(
-			KBArticle kbArticle, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			kbArticle.getCompanyId(), kbArticle.getGroupId(),
-			kbArticle.getUserId(), KBArticle.class.getName(),
-			kbArticle.getResourcePrimKey(), modelPermissions);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void addKBArticleResources(
 			KBArticle kbArticle, String[] groupPermissions,
 			String[] guestPermissions)
 		throws PortalException {
@@ -285,10 +270,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle, addGroupPermissions, addGuestPermissions);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void addKBArticleResources(
 			long kbArticleId, String[] groupPermissions,

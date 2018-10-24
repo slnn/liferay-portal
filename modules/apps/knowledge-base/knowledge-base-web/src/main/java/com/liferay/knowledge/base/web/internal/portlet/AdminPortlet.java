@@ -33,13 +33,11 @@ import com.liferay.knowledge.base.web.internal.upload.KBArticleAttachmentKBUploa
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -218,11 +216,8 @@ public class AdminPortlet extends BaseKBPortlet {
 					ServiceContextFactory.getInstance(
 						AdminPortlet.class.getName(), actionRequest);
 
-				ModelPermissions modelPermissions =
-					serviceContext.getModelPermissions();
-
-				modelPermissions.addRolePermissions(
-					RoleConstants.GUEST, ActionKeys.VIEW);
+				serviceContext.setGuestPermissions(
+					new String[] {ActionKeys.VIEW});
 
 				int importedKBArticlesCount =
 					kbArticleService.addKBArticlesMarkdown(
