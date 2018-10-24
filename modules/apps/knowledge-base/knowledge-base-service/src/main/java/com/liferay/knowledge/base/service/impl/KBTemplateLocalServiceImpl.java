@@ -215,6 +215,16 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 
 		kbTemplatePersistence.update(kbTemplate);
 
+		// Resources
+
+		if ((serviceContext.getGroupPermissions() != null) ||
+			(serviceContext.getGuestPermissions() != null)) {
+
+			updateKBTemplateResources(
+				kbTemplate, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
+		}
+
 		// Social
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
