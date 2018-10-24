@@ -101,10 +101,15 @@ public class ModelPermissionsFactory {
 
 		ModelPermissions modelPermissions = new ModelPermissions();
 
-		modelPermissions.addRolePermissions(
-			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
-		modelPermissions.addRolePermissions(
-			RoleConstants.GUEST, guestPermissions);
+		if (groupPermissions != null) {
+			modelPermissions.addRolePermissions(
+				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
+		}
+
+		if (guestPermissions != null) {
+			modelPermissions.addRolePermissions(
+				RoleConstants.GUEST, guestPermissions);
+		}
 
 		return modelPermissions;
 	}
