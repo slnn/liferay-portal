@@ -135,7 +135,29 @@ public class ServiceContextFactory {
 			String className, UploadPortletRequest uploadPortletRequest)
 		throws PortalException {
 
-		return getInstance(className, (HttpServletRequest)uploadPortletRequest);
+		ServiceContext serviceContext = _getInstance(uploadPortletRequest);
+
+		// Permissions
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(
+					uploadPortletRequest, className));
+		}
+
+		_ensureValidModelPermissions(serviceContext);
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				uploadPortletRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
 	}
 
 	private static void _ensureValidModelPermissions(
