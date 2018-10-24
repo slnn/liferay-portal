@@ -78,16 +78,6 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	public static void addQuestionResources(long questionId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addQuestionResources(questionId, modelPermissions);
-	}
-
-	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
-	*/
-	@Deprecated
-	public static void addQuestionResources(long questionId,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -103,17 +93,6 @@ public class PollsQuestionLocalServiceUtil {
 			addGuestPermissions);
 	}
 
-	public static void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addQuestionResources(question, modelPermissions);
-	}
-
-	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
-	*/
-	@Deprecated
 	public static void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
 		String[] groupPermissions, String[] guestPermissions)
