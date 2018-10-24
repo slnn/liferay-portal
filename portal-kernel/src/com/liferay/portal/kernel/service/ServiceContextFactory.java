@@ -40,6 +40,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -262,8 +263,10 @@ public class ServiceContextFactory {
 
 		// Permissions
 
-		serviceContext.setModelPermissions(
-			ModelPermissionsFactory.create(request));
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			request);
+
+		serviceContext.setModelPermissions(modelPermissions);
 
 		// Portlet preferences ids
 
@@ -382,18 +385,19 @@ public class ServiceContextFactory {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		Map<String, String[]> parameters = portletRequest.getParameterMap();
+		Enumeration<String> enu = portletRequest.getParameterNames();
 
-		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-			String name = entry.getKey();
-			String[] values = entry.getValue();
+		while (enu.hasMoreElements()) {
+			String param = enu.nextElement();
+
+			String[] values = portletRequest.getParameterValues(param);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				if (values.length == 1) {
-					attributes.put(name, values[0]);
+					attributes.put(param, values[0]);
 				}
 				else {
-					attributes.put(name, values);
+					attributes.put(param, values);
 				}
 			}
 		}
@@ -402,19 +406,24 @@ public class ServiceContextFactory {
 
 		// Command
 
-		serviceContext.setCommand(
-			ParamUtil.getString(portletRequest, Constants.CMD));
+		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
+
+		serviceContext.setCommand(cmd);
 
 		// Current URL
 
-		serviceContext.setCurrentURL(PortalUtil.getCurrentURL(portletRequest));
+		String currentURL = PortalUtil.getCurrentURL(portletRequest);
+
+		serviceContext.setCurrentURL(currentURL);
 
 		// Form date
 
 		long formDateLong = ParamUtil.getLong(portletRequest, "formDate");
 
 		if (formDateLong > 0) {
-			serviceContext.setFormDate(new Date(formDateLong));
+			Date formDate = new Date(formDateLong);
+
+			serviceContext.setFormDate(formDate);
 		}
 
 		// Permissions
@@ -427,11 +436,7 @@ public class ServiceContextFactory {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		String portletId = PortalUtil.getPortletId(portletRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			serviceContext.setPortletId(portletId);
-		}
+		serviceContext.setPortletId(PortalUtil.getPortletId(portletRequest));
 
 		// Request
 
@@ -463,39 +468,46 @@ public class ServiceContextFactory {
 		}
 
 		if (updateAssetCategoryIds) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toArray(
-					assetCategoryIdsList.toArray(
-						new Long[assetCategoryIdsList.size()])));
+			long[] assetCategoryIds = ArrayUtil.toArray(
+				assetCategoryIdsList.toArray(
+					new Long[assetCategoryIdsList.size()]));
+
+			serviceContext.setAssetCategoryIds(assetCategoryIds);
 		}
 
-		serviceContext.setAssetEntryVisible(
-			ParamUtil.getBoolean(portletRequest, "assetEntryVisible", true));
+		boolean assetEntryVisible = ParamUtil.getBoolean(
+			portletRequest, "assetEntryVisible", true);
+
+		serviceContext.setAssetEntryVisible(assetEntryVisible);
 
 		String assetLinkEntryIdsString = request.getParameter(
 			"assetLinksSearchContainerPrimaryKeys");
 
 		if (assetLinkEntryIdsString != null) {
-			serviceContext.setAssetLinkEntryIds(
-				StringUtil.split(assetLinkEntryIdsString, 0L));
+			long[] assetLinkEntryIds = StringUtil.split(
+				assetLinkEntryIdsString, 0L);
+
+			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		}
 
-		serviceContext.setAssetPriority(
-			ParamUtil.getDouble(request, "assetPriority"));
+		Double assetPriority = ParamUtil.getDouble(request, "assetPriority");
+
+		serviceContext.setAssetPriority(assetPriority);
 
 		String assetTagNamesString = request.getParameter("assetTagNames");
 
 		if (assetTagNamesString != null) {
-			serviceContext.setAssetTagNames(
-				StringUtil.split(assetTagNamesString));
+			String[] assetTagNames = StringUtil.split(assetTagNamesString);
+
+			serviceContext.setAssetTagNames(assetTagNames);
 		}
 
 		// Workflow
 
-		serviceContext.setWorkflowAction(
-			ParamUtil.getInteger(
-				portletRequest, "workflowAction",
-				WorkflowConstants.ACTION_PUBLISH));
+		int workflowAction = ParamUtil.getInteger(
+			portletRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
+
+		serviceContext.setWorkflowAction(workflowAction);
 
 		return serviceContext;
 	}
