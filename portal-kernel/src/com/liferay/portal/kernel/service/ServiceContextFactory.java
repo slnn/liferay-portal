@@ -179,6 +179,10 @@ public class ServiceContextFactory {
 			serviceContext.setModelPermissions(modelPermissions);
 		}
 		else {
+			serviceContext.setAddGroupPermissions(
+				ParamUtil.getBoolean(request, "addGroupPermissions"));
+			serviceContext.setAddGuestPermissions(
+				ParamUtil.getBoolean(request, "addGuestPermissions"));
 			serviceContext.setGroupPermissions(
 				PortalUtil.getGroupPermissions(request));
 			serviceContext.setGuestPermissions(
@@ -352,11 +356,17 @@ public class ServiceContextFactory {
 			serviceContext.setModelPermissions(modelPermissions);
 		}
 		else {
+			boolean addGroupPermissions = ParamUtil.getBoolean(
+				portletRequest, "addGroupPermissions");
+			boolean addGuestPermissions = ParamUtil.getBoolean(
+				portletRequest, "addGuestPermissions");
 			String[] groupPermissions = PortalUtil.getGroupPermissions(
 				portletRequest);
 			String[] guestPermissions = PortalUtil.getGuestPermissions(
 				portletRequest);
 
+			serviceContext.setAddGroupPermissions(addGroupPermissions);
+			serviceContext.setAddGuestPermissions(addGuestPermissions);
 			serviceContext.setGroupPermissions(groupPermissions);
 			serviceContext.setGuestPermissions(guestPermissions);
 		}
