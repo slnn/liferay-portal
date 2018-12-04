@@ -96,7 +96,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			te.printStackTrace();
 		}
 
-		return EVAL_BODY_INCLUDE;
+		return SKIP_BODY;
 	}
 
 	public String getComponentId() {
