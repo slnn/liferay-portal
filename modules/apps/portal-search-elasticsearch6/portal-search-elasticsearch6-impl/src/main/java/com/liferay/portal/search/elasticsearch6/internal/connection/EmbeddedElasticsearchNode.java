@@ -32,6 +32,7 @@ import org.elasticsearch.node.InternalSettingsPreparer;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.transport.Netty4Plugin;
+import org.elasticsearch.xpack.core.XPackPlugin;
 
 /**
  * @author André de Oliveira
@@ -43,8 +44,8 @@ public class EmbeddedElasticsearchNode extends Node {
 			settings, null);
 
 		List<Class<? extends Plugin>> classpathPlugins = Arrays.asList(
-			CommonAnalysisPlugin.class, Netty4Plugin.class,
-			ReindexPlugin.class);
+			CommonAnalysisPlugin.class, Netty4Plugin.class, ReindexPlugin.class,
+			XPackPlugin.class);
 
 		try {
 			LogConfigurator.configure(environment);

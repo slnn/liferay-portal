@@ -412,6 +412,8 @@ public class EmbeddedElasticsearchConnection
 		configurePaths();
 
 		configureTestMode();
+
+		settingsBuilder.put("xpack.security.enabled", false);
 	}
 
 	protected void removeObsoletePlugin(String name, Settings settings) {
