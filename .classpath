@@ -189,6 +189,10 @@
 	<classpathentry kind="lib" path="lib/portal/im4java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/isoparser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jabsorb.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jackson-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jackson-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jackson-databind.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jackson-module-jaxb-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jakarta-regexp.jar"/>
