@@ -192,7 +192,6 @@
 	<classpathentry kind="lib" path="lib/portal/jackson-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jackson-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jackson-databind.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jackson-module-jaxb-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jakarta-regexp.jar"/>

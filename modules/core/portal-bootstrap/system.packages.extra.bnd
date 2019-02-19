@@ -110,9 +110,6 @@ Export-Package:\
 	com.fasterxml.jackson.databind.node;version='2.9.8',\
 	com.fasterxml.jackson.databind.type;version='2.9.8',\
 	com.fasterxml.jackson.databind.util;version='2.9.8',\
-	com.fasterxml.jackson.module.jaxb;version='2.9.8',\
-	com.fasterxml.jackson.module.jaxb.deser;version='2.9.8',\
-	com.fasterxml.jackson.module.jaxb.ser;version='2.9.8',\
 	\
 	com.ibm.crypto.provider,\
 	\
@@ -369,7 +366,6 @@ Provide-Capability:\
 	@../../../lib/portal/jackson-annotations.jar,\
 	@../../../lib/portal/jackson-core.jar,\
 	@../../../lib/portal/jackson-databind.jar,\
-	@../../../lib/portal/jackson-module-jaxb-annotations.jar,\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\
