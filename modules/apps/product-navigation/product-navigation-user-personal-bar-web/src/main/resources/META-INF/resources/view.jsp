@@ -16,10 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/user_personal_menu.jsp");
+portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+%>
+
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
-			<a class="text-default" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
+			<div data-url="<%= portletURL.toString() %>" id="<portlet:namespace />userAvatar">
 				<c:if test="<%= themeDisplay.isImpersonated() %>">
 					<aui:icon image="asterisk" markupView="lexicon" />
 				</c:if>
@@ -32,7 +39,7 @@
 				<span class="user-full-name">
 					<%= HtmlUtil.escape(user.getFullName()) %>
 				</span>
-			</a>
+			</div>
 
 			<%
 			int notificationsCount = GetterUtil.getInteger(request.getAttribute(ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT));
@@ -51,17 +58,6 @@
 				</aui:a>
 			</c:if>
 		</span>
-
-		<aui:script sandbox="<%= true %>">
-			var sidenavUserToggle = $('#<portlet:namespace />sidenavUserToggle');
-
-			sidenavUserToggle.on(
-				'click',
-				function(event) {
-					Liferay.fire('ProductMenu:openUserMenu');
-				}
-			);
-		</aui:script>
 	</c:when>
 	<c:otherwise>
 
@@ -76,3 +72,23 @@
 		</span>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	var userAvatar = $('#<portlet:namespace />userAvatar');
+
+	userAvatar.one(
+		'click',
+		function(event) {
+			var target = $(event.currentTarget);
+
+			$.ajax({
+				url: target.data('url'),
+				dataType: 'html',
+				type: 'get',
+				success: function(data) {
+					userAvatar.html(data);
+				}
+			})
+		}
+	);
+</aui:script>
