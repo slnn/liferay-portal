@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.util.RSSUtil;
 
 import java.io.Serializable;
@@ -723,8 +722,17 @@ public class AssetPublisherDisplayContext {
 			return _metadataFields;
 		}
 
-		_metadataFields = StringUtil.split(
-			_portletPreferences.getValue("metadataFields", StringPool.BLANK));
+		String metadataFields = _portletPreferences.getValue(
+			"metadataFields", null);
+
+		if (metadataFields == null) {
+			_metadataFields = new String[] {
+				"author", "categories", "modified-date", "tags"
+			};
+		}
+		else {
+			_metadataFields = StringUtil.split(metadataFields);
+		}
 
 		return _metadataFields;
 	}
@@ -972,8 +980,8 @@ public class AssetPublisherDisplayContext {
 
 	public String getSocialBookmarksTypes() {
 		if (_socialBookmarksTypes == null) {
-			_socialBookmarksTypes = _portletPreferences.getValue(
-				"socialBookmarksTypes", null);
+			_socialBookmarksTypes = GetterUtil.getString(
+				_portletPreferences.getValue("socialBookmarksTypes", null));
 		}
 
 		return _socialBookmarksTypes;
@@ -1192,8 +1200,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_enableViewCountIncrement = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableViewCountIncrement", null),
-			PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
+			_portletPreferences.getValue("enableViewCountIncrement", null));
 
 		return _enableViewCountIncrement;
 	}
@@ -1306,6 +1313,22 @@ public class AssetPublisherDisplayContext {
 		return _showAssetTitle;
 	}
 
+	public boolean isShowAuthor() {
+		if (_showAuthor != null) {
+			return _showAuthor;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "author")) {
+			_showAuthor = true;
+
+			return _showAuthor;
+		}
+
+		_showAuthor = false;
+
+		return _showAuthor;
+	}
+
 	public Boolean isShowAvailableLocales() {
 		if (_showAvailableLocales != null) {
 			return _showAvailableLocales;
@@ -1315,6 +1338,22 @@ public class AssetPublisherDisplayContext {
 			_portletPreferences.getValue("showAvailableLocales", null));
 
 		return _showAvailableLocales;
+	}
+
+	public boolean isShowCategories() {
+		if (_showCategories != null) {
+			return _showCategories;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "categories")) {
+			_showCategories = true;
+
+			return _showCategories;
+		}
+
+		_showCategories = false;
+
+		return _showCategories;
 	}
 
 	public Boolean isShowContextLink() {
@@ -1346,6 +1385,22 @@ public class AssetPublisherDisplayContext {
 		return _showContextLink;
 	}
 
+	public boolean isShowCreateDate() {
+		if (_showCreateDate != null) {
+			return _showCreateDate;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "create-date")) {
+			_showCreateDate = true;
+
+			return _showCreateDate;
+		}
+
+		_showCreateDate = false;
+
+		return _showCreateDate;
+	}
+
 	public boolean isShowEnableAddContentButton() {
 		return _assetPublisherCustomizer.isShowEnableAddContentButton(_request);
 	}
@@ -1360,6 +1415,22 @@ public class AssetPublisherDisplayContext {
 
 	public boolean isShowEnableRelatedAssets() {
 		return _assetPublisherCustomizer.isShowEnableRelatedAssets(_request);
+	}
+
+	public boolean isShowExpirationDate() {
+		if (_showExpirationDate != null) {
+			return _showExpirationDate;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "expiration-date")) {
+			_showExpirationDate = true;
+
+			return _showExpirationDate;
+		}
+
+		_showExpirationDate = false;
+
+		return _showExpirationDate;
 	}
 
 	public boolean isShowExtraInfo() {
@@ -1385,6 +1456,22 @@ public class AssetPublisherDisplayContext {
 		return _showMetadataDescriptions;
 	}
 
+	public boolean isShowModifiedDate() {
+		if (_showModifiedDate != null) {
+			return _showModifiedDate;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "modified-date")) {
+			_showModifiedDate = true;
+
+			return _showModifiedDate;
+		}
+
+		_showModifiedDate = false;
+
+		return _showModifiedDate;
+	}
+
 	public boolean isShowOnlyLayoutAssets() {
 		if (_showOnlyLayoutAssets != null) {
 			return _showOnlyLayoutAssets;
@@ -1396,8 +1483,72 @@ public class AssetPublisherDisplayContext {
 		return _showOnlyLayoutAssets;
 	}
 
+	public boolean isShowPriority() {
+		if (_showPriority != null) {
+			return _showPriority;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "priority")) {
+			_showPriority = true;
+
+			return _showPriority;
+		}
+
+		_showPriority = false;
+
+		return _showPriority;
+	}
+
+	public boolean isShowPublishDate() {
+		if (_showPublishDate != null) {
+			return _showPublishDate;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "publish-date")) {
+			_showPublishDate = true;
+
+			return _showPublishDate;
+		}
+
+		_showPublishDate = false;
+
+		return _showPublishDate;
+	}
+
 	public boolean isShowSubtypeFieldsFilter() {
 		return _assetPublisherCustomizer.isShowSubtypeFieldsFilter(_request);
+	}
+
+	public boolean isShowTags() {
+		if (_showTags != null) {
+			return _showTags;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "tags")) {
+			_showTags = true;
+
+			return _showTags;
+		}
+
+		_showTags = false;
+
+		return _showTags;
+	}
+
+	public boolean isShowViewCount() {
+		if (_showViewCount != null) {
+			return _showViewCount;
+		}
+
+		if (ArrayUtil.contains(getMetadataFields(), "view-count")) {
+			_showViewCount = true;
+
+			return _showViewCount;
+		}
+
+		_showViewCount = false;
+
+		return _showViewCount;
 	}
 
 	public boolean isSubscriptionEnabled() throws PortalException {
@@ -1667,11 +1818,20 @@ public class AssetPublisherDisplayContext {
 	private String _selectionStyle;
 	private Boolean _showAddContentButton;
 	private Boolean _showAssetTitle;
+	private Boolean _showAuthor;
 	private Boolean _showAvailableLocales;
+	private Boolean _showCategories;
 	private Boolean _showContextLink;
+	private Boolean _showCreateDate;
+	private Boolean _showExpirationDate;
 	private Boolean _showExtraInfo;
 	private Boolean _showMetadataDescriptions;
+	private Boolean _showModifiedDate;
 	private Boolean _showOnlyLayoutAssets;
+	private Boolean _showPriority;
+	private Boolean _showPublishDate;
+	private Boolean _showTags;
+	private Boolean _showViewCount;
 	private String _socialBookmarksDisplayStyle;
 	private String _socialBookmarksTypes;
 	private Boolean _subtypeFieldsFilterEnabled;

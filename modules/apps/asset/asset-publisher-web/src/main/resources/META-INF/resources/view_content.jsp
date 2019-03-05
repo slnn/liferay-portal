@@ -56,18 +56,15 @@ else {
 
 if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions()) || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable())) {
 	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetEntryIndex", 0);
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 	request.setAttribute("view.jsp-print", print);
-	request.setAttribute("view.jsp-results", new ArrayList());
 	request.setAttribute("view.jsp-showBackURL", !print);
-	request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
 
 	PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
 %>
 
-	<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
 
 <%
 	String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());

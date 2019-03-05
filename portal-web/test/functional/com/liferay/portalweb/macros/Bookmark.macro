@@ -533,14 +533,18 @@ definition {
 		var key_assetTitle = "${bookmarkName}";
 		var key_bookmarkName = "${bookmarkName}";
 
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${bookmarkName}");
+		AssetPublisherPortlet.clickShowFullContent(
+			assetTitle = "${bookmarkName}"
+		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${bookmarkName}"
 		);
 
-		Click(locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK");
+		Click(
+			locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK"
+		);
 
 		SelectWindow(
 			locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay"
