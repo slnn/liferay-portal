@@ -14,14 +14,10 @@
 
 package com.liferay.portal.template.soy.renderer.internal;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.InputStream;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -43,34 +39,44 @@ public class SoyJavaScriptRendererUtil {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		String contextString = jsonSerializer.serializeDeep(context);
-		String wrapperString = jsonSerializer.serialize(wrapper);
 
-		return StringUtil.replace(
-			_JAVA_SCRIPT_TPL,
-			new String[] {"$CONTEXT", "$ID", "$MODULE", "$WRAPPER"},
-			new String[] {contextString, id, module, wrapperString});
-	}
+		StringBundler componentSB = new StringBundler(9);
 
-	private static final String _JAVA_SCRIPT_TPL;
+		componentSB.append("Liferay.component('");
+		componentSB.append(id);
+		componentSB.append("', new ");
+		componentSB.append(module);
+		componentSB.append(".default(context");
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SoyJavaScriptRendererUtil.class);
-
-	static {
-		InputStream inputStream =
-			SoyJavaScriptRendererUtil.class.getResourceAsStream(
-				"dependencies/bootstrap.js.tpl");
-
-		String js = StringPool.BLANK;
-
-		try {
-			js = StringUtil.read(inputStream);
-		}
-		catch (Exception e) {
-			_log.error("Unable to read template", e);
+		if (wrapper) {
+			componentSB.append(", '#");
+			componentSB.append(id);
+			componentSB.append("'");
 		}
 
-		_JAVA_SCRIPT_TPL = js;
+		componentSB.append("), componentConfig);");
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("var context = Object.assign(");
+		sb.append(contextString);
+		sb.append(", Liferay.getComponentCache('$ID'));");
+
+		sb.append("var componentConfig = { cacheState: context.cacheState, ");
+		sb.append("destroyOnNavigate: true, portletId: context.portletId};");
+
+		if (Validator.isNotNull(context.get("defaultEventHandler"))) {
+			sb.append("Liferay.componentReady(context.defaultEventHandler).");
+			sb.append("then(function(defaultEventHandler) {");
+			sb.append("context.defaultEventHandler = defaultEventHandler;");
+			sb.append(componentSB.toString());
+			sb.append("});");
+		}
+		else {
+			sb.append(componentSB.toString());
+		}
+
+		return sb.toString();
 	}
 
 }
