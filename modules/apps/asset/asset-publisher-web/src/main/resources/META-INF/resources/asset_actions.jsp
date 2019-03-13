@@ -27,5 +27,4 @@ AssetEntryActionDropdownItemsProvider assetEntryActionDropdownItemsProvider = ne
 <clay:dropdown-actions
 	defaultEventHandler="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	dropdownItems="<%= assetEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
-	elementClasses="visible-interaction"
 />
