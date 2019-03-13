@@ -366,7 +366,7 @@
 	<tag>
 		<description></description>
 		<name>dropdown-actions</name>
-		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.DropdownActionsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.DropdownActionsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
