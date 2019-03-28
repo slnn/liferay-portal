@@ -80,7 +80,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
 				%>
 
-				<div class="autofit-row mb-3 metadata-author">
+				<div class="autofit-row mb-4 metadata-author">
 					<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 						<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
 							<span class="user-avatar-image">
