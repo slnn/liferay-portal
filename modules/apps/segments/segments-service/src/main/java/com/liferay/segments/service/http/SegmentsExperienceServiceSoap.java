@@ -138,12 +138,27 @@ public class SegmentsExperienceServiceSoap {
 		}
 	}
 
+	public static int getSegmentsExperiencesCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = SegmentsExperienceServiceUtil.getSegmentsExperiencesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getSegmentsExperiencesCount(long groupId,
-		long classNameId, long classPK, boolean active)
+		long classNameId, long classPK, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsExperience> orderByComparator)
 		throws RemoteException {
 		try {
 			int returnValue = SegmentsExperienceServiceUtil.getSegmentsExperiencesCount(groupId,
-					classNameId, classPK, active);
+					classNameId, classPK, active, start, end, orderByComparator);
 
 			return returnValue;
 		}
