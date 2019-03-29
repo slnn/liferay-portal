@@ -52,10 +52,10 @@ public class JavaCatchStatement extends BaseJavaTerm {
 			prefix = StringPool.BLANK;
 		}
 
-		indent = append(
-			sb, _parameterTypeNames, " | ", indent, prefix, " ", maxLineLength);
-
-		append(sb, _parameterName, indent, "", ")" + suffix, maxLineLength);
+		append(
+			sb, _parameterTypeNames, " | ", indent, prefix,
+			" " + _parameterName.toString("", "", ")" + suffix, -1),
+			maxLineLength);
 
 		return sb.toString();
 	}
