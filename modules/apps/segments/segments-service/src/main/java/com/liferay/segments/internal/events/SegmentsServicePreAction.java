@@ -91,6 +91,7 @@ public class SegmentsServicePreAction extends Action {
 		long[] segmentsExperienceIds = null;
 
 		Layout layout = themeDisplay.getLayout();
+
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
@@ -106,6 +107,7 @@ public class SegmentsServicePreAction extends Action {
 				segmentsExperienceIds = _getSegmentsExperienceIds(
 					layout.getGroupId(), segmentsEntryIds, classNameId,
 					layout.getPrimaryKey());
+
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
