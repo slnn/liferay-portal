@@ -35,10 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SiteNavigationMenuItemModel
-	extends BaseModel<SiteNavigationMenuItem>, ShardedModel,
-			StagedGroupedModel {
-
+public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMenuItem>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -306,5 +304,4 @@ public interface SiteNavigationMenuItemModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

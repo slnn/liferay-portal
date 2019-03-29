@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class LVEntryVersionSoap implements Serializable {
-
 	public static LVEntryVersionSoap toSoapModel(LVEntryVersion model) {
 		LVEntryVersionSoap soapModel = new LVEntryVersionSoap();
 
@@ -54,14 +53,11 @@ public class LVEntryVersionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LVEntryVersionSoap[][] toSoapModels(
-		LVEntryVersion[][] models) {
-
+	public static LVEntryVersionSoap[][] toSoapModels(LVEntryVersion[][] models) {
 		LVEntryVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new LVEntryVersionSoap[models.length][models[0].length];
+			soapModels = new LVEntryVersionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LVEntryVersionSoap[0][0];
@@ -74,11 +70,8 @@ public class LVEntryVersionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LVEntryVersionSoap[] toSoapModels(
-		List<LVEntryVersion> models) {
-
-		List<LVEntryVersionSoap> soapModels = new ArrayList<LVEntryVersionSoap>(
-			models.size());
+	public static LVEntryVersionSoap[] toSoapModels(List<LVEntryVersion> models) {
+		List<LVEntryVersionSoap> soapModels = new ArrayList<LVEntryVersionSoap>(models.size());
 
 		for (LVEntryVersion model : models) {
 			soapModels.add(toSoapModel(model));
@@ -161,5 +154,4 @@ public class LVEntryVersionSoap implements Serializable {
 	private long _lvEntryId;
 	private long _groupId;
 	private String _uniqueGroupKey;
-
 }

@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class KaleoNodeSoap implements Serializable {
-
 	public static KaleoNodeSoap toSoapModel(KaleoNode model) {
 		KaleoNodeSoap soapModel = new KaleoNodeSoap();
 
@@ -42,8 +41,7 @@ public class KaleoNodeSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setKaleoDefinitionVersionId(
-			model.getKaleoDefinitionVersionId());
+		soapModel.setKaleoDefinitionVersionId(model.getKaleoDefinitionVersionId());
 		soapModel.setName(model.getName());
 		soapModel.setMetadata(model.getMetadata());
 		soapModel.setDescription(model.getDescription());
@@ -82,8 +80,7 @@ public class KaleoNodeSoap implements Serializable {
 	}
 
 	public static KaleoNodeSoap[] toSoapModels(List<KaleoNode> models) {
-		List<KaleoNodeSoap> soapModels = new ArrayList<KaleoNodeSoap>(
-			models.size());
+		List<KaleoNodeSoap> soapModels = new ArrayList<KaleoNodeSoap>(models.size());
 
 		for (KaleoNode model : models) {
 			soapModels.add(toSoapModel(model));
@@ -246,5 +243,4 @@ public class KaleoNodeSoap implements Serializable {
 	private String _type;
 	private boolean _initial;
 	private boolean _terminal;
-
 }

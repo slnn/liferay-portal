@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliasesModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -55,26 +58,25 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class OAuth2ApplicationScopeAliasesModelImpl
-	extends BaseModelImpl<OAuth2ApplicationScopeAliases>
+public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2ApplicationScopeAliases>
 	implements OAuth2ApplicationScopeAliasesModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth2 application scope aliases model instance should use the <code>OAuth2ApplicationScopeAliases</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "OAuth2ApplicationScopeAliases";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"oA2AScopeAliasesId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"oAuth2ApplicationId", Types.BIGINT},
-		{"scopeAliases", Types.CLOB}, {"scopeAliasesHash", Types.BIGINT}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "oA2AScopeAliasesId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "oAuth2ApplicationId", Types.BIGINT },
+			{ "scopeAliases", Types.CLOB },
+			{ "scopeAliasesHash", Types.BIGINT }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("oA2AScopeAliasesId", Types.BIGINT);
@@ -87,32 +89,17 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		TABLE_COLUMNS_MAP.put("scopeAliasesHash", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2ApplicationScopeAliases (oA2AScopeAliasesId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,scopeAliases TEXT null,scopeAliasesHash LONG)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table OAuth2ApplicationScopeAliases";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY oAuth2ApplicationScopeAliases.oAuth2ApplicationScopeAliasesId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY OAuth2ApplicationScopeAliases.oA2AScopeAliasesId ASC";
-
+	public static final String TABLE_SQL_CREATE = "create table OAuth2ApplicationScopeAliases (oA2AScopeAliasesId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,scopeAliases TEXT null,scopeAliasesHash LONG)";
+	public static final String TABLE_SQL_DROP = "drop table OAuth2ApplicationScopeAliases";
+	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2ApplicationScopeAliases.oAuth2ApplicationScopeAliasesId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY OAuth2ApplicationScopeAliases.oA2AScopeAliasesId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 2L;
-
 	public static final long SCOPEALIASESHASH_COLUMN_BITMASK = 4L;
-
-	public static final long OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK =
-		8L;
+	public static final long OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -159,18 +146,15 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<OAuth2ApplicationScopeAliases, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<OAuth2ApplicationScopeAliases, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<OAuth2ApplicationScopeAliases, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<OAuth2ApplicationScopeAliases, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<OAuth2ApplicationScopeAliases, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<OAuth2ApplicationScopeAliases, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply(
 					(OAuth2ApplicationScopeAliases)this));
 		}
@@ -183,109 +167,60 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<OAuth2ApplicationScopeAliases, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<OAuth2ApplicationScopeAliases, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<OAuth2ApplicationScopeAliases, Object>
-				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
-					attributeName);
+			BiConsumer<OAuth2ApplicationScopeAliases, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(OAuth2ApplicationScopeAliases)this, entry.getValue());
+				attributeSetterBiConsumer.accept((OAuth2ApplicationScopeAliases)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<OAuth2ApplicationScopeAliases, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<OAuth2ApplicationScopeAliases, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<OAuth2ApplicationScopeAliases, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<OAuth2ApplicationScopeAliases, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<OAuth2ApplicationScopeAliases, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<OAuth2ApplicationScopeAliases, Object>>
-			_attributeSetterBiConsumers;
+	private static final Map<String, Function<OAuth2ApplicationScopeAliases, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<OAuth2ApplicationScopeAliases, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<OAuth2ApplicationScopeAliases, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<OAuth2ApplicationScopeAliases, Object>>();
-		Map<String, BiConsumer<OAuth2ApplicationScopeAliases, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<OAuth2ApplicationScopeAliases, ?>>();
+		Map<String, Function<OAuth2ApplicationScopeAliases, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<OAuth2ApplicationScopeAliases, Object>>();
+		Map<String, BiConsumer<OAuth2ApplicationScopeAliases, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<OAuth2ApplicationScopeAliases, ?>>();
 
-		attributeGetterFunctions.put(
-			"oAuth2ApplicationScopeAliasesId",
-			OAuth2ApplicationScopeAliases::getOAuth2ApplicationScopeAliasesId);
-		attributeSetterBiConsumers.put(
-			"oAuth2ApplicationScopeAliasesId",
-			(BiConsumer<OAuth2ApplicationScopeAliases, Long>)
-				OAuth2ApplicationScopeAliases::
-					setOAuth2ApplicationScopeAliasesId);
-		attributeGetterFunctions.put(
-			"companyId", OAuth2ApplicationScopeAliases::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<OAuth2ApplicationScopeAliases, Long>)
-				OAuth2ApplicationScopeAliases::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", OAuth2ApplicationScopeAliases::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<OAuth2ApplicationScopeAliases, Long>)
-				OAuth2ApplicationScopeAliases::setUserId);
-		attributeGetterFunctions.put(
-			"userName", OAuth2ApplicationScopeAliases::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<OAuth2ApplicationScopeAliases, String>)
-				OAuth2ApplicationScopeAliases::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", OAuth2ApplicationScopeAliases::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<OAuth2ApplicationScopeAliases, Date>)
-				OAuth2ApplicationScopeAliases::setCreateDate);
-		attributeGetterFunctions.put(
-			"oAuth2ApplicationId",
-			OAuth2ApplicationScopeAliases::getOAuth2ApplicationId);
-		attributeSetterBiConsumers.put(
-			"oAuth2ApplicationId",
-			(BiConsumer<OAuth2ApplicationScopeAliases, Long>)
-				OAuth2ApplicationScopeAliases::setOAuth2ApplicationId);
-		attributeGetterFunctions.put(
-			"scopeAliases", OAuth2ApplicationScopeAliases::getScopeAliases);
-		attributeSetterBiConsumers.put(
-			"scopeAliases",
-			(BiConsumer<OAuth2ApplicationScopeAliases, String>)
-				OAuth2ApplicationScopeAliases::setScopeAliases);
-		attributeGetterFunctions.put(
-			"scopeAliasesHash",
-			OAuth2ApplicationScopeAliases::getScopeAliasesHash);
-		attributeSetterBiConsumers.put(
-			"scopeAliasesHash",
-			(BiConsumer<OAuth2ApplicationScopeAliases, Long>)
-				OAuth2ApplicationScopeAliases::setScopeAliasesHash);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+		attributeGetterFunctions.put("oAuth2ApplicationScopeAliasesId", OAuth2ApplicationScopeAliases::getOAuth2ApplicationScopeAliasesId);
+		attributeSetterBiConsumers.put("oAuth2ApplicationScopeAliasesId", (BiConsumer<OAuth2ApplicationScopeAliases, Long>)OAuth2ApplicationScopeAliases::setOAuth2ApplicationScopeAliasesId);
+		attributeGetterFunctions.put("companyId", OAuth2ApplicationScopeAliases::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<OAuth2ApplicationScopeAliases, Long>)OAuth2ApplicationScopeAliases::setCompanyId);
+		attributeGetterFunctions.put("userId", OAuth2ApplicationScopeAliases::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<OAuth2ApplicationScopeAliases, Long>)OAuth2ApplicationScopeAliases::setUserId);
+		attributeGetterFunctions.put("userName", OAuth2ApplicationScopeAliases::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<OAuth2ApplicationScopeAliases, String>)OAuth2ApplicationScopeAliases::setUserName);
+		attributeGetterFunctions.put("createDate", OAuth2ApplicationScopeAliases::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<OAuth2ApplicationScopeAliases, Date>)OAuth2ApplicationScopeAliases::setCreateDate);
+		attributeGetterFunctions.put("oAuth2ApplicationId", OAuth2ApplicationScopeAliases::getOAuth2ApplicationId);
+		attributeSetterBiConsumers.put("oAuth2ApplicationId", (BiConsumer<OAuth2ApplicationScopeAliases, Long>)OAuth2ApplicationScopeAliases::setOAuth2ApplicationId);
+		attributeGetterFunctions.put("scopeAliases", OAuth2ApplicationScopeAliases::getScopeAliases);
+		attributeSetterBiConsumers.put("scopeAliases", (BiConsumer<OAuth2ApplicationScopeAliases, String>)OAuth2ApplicationScopeAliases::setScopeAliases);
+		attributeGetterFunctions.put("scopeAliasesHash", OAuth2ApplicationScopeAliases::getScopeAliasesHash);
+		attributeSetterBiConsumers.put("scopeAliasesHash", (BiConsumer<OAuth2ApplicationScopeAliases, Long>)OAuth2ApplicationScopeAliases::setScopeAliasesHash);
+
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -296,7 +231,6 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	@Override
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
-
 		_oAuth2ApplicationScopeAliasesId = oAuth2ApplicationScopeAliasesId;
 	}
 
@@ -438,9 +372,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), OAuth2ApplicationScopeAliases.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			OAuth2ApplicationScopeAliases.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -453,10 +386,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	@Override
 	public OAuth2ApplicationScopeAliases toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(OAuth2ApplicationScopeAliases)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = (OAuth2ApplicationScopeAliases)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -464,20 +395,16 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 
 	@Override
 	public Object clone() {
-		OAuth2ApplicationScopeAliasesImpl oAuth2ApplicationScopeAliasesImpl =
-			new OAuth2ApplicationScopeAliasesImpl();
+		OAuth2ApplicationScopeAliasesImpl oAuth2ApplicationScopeAliasesImpl = new OAuth2ApplicationScopeAliasesImpl();
 
-		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationScopeAliasesId(
-			getOAuth2ApplicationScopeAliasesId());
+		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationScopeAliasesId(getOAuth2ApplicationScopeAliasesId());
 		oAuth2ApplicationScopeAliasesImpl.setCompanyId(getCompanyId());
 		oAuth2ApplicationScopeAliasesImpl.setUserId(getUserId());
 		oAuth2ApplicationScopeAliasesImpl.setUserName(getUserName());
 		oAuth2ApplicationScopeAliasesImpl.setCreateDate(getCreateDate());
-		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationId(
-			getOAuth2ApplicationId());
+		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationId(getOAuth2ApplicationId());
 		oAuth2ApplicationScopeAliasesImpl.setScopeAliases(getScopeAliases());
-		oAuth2ApplicationScopeAliasesImpl.setScopeAliasesHash(
-			getScopeAliasesHash());
+		oAuth2ApplicationScopeAliasesImpl.setScopeAliasesHash(getScopeAliasesHash());
 
 		oAuth2ApplicationScopeAliasesImpl.resetOriginalValues();
 
@@ -487,7 +414,6 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	@Override
 	public int compareTo(
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
-
 		long primaryKey = oAuth2ApplicationScopeAliases.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
@@ -511,8 +437,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 			return false;
 		}
 
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			(OAuth2ApplicationScopeAliases)obj;
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = (OAuth2ApplicationScopeAliases)obj;
 
 		long primaryKey = oAuth2ApplicationScopeAliases.getPrimaryKey();
 
@@ -541,38 +466,30 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		OAuth2ApplicationScopeAliasesModelImpl
-			oAuth2ApplicationScopeAliasesModelImpl = this;
+		OAuth2ApplicationScopeAliasesModelImpl oAuth2ApplicationScopeAliasesModelImpl =
+			this;
 
-		oAuth2ApplicationScopeAliasesModelImpl._originalCompanyId =
-			oAuth2ApplicationScopeAliasesModelImpl._companyId;
+		oAuth2ApplicationScopeAliasesModelImpl._originalCompanyId = oAuth2ApplicationScopeAliasesModelImpl._companyId;
 
 		oAuth2ApplicationScopeAliasesModelImpl._setOriginalCompanyId = false;
 
-		oAuth2ApplicationScopeAliasesModelImpl._originalOAuth2ApplicationId =
-			oAuth2ApplicationScopeAliasesModelImpl._oAuth2ApplicationId;
+		oAuth2ApplicationScopeAliasesModelImpl._originalOAuth2ApplicationId = oAuth2ApplicationScopeAliasesModelImpl._oAuth2ApplicationId;
 
-		oAuth2ApplicationScopeAliasesModelImpl._setOriginalOAuth2ApplicationId =
-			false;
+		oAuth2ApplicationScopeAliasesModelImpl._setOriginalOAuth2ApplicationId = false;
 
-		oAuth2ApplicationScopeAliasesModelImpl._originalScopeAliasesHash =
-			oAuth2ApplicationScopeAliasesModelImpl._scopeAliasesHash;
+		oAuth2ApplicationScopeAliasesModelImpl._originalScopeAliasesHash = oAuth2ApplicationScopeAliasesModelImpl._scopeAliasesHash;
 
-		oAuth2ApplicationScopeAliasesModelImpl._setOriginalScopeAliasesHash =
-			false;
+		oAuth2ApplicationScopeAliasesModelImpl._setOriginalScopeAliasesHash = false;
 
 		oAuth2ApplicationScopeAliasesModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<OAuth2ApplicationScopeAliases> toCacheModel() {
-		OAuth2ApplicationScopeAliasesCacheModel
-			oAuth2ApplicationScopeAliasesCacheModel =
-				new OAuth2ApplicationScopeAliasesCacheModel();
+		OAuth2ApplicationScopeAliasesCacheModel oAuth2ApplicationScopeAliasesCacheModel =
+			new OAuth2ApplicationScopeAliasesCacheModel();
 
-		oAuth2ApplicationScopeAliasesCacheModel.
-			oAuth2ApplicationScopeAliasesId =
-				getOAuth2ApplicationScopeAliasesId();
+		oAuth2ApplicationScopeAliasesCacheModel.oAuth2ApplicationScopeAliasesId = getOAuth2ApplicationScopeAliasesId();
 
 		oAuth2ApplicationScopeAliasesCacheModel.companyId = getCompanyId();
 
@@ -589,53 +506,45 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
-			oAuth2ApplicationScopeAliasesCacheModel.createDate =
-				createDate.getTime();
+			oAuth2ApplicationScopeAliasesCacheModel.createDate = createDate.getTime();
 		}
 		else {
 			oAuth2ApplicationScopeAliasesCacheModel.createDate = Long.MIN_VALUE;
 		}
 
-		oAuth2ApplicationScopeAliasesCacheModel.oAuth2ApplicationId =
-			getOAuth2ApplicationId();
+		oAuth2ApplicationScopeAliasesCacheModel.oAuth2ApplicationId = getOAuth2ApplicationId();
 
-		oAuth2ApplicationScopeAliasesCacheModel.scopeAliases =
-			getScopeAliases();
+		oAuth2ApplicationScopeAliasesCacheModel.scopeAliases = getScopeAliases();
 
-		String scopeAliases =
-			oAuth2ApplicationScopeAliasesCacheModel.scopeAliases;
+		String scopeAliases = oAuth2ApplicationScopeAliasesCacheModel.scopeAliases;
 
 		if ((scopeAliases != null) && (scopeAliases.length() == 0)) {
 			oAuth2ApplicationScopeAliasesCacheModel.scopeAliases = null;
 		}
 
-		oAuth2ApplicationScopeAliasesCacheModel.scopeAliasesHash =
-			getScopeAliasesHash();
+		oAuth2ApplicationScopeAliasesCacheModel.scopeAliasesHash = getScopeAliasesHash();
 
 		return oAuth2ApplicationScopeAliasesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		Map<String, Function<OAuth2ApplicationScopeAliases, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<OAuth2ApplicationScopeAliases, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<OAuth2ApplicationScopeAliases, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<OAuth2ApplicationScopeAliases, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<OAuth2ApplicationScopeAliases, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<OAuth2ApplicationScopeAliases, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply(
+			sb.append(attributeGetterFunction.apply(
 					(OAuth2ApplicationScopeAliases)this));
 			sb.append(", ");
 		}
@@ -651,28 +560,25 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<OAuth2ApplicationScopeAliases, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<OAuth2ApplicationScopeAliases, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<OAuth2ApplicationScopeAliases, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<OAuth2ApplicationScopeAliases, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<OAuth2ApplicationScopeAliases, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<OAuth2ApplicationScopeAliases, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply(
+			sb.append(attributeGetterFunction.apply(
 					(OAuth2ApplicationScopeAliases)this));
 			sb.append("]]></column-value></column>");
 		}
@@ -682,14 +588,12 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OAuth2ApplicationScopeAliases.class.getClassLoader();
+	private static final ClassLoader _classLoader = OAuth2ApplicationScopeAliases.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OAuth2ApplicationScopeAliases.class, ModelWrapper.class
-	};
+			OAuth2ApplicationScopeAliases.class, ModelWrapper.class
+		};
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
-
 	private long _oAuth2ApplicationScopeAliasesId;
 	private long _companyId;
 	private long _originalCompanyId;
@@ -706,5 +610,4 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	private boolean _setOriginalScopeAliasesHash;
 	private long _columnBitmask;
 	private OAuth2ApplicationScopeAliases _escapedModel;
-
 }

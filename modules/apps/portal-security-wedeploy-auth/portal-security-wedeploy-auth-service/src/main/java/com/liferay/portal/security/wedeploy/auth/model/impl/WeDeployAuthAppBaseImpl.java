@@ -32,9 +32,8 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalSer
  * @generated
  */
 @ProviderType
-public abstract class WeDeployAuthAppBaseImpl
-	extends WeDeployAuthAppModelImpl implements WeDeployAuthApp {
-
+public abstract class WeDeployAuthAppBaseImpl extends WeDeployAuthAppModelImpl
+	implements WeDeployAuthApp {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class WeDeployAuthAppBaseImpl
 			WeDeployAuthAppLocalServiceUtil.updateWeDeployAuthApp(this);
 		}
 	}
-
 }

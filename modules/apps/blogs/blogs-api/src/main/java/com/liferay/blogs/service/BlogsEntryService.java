@@ -17,6 +17,7 @@ package com.liferay.blogs.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.blogs.model.BlogsEntry;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -48,12 +49,9 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface BlogsEntryService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,54 +60,48 @@ public interface BlogsEntryService extends BaseService {
 	public Folder addAttachmentsFolder(long groupId) throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(String,
-	 String, String, String, int, int, int, int, int, boolean,
-	 boolean, String[], String, ImageSelector, ImageSelector,
-	 ServiceContext)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(String,
+	String, String, String, int, int, int, int, int, boolean,
+	boolean, String[], String, ImageSelector, ImageSelector,
+	ServiceContext)}
+	*/
 	@Deprecated
-	public BlogsEntry addEntry(
-			String title, String description, String content,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, String smallImageFileName,
-			InputStream smallImageInputStream, ServiceContext serviceContext)
+	public BlogsEntry addEntry(String title, String description,
+		String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
+		boolean smallImage, String smallImageURL, String smallImageFileName,
+		InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException;
 
-	public BlogsEntry addEntry(
-			String title, String subtitle, String description, String content,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks,
-			String coverImageCaption, ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
+	public BlogsEntry addEntry(String title, String subtitle,
+		String description, String content, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public BlogsEntry addEntry(
-			String title, String subtitle, String urlTitle, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, String coverImageCaption,
-			ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
+	public BlogsEntry addEntry(String title, String subtitle, String urlTitle,
+		String description, String content, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getCompanyEntries(
-			long companyId, Date displayDate, int status, int max)
-		throws PortalException;
+	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
+		int status, int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getCompanyEntriesRSS(
-			long companyId, Date displayDate, int status, int max, String type,
-			double version, String displayStyle, String feedURL,
-			String entryURL, ThemeDisplay themeDisplay)
+	public String getCompanyEntriesRSS(long companyId, Date displayDate,
+		int status, int max, String type, double version, String displayStyle,
+		String feedURL, String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -124,24 +116,23 @@ public interface BlogsEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, Date displayDate, int status, int max);
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int max);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, Date displayDate, int status, int start, int end);
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end);
+	public List<BlogsEntry> getGroupEntries(long groupId, int status,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> obc);
+	public List<BlogsEntry> getGroupEntries(long groupId, int status,
+		int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId, Date displayDate, int status);
@@ -150,51 +141,45 @@ public interface BlogsEntryService extends BaseService {
 	public int getGroupEntriesCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getGroupEntriesRSS(
-			long groupId, Date displayDate, int status, int max, String type,
-			double version, String displayStyle, String feedURL,
-			String entryURL, ThemeDisplay themeDisplay)
+	public String getGroupEntriesRSS(long groupId, Date displayDate,
+		int status, int max, String type, double version, String displayStyle,
+		String feedURL, String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupsEntries(
-			long companyId, long groupId, Date displayDate, int status, int max)
-		throws PortalException;
+	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
+		Date displayDate, int status, int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> obc);
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		int status, int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int[] statuses, int start, int end,
-		OrderByComparator<BlogsEntry> obc);
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		int[] statuses, int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupUserEntriesCount(long groupId, long userId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupUserEntriesCount(
-		long groupId, long userId, int[] statuses);
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		int[] statuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getOrganizationEntries(
-			long organizationId, Date displayDate, int status, int max)
-		throws PortalException;
+	public List<BlogsEntry> getOrganizationEntries(long organizationId,
+		Date displayDate, int status, int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getOrganizationEntriesRSS(
-			long organizationId, Date displayDate, int status, int max,
-			String type, double version, String displayStyle, String feedURL,
-			String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException;
+	public String getOrganizationEntriesRSS(long organizationId,
+		Date displayDate, int status, int max, String type, double version,
+		String displayStyle, String feedURL, String entryURL,
+		ThemeDisplay themeDisplay) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException;
@@ -206,41 +191,35 @@ public interface BlogsEntryService extends BaseService {
 	public void unsubscribe(long groupId) throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
-	 String, String, String, String, int, int, int, int, int,
-	 boolean, boolean, String[], String, ImageSelector,
-	 ImageSelector, ServiceContext)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	String, String, String, String, int, int, int, int, int,
+	boolean, boolean, String[], String, ImageSelector,
+	ImageSelector, ServiceContext)}
+	*/
 	@Deprecated
-	public BlogsEntry updateEntry(
-			long entryId, String title, String description, String content,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, String smallImageFileName,
-			InputStream smallImageInputStream, ServiceContext serviceContext)
+	public BlogsEntry updateEntry(long entryId, String title,
+		String description, String content, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, boolean smallImage, String smallImageURL,
+		String smallImageFileName, InputStream smallImageInputStream,
+		ServiceContext serviceContext) throws PortalException;
+
+	public BlogsEntry updateEntry(long entryId, String title, String subtitle,
+		String description, String content, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
+		String[] trackbacks, String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public BlogsEntry updateEntry(
-			long entryId, String title, String subtitle, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, String coverImageCaption,
-			ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
+	public BlogsEntry updateEntry(long entryId, String title, String subtitle,
+		String urlTitle, String description, String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, String[] trackbacks, String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
-
-	public BlogsEntry updateEntry(
-			long entryId, String title, String subtitle, String urlTitle,
-			String description, String content, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks,
-			String coverImageCaption, ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 }

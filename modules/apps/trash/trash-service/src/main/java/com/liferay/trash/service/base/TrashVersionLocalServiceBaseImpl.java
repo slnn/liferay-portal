@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashVersionLocalService;
 import com.liferay.trash.service.persistence.TrashVersionPersistence;
@@ -63,9 +64,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class TrashVersionLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements TrashVersionLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements TrashVersionLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,7 +109,6 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	@Override
 	public TrashVersion deleteTrashVersion(long versionId)
 		throws PortalException {
-
 		return trashVersionPersistence.remove(versionId);
 	}
 
@@ -129,8 +128,8 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			TrashVersion.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(TrashVersion.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -157,11 +156,10 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return trashVersionPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return trashVersionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -178,12 +176,10 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return trashVersionPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return trashVersionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -205,11 +201,10 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return trashVersionPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return trashVersionPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -225,14 +220,14 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 * @throws PortalException if a trash version with the primary key could not be found
 	 */
 	@Override
-	public TrashVersion getTrashVersion(long versionId) throws PortalException {
+	public TrashVersion getTrashVersion(long versionId)
+		throws PortalException {
 		return trashVersionPersistence.findByPrimaryKey(versionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(trashVersionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -244,14 +239,10 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			trashVersionLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(trashVersionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(TrashVersion.class);
 
@@ -262,7 +253,6 @@ public abstract class TrashVersionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(trashVersionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TrashVersion.class);
@@ -276,15 +266,12 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return trashVersionLocalService.deleteTrashVersion(
-			(TrashVersion)persistedModel);
+		return trashVersionLocalService.deleteTrashVersion((TrashVersion)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return trashVersionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -342,7 +329,6 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 */
 	public void setTrashVersionLocalService(
 		TrashVersionLocalService trashVersionLocalService) {
-
 		this.trashVersionLocalService = trashVersionLocalService;
 	}
 
@@ -362,7 +348,6 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 */
 	public void setTrashVersionPersistence(
 		TrashVersionPersistence trashVersionPersistence) {
-
 		this.trashVersionPersistence = trashVersionPersistence;
 	}
 
@@ -371,9 +356,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -383,9 +366,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -394,9 +375,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -406,9 +385,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -428,13 +405,12 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.trash.model.TrashVersion", trashVersionLocalService);
+		persistedModelLocalServiceRegistry.register("com.liferay.trash.model.TrashVersion",
+			trashVersionLocalService);
 	}
 
 	public void destroy() {
@@ -474,8 +450,8 @@ public abstract class TrashVersionLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -486,27 +462,14 @@ public abstract class TrashVersionLocalServiceBaseImpl
 
 	@BeanReference(type = TrashVersionLocalService.class)
 	protected TrashVersionLocalService trashVersionLocalService;
-
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

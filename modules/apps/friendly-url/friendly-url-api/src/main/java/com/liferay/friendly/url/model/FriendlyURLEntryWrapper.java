@@ -17,6 +17,7 @@ package com.liferay.friendly.url.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class FriendlyURLEntryWrapper
-	extends BaseModelWrapper<FriendlyURLEntry>
+public class FriendlyURLEntryWrapper extends BaseModelWrapper<FriendlyURLEntry>
 	implements FriendlyURLEntry, ModelWrapper<FriendlyURLEntry> {
-
 	public FriendlyURLEntryWrapper(FriendlyURLEntry friendlyURLEntry) {
 		super(friendlyURLEntry);
 	}
@@ -129,80 +128,80 @@ public class FriendlyURLEntryWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this friendly url entry.
-	 *
-	 * @return the fully qualified class name of this friendly url entry
-	 */
+	* Returns the fully qualified class name of this friendly url entry.
+	*
+	* @return the fully qualified class name of this friendly url entry
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this friendly url entry.
-	 *
-	 * @return the class name ID of this friendly url entry
-	 */
+	* Returns the class name ID of this friendly url entry.
+	*
+	* @return the class name ID of this friendly url entry
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this friendly url entry.
-	 *
-	 * @return the class pk of this friendly url entry
-	 */
+	* Returns the class pk of this friendly url entry.
+	*
+	* @return the class pk of this friendly url entry
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this friendly url entry.
-	 *
-	 * @return the company ID of this friendly url entry
-	 */
+	* Returns the company ID of this friendly url entry.
+	*
+	* @return the company ID of this friendly url entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this friendly url entry.
-	 *
-	 * @return the create date of this friendly url entry
-	 */
+	* Returns the create date of this friendly url entry.
+	*
+	* @return the create date of this friendly url entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the default language ID of this friendly url entry.
-	 *
-	 * @return the default language ID of this friendly url entry
-	 */
+	* Returns the default language ID of this friendly url entry.
+	*
+	* @return the default language ID of this friendly url entry
+	*/
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
 	}
 
 	/**
-	 * Returns the friendly url entry ID of this friendly url entry.
-	 *
-	 * @return the friendly url entry ID of this friendly url entry
-	 */
+	* Returns the friendly url entry ID of this friendly url entry.
+	*
+	* @return the friendly url entry ID of this friendly url entry
+	*/
 	@Override
 	public long getFriendlyURLEntryId() {
 		return model.getFriendlyURLEntryId();
 	}
 
 	/**
-	 * Returns the group ID of this friendly url entry.
-	 *
-	 * @return the group ID of this friendly url entry
-	 */
+	* Returns the group ID of this friendly url entry.
+	*
+	* @return the group ID of this friendly url entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
@@ -214,30 +213,30 @@ public class FriendlyURLEntryWrapper
 	}
 
 	/**
-	 * Returns the modified date of this friendly url entry.
-	 *
-	 * @return the modified date of this friendly url entry
-	 */
+	* Returns the modified date of this friendly url entry.
+	*
+	* @return the modified date of this friendly url entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the mvcc version of this friendly url entry.
-	 *
-	 * @return the mvcc version of this friendly url entry
-	 */
+	* Returns the mvcc version of this friendly url entry.
+	*
+	* @return the mvcc version of this friendly url entry
+	*/
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	 * Returns the primary key of this friendly url entry.
-	 *
-	 * @return the primary key of this friendly url entry
-	 */
+	* Returns the primary key of this friendly url entry.
+	*
+	* @return the primary key of this friendly url entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -264,10 +263,10 @@ public class FriendlyURLEntryWrapper
 	}
 
 	/**
-	 * Returns the uuid of this friendly url entry.
-	 *
-	 * @return the uuid of this friendly url entry
-	 */
+	* Returns the uuid of this friendly url entry.
+	*
+	* @return the uuid of this friendly url entry
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -276,7 +275,6 @@ public class FriendlyURLEntryWrapper
 	@Override
 	public boolean isMain()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.isMain();
 	}
 
@@ -291,110 +289,110 @@ public class FriendlyURLEntryWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this friendly url entry.
-	 *
-	 * @param classNameId the class name ID of this friendly url entry
-	 */
+	* Sets the class name ID of this friendly url entry.
+	*
+	* @param classNameId the class name ID of this friendly url entry
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this friendly url entry.
-	 *
-	 * @param classPK the class pk of this friendly url entry
-	 */
+	* Sets the class pk of this friendly url entry.
+	*
+	* @param classPK the class pk of this friendly url entry
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this friendly url entry.
-	 *
-	 * @param companyId the company ID of this friendly url entry
-	 */
+	* Sets the company ID of this friendly url entry.
+	*
+	* @param companyId the company ID of this friendly url entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this friendly url entry.
-	 *
-	 * @param createDate the create date of this friendly url entry
-	 */
+	* Sets the create date of this friendly url entry.
+	*
+	* @param createDate the create date of this friendly url entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the default language ID of this friendly url entry.
-	 *
-	 * @param defaultLanguageId the default language ID of this friendly url entry
-	 */
+	* Sets the default language ID of this friendly url entry.
+	*
+	* @param defaultLanguageId the default language ID of this friendly url entry
+	*/
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
 		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
-	 * Sets the friendly url entry ID of this friendly url entry.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID of this friendly url entry
-	 */
+	* Sets the friendly url entry ID of this friendly url entry.
+	*
+	* @param friendlyURLEntryId the friendly url entry ID of this friendly url entry
+	*/
 	@Override
 	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
 		model.setFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**
-	 * Sets the group ID of this friendly url entry.
-	 *
-	 * @param groupId the group ID of this friendly url entry
-	 */
+	* Sets the group ID of this friendly url entry.
+	*
+	* @param groupId the group ID of this friendly url entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the modified date of this friendly url entry.
-	 *
-	 * @param modifiedDate the modified date of this friendly url entry
-	 */
+	* Sets the modified date of this friendly url entry.
+	*
+	* @param modifiedDate the modified date of this friendly url entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the mvcc version of this friendly url entry.
-	 *
-	 * @param mvccVersion the mvcc version of this friendly url entry
-	 */
+	* Sets the mvcc version of this friendly url entry.
+	*
+	* @param mvccVersion the mvcc version of this friendly url entry
+	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	 * Sets the primary key of this friendly url entry.
-	 *
-	 * @param primaryKey the primary key of this friendly url entry
-	 */
+	* Sets the primary key of this friendly url entry.
+	*
+	* @param primaryKey the primary key of this friendly url entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the uuid of this friendly url entry.
-	 *
-	 * @param uuid the uuid of this friendly url entry
-	 */
+	* Sets the uuid of this friendly url entry.
+	*
+	* @param uuid the uuid of this friendly url entry
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -409,5 +407,4 @@ public class FriendlyURLEntryWrapper
 	protected FriendlyURLEntryWrapper wrap(FriendlyURLEntry friendlyURLEntry) {
 		return new FriendlyURLEntryWrapper(friendlyURLEntry);
 	}
-
 }

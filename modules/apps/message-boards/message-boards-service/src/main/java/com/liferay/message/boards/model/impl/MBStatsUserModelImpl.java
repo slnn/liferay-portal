@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBStatsUserModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,24 +59,23 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class MBStatsUserModelImpl
-	extends BaseModelImpl<MBStatsUser> implements MBStatsUserModel {
-
+public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
+	implements MBStatsUserModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards stats user model instance should use the <code>MBStatsUser</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MBStatsUser";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"statsUserId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"messageCount", Types.INTEGER}, {"lastPostDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "statsUserId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "messageCount", Types.INTEGER },
+			{ "lastPostDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
@@ -84,47 +86,27 @@ public class MBStatsUserModelImpl
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY mbStatsUser.messageCount DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MBStatsUser.messageCount DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY mbStatsUser.messageCount DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBStatsUser.messageCount DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBStatsUser"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBStatsUser"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBStatsUser"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBStatsUser"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBStatsUser"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBStatsUser"),
+			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-
 	public static final long MESSAGECOUNT_COLUMN_BITMASK = 2L;
-
 	public static final long USERID_COLUMN_BITMASK = 4L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.message.boards.model.MBStatsUser"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBStatsUser"));
 
 	public MBStatsUserModelImpl() {
 	}
@@ -163,18 +145,13 @@ public class MBStatsUserModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MBStatsUser, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBStatsUser, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBStatsUser, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBStatsUser, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((MBStatsUser)this));
 		}
 
@@ -186,75 +163,52 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MBStatsUser, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MBStatsUser, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MBStatsUser, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MBStatsUser, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MBStatsUser)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MBStatsUser)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MBStatsUser, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MBStatsUser, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MBStatsUser, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MBStatsUser, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBStatsUser, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBStatsUser, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MBStatsUser, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBStatsUser, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MBStatsUser, Object>>();
-		Map<String, BiConsumer<MBStatsUser, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MBStatsUser, ?>>();
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBStatsUser, Object>>();
+		Map<String, BiConsumer<MBStatsUser, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBStatsUser, ?>>();
 
-		attributeGetterFunctions.put(
-			"statsUserId", MBStatsUser::getStatsUserId);
-		attributeSetterBiConsumers.put(
-			"statsUserId",
-			(BiConsumer<MBStatsUser, Long>)MBStatsUser::setStatsUserId);
+
+		attributeGetterFunctions.put("statsUserId", MBStatsUser::getStatsUserId);
+		attributeSetterBiConsumers.put("statsUserId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setStatsUserId);
 		attributeGetterFunctions.put("groupId", MBStatsUser::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setGroupId);
 		attributeGetterFunctions.put("companyId", MBStatsUser::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MBStatsUser, Long>)MBStatsUser::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setCompanyId);
 		attributeGetterFunctions.put("userId", MBStatsUser::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setUserId);
-		attributeGetterFunctions.put(
-			"messageCount", MBStatsUser::getMessageCount);
-		attributeSetterBiConsumers.put(
-			"messageCount",
-			(BiConsumer<MBStatsUser, Integer>)MBStatsUser::setMessageCount);
-		attributeGetterFunctions.put(
-			"lastPostDate", MBStatsUser::getLastPostDate);
-		attributeSetterBiConsumers.put(
-			"lastPostDate",
-			(BiConsumer<MBStatsUser, Date>)MBStatsUser::setLastPostDate);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setUserId);
+		attributeGetterFunctions.put("messageCount", MBStatsUser::getMessageCount);
+		attributeSetterBiConsumers.put("messageCount", (BiConsumer<MBStatsUser, Integer>)MBStatsUser::setMessageCount);
+		attributeGetterFunctions.put("lastPostDate", MBStatsUser::getLastPostDate);
+		attributeSetterBiConsumers.put("lastPostDate", (BiConsumer<MBStatsUser, Date>)MBStatsUser::setLastPostDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -391,8 +345,8 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MBStatsUser.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBStatsUser.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -405,9 +359,8 @@ public class MBStatsUserModelImpl
 	@Override
 	public MBStatsUser toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBStatsUser)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MBStatsUser)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -501,8 +454,7 @@ public class MBStatsUserModelImpl
 
 		mbStatsUserModelImpl._setOriginalUserId = false;
 
-		mbStatsUserModelImpl._originalMessageCount =
-			mbStatsUserModelImpl._messageCount;
+		mbStatsUserModelImpl._originalMessageCount = mbStatsUserModelImpl._messageCount;
 
 		mbStatsUserModelImpl._setOriginalMessageCount = false;
 
@@ -511,8 +463,7 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public CacheModel<MBStatsUser> toCacheModel() {
-		MBStatsUserCacheModel mbStatsUserCacheModel =
-			new MBStatsUserCacheModel();
+		MBStatsUserCacheModel mbStatsUserCacheModel = new MBStatsUserCacheModel();
 
 		mbStatsUserCacheModel.statsUserId = getStatsUserId();
 
@@ -538,20 +489,16 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MBStatsUser, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBStatsUser, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBStatsUser, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBStatsUser, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -570,22 +517,18 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MBStatsUser, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBStatsUser, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBStatsUser, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBStatsUser, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -599,12 +542,10 @@ public class MBStatsUserModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBStatsUser.class.getClassLoader();
+	private static final ClassLoader _classLoader = MBStatsUser.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBStatsUser.class, ModelWrapper.class
-	};
-
+			MBStatsUser.class, ModelWrapper.class
+		};
 	private long _statsUserId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -619,5 +560,4 @@ public class MBStatsUserModelImpl
 	private Date _lastPostDate;
 	private long _columnBitmask;
 	private MBStatsUser _escapedModel;
-
 }

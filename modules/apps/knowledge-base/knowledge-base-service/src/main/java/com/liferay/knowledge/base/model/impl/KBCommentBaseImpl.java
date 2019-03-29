@@ -32,9 +32,8 @@ import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class KBCommentBaseImpl
-	extends KBCommentModelImpl implements KBComment {
-
+public abstract class KBCommentBaseImpl extends KBCommentModelImpl
+	implements KBComment {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class KBCommentBaseImpl
 			KBCommentLocalServiceUtil.updateKBComment(this);
 		}
 	}
-
 }

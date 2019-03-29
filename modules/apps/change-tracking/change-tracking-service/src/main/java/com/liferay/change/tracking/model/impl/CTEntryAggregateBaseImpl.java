@@ -32,9 +32,8 @@ import com.liferay.change.tracking.service.CTEntryAggregateLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CTEntryAggregateBaseImpl
-	extends CTEntryAggregateModelImpl implements CTEntryAggregate {
-
+public abstract class CTEntryAggregateBaseImpl extends CTEntryAggregateModelImpl
+	implements CTEntryAggregate {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class CTEntryAggregateBaseImpl
 			CTEntryAggregateLocalServiceUtil.updateCTEntryAggregate(this);
 		}
 	}
-
 }

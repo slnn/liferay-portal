@@ -17,8 +17,10 @@ package com.liferay.message.boards.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBDiscussion;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class MBDiscussionCacheModel
-	implements CacheModel<MBDiscussion>, Externalizable {
-
+public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class MBDiscussionCacheModel
 			return false;
 		}
 
-		MBDiscussionCacheModel mbDiscussionCacheModel =
-			(MBDiscussionCacheModel)obj;
+		MBDiscussionCacheModel mbDiscussionCacheModel = (MBDiscussionCacheModel)obj;
 
 		if (discussionId == mbDiscussionCacheModel.discussionId) {
 			return true;
@@ -173,7 +173,8 @@ public class MBDiscussionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -219,5 +220,4 @@ public class MBDiscussionCacheModel
 	public long classPK;
 	public long threadId;
 	public long lastPublishDate;
-
 }

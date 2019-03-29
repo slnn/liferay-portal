@@ -17,8 +17,10 @@ package com.liferay.calendar.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.calendar.model.CalendarBooking;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class CalendarBookingCacheModel
-	implements CacheModel<CalendarBooking>, Externalizable {
-
+public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class CalendarBookingCacheModel
 			return false;
 		}
 
-		CalendarBookingCacheModel calendarBookingCacheModel =
-			(CalendarBookingCacheModel)obj;
+		CalendarBookingCacheModel calendarBookingCacheModel = (CalendarBookingCacheModel)obj;
 
 		if (calendarBookingId == calendarBookingCacheModel.calendarBookingId) {
 			return true;
@@ -170,8 +170,7 @@ public class CalendarBookingCacheModel
 		calendarBookingImpl.setCalendarId(calendarId);
 		calendarBookingImpl.setCalendarResourceId(calendarResourceId);
 		calendarBookingImpl.setParentCalendarBookingId(parentCalendarBookingId);
-		calendarBookingImpl.setRecurringCalendarBookingId(
-			recurringCalendarBookingId);
+		calendarBookingImpl.setRecurringCalendarBookingId(recurringCalendarBookingId);
 
 		if (vEventUid == null) {
 			calendarBookingImpl.setVEventUid("");
@@ -308,7 +307,8 @@ public class CalendarBookingCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -446,5 +446,4 @@ public class CalendarBookingCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-
 }

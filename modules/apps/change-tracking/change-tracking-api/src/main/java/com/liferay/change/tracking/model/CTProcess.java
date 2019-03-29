@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.change.tracking.model.impl.CTProcessImpl")
 @ProviderType
 public interface CTProcess extends CTProcessModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTProcessImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CTProcess, Long> CT_PROCESS_ID_ACCESSOR =
-		new Accessor<CTProcess, Long>() {
-
+	public static final Accessor<CTProcess, Long> CT_PROCESS_ID_ACCESSOR = new Accessor<CTProcess, Long>() {
 			@Override
 			public Long get(CTProcess ctProcess) {
 				return ctProcess.getCtProcessId();
@@ -53,10 +50,8 @@ public interface CTProcess extends CTProcessModel, PersistedModel {
 			public Class<CTProcess> getTypeClass() {
 				return CTProcess.class;
 			}
-
 		};
 
 	public int getStatus()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

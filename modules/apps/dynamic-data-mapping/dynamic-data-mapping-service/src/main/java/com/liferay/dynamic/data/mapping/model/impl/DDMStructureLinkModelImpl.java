@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -54,24 +57,22 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class DDMStructureLinkModelImpl
-	extends BaseModelImpl<DDMStructureLink> implements DDMStructureLinkModel {
-
+public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
+	implements DDMStructureLinkModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm structure link model instance should use the <code>DDMStructureLink</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructureLink";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"structureLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"structureId", Types.BIGINT}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "structureLinkId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "structureId", Types.BIGINT }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("structureLinkId", Types.BIGINT);
@@ -81,49 +82,28 @@ public class DDMStructureLinkModelImpl
 		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLink (structureLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG)";
-
+	public static final String TABLE_SQL_CREATE = "create table DDMStructureLink (structureLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLink";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY ddmStructureLink.structureLinkId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY DDMStructureLink.structureLinkId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureLink.structureLinkId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMStructureLink.structureLinkId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLink"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLink"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLink"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLink"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLink"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLink"),
+			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-
 	public static final long STRUCTUREID_COLUMN_BITMASK = 4L;
-
 	public static final long STRUCTURELINKID_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStructureLink"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStructureLink"));
 
 	public DDMStructureLinkModelImpl() {
 	}
@@ -162,18 +142,14 @@ public class DDMStructureLinkModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DDMStructureLink, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureLink, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureLink, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((DDMStructureLink)this));
 		}
 
@@ -185,79 +161,52 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DDMStructureLink, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DDMStructureLink, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DDMStructureLink, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<DDMStructureLink, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(DDMStructureLink)this, entry.getValue());
+				attributeSetterBiConsumer.accept((DDMStructureLink)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DDMStructureLink, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<DDMStructureLink, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DDMStructureLink, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<DDMStructureLink, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMStructureLink, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMStructureLink, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<DDMStructureLink, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMStructureLink, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DDMStructureLink, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<DDMStructureLink, Object>>();
-		Map<String, BiConsumer<DDMStructureLink, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<DDMStructureLink, ?>>();
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMStructureLink, Object>>();
+		Map<String, BiConsumer<DDMStructureLink, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DDMStructureLink, ?>>();
 
-		attributeGetterFunctions.put(
-			"structureLinkId", DDMStructureLink::getStructureLinkId);
-		attributeSetterBiConsumers.put(
-			"structureLinkId",
-			(BiConsumer<DDMStructureLink, Long>)
-				DDMStructureLink::setStructureLinkId);
-		attributeGetterFunctions.put(
-			"companyId", DDMStructureLink::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setCompanyId);
-		attributeGetterFunctions.put(
-			"classNameId", DDMStructureLink::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<DDMStructureLink, Long>)
-				DDMStructureLink::setClassNameId);
+
+		attributeGetterFunctions.put("structureLinkId", DDMStructureLink::getStructureLinkId);
+		attributeSetterBiConsumers.put("structureLinkId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setStructureLinkId);
+		attributeGetterFunctions.put("companyId", DDMStructureLink::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setCompanyId);
+		attributeGetterFunctions.put("classNameId", DDMStructureLink::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setClassNameId);
 		attributeGetterFunctions.put("classPK", DDMStructureLink::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setClassPK);
-		attributeGetterFunctions.put(
-			"structureId", DDMStructureLink::getStructureId);
-		attributeSetterBiConsumers.put(
-			"structureId",
-			(BiConsumer<DDMStructureLink, Long>)
-				DDMStructureLink::setStructureId);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setClassPK);
+		attributeGetterFunctions.put("structureId", DDMStructureLink::getStructureId);
+		attributeSetterBiConsumers.put("structureId", (BiConsumer<DDMStructureLink, Long>)DDMStructureLink::setStructureId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -372,8 +321,8 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), DDMStructureLink.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DDMStructureLink.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -386,9 +335,8 @@ public class DDMStructureLinkModelImpl
 	@Override
 	public DDMStructureLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMStructureLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (DDMStructureLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -465,18 +413,15 @@ public class DDMStructureLinkModelImpl
 	public void resetOriginalValues() {
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = this;
 
-		ddmStructureLinkModelImpl._originalClassNameId =
-			ddmStructureLinkModelImpl._classNameId;
+		ddmStructureLinkModelImpl._originalClassNameId = ddmStructureLinkModelImpl._classNameId;
 
 		ddmStructureLinkModelImpl._setOriginalClassNameId = false;
 
-		ddmStructureLinkModelImpl._originalClassPK =
-			ddmStructureLinkModelImpl._classPK;
+		ddmStructureLinkModelImpl._originalClassPK = ddmStructureLinkModelImpl._classPK;
 
 		ddmStructureLinkModelImpl._setOriginalClassPK = false;
 
-		ddmStructureLinkModelImpl._originalStructureId =
-			ddmStructureLinkModelImpl._structureId;
+		ddmStructureLinkModelImpl._originalStructureId = ddmStructureLinkModelImpl._structureId;
 
 		ddmStructureLinkModelImpl._setOriginalStructureId = false;
 
@@ -485,8 +430,7 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public CacheModel<DDMStructureLink> toCacheModel() {
-		DDMStructureLinkCacheModel ddmStructureLinkCacheModel =
-			new DDMStructureLinkCacheModel();
+		DDMStructureLinkCacheModel ddmStructureLinkCacheModel = new DDMStructureLinkCacheModel();
 
 		ddmStructureLinkCacheModel.structureLinkId = getStructureLinkId();
 
@@ -503,20 +447,17 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<DDMStructureLink, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureLink, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureLink, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -535,22 +476,19 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DDMStructureLink, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureLink, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureLink, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureLink, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -564,12 +502,10 @@ public class DDMStructureLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMStructureLink.class.getClassLoader();
+	private static final ClassLoader _classLoader = DDMStructureLink.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMStructureLink.class, ModelWrapper.class
-	};
-
+			DDMStructureLink.class, ModelWrapper.class
+		};
 	private long _structureLinkId;
 	private long _companyId;
 	private long _classNameId;
@@ -583,5 +519,4 @@ public class DDMStructureLinkModelImpl
 	private boolean _setOriginalStructureId;
 	private long _columnBitmask;
 	private DDMStructureLink _escapedModel;
-
 }

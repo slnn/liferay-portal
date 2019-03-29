@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.service.persistence.impl;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Edward C. Han
  * @generated
  */
-public class MDRRuleGroupFinderBaseImpl
-	extends BasePersistenceImpl<MDRRuleGroup> {
-
+public class MDRRuleGroupFinderBaseImpl extends BasePersistenceImpl<MDRRuleGroup> {
 	public MDRRuleGroupFinderBaseImpl() {
 		setModelClass(MDRRuleGroup.class);
 	}
@@ -55,14 +54,10 @@ public class MDRRuleGroupFinderBaseImpl
 	 */
 	public void setMDRRuleGroupPersistence(
 		MDRRuleGroupPersistence mdrRuleGroupPersistence) {
-
 		this.mdrRuleGroupPersistence = mdrRuleGroupPersistence;
 	}
 
 	@BeanReference(type = MDRRuleGroupPersistence.class)
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MDRRuleGroupFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(MDRRuleGroupFinderBaseImpl.class);
 }

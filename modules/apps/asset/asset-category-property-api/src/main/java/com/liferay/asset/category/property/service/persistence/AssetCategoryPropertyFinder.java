@@ -22,15 +22,11 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface AssetCategoryPropertyFinder {
-
 	public int countByG_K(long groupId, String key);
 
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			findByG_K(long groupId, String key);
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> findByG_K(
+		long groupId, String key);
 
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			findByG_K(long groupId, String key, int start, int end);
-
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> findByG_K(
+		long groupId, String key, int start, int end);
 }

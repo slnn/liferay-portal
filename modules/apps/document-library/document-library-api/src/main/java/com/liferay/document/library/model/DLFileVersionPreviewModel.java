@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.model.BaseModel;
  * @generated
  */
 @ProviderType
-public interface DLFileVersionPreviewModel
-	extends BaseModel<DLFileVersionPreview> {
-
+public interface DLFileVersionPreviewModel extends BaseModel<DLFileVersionPreview> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -122,5 +120,4 @@ public interface DLFileVersionPreviewModel
 	 * @param previewStatus the preview status of this dl file version preview
 	 */
 	public void setPreviewStatus(int previewStatus);
-
 }

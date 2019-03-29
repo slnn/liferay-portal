@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.ReadingTimeEntryService;
 import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
@@ -41,10 +42,8 @@ import javax.sql.DataSource;
  * @see com.liferay.reading.time.service.impl.ReadingTimeEntryServiceImpl
  * @generated
  */
-public abstract class ReadingTimeEntryServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class ReadingTimeEntryServiceBaseImpl extends BaseServiceImpl
 	implements ReadingTimeEntryService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -56,9 +55,7 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 *
 	 * @return the reading time entry local service
 	 */
-	public com.liferay.reading.time.service.ReadingTimeEntryLocalService
-		getReadingTimeEntryLocalService() {
-
+	public com.liferay.reading.time.service.ReadingTimeEntryLocalService getReadingTimeEntryLocalService() {
 		return readingTimeEntryLocalService;
 	}
 
@@ -68,9 +65,7 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 * @param readingTimeEntryLocalService the reading time entry local service
 	 */
 	public void setReadingTimeEntryLocalService(
-		com.liferay.reading.time.service.ReadingTimeEntryLocalService
-			readingTimeEntryLocalService) {
-
+		com.liferay.reading.time.service.ReadingTimeEntryLocalService readingTimeEntryLocalService) {
 		this.readingTimeEntryLocalService = readingTimeEntryLocalService;
 	}
 
@@ -90,7 +85,6 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 */
 	public void setReadingTimeEntryService(
 		ReadingTimeEntryService readingTimeEntryService) {
-
 		this.readingTimeEntryService = readingTimeEntryService;
 	}
 
@@ -110,7 +104,6 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 */
 	public void setReadingTimeEntryPersistence(
 		ReadingTimeEntryPersistence readingTimeEntryPersistence) {
-
 		this.readingTimeEntryPersistence = readingTimeEntryPersistence;
 	}
 
@@ -119,9 +112,7 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -131,9 +122,7 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -175,8 +164,8 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -185,22 +174,12 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.reading.time.service.ReadingTimeEntryLocalService.class
-	)
-	protected com.liferay.reading.time.service.ReadingTimeEntryLocalService
-		readingTimeEntryLocalService;
-
+	@BeanReference(type = com.liferay.reading.time.service.ReadingTimeEntryLocalService.class)
+	protected com.liferay.reading.time.service.ReadingTimeEntryLocalService readingTimeEntryLocalService;
 	@BeanReference(type = ReadingTimeEntryService.class)
 	protected ReadingTimeEntryService readingTimeEntryService;
-
 	@BeanReference(type = ReadingTimeEntryPersistence.class)
 	protected ReadingTimeEntryPersistence readingTimeEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 }

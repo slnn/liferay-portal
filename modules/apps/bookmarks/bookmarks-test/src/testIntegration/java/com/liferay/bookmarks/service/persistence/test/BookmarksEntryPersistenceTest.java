@@ -15,11 +15,13 @@
 package com.liferay.bookmarks.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class BookmarksEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.bookmarks.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.bookmarks.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class BookmarksEntryPersistenceTest {
 
 		_persistence.remove(newBookmarksEntry);
 
-		BookmarksEntry existingBookmarksEntry = _persistence.fetchByPrimaryKey(
-			newBookmarksEntry.getPrimaryKey());
+		BookmarksEntry existingBookmarksEntry = _persistence.fetchByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
 		Assert.assertNull(existingBookmarksEntry);
 	}
@@ -164,62 +164,51 @@ public class BookmarksEntryPersistenceTest {
 
 		_bookmarksEntries.add(_persistence.update(newBookmarksEntry));
 
-		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(
-			newBookmarksEntry.getPrimaryKey());
+		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingBookmarksEntry.getUuid(), newBookmarksEntry.getUuid());
-		Assert.assertEquals(
-			existingBookmarksEntry.getEntryId(),
+		Assert.assertEquals(existingBookmarksEntry.getUuid(),
+			newBookmarksEntry.getUuid());
+		Assert.assertEquals(existingBookmarksEntry.getEntryId(),
 			newBookmarksEntry.getEntryId());
-		Assert.assertEquals(
-			existingBookmarksEntry.getGroupId(),
+		Assert.assertEquals(existingBookmarksEntry.getGroupId(),
 			newBookmarksEntry.getGroupId());
-		Assert.assertEquals(
-			existingBookmarksEntry.getCompanyId(),
+		Assert.assertEquals(existingBookmarksEntry.getCompanyId(),
 			newBookmarksEntry.getCompanyId());
-		Assert.assertEquals(
-			existingBookmarksEntry.getUserId(), newBookmarksEntry.getUserId());
-		Assert.assertEquals(
-			existingBookmarksEntry.getUserName(),
+		Assert.assertEquals(existingBookmarksEntry.getUserId(),
+			newBookmarksEntry.getUserId());
+		Assert.assertEquals(existingBookmarksEntry.getUserName(),
 			newBookmarksEntry.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksEntry.getCreateDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksEntry.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingBookmarksEntry.getFolderId(),
+		Assert.assertEquals(existingBookmarksEntry.getFolderId(),
 			newBookmarksEntry.getFolderId());
-		Assert.assertEquals(
-			existingBookmarksEntry.getTreePath(),
+		Assert.assertEquals(existingBookmarksEntry.getTreePath(),
 			newBookmarksEntry.getTreePath());
-		Assert.assertEquals(
-			existingBookmarksEntry.getName(), newBookmarksEntry.getName());
-		Assert.assertEquals(
-			existingBookmarksEntry.getUrl(), newBookmarksEntry.getUrl());
-		Assert.assertEquals(
-			existingBookmarksEntry.getDescription(),
+		Assert.assertEquals(existingBookmarksEntry.getName(),
+			newBookmarksEntry.getName());
+		Assert.assertEquals(existingBookmarksEntry.getUrl(),
+			newBookmarksEntry.getUrl());
+		Assert.assertEquals(existingBookmarksEntry.getDescription(),
 			newBookmarksEntry.getDescription());
-		Assert.assertEquals(
-			existingBookmarksEntry.getVisits(), newBookmarksEntry.getVisits());
-		Assert.assertEquals(
-			existingBookmarksEntry.getPriority(),
+		Assert.assertEquals(existingBookmarksEntry.getVisits(),
+			newBookmarksEntry.getVisits());
+		Assert.assertEquals(existingBookmarksEntry.getPriority(),
 			newBookmarksEntry.getPriority());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksEntry.getLastPublishDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getLastPublishDate()));
-		Assert.assertEquals(
-			existingBookmarksEntry.getStatus(), newBookmarksEntry.getStatus());
-		Assert.assertEquals(
-			existingBookmarksEntry.getStatusByUserId(),
+		Assert.assertEquals(existingBookmarksEntry.getStatus(),
+			newBookmarksEntry.getStatus());
+		Assert.assertEquals(existingBookmarksEntry.getStatusByUserId(),
 			newBookmarksEntry.getStatusByUserId());
-		Assert.assertEquals(
-			existingBookmarksEntry.getStatusByUserName(),
+		Assert.assertEquals(existingBookmarksEntry.getStatusByUserName(),
 			newBookmarksEntry.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksEntry.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksEntry.getStatusDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getStatusDate()));
 	}
 
@@ -259,109 +248,102 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_F() throws Exception {
-		_persistence.countByG_F(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_F(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_F(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_FArrayable() throws Exception {
-		_persistence.countByG_F(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByG_F(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_NotS() throws Exception {
-		_persistence.countByG_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_NotS(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_U_S() throws Exception {
-		_persistence.countByG_U_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_U_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_U_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_U_NotS() throws Exception {
-		_persistence.countByG_U_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_U_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_U_NotS(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_F_S() throws Exception {
-		_persistence.countByG_F_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_F_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_F_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_F_SArrayable() throws Exception {
-		_persistence.countByG_F_S(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_F_S(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_F_NotS() throws Exception {
-		_persistence.countByG_F_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_F_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_F_NotS(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_F_NotSArrayable() throws Exception {
-		_persistence.countByG_F_NotS(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_F_NotS(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_U_F_S() throws Exception {
-		_persistence.countByG_U_F_S(
+		_persistence.countByG_U_F_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_U_F_S(0L, 0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_U_F_SArrayable() throws Exception {
-		_persistence.countByG_U_F_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_U_F_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
@@ -369,8 +351,7 @@ public class BookmarksEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
-		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(
-			newBookmarksEntry.getPrimaryKey());
+		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingBookmarksEntry, newBookmarksEntry);
 	}
@@ -384,27 +365,25 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<BookmarksEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"BookmarksEntry", "uuid", true, "entryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "folderId", true, "treePath", true,
-			"name", true, "url", true, "description", true, "visits", true,
-			"priority", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+		return OrderByComparatorFactoryUtil.create("BookmarksEntry", "uuid",
+			true, "entryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "folderId", true, "treePath", true, "name",
+			true, "url", true, "description", true, "visits", true, "priority",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
-		BookmarksEntry existingBookmarksEntry = _persistence.fetchByPrimaryKey(
-			newBookmarksEntry.getPrimaryKey());
+		BookmarksEntry existingBookmarksEntry = _persistence.fetchByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingBookmarksEntry, newBookmarksEntry);
 	}
@@ -413,8 +392,7 @@ public class BookmarksEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		BookmarksEntry missingBookmarksEntry = _persistence.fetchByPrimaryKey(
-			pk);
+		BookmarksEntry missingBookmarksEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingBookmarksEntry);
 	}
@@ -422,7 +400,6 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		BookmarksEntry newBookmarksEntry1 = addBookmarksEntry();
 		BookmarksEntry newBookmarksEntry2 = addBookmarksEntry();
 
@@ -431,22 +408,18 @@ public class BookmarksEntryPersistenceTest {
 		primaryKeys.add(newBookmarksEntry1.getPrimaryKey());
 		primaryKeys.add(newBookmarksEntry2.getPrimaryKey());
 
-		Map<Serializable, BookmarksEntry> bookmarksEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, bookmarksEntries.size());
-		Assert.assertEquals(
-			newBookmarksEntry1,
+		Assert.assertEquals(newBookmarksEntry1,
 			bookmarksEntries.get(newBookmarksEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newBookmarksEntry2,
+		Assert.assertEquals(newBookmarksEntry2,
 			bookmarksEntries.get(newBookmarksEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -456,8 +429,7 @@ public class BookmarksEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, BookmarksEntry> bookmarksEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(bookmarksEntries.isEmpty());
 	}
@@ -465,7 +437,6 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -475,39 +446,36 @@ public class BookmarksEntryPersistenceTest {
 		primaryKeys.add(newBookmarksEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, BookmarksEntry> bookmarksEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, bookmarksEntries.size());
-		Assert.assertEquals(
-			newBookmarksEntry,
+		Assert.assertEquals(newBookmarksEntry,
 			bookmarksEntries.get(newBookmarksEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BookmarksEntry> bookmarksEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(bookmarksEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newBookmarksEntry.getPrimaryKey());
 
-		Map<Serializable, BookmarksEntry> bookmarksEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, bookmarksEntries.size());
-		Assert.assertEquals(
-			newBookmarksEntry,
+		Assert.assertEquals(newBookmarksEntry,
 			bookmarksEntries.get(newBookmarksEntry.getPrimaryKey()));
 	}
 
@@ -515,19 +483,15 @@ public class BookmarksEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			BookmarksEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = BookmarksEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 				@Override
 				public void performAction(BookmarksEntry bookmarksEntry) {
 					Assert.assertNotNull(bookmarksEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -536,18 +500,17 @@ public class BookmarksEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"entryId", newBookmarksEntry.getEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
+				newBookmarksEntry.getEntryId()));
 
-		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -558,31 +521,31 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("entryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
+				RandomTestUtil.nextLong()));
 
-		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		Object newEntryId = newBookmarksEntry.getEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("entryId", new Object[] {newEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
+				new Object[] { newEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -595,14 +558,13 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"entryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -615,19 +577,14 @@ public class BookmarksEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(
-			newBookmarksEntry.getPrimaryKey());
+		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingBookmarksEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingBookmarksEntry, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingBookmarksEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingBookmarksEntry, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingBookmarksEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingBookmarksEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingBookmarksEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBookmarksEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected BookmarksEntry addBookmarksEntry() throws Exception {
@@ -678,9 +635,7 @@ public class BookmarksEntryPersistenceTest {
 		return bookmarksEntry;
 	}
 
-	private List<BookmarksEntry> _bookmarksEntries =
-		new ArrayList<BookmarksEntry>();
+	private List<BookmarksEntry> _bookmarksEntries = new ArrayList<BookmarksEntry>();
 	private BookmarksEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

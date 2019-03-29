@@ -32,14 +32,11 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class JournalArticleLocalizationWrapper
-	extends BaseModelWrapper<JournalArticleLocalization>
+public class JournalArticleLocalizationWrapper extends BaseModelWrapper<JournalArticleLocalization>
 	implements JournalArticleLocalization,
-			   ModelWrapper<JournalArticleLocalization> {
-
+		ModelWrapper<JournalArticleLocalization> {
 	public JournalArticleLocalizationWrapper(
 		JournalArticleLocalization journalArticleLocalization) {
-
 		super(journalArticleLocalization);
 	}
 
@@ -60,7 +57,7 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long articleLocalizationId = (Long)attributes.get(
-			"articleLocalizationId");
+				"articleLocalizationId");
 
 		if (articleLocalizationId != null) {
 			setArticleLocalizationId(articleLocalizationId);
@@ -98,140 +95,140 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	/**
-	 * Returns the article localization ID of this journal article localization.
-	 *
-	 * @return the article localization ID of this journal article localization
-	 */
+	* Returns the article localization ID of this journal article localization.
+	*
+	* @return the article localization ID of this journal article localization
+	*/
 	@Override
 	public long getArticleLocalizationId() {
 		return model.getArticleLocalizationId();
 	}
 
 	/**
-	 * Returns the article pk of this journal article localization.
-	 *
-	 * @return the article pk of this journal article localization
-	 */
+	* Returns the article pk of this journal article localization.
+	*
+	* @return the article pk of this journal article localization
+	*/
 	@Override
 	public long getArticlePK() {
 		return model.getArticlePK();
 	}
 
 	/**
-	 * Returns the company ID of this journal article localization.
-	 *
-	 * @return the company ID of this journal article localization
-	 */
+	* Returns the company ID of this journal article localization.
+	*
+	* @return the company ID of this journal article localization
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the description of this journal article localization.
-	 *
-	 * @return the description of this journal article localization
-	 */
+	* Returns the description of this journal article localization.
+	*
+	* @return the description of this journal article localization
+	*/
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	 * Returns the language ID of this journal article localization.
-	 *
-	 * @return the language ID of this journal article localization
-	 */
+	* Returns the language ID of this journal article localization.
+	*
+	* @return the language ID of this journal article localization
+	*/
 	@Override
 	public String getLanguageId() {
 		return model.getLanguageId();
 	}
 
 	/**
-	 * Returns the primary key of this journal article localization.
-	 *
-	 * @return the primary key of this journal article localization
-	 */
+	* Returns the primary key of this journal article localization.
+	*
+	* @return the primary key of this journal article localization
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the title of this journal article localization.
-	 *
-	 * @return the title of this journal article localization
-	 */
+	* Returns the title of this journal article localization.
+	*
+	* @return the title of this journal article localization
+	*/
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	 * Sets the article localization ID of this journal article localization.
-	 *
-	 * @param articleLocalizationId the article localization ID of this journal article localization
-	 */
+	* Sets the article localization ID of this journal article localization.
+	*
+	* @param articleLocalizationId the article localization ID of this journal article localization
+	*/
 	@Override
 	public void setArticleLocalizationId(long articleLocalizationId) {
 		model.setArticleLocalizationId(articleLocalizationId);
 	}
 
 	/**
-	 * Sets the article pk of this journal article localization.
-	 *
-	 * @param articlePK the article pk of this journal article localization
-	 */
+	* Sets the article pk of this journal article localization.
+	*
+	* @param articlePK the article pk of this journal article localization
+	*/
 	@Override
 	public void setArticlePK(long articlePK) {
 		model.setArticlePK(articlePK);
 	}
 
 	/**
-	 * Sets the company ID of this journal article localization.
-	 *
-	 * @param companyId the company ID of this journal article localization
-	 */
+	* Sets the company ID of this journal article localization.
+	*
+	* @param companyId the company ID of this journal article localization
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the description of this journal article localization.
-	 *
-	 * @param description the description of this journal article localization
-	 */
+	* Sets the description of this journal article localization.
+	*
+	* @param description the description of this journal article localization
+	*/
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	 * Sets the language ID of this journal article localization.
-	 *
-	 * @param languageId the language ID of this journal article localization
-	 */
+	* Sets the language ID of this journal article localization.
+	*
+	* @param languageId the language ID of this journal article localization
+	*/
 	@Override
 	public void setLanguageId(String languageId) {
 		model.setLanguageId(languageId);
 	}
 
 	/**
-	 * Sets the primary key of this journal article localization.
-	 *
-	 * @param primaryKey the primary key of this journal article localization
-	 */
+	* Sets the primary key of this journal article localization.
+	*
+	* @param primaryKey the primary key of this journal article localization
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the title of this journal article localization.
-	 *
-	 * @param title the title of this journal article localization
-	 */
+	* Sets the title of this journal article localization.
+	*
+	* @param title the title of this journal article localization
+	*/
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
@@ -240,9 +237,6 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	protected JournalArticleLocalizationWrapper wrap(
 		JournalArticleLocalization journalArticleLocalization) {
-
-		return new JournalArticleLocalizationWrapper(
-			journalArticleLocalization);
+		return new JournalArticleLocalizationWrapper(journalArticleLocalization);
 	}
-
 }

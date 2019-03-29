@@ -30,17 +30,14 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.sync.model.impl.SyncDLObjectImpl")
 @ProviderType
-public interface SyncDLObject
-	extends SyncDLObjectModel, PersistedModel, TreeModel {
-
+public interface SyncDLObject extends SyncDLObjectModel, PersistedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDLObjectImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SyncDLObject, Long>
-		SYNC_DL_OBJECT_ID_ACCESSOR = new Accessor<SyncDLObject, Long>() {
-
+	public static final Accessor<SyncDLObject, Long> SYNC_DL_OBJECT_ID_ACCESSOR = new Accessor<SyncDLObject, Long>() {
 			@Override
 			public Long get(SyncDLObject syncDLObject) {
 				return syncDLObject.getSyncDLObjectId();
@@ -55,7 +52,6 @@ public interface SyncDLObject
 			public Class<SyncDLObject> getTypeClass() {
 				return SyncDLObject.class;
 			}
-
 		};
 
 	@Override
@@ -64,5 +60,4 @@ public interface SyncDLObject
 	public void setCreateDate(java.util.Date createDate);
 
 	public void setModifiedDate(java.util.Date modifiedDate);
-
 }

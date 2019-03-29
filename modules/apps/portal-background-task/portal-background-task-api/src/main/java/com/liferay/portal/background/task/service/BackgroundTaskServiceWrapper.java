@@ -26,34 +26,30 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class BackgroundTaskServiceWrapper
-	implements BackgroundTaskService, ServiceWrapper<BackgroundTaskService> {
-
+public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
+	ServiceWrapper<BackgroundTaskService> {
 	public BackgroundTaskServiceWrapper(
 		BackgroundTaskService backgroundTaskService) {
-
 		_backgroundTaskService = backgroundTaskService;
 	}
 
 	@Override
-	public int getBackgroundTasksCount(
-		long groupId, String taskExecutorClassName, String completed) {
-
-		return _backgroundTaskService.getBackgroundTasksCount(
-			groupId, taskExecutorClassName, completed);
+	public int getBackgroundTasksCount(long groupId,
+		String taskExecutorClassName, String completed) {
+		return _backgroundTaskService.getBackgroundTasksCount(groupId,
+			taskExecutorClassName, completed);
 	}
 
 	@Override
 	public String getBackgroundTaskStatusJSON(long backgroundTaskId) {
-		return _backgroundTaskService.getBackgroundTaskStatusJSON(
-			backgroundTaskId);
+		return _backgroundTaskService.getBackgroundTaskStatusJSON(backgroundTaskId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _backgroundTaskService.getOSGiServiceIdentifier();
@@ -70,5 +66,4 @@ public class BackgroundTaskServiceWrapper
 	}
 
 	private BackgroundTaskService _backgroundTaskService;
-
 }

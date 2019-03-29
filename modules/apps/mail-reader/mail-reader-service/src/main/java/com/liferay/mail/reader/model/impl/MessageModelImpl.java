@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.model.MessageModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -57,30 +60,37 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class MessageModelImpl
-	extends BaseModelImpl<Message> implements MessageModel {
-
+public class MessageModelImpl extends BaseModelImpl<Message>
+	implements MessageModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message model instance should use the <code>Message</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Mail_Message";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"messageId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"folderId", Types.BIGINT},
-		{"sender", Types.VARCHAR}, {"to_", Types.CLOB}, {"cc", Types.CLOB},
-		{"bcc", Types.CLOB}, {"sentDate", Types.TIMESTAMP},
-		{"subject", Types.VARCHAR}, {"preview", Types.VARCHAR},
-		{"body", Types.CLOB}, {"flags", Types.VARCHAR}, {"size_", Types.BIGINT},
-		{"remoteMessageId", Types.BIGINT}, {"contentType", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "messageId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "accountId", Types.BIGINT },
+			{ "folderId", Types.BIGINT },
+			{ "sender", Types.VARCHAR },
+			{ "to_", Types.CLOB },
+			{ "cc", Types.CLOB },
+			{ "bcc", Types.CLOB },
+			{ "sentDate", Types.TIMESTAMP },
+			{ "subject", Types.VARCHAR },
+			{ "preview", Types.VARCHAR },
+			{ "body", Types.CLOB },
+			{ "flags", Types.VARCHAR },
+			{ "size_", Types.BIGINT },
+			{ "remoteMessageId", Types.BIGINT },
+			{ "contentType", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("messageId", Types.BIGINT);
@@ -105,48 +115,28 @@ public class MessageModelImpl
 		TABLE_COLUMNS_MAP.put("contentType", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table Mail_Message (messageId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountId LONG,folderId LONG,sender STRING null,to_ TEXT null,cc TEXT null,bcc TEXT null,sentDate DATE null,subject STRING null,preview VARCHAR(75) null,body TEXT null,flags VARCHAR(75) null,size_ LONG,remoteMessageId LONG,contentType VARCHAR(75) null)";
-
+	public static final String TABLE_SQL_CREATE = "create table Mail_Message (messageId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountId LONG,folderId LONG,sender STRING null,to_ TEXT null,cc TEXT null,bcc TEXT null,sentDate DATE null,subject STRING null,preview VARCHAR(75) null,body TEXT null,flags VARCHAR(75) null,size_ LONG,remoteMessageId LONG,contentType VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Mail_Message";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY message.sentDate ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY Mail_Message.sentDate ASC";
-
+	public static final String ORDER_BY_SQL = " ORDER BY Mail_Message.sentDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.mail.reader.model.Message"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.mail.reader.model.Message"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Message"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.mail.reader.model.Message"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.mail.reader.model.Message"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Message"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long FOLDERID_COLUMN_BITMASK = 2L;
-
 	public static final long REMOTEMESSAGEID_COLUMN_BITMASK = 4L;
-
 	public static final long SENTDATE_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.mail.reader.model.Message"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.mail.reader.model.Message"));
 
 	public MessageModelImpl() {
 	}
@@ -185,18 +175,14 @@ public class MessageModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Message, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Message, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Message, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Message, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<Message, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<Message, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((Message)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Message)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -207,114 +193,79 @@ public class MessageModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Message, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Message, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Message, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Message, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(Message)this, entry.getValue());
+				attributeSetterBiConsumer.accept((Message)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Message, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<Message, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Message, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<Message, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Message, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Message, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<Message, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Message, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Message, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Message, Object>>();
-		Map<String, BiConsumer<Message, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Message, ?>>();
+		Map<String, Function<Message, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Message, Object>>();
+		Map<String, BiConsumer<Message, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Message, ?>>();
+
 
 		attributeGetterFunctions.put("messageId", Message::getMessageId);
-		attributeSetterBiConsumers.put(
-			"messageId", (BiConsumer<Message, Long>)Message::setMessageId);
+		attributeSetterBiConsumers.put("messageId", (BiConsumer<Message, Long>)Message::setMessageId);
 		attributeGetterFunctions.put("companyId", Message::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Message, Long>)Message::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Message, Long>)Message::setCompanyId);
 		attributeGetterFunctions.put("userId", Message::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Message, Long>)Message::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Message, Long>)Message::setUserId);
 		attributeGetterFunctions.put("userName", Message::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Message, String>)Message::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Message, String>)Message::setUserName);
 		attributeGetterFunctions.put("createDate", Message::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Message, Date>)Message::setCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Message, Date>)Message::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Message::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Message, Date>)Message::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Message, Date>)Message::setModifiedDate);
 		attributeGetterFunctions.put("accountId", Message::getAccountId);
-		attributeSetterBiConsumers.put(
-			"accountId", (BiConsumer<Message, Long>)Message::setAccountId);
+		attributeSetterBiConsumers.put("accountId", (BiConsumer<Message, Long>)Message::setAccountId);
 		attributeGetterFunctions.put("folderId", Message::getFolderId);
-		attributeSetterBiConsumers.put(
-			"folderId", (BiConsumer<Message, Long>)Message::setFolderId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<Message, Long>)Message::setFolderId);
 		attributeGetterFunctions.put("sender", Message::getSender);
-		attributeSetterBiConsumers.put(
-			"sender", (BiConsumer<Message, String>)Message::setSender);
+		attributeSetterBiConsumers.put("sender", (BiConsumer<Message, String>)Message::setSender);
 		attributeGetterFunctions.put("to", Message::getTo);
-		attributeSetterBiConsumers.put(
-			"to", (BiConsumer<Message, String>)Message::setTo);
+		attributeSetterBiConsumers.put("to", (BiConsumer<Message, String>)Message::setTo);
 		attributeGetterFunctions.put("cc", Message::getCc);
-		attributeSetterBiConsumers.put(
-			"cc", (BiConsumer<Message, String>)Message::setCc);
+		attributeSetterBiConsumers.put("cc", (BiConsumer<Message, String>)Message::setCc);
 		attributeGetterFunctions.put("bcc", Message::getBcc);
-		attributeSetterBiConsumers.put(
-			"bcc", (BiConsumer<Message, String>)Message::setBcc);
+		attributeSetterBiConsumers.put("bcc", (BiConsumer<Message, String>)Message::setBcc);
 		attributeGetterFunctions.put("sentDate", Message::getSentDate);
-		attributeSetterBiConsumers.put(
-			"sentDate", (BiConsumer<Message, Date>)Message::setSentDate);
+		attributeSetterBiConsumers.put("sentDate", (BiConsumer<Message, Date>)Message::setSentDate);
 		attributeGetterFunctions.put("subject", Message::getSubject);
-		attributeSetterBiConsumers.put(
-			"subject", (BiConsumer<Message, String>)Message::setSubject);
+		attributeSetterBiConsumers.put("subject", (BiConsumer<Message, String>)Message::setSubject);
 		attributeGetterFunctions.put("preview", Message::getPreview);
-		attributeSetterBiConsumers.put(
-			"preview", (BiConsumer<Message, String>)Message::setPreview);
+		attributeSetterBiConsumers.put("preview", (BiConsumer<Message, String>)Message::setPreview);
 		attributeGetterFunctions.put("body", Message::getBody);
-		attributeSetterBiConsumers.put(
-			"body", (BiConsumer<Message, String>)Message::setBody);
+		attributeSetterBiConsumers.put("body", (BiConsumer<Message, String>)Message::setBody);
 		attributeGetterFunctions.put("flags", Message::getFlags);
-		attributeSetterBiConsumers.put(
-			"flags", (BiConsumer<Message, String>)Message::setFlags);
+		attributeSetterBiConsumers.put("flags", (BiConsumer<Message, String>)Message::setFlags);
 		attributeGetterFunctions.put("size", Message::getSize);
-		attributeSetterBiConsumers.put(
-			"size", (BiConsumer<Message, Long>)Message::setSize);
-		attributeGetterFunctions.put(
-			"remoteMessageId", Message::getRemoteMessageId);
-		attributeSetterBiConsumers.put(
-			"remoteMessageId",
-			(BiConsumer<Message, Long>)Message::setRemoteMessageId);
+		attributeSetterBiConsumers.put("size", (BiConsumer<Message, Long>)Message::setSize);
+		attributeGetterFunctions.put("remoteMessageId", Message::getRemoteMessageId);
+		attributeSetterBiConsumers.put("remoteMessageId", (BiConsumer<Message, Long>)Message::setRemoteMessageId);
 		attributeGetterFunctions.put("contentType", Message::getContentType);
-		attributeSetterBiConsumers.put(
-			"contentType",
-			(BiConsumer<Message, String>)Message::setContentType);
+		attributeSetterBiConsumers.put("contentType", (BiConsumer<Message, String>)Message::setContentType);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -633,8 +584,8 @@ public class MessageModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), Message.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			Message.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -647,9 +598,8 @@ public class MessageModelImpl
 	@Override
 	public Message toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Message)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (Message)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -749,8 +699,7 @@ public class MessageModelImpl
 
 		messageModelImpl._setOriginalFolderId = false;
 
-		messageModelImpl._originalRemoteMessageId =
-			messageModelImpl._remoteMessageId;
+		messageModelImpl._originalRemoteMessageId = messageModelImpl._remoteMessageId;
 
 		messageModelImpl._setOriginalRemoteMessageId = false;
 
@@ -887,20 +836,16 @@ public class MessageModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<Message, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Message, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Message, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Message, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<Message, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<Message, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -919,22 +864,18 @@ public class MessageModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Message, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Message, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Message, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Message, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<Message, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<Message, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -948,12 +889,10 @@ public class MessageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Message.class.getClassLoader();
+	private static final ClassLoader _classLoader = Message.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Message.class, ModelWrapper.class
-	};
-
+			Message.class, ModelWrapper.class
+		};
 	private long _messageId;
 	private long _companyId;
 	private long _originalCompanyId;
@@ -983,5 +922,4 @@ public class MessageModelImpl
 	private String _contentType;
 	private long _columnBitmask;
 	private Message _escapedModel;
-
 }

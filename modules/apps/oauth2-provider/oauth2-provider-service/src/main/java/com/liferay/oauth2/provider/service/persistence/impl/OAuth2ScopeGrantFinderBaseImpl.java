@@ -17,25 +17,24 @@ package com.liferay.oauth2.provider.service.persistence.impl;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
 import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
+
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Set;
 
 import javax.sql.DataSource;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class OAuth2ScopeGrantFinderBaseImpl
-	extends BasePersistenceImpl<OAuth2ScopeGrant> {
-
+public abstract class OAuth2ScopeGrantFinderBaseImpl extends BasePersistenceImpl<OAuth2ScopeGrant> {
 	public OAuth2ScopeGrantFinderBaseImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
 	}
@@ -46,36 +45,24 @@ public abstract class OAuth2ScopeGrantFinderBaseImpl
 	}
 
 	@Override
-	@Reference(
-		target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
-		unbind = "-"
-	)
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
 	public void setConfiguration(Configuration configuration) {
 		super.setConfiguration(configuration);
 	}
 
 	@Override
-	@Reference(
-		target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
-		unbind = "-"
-	)
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 	}
 
 	@Override
-	@Reference(
-		target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
-		unbind = "-"
-	)
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
 
 	@Reference
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2ScopeGrantFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(OAuth2ScopeGrantFinderBaseImpl.class);
 }

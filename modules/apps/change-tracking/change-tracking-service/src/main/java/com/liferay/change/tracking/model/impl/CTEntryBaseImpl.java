@@ -32,9 +32,8 @@ import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CTEntryBaseImpl
-	extends CTEntryModelImpl implements CTEntry {
-
+public abstract class CTEntryBaseImpl extends CTEntryModelImpl
+	implements CTEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class CTEntryBaseImpl
 			CTEntryLocalServiceUtil.updateCTEntry(this);
 		}
 	}
-
 }

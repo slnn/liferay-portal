@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.AssetTagStatsLocalService;
 import com.liferay.asset.tag.stats.service.persistence.AssetTagStatsPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -63,9 +64,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class AssetTagStatsLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements AssetTagStatsLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements AssetTagStatsLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,7 +109,6 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	@Override
 	public AssetTagStats deleteAssetTagStats(long tagStatsId)
 		throws PortalException {
-
 		return assetTagStatsPersistence.remove(tagStatsId);
 	}
 
@@ -129,8 +128,8 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			AssetTagStats.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(AssetTagStats.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -157,11 +156,10 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return assetTagStatsPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return assetTagStatsPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -178,12 +176,10 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return assetTagStatsPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return assetTagStatsPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -205,11 +201,10 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return assetTagStatsPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return assetTagStatsPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -227,14 +222,12 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	@Override
 	public AssetTagStats getAssetTagStats(long tagStatsId)
 		throws PortalException {
-
 		return assetTagStatsPersistence.findByPrimaryKey(tagStatsId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(assetTagStatsLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -246,14 +239,10 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			assetTagStatsLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(assetTagStatsLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AssetTagStats.class);
 
@@ -264,7 +253,6 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(assetTagStatsLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetTagStats.class);
@@ -278,15 +266,12 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return assetTagStatsLocalService.deleteAssetTagStats(
-			(AssetTagStats)persistedModel);
+		return assetTagStatsLocalService.deleteAssetTagStats((AssetTagStats)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return assetTagStatsPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -344,7 +329,6 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 */
 	public void setAssetTagStatsLocalService(
 		AssetTagStatsLocalService assetTagStatsLocalService) {
-
 		this.assetTagStatsLocalService = assetTagStatsLocalService;
 	}
 
@@ -364,7 +348,6 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 */
 	public void setAssetTagStatsPersistence(
 		AssetTagStatsPersistence assetTagStatsPersistence) {
-
 		this.assetTagStatsPersistence = assetTagStatsPersistence;
 	}
 
@@ -373,9 +356,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -385,9 +366,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -396,9 +375,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 *
 	 * @return the asset tag local service
 	 */
-	public com.liferay.asset.kernel.service.AssetTagLocalService
-		getAssetTagLocalService() {
-
+	public com.liferay.asset.kernel.service.AssetTagLocalService getAssetTagLocalService() {
 		return assetTagLocalService;
 	}
 
@@ -408,9 +385,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 * @param assetTagLocalService the asset tag local service
 	 */
 	public void setAssetTagLocalService(
-		com.liferay.asset.kernel.service.AssetTagLocalService
-			assetTagLocalService) {
-
+		com.liferay.asset.kernel.service.AssetTagLocalService assetTagLocalService) {
 		this.assetTagLocalService = assetTagLocalService;
 	}
 
@@ -428,15 +403,12 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	 *
 	 * @param assetTagPersistence the asset tag persistence
 	 */
-	public void setAssetTagPersistence(
-		AssetTagPersistence assetTagPersistence) {
-
+	public void setAssetTagPersistence(AssetTagPersistence assetTagPersistence) {
 		this.assetTagPersistence = assetTagPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.asset.tag.stats.model.AssetTagStats",
+		persistedModelLocalServiceRegistry.register("com.liferay.asset.tag.stats.model.AssetTagStats",
 			assetTagStatsLocalService);
 	}
 
@@ -477,8 +449,8 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -489,27 +461,14 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 
 	@BeanReference(type = AssetTagStatsLocalService.class)
 	protected AssetTagStatsLocalService assetTagStatsLocalService;
-
 	@BeanReference(type = AssetTagStatsPersistence.class)
 	protected AssetTagStatsPersistence assetTagStatsPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.asset.kernel.service.AssetTagLocalService.class
-	)
-	protected com.liferay.asset.kernel.service.AssetTagLocalService
-		assetTagLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.asset.kernel.service.AssetTagLocalService.class)
+	protected com.liferay.asset.kernel.service.AssetTagLocalService assetTagLocalService;
 	@ServiceReference(type = AssetTagPersistence.class)
 	protected AssetTagPersistence assetTagPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

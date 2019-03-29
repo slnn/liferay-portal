@@ -39,20 +39,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=screens",
-		"json.web.service.context.path=ScreensComment"
-	},
-	service = ScreensCommentService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=screens", "json.web.service.context.path=ScreensComment"}, service = ScreensCommentService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface ScreensCommentService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,22 +57,20 @@ public interface ScreensCommentService extends BaseService {
 	public JSONObject getComment(long commentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray getComments(
-			String className, long classPK, int start, int end)
-		throws PortalException;
+	public JSONArray getComments(String className, long classPK, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommentsCount(String className, long classPK)
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	public JSONObject updateComment(long commentId, String body)
 		throws PortalException;
-
 }

@@ -23,6 +23,7 @@ import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersisten
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -68,9 +69,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class CTCollectionLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements CTCollectionLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements CTCollectionLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,7 +114,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	@Override
 	public CTCollection deleteCTCollection(long ctCollectionId)
 		throws PortalException {
-
 		return ctCollectionPersistence.remove(ctCollectionId);
 	}
 
@@ -129,7 +128,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	@Override
 	public CTCollection deleteCTCollection(CTCollection ctCollection)
 		throws PortalException {
-
 		return ctCollectionPersistence.remove(ctCollection);
 	}
 
@@ -137,8 +135,8 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			CTCollection.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(CTCollection.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -165,11 +163,10 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return ctCollectionPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return ctCollectionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -186,12 +183,10 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return ctCollectionPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return ctCollectionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -213,11 +208,10 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return ctCollectionPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return ctCollectionPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -235,14 +229,12 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	@Override
 	public CTCollection getCTCollection(long ctCollectionId)
 		throws PortalException {
-
 		return ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(ctCollectionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -254,14 +246,10 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			ctCollectionLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(ctCollectionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(CTCollection.class);
 
@@ -273,7 +261,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(ctCollectionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CTCollection.class);
@@ -287,15 +274,12 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return ctCollectionLocalService.deleteCTCollection(
-			(CTCollection)persistedModel);
+		return ctCollectionLocalService.deleteCTCollection((CTCollection)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return ctCollectionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -347,27 +331,22 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addCTEntryCTCollection(
-		long ctEntryId, CTCollection ctCollection) {
-
+	public void addCTEntryCTCollection(long ctEntryId, CTCollection ctCollection) {
 		ctEntryPersistence.addCTCollection(ctEntryId, ctCollection);
 	}
 
 	/**
 	 */
 	@Override
-	public void addCTEntryCTCollections(
-		long ctEntryId, long[] ctCollectionIds) {
-
+	public void addCTEntryCTCollections(long ctEntryId, long[] ctCollectionIds) {
 		ctEntryPersistence.addCTCollections(ctEntryId, ctCollectionIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addCTEntryCTCollections(
-		long ctEntryId, List<CTCollection> ctCollections) {
-
+	public void addCTEntryCTCollections(long ctEntryId,
+		List<CTCollection> ctCollections) {
 		ctEntryPersistence.addCTCollections(ctEntryId, ctCollections);
 	}
 
@@ -388,27 +367,24 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void deleteCTEntryCTCollection(
-		long ctEntryId, CTCollection ctCollection) {
-
+	public void deleteCTEntryCTCollection(long ctEntryId,
+		CTCollection ctCollection) {
 		ctEntryPersistence.removeCTCollection(ctEntryId, ctCollection);
 	}
 
 	/**
 	 */
 	@Override
-	public void deleteCTEntryCTCollections(
-		long ctEntryId, long[] ctCollectionIds) {
-
+	public void deleteCTEntryCTCollections(long ctEntryId,
+		long[] ctCollectionIds) {
 		ctEntryPersistence.removeCTCollections(ctEntryId, ctCollectionIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void deleteCTEntryCTCollections(
-		long ctEntryId, List<CTCollection> ctCollections) {
-
+	public void deleteCTEntryCTCollections(long ctEntryId,
+		List<CTCollection> ctCollections) {
 		ctEntryPersistence.removeCTCollections(ctEntryId, ctCollections);
 	}
 
@@ -433,21 +409,18 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public List<CTCollection> getCTEntryCTCollections(
-		long ctEntryId, int start, int end) {
-
+	public List<CTCollection> getCTEntryCTCollections(long ctEntryId,
+		int start, int end) {
 		return ctEntryPersistence.getCTCollections(ctEntryId, start, end);
 	}
 
 	/**
 	 */
 	@Override
-	public List<CTCollection> getCTEntryCTCollections(
-		long ctEntryId, int start, int end,
-		OrderByComparator<CTCollection> orderByComparator) {
-
-		return ctEntryPersistence.getCTCollections(
-			ctEntryId, start, end, orderByComparator);
+	public List<CTCollection> getCTEntryCTCollections(long ctEntryId,
+		int start, int end, OrderByComparator<CTCollection> orderByComparator) {
+		return ctEntryPersistence.getCTCollections(ctEntryId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -461,8 +434,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	@Override
 	public boolean hasCTEntryCTCollection(long ctEntryId, long ctCollectionId) {
-		return ctEntryPersistence.containsCTCollection(
-			ctEntryId, ctCollectionId);
+		return ctEntryPersistence.containsCTCollection(ctEntryId, ctCollectionId);
 	}
 
 	/**
@@ -475,9 +447,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void setCTEntryCTCollections(
-		long ctEntryId, long[] ctCollectionIds) {
-
+	public void setCTEntryCTCollections(long ctEntryId, long[] ctCollectionIds) {
 		ctEntryPersistence.setCTCollections(ctEntryId, ctCollectionIds);
 	}
 
@@ -497,7 +467,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	public void setCTCollectionLocalService(
 		CTCollectionLocalService ctCollectionLocalService) {
-
 		this.ctCollectionLocalService = ctCollectionLocalService;
 	}
 
@@ -517,7 +486,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	public void setCTCollectionPersistence(
 		CTCollectionPersistence ctCollectionPersistence) {
-
 		this.ctCollectionPersistence = ctCollectionPersistence;
 	}
 
@@ -526,9 +494,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the ct entry local service
 	 */
-	public com.liferay.change.tracking.service.CTEntryLocalService
-		getCTEntryLocalService() {
-
+	public com.liferay.change.tracking.service.CTEntryLocalService getCTEntryLocalService() {
 		return ctEntryLocalService;
 	}
 
@@ -538,9 +504,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @param ctEntryLocalService the ct entry local service
 	 */
 	public void setCTEntryLocalService(
-		com.liferay.change.tracking.service.CTEntryLocalService
-			ctEntryLocalService) {
-
+		com.liferay.change.tracking.service.CTEntryLocalService ctEntryLocalService) {
 		this.ctEntryLocalService = ctEntryLocalService;
 	}
 
@@ -585,9 +549,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the ct entry aggregate local service
 	 */
-	public com.liferay.change.tracking.service.CTEntryAggregateLocalService
-		getCTEntryAggregateLocalService() {
-
+	public com.liferay.change.tracking.service.CTEntryAggregateLocalService getCTEntryAggregateLocalService() {
 		return ctEntryAggregateLocalService;
 	}
 
@@ -597,9 +559,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @param ctEntryAggregateLocalService the ct entry aggregate local service
 	 */
 	public void setCTEntryAggregateLocalService(
-		com.liferay.change.tracking.service.CTEntryAggregateLocalService
-			ctEntryAggregateLocalService) {
-
+		com.liferay.change.tracking.service.CTEntryAggregateLocalService ctEntryAggregateLocalService) {
 		this.ctEntryAggregateLocalService = ctEntryAggregateLocalService;
 	}
 
@@ -619,7 +579,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	public void setCTEntryAggregatePersistence(
 		CTEntryAggregatePersistence ctEntryAggregatePersistence) {
-
 		this.ctEntryAggregatePersistence = ctEntryAggregatePersistence;
 	}
 
@@ -628,9 +587,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the ct process local service
 	 */
-	public com.liferay.change.tracking.service.CTProcessLocalService
-		getCTProcessLocalService() {
-
+	public com.liferay.change.tracking.service.CTProcessLocalService getCTProcessLocalService() {
 		return ctProcessLocalService;
 	}
 
@@ -640,9 +597,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @param ctProcessLocalService the ct process local service
 	 */
 	public void setCTProcessLocalService(
-		com.liferay.change.tracking.service.CTProcessLocalService
-			ctProcessLocalService) {
-
+		com.liferay.change.tracking.service.CTProcessLocalService ctProcessLocalService) {
 		this.ctProcessLocalService = ctProcessLocalService;
 	}
 
@@ -662,7 +617,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	public void setCTProcessPersistence(
 		CTProcessPersistence ctProcessPersistence) {
-
 		this.ctProcessPersistence = ctProcessPersistence;
 	}
 
@@ -671,9 +625,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -683,9 +635,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -694,9 +644,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -706,9 +654,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -728,7 +674,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -737,9 +682,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -749,9 +692,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -760,9 +701,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -773,7 +712,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -796,8 +734,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.change.tracking.model.CTCollection",
+		persistedModelLocalServiceRegistry.register("com.liferay.change.tracking.model.CTCollection",
 			ctCollectionLocalService);
 	}
 
@@ -838,8 +775,8 @@ public abstract class CTCollectionLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -850,72 +787,34 @@ public abstract class CTCollectionLocalServiceBaseImpl
 
 	@BeanReference(type = CTCollectionLocalService.class)
 	protected CTCollectionLocalService ctCollectionLocalService;
-
 	@BeanReference(type = CTCollectionPersistence.class)
 	protected CTCollectionPersistence ctCollectionPersistence;
-
-	@BeanReference(
-		type = com.liferay.change.tracking.service.CTEntryLocalService.class
-	)
-	protected com.liferay.change.tracking.service.CTEntryLocalService
-		ctEntryLocalService;
-
+	@BeanReference(type = com.liferay.change.tracking.service.CTEntryLocalService.class)
+	protected com.liferay.change.tracking.service.CTEntryLocalService ctEntryLocalService;
 	@BeanReference(type = CTEntryPersistence.class)
 	protected CTEntryPersistence ctEntryPersistence;
-
 	@BeanReference(type = CTEntryFinder.class)
 	protected CTEntryFinder ctEntryFinder;
-
-	@BeanReference(
-		type = com.liferay.change.tracking.service.CTEntryAggregateLocalService.class
-	)
-	protected com.liferay.change.tracking.service.CTEntryAggregateLocalService
-		ctEntryAggregateLocalService;
-
+	@BeanReference(type = com.liferay.change.tracking.service.CTEntryAggregateLocalService.class)
+	protected com.liferay.change.tracking.service.CTEntryAggregateLocalService ctEntryAggregateLocalService;
 	@BeanReference(type = CTEntryAggregatePersistence.class)
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
-
-	@BeanReference(
-		type = com.liferay.change.tracking.service.CTProcessLocalService.class
-	)
-	protected com.liferay.change.tracking.service.CTProcessLocalService
-		ctProcessLocalService;
-
+	@BeanReference(type = com.liferay.change.tracking.service.CTProcessLocalService.class)
+	protected com.liferay.change.tracking.service.CTProcessLocalService ctProcessLocalService;
 	@BeanReference(type = CTProcessPersistence.class)
 	protected CTProcessPersistence ctProcessPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

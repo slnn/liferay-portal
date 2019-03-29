@@ -17,6 +17,7 @@ package com.liferay.message.boards.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBStatsUser;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -49,13 +50,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface MBStatsUserLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface MBStatsUserLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,48 +61,48 @@ public interface MBStatsUserLocalService
 	 */
 
 	/**
-	 * Adds the message boards stats user to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbStatsUser the message boards stats user
-	 * @return the message boards stats user that was added
-	 */
+	* Adds the message boards stats user to the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBStatsUser addMBStatsUser(MBStatsUser mbStatsUser);
 
 	public MBStatsUser addStatsUser(long groupId, long userId);
 
 	/**
-	 * Creates a new message boards stats user with the primary key. Does not add the message boards stats user to the database.
-	 *
-	 * @param statsUserId the primary key for the new message boards stats user
-	 * @return the new message boards stats user
-	 */
+	* Creates a new message boards stats user with the primary key. Does not add the message boards stats user to the database.
+	*
+	* @param statsUserId the primary key for the new message boards stats user
+	* @return the new message boards stats user
+	*/
 	@Transactional(enabled = false)
 	public MBStatsUser createMBStatsUser(long statsUserId);
 
 	/**
-	 * Deletes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param statsUserId the primary key of the message boards stats user
-	 * @return the message boards stats user that was removed
-	 * @throws PortalException if a message boards stats user with the primary key could not be found
-	 */
+	* Deletes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param statsUserId the primary key of the message boards stats user
+	* @return the message boards stats user that was removed
+	* @throws PortalException if a message boards stats user with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MBStatsUser deleteMBStatsUser(long statsUserId)
 		throws PortalException;
 
 	/**
-	 * Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbStatsUser the message boards stats user
-	 * @return the message boards stats user that was removed
-	 */
+	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MBStatsUser deleteMBStatsUser(MBStatsUser mbStatsUser);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -121,67 +119,66 @@ public interface MBStatsUserLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBStatsUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBStatsUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBStatsUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBStatsUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBStatsUser fetchMBStatsUser(long statsUserId);
@@ -196,34 +193,35 @@ public interface MBStatsUserLocalService
 	public Date getLastPostDateByUserId(long groupId, long userId);
 
 	/**
-	 * Returns the message boards stats user with the primary key.
-	 *
-	 * @param statsUserId the primary key of the message boards stats user
-	 * @return the message boards stats user
-	 * @throws PortalException if a message boards stats user with the primary key could not be found
-	 */
+	* Returns the message boards stats user with the primary key.
+	*
+	* @param statsUserId the primary key of the message boards stats user
+	* @return the message boards stats user
+	* @throws PortalException if a message boards stats user with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBStatsUser getMBStatsUser(long statsUserId) throws PortalException;
+	public MBStatsUser getMBStatsUser(long statsUserId)
+		throws PortalException;
 
 	/**
-	 * Returns a range of all the message boards stats users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBStatsUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of message boards stats users
-	 * @param end the upper bound of the range of message boards stats users (not inclusive)
-	 * @return the range of message boards stats users
-	 */
+	* Returns a range of all the message boards stats users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBStatsUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of message boards stats users
+	* @param end the upper bound of the range of message boards stats users (not inclusive)
+	* @return the range of message boards stats users
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBStatsUser> getMBStatsUsers(int start, int end);
 
 	/**
-	 * Returns the number of message boards stats users.
-	 *
-	 * @return the number of message boards stats users
-	 */
+	* Returns the number of message boards stats users.
+	*
+	* @return the number of message boards stats users
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMBStatsUsersCount();
 
@@ -234,10 +232,10 @@ public interface MBStatsUserLocalService
 	public long getMessageCountByUserId(long userId);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -249,31 +247,30 @@ public interface MBStatsUserLocalService
 	public MBStatsUser getStatsUser(long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBStatsUser> getStatsUsersByGroupId(
-			long groupId, int start, int end)
-		throws PortalException;
+	public List<MBStatsUser> getStatsUsersByGroupId(long groupId, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStatsUsersByGroupIdCount(long groupId) throws PortalException;
+	public int getStatsUsersByGroupIdCount(long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBStatsUser> getStatsUsersByUserId(long userId);
 
 	/**
-	 * Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbStatsUser the message boards stats user
-	 * @return the message boards stats user that was updated
-	 */
+	* Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBStatsUser updateMBStatsUser(MBStatsUser mbStatsUser);
 
 	public MBStatsUser updateStatsUser(long groupId, long userId);
 
-	public MBStatsUser updateStatsUser(
-		long groupId, long userId, Date lastPostDate);
+	public MBStatsUser updateStatsUser(long groupId, long userId,
+		Date lastPostDate);
 
-	public MBStatsUser updateStatsUser(
-		long groupId, long userId, int messageCount, Date lastPostDate);
-
+	public MBStatsUser updateStatsUser(long groupId, long userId,
+		int messageCount, Date lastPostDate);
 }

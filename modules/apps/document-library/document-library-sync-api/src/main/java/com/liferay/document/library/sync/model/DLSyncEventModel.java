@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.ShardedModel;
  */
 @ProviderType
 public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -141,5 +140,4 @@ public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 	 * @param typePK the type pk of this dl sync event
 	 */
 	public void setTypePK(long typePK);
-
 }

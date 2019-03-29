@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+
 import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
 
 /**
@@ -53,19 +54,16 @@ import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
  */
 @ProviderType
 public class ScreensRatingsEntryServiceHttp {
-
 	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
-			HttpPrincipal httpPrincipal, long classPK, String className,
-			int ratingsLength)
+		HttpPrincipal httpPrincipal, long classPK, String className,
+		int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ScreensRatingsEntryServiceUtil.class, "deleteRatingsEntry",
-				_deleteRatingsEntryParameterTypes0);
+			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
+					"deleteRatingsEntry", _deleteRatingsEntryParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classPK, className, ratingsLength);
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					className, ratingsLength);
 
 			Object returnObj = null;
 
@@ -73,15 +71,11 @@ public class ScreensRatingsEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
@@ -94,16 +88,14 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-			HttpPrincipal httpPrincipal, long assetEntryId, int ratingsLength)
+		HttpPrincipal httpPrincipal, long assetEntryId, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ScreensRatingsEntryServiceUtil.class, "getRatingsEntries",
-				_getRatingsEntriesParameterTypes1);
+			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
+					"getRatingsEntries", _getRatingsEntriesParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, assetEntryId, ratingsLength);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					assetEntryId, ratingsLength);
 
 			Object returnObj = null;
 
@@ -111,15 +103,11 @@ public class ScreensRatingsEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
@@ -132,17 +120,15 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-			HttpPrincipal httpPrincipal, long classPK, String className,
-			int ratingsLength)
+		HttpPrincipal httpPrincipal, long classPK, String className,
+		int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ScreensRatingsEntryServiceUtil.class, "getRatingsEntries",
-				_getRatingsEntriesParameterTypes2);
+			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
+					"getRatingsEntries", _getRatingsEntriesParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classPK, className, ratingsLength);
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					className, ratingsLength);
 
 			Object returnObj = null;
 
@@ -150,15 +136,11 @@ public class ScreensRatingsEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
@@ -171,17 +153,15 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
-			HttpPrincipal httpPrincipal, long classPK, String className,
-			double score, int ratingsLength)
+		HttpPrincipal httpPrincipal, long classPK, String className,
+		double score, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ScreensRatingsEntryServiceUtil.class, "updateRatingsEntry",
-				_updateRatingsEntryParameterTypes3);
+			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
+					"updateRatingsEntry", _updateRatingsEntryParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classPK, className, score, ratingsLength);
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					className, score, ratingsLength);
 
 			Object returnObj = null;
 
@@ -189,15 +169,11 @@ public class ScreensRatingsEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
@@ -209,16 +185,17 @@ public class ScreensRatingsEntryServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ScreensRatingsEntryServiceHttp.class);
-
-	private static final Class<?>[] _deleteRatingsEntryParameterTypes0 =
-		new Class[] {long.class, String.class, int.class};
-	private static final Class<?>[] _getRatingsEntriesParameterTypes1 =
-		new Class[] {long.class, int.class};
-	private static final Class<?>[] _getRatingsEntriesParameterTypes2 =
-		new Class[] {long.class, String.class, int.class};
-	private static final Class<?>[] _updateRatingsEntryParameterTypes3 =
-		new Class[] {long.class, String.class, double.class, int.class};
-
+	private static Log _log = LogFactoryUtil.getLog(ScreensRatingsEntryServiceHttp.class);
+	private static final Class<?>[] _deleteRatingsEntryParameterTypes0 = new Class[] {
+			long.class, String.class, int.class
+		};
+	private static final Class<?>[] _getRatingsEntriesParameterTypes1 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[] _getRatingsEntriesParameterTypes2 = new Class[] {
+			long.class, String.class, int.class
+		};
+	private static final Class<?>[] _updateRatingsEntryParameterTypes3 = new Class[] {
+			long.class, String.class, double.class, int.class
+		};
 }

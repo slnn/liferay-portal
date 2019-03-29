@@ -22,72 +22,58 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface WikiPageFinder {
+	public int countByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before);
 
-	public int countByCreateDate(
-		long groupId, long nodeId, java.util.Date createDate, boolean before);
+	public int countByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before);
 
-	public int countByCreateDate(
+	public int countByModifiedDate(long groupId, long nodeId,
+		java.util.Date modifiedDate, boolean before);
+
+	public int countByModifiedDate(long groupId, long nodeId,
+		java.sql.Timestamp modifiedDate, boolean before);
+
+	public int countByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
+
+	public int filterCountByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before);
+
+	public int filterCountByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp modifiedDate, boolean before);
+
+	public int filterCountByModifiedDate(long groupId, long nodeId,
+		java.util.Date modifiedDate, boolean before);
+
+	public int filterCountByModifiedDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before);
+
+	public int filterCountByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
 		long groupId, long nodeId, java.sql.Timestamp createDate,
-		boolean before);
+		boolean before, int start, int end);
 
-	public int countByModifiedDate(
-		long groupId, long nodeId, java.util.Date modifiedDate, boolean before);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByModifiedDate(
+		long groupId, long nodeId, java.util.Date modifiedDate, boolean before,
+		int start, int end);
 
-	public int countByModifiedDate(
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByModifiedDate(
 		long groupId, long nodeId, java.sql.Timestamp modifiedDate,
-		boolean before);
-
-	public int countByG_N_H_S(
-		long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.wiki.model.WikiPage> queryDefinition);
-
-	public int filterCountByCreateDate(
-		long groupId, long nodeId, java.util.Date createDate, boolean before);
-
-	public int filterCountByCreateDate(
-		long groupId, long nodeId, java.sql.Timestamp modifiedDate,
-		boolean before);
-
-	public int filterCountByModifiedDate(
-		long groupId, long nodeId, java.util.Date modifiedDate, boolean before);
-
-	public int filterCountByModifiedDate(
-		long groupId, long nodeId, java.sql.Timestamp createDate,
-		boolean before);
-
-	public int filterCountByG_N_H_S(
-		long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.wiki.model.WikiPage> queryDefinition);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage>
-		filterFindByCreateDate(
-			long groupId, long nodeId, java.util.Date createDate,
-			boolean before, int start, int end);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage>
-		filterFindByCreateDate(
-			long groupId, long nodeId, java.sql.Timestamp createDate,
-			boolean before, int start, int end);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage>
-		filterFindByModifiedDate(
-			long groupId, long nodeId, java.util.Date modifiedDate,
-			boolean before, int start, int end);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage>
-		filterFindByModifiedDate(
-			long groupId, long nodeId, java.sql.Timestamp modifiedDate,
-			boolean before, int start, int end);
+		boolean before, int start, int end);
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_S(
 		long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.wiki.model.WikiPage> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
 
 	public com.liferay.wiki.model.WikiPage findByResourcePrimKey(
-			long resourcePrimKey)
+		long resourcePrimKey)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByCreateDate(
@@ -110,7 +96,5 @@ public interface WikiPageFinder {
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_S(
 		long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.wiki.model.WikiPage> queryDefinition);
-
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
 }

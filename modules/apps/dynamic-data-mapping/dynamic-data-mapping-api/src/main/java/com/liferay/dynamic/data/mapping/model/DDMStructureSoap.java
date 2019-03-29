@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class DDMStructureSoap implements Serializable {
-
 	public static DDMStructureSoap toSoapModel(DDMStructure model) {
 		DDMStructureSoap soapModel = new DDMStructureSoap();
 
@@ -86,8 +85,7 @@ public class DDMStructureSoap implements Serializable {
 	}
 
 	public static DDMStructureSoap[] toSoapModels(List<DDMStructure> models) {
-		List<DDMStructureSoap> soapModels = new ArrayList<DDMStructureSoap>(
-			models.size());
+		List<DDMStructureSoap> soapModels = new ArrayList<DDMStructureSoap>(models.size());
 
 		for (DDMStructure model : models) {
 			soapModels.add(toSoapModel(model));
@@ -287,5 +285,4 @@ public class DDMStructureSoap implements Serializable {
 	private String _storageType;
 	private int _type;
 	private Date _lastPublishDate;
-
 }

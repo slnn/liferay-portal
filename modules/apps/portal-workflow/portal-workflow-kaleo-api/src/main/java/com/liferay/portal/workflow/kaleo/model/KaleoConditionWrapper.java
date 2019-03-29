@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class KaleoConditionWrapper
-	extends BaseModelWrapper<KaleoCondition>
+public class KaleoConditionWrapper extends BaseModelWrapper<KaleoCondition>
 	implements KaleoCondition, ModelWrapper<KaleoCondition> {
-
 	public KaleoConditionWrapper(KaleoCondition kaleoCondition) {
 		super(kaleoCondition);
 	}
@@ -53,8 +51,7 @@ public class KaleoConditionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put(
-			"kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
+		attributes.put("kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
 		attributes.put("kaleoNodeId", getKaleoNodeId());
 		attributes.put("script", getScript());
 		attributes.put("scriptLanguage", getScriptLanguage());
@@ -114,7 +111,7 @@ public class KaleoConditionWrapper
 		}
 
 		Long kaleoDefinitionVersionId = (Long)attributes.get(
-			"kaleoDefinitionVersionId");
+				"kaleoDefinitionVersionId");
 
 		if (kaleoDefinitionVersionId != null) {
 			setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
@@ -139,7 +136,7 @@ public class KaleoConditionWrapper
 		}
 
 		String scriptRequiredContexts = (String)attributes.get(
-			"scriptRequiredContexts");
+				"scriptRequiredContexts");
 
 		if (scriptRequiredContexts != null) {
 			setScriptRequiredContexts(scriptRequiredContexts);
@@ -147,150 +144,150 @@ public class KaleoConditionWrapper
 	}
 
 	/**
-	 * Returns the company ID of this kaleo condition.
-	 *
-	 * @return the company ID of this kaleo condition
-	 */
+	* Returns the company ID of this kaleo condition.
+	*
+	* @return the company ID of this kaleo condition
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this kaleo condition.
-	 *
-	 * @return the create date of this kaleo condition
-	 */
+	* Returns the create date of this kaleo condition.
+	*
+	* @return the create date of this kaleo condition
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this kaleo condition.
-	 *
-	 * @return the group ID of this kaleo condition
-	 */
+	* Returns the group ID of this kaleo condition.
+	*
+	* @return the group ID of this kaleo condition
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the kaleo condition ID of this kaleo condition.
-	 *
-	 * @return the kaleo condition ID of this kaleo condition
-	 */
+	* Returns the kaleo condition ID of this kaleo condition.
+	*
+	* @return the kaleo condition ID of this kaleo condition
+	*/
 	@Override
 	public long getKaleoConditionId() {
 		return model.getKaleoConditionId();
 	}
 
 	/**
-	 * Returns the kaleo definition version ID of this kaleo condition.
-	 *
-	 * @return the kaleo definition version ID of this kaleo condition
-	 */
+	* Returns the kaleo definition version ID of this kaleo condition.
+	*
+	* @return the kaleo definition version ID of this kaleo condition
+	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
 		return model.getKaleoDefinitionVersionId();
 	}
 
 	/**
-	 * Returns the kaleo node ID of this kaleo condition.
-	 *
-	 * @return the kaleo node ID of this kaleo condition
-	 */
+	* Returns the kaleo node ID of this kaleo condition.
+	*
+	* @return the kaleo node ID of this kaleo condition
+	*/
 	@Override
 	public long getKaleoNodeId() {
 		return model.getKaleoNodeId();
 	}
 
 	/**
-	 * Returns the modified date of this kaleo condition.
-	 *
-	 * @return the modified date of this kaleo condition
-	 */
+	* Returns the modified date of this kaleo condition.
+	*
+	* @return the modified date of this kaleo condition
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the mvcc version of this kaleo condition.
-	 *
-	 * @return the mvcc version of this kaleo condition
-	 */
+	* Returns the mvcc version of this kaleo condition.
+	*
+	* @return the mvcc version of this kaleo condition
+	*/
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	 * Returns the primary key of this kaleo condition.
-	 *
-	 * @return the primary key of this kaleo condition
-	 */
+	* Returns the primary key of this kaleo condition.
+	*
+	* @return the primary key of this kaleo condition
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the script of this kaleo condition.
-	 *
-	 * @return the script of this kaleo condition
-	 */
+	* Returns the script of this kaleo condition.
+	*
+	* @return the script of this kaleo condition
+	*/
 	@Override
 	public String getScript() {
 		return model.getScript();
 	}
 
 	/**
-	 * Returns the script language of this kaleo condition.
-	 *
-	 * @return the script language of this kaleo condition
-	 */
+	* Returns the script language of this kaleo condition.
+	*
+	* @return the script language of this kaleo condition
+	*/
 	@Override
 	public String getScriptLanguage() {
 		return model.getScriptLanguage();
 	}
 
 	/**
-	 * Returns the script required contexts of this kaleo condition.
-	 *
-	 * @return the script required contexts of this kaleo condition
-	 */
+	* Returns the script required contexts of this kaleo condition.
+	*
+	* @return the script required contexts of this kaleo condition
+	*/
 	@Override
 	public String getScriptRequiredContexts() {
 		return model.getScriptRequiredContexts();
 	}
 
 	/**
-	 * Returns the user ID of this kaleo condition.
-	 *
-	 * @return the user ID of this kaleo condition
-	 */
+	* Returns the user ID of this kaleo condition.
+	*
+	* @return the user ID of this kaleo condition
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this kaleo condition.
-	 *
-	 * @return the user name of this kaleo condition
-	 */
+	* Returns the user name of this kaleo condition.
+	*
+	* @return the user name of this kaleo condition
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this kaleo condition.
-	 *
-	 * @return the user uuid of this kaleo condition
-	 */
+	* Returns the user uuid of this kaleo condition.
+	*
+	* @return the user uuid of this kaleo condition
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -302,150 +299,150 @@ public class KaleoConditionWrapper
 	}
 
 	/**
-	 * Sets the company ID of this kaleo condition.
-	 *
-	 * @param companyId the company ID of this kaleo condition
-	 */
+	* Sets the company ID of this kaleo condition.
+	*
+	* @param companyId the company ID of this kaleo condition
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this kaleo condition.
-	 *
-	 * @param createDate the create date of this kaleo condition
-	 */
+	* Sets the create date of this kaleo condition.
+	*
+	* @param createDate the create date of this kaleo condition
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this kaleo condition.
-	 *
-	 * @param groupId the group ID of this kaleo condition
-	 */
+	* Sets the group ID of this kaleo condition.
+	*
+	* @param groupId the group ID of this kaleo condition
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the kaleo condition ID of this kaleo condition.
-	 *
-	 * @param kaleoConditionId the kaleo condition ID of this kaleo condition
-	 */
+	* Sets the kaleo condition ID of this kaleo condition.
+	*
+	* @param kaleoConditionId the kaleo condition ID of this kaleo condition
+	*/
 	@Override
 	public void setKaleoConditionId(long kaleoConditionId) {
 		model.setKaleoConditionId(kaleoConditionId);
 	}
 
 	/**
-	 * Sets the kaleo definition version ID of this kaleo condition.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo condition
-	 */
+	* Sets the kaleo definition version ID of this kaleo condition.
+	*
+	* @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo condition
+	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
 		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
-	 * Sets the kaleo node ID of this kaleo condition.
-	 *
-	 * @param kaleoNodeId the kaleo node ID of this kaleo condition
-	 */
+	* Sets the kaleo node ID of this kaleo condition.
+	*
+	* @param kaleoNodeId the kaleo node ID of this kaleo condition
+	*/
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
 		model.setKaleoNodeId(kaleoNodeId);
 	}
 
 	/**
-	 * Sets the modified date of this kaleo condition.
-	 *
-	 * @param modifiedDate the modified date of this kaleo condition
-	 */
+	* Sets the modified date of this kaleo condition.
+	*
+	* @param modifiedDate the modified date of this kaleo condition
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the mvcc version of this kaleo condition.
-	 *
-	 * @param mvccVersion the mvcc version of this kaleo condition
-	 */
+	* Sets the mvcc version of this kaleo condition.
+	*
+	* @param mvccVersion the mvcc version of this kaleo condition
+	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	 * Sets the primary key of this kaleo condition.
-	 *
-	 * @param primaryKey the primary key of this kaleo condition
-	 */
+	* Sets the primary key of this kaleo condition.
+	*
+	* @param primaryKey the primary key of this kaleo condition
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the script of this kaleo condition.
-	 *
-	 * @param script the script of this kaleo condition
-	 */
+	* Sets the script of this kaleo condition.
+	*
+	* @param script the script of this kaleo condition
+	*/
 	@Override
 	public void setScript(String script) {
 		model.setScript(script);
 	}
 
 	/**
-	 * Sets the script language of this kaleo condition.
-	 *
-	 * @param scriptLanguage the script language of this kaleo condition
-	 */
+	* Sets the script language of this kaleo condition.
+	*
+	* @param scriptLanguage the script language of this kaleo condition
+	*/
 	@Override
 	public void setScriptLanguage(String scriptLanguage) {
 		model.setScriptLanguage(scriptLanguage);
 	}
 
 	/**
-	 * Sets the script required contexts of this kaleo condition.
-	 *
-	 * @param scriptRequiredContexts the script required contexts of this kaleo condition
-	 */
+	* Sets the script required contexts of this kaleo condition.
+	*
+	* @param scriptRequiredContexts the script required contexts of this kaleo condition
+	*/
 	@Override
 	public void setScriptRequiredContexts(String scriptRequiredContexts) {
 		model.setScriptRequiredContexts(scriptRequiredContexts);
 	}
 
 	/**
-	 * Sets the user ID of this kaleo condition.
-	 *
-	 * @param userId the user ID of this kaleo condition
-	 */
+	* Sets the user ID of this kaleo condition.
+	*
+	* @param userId the user ID of this kaleo condition
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this kaleo condition.
-	 *
-	 * @param userName the user name of this kaleo condition
-	 */
+	* Sets the user name of this kaleo condition.
+	*
+	* @param userName the user name of this kaleo condition
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this kaleo condition.
-	 *
-	 * @param userUuid the user uuid of this kaleo condition
-	 */
+	* Sets the user uuid of this kaleo condition.
+	*
+	* @param userUuid the user uuid of this kaleo condition
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -455,5 +452,4 @@ public class KaleoConditionWrapper
 	protected KaleoConditionWrapper wrap(KaleoCondition kaleoCondition) {
 		return new KaleoConditionWrapper(kaleoCondition);
 	}
-
 }

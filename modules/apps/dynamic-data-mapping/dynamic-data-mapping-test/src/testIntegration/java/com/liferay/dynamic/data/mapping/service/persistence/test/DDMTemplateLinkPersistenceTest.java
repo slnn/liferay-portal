@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.mapping.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDMTemplateLinkPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
@@ -106,8 +106,7 @@ public class DDMTemplateLinkPersistenceTest {
 
 		_persistence.remove(newDDMTemplateLink);
 
-		DDMTemplateLink existingDDMTemplateLink =
-			_persistence.fetchByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
+		DDMTemplateLink existingDDMTemplateLink = _persistence.fetchByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
 
 		Assert.assertNull(existingDDMTemplateLink);
 	}
@@ -133,23 +132,17 @@ public class DDMTemplateLinkPersistenceTest {
 
 		_ddmTemplateLinks.add(_persistence.update(newDDMTemplateLink));
 
-		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(
-			newDDMTemplateLink.getPrimaryKey());
+		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMTemplateLink.getTemplateLinkId(),
+		Assert.assertEquals(existingDDMTemplateLink.getTemplateLinkId(),
 			newDDMTemplateLink.getTemplateLinkId());
-		Assert.assertEquals(
-			existingDDMTemplateLink.getCompanyId(),
+		Assert.assertEquals(existingDDMTemplateLink.getCompanyId(),
 			newDDMTemplateLink.getCompanyId());
-		Assert.assertEquals(
-			existingDDMTemplateLink.getClassNameId(),
+		Assert.assertEquals(existingDDMTemplateLink.getClassNameId(),
 			newDDMTemplateLink.getClassNameId());
-		Assert.assertEquals(
-			existingDDMTemplateLink.getClassPK(),
+		Assert.assertEquals(existingDDMTemplateLink.getClassPK(),
 			newDDMTemplateLink.getClassPK());
-		Assert.assertEquals(
-			existingDDMTemplateLink.getTemplateId(),
+		Assert.assertEquals(existingDDMTemplateLink.getTemplateId(),
 			newDDMTemplateLink.getTemplateId());
 	}
 
@@ -169,8 +162,8 @@ public class DDMTemplateLinkPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
@@ -179,8 +172,7 @@ public class DDMTemplateLinkPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
-		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(
-			newDDMTemplateLink.getPrimaryKey());
+		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
 
 		Assert.assertEquals(existingDDMTemplateLink, newDDMTemplateLink);
 	}
@@ -194,22 +186,21 @@ public class DDMTemplateLinkPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMTemplateLink> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DDMTemplateLink", "templateLinkId", true, "companyId", true,
-			"classNameId", true, "classPK", true, "templateId", true);
+		return OrderByComparatorFactoryUtil.create("DDMTemplateLink",
+			"templateLinkId", true, "companyId", true, "classNameId", true,
+			"classPK", true, "templateId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
-		DDMTemplateLink existingDDMTemplateLink =
-			_persistence.fetchByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
+		DDMTemplateLink existingDDMTemplateLink = _persistence.fetchByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
 
 		Assert.assertEquals(existingDDMTemplateLink, newDDMTemplateLink);
 	}
@@ -218,8 +209,7 @@ public class DDMTemplateLinkPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMTemplateLink missingDDMTemplateLink = _persistence.fetchByPrimaryKey(
-			pk);
+		DDMTemplateLink missingDDMTemplateLink = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDMTemplateLink);
 	}
@@ -227,7 +217,6 @@ public class DDMTemplateLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		DDMTemplateLink newDDMTemplateLink1 = addDDMTemplateLink();
 		DDMTemplateLink newDDMTemplateLink2 = addDDMTemplateLink();
 
@@ -236,22 +225,18 @@ public class DDMTemplateLinkPersistenceTest {
 		primaryKeys.add(newDDMTemplateLink1.getPrimaryKey());
 		primaryKeys.add(newDDMTemplateLink2.getPrimaryKey());
 
-		Map<Serializable, DDMTemplateLink> ddmTemplateLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateLink> ddmTemplateLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddmTemplateLinks.size());
-		Assert.assertEquals(
-			newDDMTemplateLink1,
+		Assert.assertEquals(newDDMTemplateLink1,
 			ddmTemplateLinks.get(newDDMTemplateLink1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDMTemplateLink2,
+		Assert.assertEquals(newDDMTemplateLink2,
 			ddmTemplateLinks.get(newDDMTemplateLink2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -261,8 +246,7 @@ public class DDMTemplateLinkPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDMTemplateLink> ddmTemplateLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateLink> ddmTemplateLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmTemplateLinks.isEmpty());
 	}
@@ -270,7 +254,6 @@ public class DDMTemplateLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
 		long pk = RandomTestUtil.nextLong();
@@ -280,39 +263,36 @@ public class DDMTemplateLinkPersistenceTest {
 		primaryKeys.add(newDDMTemplateLink.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDMTemplateLink> ddmTemplateLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateLink> ddmTemplateLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmTemplateLinks.size());
-		Assert.assertEquals(
-			newDDMTemplateLink,
+		Assert.assertEquals(newDDMTemplateLink,
 			ddmTemplateLinks.get(newDDMTemplateLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplateLink> ddmTemplateLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateLink> ddmTemplateLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmTemplateLinks.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMTemplateLink.getPrimaryKey());
 
-		Map<Serializable, DDMTemplateLink> ddmTemplateLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateLink> ddmTemplateLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmTemplateLinks.size());
-		Assert.assertEquals(
-			newDDMTemplateLink,
+		Assert.assertEquals(newDDMTemplateLink,
 			ddmTemplateLinks.get(newDDMTemplateLink.getPrimaryKey()));
 	}
 
@@ -320,19 +300,15 @@ public class DDMTemplateLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDMTemplateLinkLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDMTemplateLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDMTemplateLink>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMTemplateLink>() {
 				@Override
 				public void performAction(DDMTemplateLink ddmTemplateLink) {
 					Assert.assertNotNull(ddmTemplateLink);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -341,18 +317,17 @@ public class DDMTemplateLinkPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"templateLinkId", newDDMTemplateLink.getTemplateLinkId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateLinkId",
+				newDDMTemplateLink.getTemplateLinkId()));
 
-		List<DDMTemplateLink> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMTemplateLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -363,34 +338,32 @@ public class DDMTemplateLinkPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"templateLinkId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateLinkId",
+				RandomTestUtil.nextLong()));
 
-		List<DDMTemplateLink> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMTemplateLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("templateLinkId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"templateLinkId"));
 
 		Object newTemplateLinkId = newDDMTemplateLink.getTemplateLinkId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"templateLinkId", new Object[] {newTemplateLinkId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("templateLinkId",
+				new Object[] { newTemplateLinkId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -403,15 +376,14 @@ public class DDMTemplateLinkPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("templateLinkId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"templateLinkId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"templateLinkId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("templateLinkId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -424,19 +396,15 @@ public class DDMTemplateLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(
-			newDDMTemplateLink.getPrimaryKey());
+		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplateLink.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplateLink, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplateLink.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplateLink, "getOriginalClassPK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingDDMTemplateLink.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplateLink,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDDMTemplateLink.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplateLink,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected DDMTemplateLink addDDMTemplateLink() throws Exception {
@@ -457,9 +425,7 @@ public class DDMTemplateLinkPersistenceTest {
 		return ddmTemplateLink;
 	}
 
-	private List<DDMTemplateLink> _ddmTemplateLinks =
-		new ArrayList<DDMTemplateLink>();
+	private List<DDMTemplateLink> _ddmTemplateLinks = new ArrayList<DDMTemplateLink>();
 	private DDMTemplateLinkPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

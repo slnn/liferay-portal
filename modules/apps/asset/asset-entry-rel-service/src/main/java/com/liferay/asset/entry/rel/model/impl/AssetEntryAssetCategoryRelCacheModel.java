@@ -17,8 +17,10 @@ package com.liferay.asset.entry.rel.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -33,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class AssetEntryAssetCategoryRelCacheModel
-	implements CacheModel<AssetEntryAssetCategoryRel>, Externalizable {
-
+public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEntryAssetCategoryRel>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -46,14 +47,10 @@ public class AssetEntryAssetCategoryRelCacheModel
 			return false;
 		}
 
-		AssetEntryAssetCategoryRelCacheModel
-			assetEntryAssetCategoryRelCacheModel =
-				(AssetEntryAssetCategoryRelCacheModel)obj;
+		AssetEntryAssetCategoryRelCacheModel assetEntryAssetCategoryRelCacheModel =
+			(AssetEntryAssetCategoryRelCacheModel)obj;
 
-		if (assetEntryAssetCategoryRelId ==
-				assetEntryAssetCategoryRelCacheModel.
-					assetEntryAssetCategoryRelId) {
-
+		if (assetEntryAssetCategoryRelId == assetEntryAssetCategoryRelCacheModel.assetEntryAssetCategoryRelId) {
 			return true;
 		}
 
@@ -84,11 +81,9 @@ public class AssetEntryAssetCategoryRelCacheModel
 
 	@Override
 	public AssetEntryAssetCategoryRel toEntityModel() {
-		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl =
-			new AssetEntryAssetCategoryRelImpl();
+		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl = new AssetEntryAssetCategoryRelImpl();
 
-		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
-			assetEntryAssetCategoryRelId);
+		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryId);
 		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetCategoryId);
 		assetEntryAssetCategoryRelImpl.setPriority(priority);
@@ -110,7 +105,8 @@ public class AssetEntryAssetCategoryRelCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(assetEntryAssetCategoryRelId);
 
 		objectOutput.writeLong(assetEntryId);
@@ -124,5 +120,4 @@ public class AssetEntryAssetCategoryRelCacheModel
 	public long assetEntryId;
 	public long assetCategoryId;
 	public int priority;
-
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoDefinitionCacheModel
-	implements CacheModel<KaleoDefinition>, Externalizable, MVCCModel {
-
+public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +49,10 @@ public class KaleoDefinitionCacheModel
 			return false;
 		}
 
-		KaleoDefinitionCacheModel kaleoDefinitionCacheModel =
-			(KaleoDefinitionCacheModel)obj;
+		KaleoDefinitionCacheModel kaleoDefinitionCacheModel = (KaleoDefinitionCacheModel)obj;
 
-		if ((kaleoDefinitionId ==
-				kaleoDefinitionCacheModel.kaleoDefinitionId) &&
-			(mvccVersion == kaleoDefinitionCacheModel.mvccVersion)) {
-
+		if ((kaleoDefinitionId == kaleoDefinitionCacheModel.kaleoDefinitionId) &&
+				(mvccVersion == kaleoDefinitionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -208,7 +205,8 @@ public class KaleoDefinitionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoDefinitionId);
@@ -276,5 +274,4 @@ public class KaleoDefinitionCacheModel
 	public String content;
 	public int version;
 	public boolean active;
-
 }

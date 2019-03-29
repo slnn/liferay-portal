@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -56,62 +57,40 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class LocalizedEntryModelImpl
-	extends BaseModelImpl<LocalizedEntry> implements LocalizedEntryModel {
-
+public class LocalizedEntryModelImpl extends BaseModelImpl<LocalizedEntry>
+	implements LocalizedEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a localized entry model instance should use the <code>LocalizedEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "LocalizedEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"defaultLanguageId", Types.VARCHAR}, {"localizedEntryId", Types.BIGINT}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "defaultLanguageId", Types.VARCHAR },
+			{ "localizedEntryId", Types.BIGINT }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("localizedEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table LocalizedEntry (defaultLanguageId VARCHAR(75) null,localizedEntryId LONG not null primary key)";
-
+	public static final String TABLE_SQL_CREATE = "create table LocalizedEntry (defaultLanguageId VARCHAR(75) null,localizedEntryId LONG not null primary key)";
 	public static final String TABLE_SQL_DROP = "drop table LocalizedEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY localizedEntry.localizedEntryId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY LocalizedEntry.localizedEntryId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY localizedEntry.localizedEntryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LocalizedEntry.localizedEntryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.portal.tools.service.builder.test.model.LocalizedEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.tools.service.builder.test.model.LocalizedEntry"),
-		true);
-
+			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = false;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.LocalizedEntry"));
 
 	public LocalizedEntryModelImpl() {
@@ -151,18 +130,13 @@ public class LocalizedEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LocalizedEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LocalizedEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((LocalizedEntry)this));
 		}
 
@@ -174,44 +148,36 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<LocalizedEntry, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<LocalizedEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<LocalizedEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<LocalizedEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(LocalizedEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((LocalizedEntry)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<LocalizedEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<LocalizedEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<LocalizedEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<LocalizedEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LocalizedEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LocalizedEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<LocalizedEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LocalizedEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<LocalizedEntry, Object>>();
-		Map<String, BiConsumer<LocalizedEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LocalizedEntry, Object>>();
+		Map<String, BiConsumer<LocalizedEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
+
 
 		attributeGetterFunctions.put(
 			"defaultLanguageId",
@@ -228,11 +194,8 @@ public class LocalizedEntryModelImpl
 			new BiConsumer<LocalizedEntry, Object>() {
 
 				@Override
-				public void accept(
-					LocalizedEntry localizedEntry, Object defaultLanguageId) {
-
-					localizedEntry.setDefaultLanguageId(
-						(String)defaultLanguageId);
+				public void accept(LocalizedEntry localizedEntry, Object defaultLanguageId) {
+					localizedEntry.setDefaultLanguageId((String)defaultLanguageId);
 				}
 
 			});
@@ -251,35 +214,27 @@ public class LocalizedEntryModelImpl
 			new BiConsumer<LocalizedEntry, Object>() {
 
 				@Override
-				public void accept(
-					LocalizedEntry localizedEntry, Object localizedEntryId) {
-
+				public void accept(LocalizedEntry localizedEntry, Object localizedEntryId) {
 					localizedEntry.setLocalizedEntryId((Long)localizedEntryId);
 				}
 
 			});
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		List<LocalizedEntryLocalization> localizedEntryLocalizations =
-			LocalizedEntryLocalServiceUtil.getLocalizedEntryLocalizations(
-				getPrimaryKey());
+		List<LocalizedEntryLocalization> localizedEntryLocalizations = LocalizedEntryLocalServiceUtil.getLocalizedEntryLocalizations(getPrimaryKey());
 
-		String[] availableLanguageIds =
-			new String[localizedEntryLocalizations.size()];
+		String[] availableLanguageIds = new String[localizedEntryLocalizations.size()];
 
 		for (int i = 0; i < availableLanguageIds.length; i++) {
-			LocalizedEntryLocalization localizedEntryLocalization =
-				localizedEntryLocalizations.get(i);
+			LocalizedEntryLocalization localizedEntryLocalization = localizedEntryLocalizations.get(i);
 
-			availableLanguageIds[i] =
-				localizedEntryLocalization.getLanguageId();
+			availableLanguageIds[i] = localizedEntryLocalization.getLanguageId();
 		}
 
 		return availableLanguageIds;
@@ -298,16 +253,12 @@ public class LocalizedEntryModelImpl
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
 		if (useDefault) {
-			return LocalizationUtil.getLocalization(
-				new Function<String, String>() {
-
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
 					@Override
 					public String apply(String languageId) {
 						return _getTitle(languageId);
 					}
-
-				},
-				languageId, getDefaultLanguageId());
+				}, languageId, getDefaultLanguageId());
 		}
 
 		return _getTitle(languageId);
@@ -315,24 +266,18 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public String getTitleMapAsXML() {
-		return LocalizationUtil.getXml(
-			getLanguageIdToTitleMap(), getDefaultLanguageId(), "Title");
+		return LocalizationUtil.getXml(getLanguageIdToTitleMap(),
+			getDefaultLanguageId(), "Title");
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToTitleMap() {
-		Map<String, String> languageIdToTitleMap =
-			new HashMap<String, String>();
+		Map<String, String> languageIdToTitleMap = new HashMap<String, String>();
 
-		List<LocalizedEntryLocalization> localizedEntryLocalizations =
-			LocalizedEntryLocalServiceUtil.getLocalizedEntryLocalizations(
-				getPrimaryKey());
+		List<LocalizedEntryLocalization> localizedEntryLocalizations = LocalizedEntryLocalServiceUtil.getLocalizedEntryLocalizations(getPrimaryKey());
 
-		for (LocalizedEntryLocalization localizedEntryLocalization :
-				localizedEntryLocalizations) {
-
-			languageIdToTitleMap.put(
-				localizedEntryLocalization.getLanguageId(),
+		for (LocalizedEntryLocalization localizedEntryLocalization : localizedEntryLocalizations) {
+			languageIdToTitleMap.put(localizedEntryLocalization.getLanguageId(),
 				localizedEntryLocalization.getTitle());
 		}
 
@@ -340,9 +285,8 @@ public class LocalizedEntryModelImpl
 	}
 
 	private String _getTitle(String languageId) {
-		LocalizedEntryLocalization localizedEntryLocalization =
-			LocalizedEntryLocalServiceUtil.fetchLocalizedEntryLocalization(
-				getPrimaryKey(), languageId);
+		LocalizedEntryLocalization localizedEntryLocalization = LocalizedEntryLocalServiceUtil.fetchLocalizedEntryLocalization(getPrimaryKey(),
+				languageId);
 
 		if (localizedEntryLocalization == null) {
 			return "";
@@ -364,16 +308,12 @@ public class LocalizedEntryModelImpl
 	@Override
 	public String getContent(String languageId, boolean useDefault) {
 		if (useDefault) {
-			return LocalizationUtil.getLocalization(
-				new Function<String, String>() {
-
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
 					@Override
 					public String apply(String languageId) {
 						return _getContent(languageId);
 					}
-
-				},
-				languageId, getDefaultLanguageId());
+				}, languageId, getDefaultLanguageId());
 		}
 
 		return _getContent(languageId);
@@ -381,24 +321,18 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public String getContentMapAsXML() {
-		return LocalizationUtil.getXml(
-			getLanguageIdToContentMap(), getDefaultLanguageId(), "Content");
+		return LocalizationUtil.getXml(getLanguageIdToContentMap(),
+			getDefaultLanguageId(), "Content");
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToContentMap() {
-		Map<String, String> languageIdToContentMap =
-			new HashMap<String, String>();
+		Map<String, String> languageIdToContentMap = new HashMap<String, String>();
 
-		List<LocalizedEntryLocalization> localizedEntryLocalizations =
-			LocalizedEntryLocalServiceUtil.getLocalizedEntryLocalizations(
-				getPrimaryKey());
+		List<LocalizedEntryLocalization> localizedEntryLocalizations = LocalizedEntryLocalServiceUtil.getLocalizedEntryLocalizations(getPrimaryKey());
 
-		for (LocalizedEntryLocalization localizedEntryLocalization :
-				localizedEntryLocalizations) {
-
-			languageIdToContentMap.put(
-				localizedEntryLocalization.getLanguageId(),
+		for (LocalizedEntryLocalization localizedEntryLocalization : localizedEntryLocalizations) {
+			languageIdToContentMap.put(localizedEntryLocalization.getLanguageId(),
 				localizedEntryLocalization.getContent());
 		}
 
@@ -406,9 +340,8 @@ public class LocalizedEntryModelImpl
 	}
 
 	private String _getContent(String languageId) {
-		LocalizedEntryLocalization localizedEntryLocalization =
-			LocalizedEntryLocalServiceUtil.fetchLocalizedEntryLocalization(
-				getPrimaryKey(), languageId);
+		LocalizedEntryLocalization localizedEntryLocalization = LocalizedEntryLocalServiceUtil.fetchLocalizedEntryLocalization(getPrimaryKey(),
+				languageId);
 
 		if (localizedEntryLocalization == null) {
 			return "";
@@ -444,8 +377,8 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, LocalizedEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			LocalizedEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -458,9 +391,8 @@ public class LocalizedEntryModelImpl
 	@Override
 	public LocalizedEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LocalizedEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (LocalizedEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -536,8 +468,7 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public CacheModel<LocalizedEntry> toCacheModel() {
-		LocalizedEntryCacheModel localizedEntryCacheModel =
-			new LocalizedEntryCacheModel();
+		LocalizedEntryCacheModel localizedEntryCacheModel = new LocalizedEntryCacheModel();
 
 		localizedEntryCacheModel.defaultLanguageId = getDefaultLanguageId();
 
@@ -554,20 +485,16 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LocalizedEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LocalizedEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -586,22 +513,18 @@ public class LocalizedEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LocalizedEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LocalizedEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -615,14 +538,11 @@ public class LocalizedEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LocalizedEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = LocalizedEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LocalizedEntry.class, ModelWrapper.class
-	};
-
+			LocalizedEntry.class, ModelWrapper.class
+		};
 	private String _defaultLanguageId;
 	private long _localizedEntryId;
 	private LocalizedEntry _escapedModel;
-
 }

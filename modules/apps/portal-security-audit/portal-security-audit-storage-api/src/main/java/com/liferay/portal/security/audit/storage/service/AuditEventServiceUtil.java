@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,93 +35,75 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class AuditEventServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.security.audit.storage.service.impl.AuditEventServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(long companyId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAuditEvents(companyId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					long companyId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getAuditEvents(
-			companyId, start, end, orderByComparator);
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAuditEvents(companyId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					long companyId, long userId, String userName,
-					java.util.Date createDateGT, java.util.Date createDateLT,
-					String eventType, String className, String classPK,
-					String clientHost, String clientIP, String serverName,
-					int serverPort, String sessionID, boolean andSearch,
-					int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end);
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		long companyId, long userId, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAuditEvents(companyId, userId, userName, createDateGT,
+			createDateLT, eventType, className, classPK, clientHost, clientIP,
+			serverName, serverPort, sessionID, andSearch, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					long companyId, long userId, String userName,
-					java.util.Date createDateGT, java.util.Date createDateLT,
-					String eventType, String className, String classPK,
-					String clientHost, String clientIP, String serverName,
-					int serverPort, String sessionID, boolean andSearch,
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end, orderByComparator);
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		long companyId, long userId, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAuditEvents(companyId, userId, userName, createDateGT,
+			createDateLT, eventType, className, classPK, clientHost, clientIP,
+			serverName, serverPort, sessionID, andSearch, start, end,
+			orderByComparator);
 	}
 
 	public static int getAuditEventsCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getAuditEventsCount(companyId);
 	}
 
-	public static int getAuditEventsCount(
-			long companyId, long userId, String userName,
-			java.util.Date createDateGT, java.util.Date createDateLT,
-			String eventType, String className, String classPK,
-			String clientHost, String clientIP, String serverName,
-			int serverPort, String sessionID, boolean andSearch)
+	public static int getAuditEventsCount(long companyId, long userId,
+		String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, String eventType, String className,
+		String classPK, String clientHost, String clientIP, String serverName,
+		int serverPort, String sessionID, boolean andSearch)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getAuditEventsCount(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch);
+		return getService()
+				   .getAuditEventsCount(companyId, userId, userName,
+			createDateGT, createDateLT, eventType, className, classPK,
+			clientHost, clientIP, serverName, serverPort, sessionID, andSearch);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -129,19 +112,16 @@ public class AuditEventServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AuditEventService, AuditEventService>
-		_serviceTracker;
+	private static ServiceTracker<AuditEventService, AuditEventService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(AuditEventService.class);
 
-		ServiceTracker<AuditEventService, AuditEventService> serviceTracker =
-			new ServiceTracker<AuditEventService, AuditEventService>(
-				bundle.getBundleContext(), AuditEventService.class, null);
+		ServiceTracker<AuditEventService, AuditEventService> serviceTracker = new ServiceTracker<AuditEventService, AuditEventService>(bundle.getBundleContext(),
+				AuditEventService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

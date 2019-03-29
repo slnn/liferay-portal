@@ -32,13 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class JournalArticleResourceWrapper
-	extends BaseModelWrapper<JournalArticleResource>
+public class JournalArticleResourceWrapper extends BaseModelWrapper<JournalArticleResource>
 	implements JournalArticleResource, ModelWrapper<JournalArticleResource> {
-
 	public JournalArticleResourceWrapper(
 		JournalArticleResource journalArticleResource) {
-
 		super(journalArticleResource);
 	}
 
@@ -89,30 +86,30 @@ public class JournalArticleResourceWrapper
 	}
 
 	/**
-	 * Returns the article ID of this journal article resource.
-	 *
-	 * @return the article ID of this journal article resource
-	 */
+	* Returns the article ID of this journal article resource.
+	*
+	* @return the article ID of this journal article resource
+	*/
 	@Override
 	public String getArticleId() {
 		return model.getArticleId();
 	}
 
 	/**
-	 * Returns the company ID of this journal article resource.
-	 *
-	 * @return the company ID of this journal article resource
-	 */
+	* Returns the company ID of this journal article resource.
+	*
+	* @return the company ID of this journal article resource
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the group ID of this journal article resource.
-	 *
-	 * @return the group ID of this journal article resource
-	 */
+	* Returns the group ID of this journal article resource.
+	*
+	* @return the group ID of this journal article resource
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
@@ -124,30 +121,30 @@ public class JournalArticleResourceWrapper
 	}
 
 	/**
-	 * Returns the primary key of this journal article resource.
-	 *
-	 * @return the primary key of this journal article resource
-	 */
+	* Returns the primary key of this journal article resource.
+	*
+	* @return the primary key of this journal article resource
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the resource prim key of this journal article resource.
-	 *
-	 * @return the resource prim key of this journal article resource
-	 */
+	* Returns the resource prim key of this journal article resource.
+	*
+	* @return the resource prim key of this journal article resource
+	*/
 	@Override
 	public long getResourcePrimKey() {
 		return model.getResourcePrimKey();
 	}
 
 	/**
-	 * Returns the uuid of this journal article resource.
-	 *
-	 * @return the uuid of this journal article resource
-	 */
+	* Returns the uuid of this journal article resource.
+	*
+	* @return the uuid of this journal article resource
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -159,60 +156,60 @@ public class JournalArticleResourceWrapper
 	}
 
 	/**
-	 * Sets the article ID of this journal article resource.
-	 *
-	 * @param articleId the article ID of this journal article resource
-	 */
+	* Sets the article ID of this journal article resource.
+	*
+	* @param articleId the article ID of this journal article resource
+	*/
 	@Override
 	public void setArticleId(String articleId) {
 		model.setArticleId(articleId);
 	}
 
 	/**
-	 * Sets the company ID of this journal article resource.
-	 *
-	 * @param companyId the company ID of this journal article resource
-	 */
+	* Sets the company ID of this journal article resource.
+	*
+	* @param companyId the company ID of this journal article resource
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the group ID of this journal article resource.
-	 *
-	 * @param groupId the group ID of this journal article resource
-	 */
+	* Sets the group ID of this journal article resource.
+	*
+	* @param groupId the group ID of this journal article resource
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the primary key of this journal article resource.
-	 *
-	 * @param primaryKey the primary key of this journal article resource
-	 */
+	* Sets the primary key of this journal article resource.
+	*
+	* @param primaryKey the primary key of this journal article resource
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the resource prim key of this journal article resource.
-	 *
-	 * @param resourcePrimKey the resource prim key of this journal article resource
-	 */
+	* Sets the resource prim key of this journal article resource.
+	*
+	* @param resourcePrimKey the resource prim key of this journal article resource
+	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
 		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
-	 * Sets the uuid of this journal article resource.
-	 *
-	 * @param uuid the uuid of this journal article resource
-	 */
+	* Sets the uuid of this journal article resource.
+	*
+	* @param uuid the uuid of this journal article resource
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -221,8 +218,6 @@ public class JournalArticleResourceWrapper
 	@Override
 	protected JournalArticleResourceWrapper wrap(
 		JournalArticleResource journalArticleResource) {
-
 		return new JournalArticleResourceWrapper(journalArticleResource);
 	}
-
 }

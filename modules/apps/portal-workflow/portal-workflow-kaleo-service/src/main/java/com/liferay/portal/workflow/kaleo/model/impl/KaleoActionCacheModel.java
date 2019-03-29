@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoActionCacheModel
-	implements CacheModel<KaleoAction>, Externalizable, MVCCModel {
-
+public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class KaleoActionCacheModel
 			return false;
 		}
 
-		KaleoActionCacheModel kaleoActionCacheModel =
-			(KaleoActionCacheModel)obj;
+		KaleoActionCacheModel kaleoActionCacheModel = (KaleoActionCacheModel)obj;
 
 		if ((kaleoActionId == kaleoActionCacheModel.kaleoActionId) &&
-			(mvccVersion == kaleoActionCacheModel.mvccVersion)) {
-
+				(mvccVersion == kaleoActionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -253,7 +251,8 @@ public class KaleoActionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoActionId);
@@ -356,5 +355,4 @@ public class KaleoActionCacheModel
 	public String scriptLanguage;
 	public String scriptRequiredContexts;
 	public int priority;
-
 }

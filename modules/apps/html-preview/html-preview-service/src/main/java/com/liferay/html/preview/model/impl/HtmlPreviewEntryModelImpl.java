@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.model.HtmlPreviewEntryModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -58,26 +61,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class HtmlPreviewEntryModelImpl
-	extends BaseModelImpl<HtmlPreviewEntry> implements HtmlPreviewEntryModel {
-
+public class HtmlPreviewEntryModelImpl extends BaseModelImpl<HtmlPreviewEntry>
+	implements HtmlPreviewEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a html preview entry model instance should use the <code>HtmlPreviewEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "HtmlPreviewEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"htmlPreviewEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"fileEntryId", Types.BIGINT}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "htmlPreviewEntryId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "fileEntryId", Types.BIGINT }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("htmlPreviewEntryId", Types.BIGINT);
@@ -92,49 +96,28 @@ public class HtmlPreviewEntryModelImpl
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table HtmlPreviewEntry (htmlPreviewEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG)";
-
+	public static final String TABLE_SQL_CREATE = "create table HtmlPreviewEntry (htmlPreviewEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table HtmlPreviewEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY htmlPreviewEntry.htmlPreviewEntryId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY HtmlPreviewEntry.htmlPreviewEntryId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY htmlPreviewEntry.htmlPreviewEntryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY HtmlPreviewEntry.htmlPreviewEntryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.html.preview.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.html.preview.model.HtmlPreviewEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.html.preview.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.html.preview.model.HtmlPreviewEntry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.html.preview.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.html.preview.model.HtmlPreviewEntry"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.html.preview.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.html.preview.model.HtmlPreviewEntry"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.html.preview.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.html.preview.model.HtmlPreviewEntry"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.html.preview.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.html.preview.model.HtmlPreviewEntry"),
+			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long HTMLPREVIEWENTRYID_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.html.preview.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.html.preview.model.HtmlPreviewEntry"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.html.preview.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.html.preview.model.HtmlPreviewEntry"));
 
 	public HtmlPreviewEntryModelImpl() {
 	}
@@ -173,18 +156,14 @@ public class HtmlPreviewEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<HtmlPreviewEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<HtmlPreviewEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<HtmlPreviewEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<HtmlPreviewEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<HtmlPreviewEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<HtmlPreviewEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((HtmlPreviewEntry)this));
 		}
 
@@ -196,104 +175,62 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<HtmlPreviewEntry, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<HtmlPreviewEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<HtmlPreviewEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<HtmlPreviewEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(HtmlPreviewEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((HtmlPreviewEntry)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<HtmlPreviewEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<HtmlPreviewEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<HtmlPreviewEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<HtmlPreviewEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<HtmlPreviewEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<HtmlPreviewEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<HtmlPreviewEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<HtmlPreviewEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<HtmlPreviewEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<HtmlPreviewEntry, Object>>();
-		Map<String, BiConsumer<HtmlPreviewEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<HtmlPreviewEntry, ?>>();
+		Map<String, Function<HtmlPreviewEntry, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<HtmlPreviewEntry, Object>>();
+		Map<String, BiConsumer<HtmlPreviewEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<HtmlPreviewEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"htmlPreviewEntryId", HtmlPreviewEntry::getHtmlPreviewEntryId);
-		attributeSetterBiConsumers.put(
-			"htmlPreviewEntryId",
-			(BiConsumer<HtmlPreviewEntry, Long>)
-				HtmlPreviewEntry::setHtmlPreviewEntryId);
+
+		attributeGetterFunctions.put("htmlPreviewEntryId", HtmlPreviewEntry::getHtmlPreviewEntryId);
+		attributeSetterBiConsumers.put("htmlPreviewEntryId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setHtmlPreviewEntryId);
 		attributeGetterFunctions.put("groupId", HtmlPreviewEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", HtmlPreviewEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setCompanyId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", HtmlPreviewEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setCompanyId);
 		attributeGetterFunctions.put("userId", HtmlPreviewEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setUserId);
 		attributeGetterFunctions.put("userName", HtmlPreviewEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<HtmlPreviewEntry, String>)
-				HtmlPreviewEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", HtmlPreviewEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<HtmlPreviewEntry, Date>)
-				HtmlPreviewEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", HtmlPreviewEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<HtmlPreviewEntry, Date>)
-				HtmlPreviewEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", HtmlPreviewEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<HtmlPreviewEntry, Long>)
-				HtmlPreviewEntry::setClassNameId);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<HtmlPreviewEntry, String>)HtmlPreviewEntry::setUserName);
+		attributeGetterFunctions.put("createDate", HtmlPreviewEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<HtmlPreviewEntry, Date>)HtmlPreviewEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", HtmlPreviewEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<HtmlPreviewEntry, Date>)HtmlPreviewEntry::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", HtmlPreviewEntry::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setClassNameId);
 		attributeGetterFunctions.put("classPK", HtmlPreviewEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setClassPK);
-		attributeGetterFunctions.put(
-			"fileEntryId", HtmlPreviewEntry::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<HtmlPreviewEntry, Long>)
-				HtmlPreviewEntry::setFileEntryId);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setClassPK);
+		attributeGetterFunctions.put("fileEntryId", HtmlPreviewEntry::getFileEntryId);
+		attributeSetterBiConsumers.put("fileEntryId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setFileEntryId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -485,8 +422,8 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), HtmlPreviewEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			HtmlPreviewEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -499,9 +436,8 @@ public class HtmlPreviewEntryModelImpl
 	@Override
 	public HtmlPreviewEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (HtmlPreviewEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (HtmlPreviewEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -583,20 +519,17 @@ public class HtmlPreviewEntryModelImpl
 	public void resetOriginalValues() {
 		HtmlPreviewEntryModelImpl htmlPreviewEntryModelImpl = this;
 
-		htmlPreviewEntryModelImpl._originalGroupId =
-			htmlPreviewEntryModelImpl._groupId;
+		htmlPreviewEntryModelImpl._originalGroupId = htmlPreviewEntryModelImpl._groupId;
 
 		htmlPreviewEntryModelImpl._setOriginalGroupId = false;
 
 		htmlPreviewEntryModelImpl._setModifiedDate = false;
 
-		htmlPreviewEntryModelImpl._originalClassNameId =
-			htmlPreviewEntryModelImpl._classNameId;
+		htmlPreviewEntryModelImpl._originalClassNameId = htmlPreviewEntryModelImpl._classNameId;
 
 		htmlPreviewEntryModelImpl._setOriginalClassNameId = false;
 
-		htmlPreviewEntryModelImpl._originalClassPK =
-			htmlPreviewEntryModelImpl._classPK;
+		htmlPreviewEntryModelImpl._originalClassPK = htmlPreviewEntryModelImpl._classPK;
 
 		htmlPreviewEntryModelImpl._setOriginalClassPK = false;
 
@@ -605,8 +538,7 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public CacheModel<HtmlPreviewEntry> toCacheModel() {
-		HtmlPreviewEntryCacheModel htmlPreviewEntryCacheModel =
-			new HtmlPreviewEntryCacheModel();
+		HtmlPreviewEntryCacheModel htmlPreviewEntryCacheModel = new HtmlPreviewEntryCacheModel();
 
 		htmlPreviewEntryCacheModel.htmlPreviewEntryId = getHtmlPreviewEntryId();
 
@@ -653,20 +585,17 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<HtmlPreviewEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<HtmlPreviewEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<HtmlPreviewEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<HtmlPreviewEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<HtmlPreviewEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<HtmlPreviewEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -685,22 +614,19 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<HtmlPreviewEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<HtmlPreviewEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<HtmlPreviewEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<HtmlPreviewEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<HtmlPreviewEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<HtmlPreviewEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -714,12 +640,10 @@ public class HtmlPreviewEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		HtmlPreviewEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = HtmlPreviewEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		HtmlPreviewEntry.class, ModelWrapper.class
-	};
-
+			HtmlPreviewEntry.class, ModelWrapper.class
+		};
 	private long _htmlPreviewEntryId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -739,5 +663,4 @@ public class HtmlPreviewEntryModelImpl
 	private long _fileEntryId;
 	private long _columnBitmask;
 	private HtmlPreviewEntry _escapedModel;
-
 }

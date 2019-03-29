@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.model.PollsVoteModel;
 import com.liferay.polls.model.PollsVoteSoap;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -63,27 +67,29 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class PollsVoteModelImpl
-	extends BaseModelImpl<PollsVote> implements PollsVoteModel {
-
+public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
+	implements PollsVoteModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a polls vote model instance should use the <code>PollsVote</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "PollsVote";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"voteId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"questionId", Types.BIGINT}, {"choiceId", Types.BIGINT},
-		{"lastPublishDate", Types.TIMESTAMP}, {"voteDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "voteId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "questionId", Types.BIGINT },
+			{ "choiceId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "voteDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -100,48 +106,28 @@ public class PollsVoteModelImpl
 		TABLE_COLUMNS_MAP.put("voteDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table PollsVote (uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,lastPublishDate DATE null,voteDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table PollsVote (uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,lastPublishDate DATE null,voteDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsVote";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsVote.voteId ASC";
-
 	public static final String ORDER_BY_SQL = " ORDER BY PollsVote.voteId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.polls.model.PollsVote"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.polls.model.PollsVote"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.polls.model.PollsVote"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.polls.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.polls.model.PollsVote"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.polls.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.polls.model.PollsVote"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.polls.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.polls.model.PollsVote"),
+			true);
 	public static final long CHOICEID_COLUMN_BITMASK = 1L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long QUESTIONID_COLUMN_BITMASK = 8L;
-
 	public static final long USERID_COLUMN_BITMASK = 16L;
-
 	public static final long UUID_COLUMN_BITMASK = 32L;
-
 	public static final long VOTEID_COLUMN_BITMASK = 64L;
 
 	/**
@@ -193,9 +179,8 @@ public class PollsVoteModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.polls.model.PollsVote"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.polls.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.polls.model.PollsVote"));
 
 	public PollsVoteModelImpl() {
 	}
@@ -234,18 +219,14 @@ public class PollsVoteModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<PollsVote, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<PollsVote, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<PollsVote, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<PollsVote, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<PollsVote, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((PollsVote)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((PollsVote)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -256,92 +237,64 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<PollsVote, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<PollsVote, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<PollsVote, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<PollsVote, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(PollsVote)this, entry.getValue());
+				attributeSetterBiConsumer.accept((PollsVote)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<PollsVote, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<PollsVote, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<PollsVote, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<PollsVote, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<PollsVote, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<PollsVote, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<PollsVote, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PollsVote, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<PollsVote, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<PollsVote, Object>>();
-		Map<String, BiConsumer<PollsVote, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<PollsVote, ?>>();
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PollsVote, Object>>();
+		Map<String, BiConsumer<PollsVote, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PollsVote, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", PollsVote::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<PollsVote, String>)PollsVote::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<PollsVote, String>)PollsVote::setUuid);
 		attributeGetterFunctions.put("voteId", PollsVote::getVoteId);
-		attributeSetterBiConsumers.put(
-			"voteId", (BiConsumer<PollsVote, Long>)PollsVote::setVoteId);
+		attributeSetterBiConsumers.put("voteId", (BiConsumer<PollsVote, Long>)PollsVote::setVoteId);
 		attributeGetterFunctions.put("groupId", PollsVote::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<PollsVote, Long>)PollsVote::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<PollsVote, Long>)PollsVote::setGroupId);
 		attributeGetterFunctions.put("companyId", PollsVote::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<PollsVote, Long>)PollsVote::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PollsVote, Long>)PollsVote::setCompanyId);
 		attributeGetterFunctions.put("userId", PollsVote::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<PollsVote, Long>)PollsVote::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PollsVote, Long>)PollsVote::setUserId);
 		attributeGetterFunctions.put("userName", PollsVote::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<PollsVote, String>)PollsVote::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<PollsVote, String>)PollsVote::setUserName);
 		attributeGetterFunctions.put("createDate", PollsVote::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<PollsVote, Date>)PollsVote::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", PollsVote::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<PollsVote, Date>)PollsVote::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PollsVote, Date>)PollsVote::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", PollsVote::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<PollsVote, Date>)PollsVote::setModifiedDate);
 		attributeGetterFunctions.put("questionId", PollsVote::getQuestionId);
-		attributeSetterBiConsumers.put(
-			"questionId",
-			(BiConsumer<PollsVote, Long>)PollsVote::setQuestionId);
+		attributeSetterBiConsumers.put("questionId", (BiConsumer<PollsVote, Long>)PollsVote::setQuestionId);
 		attributeGetterFunctions.put("choiceId", PollsVote::getChoiceId);
-		attributeSetterBiConsumers.put(
-			"choiceId", (BiConsumer<PollsVote, Long>)PollsVote::setChoiceId);
-		attributeGetterFunctions.put(
-			"lastPublishDate", PollsVote::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<PollsVote, Date>)PollsVote::setLastPublishDate);
+		attributeSetterBiConsumers.put("choiceId", (BiConsumer<PollsVote, Long>)PollsVote::setChoiceId);
+		attributeGetterFunctions.put("lastPublishDate", PollsVote::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<PollsVote, Date>)PollsVote::setLastPublishDate);
 		attributeGetterFunctions.put("voteDate", PollsVote::getVoteDate);
-		attributeSetterBiConsumers.put(
-			"voteDate", (BiConsumer<PollsVote, Date>)PollsVote::setVoteDate);
+		attributeSetterBiConsumers.put("voteDate", (BiConsumer<PollsVote, Date>)PollsVote::setVoteDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -580,8 +533,8 @@ public class PollsVoteModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(PollsVote.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				PollsVote.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -590,8 +543,8 @@ public class PollsVoteModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), PollsVote.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			PollsVote.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -604,9 +557,8 @@ public class PollsVoteModelImpl
 	@Override
 	public PollsVote toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PollsVote)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (PollsVote)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -790,20 +742,16 @@ public class PollsVoteModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<PollsVote, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<PollsVote, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<PollsVote, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<PollsVote, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<PollsVote, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -822,22 +770,18 @@ public class PollsVoteModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<PollsVote, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<PollsVote, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<PollsVote, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<PollsVote, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<PollsVote, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<PollsVote, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -851,12 +795,10 @@ public class PollsVoteModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PollsVote.class.getClassLoader();
+	private static final ClassLoader _classLoader = PollsVote.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PollsVote.class, ModelWrapper.class
-	};
-
+			PollsVote.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _voteId;
@@ -883,5 +825,4 @@ public class PollsVoteModelImpl
 	private Date _voteDate;
 	private long _columnBitmask;
 	private PollsVote _escapedModel;
-
 }

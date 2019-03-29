@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLFileRankModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.document.library.file.rank.model.impl.DLFileRankImpl"
-)
+@ImplementationClassName("com.liferay.document.library.file.rank.model.impl.DLFileRankImpl")
 @ProviderType
 public interface DLFileRank extends DLFileRankModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.file.rank.model.impl.DLFileRankImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DLFileRank, Long> FILE_RANK_ID_ACCESSOR =
-		new Accessor<DLFileRank, Long>() {
-
+	public static final Accessor<DLFileRank, Long> FILE_RANK_ID_ACCESSOR = new Accessor<DLFileRank, Long>() {
 			@Override
 			public Long get(DLFileRank dlFileRank) {
 				return dlFileRank.getFileRankId();
@@ -55,7 +50,5 @@ public interface DLFileRank extends DLFileRankModel, PersistedModel {
 			public Class<DLFileRank> getTypeClass() {
 				return DLFileRank.class;
 			}
-
 		};
-
 }

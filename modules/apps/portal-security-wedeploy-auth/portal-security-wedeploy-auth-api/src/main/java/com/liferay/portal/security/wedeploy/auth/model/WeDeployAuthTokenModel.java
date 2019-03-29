@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WeDeployAuthTokenModel
-	extends AuditedModel, BaseModel<WeDeployAuthToken>, ShardedModel {
-
+public interface WeDeployAuthTokenModel extends AuditedModel,
+	BaseModel<WeDeployAuthToken>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -212,5 +211,4 @@ public interface WeDeployAuthTokenModel
 	 * @param type the type of this we deploy auth token
 	 */
 	public void setType(int type);
-
 }

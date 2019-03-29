@@ -30,14 +30,11 @@ import java.util.List;
  */
 @ProviderType
 public class SyncDLFileVersionDiffSoap implements Serializable {
-
 	public static SyncDLFileVersionDiffSoap toSoapModel(
 		SyncDLFileVersionDiff model) {
-
 		SyncDLFileVersionDiffSoap soapModel = new SyncDLFileVersionDiffSoap();
 
-		soapModel.setSyncDLFileVersionDiffId(
-			model.getSyncDLFileVersionDiffId());
+		soapModel.setSyncDLFileVersionDiffId(model.getSyncDLFileVersionDiffId());
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setSourceFileVersionId(model.getSourceFileVersionId());
 		soapModel.setTargetFileVersionId(model.getTargetFileVersionId());
@@ -50,9 +47,7 @@ public class SyncDLFileVersionDiffSoap implements Serializable {
 
 	public static SyncDLFileVersionDiffSoap[] toSoapModels(
 		SyncDLFileVersionDiff[] models) {
-
-		SyncDLFileVersionDiffSoap[] soapModels =
-			new SyncDLFileVersionDiffSoap[models.length];
+		SyncDLFileVersionDiffSoap[] soapModels = new SyncDLFileVersionDiffSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,12 +58,10 @@ public class SyncDLFileVersionDiffSoap implements Serializable {
 
 	public static SyncDLFileVersionDiffSoap[][] toSoapModels(
 		SyncDLFileVersionDiff[][] models) {
-
 		SyncDLFileVersionDiffSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new SyncDLFileVersionDiffSoap[models.length][models[0].length];
+			soapModels = new SyncDLFileVersionDiffSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SyncDLFileVersionDiffSoap[0][0];
@@ -83,16 +76,13 @@ public class SyncDLFileVersionDiffSoap implements Serializable {
 
 	public static SyncDLFileVersionDiffSoap[] toSoapModels(
 		List<SyncDLFileVersionDiff> models) {
-
-		List<SyncDLFileVersionDiffSoap> soapModels =
-			new ArrayList<SyncDLFileVersionDiffSoap>(models.size());
+		List<SyncDLFileVersionDiffSoap> soapModels = new ArrayList<SyncDLFileVersionDiffSoap>(models.size());
 
 		for (SyncDLFileVersionDiff model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new SyncDLFileVersionDiffSoap[soapModels.size()]);
+		return soapModels.toArray(new SyncDLFileVersionDiffSoap[soapModels.size()]);
 	}
 
 	public SyncDLFileVersionDiffSoap() {
@@ -169,5 +159,4 @@ public class SyncDLFileVersionDiffSoap implements Serializable {
 	private long _dataFileEntryId;
 	private long _size;
 	private Date _expirationDate;
-
 }

@@ -27,40 +27,32 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see FriendlyURLEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl"
-)
+@ImplementationClassName("com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl")
 @ProviderType
-public interface FriendlyURLEntry
-	extends FriendlyURLEntryModel, PersistedModel {
-
+public interface FriendlyURLEntry extends FriendlyURLEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<FriendlyURLEntry, Long>
-		FRIENDLY_URL_ENTRY_ID_ACCESSOR =
-			new Accessor<FriendlyURLEntry, Long>() {
+	public static final Accessor<FriendlyURLEntry, Long> FRIENDLY_URL_ENTRY_ID_ACCESSOR =
+		new Accessor<FriendlyURLEntry, Long>() {
+			@Override
+			public Long get(FriendlyURLEntry friendlyURLEntry) {
+				return friendlyURLEntry.getFriendlyURLEntryId();
+			}
 
-				@Override
-				public Long get(FriendlyURLEntry friendlyURLEntry) {
-					return friendlyURLEntry.getFriendlyURLEntryId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<FriendlyURLEntry> getTypeClass() {
-					return FriendlyURLEntry.class;
-				}
-
-			};
+			@Override
+			public Class<FriendlyURLEntry> getTypeClass() {
+				return FriendlyURLEntry.class;
+			}
+		};
 
 	public boolean isMain()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBCategoryModel;
 import com.liferay.message.boards.model.MBCategorySoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,31 +72,37 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class MBCategoryModelImpl
-	extends BaseModelImpl<MBCategory> implements MBCategoryModel {
-
+public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
+	implements MBCategoryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards category model instance should use the <code>MBCategory</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MBCategory";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"categoryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentCategoryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"displayStyle", Types.VARCHAR},
-		{"threadCount", Types.INTEGER}, {"messageCount", Types.INTEGER},
-		{"lastPostDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "categoryId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "parentCategoryId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "displayStyle", Types.VARCHAR },
+			{ "threadCount", Types.INTEGER },
+			{ "messageCount", Types.INTEGER },
+			{ "lastPostDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -117,50 +127,28 @@ public class MBCategoryModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBCategory";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MBCategory.parentCategoryId ASC, MBCategory.name ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBCategory.parentCategoryId ASC, MBCategory.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBCategory"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBCategory"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBCategory"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBCategory"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBCategory"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBCategory"),
+			true);
 	public static final long CATEGORYID_COLUMN_BITMASK = 1L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 8L;
-
 	public static final long STATUS_COLUMN_BITMASK = 16L;
-
 	public static final long UUID_COLUMN_BITMASK = 32L;
-
 	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
@@ -220,9 +208,8 @@ public class MBCategoryModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.message.boards.model.MBCategory"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBCategory"));
 
 	public MBCategoryModelImpl() {
 	}
@@ -261,18 +248,14 @@ public class MBCategoryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MBCategory, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBCategory, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MBCategory, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBCategory, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBCategory, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBCategory, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((MBCategory)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MBCategory)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -283,133 +266,80 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MBCategory, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MBCategory, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MBCategory, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MBCategory, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MBCategory)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MBCategory)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MBCategory, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MBCategory, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MBCategory, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MBCategory, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBCategory, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBCategory, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MBCategory, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBCategory, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MBCategory, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MBCategory, Object>>();
-		Map<String, BiConsumer<MBCategory, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MBCategory, ?>>();
+		Map<String, Function<MBCategory, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBCategory, Object>>();
+		Map<String, BiConsumer<MBCategory, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBCategory, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", MBCategory::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<MBCategory, String>)MBCategory::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBCategory, String>)MBCategory::setUuid);
 		attributeGetterFunctions.put("categoryId", MBCategory::getCategoryId);
-		attributeSetterBiConsumers.put(
-			"categoryId",
-			(BiConsumer<MBCategory, Long>)MBCategory::setCategoryId);
+		attributeSetterBiConsumers.put("categoryId", (BiConsumer<MBCategory, Long>)MBCategory::setCategoryId);
 		attributeGetterFunctions.put("groupId", MBCategory::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<MBCategory, Long>)MBCategory::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBCategory, Long>)MBCategory::setGroupId);
 		attributeGetterFunctions.put("companyId", MBCategory::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MBCategory, Long>)MBCategory::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBCategory, Long>)MBCategory::setCompanyId);
 		attributeGetterFunctions.put("userId", MBCategory::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<MBCategory, Long>)MBCategory::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBCategory, Long>)MBCategory::setUserId);
 		attributeGetterFunctions.put("userName", MBCategory::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<MBCategory, String>)MBCategory::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBCategory, String>)MBCategory::setUserName);
 		attributeGetterFunctions.put("createDate", MBCategory::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MBCategory, Date>)MBCategory::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MBCategory::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MBCategory, Date>)MBCategory::setModifiedDate);
-		attributeGetterFunctions.put(
-			"parentCategoryId", MBCategory::getParentCategoryId);
-		attributeSetterBiConsumers.put(
-			"parentCategoryId",
-			(BiConsumer<MBCategory, Long>)MBCategory::setParentCategoryId);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBCategory, Date>)MBCategory::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBCategory::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBCategory, Date>)MBCategory::setModifiedDate);
+		attributeGetterFunctions.put("parentCategoryId", MBCategory::getParentCategoryId);
+		attributeSetterBiConsumers.put("parentCategoryId", (BiConsumer<MBCategory, Long>)MBCategory::setParentCategoryId);
 		attributeGetterFunctions.put("name", MBCategory::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<MBCategory, String>)MBCategory::setName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<MBCategory, String>)MBCategory::setName);
 		attributeGetterFunctions.put("description", MBCategory::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<MBCategory, String>)MBCategory::setDescription);
-		attributeGetterFunctions.put(
-			"displayStyle", MBCategory::getDisplayStyle);
-		attributeSetterBiConsumers.put(
-			"displayStyle",
-			(BiConsumer<MBCategory, String>)MBCategory::setDisplayStyle);
+		attributeSetterBiConsumers.put("description", (BiConsumer<MBCategory, String>)MBCategory::setDescription);
+		attributeGetterFunctions.put("displayStyle", MBCategory::getDisplayStyle);
+		attributeSetterBiConsumers.put("displayStyle", (BiConsumer<MBCategory, String>)MBCategory::setDisplayStyle);
 		attributeGetterFunctions.put("threadCount", MBCategory::getThreadCount);
-		attributeSetterBiConsumers.put(
-			"threadCount",
-			(BiConsumer<MBCategory, Integer>)MBCategory::setThreadCount);
-		attributeGetterFunctions.put(
-			"messageCount", MBCategory::getMessageCount);
-		attributeSetterBiConsumers.put(
-			"messageCount",
-			(BiConsumer<MBCategory, Integer>)MBCategory::setMessageCount);
-		attributeGetterFunctions.put(
-			"lastPostDate", MBCategory::getLastPostDate);
-		attributeSetterBiConsumers.put(
-			"lastPostDate",
-			(BiConsumer<MBCategory, Date>)MBCategory::setLastPostDate);
-		attributeGetterFunctions.put(
-			"lastPublishDate", MBCategory::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<MBCategory, Date>)MBCategory::setLastPublishDate);
+		attributeSetterBiConsumers.put("threadCount", (BiConsumer<MBCategory, Integer>)MBCategory::setThreadCount);
+		attributeGetterFunctions.put("messageCount", MBCategory::getMessageCount);
+		attributeSetterBiConsumers.put("messageCount", (BiConsumer<MBCategory, Integer>)MBCategory::setMessageCount);
+		attributeGetterFunctions.put("lastPostDate", MBCategory::getLastPostDate);
+		attributeSetterBiConsumers.put("lastPostDate", (BiConsumer<MBCategory, Date>)MBCategory::setLastPostDate);
+		attributeGetterFunctions.put("lastPublishDate", MBCategory::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MBCategory, Date>)MBCategory::setLastPublishDate);
 		attributeGetterFunctions.put("status", MBCategory::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<MBCategory, Integer>)MBCategory::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", MBCategory::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<MBCategory, Long>)MBCategory::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", MBCategory::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<MBCategory, String>)MBCategory::setStatusByUserName);
+		attributeSetterBiConsumers.put("status", (BiConsumer<MBCategory, Integer>)MBCategory::setStatus);
+		attributeGetterFunctions.put("statusByUserId", MBCategory::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<MBCategory, Long>)MBCategory::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", MBCategory::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<MBCategory, String>)MBCategory::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", MBCategory::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<MBCategory, Date>)MBCategory::setStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<MBCategory, Date>)MBCategory::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -799,32 +729,28 @@ public class MBCategoryModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(MBCategory.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MBCategory.class.getName()));
 	}
 
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
-
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -841,18 +767,14 @@ public class MBCategoryModelImpl
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
+				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -865,13 +787,12 @@ public class MBCategoryModelImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -886,19 +807,16 @@ public class MBCategoryModelImpl
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -920,9 +838,8 @@ public class MBCategoryModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -937,9 +854,8 @@ public class MBCategoryModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -1034,8 +950,8 @@ public class MBCategoryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MBCategory.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBCategory.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1048,9 +964,8 @@ public class MBCategoryModelImpl
 	@Override
 	public MBCategory toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBCategory)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MBCategory)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1156,8 +1071,7 @@ public class MBCategoryModelImpl
 
 		mbCategoryModelImpl._originalUuid = mbCategoryModelImpl._uuid;
 
-		mbCategoryModelImpl._originalCategoryId =
-			mbCategoryModelImpl._categoryId;
+		mbCategoryModelImpl._originalCategoryId = mbCategoryModelImpl._categoryId;
 
 		mbCategoryModelImpl._setOriginalCategoryId = false;
 
@@ -1171,8 +1085,7 @@ public class MBCategoryModelImpl
 
 		mbCategoryModelImpl._setModifiedDate = false;
 
-		mbCategoryModelImpl._originalParentCategoryId =
-			mbCategoryModelImpl._parentCategoryId;
+		mbCategoryModelImpl._originalParentCategoryId = mbCategoryModelImpl._parentCategoryId;
 
 		mbCategoryModelImpl._setOriginalParentCategoryId = false;
 
@@ -1303,20 +1216,16 @@ public class MBCategoryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MBCategory, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBCategory, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MBCategory, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBCategory, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBCategory, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBCategory, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1335,22 +1244,18 @@ public class MBCategoryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MBCategory, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBCategory, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MBCategory, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBCategory, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBCategory, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBCategory, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1364,12 +1269,10 @@ public class MBCategoryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBCategory.class.getClassLoader();
+	private static final ClassLoader _classLoader = MBCategory.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBCategory.class, ModelWrapper.class
-	};
-
+			MBCategory.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _categoryId;
@@ -1404,5 +1307,4 @@ public class MBCategoryModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private MBCategory _escapedModel;
-
 }

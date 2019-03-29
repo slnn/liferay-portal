@@ -17,6 +17,7 @@ package com.liferay.fragment.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class FragmentEntryWrapper
-	extends BaseModelWrapper<FragmentEntry>
+public class FragmentEntryWrapper extends BaseModelWrapper<FragmentEntry>
 	implements FragmentEntry, ModelWrapper<FragmentEntry> {
-
 	public FragmentEntryWrapper(FragmentEntry fragmentEntry) {
 		super(fragmentEntry);
 	}
@@ -121,8 +120,7 @@ public class FragmentEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long fragmentCollectionId = (Long)attributes.get(
-			"fragmentCollectionId");
+		Long fragmentCollectionId = (Long)attributes.get("fragmentCollectionId");
 
 		if (fragmentCollectionId != null) {
 			setFragmentCollectionId(fragmentCollectionId);
@@ -202,10 +200,10 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the company ID of this fragment entry.
-	 *
-	 * @return the company ID of this fragment entry
-	 */
+	* Returns the company ID of this fragment entry.
+	*
+	* @return the company ID of this fragment entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
@@ -217,70 +215,70 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the create date of this fragment entry.
-	 *
-	 * @return the create date of this fragment entry
-	 */
+	* Returns the create date of this fragment entry.
+	*
+	* @return the create date of this fragment entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the css of this fragment entry.
-	 *
-	 * @return the css of this fragment entry
-	 */
+	* Returns the css of this fragment entry.
+	*
+	* @return the css of this fragment entry
+	*/
 	@Override
 	public String getCss() {
 		return model.getCss();
 	}
 
 	/**
-	 * Returns the fragment collection ID of this fragment entry.
-	 *
-	 * @return the fragment collection ID of this fragment entry
-	 */
+	* Returns the fragment collection ID of this fragment entry.
+	*
+	* @return the fragment collection ID of this fragment entry
+	*/
 	@Override
 	public long getFragmentCollectionId() {
 		return model.getFragmentCollectionId();
 	}
 
 	/**
-	 * Returns the fragment entry ID of this fragment entry.
-	 *
-	 * @return the fragment entry ID of this fragment entry
-	 */
+	* Returns the fragment entry ID of this fragment entry.
+	*
+	* @return the fragment entry ID of this fragment entry
+	*/
 	@Override
 	public long getFragmentEntryId() {
 		return model.getFragmentEntryId();
 	}
 
 	/**
-	 * Returns the fragment entry key of this fragment entry.
-	 *
-	 * @return the fragment entry key of this fragment entry
-	 */
+	* Returns the fragment entry key of this fragment entry.
+	*
+	* @return the fragment entry key of this fragment entry
+	*/
 	@Override
 	public String getFragmentEntryKey() {
 		return model.getFragmentEntryKey();
 	}
 
 	/**
-	 * Returns the group ID of this fragment entry.
-	 *
-	 * @return the group ID of this fragment entry
-	 */
+	* Returns the group ID of this fragment entry.
+	*
+	* @return the group ID of this fragment entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the html of this fragment entry.
-	 *
-	 * @return the html of this fragment entry
-	 */
+	* Returns the html of this fragment entry.
+	*
+	* @return the html of this fragment entry
+	*/
 	@Override
 	public String getHtml() {
 		return model.getHtml();
@@ -289,125 +287,124 @@ public class FragmentEntryWrapper
 	@Override
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-
 		return model.getImagePreviewURL(themeDisplay);
 	}
 
 	/**
-	 * Returns the js of this fragment entry.
-	 *
-	 * @return the js of this fragment entry
-	 */
+	* Returns the js of this fragment entry.
+	*
+	* @return the js of this fragment entry
+	*/
 	@Override
 	public String getJs() {
 		return model.getJs();
 	}
 
 	/**
-	 * Returns the last publish date of this fragment entry.
-	 *
-	 * @return the last publish date of this fragment entry
-	 */
+	* Returns the last publish date of this fragment entry.
+	*
+	* @return the last publish date of this fragment entry
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this fragment entry.
-	 *
-	 * @return the modified date of this fragment entry
-	 */
+	* Returns the modified date of this fragment entry.
+	*
+	* @return the modified date of this fragment entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the name of this fragment entry.
-	 *
-	 * @return the name of this fragment entry
-	 */
+	* Returns the name of this fragment entry.
+	*
+	* @return the name of this fragment entry
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	 * Returns the preview file entry ID of this fragment entry.
-	 *
-	 * @return the preview file entry ID of this fragment entry
-	 */
+	* Returns the preview file entry ID of this fragment entry.
+	*
+	* @return the preview file entry ID of this fragment entry
+	*/
 	@Override
 	public long getPreviewFileEntryId() {
 		return model.getPreviewFileEntryId();
 	}
 
 	/**
-	 * Returns the primary key of this fragment entry.
-	 *
-	 * @return the primary key of this fragment entry
-	 */
+	* Returns the primary key of this fragment entry.
+	*
+	* @return the primary key of this fragment entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the status of this fragment entry.
-	 *
-	 * @return the status of this fragment entry
-	 */
+	* Returns the status of this fragment entry.
+	*
+	* @return the status of this fragment entry
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the status by user ID of this fragment entry.
-	 *
-	 * @return the status by user ID of this fragment entry
-	 */
+	* Returns the status by user ID of this fragment entry.
+	*
+	* @return the status by user ID of this fragment entry
+	*/
 	@Override
 	public long getStatusByUserId() {
 		return model.getStatusByUserId();
 	}
 
 	/**
-	 * Returns the status by user name of this fragment entry.
-	 *
-	 * @return the status by user name of this fragment entry
-	 */
+	* Returns the status by user name of this fragment entry.
+	*
+	* @return the status by user name of this fragment entry
+	*/
 	@Override
 	public String getStatusByUserName() {
 		return model.getStatusByUserName();
 	}
 
 	/**
-	 * Returns the status by user uuid of this fragment entry.
-	 *
-	 * @return the status by user uuid of this fragment entry
-	 */
+	* Returns the status by user uuid of this fragment entry.
+	*
+	* @return the status by user uuid of this fragment entry
+	*/
 	@Override
 	public String getStatusByUserUuid() {
 		return model.getStatusByUserUuid();
 	}
 
 	/**
-	 * Returns the status date of this fragment entry.
-	 *
-	 * @return the status date of this fragment entry
-	 */
+	* Returns the status date of this fragment entry.
+	*
+	* @return the status date of this fragment entry
+	*/
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
 	}
 
 	/**
-	 * Returns the type of this fragment entry.
-	 *
-	 * @return the type of this fragment entry
-	 */
+	* Returns the type of this fragment entry.
+	*
+	* @return the type of this fragment entry
+	*/
 	@Override
 	public int getType() {
 		return model.getType();
@@ -424,120 +421,120 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the user ID of this fragment entry.
-	 *
-	 * @return the user ID of this fragment entry
-	 */
+	* Returns the user ID of this fragment entry.
+	*
+	* @return the user ID of this fragment entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this fragment entry.
-	 *
-	 * @return the user name of this fragment entry
-	 */
+	* Returns the user name of this fragment entry.
+	*
+	* @return the user name of this fragment entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this fragment entry.
-	 *
-	 * @return the user uuid of this fragment entry
-	 */
+	* Returns the user uuid of this fragment entry.
+	*
+	* @return the user uuid of this fragment entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this fragment entry.
-	 *
-	 * @return the uuid of this fragment entry
-	 */
+	* Returns the uuid of this fragment entry.
+	*
+	* @return the uuid of this fragment entry
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is approved.
-	 *
-	 * @return <code>true</code> if this fragment entry is approved; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is approved.
+	*
+	* @return <code>true</code> if this fragment entry is approved; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isApproved() {
 		return model.isApproved();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is denied.
-	 *
-	 * @return <code>true</code> if this fragment entry is denied; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is denied.
+	*
+	* @return <code>true</code> if this fragment entry is denied; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDenied() {
 		return model.isDenied();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is a draft.
-	 *
-	 * @return <code>true</code> if this fragment entry is a draft; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is a draft.
+	*
+	* @return <code>true</code> if this fragment entry is a draft; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDraft() {
 		return model.isDraft();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is expired.
-	 *
-	 * @return <code>true</code> if this fragment entry is expired; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is expired.
+	*
+	* @return <code>true</code> if this fragment entry is expired; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isExpired() {
 		return model.isExpired();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is inactive.
-	 *
-	 * @return <code>true</code> if this fragment entry is inactive; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is inactive.
+	*
+	* @return <code>true</code> if this fragment entry is inactive; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isInactive() {
 		return model.isInactive();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is incomplete.
-	 *
-	 * @return <code>true</code> if this fragment entry is incomplete; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is incomplete.
+	*
+	* @return <code>true</code> if this fragment entry is incomplete; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isIncomplete() {
 		return model.isIncomplete();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is pending.
-	 *
-	 * @return <code>true</code> if this fragment entry is pending; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is pending.
+	*
+	* @return <code>true</code> if this fragment entry is pending; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isPending() {
 		return model.isPending();
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is scheduled.
-	 *
-	 * @return <code>true</code> if this fragment entry is scheduled; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this fragment entry is scheduled.
+	*
+	* @return <code>true</code> if this fragment entry is scheduled; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isScheduled() {
 		return model.isScheduled();
@@ -550,87 +547,86 @@ public class FragmentEntryWrapper
 
 	@Override
 	public void populateZipWriter(
-			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
+		com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
 		throws Exception {
-
 		model.populateZipWriter(zipWriter, path);
 	}
 
 	/**
-	 * Sets the company ID of this fragment entry.
-	 *
-	 * @param companyId the company ID of this fragment entry
-	 */
+	* Sets the company ID of this fragment entry.
+	*
+	* @param companyId the company ID of this fragment entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this fragment entry.
-	 *
-	 * @param createDate the create date of this fragment entry
-	 */
+	* Sets the create date of this fragment entry.
+	*
+	* @param createDate the create date of this fragment entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the css of this fragment entry.
-	 *
-	 * @param css the css of this fragment entry
-	 */
+	* Sets the css of this fragment entry.
+	*
+	* @param css the css of this fragment entry
+	*/
 	@Override
 	public void setCss(String css) {
 		model.setCss(css);
 	}
 
 	/**
-	 * Sets the fragment collection ID of this fragment entry.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID of this fragment entry
-	 */
+	* Sets the fragment collection ID of this fragment entry.
+	*
+	* @param fragmentCollectionId the fragment collection ID of this fragment entry
+	*/
 	@Override
 	public void setFragmentCollectionId(long fragmentCollectionId) {
 		model.setFragmentCollectionId(fragmentCollectionId);
 	}
 
 	/**
-	 * Sets the fragment entry ID of this fragment entry.
-	 *
-	 * @param fragmentEntryId the fragment entry ID of this fragment entry
-	 */
+	* Sets the fragment entry ID of this fragment entry.
+	*
+	* @param fragmentEntryId the fragment entry ID of this fragment entry
+	*/
 	@Override
 	public void setFragmentEntryId(long fragmentEntryId) {
 		model.setFragmentEntryId(fragmentEntryId);
 	}
 
 	/**
-	 * Sets the fragment entry key of this fragment entry.
-	 *
-	 * @param fragmentEntryKey the fragment entry key of this fragment entry
-	 */
+	* Sets the fragment entry key of this fragment entry.
+	*
+	* @param fragmentEntryKey the fragment entry key of this fragment entry
+	*/
 	@Override
 	public void setFragmentEntryKey(String fragmentEntryKey) {
 		model.setFragmentEntryKey(fragmentEntryKey);
 	}
 
 	/**
-	 * Sets the group ID of this fragment entry.
-	 *
-	 * @param groupId the group ID of this fragment entry
-	 */
+	* Sets the group ID of this fragment entry.
+	*
+	* @param groupId the group ID of this fragment entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the html of this fragment entry.
-	 *
-	 * @param html the html of this fragment entry
-	 */
+	* Sets the html of this fragment entry.
+	*
+	* @param html the html of this fragment entry
+	*/
 	@Override
 	public void setHtml(String html) {
 		model.setHtml(html);
@@ -642,160 +638,160 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the js of this fragment entry.
-	 *
-	 * @param js the js of this fragment entry
-	 */
+	* Sets the js of this fragment entry.
+	*
+	* @param js the js of this fragment entry
+	*/
 	@Override
 	public void setJs(String js) {
 		model.setJs(js);
 	}
 
 	/**
-	 * Sets the last publish date of this fragment entry.
-	 *
-	 * @param lastPublishDate the last publish date of this fragment entry
-	 */
+	* Sets the last publish date of this fragment entry.
+	*
+	* @param lastPublishDate the last publish date of this fragment entry
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this fragment entry.
-	 *
-	 * @param modifiedDate the modified date of this fragment entry
-	 */
+	* Sets the modified date of this fragment entry.
+	*
+	* @param modifiedDate the modified date of this fragment entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the name of this fragment entry.
-	 *
-	 * @param name the name of this fragment entry
-	 */
+	* Sets the name of this fragment entry.
+	*
+	* @param name the name of this fragment entry
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the preview file entry ID of this fragment entry.
-	 *
-	 * @param previewFileEntryId the preview file entry ID of this fragment entry
-	 */
+	* Sets the preview file entry ID of this fragment entry.
+	*
+	* @param previewFileEntryId the preview file entry ID of this fragment entry
+	*/
 	@Override
 	public void setPreviewFileEntryId(long previewFileEntryId) {
 		model.setPreviewFileEntryId(previewFileEntryId);
 	}
 
 	/**
-	 * Sets the primary key of this fragment entry.
-	 *
-	 * @param primaryKey the primary key of this fragment entry
-	 */
+	* Sets the primary key of this fragment entry.
+	*
+	* @param primaryKey the primary key of this fragment entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the status of this fragment entry.
-	 *
-	 * @param status the status of this fragment entry
-	 */
+	* Sets the status of this fragment entry.
+	*
+	* @param status the status of this fragment entry
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the status by user ID of this fragment entry.
-	 *
-	 * @param statusByUserId the status by user ID of this fragment entry
-	 */
+	* Sets the status by user ID of this fragment entry.
+	*
+	* @param statusByUserId the status by user ID of this fragment entry
+	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
 		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
-	 * Sets the status by user name of this fragment entry.
-	 *
-	 * @param statusByUserName the status by user name of this fragment entry
-	 */
+	* Sets the status by user name of this fragment entry.
+	*
+	* @param statusByUserName the status by user name of this fragment entry
+	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
 		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
-	 * Sets the status by user uuid of this fragment entry.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this fragment entry
-	 */
+	* Sets the status by user uuid of this fragment entry.
+	*
+	* @param statusByUserUuid the status by user uuid of this fragment entry
+	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
 		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
-	 * Sets the status date of this fragment entry.
-	 *
-	 * @param statusDate the status date of this fragment entry
-	 */
+	* Sets the status date of this fragment entry.
+	*
+	* @param statusDate the status date of this fragment entry
+	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
 	}
 
 	/**
-	 * Sets the type of this fragment entry.
-	 *
-	 * @param type the type of this fragment entry
-	 */
+	* Sets the type of this fragment entry.
+	*
+	* @param type the type of this fragment entry
+	*/
 	@Override
 	public void setType(int type) {
 		model.setType(type);
 	}
 
 	/**
-	 * Sets the user ID of this fragment entry.
-	 *
-	 * @param userId the user ID of this fragment entry
-	 */
+	* Sets the user ID of this fragment entry.
+	*
+	* @param userId the user ID of this fragment entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this fragment entry.
-	 *
-	 * @param userName the user name of this fragment entry
-	 */
+	* Sets the user name of this fragment entry.
+	*
+	* @param userName the user name of this fragment entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this fragment entry.
-	 *
-	 * @param userUuid the user uuid of this fragment entry
-	 */
+	* Sets the user uuid of this fragment entry.
+	*
+	* @param userUuid the user uuid of this fragment entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this fragment entry.
-	 *
-	 * @param uuid the uuid of this fragment entry
-	 */
+	* Sets the uuid of this fragment entry.
+	*
+	* @param uuid the uuid of this fragment entry
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -810,5 +806,4 @@ public class FragmentEntryWrapper
 	protected FragmentEntryWrapper wrap(FragmentEntry fragmentEntry) {
 		return new FragmentEntryWrapper(fragmentEntry);
 	}
-
 }

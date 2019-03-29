@@ -35,7 +35,6 @@ import java.sql.Blob;
  */
 @ProviderType
 public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -171,5 +170,4 @@ public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
 	 * @param size the size of this document library content
 	 */
 	public void setSize(long size);
-
 }

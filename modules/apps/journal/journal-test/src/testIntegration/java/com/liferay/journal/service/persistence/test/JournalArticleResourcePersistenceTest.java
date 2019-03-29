@@ -15,11 +15,13 @@
 package com.liferay.journal.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.journal.exception.NoSuchArticleResourceException;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
 import com.liferay.journal.service.persistence.JournalArticleResourceUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +58,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class JournalArticleResourcePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.journal.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.journal.service"));
 
 	@Before
 	public void setUp() {
@@ -80,8 +81,7 @@ public class JournalArticleResourcePersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<JournalArticleResource> iterator =
-			_journalArticleResources.iterator();
+		Iterator<JournalArticleResource> iterator = _journalArticleResources.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -103,14 +103,11 @@ public class JournalArticleResourcePersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
 		_persistence.remove(newJournalArticleResource);
 
-		JournalArticleResource existingJournalArticleResource =
-			_persistence.fetchByPrimaryKey(
-				newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource = _persistence.fetchByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
 		Assert.assertNull(existingJournalArticleResource);
 	}
@@ -124,8 +121,7 @@ public class JournalArticleResourcePersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		JournalArticleResource newJournalArticleResource = _persistence.create(
-			pk);
+		JournalArticleResource newJournalArticleResource = _persistence.create(pk);
 
 		newJournalArticleResource.setUuid(RandomTestUtil.randomString());
 
@@ -135,27 +131,20 @@ public class JournalArticleResourcePersistenceTest {
 
 		newJournalArticleResource.setArticleId(RandomTestUtil.randomString());
 
-		_journalArticleResources.add(
-			_persistence.update(newJournalArticleResource));
+		_journalArticleResources.add(_persistence.update(
+				newJournalArticleResource));
 
-		JournalArticleResource existingJournalArticleResource =
-			_persistence.findByPrimaryKey(
-				newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource = _persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingJournalArticleResource.getUuid(),
+		Assert.assertEquals(existingJournalArticleResource.getUuid(),
 			newJournalArticleResource.getUuid());
-		Assert.assertEquals(
-			existingJournalArticleResource.getResourcePrimKey(),
+		Assert.assertEquals(existingJournalArticleResource.getResourcePrimKey(),
 			newJournalArticleResource.getResourcePrimKey());
-		Assert.assertEquals(
-			existingJournalArticleResource.getGroupId(),
+		Assert.assertEquals(existingJournalArticleResource.getGroupId(),
 			newJournalArticleResource.getGroupId());
-		Assert.assertEquals(
-			existingJournalArticleResource.getCompanyId(),
+		Assert.assertEquals(existingJournalArticleResource.getCompanyId(),
 			newJournalArticleResource.getCompanyId());
-		Assert.assertEquals(
-			existingJournalArticleResource.getArticleId(),
+		Assert.assertEquals(existingJournalArticleResource.getArticleId(),
 			newJournalArticleResource.getArticleId());
 	}
 
@@ -204,15 +193,12 @@ public class JournalArticleResourcePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
-		JournalArticleResource existingJournalArticleResource =
-			_persistence.findByPrimaryKey(
-				newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource = _persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingJournalArticleResource, newJournalArticleResource);
+		Assert.assertEquals(existingJournalArticleResource,
+			newJournalArticleResource);
 	}
 
 	@Test(expected = NoSuchArticleResourceException.class)
@@ -224,35 +210,31 @@ public class JournalArticleResourcePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<JournalArticleResource> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"JournalArticleResource", "uuid", true, "resourcePrimKey", true,
-			"groupId", true, "companyId", true, "articleId", true);
+		return OrderByComparatorFactoryUtil.create("JournalArticleResource",
+			"uuid", true, "resourcePrimKey", true, "groupId", true,
+			"companyId", true, "articleId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
-		JournalArticleResource existingJournalArticleResource =
-			_persistence.fetchByPrimaryKey(
-				newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource = _persistence.fetchByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingJournalArticleResource, newJournalArticleResource);
+		Assert.assertEquals(existingJournalArticleResource,
+			newJournalArticleResource);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		JournalArticleResource missingJournalArticleResource =
-			_persistence.fetchByPrimaryKey(pk);
+		JournalArticleResource missingJournalArticleResource = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingJournalArticleResource);
 	}
@@ -260,27 +242,21 @@ public class JournalArticleResourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		JournalArticleResource newJournalArticleResource1 =
-			addJournalArticleResource();
-		JournalArticleResource newJournalArticleResource2 =
-			addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource1 = addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource2 = addJournalArticleResource();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newJournalArticleResource1.getPrimaryKey());
 		primaryKeys.add(newJournalArticleResource2.getPrimaryKey());
 
-		Map<Serializable, JournalArticleResource> journalArticleResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, JournalArticleResource> journalArticleResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, journalArticleResources.size());
-		Assert.assertEquals(
-			newJournalArticleResource1,
+		Assert.assertEquals(newJournalArticleResource1,
 			journalArticleResources.get(
 				newJournalArticleResource1.getPrimaryKey()));
-		Assert.assertEquals(
-			newJournalArticleResource2,
+		Assert.assertEquals(newJournalArticleResource2,
 			journalArticleResources.get(
 				newJournalArticleResource2.getPrimaryKey()));
 	}
@@ -288,7 +264,6 @@ public class JournalArticleResourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -298,8 +273,7 @@ public class JournalArticleResourcePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, JournalArticleResource> journalArticleResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, JournalArticleResource> journalArticleResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(journalArticleResources.isEmpty());
 	}
@@ -307,9 +281,7 @@ public class JournalArticleResourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -318,41 +290,37 @@ public class JournalArticleResourcePersistenceTest {
 		primaryKeys.add(newJournalArticleResource.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, JournalArticleResource> journalArticleResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, JournalArticleResource> journalArticleResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, journalArticleResources.size());
-		Assert.assertEquals(
-			newJournalArticleResource,
+		Assert.assertEquals(newJournalArticleResource,
 			journalArticleResources.get(
 				newJournalArticleResource.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalArticleResource> journalArticleResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, JournalArticleResource> journalArticleResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(journalArticleResources.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newJournalArticleResource.getPrimaryKey());
 
-		Map<Serializable, JournalArticleResource> journalArticleResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, JournalArticleResource> journalArticleResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, journalArticleResources.size());
-		Assert.assertEquals(
-			newJournalArticleResource,
+		Assert.assertEquals(newJournalArticleResource,
 			journalArticleResources.get(
 				newJournalArticleResource.getPrimaryKey()));
 	}
@@ -361,22 +329,16 @@ public class JournalArticleResourcePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = JournalArticleResourceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<JournalArticleResource>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalArticleResource>() {
 				@Override
 				public void performAction(
 					JournalArticleResource journalArticleResource) {
-
 					Assert.assertNotNull(journalArticleResource);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -385,61 +347,54 @@ public class JournalArticleResourcePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"resourcePrimKey",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				newJournalArticleResource.getResourcePrimKey()));
 
-		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		JournalArticleResource existingJournalArticleResource = result.get(0);
 
-		Assert.assertEquals(
-			existingJournalArticleResource, newJournalArticleResource);
+		Assert.assertEquals(existingJournalArticleResource,
+			newJournalArticleResource);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"resourcePrimKey", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
+				RandomTestUtil.nextLong()));
 
-		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("resourcePrimKey"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"resourcePrimKey"));
 
-		Object newResourcePrimKey =
-			newJournalArticleResource.getResourcePrimKey();
+		Object newResourcePrimKey = newJournalArticleResource.getResourcePrimKey();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"resourcePrimKey", new Object[] {newResourcePrimKey}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
+				new Object[] { newResourcePrimKey }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -452,15 +407,14 @@ public class JournalArticleResourcePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("resourcePrimKey"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"resourcePrimKey"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"resourcePrimKey", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -469,43 +423,33 @@ public class JournalArticleResourcePersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		JournalArticleResource newJournalArticleResource =
-			addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
 		_persistence.clearCache();
 
-		JournalArticleResource existingJournalArticleResource =
-			_persistence.findByPrimaryKey(
-				newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource = _persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleResource.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingJournalArticleResource, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingJournalArticleResource.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticleResource, "getOriginalGroupId",
-				new Class<?>[0]));
+				ReflectionTestUtil.invoke(existingJournalArticleResource,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingJournalArticleResource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticleResource,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingJournalArticleResource.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingJournalArticleResource, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingJournalArticleResource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticleResource,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleResource.getArticleId(),
-				ReflectionTestUtil.invoke(
-					existingJournalArticleResource, "getOriginalArticleId",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingJournalArticleResource,
+					"getOriginalArticleId", new Class<?>[0])));
 	}
 
 	protected JournalArticleResource addJournalArticleResource()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
 		JournalArticleResource journalArticleResource = _persistence.create(pk);
@@ -518,15 +462,12 @@ public class JournalArticleResourcePersistenceTest {
 
 		journalArticleResource.setArticleId(RandomTestUtil.randomString());
 
-		_journalArticleResources.add(
-			_persistence.update(journalArticleResource));
+		_journalArticleResources.add(_persistence.update(journalArticleResource));
 
 		return journalArticleResource;
 	}
 
-	private List<JournalArticleResource> _journalArticleResources =
-		new ArrayList<JournalArticleResource>();
+	private List<JournalArticleResource> _journalArticleResources = new ArrayList<JournalArticleResource>();
 	private JournalArticleResourcePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

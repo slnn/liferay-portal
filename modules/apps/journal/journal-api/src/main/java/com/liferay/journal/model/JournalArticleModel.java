@@ -40,10 +40,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface JournalArticleModel
-	extends AttachedModel, BaseModel<JournalArticle>, ResourcedModel,
-			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface JournalArticleModel extends AttachedModel,
+	BaseModel<JournalArticle>, ResourcedModel, ShardedModel, StagedGroupedModel,
+	TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -739,5 +738,4 @@ public interface JournalArticleModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

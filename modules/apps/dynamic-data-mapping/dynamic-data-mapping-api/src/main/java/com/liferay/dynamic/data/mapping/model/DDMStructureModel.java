@@ -40,10 +40,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface DDMStructureModel
-	extends BaseModel<DDMStructure>, LocalizedModel, ShardedModel,
-			StagedGroupedModel, TypedModel {
-
+public interface DDMStructureModel extends BaseModel<DDMStructure>,
+	LocalizedModel, ShardedModel, StagedGroupedModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -499,8 +497,8 @@ public interface DDMStructureModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -517,8 +515,8 @@ public interface DDMStructureModel
 	 * @param descriptionMap the locales and localized descriptions of this ddm structure
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the definition of this ddm structure.
@@ -592,5 +590,4 @@ public interface DDMStructureModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

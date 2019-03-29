@@ -15,11 +15,13 @@
 package com.liferay.polls.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.polls.exception.NoSuchChoiceException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 import com.liferay.polls.service.persistence.PollsChoiceUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class PollsChoicePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.polls.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.polls.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class PollsChoicePersistenceTest {
 
 		_persistence.remove(newPollsChoice);
 
-		PollsChoice existingPollsChoice = _persistence.fetchByPrimaryKey(
-			newPollsChoice.getPrimaryKey());
+		PollsChoice existingPollsChoice = _persistence.fetchByPrimaryKey(newPollsChoice.getPrimaryKey());
 
 		Assert.assertNull(existingPollsChoice);
 	}
@@ -148,37 +148,34 @@ public class PollsChoicePersistenceTest {
 
 		_pollsChoices.add(_persistence.update(newPollsChoice));
 
-		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(
-			newPollsChoice.getPrimaryKey());
+		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingPollsChoice.getUuid(), newPollsChoice.getUuid());
-		Assert.assertEquals(
-			existingPollsChoice.getChoiceId(), newPollsChoice.getChoiceId());
-		Assert.assertEquals(
-			existingPollsChoice.getGroupId(), newPollsChoice.getGroupId());
-		Assert.assertEquals(
-			existingPollsChoice.getCompanyId(), newPollsChoice.getCompanyId());
-		Assert.assertEquals(
-			existingPollsChoice.getUserId(), newPollsChoice.getUserId());
-		Assert.assertEquals(
-			existingPollsChoice.getUserName(), newPollsChoice.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingPollsChoice.getCreateDate()),
+		Assert.assertEquals(existingPollsChoice.getUuid(),
+			newPollsChoice.getUuid());
+		Assert.assertEquals(existingPollsChoice.getChoiceId(),
+			newPollsChoice.getChoiceId());
+		Assert.assertEquals(existingPollsChoice.getGroupId(),
+			newPollsChoice.getGroupId());
+		Assert.assertEquals(existingPollsChoice.getCompanyId(),
+			newPollsChoice.getCompanyId());
+		Assert.assertEquals(existingPollsChoice.getUserId(),
+			newPollsChoice.getUserId());
+		Assert.assertEquals(existingPollsChoice.getUserName(),
+			newPollsChoice.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPollsChoice.getCreateDate()),
 			Time.getShortTimestamp(newPollsChoice.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingPollsChoice.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPollsChoice.getModifiedDate()),
 			Time.getShortTimestamp(newPollsChoice.getModifiedDate()));
-		Assert.assertEquals(
-			existingPollsChoice.getQuestionId(),
+		Assert.assertEquals(existingPollsChoice.getQuestionId(),
 			newPollsChoice.getQuestionId());
-		Assert.assertEquals(
-			existingPollsChoice.getName(), newPollsChoice.getName());
-		Assert.assertEquals(
-			existingPollsChoice.getDescription(),
+		Assert.assertEquals(existingPollsChoice.getName(),
+			newPollsChoice.getName());
+		Assert.assertEquals(existingPollsChoice.getDescription(),
 			newPollsChoice.getDescription());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingPollsChoice.getLastPublishDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPollsChoice.getLastPublishDate()),
 			Time.getShortTimestamp(newPollsChoice.getLastPublishDate()));
 	}
 
@@ -229,8 +226,7 @@ public class PollsChoicePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
-		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(
-			newPollsChoice.getPrimaryKey());
+		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
 		Assert.assertEquals(existingPollsChoice, newPollsChoice);
 	}
@@ -244,24 +240,23 @@ public class PollsChoicePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<PollsChoice> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"PollsChoice", "uuid", true, "choiceId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "questionId", true, "name", true,
-			"description", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("PollsChoice", "uuid", true,
+			"choiceId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"questionId", true, "name", true, "description", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
-		PollsChoice existingPollsChoice = _persistence.fetchByPrimaryKey(
-			newPollsChoice.getPrimaryKey());
+		PollsChoice existingPollsChoice = _persistence.fetchByPrimaryKey(newPollsChoice.getPrimaryKey());
 
 		Assert.assertEquals(existingPollsChoice, newPollsChoice);
 	}
@@ -278,7 +273,6 @@ public class PollsChoicePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		PollsChoice newPollsChoice1 = addPollsChoice();
 		PollsChoice newPollsChoice2 = addPollsChoice();
 
@@ -287,20 +281,18 @@ public class PollsChoicePersistenceTest {
 		primaryKeys.add(newPollsChoice1.getPrimaryKey());
 		primaryKeys.add(newPollsChoice2.getPrimaryKey());
 
-		Map<Serializable, PollsChoice> pollsChoices =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PollsChoice> pollsChoices = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, pollsChoices.size());
-		Assert.assertEquals(
-			newPollsChoice1, pollsChoices.get(newPollsChoice1.getPrimaryKey()));
-		Assert.assertEquals(
-			newPollsChoice2, pollsChoices.get(newPollsChoice2.getPrimaryKey()));
+		Assert.assertEquals(newPollsChoice1,
+			pollsChoices.get(newPollsChoice1.getPrimaryKey()));
+		Assert.assertEquals(newPollsChoice2,
+			pollsChoices.get(newPollsChoice2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -310,8 +302,7 @@ public class PollsChoicePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, PollsChoice> pollsChoices =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PollsChoice> pollsChoices = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(pollsChoices.isEmpty());
 	}
@@ -319,7 +310,6 @@ public class PollsChoicePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		PollsChoice newPollsChoice = addPollsChoice();
 
 		long pk = RandomTestUtil.nextLong();
@@ -329,57 +319,52 @@ public class PollsChoicePersistenceTest {
 		primaryKeys.add(newPollsChoice.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, PollsChoice> pollsChoices =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PollsChoice> pollsChoices = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, pollsChoices.size());
-		Assert.assertEquals(
-			newPollsChoice, pollsChoices.get(newPollsChoice.getPrimaryKey()));
+		Assert.assertEquals(newPollsChoice,
+			pollsChoices.get(newPollsChoice.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PollsChoice> pollsChoices =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PollsChoice> pollsChoices = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(pollsChoices.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newPollsChoice.getPrimaryKey());
 
-		Map<Serializable, PollsChoice> pollsChoices =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PollsChoice> pollsChoices = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, pollsChoices.size());
-		Assert.assertEquals(
-			newPollsChoice, pollsChoices.get(newPollsChoice.getPrimaryKey()));
+		Assert.assertEquals(newPollsChoice,
+			pollsChoices.get(newPollsChoice.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			PollsChoiceLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = PollsChoiceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<PollsChoice>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PollsChoice>() {
 				@Override
 				public void performAction(PollsChoice pollsChoice) {
 					Assert.assertNotNull(pollsChoice);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -388,18 +373,17 @@ public class PollsChoicePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PollsChoice.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"choiceId", newPollsChoice.getChoiceId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("choiceId",
+				newPollsChoice.getChoiceId()));
 
-		List<PollsChoice> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<PollsChoice> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -410,31 +394,31 @@ public class PollsChoicePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PollsChoice.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("choiceId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("choiceId",
+				RandomTestUtil.nextLong()));
 
-		List<PollsChoice> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<PollsChoice> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PollsChoice.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("choiceId"));
 
 		Object newChoiceId = newPollsChoice.getChoiceId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("choiceId", new Object[] {newChoiceId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("choiceId",
+				new Object[] { newChoiceId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -447,14 +431,13 @@ public class PollsChoicePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PollsChoice.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("choiceId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"choiceId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("choiceId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -467,28 +450,21 @@ public class PollsChoicePersistenceTest {
 
 		_persistence.clearCache();
 
-		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(
-			newPollsChoice.getPrimaryKey());
+		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingPollsChoice.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingPollsChoice, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingPollsChoice.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingPollsChoice, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingPollsChoice.getUuid(),
+				ReflectionTestUtil.invoke(existingPollsChoice,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingPollsChoice.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsChoice,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingPollsChoice.getQuestionId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingPollsChoice, "getOriginalQuestionId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingPollsChoice.getName(),
-				ReflectionTestUtil.invoke(
-					existingPollsChoice, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingPollsChoice.getQuestionId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsChoice,
+				"getOriginalQuestionId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingPollsChoice.getName(),
+				ReflectionTestUtil.invoke(existingPollsChoice,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected PollsChoice addPollsChoice() throws Exception {
@@ -526,5 +502,4 @@ public class PollsChoicePersistenceTest {
 	private List<PollsChoice> _pollsChoices = new ArrayList<PollsChoice>();
 	private PollsChoicePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

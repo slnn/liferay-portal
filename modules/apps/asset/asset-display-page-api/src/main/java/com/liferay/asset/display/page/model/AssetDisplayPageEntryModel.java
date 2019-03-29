@@ -37,10 +37,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AssetDisplayPageEntryModel
-	extends AttachedModel, BaseModel<AssetDisplayPageEntry>, GroupedModel,
-			ShardedModel, StagedAuditedModel {
-
+public interface AssetDisplayPageEntryModel extends AttachedModel,
+	BaseModel<AssetDisplayPageEntry>, GroupedModel, ShardedModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -288,5 +287,4 @@ public interface AssetDisplayPageEntryModel
 	 * @param plid the plid of this asset display page entry
 	 */
 	public void setPlid(long plid);
-
 }

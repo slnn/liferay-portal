@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mobile.device.rules.model.MDRAction;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -43,37 +44,26 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=mdr",
-		"json.web.service.context.path=MDRAction"
-	},
-	service = MDRActionService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=mdr", "json.web.service.context.path=MDRAction"}, service = MDRActionService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface MDRActionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRActionServiceUtil} to access the mdr action remote service. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MDRAction addAction(
-			long ruleGroupInstanceId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type,
-			String typeSettings, ServiceContext serviceContext)
+	public MDRAction addAction(long ruleGroupInstanceId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public MDRAction addAction(
-			long ruleGroupInstanceId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettingsProperties,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public MDRAction addAction(long ruleGroupInstanceId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, UnicodeProperties typeSettingsProperties,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteAction(long actionId) throws PortalException;
 
@@ -84,23 +74,18 @@ public interface MDRActionService extends BaseService {
 	public MDRAction getAction(long actionId) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
-	public MDRAction updateAction(
-			long actionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type,
-			String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public MDRAction updateAction(long actionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public MDRAction updateAction(
-			long actionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettingsProperties,
-			ServiceContext serviceContext)
+	public MDRAction updateAction(long actionId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
-
 }

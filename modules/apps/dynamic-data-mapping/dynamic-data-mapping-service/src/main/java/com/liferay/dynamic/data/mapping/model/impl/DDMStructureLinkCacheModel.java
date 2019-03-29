@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -33,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class DDMStructureLinkCacheModel
-	implements CacheModel<DDMStructureLink>, Externalizable {
-
+public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -46,8 +47,7 @@ public class DDMStructureLinkCacheModel
 			return false;
 		}
 
-		DDMStructureLinkCacheModel ddmStructureLinkCacheModel =
-			(DDMStructureLinkCacheModel)obj;
+		DDMStructureLinkCacheModel ddmStructureLinkCacheModel = (DDMStructureLinkCacheModel)obj;
 
 		if (structureLinkId == ddmStructureLinkCacheModel.structureLinkId) {
 			return true;
@@ -109,7 +109,8 @@ public class DDMStructureLinkCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(structureLinkId);
 
 		objectOutput.writeLong(companyId);
@@ -126,5 +127,4 @@ public class DDMStructureLinkCacheModel
 	public long classNameId;
 	public long classPK;
 	public long structureId;
-
 }

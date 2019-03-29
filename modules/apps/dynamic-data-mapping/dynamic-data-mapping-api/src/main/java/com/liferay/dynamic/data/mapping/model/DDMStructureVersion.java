@@ -27,38 +27,32 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMStructureVersionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl")
 @ProviderType
-public interface DDMStructureVersion
-	extends DDMStructureVersionModel, PersistedModel {
-
+public interface DDMStructureVersion extends DDMStructureVersionModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMStructureVersion, Long>
-		STRUCTURE_VERSION_ID_ACCESSOR =
-			new Accessor<DDMStructureVersion, Long>() {
+	public static final Accessor<DDMStructureVersion, Long> STRUCTURE_VERSION_ID_ACCESSOR =
+		new Accessor<DDMStructureVersion, Long>() {
+			@Override
+			public Long get(DDMStructureVersion ddmStructureVersion) {
+				return ddmStructureVersion.getStructureVersionId();
+			}
 
-				@Override
-				public Long get(DDMStructureVersion ddmStructureVersion) {
-					return ddmStructureVersion.getStructureVersionId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<DDMStructureVersion> getTypeClass() {
-					return DDMStructureVersion.class;
-				}
-
-			};
+			@Override
+			public Class<DDMStructureVersion> getTypeClass() {
+				return DDMStructureVersion.class;
+			}
+		};
 
 	public DDMForm getDDMForm();
 
@@ -69,5 +63,4 @@ public interface DDMStructureVersion
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setDDMForm(DDMForm ddmForm);
-
 }

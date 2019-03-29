@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.polls.model.impl.PollsQuestionImpl")
 @ProviderType
 public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.polls.model.impl.PollsQuestionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PollsQuestion, Long> QUESTION_ID_ACCESSOR =
-		new Accessor<PollsQuestion, Long>() {
-
+	public static final Accessor<PollsQuestion, Long> QUESTION_ID_ACCESSOR = new Accessor<PollsQuestion, Long>() {
 			@Override
 			public Long get(PollsQuestion pollsQuestion) {
 				return pollsQuestion.getQuestionId();
@@ -53,7 +50,6 @@ public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 			public Class<PollsQuestion> getTypeClass() {
 				return PollsQuestion.class;
 			}
-
 		};
 
 	public java.util.List<PollsChoice> getChoices();
@@ -69,5 +65,4 @@ public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 	public boolean isExpired(
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Date defaultCreateDate);
-
 }

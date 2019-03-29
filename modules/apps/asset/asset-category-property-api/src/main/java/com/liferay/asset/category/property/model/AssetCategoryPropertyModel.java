@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AssetCategoryPropertyModel
-	extends AuditedModel, BaseModel<AssetCategoryProperty>, ShardedModel {
-
+public interface AssetCategoryPropertyModel extends AuditedModel,
+	BaseModel<AssetCategoryProperty>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -212,5 +211,4 @@ public interface AssetCategoryPropertyModel
 	 * @param value the value of this asset category property
 	 */
 	public void setValue(String value);
-
 }

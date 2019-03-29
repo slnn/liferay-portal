@@ -15,11 +15,13 @@
 package com.liferay.change.tracking.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.change.tracking.exception.NoSuchEntryAggregateException;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregateUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class CTEntryAggregatePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.change.tracking.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.change.tracking.service"));
 
 	@Before
 	public void setUp() {
@@ -105,8 +106,7 @@ public class CTEntryAggregatePersistenceTest {
 
 		_persistence.remove(newCTEntryAggregate);
 
-		CTEntryAggregate existingCTEntryAggregate =
-			_persistence.fetchByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
+		CTEntryAggregate existingCTEntryAggregate = _persistence.fetchByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
 
 		Assert.assertNull(existingCTEntryAggregate);
 	}
@@ -138,39 +138,32 @@ public class CTEntryAggregatePersistenceTest {
 
 		_ctEntryAggregates.add(_persistence.update(newCTEntryAggregate));
 
-		CTEntryAggregate existingCTEntryAggregate =
-			_persistence.findByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
+		CTEntryAggregate existingCTEntryAggregate = _persistence.findByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCTEntryAggregate.getCtEntryAggregateId(),
+		Assert.assertEquals(existingCTEntryAggregate.getCtEntryAggregateId(),
 			newCTEntryAggregate.getCtEntryAggregateId());
-		Assert.assertEquals(
-			existingCTEntryAggregate.getCompanyId(),
+		Assert.assertEquals(existingCTEntryAggregate.getCompanyId(),
 			newCTEntryAggregate.getCompanyId());
-		Assert.assertEquals(
-			existingCTEntryAggregate.getUserId(),
+		Assert.assertEquals(existingCTEntryAggregate.getUserId(),
 			newCTEntryAggregate.getUserId());
-		Assert.assertEquals(
-			existingCTEntryAggregate.getUserName(),
+		Assert.assertEquals(existingCTEntryAggregate.getUserName(),
 			newCTEntryAggregate.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCTEntryAggregate.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCTEntryAggregate.getCreateDate()),
 			Time.getShortTimestamp(newCTEntryAggregate.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCTEntryAggregate.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCTEntryAggregate.getModifiedDate()),
 			Time.getShortTimestamp(newCTEntryAggregate.getModifiedDate()));
-		Assert.assertEquals(
-			existingCTEntryAggregate.getCtCollectionId(),
+		Assert.assertEquals(existingCTEntryAggregate.getCtCollectionId(),
 			newCTEntryAggregate.getCtCollectionId());
-		Assert.assertEquals(
-			existingCTEntryAggregate.getOwnerCTEntryId(),
+		Assert.assertEquals(existingCTEntryAggregate.getOwnerCTEntryId(),
 			newCTEntryAggregate.getOwnerCTEntryId());
 	}
 
 	@Test
 	public void testCountByC_O() throws Exception {
-		_persistence.countByC_O(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_O(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_O(0L, 0L);
 	}
@@ -179,8 +172,7 @@ public class CTEntryAggregatePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CTEntryAggregate newCTEntryAggregate = addCTEntryAggregate();
 
-		CTEntryAggregate existingCTEntryAggregate =
-			_persistence.findByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
+		CTEntryAggregate existingCTEntryAggregate = _persistence.findByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
 
 		Assert.assertEquals(existingCTEntryAggregate, newCTEntryAggregate);
 	}
@@ -194,24 +186,22 @@ public class CTEntryAggregatePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<CTEntryAggregate> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"CTEntryAggregate", "ctEntryAggregateId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "ctCollectionId", true, "ownerCTEntryId",
-			true);
+		return OrderByComparatorFactoryUtil.create("CTEntryAggregate",
+			"ctEntryAggregateId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"ctCollectionId", true, "ownerCTEntryId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		CTEntryAggregate newCTEntryAggregate = addCTEntryAggregate();
 
-		CTEntryAggregate existingCTEntryAggregate =
-			_persistence.fetchByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
+		CTEntryAggregate existingCTEntryAggregate = _persistence.fetchByPrimaryKey(newCTEntryAggregate.getPrimaryKey());
 
 		Assert.assertEquals(existingCTEntryAggregate, newCTEntryAggregate);
 	}
@@ -220,8 +210,7 @@ public class CTEntryAggregatePersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CTEntryAggregate missingCTEntryAggregate =
-			_persistence.fetchByPrimaryKey(pk);
+		CTEntryAggregate missingCTEntryAggregate = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingCTEntryAggregate);
 	}
@@ -229,7 +218,6 @@ public class CTEntryAggregatePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		CTEntryAggregate newCTEntryAggregate1 = addCTEntryAggregate();
 		CTEntryAggregate newCTEntryAggregate2 = addCTEntryAggregate();
 
@@ -238,22 +226,18 @@ public class CTEntryAggregatePersistenceTest {
 		primaryKeys.add(newCTEntryAggregate1.getPrimaryKey());
 		primaryKeys.add(newCTEntryAggregate2.getPrimaryKey());
 
-		Map<Serializable, CTEntryAggregate> ctEntryAggregates =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTEntryAggregate> ctEntryAggregates = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ctEntryAggregates.size());
-		Assert.assertEquals(
-			newCTEntryAggregate1,
+		Assert.assertEquals(newCTEntryAggregate1,
 			ctEntryAggregates.get(newCTEntryAggregate1.getPrimaryKey()));
-		Assert.assertEquals(
-			newCTEntryAggregate2,
+		Assert.assertEquals(newCTEntryAggregate2,
 			ctEntryAggregates.get(newCTEntryAggregate2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -263,8 +247,7 @@ public class CTEntryAggregatePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CTEntryAggregate> ctEntryAggregates =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTEntryAggregate> ctEntryAggregates = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ctEntryAggregates.isEmpty());
 	}
@@ -272,7 +255,6 @@ public class CTEntryAggregatePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		CTEntryAggregate newCTEntryAggregate = addCTEntryAggregate();
 
 		long pk = RandomTestUtil.nextLong();
@@ -282,39 +264,36 @@ public class CTEntryAggregatePersistenceTest {
 		primaryKeys.add(newCTEntryAggregate.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CTEntryAggregate> ctEntryAggregates =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTEntryAggregate> ctEntryAggregates = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ctEntryAggregates.size());
-		Assert.assertEquals(
-			newCTEntryAggregate,
+		Assert.assertEquals(newCTEntryAggregate,
 			ctEntryAggregates.get(newCTEntryAggregate.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CTEntryAggregate> ctEntryAggregates =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTEntryAggregate> ctEntryAggregates = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ctEntryAggregates.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		CTEntryAggregate newCTEntryAggregate = addCTEntryAggregate();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCTEntryAggregate.getPrimaryKey());
 
-		Map<Serializable, CTEntryAggregate> ctEntryAggregates =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTEntryAggregate> ctEntryAggregates = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ctEntryAggregates.size());
-		Assert.assertEquals(
-			newCTEntryAggregate,
+		Assert.assertEquals(newCTEntryAggregate,
 			ctEntryAggregates.get(newCTEntryAggregate.getPrimaryKey()));
 	}
 
@@ -322,19 +301,15 @@ public class CTEntryAggregatePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			CTEntryAggregateLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CTEntryAggregateLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<CTEntryAggregate>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CTEntryAggregate>() {
 				@Override
 				public void performAction(CTEntryAggregate ctEntryAggregate) {
 					Assert.assertNotNull(ctEntryAggregate);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -343,19 +318,17 @@ public class CTEntryAggregatePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		CTEntryAggregate newCTEntryAggregate = addCTEntryAggregate();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTEntryAggregate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTEntryAggregate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"ctEntryAggregateId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ctEntryAggregateId",
 				newCTEntryAggregate.getCtEntryAggregateId()));
 
-		List<CTEntryAggregate> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CTEntryAggregate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -366,35 +339,32 @@ public class CTEntryAggregatePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTEntryAggregate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTEntryAggregate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"ctEntryAggregateId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ctEntryAggregateId",
+				RandomTestUtil.nextLong()));
 
-		List<CTEntryAggregate> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CTEntryAggregate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		CTEntryAggregate newCTEntryAggregate = addCTEntryAggregate();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTEntryAggregate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTEntryAggregate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("ctEntryAggregateId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"ctEntryAggregateId"));
 
-		Object newCtEntryAggregateId =
-			newCTEntryAggregate.getCtEntryAggregateId();
+		Object newCtEntryAggregateId = newCTEntryAggregate.getCtEntryAggregateId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ctEntryAggregateId", new Object[] {newCtEntryAggregateId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ctEntryAggregateId",
+				new Object[] { newCtEntryAggregateId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -407,16 +377,14 @@ public class CTEntryAggregatePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTEntryAggregate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTEntryAggregate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("ctEntryAggregateId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"ctEntryAggregateId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ctEntryAggregateId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ctEntryAggregateId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -447,9 +415,7 @@ public class CTEntryAggregatePersistenceTest {
 		return ctEntryAggregate;
 	}
 
-	private List<CTEntryAggregate> _ctEntryAggregates =
-		new ArrayList<CTEntryAggregate>();
+	private List<CTEntryAggregate> _ctEntryAggregates = new ArrayList<CTEntryAggregate>();
 	private CTEntryAggregatePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

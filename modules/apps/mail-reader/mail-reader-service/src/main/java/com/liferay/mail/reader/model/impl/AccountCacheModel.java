@@ -17,8 +17,10 @@ package com.liferay.mail.reader.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mail.reader.model.Account;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -36,7 +38,6 @@ import java.util.Date;
  */
 @ProviderType
 public class AccountCacheModel implements CacheModel<Account>, Externalizable {
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -279,7 +280,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(accountId);
 
 		objectOutput.writeLong(companyId);
@@ -408,5 +410,4 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	public long sentFolderId;
 	public long trashFolderId;
 	public boolean defaultSender;
-
 }

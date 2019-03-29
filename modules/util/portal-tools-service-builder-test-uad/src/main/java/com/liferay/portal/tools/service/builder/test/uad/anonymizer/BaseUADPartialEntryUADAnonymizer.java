@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
 import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.uad.constants.SBTestUADConstants;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +39,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUADPartialEntryUADAnonymizer
 	extends DynamicQueryUADAnonymizer<UADPartialEntry> {
-
 	@Override
-	public void autoAnonymize(
-			UADPartialEntry uadPartialEntry, long userId, User anonymousUser)
-		throws PortalException {
-
+	public void autoAnonymize(UADPartialEntry uadPartialEntry, long userId,
+		User anonymousUser) throws PortalException {
 		if (uadPartialEntry.getUserId() == userId) {
 			uadPartialEntry.setUserId(anonymousUser.getUserId());
 			uadPartialEntry.setUserName(anonymousUser.getFullName());
@@ -53,7 +51,8 @@ public abstract class BaseUADPartialEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(UADPartialEntry uadPartialEntry) throws PortalException {
+	public void delete(UADPartialEntry uadPartialEntry)
+		throws PortalException {
 		uadPartialEntryLocalService.deleteUADPartialEntry(uadPartialEntry);
 	}
 
@@ -74,5 +73,4 @@ public abstract class BaseUADPartialEntryUADAnonymizer
 
 	@Reference
 	protected UADPartialEntryLocalService uadPartialEntryLocalService;
-
 }

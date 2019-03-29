@@ -35,7 +35,6 @@ import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil
 public abstract class CalendarNotificationTemplateBaseImpl
 	extends CalendarNotificationTemplateModelImpl
 	implements CalendarNotificationTemplate {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +43,10 @@ public abstract class CalendarNotificationTemplateBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			CalendarNotificationTemplateLocalServiceUtil.
-				addCalendarNotificationTemplate(this);
+			CalendarNotificationTemplateLocalServiceUtil.addCalendarNotificationTemplate(this);
 		}
 		else {
-			CalendarNotificationTemplateLocalServiceUtil.
-				updateCalendarNotificationTemplate(this);
+			CalendarNotificationTemplateLocalServiceUtil.updateCalendarNotificationTemplate(this);
 		}
 	}
-
 }

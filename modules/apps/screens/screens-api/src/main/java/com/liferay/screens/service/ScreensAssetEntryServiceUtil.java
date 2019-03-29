@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,49 +35,44 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class ScreensAssetEntryServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensAssetEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
-			com.liferay.asset.kernel.service.persistence.AssetEntryQuery
-				assetEntryQuery,
-			java.util.Locale locale)
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery assetEntryQuery,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getAssetEntries(assetEntryQuery, locale);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
-			long companyId, long groupId, String portletItemName,
-			java.util.Locale locale, int max)
+		long companyId, long groupId, String portletItemName,
+		java.util.Locale locale, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getAssetEntries(
-			companyId, groupId, portletItemName, locale, max);
+		return getService()
+				   .getAssetEntries(companyId, groupId, portletItemName,
+			locale, max);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
-			long entryId, java.util.Locale locale)
+		long entryId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getAssetEntry(entryId, locale);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
-			String className, long classPK, java.util.Locale locale)
+		String className, long classPK, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getAssetEntry(className, classPK, locale);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -85,22 +81,17 @@ public class ScreensAssetEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<ScreensAssetEntryService, ScreensAssetEntryService> _serviceTracker;
+	private static ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(ScreensAssetEntryService.class);
 
-		ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<ScreensAssetEntryService, ScreensAssetEntryService>(
-						bundle.getBundleContext(),
-						ScreensAssetEntryService.class, null);
+		ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService> serviceTracker =
+			new ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService>(bundle.getBundleContext(),
+				ScreensAssetEntryService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

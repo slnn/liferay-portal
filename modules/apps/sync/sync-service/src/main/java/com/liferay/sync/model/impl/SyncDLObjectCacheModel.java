@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
+
 import com.liferay.sync.model.SyncDLObject;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SyncDLObjectCacheModel
-	implements CacheModel<SyncDLObject>, Externalizable {
-
+public class SyncDLObjectCacheModel implements CacheModel<SyncDLObject>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class SyncDLObjectCacheModel
 			return false;
 		}
 
-		SyncDLObjectCacheModel syncDLObjectCacheModel =
-			(SyncDLObjectCacheModel)obj;
+		SyncDLObjectCacheModel syncDLObjectCacheModel = (SyncDLObjectCacheModel)obj;
 
 		if (syncDLObjectId == syncDLObjectCacheModel.syncDLObjectId) {
 			return true;
@@ -232,16 +232,15 @@ public class SyncDLObjectCacheModel
 			syncDLObjectImpl.setLastPermissionChangeDate(null);
 		}
 		else {
-			syncDLObjectImpl.setLastPermissionChangeDate(
-				new Date(lastPermissionChangeDate));
+			syncDLObjectImpl.setLastPermissionChangeDate(new Date(
+					lastPermissionChangeDate));
 		}
 
 		if (lockExpirationDate == Long.MIN_VALUE) {
 			syncDLObjectImpl.setLockExpirationDate(null);
 		}
 		else {
-			syncDLObjectImpl.setLockExpirationDate(
-				new Date(lockExpirationDate));
+			syncDLObjectImpl.setLockExpirationDate(new Date(lockExpirationDate));
 		}
 
 		syncDLObjectImpl.setLockUserId(lockUserId);
@@ -317,7 +316,8 @@ public class SyncDLObjectCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(syncDLObjectId);
 
 		objectOutput.writeLong(companyId);
@@ -477,5 +477,4 @@ public class SyncDLObjectCacheModel
 	public String type;
 	public long typePK;
 	public String typeUuid;
-
 }

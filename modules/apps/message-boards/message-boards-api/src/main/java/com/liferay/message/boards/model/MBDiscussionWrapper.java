@@ -17,6 +17,7 @@ package com.liferay.message.boards.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class MBDiscussionWrapper
-	extends BaseModelWrapper<MBDiscussion>
+public class MBDiscussionWrapper extends BaseModelWrapper<MBDiscussion>
 	implements MBDiscussion, ModelWrapper<MBDiscussion> {
-
 	public MBDiscussionWrapper(MBDiscussion mbDiscussion) {
 		super(mbDiscussion);
 	}
@@ -138,150 +137,150 @@ public class MBDiscussionWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this message boards discussion.
-	 *
-	 * @return the fully qualified class name of this message boards discussion
-	 */
+	* Returns the fully qualified class name of this message boards discussion.
+	*
+	* @return the fully qualified class name of this message boards discussion
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this message boards discussion.
-	 *
-	 * @return the class name ID of this message boards discussion
-	 */
+	* Returns the class name ID of this message boards discussion.
+	*
+	* @return the class name ID of this message boards discussion
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this message boards discussion.
-	 *
-	 * @return the class pk of this message boards discussion
-	 */
+	* Returns the class pk of this message boards discussion.
+	*
+	* @return the class pk of this message boards discussion
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this message boards discussion.
-	 *
-	 * @return the company ID of this message boards discussion
-	 */
+	* Returns the company ID of this message boards discussion.
+	*
+	* @return the company ID of this message boards discussion
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this message boards discussion.
-	 *
-	 * @return the create date of this message boards discussion
-	 */
+	* Returns the create date of this message boards discussion.
+	*
+	* @return the create date of this message boards discussion
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the discussion ID of this message boards discussion.
-	 *
-	 * @return the discussion ID of this message boards discussion
-	 */
+	* Returns the discussion ID of this message boards discussion.
+	*
+	* @return the discussion ID of this message boards discussion
+	*/
 	@Override
 	public long getDiscussionId() {
 		return model.getDiscussionId();
 	}
 
 	/**
-	 * Returns the group ID of this message boards discussion.
-	 *
-	 * @return the group ID of this message boards discussion
-	 */
+	* Returns the group ID of this message boards discussion.
+	*
+	* @return the group ID of this message boards discussion
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last publish date of this message boards discussion.
-	 *
-	 * @return the last publish date of this message boards discussion
-	 */
+	* Returns the last publish date of this message boards discussion.
+	*
+	* @return the last publish date of this message boards discussion
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this message boards discussion.
-	 *
-	 * @return the modified date of this message boards discussion
-	 */
+	* Returns the modified date of this message boards discussion.
+	*
+	* @return the modified date of this message boards discussion
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this message boards discussion.
-	 *
-	 * @return the primary key of this message boards discussion
-	 */
+	* Returns the primary key of this message boards discussion.
+	*
+	* @return the primary key of this message boards discussion
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the thread ID of this message boards discussion.
-	 *
-	 * @return the thread ID of this message boards discussion
-	 */
+	* Returns the thread ID of this message boards discussion.
+	*
+	* @return the thread ID of this message boards discussion
+	*/
 	@Override
 	public long getThreadId() {
 		return model.getThreadId();
 	}
 
 	/**
-	 * Returns the user ID of this message boards discussion.
-	 *
-	 * @return the user ID of this message boards discussion
-	 */
+	* Returns the user ID of this message boards discussion.
+	*
+	* @return the user ID of this message boards discussion
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this message boards discussion.
-	 *
-	 * @return the user name of this message boards discussion
-	 */
+	* Returns the user name of this message boards discussion.
+	*
+	* @return the user name of this message boards discussion
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this message boards discussion.
-	 *
-	 * @return the user uuid of this message boards discussion
-	 */
+	* Returns the user uuid of this message boards discussion.
+	*
+	* @return the user uuid of this message boards discussion
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this message boards discussion.
-	 *
-	 * @return the uuid of this message boards discussion
-	 */
+	* Returns the uuid of this message boards discussion.
+	*
+	* @return the uuid of this message boards discussion
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -298,140 +297,140 @@ public class MBDiscussionWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this message boards discussion.
-	 *
-	 * @param classNameId the class name ID of this message boards discussion
-	 */
+	* Sets the class name ID of this message boards discussion.
+	*
+	* @param classNameId the class name ID of this message boards discussion
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this message boards discussion.
-	 *
-	 * @param classPK the class pk of this message boards discussion
-	 */
+	* Sets the class pk of this message boards discussion.
+	*
+	* @param classPK the class pk of this message boards discussion
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this message boards discussion.
-	 *
-	 * @param companyId the company ID of this message boards discussion
-	 */
+	* Sets the company ID of this message boards discussion.
+	*
+	* @param companyId the company ID of this message boards discussion
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this message boards discussion.
-	 *
-	 * @param createDate the create date of this message boards discussion
-	 */
+	* Sets the create date of this message boards discussion.
+	*
+	* @param createDate the create date of this message boards discussion
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the discussion ID of this message boards discussion.
-	 *
-	 * @param discussionId the discussion ID of this message boards discussion
-	 */
+	* Sets the discussion ID of this message boards discussion.
+	*
+	* @param discussionId the discussion ID of this message boards discussion
+	*/
 	@Override
 	public void setDiscussionId(long discussionId) {
 		model.setDiscussionId(discussionId);
 	}
 
 	/**
-	 * Sets the group ID of this message boards discussion.
-	 *
-	 * @param groupId the group ID of this message boards discussion
-	 */
+	* Sets the group ID of this message boards discussion.
+	*
+	* @param groupId the group ID of this message boards discussion
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last publish date of this message boards discussion.
-	 *
-	 * @param lastPublishDate the last publish date of this message boards discussion
-	 */
+	* Sets the last publish date of this message boards discussion.
+	*
+	* @param lastPublishDate the last publish date of this message boards discussion
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this message boards discussion.
-	 *
-	 * @param modifiedDate the modified date of this message boards discussion
-	 */
+	* Sets the modified date of this message boards discussion.
+	*
+	* @param modifiedDate the modified date of this message boards discussion
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this message boards discussion.
-	 *
-	 * @param primaryKey the primary key of this message boards discussion
-	 */
+	* Sets the primary key of this message boards discussion.
+	*
+	* @param primaryKey the primary key of this message boards discussion
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the thread ID of this message boards discussion.
-	 *
-	 * @param threadId the thread ID of this message boards discussion
-	 */
+	* Sets the thread ID of this message boards discussion.
+	*
+	* @param threadId the thread ID of this message boards discussion
+	*/
 	@Override
 	public void setThreadId(long threadId) {
 		model.setThreadId(threadId);
 	}
 
 	/**
-	 * Sets the user ID of this message boards discussion.
-	 *
-	 * @param userId the user ID of this message boards discussion
-	 */
+	* Sets the user ID of this message boards discussion.
+	*
+	* @param userId the user ID of this message boards discussion
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this message boards discussion.
-	 *
-	 * @param userName the user name of this message boards discussion
-	 */
+	* Sets the user name of this message boards discussion.
+	*
+	* @param userName the user name of this message boards discussion
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this message boards discussion.
-	 *
-	 * @param userUuid the user uuid of this message boards discussion
-	 */
+	* Sets the user uuid of this message boards discussion.
+	*
+	* @param userUuid the user uuid of this message boards discussion
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this message boards discussion.
-	 *
-	 * @param uuid the uuid of this message boards discussion
-	 */
+	* Sets the uuid of this message boards discussion.
+	*
+	* @param uuid the uuid of this message boards discussion
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -446,5 +445,4 @@ public class MBDiscussionWrapper
 	protected MBDiscussionWrapper wrap(MBDiscussion mbDiscussion) {
 		return new MBDiscussionWrapper(mbDiscussion);
 	}
-
 }

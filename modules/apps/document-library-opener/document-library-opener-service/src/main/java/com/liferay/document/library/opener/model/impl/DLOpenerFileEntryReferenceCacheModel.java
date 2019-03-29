@@ -17,8 +17,10 @@ package com.liferay.document.library.opener.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class DLOpenerFileEntryReferenceCacheModel
-	implements CacheModel<DLOpenerFileEntryReference>, Externalizable {
-
+public class DLOpenerFileEntryReferenceCacheModel implements CacheModel<DLOpenerFileEntryReference>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,14 +49,10 @@ public class DLOpenerFileEntryReferenceCacheModel
 			return false;
 		}
 
-		DLOpenerFileEntryReferenceCacheModel
-			dlOpenerFileEntryReferenceCacheModel =
-				(DLOpenerFileEntryReferenceCacheModel)obj;
+		DLOpenerFileEntryReferenceCacheModel dlOpenerFileEntryReferenceCacheModel =
+			(DLOpenerFileEntryReferenceCacheModel)obj;
 
-		if (dlOpenerFileEntryReferenceId ==
-				dlOpenerFileEntryReferenceCacheModel.
-					dlOpenerFileEntryReferenceId) {
-
+		if (dlOpenerFileEntryReferenceId == dlOpenerFileEntryReferenceCacheModel.dlOpenerFileEntryReferenceId) {
 			return true;
 		}
 
@@ -98,11 +95,9 @@ public class DLOpenerFileEntryReferenceCacheModel
 
 	@Override
 	public DLOpenerFileEntryReference toEntityModel() {
-		DLOpenerFileEntryReferenceImpl dlOpenerFileEntryReferenceImpl =
-			new DLOpenerFileEntryReferenceImpl();
+		DLOpenerFileEntryReferenceImpl dlOpenerFileEntryReferenceImpl = new DLOpenerFileEntryReferenceImpl();
 
-		dlOpenerFileEntryReferenceImpl.setDlOpenerFileEntryReferenceId(
-			dlOpenerFileEntryReferenceId);
+		dlOpenerFileEntryReferenceImpl.setDlOpenerFileEntryReferenceId(dlOpenerFileEntryReferenceId);
 		dlOpenerFileEntryReferenceImpl.setGroupId(groupId);
 		dlOpenerFileEntryReferenceImpl.setCompanyId(companyId);
 		dlOpenerFileEntryReferenceImpl.setUserId(userId);
@@ -125,8 +120,8 @@ public class DLOpenerFileEntryReferenceCacheModel
 			dlOpenerFileEntryReferenceImpl.setModifiedDate(null);
 		}
 		else {
-			dlOpenerFileEntryReferenceImpl.setModifiedDate(
-				new Date(modifiedDate));
+			dlOpenerFileEntryReferenceImpl.setModifiedDate(new Date(
+					modifiedDate));
 		}
 
 		if (referenceKey == null) {
@@ -164,7 +159,8 @@ public class DLOpenerFileEntryReferenceCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(dlOpenerFileEntryReferenceId);
 
 		objectOutput.writeLong(groupId);
@@ -205,5 +201,4 @@ public class DLOpenerFileEntryReferenceCacheModel
 	public String referenceKey;
 	public long fileEntryId;
 	public int type;
-
 }

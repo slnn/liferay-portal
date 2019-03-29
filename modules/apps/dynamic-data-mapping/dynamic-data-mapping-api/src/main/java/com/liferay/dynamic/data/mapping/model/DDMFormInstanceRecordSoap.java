@@ -30,10 +30,8 @@ import java.util.List;
  */
 @ProviderType
 public class DDMFormInstanceRecordSoap implements Serializable {
-
 	public static DDMFormInstanceRecordSoap toSoapModel(
 		DDMFormInstanceRecord model) {
-
 		DDMFormInstanceRecordSoap soapModel = new DDMFormInstanceRecordSoap();
 
 		soapModel.setUuid(model.getUuid());
@@ -57,9 +55,7 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 
 	public static DDMFormInstanceRecordSoap[] toSoapModels(
 		DDMFormInstanceRecord[] models) {
-
-		DDMFormInstanceRecordSoap[] soapModels =
-			new DDMFormInstanceRecordSoap[models.length];
+		DDMFormInstanceRecordSoap[] soapModels = new DDMFormInstanceRecordSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -70,12 +66,10 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 
 	public static DDMFormInstanceRecordSoap[][] toSoapModels(
 		DDMFormInstanceRecord[][] models) {
-
 		DDMFormInstanceRecordSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new DDMFormInstanceRecordSoap[models.length][models[0].length];
+			soapModels = new DDMFormInstanceRecordSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new DDMFormInstanceRecordSoap[0][0];
@@ -90,16 +84,13 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 
 	public static DDMFormInstanceRecordSoap[] toSoapModels(
 		List<DDMFormInstanceRecord> models) {
-
-		List<DDMFormInstanceRecordSoap> soapModels =
-			new ArrayList<DDMFormInstanceRecordSoap>(models.size());
+		List<DDMFormInstanceRecordSoap> soapModels = new ArrayList<DDMFormInstanceRecordSoap>(models.size());
 
 		for (DDMFormInstanceRecord model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new DDMFormInstanceRecordSoap[soapModels.size()]);
+		return soapModels.toArray(new DDMFormInstanceRecordSoap[soapModels.size()]);
 	}
 
 	public DDMFormInstanceRecordSoap() {
@@ -248,5 +239,4 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 	private long _storageId;
 	private String _version;
 	private Date _lastPublishDate;
-
 }

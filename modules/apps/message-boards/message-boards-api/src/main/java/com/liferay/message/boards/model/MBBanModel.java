@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBBanModel
-	extends BaseModel<MBBan>, ShardedModel, StagedGroupedModel {
-
+public interface MBBanModel extends BaseModel<MBBan>, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -245,5 +244,4 @@ public interface MBBanModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

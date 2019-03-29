@@ -31,9 +31,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface DDMDataProviderInstanceLinkModel
-	extends BaseModel<DDMDataProviderInstanceLink>, ShardedModel {
-
+public interface DDMDataProviderInstanceLinkModel extends BaseModel<DDMDataProviderInstanceLink>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -111,5 +110,4 @@ public interface DDMDataProviderInstanceLinkModel
 	 * @param structureId the structure ID of this ddm data provider instance link
 	 */
 	public void setStructureId(long structureId);
-
 }

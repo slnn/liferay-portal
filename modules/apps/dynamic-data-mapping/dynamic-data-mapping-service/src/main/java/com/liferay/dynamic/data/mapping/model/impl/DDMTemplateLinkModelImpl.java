@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -54,24 +57,22 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class DDMTemplateLinkModelImpl
-	extends BaseModelImpl<DDMTemplateLink> implements DDMTemplateLinkModel {
-
+public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
+	implements DDMTemplateLinkModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm template link model instance should use the <code>DDMTemplateLink</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMTemplateLink";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"templateLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"templateId", Types.BIGINT}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "templateLinkId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "templateId", Types.BIGINT }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("templateLinkId", Types.BIGINT);
@@ -81,49 +82,28 @@ public class DDMTemplateLinkModelImpl
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateLink (templateLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,templateId LONG)";
-
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplateLink (templateLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,templateId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY ddmTemplateLink.templateLinkId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY DDMTemplateLink.templateLinkId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplateLink.templateLinkId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplateLink.templateLinkId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"),
+			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-
 	public static final long TEMPLATEID_COLUMN_BITMASK = 4L;
-
 	public static final long TEMPLATELINKID_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMTemplateLink"));
 
 	public DDMTemplateLinkModelImpl() {
 	}
@@ -162,18 +142,13 @@ public class DDMTemplateLinkModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DDMTemplateLink, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMTemplateLink, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DDMTemplateLink, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMTemplateLink, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMTemplateLink, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMTemplateLink, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((DDMTemplateLink)this));
 		}
 
@@ -185,76 +160,51 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DDMTemplateLink, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DDMTemplateLink, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DDMTemplateLink, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<DDMTemplateLink, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(DDMTemplateLink)this, entry.getValue());
+				attributeSetterBiConsumer.accept((DDMTemplateLink)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DDMTemplateLink, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<DDMTemplateLink, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DDMTemplateLink, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<DDMTemplateLink, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMTemplateLink, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMTemplateLink, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<DDMTemplateLink, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMTemplateLink, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DDMTemplateLink, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<DDMTemplateLink, Object>>();
-		Map<String, BiConsumer<DDMTemplateLink, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DDMTemplateLink, ?>>();
+		Map<String, Function<DDMTemplateLink, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<DDMTemplateLink, Object>>();
+		Map<String, BiConsumer<DDMTemplateLink, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DDMTemplateLink, ?>>();
 
-		attributeGetterFunctions.put(
-			"templateLinkId", DDMTemplateLink::getTemplateLinkId);
-		attributeSetterBiConsumers.put(
-			"templateLinkId",
-			(BiConsumer<DDMTemplateLink, Long>)
-				DDMTemplateLink::setTemplateLinkId);
-		attributeGetterFunctions.put(
-			"companyId", DDMTemplateLink::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setCompanyId);
-		attributeGetterFunctions.put(
-			"classNameId", DDMTemplateLink::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setClassNameId);
+
+		attributeGetterFunctions.put("templateLinkId", DDMTemplateLink::getTemplateLinkId);
+		attributeSetterBiConsumers.put("templateLinkId", (BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setTemplateLinkId);
+		attributeGetterFunctions.put("companyId", DDMTemplateLink::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setCompanyId);
+		attributeGetterFunctions.put("classNameId", DDMTemplateLink::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setClassNameId);
 		attributeGetterFunctions.put("classPK", DDMTemplateLink::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setClassPK);
-		attributeGetterFunctions.put(
-			"templateId", DDMTemplateLink::getTemplateId);
-		attributeSetterBiConsumers.put(
-			"templateId",
-			(BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setTemplateId);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setClassPK);
+		attributeGetterFunctions.put("templateId", DDMTemplateLink::getTemplateId);
+		attributeSetterBiConsumers.put("templateId", (BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setTemplateId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -369,8 +319,8 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), DDMTemplateLink.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DDMTemplateLink.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -383,9 +333,8 @@ public class DDMTemplateLinkModelImpl
 	@Override
 	public DDMTemplateLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMTemplateLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (DDMTemplateLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -462,18 +411,15 @@ public class DDMTemplateLinkModelImpl
 	public void resetOriginalValues() {
 		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl = this;
 
-		ddmTemplateLinkModelImpl._originalClassNameId =
-			ddmTemplateLinkModelImpl._classNameId;
+		ddmTemplateLinkModelImpl._originalClassNameId = ddmTemplateLinkModelImpl._classNameId;
 
 		ddmTemplateLinkModelImpl._setOriginalClassNameId = false;
 
-		ddmTemplateLinkModelImpl._originalClassPK =
-			ddmTemplateLinkModelImpl._classPK;
+		ddmTemplateLinkModelImpl._originalClassPK = ddmTemplateLinkModelImpl._classPK;
 
 		ddmTemplateLinkModelImpl._setOriginalClassPK = false;
 
-		ddmTemplateLinkModelImpl._originalTemplateId =
-			ddmTemplateLinkModelImpl._templateId;
+		ddmTemplateLinkModelImpl._originalTemplateId = ddmTemplateLinkModelImpl._templateId;
 
 		ddmTemplateLinkModelImpl._setOriginalTemplateId = false;
 
@@ -482,8 +428,7 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public CacheModel<DDMTemplateLink> toCacheModel() {
-		DDMTemplateLinkCacheModel ddmTemplateLinkCacheModel =
-			new DDMTemplateLinkCacheModel();
+		DDMTemplateLinkCacheModel ddmTemplateLinkCacheModel = new DDMTemplateLinkCacheModel();
 
 		ddmTemplateLinkCacheModel.templateLinkId = getTemplateLinkId();
 
@@ -500,20 +445,16 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<DDMTemplateLink, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMTemplateLink, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DDMTemplateLink, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMTemplateLink, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMTemplateLink, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMTemplateLink, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -532,22 +473,18 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DDMTemplateLink, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMTemplateLink, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DDMTemplateLink, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMTemplateLink, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMTemplateLink, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMTemplateLink, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -561,12 +498,10 @@ public class DDMTemplateLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMTemplateLink.class.getClassLoader();
+	private static final ClassLoader _classLoader = DDMTemplateLink.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMTemplateLink.class, ModelWrapper.class
-	};
-
+			DDMTemplateLink.class, ModelWrapper.class
+		};
 	private long _templateLinkId;
 	private long _companyId;
 	private long _classNameId;
@@ -580,5 +515,4 @@ public class DDMTemplateLinkModelImpl
 	private boolean _setOriginalTemplateId;
 	private long _columnBitmask;
 	private DDMTemplateLink _escapedModel;
-
 }

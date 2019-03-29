@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.journal.model.impl.JournalFeedImpl")
 @ProviderType
 public interface JournalFeed extends JournalFeedModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalFeedImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<JournalFeed, Long> ID_ACCESSOR =
-		new Accessor<JournalFeed, Long>() {
-
+	public static final Accessor<JournalFeed, Long> ID_ACCESSOR = new Accessor<JournalFeed, Long>() {
 			@Override
 			public Long get(JournalFeed journalFeed) {
 				return journalFeed.getId();
@@ -53,49 +50,47 @@ public interface JournalFeed extends JournalFeedModel, PersistedModel {
 			public Class<JournalFeed> getTypeClass() {
 				return JournalFeed.class;
 			}
-
 		};
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getDDMRendererTemplateKey()}
-	 */
-	@Deprecated
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getDDMRendererTemplateKey()}
+	*/
+	@Deprecated()
 	public String getRendererTemplateId();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getDDMStructureKey()}
-	 */
-	@Deprecated
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getDDMStructureKey()}
+	*/
+	@Deprecated()
 	public String getStructureId();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getDDMTemplateKey()}
-	 */
-	@Deprecated
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getDDMTemplateKey()}
+	*/
+	@Deprecated()
 	public String getTemplateId();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #setDDMRendererTemplateKey(String)}
-	 */
-	@Deprecated
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#setDDMRendererTemplateKey(String)}
+	*/
+	@Deprecated()
 	public void setRendererTemplateId(String rendererTemplateKey);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #setDDMStructureKey(String)}
-	 */
-	@Deprecated
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#setDDMStructureKey(String)}
+	*/
+	@Deprecated()
 	public void setStructureId(String structureKey);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #setDDMTemplateKey(String)}
-	 */
-	@Deprecated
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#setDDMTemplateKey(String)}
+	*/
+	@Deprecated()
 	public void setTemplateId(String templateKey);
-
 }

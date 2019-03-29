@@ -17,8 +17,10 @@ package com.liferay.layout.page.template.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateCollectionCacheModel
-	implements CacheModel<LayoutPageTemplateCollection>, Externalizable {
-
+public class LayoutPageTemplateCollectionCacheModel implements CacheModel<LayoutPageTemplateCollection>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,14 +49,10 @@ public class LayoutPageTemplateCollectionCacheModel
 			return false;
 		}
 
-		LayoutPageTemplateCollectionCacheModel
-			layoutPageTemplateCollectionCacheModel =
-				(LayoutPageTemplateCollectionCacheModel)obj;
+		LayoutPageTemplateCollectionCacheModel layoutPageTemplateCollectionCacheModel =
+			(LayoutPageTemplateCollectionCacheModel)obj;
 
-		if (layoutPageTemplateCollectionId ==
-				layoutPageTemplateCollectionCacheModel.
-					layoutPageTemplateCollectionId) {
-
+		if (layoutPageTemplateCollectionId == layoutPageTemplateCollectionCacheModel.layoutPageTemplateCollectionId) {
 			return true;
 		}
 
@@ -100,8 +97,7 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public LayoutPageTemplateCollection toEntityModel() {
-		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl =
-			new LayoutPageTemplateCollectionImpl();
+		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl = new LayoutPageTemplateCollectionImpl();
 
 		if (uuid == null) {
 			layoutPageTemplateCollectionImpl.setUuid("");
@@ -110,8 +106,7 @@ public class LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionImpl.setUuid(uuid);
 		}
 
-		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(
-			layoutPageTemplateCollectionId);
+		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateCollectionId);
 		layoutPageTemplateCollectionImpl.setGroupId(groupId);
 		layoutPageTemplateCollectionImpl.setCompanyId(companyId);
 		layoutPageTemplateCollectionImpl.setUserId(userId);
@@ -127,16 +122,15 @@ public class LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionImpl.setCreateDate(null);
 		}
 		else {
-			layoutPageTemplateCollectionImpl.setCreateDate(
-				new Date(createDate));
+			layoutPageTemplateCollectionImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
 			layoutPageTemplateCollectionImpl.setModifiedDate(null);
 		}
 		else {
-			layoutPageTemplateCollectionImpl.setModifiedDate(
-				new Date(modifiedDate));
+			layoutPageTemplateCollectionImpl.setModifiedDate(new Date(
+					modifiedDate));
 		}
 
 		if (name == null) {
@@ -157,8 +151,8 @@ public class LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionImpl.setLastPublishDate(null);
 		}
 		else {
-			layoutPageTemplateCollectionImpl.setLastPublishDate(
-				new Date(lastPublishDate));
+			layoutPageTemplateCollectionImpl.setLastPublishDate(new Date(
+					lastPublishDate));
 		}
 
 		layoutPageTemplateCollectionImpl.resetOriginalValues();
@@ -186,7 +180,8 @@ public class LayoutPageTemplateCollectionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -240,5 +235,4 @@ public class LayoutPageTemplateCollectionCacheModel
 	public String name;
 	public String description;
 	public long lastPublishDate;
-
 }

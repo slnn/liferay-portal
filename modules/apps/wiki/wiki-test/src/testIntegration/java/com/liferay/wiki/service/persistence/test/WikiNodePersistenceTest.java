@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -32,11 +33,21 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
 import com.liferay.wiki.service.persistence.WikiNodeUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class WikiNodePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.wiki.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.wiki.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class WikiNodePersistenceTest {
 
 		_persistence.remove(newWikiNode);
 
-		WikiNode existingWikiNode = _persistence.fetchByPrimaryKey(
-			newWikiNode.getPrimaryKey());
+		WikiNode existingWikiNode = _persistence.fetchByPrimaryKey(newWikiNode.getPrimaryKey());
 
 		Assert.assertNull(existingWikiNode);
 	}
@@ -156,45 +156,42 @@ public class WikiNodePersistenceTest {
 
 		_wikiNodes.add(_persistence.update(newWikiNode));
 
-		WikiNode existingWikiNode = _persistence.findByPrimaryKey(
-			newWikiNode.getPrimaryKey());
+		WikiNode existingWikiNode = _persistence.findByPrimaryKey(newWikiNode.getPrimaryKey());
 
 		Assert.assertEquals(existingWikiNode.getUuid(), newWikiNode.getUuid());
-		Assert.assertEquals(
-			existingWikiNode.getNodeId(), newWikiNode.getNodeId());
-		Assert.assertEquals(
-			existingWikiNode.getGroupId(), newWikiNode.getGroupId());
-		Assert.assertEquals(
-			existingWikiNode.getCompanyId(), newWikiNode.getCompanyId());
-		Assert.assertEquals(
-			existingWikiNode.getUserId(), newWikiNode.getUserId());
-		Assert.assertEquals(
-			existingWikiNode.getUserName(), newWikiNode.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiNode.getCreateDate()),
+		Assert.assertEquals(existingWikiNode.getNodeId(),
+			newWikiNode.getNodeId());
+		Assert.assertEquals(existingWikiNode.getGroupId(),
+			newWikiNode.getGroupId());
+		Assert.assertEquals(existingWikiNode.getCompanyId(),
+			newWikiNode.getCompanyId());
+		Assert.assertEquals(existingWikiNode.getUserId(),
+			newWikiNode.getUserId());
+		Assert.assertEquals(existingWikiNode.getUserName(),
+			newWikiNode.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiNode.getCreateDate()),
 			Time.getShortTimestamp(newWikiNode.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiNode.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiNode.getModifiedDate()),
 			Time.getShortTimestamp(newWikiNode.getModifiedDate()));
 		Assert.assertEquals(existingWikiNode.getName(), newWikiNode.getName());
-		Assert.assertEquals(
-			existingWikiNode.getDescription(), newWikiNode.getDescription());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiNode.getLastPostDate()),
+		Assert.assertEquals(existingWikiNode.getDescription(),
+			newWikiNode.getDescription());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiNode.getLastPostDate()),
 			Time.getShortTimestamp(newWikiNode.getLastPostDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiNode.getLastPublishDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiNode.getLastPublishDate()),
 			Time.getShortTimestamp(newWikiNode.getLastPublishDate()));
-		Assert.assertEquals(
-			existingWikiNode.getStatus(), newWikiNode.getStatus());
-		Assert.assertEquals(
-			existingWikiNode.getStatusByUserId(),
+		Assert.assertEquals(existingWikiNode.getStatus(),
+			newWikiNode.getStatus());
+		Assert.assertEquals(existingWikiNode.getStatusByUserId(),
 			newWikiNode.getStatusByUserId());
-		Assert.assertEquals(
-			existingWikiNode.getStatusByUserName(),
+		Assert.assertEquals(existingWikiNode.getStatusByUserName(),
 			newWikiNode.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiNode.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiNode.getStatusDate()),
 			Time.getShortTimestamp(newWikiNode.getStatusDate()));
 	}
 
@@ -250,16 +247,16 @@ public class WikiNodePersistenceTest {
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_S(0L, 0);
 	}
@@ -268,8 +265,7 @@ public class WikiNodePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		WikiNode newWikiNode = addWikiNode();
 
-		WikiNode existingWikiNode = _persistence.findByPrimaryKey(
-			newWikiNode.getPrimaryKey());
+		WikiNode existingWikiNode = _persistence.findByPrimaryKey(newWikiNode.getPrimaryKey());
 
 		Assert.assertEquals(existingWikiNode, newWikiNode);
 	}
@@ -283,32 +279,30 @@ public class WikiNodePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<WikiNode> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"WikiNode", "uuid", true, "nodeId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"lastPostDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+		return OrderByComparatorFactoryUtil.create("WikiNode", "uuid", true,
+			"nodeId", true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "description", true, "lastPostDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		WikiNode newWikiNode = addWikiNode();
 
-		WikiNode existingWikiNode = _persistence.fetchByPrimaryKey(
-			newWikiNode.getPrimaryKey());
+		WikiNode existingWikiNode = _persistence.fetchByPrimaryKey(newWikiNode.getPrimaryKey());
 
 		Assert.assertEquals(existingWikiNode, newWikiNode);
 	}
@@ -325,7 +319,6 @@ public class WikiNodePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		WikiNode newWikiNode1 = addWikiNode();
 		WikiNode newWikiNode2 = addWikiNode();
 
@@ -334,20 +327,18 @@ public class WikiNodePersistenceTest {
 		primaryKeys.add(newWikiNode1.getPrimaryKey());
 		primaryKeys.add(newWikiNode2.getPrimaryKey());
 
-		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, wikiNodes.size());
-		Assert.assertEquals(
-			newWikiNode1, wikiNodes.get(newWikiNode1.getPrimaryKey()));
-		Assert.assertEquals(
-			newWikiNode2, wikiNodes.get(newWikiNode2.getPrimaryKey()));
+		Assert.assertEquals(newWikiNode1,
+			wikiNodes.get(newWikiNode1.getPrimaryKey()));
+		Assert.assertEquals(newWikiNode2,
+			wikiNodes.get(newWikiNode2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -357,8 +348,7 @@ public class WikiNodePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(wikiNodes.isEmpty());
 	}
@@ -366,7 +356,6 @@ public class WikiNodePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		WikiNode newWikiNode = addWikiNode();
 
 		long pk = RandomTestUtil.nextLong();
@@ -376,57 +365,52 @@ public class WikiNodePersistenceTest {
 		primaryKeys.add(newWikiNode.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, wikiNodes.size());
-		Assert.assertEquals(
-			newWikiNode, wikiNodes.get(newWikiNode.getPrimaryKey()));
+		Assert.assertEquals(newWikiNode,
+			wikiNodes.get(newWikiNode.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(wikiNodes.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		WikiNode newWikiNode = addWikiNode();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newWikiNode.getPrimaryKey());
 
-		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiNode> wikiNodes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, wikiNodes.size());
-		Assert.assertEquals(
-			newWikiNode, wikiNodes.get(newWikiNode.getPrimaryKey()));
+		Assert.assertEquals(newWikiNode,
+			wikiNodes.get(newWikiNode.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = WikiNodeLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
 				@Override
 				public void performAction(WikiNode wikiNode) {
 					Assert.assertNotNull(wikiNode);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -435,14 +419,15 @@ public class WikiNodePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		WikiNode newWikiNode = addWikiNode();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("nodeId", newWikiNode.getNodeId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("nodeId",
+				newWikiNode.getNodeId()));
 
 		List<WikiNode> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -455,11 +440,11 @@ public class WikiNodePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("nodeId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("nodeId",
+				RandomTestUtil.nextLong()));
 
 		List<WikiNode> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -467,18 +452,19 @@ public class WikiNodePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		WikiNode newWikiNode = addWikiNode();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("nodeId"));
 
 		Object newNodeId = newWikiNode.getNodeId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("nodeId", new Object[] {newNodeId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("nodeId",
+				new Object[] { newNodeId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -491,14 +477,13 @@ public class WikiNodePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("nodeId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"nodeId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("nodeId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -511,28 +496,21 @@ public class WikiNodePersistenceTest {
 
 		_persistence.clearCache();
 
-		WikiNode existingWikiNode = _persistence.findByPrimaryKey(
-			newWikiNode.getPrimaryKey());
+		WikiNode existingWikiNode = _persistence.findByPrimaryKey(newWikiNode.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiNode.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingWikiNode, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingWikiNode.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWikiNode, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingWikiNode.getUuid(),
+				ReflectionTestUtil.invoke(existingWikiNode, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingWikiNode.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiNode,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingWikiNode.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWikiNode, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiNode.getName(),
-				ReflectionTestUtil.invoke(
-					existingWikiNode, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingWikiNode.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiNode,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingWikiNode.getName(),
+				ReflectionTestUtil.invoke(existingWikiNode, "getOriginalName",
+					new Class<?>[0])));
 	}
 
 	protected WikiNode addWikiNode() throws Exception {
@@ -578,5 +556,4 @@ public class WikiNodePersistenceTest {
 	private List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	private WikiNodePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

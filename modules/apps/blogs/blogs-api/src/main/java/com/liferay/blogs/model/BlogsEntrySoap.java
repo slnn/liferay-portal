@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class BlogsEntrySoap implements Serializable {
-
 	public static BlogsEntrySoap toSoapModel(BlogsEntry model) {
 		BlogsEntrySoap soapModel = new BlogsEntrySoap();
 
@@ -95,8 +94,7 @@ public class BlogsEntrySoap implements Serializable {
 	}
 
 	public static BlogsEntrySoap[] toSoapModels(List<BlogsEntry> models) {
-		List<BlogsEntrySoap> soapModels = new ArrayList<BlogsEntrySoap>(
-			models.size());
+		List<BlogsEntrySoap> soapModels = new ArrayList<BlogsEntrySoap>(models.size());
 
 		for (BlogsEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -389,5 +387,4 @@ public class BlogsEntrySoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

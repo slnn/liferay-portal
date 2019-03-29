@@ -28,33 +28,30 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class ERAssetVocabularyLocalServiceWrapper
 	implements ERAssetVocabularyLocalService,
-			   ServiceWrapper<ERAssetVocabularyLocalService> {
-
+		ServiceWrapper<ERAssetVocabularyLocalService> {
 	public ERAssetVocabularyLocalServiceWrapper(
 		ERAssetVocabularyLocalService erAssetVocabularyLocalService) {
-
 		_erAssetVocabularyLocalService = erAssetVocabularyLocalService;
 	}
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetVocabulary addOrUpdateVocabulary(
-			String externalReferenceCode, long userId, long groupId,
-			String title, java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			String settings,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		String externalReferenceCode, long userId, long groupId, String title,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String settings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _erAssetVocabularyLocalService.addOrUpdateVocabulary(
-			externalReferenceCode, userId, groupId, title, titleMap,
-			descriptionMap, settings, serviceContext);
+		return _erAssetVocabularyLocalService.addOrUpdateVocabulary(externalReferenceCode,
+			userId, groupId, title, titleMap, descriptionMap, settings,
+			serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _erAssetVocabularyLocalService.getOSGiServiceIdentifier();
@@ -68,10 +65,8 @@ public class ERAssetVocabularyLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		ERAssetVocabularyLocalService erAssetVocabularyLocalService) {
-
 		_erAssetVocabularyLocalService = erAssetVocabularyLocalService;
 	}
 
 	private ERAssetVocabularyLocalService _erAssetVocabularyLocalService;
-
 }

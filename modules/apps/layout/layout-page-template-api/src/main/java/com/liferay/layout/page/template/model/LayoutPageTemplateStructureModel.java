@@ -37,10 +37,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutPageTemplateStructureModel
-	extends AttachedModel, BaseModel<LayoutPageTemplateStructure>, GroupedModel,
-			ShardedModel, StagedAuditedModel {
-
+public interface LayoutPageTemplateStructureModel extends AttachedModel,
+	BaseModel<LayoutPageTemplateStructure>, GroupedModel, ShardedModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -262,5 +261,4 @@ public interface LayoutPageTemplateStructureModel
 	 * @param data the data of this layout page template structure
 	 */
 	public void setData(String data);
-
 }

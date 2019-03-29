@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -62,9 +63,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class JournalArticleResourceLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements JournalArticleResourceLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements JournalArticleResourceLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -81,7 +81,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Override
 	public JournalArticleResource addJournalArticleResource(
 		JournalArticleResource journalArticleResource) {
-
 		journalArticleResource.setNew(true);
 
 		return journalArticleResourcePersistence.update(journalArticleResource);
@@ -97,7 +96,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey) {
-
 		return journalArticleResourcePersistence.create(resourcePrimKey);
 	}
 
@@ -111,9 +109,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public JournalArticleResource deleteJournalArticleResource(
-			long resourcePrimKey)
-		throws PortalException {
-
+		long resourcePrimKey) throws PortalException {
 		return journalArticleResourcePersistence.remove(resourcePrimKey);
 	}
 
@@ -127,7 +123,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Override
 	public JournalArticleResource deleteJournalArticleResource(
 		JournalArticleResource journalArticleResource) {
-
 		return journalArticleResourcePersistence.remove(journalArticleResource);
 	}
 
@@ -135,8 +130,8 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			JournalArticleResource.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -147,8 +142,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return journalArticleResourcePersistence.findWithDynamicQuery(
-			dynamicQuery);
+		return journalArticleResourcePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -164,11 +158,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return journalArticleResourcePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return journalArticleResourcePersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -185,12 +178,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return journalArticleResourcePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return journalArticleResourcePersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -201,8 +192,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return journalArticleResourcePersistence.countWithDynamicQuery(
-			dynamicQuery);
+		return journalArticleResourcePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -213,19 +203,16 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return journalArticleResourcePersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return journalArticleResourcePersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public JournalArticleResource fetchJournalArticleResource(
 		long resourcePrimKey) {
-
-		return journalArticleResourcePersistence.fetchByPrimaryKey(
-			resourcePrimKey);
+		return journalArticleResourcePersistence.fetchByPrimaryKey(resourcePrimKey);
 	}
 
 	/**
@@ -238,7 +225,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Override
 	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
 		String uuid, long groupId) {
-
 		return journalArticleResourcePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -251,20 +237,15 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	@Override
 	public JournalArticleResource getJournalArticleResource(
-			long resourcePrimKey)
-		throws PortalException {
-
-		return journalArticleResourcePersistence.findByPrimaryKey(
-			resourcePrimKey);
+		long resourcePrimKey) throws PortalException {
+		return journalArticleResourcePersistence.findByPrimaryKey(resourcePrimKey);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			journalArticleResourceLocalService);
+		actionableDynamicQuery.setBaseLocalService(journalArticleResourceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(JournalArticleResource.class);
 
@@ -274,17 +255,12 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			journalArticleResourceLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(journalArticleResourceLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(
-			JournalArticleResource.class);
+		indexableActionableDynamicQuery.setModelClass(JournalArticleResource.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"resourcePrimKey");
@@ -294,9 +270,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			journalArticleResourceLocalService);
+		actionableDynamicQuery.setBaseLocalService(journalArticleResourceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(JournalArticleResource.class);
 
@@ -309,17 +283,13 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return journalArticleResourceLocalService.deleteJournalArticleResource(
-			(JournalArticleResource)persistedModel);
+		return journalArticleResourceLocalService.deleteJournalArticleResource((JournalArticleResource)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
-		return journalArticleResourcePersistence.findByPrimaryKey(
-			primaryKeyObj);
+		return journalArticleResourcePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -330,10 +300,8 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @return the matching journal article resources, or an empty list if no matches were found
 	 */
 	@Override
-	public List<JournalArticleResource>
-		getJournalArticleResourcesByUuidAndCompanyId(
-			String uuid, long companyId) {
-
+	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+		String uuid, long companyId) {
 		return journalArticleResourcePersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -348,13 +316,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @return the range of matching journal article resources, or an empty list if no matches were found
 	 */
 	@Override
-	public List<JournalArticleResource>
-		getJournalArticleResourcesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<JournalArticleResource> orderByComparator) {
-
-		return journalArticleResourcePersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<JournalArticleResource> orderByComparator) {
+		return journalArticleResourcePersistence.findByUuid_C(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -367,9 +333,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	@Override
 	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException {
-
+		String uuid, long groupId) throws PortalException {
 		return journalArticleResourcePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -385,9 +349,8 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @return the range of journal article resources
 	 */
 	@Override
-	public List<JournalArticleResource> getJournalArticleResources(
-		int start, int end) {
-
+	public List<JournalArticleResource> getJournalArticleResources(int start,
+		int end) {
 		return journalArticleResourcePersistence.findAll(start, end);
 	}
 
@@ -411,7 +374,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	@Override
 	public JournalArticleResource updateJournalArticleResource(
 		JournalArticleResource journalArticleResource) {
-
 		return journalArticleResourcePersistence.update(journalArticleResource);
 	}
 
@@ -420,9 +382,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @return the journal article resource local service
 	 */
-	public JournalArticleResourceLocalService
-		getJournalArticleResourceLocalService() {
-
+	public JournalArticleResourceLocalService getJournalArticleResourceLocalService() {
 		return journalArticleResourceLocalService;
 	}
 
@@ -433,9 +393,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	public void setJournalArticleResourceLocalService(
 		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		this.journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
+		this.journalArticleResourceLocalService = journalArticleResourceLocalService;
 	}
 
 	/**
@@ -443,9 +401,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @return the journal article resource persistence
 	 */
-	public JournalArticleResourcePersistence
-		getJournalArticleResourcePersistence() {
-
+	public JournalArticleResourcePersistence getJournalArticleResourcePersistence() {
 		return journalArticleResourcePersistence;
 	}
 
@@ -456,9 +412,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	public void setJournalArticleResourcePersistence(
 		JournalArticleResourcePersistence journalArticleResourcePersistence) {
-
-		this.journalArticleResourcePersistence =
-			journalArticleResourcePersistence;
+		this.journalArticleResourcePersistence = journalArticleResourcePersistence;
 	}
 
 	/**
@@ -466,9 +420,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -478,15 +430,12 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.journal.model.JournalArticleResource",
+		persistedModelLocalServiceRegistry.register("com.liferay.journal.model.JournalArticleResource",
 			journalArticleResourceLocalService);
 	}
 
@@ -520,16 +469,15 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				journalArticleResourcePersistence.getDataSource();
+			DataSource dataSource = journalArticleResourcePersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -539,21 +487,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = JournalArticleResourceLocalService.class)
-	protected JournalArticleResourceLocalService
-		journalArticleResourceLocalService;
-
+	protected JournalArticleResourceLocalService journalArticleResourceLocalService;
 	@BeanReference(type = JournalArticleResourcePersistence.class)
-	protected JournalArticleResourcePersistence
-		journalArticleResourcePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	protected JournalArticleResourcePersistence journalArticleResourcePersistence;
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

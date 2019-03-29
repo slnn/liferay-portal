@@ -21,15 +21,16 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
+
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the lv entry localization service. This utility wraps <code>com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -44,7 +45,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class LVEntryLocalizationUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,7 +77,6 @@ public class LVEntryLocalizationUtil {
 	 */
 	public static Map<Serializable, LVEntryLocalization> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -86,7 +85,6 @@ public class LVEntryLocalizationUtil {
 	 */
 	public static List<LVEntryLocalization> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
-
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -95,7 +93,6 @@ public class LVEntryLocalizationUtil {
 	 */
 	public static List<LVEntryLocalization> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
-
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -105,9 +102,9 @@ public class LVEntryLocalizationUtil {
 	public static List<LVEntryLocalization> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
-		return getPersistence().findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -115,7 +112,6 @@ public class LVEntryLocalizationUtil {
 	 */
 	public static LVEntryLocalization update(
 		LVEntryLocalization lvEntryLocalization) {
-
 		return getPersistence().update(lvEntryLocalization);
 	}
 
@@ -123,478 +119,440 @@ public class LVEntryLocalizationUtil {
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static LVEntryLocalization update(
-		LVEntryLocalization lvEntryLocalization,
-		ServiceContext serviceContext) {
-
+		LVEntryLocalization lvEntryLocalization, ServiceContext serviceContext) {
 		return getPersistence().update(lvEntryLocalization, serviceContext);
 	}
 
 	/**
-	 * Returns all the lv entry localizations where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @return the matching lv entry localizations
-	 */
+	* Returns all the lv entry localizations where lvEntryId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @return the matching lv entry localizations
+	*/
 	public static List<LVEntryLocalization> findByLvEntryId(long lvEntryId) {
 		return getPersistence().findByLvEntryId(lvEntryId);
 	}
 
 	/**
-	 * Returns a range of all the lv entry localizations where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry localizations
-	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
-	 * @return the range of matching lv entry localizations
-	 */
-	public static List<LVEntryLocalization> findByLvEntryId(
-		long lvEntryId, int start, int end) {
-
+	* Returns a range of all the lv entry localizations where lvEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lvEntryId the lv entry ID
+	* @param start the lower bound of the range of lv entry localizations
+	* @param end the upper bound of the range of lv entry localizations (not inclusive)
+	* @return the range of matching lv entry localizations
+	*/
+	public static List<LVEntryLocalization> findByLvEntryId(long lvEntryId,
+		int start, int end) {
 		return getPersistence().findByLvEntryId(lvEntryId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the lv entry localizations where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry localizations
-	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry localizations
-	 */
-	public static List<LVEntryLocalization> findByLvEntryId(
-		long lvEntryId, int start, int end,
+	* Returns an ordered range of all the lv entry localizations where lvEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lvEntryId the lv entry ID
+	* @param start the lower bound of the range of lv entry localizations
+	* @param end the upper bound of the range of lv entry localizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lv entry localizations
+	*/
+	public static List<LVEntryLocalization> findByLvEntryId(long lvEntryId,
+		int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
-		return getPersistence().findByLvEntryId(
-			lvEntryId, start, end, orderByComparator);
+		return getPersistence()
+				   .findByLvEntryId(lvEntryId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the lv entry localizations where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry localizations
-	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching lv entry localizations
-	 */
-	public static List<LVEntryLocalization> findByLvEntryId(
-		long lvEntryId, int start, int end,
+	* Returns an ordered range of all the lv entry localizations where lvEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lvEntryId the lv entry ID
+	* @param start the lower bound of the range of lv entry localizations
+	* @param end the upper bound of the range of lv entry localizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching lv entry localizations
+	*/
+	public static List<LVEntryLocalization> findByLvEntryId(long lvEntryId,
+		int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findByLvEntryId(
-			lvEntryId, start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findByLvEntryId(lvEntryId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	 * Returns the first lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization findByLvEntryId_First(
-			long lvEntryId,
-			OrderByComparator<LVEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().findByLvEntryId_First(
-			lvEntryId, orderByComparator);
+	* Returns the first lv entry localization in the ordered set where lvEntryId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lv entry localization
+	* @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
+	*/
+	public static LVEntryLocalization findByLvEntryId_First(long lvEntryId,
+		OrderByComparator<LVEntryLocalization> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
+		return getPersistence()
+				   .findByLvEntryId_First(lvEntryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization fetchByLvEntryId_First(
-		long lvEntryId,
+	* Returns the first lv entry localization in the ordered set where lvEntryId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
+	*/
+	public static LVEntryLocalization fetchByLvEntryId_First(long lvEntryId,
 		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryId_First(
-			lvEntryId, orderByComparator);
+		return getPersistence()
+				   .fetchByLvEntryId_First(lvEntryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization findByLvEntryId_Last(
-			long lvEntryId,
-			OrderByComparator<LVEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().findByLvEntryId_Last(
-			lvEntryId, orderByComparator);
+	* Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lv entry localization
+	* @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
+	*/
+	public static LVEntryLocalization findByLvEntryId_Last(long lvEntryId,
+		OrderByComparator<LVEntryLocalization> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
+		return getPersistence()
+				   .findByLvEntryId_Last(lvEntryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization fetchByLvEntryId_Last(
-		long lvEntryId,
+	* Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
+	*/
+	public static LVEntryLocalization fetchByLvEntryId_Last(long lvEntryId,
 		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
-		return getPersistence().fetchByLvEntryId_Last(
-			lvEntryId, orderByComparator);
+		return getPersistence()
+				   .fetchByLvEntryId_Last(lvEntryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the lv entry localizations before and after the current lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the primary key of the current lv entry localization
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
+	* Returns the lv entry localizations before and after the current lv entry localization in the ordered set where lvEntryId = &#63;.
+	*
+	* @param lvEntryLocalizationId the primary key of the current lv entry localization
+	* @param lvEntryId the lv entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lv entry localization
+	* @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
+	*/
 	public static LVEntryLocalization[] findByLvEntryId_PrevAndNext(
-			long lvEntryLocalizationId, long lvEntryId,
-			OrderByComparator<LVEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().findByLvEntryId_PrevAndNext(
-			lvEntryLocalizationId, lvEntryId, orderByComparator);
+		long lvEntryLocalizationId, long lvEntryId,
+		OrderByComparator<LVEntryLocalization> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
+		return getPersistence()
+				   .findByLvEntryId_PrevAndNext(lvEntryLocalizationId,
+			lvEntryId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the lv entry localizations where lvEntryId = &#63; from the database.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 */
+	* Removes all the lv entry localizations where lvEntryId = &#63; from the database.
+	*
+	* @param lvEntryId the lv entry ID
+	*/
 	public static void removeByLvEntryId(long lvEntryId) {
 		getPersistence().removeByLvEntryId(lvEntryId);
 	}
 
 	/**
-	 * Returns the number of lv entry localizations where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @return the number of matching lv entry localizations
-	 */
+	* Returns the number of lv entry localizations where lvEntryId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @return the number of matching lv entry localizations
+	*/
 	public static int countByLvEntryId(long lvEntryId) {
 		return getPersistence().countByLvEntryId(lvEntryId);
 	}
 
 	/**
-	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @return the matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
+	* Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param languageId the language ID
+	* @return the matching lv entry localization
+	* @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
+	*/
 	public static LVEntryLocalization findByLvEntryId_LanguageId(
-			long lvEntryId, String languageId)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().findByLvEntryId_LanguageId(
-			lvEntryId, languageId);
+		long lvEntryId, String languageId)
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
+		return getPersistence().findByLvEntryId_LanguageId(lvEntryId, languageId);
 	}
 
 	/**
-	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
+	* Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param languageId the language ID
+	* @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
+	*/
 	public static LVEntryLocalization fetchByLvEntryId_LanguageId(
 		long lvEntryId, String languageId) {
-
-		return getPersistence().fetchByLvEntryId_LanguageId(
-			lvEntryId, languageId);
+		return getPersistence()
+				   .fetchByLvEntryId_LanguageId(lvEntryId, languageId);
 	}
 
 	/**
-	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
+	* Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param languageId the language ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
+	*/
 	public static LVEntryLocalization fetchByLvEntryId_LanguageId(
 		long lvEntryId, String languageId, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByLvEntryId_LanguageId(
-			lvEntryId, languageId, retrieveFromCache);
+		return getPersistence()
+				   .fetchByLvEntryId_LanguageId(lvEntryId, languageId,
+			retrieveFromCache);
 	}
 
 	/**
-	 * Removes the lv entry localization where lvEntryId = &#63; and languageId = &#63; from the database.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @return the lv entry localization that was removed
-	 */
+	* Removes the lv entry localization where lvEntryId = &#63; and languageId = &#63; from the database.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param languageId the language ID
+	* @return the lv entry localization that was removed
+	*/
 	public static LVEntryLocalization removeByLvEntryId_LanguageId(
-			long lvEntryId, String languageId)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().removeByLvEntryId_LanguageId(
-			lvEntryId, languageId);
+		long lvEntryId, String languageId)
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
+		return getPersistence()
+				   .removeByLvEntryId_LanguageId(lvEntryId, languageId);
 	}
 
 	/**
-	 * Returns the number of lv entry localizations where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @return the number of matching lv entry localizations
-	 */
-	public static int countByLvEntryId_LanguageId(
-		long lvEntryId, String languageId) {
-
-		return getPersistence().countByLvEntryId_LanguageId(
-			lvEntryId, languageId);
+	* Returns the number of lv entry localizations where lvEntryId = &#63; and languageId = &#63;.
+	*
+	* @param lvEntryId the lv entry ID
+	* @param languageId the language ID
+	* @return the number of matching lv entry localizations
+	*/
+	public static int countByLvEntryId_LanguageId(long lvEntryId,
+		String languageId) {
+		return getPersistence()
+				   .countByLvEntryId_LanguageId(lvEntryId, languageId);
 	}
 
 	/**
-	 * Returns the lv entry localization where headId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
-	 *
-	 * @param headId the head ID
-	 * @return the matching lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
-	 */
+	* Returns the lv entry localization where headId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
+	*
+	* @param headId the head ID
+	* @return the matching lv entry localization
+	* @throws NoSuchLVEntryLocalizationException if a matching lv entry localization could not be found
+	*/
 	public static LVEntryLocalization findByHeadId(long headId)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
 		return getPersistence().findByHeadId(headId);
 	}
 
 	/**
-	 * Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param headId the head ID
-	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
+	* Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param headId the head ID
+	* @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
+	*/
 	public static LVEntryLocalization fetchByHeadId(long headId) {
 		return getPersistence().fetchByHeadId(headId);
 	}
 
 	/**
-	 * Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
-	 */
-	public static LVEntryLocalization fetchByHeadId(
-		long headId, boolean retrieveFromCache) {
-
+	* Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param headId the head ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
+	*/
+	public static LVEntryLocalization fetchByHeadId(long headId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByHeadId(headId, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the lv entry localization where headId = &#63; from the database.
-	 *
-	 * @param headId the head ID
-	 * @return the lv entry localization that was removed
-	 */
+	* Removes the lv entry localization where headId = &#63; from the database.
+	*
+	* @param headId the head ID
+	* @return the lv entry localization that was removed
+	*/
 	public static LVEntryLocalization removeByHeadId(long headId)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
 		return getPersistence().removeByHeadId(headId);
 	}
 
 	/**
-	 * Returns the number of lv entry localizations where headId = &#63;.
-	 *
-	 * @param headId the head ID
-	 * @return the number of matching lv entry localizations
-	 */
+	* Returns the number of lv entry localizations where headId = &#63;.
+	*
+	* @param headId the head ID
+	* @return the number of matching lv entry localizations
+	*/
 	public static int countByHeadId(long headId) {
 		return getPersistence().countByHeadId(headId);
 	}
 
 	/**
-	 * Caches the lv entry localization in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalization the lv entry localization
-	 */
+	* Caches the lv entry localization in the entity cache if it is enabled.
+	*
+	* @param lvEntryLocalization the lv entry localization
+	*/
 	public static void cacheResult(LVEntryLocalization lvEntryLocalization) {
 		getPersistence().cacheResult(lvEntryLocalization);
 	}
 
 	/**
-	 * Caches the lv entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizations the lv entry localizations
-	 */
+	* Caches the lv entry localizations in the entity cache if it is enabled.
+	*
+	* @param lvEntryLocalizations the lv entry localizations
+	*/
 	public static void cacheResult(
 		List<LVEntryLocalization> lvEntryLocalizations) {
-
 		getPersistence().cacheResult(lvEntryLocalizations);
 	}
 
 	/**
-	 * Creates a new lv entry localization with the primary key. Does not add the lv entry localization to the database.
-	 *
-	 * @param lvEntryLocalizationId the primary key for the new lv entry localization
-	 * @return the new lv entry localization
-	 */
+	* Creates a new lv entry localization with the primary key. Does not add the lv entry localization to the database.
+	*
+	* @param lvEntryLocalizationId the primary key for the new lv entry localization
+	* @return the new lv entry localization
+	*/
 	public static LVEntryLocalization create(long lvEntryLocalizationId) {
 		return getPersistence().create(lvEntryLocalizationId);
 	}
 
 	/**
-	 * Removes the lv entry localization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param lvEntryLocalizationId the primary key of the lv entry localization
-	 * @return the lv entry localization that was removed
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
+	* Removes the lv entry localization with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param lvEntryLocalizationId the primary key of the lv entry localization
+	* @return the lv entry localization that was removed
+	* @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
+	*/
 	public static LVEntryLocalization remove(long lvEntryLocalizationId)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
 		return getPersistence().remove(lvEntryLocalizationId);
 	}
 
 	public static LVEntryLocalization updateImpl(
 		LVEntryLocalization lvEntryLocalization) {
-
 		return getPersistence().updateImpl(lvEntryLocalization);
 	}
 
 	/**
-	 * Returns the lv entry localization with the primary key or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
-	 *
-	 * @param lvEntryLocalizationId the primary key of the lv entry localization
-	 * @return the lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
+	* Returns the lv entry localization with the primary key or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
+	*
+	* @param lvEntryLocalizationId the primary key of the lv entry localization
+	* @return the lv entry localization
+	* @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
+	*/
 	public static LVEntryLocalization findByPrimaryKey(
-			long lvEntryLocalizationId)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
+		long lvEntryLocalizationId)
+		throws com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException {
 		return getPersistence().findByPrimaryKey(lvEntryLocalizationId);
 	}
 
 	/**
-	 * Returns the lv entry localization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param lvEntryLocalizationId the primary key of the lv entry localization
-	 * @return the lv entry localization, or <code>null</code> if a lv entry localization with the primary key could not be found
-	 */
+	* Returns the lv entry localization with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param lvEntryLocalizationId the primary key of the lv entry localization
+	* @return the lv entry localization, or <code>null</code> if a lv entry localization with the primary key could not be found
+	*/
 	public static LVEntryLocalization fetchByPrimaryKey(
 		long lvEntryLocalizationId) {
-
 		return getPersistence().fetchByPrimaryKey(lvEntryLocalizationId);
 	}
 
 	/**
-	 * Returns all the lv entry localizations.
-	 *
-	 * @return the lv entry localizations
-	 */
+	* Returns all the lv entry localizations.
+	*
+	* @return the lv entry localizations
+	*/
 	public static List<LVEntryLocalization> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	 * Returns a range of all the lv entry localizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entry localizations
-	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
-	 * @return the range of lv entry localizations
-	 */
+	* Returns a range of all the lv entry localizations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of lv entry localizations
+	* @param end the upper bound of the range of lv entry localizations (not inclusive)
+	* @return the range of lv entry localizations
+	*/
 	public static List<LVEntryLocalization> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the lv entry localizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entry localizations
-	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of lv entry localizations
-	 */
-	public static List<LVEntryLocalization> findAll(
-		int start, int end,
+	* Returns an ordered range of all the lv entry localizations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of lv entry localizations
+	* @param end the upper bound of the range of lv entry localizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of lv entry localizations
+	*/
+	public static List<LVEntryLocalization> findAll(int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator) {
-
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the lv entry localizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entry localizations
-	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of lv entry localizations
-	 */
-	public static List<LVEntryLocalization> findAll(
-		int start, int end,
+	* Returns an ordered range of all the lv entry localizations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of lv entry localizations
+	* @param end the upper bound of the range of lv entry localizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of lv entry localizations
+	*/
+	public static List<LVEntryLocalization> findAll(int start, int end,
 		OrderByComparator<LVEntryLocalization> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	 * Removes all the lv entry localizations from the database.
-	 */
+	* Removes all the lv entry localizations from the database.
+	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	 * Returns the number of lv entry localizations.
-	 *
-	 * @return the number of lv entry localizations
-	 */
+	* Returns the number of lv entry localizations.
+	*
+	* @return the number of lv entry localizations
+	*/
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -603,26 +561,17 @@ public class LVEntryLocalizationUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<LVEntryLocalizationPersistence, LVEntryLocalizationPersistence>
-			_serviceTracker;
+	private static ServiceTracker<LVEntryLocalizationPersistence, LVEntryLocalizationPersistence> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			LVEntryLocalizationPersistence.class);
+		Bundle bundle = FrameworkUtil.getBundle(LVEntryLocalizationPersistence.class);
 
-		ServiceTracker
-			<LVEntryLocalizationPersistence, LVEntryLocalizationPersistence>
-				serviceTracker =
-					new ServiceTracker
-						<LVEntryLocalizationPersistence,
-						 LVEntryLocalizationPersistence>(
-							 bundle.getBundleContext(),
-							 LVEntryLocalizationPersistence.class, null);
+		ServiceTracker<LVEntryLocalizationPersistence, LVEntryLocalizationPersistence> serviceTracker =
+			new ServiceTracker<LVEntryLocalizationPersistence, LVEntryLocalizationPersistence>(bundle.getBundleContext(),
+				LVEntryLocalizationPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

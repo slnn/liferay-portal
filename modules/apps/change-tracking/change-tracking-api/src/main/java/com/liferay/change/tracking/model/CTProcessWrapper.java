@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class CTProcessWrapper
-	extends BaseModelWrapper<CTProcess>
+public class CTProcessWrapper extends BaseModelWrapper<CTProcess>
 	implements CTProcess, ModelWrapper<CTProcess> {
-
 	public CTProcessWrapper(CTProcess ctProcess) {
 		super(ctProcess);
 	}
@@ -95,60 +93,60 @@ public class CTProcessWrapper
 	}
 
 	/**
-	 * Returns the background task ID of this ct process.
-	 *
-	 * @return the background task ID of this ct process
-	 */
+	* Returns the background task ID of this ct process.
+	*
+	* @return the background task ID of this ct process
+	*/
 	@Override
 	public long getBackgroundTaskId() {
 		return model.getBackgroundTaskId();
 	}
 
 	/**
-	 * Returns the company ID of this ct process.
-	 *
-	 * @return the company ID of this ct process
-	 */
+	* Returns the company ID of this ct process.
+	*
+	* @return the company ID of this ct process
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this ct process.
-	 *
-	 * @return the create date of this ct process
-	 */
+	* Returns the create date of this ct process.
+	*
+	* @return the create date of this ct process
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the ct collection ID of this ct process.
-	 *
-	 * @return the ct collection ID of this ct process
-	 */
+	* Returns the ct collection ID of this ct process.
+	*
+	* @return the ct collection ID of this ct process
+	*/
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
 	}
 
 	/**
-	 * Returns the ct process ID of this ct process.
-	 *
-	 * @return the ct process ID of this ct process
-	 */
+	* Returns the ct process ID of this ct process.
+	*
+	* @return the ct process ID of this ct process
+	*/
 	@Override
 	public long getCtProcessId() {
 		return model.getCtProcessId();
 	}
 
 	/**
-	 * Returns the primary key of this ct process.
-	 *
-	 * @return the primary key of this ct process
-	 */
+	* Returns the primary key of this ct process.
+	*
+	* @return the primary key of this ct process
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -157,25 +155,24 @@ public class CTProcessWrapper
 	@Override
 	public int getStatus()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the user ID of this ct process.
-	 *
-	 * @return the user ID of this ct process
-	 */
+	* Returns the user ID of this ct process.
+	*
+	* @return the user ID of this ct process
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user uuid of this ct process.
-	 *
-	 * @return the user uuid of this ct process
-	 */
+	* Returns the user uuid of this ct process.
+	*
+	* @return the user uuid of this ct process
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -187,80 +184,80 @@ public class CTProcessWrapper
 	}
 
 	/**
-	 * Sets the background task ID of this ct process.
-	 *
-	 * @param backgroundTaskId the background task ID of this ct process
-	 */
+	* Sets the background task ID of this ct process.
+	*
+	* @param backgroundTaskId the background task ID of this ct process
+	*/
 	@Override
 	public void setBackgroundTaskId(long backgroundTaskId) {
 		model.setBackgroundTaskId(backgroundTaskId);
 	}
 
 	/**
-	 * Sets the company ID of this ct process.
-	 *
-	 * @param companyId the company ID of this ct process
-	 */
+	* Sets the company ID of this ct process.
+	*
+	* @param companyId the company ID of this ct process
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this ct process.
-	 *
-	 * @param createDate the create date of this ct process
-	 */
+	* Sets the create date of this ct process.
+	*
+	* @param createDate the create date of this ct process
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the ct collection ID of this ct process.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ct process
-	 */
+	* Sets the ct collection ID of this ct process.
+	*
+	* @param ctCollectionId the ct collection ID of this ct process
+	*/
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
 	}
 
 	/**
-	 * Sets the ct process ID of this ct process.
-	 *
-	 * @param ctProcessId the ct process ID of this ct process
-	 */
+	* Sets the ct process ID of this ct process.
+	*
+	* @param ctProcessId the ct process ID of this ct process
+	*/
 	@Override
 	public void setCtProcessId(long ctProcessId) {
 		model.setCtProcessId(ctProcessId);
 	}
 
 	/**
-	 * Sets the primary key of this ct process.
-	 *
-	 * @param primaryKey the primary key of this ct process
-	 */
+	* Sets the primary key of this ct process.
+	*
+	* @param primaryKey the primary key of this ct process
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this ct process.
-	 *
-	 * @param userId the user ID of this ct process
-	 */
+	* Sets the user ID of this ct process.
+	*
+	* @param userId the user ID of this ct process
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user uuid of this ct process.
-	 *
-	 * @param userUuid the user uuid of this ct process
-	 */
+	* Sets the user uuid of this ct process.
+	*
+	* @param userUuid the user uuid of this ct process
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -270,5 +267,4 @@ public class CTProcessWrapper
 	protected CTProcessWrapper wrap(CTProcess ctProcess) {
 		return new CTProcessWrapper(ctProcess);
 	}
-
 }

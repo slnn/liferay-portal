@@ -32,9 +32,8 @@ import com.liferay.trash.service.TrashVersionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class TrashVersionBaseImpl
-	extends TrashVersionModelImpl implements TrashVersion {
-
+public abstract class TrashVersionBaseImpl extends TrashVersionModelImpl
+	implements TrashVersion {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class TrashVersionBaseImpl
 			TrashVersionLocalServiceUtil.updateTrashVersion(this);
 		}
 	}
-
 }

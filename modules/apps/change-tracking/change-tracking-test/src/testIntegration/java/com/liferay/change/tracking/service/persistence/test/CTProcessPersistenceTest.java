@@ -15,11 +15,13 @@
 package com.liferay.change.tracking.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.change.tracking.exception.NoSuchProcessException;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.change.tracking.service.persistence.CTProcessUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class CTProcessPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.change.tracking.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.change.tracking.service"));
 
 	@Before
 	public void setUp() {
@@ -105,8 +106,7 @@ public class CTProcessPersistenceTest {
 
 		_persistence.remove(newCTProcess);
 
-		CTProcess existingCTProcess = _persistence.fetchByPrimaryKey(
-			newCTProcess.getPrimaryKey());
+		CTProcess existingCTProcess = _persistence.fetchByPrimaryKey(newCTProcess.getPrimaryKey());
 
 		Assert.assertNull(existingCTProcess);
 	}
@@ -134,23 +134,20 @@ public class CTProcessPersistenceTest {
 
 		_ctProcesses.add(_persistence.update(newCTProcess));
 
-		CTProcess existingCTProcess = _persistence.findByPrimaryKey(
-			newCTProcess.getPrimaryKey());
+		CTProcess existingCTProcess = _persistence.findByPrimaryKey(newCTProcess.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCTProcess.getCtProcessId(), newCTProcess.getCtProcessId());
-		Assert.assertEquals(
-			existingCTProcess.getCompanyId(), newCTProcess.getCompanyId());
-		Assert.assertEquals(
-			existingCTProcess.getUserId(), newCTProcess.getUserId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCTProcess.getCreateDate()),
+		Assert.assertEquals(existingCTProcess.getCtProcessId(),
+			newCTProcess.getCtProcessId());
+		Assert.assertEquals(existingCTProcess.getCompanyId(),
+			newCTProcess.getCompanyId());
+		Assert.assertEquals(existingCTProcess.getUserId(),
+			newCTProcess.getUserId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCTProcess.getCreateDate()),
 			Time.getShortTimestamp(newCTProcess.getCreateDate()));
-		Assert.assertEquals(
-			existingCTProcess.getCtCollectionId(),
+		Assert.assertEquals(existingCTProcess.getCtCollectionId(),
 			newCTProcess.getCtCollectionId());
-		Assert.assertEquals(
-			existingCTProcess.getBackgroundTaskId(),
+		Assert.assertEquals(existingCTProcess.getBackgroundTaskId(),
 			newCTProcess.getBackgroundTaskId());
 	}
 
@@ -179,8 +176,7 @@ public class CTProcessPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CTProcess newCTProcess = addCTProcess();
 
-		CTProcess existingCTProcess = _persistence.findByPrimaryKey(
-			newCTProcess.getPrimaryKey());
+		CTProcess existingCTProcess = _persistence.findByPrimaryKey(newCTProcess.getPrimaryKey());
 
 		Assert.assertEquals(existingCTProcess, newCTProcess);
 	}
@@ -194,23 +190,21 @@ public class CTProcessPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<CTProcess> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"CTProcess", "ctProcessId", true, "companyId", true, "userId", true,
-			"createDate", true, "ctCollectionId", true, "backgroundTaskId",
-			true);
+		return OrderByComparatorFactoryUtil.create("CTProcess", "ctProcessId",
+			true, "companyId", true, "userId", true, "createDate", true,
+			"ctCollectionId", true, "backgroundTaskId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		CTProcess newCTProcess = addCTProcess();
 
-		CTProcess existingCTProcess = _persistence.fetchByPrimaryKey(
-			newCTProcess.getPrimaryKey());
+		CTProcess existingCTProcess = _persistence.fetchByPrimaryKey(newCTProcess.getPrimaryKey());
 
 		Assert.assertEquals(existingCTProcess, newCTProcess);
 	}
@@ -227,7 +221,6 @@ public class CTProcessPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		CTProcess newCTProcess1 = addCTProcess();
 		CTProcess newCTProcess2 = addCTProcess();
 
@@ -236,20 +229,18 @@ public class CTProcessPersistenceTest {
 		primaryKeys.add(newCTProcess1.getPrimaryKey());
 		primaryKeys.add(newCTProcess2.getPrimaryKey());
 
-		Map<Serializable, CTProcess> ctProcesses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTProcess> ctProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ctProcesses.size());
-		Assert.assertEquals(
-			newCTProcess1, ctProcesses.get(newCTProcess1.getPrimaryKey()));
-		Assert.assertEquals(
-			newCTProcess2, ctProcesses.get(newCTProcess2.getPrimaryKey()));
+		Assert.assertEquals(newCTProcess1,
+			ctProcesses.get(newCTProcess1.getPrimaryKey()));
+		Assert.assertEquals(newCTProcess2,
+			ctProcesses.get(newCTProcess2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -259,8 +250,7 @@ public class CTProcessPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CTProcess> ctProcesses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTProcess> ctProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ctProcesses.isEmpty());
 	}
@@ -268,7 +258,6 @@ public class CTProcessPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		CTProcess newCTProcess = addCTProcess();
 
 		long pk = RandomTestUtil.nextLong();
@@ -278,57 +267,52 @@ public class CTProcessPersistenceTest {
 		primaryKeys.add(newCTProcess.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CTProcess> ctProcesses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTProcess> ctProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ctProcesses.size());
-		Assert.assertEquals(
-			newCTProcess, ctProcesses.get(newCTProcess.getPrimaryKey()));
+		Assert.assertEquals(newCTProcess,
+			ctProcesses.get(newCTProcess.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CTProcess> ctProcesses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTProcess> ctProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ctProcesses.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		CTProcess newCTProcess = addCTProcess();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCTProcess.getPrimaryKey());
 
-		Map<Serializable, CTProcess> ctProcesses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTProcess> ctProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ctProcesses.size());
-		Assert.assertEquals(
-			newCTProcess, ctProcesses.get(newCTProcess.getPrimaryKey()));
+		Assert.assertEquals(newCTProcess,
+			ctProcesses.get(newCTProcess.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			CTProcessLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CTProcessLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<CTProcess>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CTProcess>() {
 				@Override
 				public void performAction(CTProcess ctProcess) {
 					Assert.assertNotNull(ctProcess);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -337,18 +321,17 @@ public class CTProcessPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		CTProcess newCTProcess = addCTProcess();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTProcess.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTProcess.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"ctProcessId", newCTProcess.getCtProcessId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ctProcessId",
+				newCTProcess.getCtProcessId()));
 
-		List<CTProcess> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CTProcess> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -359,34 +342,31 @@ public class CTProcessPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTProcess.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTProcess.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"ctProcessId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ctProcessId",
+				RandomTestUtil.nextLong()));
 
-		List<CTProcess> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CTProcess> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		CTProcess newCTProcess = addCTProcess();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTProcess.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTProcess.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("ctProcessId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ctProcessId"));
 
 		Object newCtProcessId = newCTProcess.getCtProcessId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ctProcessId", new Object[] {newCtProcessId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ctProcessId",
+				new Object[] { newCtProcessId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -399,15 +379,13 @@ public class CTProcessPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTProcess.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTProcess.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("ctProcessId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ctProcessId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ctProcessId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ctProcessId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -437,5 +415,4 @@ public class CTProcessPersistenceTest {
 	private List<CTProcess> _ctProcesses = new ArrayList<CTProcess>();
 	private CTProcessPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

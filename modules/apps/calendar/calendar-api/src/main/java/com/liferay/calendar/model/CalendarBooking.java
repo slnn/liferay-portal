@@ -30,15 +30,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.calendar.model.impl.CalendarBookingImpl")
 @ProviderType
 public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarBookingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CalendarBooking, Long>
-		CALENDAR_BOOKING_ID_ACCESSOR = new Accessor<CalendarBooking, Long>() {
-
+	public static final Accessor<CalendarBooking, Long> CALENDAR_BOOKING_ID_ACCESSOR =
+		new Accessor<CalendarBooking, Long>() {
 			@Override
 			public Long get(CalendarBooking calendarBooking) {
 				return calendarBooking.getCalendarBookingId();
@@ -53,7 +51,6 @@ public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
 			public Class<CalendarBooking> getTypeClass() {
 				return CalendarBooking.class;
 			}
-
 		};
 
 	public Calendar getCalendar()
@@ -66,10 +63,9 @@ public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
 
 	public long getDuration();
 
-	public com.liferay.calendar.notification.NotificationType
-		getFirstReminderNotificationType();
+	public com.liferay.calendar.notification.NotificationType getFirstReminderNotificationType();
 
-	@com.liferay.portal.kernel.json.JSON
+	@com.liferay.portal.kernel.json.JSON()
 	public int getInstanceIndex();
 
 	public CalendarBooking getParentCalendarBooking()
@@ -77,8 +73,7 @@ public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
 
 	public com.liferay.calendar.recurrence.Recurrence getRecurrenceObj();
 
-	public com.liferay.calendar.notification.NotificationType
-		getSecondReminderNotificationType();
+	public com.liferay.calendar.notification.NotificationType getSecondReminderNotificationType();
 
 	public java.util.TimeZone getTimeZone();
 
@@ -88,7 +83,6 @@ public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
 
 	public boolean isRecurring();
 
-	@com.liferay.portal.kernel.json.JSON
+	@com.liferay.portal.kernel.json.JSON()
 	public void setInstanceIndex(int instanceIndex);
-
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,7 +39,6 @@ import java.math.BigDecimal;
  */
 @ProviderType
 public interface BigDecimalEntryModel extends BaseModel<BigDecimalEntry> {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,5 +143,4 @@ public interface BigDecimalEntryModel extends BaseModel<BigDecimalEntry> {
 
 	@Override
 	public String toXmlString();
-
 }

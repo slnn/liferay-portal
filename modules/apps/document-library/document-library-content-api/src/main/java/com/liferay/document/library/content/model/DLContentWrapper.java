@@ -34,10 +34,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DLContentWrapper
-	extends BaseModelWrapper<DLContent>
+public class DLContentWrapper extends BaseModelWrapper<DLContent>
 	implements DLContent, ModelWrapper<DLContent> {
-
 	public DLContentWrapper(DLContent dlContent) {
 		super(dlContent);
 	}
@@ -110,90 +108,90 @@ public class DLContentWrapper
 	}
 
 	/**
-	 * Returns the company ID of this document library content.
-	 *
-	 * @return the company ID of this document library content
-	 */
+	* Returns the company ID of this document library content.
+	*
+	* @return the company ID of this document library content
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the content ID of this document library content.
-	 *
-	 * @return the content ID of this document library content
-	 */
+	* Returns the content ID of this document library content.
+	*
+	* @return the content ID of this document library content
+	*/
 	@Override
 	public long getContentId() {
 		return model.getContentId();
 	}
 
 	/**
-	 * Returns the data of this document library content.
-	 *
-	 * @return the data of this document library content
-	 */
+	* Returns the data of this document library content.
+	*
+	* @return the data of this document library content
+	*/
 	@Override
 	public Blob getData() {
 		return model.getData();
 	}
 
 	/**
-	 * Returns the group ID of this document library content.
-	 *
-	 * @return the group ID of this document library content
-	 */
+	* Returns the group ID of this document library content.
+	*
+	* @return the group ID of this document library content
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the path of this document library content.
-	 *
-	 * @return the path of this document library content
-	 */
+	* Returns the path of this document library content.
+	*
+	* @return the path of this document library content
+	*/
 	@Override
 	public String getPath() {
 		return model.getPath();
 	}
 
 	/**
-	 * Returns the primary key of this document library content.
-	 *
-	 * @return the primary key of this document library content
-	 */
+	* Returns the primary key of this document library content.
+	*
+	* @return the primary key of this document library content
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the repository ID of this document library content.
-	 *
-	 * @return the repository ID of this document library content
-	 */
+	* Returns the repository ID of this document library content.
+	*
+	* @return the repository ID of this document library content
+	*/
 	@Override
 	public long getRepositoryId() {
 		return model.getRepositoryId();
 	}
 
 	/**
-	 * Returns the size of this document library content.
-	 *
-	 * @return the size of this document library content
-	 */
+	* Returns the size of this document library content.
+	*
+	* @return the size of this document library content
+	*/
 	@Override
 	public long getSize() {
 		return model.getSize();
 	}
 
 	/**
-	 * Returns the version of this document library content.
-	 *
-	 * @return the version of this document library content
-	 */
+	* Returns the version of this document library content.
+	*
+	* @return the version of this document library content
+	*/
 	@Override
 	public String getVersion() {
 		return model.getVersion();
@@ -205,90 +203,90 @@ public class DLContentWrapper
 	}
 
 	/**
-	 * Sets the company ID of this document library content.
-	 *
-	 * @param companyId the company ID of this document library content
-	 */
+	* Sets the company ID of this document library content.
+	*
+	* @param companyId the company ID of this document library content
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the content ID of this document library content.
-	 *
-	 * @param contentId the content ID of this document library content
-	 */
+	* Sets the content ID of this document library content.
+	*
+	* @param contentId the content ID of this document library content
+	*/
 	@Override
 	public void setContentId(long contentId) {
 		model.setContentId(contentId);
 	}
 
 	/**
-	 * Sets the data of this document library content.
-	 *
-	 * @param data the data of this document library content
-	 */
+	* Sets the data of this document library content.
+	*
+	* @param data the data of this document library content
+	*/
 	@Override
 	public void setData(Blob data) {
 		model.setData(data);
 	}
 
 	/**
-	 * Sets the group ID of this document library content.
-	 *
-	 * @param groupId the group ID of this document library content
-	 */
+	* Sets the group ID of this document library content.
+	*
+	* @param groupId the group ID of this document library content
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the path of this document library content.
-	 *
-	 * @param path the path of this document library content
-	 */
+	* Sets the path of this document library content.
+	*
+	* @param path the path of this document library content
+	*/
 	@Override
 	public void setPath(String path) {
 		model.setPath(path);
 	}
 
 	/**
-	 * Sets the primary key of this document library content.
-	 *
-	 * @param primaryKey the primary key of this document library content
-	 */
+	* Sets the primary key of this document library content.
+	*
+	* @param primaryKey the primary key of this document library content
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the repository ID of this document library content.
-	 *
-	 * @param repositoryId the repository ID of this document library content
-	 */
+	* Sets the repository ID of this document library content.
+	*
+	* @param repositoryId the repository ID of this document library content
+	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
 		model.setRepositoryId(repositoryId);
 	}
 
 	/**
-	 * Sets the size of this document library content.
-	 *
-	 * @param size the size of this document library content
-	 */
+	* Sets the size of this document library content.
+	*
+	* @param size the size of this document library content
+	*/
 	@Override
 	public void setSize(long size) {
 		model.setSize(size);
 	}
 
 	/**
-	 * Sets the version of this document library content.
-	 *
-	 * @param version the version of this document library content
-	 */
+	* Sets the version of this document library content.
+	*
+	* @param version the version of this document library content
+	*/
 	@Override
 	public void setVersion(String version) {
 		model.setVersion(version);
@@ -298,5 +296,4 @@ public class DLContentWrapper
 	protected DLContentWrapper wrap(DLContent dlContent) {
 		return new DLContentWrapper(dlContent);
 	}
-
 }

@@ -31,13 +31,11 @@ import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
  * @generated
  */
 @ProviderType
-public abstract class BigDecimalEntryBaseImpl
-	extends BigDecimalEntryModelImpl implements BigDecimalEntry {
-
+public abstract class BigDecimalEntryBaseImpl extends BigDecimalEntryModelImpl
+	implements BigDecimalEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a big decimal entry model instance should use the <code>BigDecimalEntry</code> interface instead.
 	 */
-
 }

@@ -32,9 +32,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SyncDLFileVersionDiffModel
-	extends BaseModel<SyncDLFileVersionDiff> {
-
+public interface SyncDLFileVersionDiffModel extends BaseModel<SyncDLFileVersionDiff> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -152,5 +150,4 @@ public interface SyncDLFileVersionDiffModel
 	 * @param expirationDate the expiration date of this sync dl file version diff
 	 */
 	public void setExpirationDate(Date expirationDate);
-
 }

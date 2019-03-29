@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsChoiceModel;
 import com.liferay.polls.model.PollsChoiceSoap;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,27 +74,29 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class PollsChoiceModelImpl
-	extends BaseModelImpl<PollsChoice> implements PollsChoiceModel {
-
+public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
+	implements PollsChoiceModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a polls choice model instance should use the <code>PollsChoice</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "PollsChoice";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"choiceId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"questionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "choiceId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "questionId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -107,46 +113,26 @@ public class PollsChoiceModelImpl
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsChoice";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY pollsChoice.questionId ASC, pollsChoice.name ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY PollsChoice.questionId ASC, PollsChoice.name ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY pollsChoice.questionId ASC, pollsChoice.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY PollsChoice.questionId ASC, PollsChoice.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.polls.model.PollsChoice"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.polls.model.PollsChoice"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.polls.model.PollsChoice"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.polls.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.polls.model.PollsChoice"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.polls.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.polls.model.PollsChoice"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.polls.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.polls.model.PollsChoice"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-
 	public static final long NAME_COLUMN_BITMASK = 4L;
-
 	public static final long QUESTIONID_COLUMN_BITMASK = 8L;
-
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -189,8 +175,7 @@ public class PollsChoiceModelImpl
 			return null;
 		}
 
-		List<PollsChoice> models = new ArrayList<PollsChoice>(
-			soapModels.length);
+		List<PollsChoice> models = new ArrayList<PollsChoice>(soapModels.length);
 
 		for (PollsChoiceSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -199,9 +184,8 @@ public class PollsChoiceModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.polls.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.polls.model.PollsChoice"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.polls.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.polls.model.PollsChoice"));
 
 	public PollsChoiceModelImpl() {
 	}
@@ -240,18 +224,13 @@ public class PollsChoiceModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<PollsChoice, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<PollsChoice, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<PollsChoice, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<PollsChoice, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((PollsChoice)this));
 		}
 
@@ -263,97 +242,64 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<PollsChoice, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<PollsChoice, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<PollsChoice, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<PollsChoice, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(PollsChoice)this, entry.getValue());
+				attributeSetterBiConsumer.accept((PollsChoice)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<PollsChoice, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<PollsChoice, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<PollsChoice, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<PollsChoice, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<PollsChoice, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<PollsChoice, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<PollsChoice, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PollsChoice, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<PollsChoice, Object>>();
-		Map<String, BiConsumer<PollsChoice, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<PollsChoice, ?>>();
+		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PollsChoice, Object>>();
+		Map<String, BiConsumer<PollsChoice, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PollsChoice, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", PollsChoice::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<PollsChoice, String>)PollsChoice::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<PollsChoice, String>)PollsChoice::setUuid);
 		attributeGetterFunctions.put("choiceId", PollsChoice::getChoiceId);
-		attributeSetterBiConsumers.put(
-			"choiceId",
-			(BiConsumer<PollsChoice, Long>)PollsChoice::setChoiceId);
+		attributeSetterBiConsumers.put("choiceId", (BiConsumer<PollsChoice, Long>)PollsChoice::setChoiceId);
 		attributeGetterFunctions.put("groupId", PollsChoice::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<PollsChoice, Long>)PollsChoice::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<PollsChoice, Long>)PollsChoice::setGroupId);
 		attributeGetterFunctions.put("companyId", PollsChoice::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<PollsChoice, Long>)PollsChoice::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PollsChoice, Long>)PollsChoice::setCompanyId);
 		attributeGetterFunctions.put("userId", PollsChoice::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<PollsChoice, Long>)PollsChoice::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PollsChoice, Long>)PollsChoice::setUserId);
 		attributeGetterFunctions.put("userName", PollsChoice::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<PollsChoice, String>)PollsChoice::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<PollsChoice, String>)PollsChoice::setUserName);
 		attributeGetterFunctions.put("createDate", PollsChoice::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<PollsChoice, Date>)PollsChoice::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", PollsChoice::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<PollsChoice, Date>)PollsChoice::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PollsChoice, Date>)PollsChoice::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", PollsChoice::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<PollsChoice, Date>)PollsChoice::setModifiedDate);
 		attributeGetterFunctions.put("questionId", PollsChoice::getQuestionId);
-		attributeSetterBiConsumers.put(
-			"questionId",
-			(BiConsumer<PollsChoice, Long>)PollsChoice::setQuestionId);
+		attributeSetterBiConsumers.put("questionId", (BiConsumer<PollsChoice, Long>)PollsChoice::setQuestionId);
 		attributeGetterFunctions.put("name", PollsChoice::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<PollsChoice, String>)PollsChoice::setName);
-		attributeGetterFunctions.put(
-			"description", PollsChoice::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<PollsChoice, String>)PollsChoice::setDescription);
-		attributeGetterFunctions.put(
-			"lastPublishDate", PollsChoice::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<PollsChoice, Date>)PollsChoice::setLastPublishDate);
+		attributeSetterBiConsumers.put("name", (BiConsumer<PollsChoice, String>)PollsChoice::setName);
+		attributeGetterFunctions.put("description", PollsChoice::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<PollsChoice, String>)PollsChoice::setDescription);
+		attributeGetterFunctions.put("lastPublishDate", PollsChoice::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<PollsChoice, Date>)PollsChoice::setLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -591,8 +537,8 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -624,21 +570,18 @@ public class PollsChoiceModelImpl
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
-
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
+			setDescription(LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
+			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -654,16 +597,14 @@ public class PollsChoiceModelImpl
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -680,8 +621,8 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(PollsChoice.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				PollsChoice.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -690,8 +631,8 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), PollsChoice.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			PollsChoice.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -716,8 +657,7 @@ public class PollsChoiceModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -735,15 +675,12 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			PollsChoice.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(PollsChoice.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -752,7 +689,6 @@ public class PollsChoiceModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -760,21 +696,19 @@ public class PollsChoiceModelImpl
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(
-				getDescription(defaultLocale), defaultLocale, defaultLocale);
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 	}
 
 	@Override
 	public PollsChoice toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PollsChoice)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (PollsChoice)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -876,15 +810,13 @@ public class PollsChoiceModelImpl
 
 		pollsChoiceModelImpl._setOriginalGroupId = false;
 
-		pollsChoiceModelImpl._originalCompanyId =
-			pollsChoiceModelImpl._companyId;
+		pollsChoiceModelImpl._originalCompanyId = pollsChoiceModelImpl._companyId;
 
 		pollsChoiceModelImpl._setOriginalCompanyId = false;
 
 		pollsChoiceModelImpl._setModifiedDate = false;
 
-		pollsChoiceModelImpl._originalQuestionId =
-			pollsChoiceModelImpl._questionId;
+		pollsChoiceModelImpl._originalQuestionId = pollsChoiceModelImpl._questionId;
 
 		pollsChoiceModelImpl._setOriginalQuestionId = false;
 
@@ -895,8 +827,7 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public CacheModel<PollsChoice> toCacheModel() {
-		PollsChoiceCacheModel pollsChoiceCacheModel =
-			new PollsChoiceCacheModel();
+		PollsChoiceCacheModel pollsChoiceCacheModel = new PollsChoiceCacheModel();
 
 		pollsChoiceCacheModel.uuid = getUuid();
 
@@ -972,20 +903,16 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<PollsChoice, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<PollsChoice, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<PollsChoice, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<PollsChoice, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1004,22 +931,18 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<PollsChoice, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<PollsChoice, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<PollsChoice, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<PollsChoice, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<PollsChoice, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1033,12 +956,10 @@ public class PollsChoiceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PollsChoice.class.getClassLoader();
+	private static final ClassLoader _classLoader = PollsChoice.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PollsChoice.class, ModelWrapper.class
-	};
-
+			PollsChoice.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _choiceId;
@@ -1063,5 +984,4 @@ public class PollsChoiceModelImpl
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private PollsChoice _escapedModel;
-
 }

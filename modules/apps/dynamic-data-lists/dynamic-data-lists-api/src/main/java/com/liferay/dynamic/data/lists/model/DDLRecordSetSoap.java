@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class DDLRecordSetSoap implements Serializable {
-
 	public static DDLRecordSetSoap toSoapModel(DDLRecordSet model) {
 		DDLRecordSetSoap soapModel = new DDLRecordSetSoap();
 
@@ -86,8 +85,7 @@ public class DDLRecordSetSoap implements Serializable {
 	}
 
 	public static DDLRecordSetSoap[] toSoapModels(List<DDLRecordSet> models) {
-		List<DDLRecordSetSoap> soapModels = new ArrayList<DDLRecordSetSoap>(
-			models.size());
+		List<DDLRecordSetSoap> soapModels = new ArrayList<DDLRecordSetSoap>(models.size());
 
 		for (DDLRecordSet model : models) {
 			soapModels.add(toSoapModel(model));
@@ -287,5 +285,4 @@ public class DDLRecordSetSoap implements Serializable {
 	private int _scope;
 	private String _settings;
 	private Date _lastPublishDate;
-
 }

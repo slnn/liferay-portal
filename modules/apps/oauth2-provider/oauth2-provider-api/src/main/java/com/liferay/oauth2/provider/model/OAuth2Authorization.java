@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see OAuth2AuthorizationModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.oauth2.provider.model.impl.OAuth2AuthorizationImpl"
-)
+@ImplementationClassName("com.liferay.oauth2.provider.model.impl.OAuth2AuthorizationImpl")
 @ProviderType
-public interface OAuth2Authorization
-	extends OAuth2AuthorizationModel, PersistedModel {
-
+public interface OAuth2Authorization extends OAuth2AuthorizationModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2AuthorizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuth2Authorization, Long>
-		O_AUTH2_AUTHORIZATION_ID_ACCESSOR =
-			new Accessor<OAuth2Authorization, Long>() {
+	public static final Accessor<OAuth2Authorization, Long> O_AUTH2_AUTHORIZATION_ID_ACCESSOR =
+		new Accessor<OAuth2Authorization, Long>() {
+			@Override
+			public Long get(OAuth2Authorization oAuth2Authorization) {
+				return oAuth2Authorization.getOAuth2AuthorizationId();
+			}
 
-				@Override
-				public Long get(OAuth2Authorization oAuth2Authorization) {
-					return oAuth2Authorization.getOAuth2AuthorizationId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<OAuth2Authorization> getTypeClass() {
-					return OAuth2Authorization.class;
-				}
-
-			};
-
+			@Override
+			public Class<OAuth2Authorization> getTypeClass() {
+				return OAuth2Authorization.class;
+			}
+		};
 }

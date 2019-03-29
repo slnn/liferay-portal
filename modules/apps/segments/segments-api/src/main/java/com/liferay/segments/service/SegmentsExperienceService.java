@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
 import com.liferay.segments.model.SegmentsExperience;
 
 import java.util.List;
@@ -44,40 +45,30 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=segments",
-		"json.web.service.context.path=SegmentsExperience"
-	},
-	service = SegmentsExperienceService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=segments", "json.web.service.context.path=SegmentsExperience"}, service = SegmentsExperienceService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface SegmentsExperienceService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsExperienceServiceUtil} to access the segments experience remote service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperienceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, int priority, boolean active,
-			ServiceContext serviceContext)
+	public SegmentsExperience addSegmentsExperience(long segmentsEntryId,
+		long classNameId, long classPK, Map<Locale, String> nameMap,
+		int priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsExperience deleteSegmentsExperience(
-			long segmentsExperienceId)
-		throws PortalException;
+		long segmentsExperienceId) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -85,20 +76,17 @@ public interface SegmentsExperienceService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long classNameId, long classPK, boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
-		throws PortalException;
+	public int getSegmentsExperiencesCount(long groupId, long classNameId,
+		long classPK, boolean active) throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, int priority, boolean active)
+		long segmentsExperienceId, long segmentsEntryId,
+		Map<Locale, String> nameMap, int priority, boolean active)
 		throws PortalException;
-
 }

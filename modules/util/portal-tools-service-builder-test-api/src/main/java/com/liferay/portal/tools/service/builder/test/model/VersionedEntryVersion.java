@@ -26,36 +26,29 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see VersionedEntryVersionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryVersionImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryVersionImpl")
 @ProviderType
 public interface VersionedEntryVersion extends VersionedEntryVersionModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<VersionedEntryVersion, Long>
-		VERSIONED_ENTRY_VERSION_ID_ACCESSOR =
-			new Accessor<VersionedEntryVersion, Long>() {
+	public static final Accessor<VersionedEntryVersion, Long> VERSIONED_ENTRY_VERSION_ID_ACCESSOR =
+		new Accessor<VersionedEntryVersion, Long>() {
+			@Override
+			public Long get(VersionedEntryVersion versionedEntryVersion) {
+				return versionedEntryVersion.getVersionedEntryVersionId();
+			}
 
-				@Override
-				public Long get(VersionedEntryVersion versionedEntryVersion) {
-					return versionedEntryVersion.getVersionedEntryVersionId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<VersionedEntryVersion> getTypeClass() {
-					return VersionedEntryVersion.class;
-				}
-
-			};
-
+			@Override
+			public Class<VersionedEntryVersion> getTypeClass() {
+				return VersionedEntryVersion.class;
+			}
+		};
 }

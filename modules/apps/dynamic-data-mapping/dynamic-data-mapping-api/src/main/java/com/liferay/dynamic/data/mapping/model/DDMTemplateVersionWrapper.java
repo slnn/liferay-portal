@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DDMTemplateVersionWrapper
-	extends BaseModelWrapper<DDMTemplateVersion>
+public class DDMTemplateVersionWrapper extends BaseModelWrapper<DDMTemplateVersion>
 	implements DDMTemplateVersion, ModelWrapper<DDMTemplateVersion> {
-
 	public DDMTemplateVersionWrapper(DDMTemplateVersion ddmTemplateVersion) {
 		super(ddmTemplateVersion);
 	}
@@ -184,50 +182,50 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this ddm template version.
-	 *
-	 * @return the fully qualified class name of this ddm template version
-	 */
+	* Returns the fully qualified class name of this ddm template version.
+	*
+	* @return the fully qualified class name of this ddm template version
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this ddm template version.
-	 *
-	 * @return the class name ID of this ddm template version
-	 */
+	* Returns the class name ID of this ddm template version.
+	*
+	* @return the class name ID of this ddm template version
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this ddm template version.
-	 *
-	 * @return the class pk of this ddm template version
-	 */
+	* Returns the class pk of this ddm template version.
+	*
+	* @return the class pk of this ddm template version
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this ddm template version.
-	 *
-	 * @return the company ID of this ddm template version
-	 */
+	* Returns the company ID of this ddm template version.
+	*
+	* @return the company ID of this ddm template version
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this ddm template version.
-	 *
-	 * @return the create date of this ddm template version
-	 */
+	* Returns the create date of this ddm template version.
+	*
+	* @return the create date of this ddm template version
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
@@ -239,56 +237,56 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Returns the description of this ddm template version.
-	 *
-	 * @return the description of this ddm template version
-	 */
+	* Returns the description of this ddm template version.
+	*
+	* @return the description of this ddm template version
+	*/
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	 * Returns the localized description of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized description of this ddm template version
-	 */
+	* Returns the localized description of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this ddm template version
+	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
 		return model.getDescription(locale);
 	}
 
 	/**
-	 * Returns the localized description of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this ddm template version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
+	* Returns the localized description of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddm template version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return model.getDescription(locale, useDefault);
 	}
 
 	/**
-	 * Returns the localized description of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized description of this ddm template version
-	 */
+	* Returns the localized description of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this ddm template version
+	*/
 	@Override
 	public String getDescription(String languageId) {
 		return model.getDescription(languageId);
 	}
 
 	/**
-	 * Returns the localized description of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this ddm template version
-	 */
+	* Returns the localized description of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this ddm template version
+	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
 		return model.getDescription(languageId, useDefault);
@@ -305,86 +303,86 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Returns a map of the locales and localized descriptions of this ddm template version.
-	 *
-	 * @return the locales and localized descriptions of this ddm template version
-	 */
+	* Returns a map of the locales and localized descriptions of this ddm template version.
+	*
+	* @return the locales and localized descriptions of this ddm template version
+	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
 		return model.getDescriptionMap();
 	}
 
 	/**
-	 * Returns the group ID of this ddm template version.
-	 *
-	 * @return the group ID of this ddm template version
-	 */
+	* Returns the group ID of this ddm template version.
+	*
+	* @return the group ID of this ddm template version
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the language of this ddm template version.
-	 *
-	 * @return the language of this ddm template version
-	 */
+	* Returns the language of this ddm template version.
+	*
+	* @return the language of this ddm template version
+	*/
 	@Override
 	public String getLanguage() {
 		return model.getLanguage();
 	}
 
 	/**
-	 * Returns the name of this ddm template version.
-	 *
-	 * @return the name of this ddm template version
-	 */
+	* Returns the name of this ddm template version.
+	*
+	* @return the name of this ddm template version
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	 * Returns the localized name of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this ddm template version
-	 */
+	* Returns the localized name of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this ddm template version
+	*/
 	@Override
 	public String getName(java.util.Locale locale) {
 		return model.getName(locale);
 	}
 
 	/**
-	 * Returns the localized name of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this ddm template version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
+	* Returns the localized name of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddm template version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
 		return model.getName(locale, useDefault);
 	}
 
 	/**
-	 * Returns the localized name of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this ddm template version
-	 */
+	* Returns the localized name of this ddm template version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this ddm template version
+	*/
 	@Override
 	public String getName(String languageId) {
 		return model.getName(languageId);
 	}
 
 	/**
-	 * Returns the localized name of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this ddm template version
-	 */
+	* Returns the localized name of this ddm template version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this ddm template version
+	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
 		return model.getName(languageId, useDefault);
@@ -401,80 +399,80 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Returns a map of the locales and localized names of this ddm template version.
-	 *
-	 * @return the locales and localized names of this ddm template version
-	 */
+	* Returns a map of the locales and localized names of this ddm template version.
+	*
+	* @return the locales and localized names of this ddm template version
+	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
 		return model.getNameMap();
 	}
 
 	/**
-	 * Returns the primary key of this ddm template version.
-	 *
-	 * @return the primary key of this ddm template version
-	 */
+	* Returns the primary key of this ddm template version.
+	*
+	* @return the primary key of this ddm template version
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the script of this ddm template version.
-	 *
-	 * @return the script of this ddm template version
-	 */
+	* Returns the script of this ddm template version.
+	*
+	* @return the script of this ddm template version
+	*/
 	@Override
 	public String getScript() {
 		return model.getScript();
 	}
 
 	/**
-	 * Returns the status of this ddm template version.
-	 *
-	 * @return the status of this ddm template version
-	 */
+	* Returns the status of this ddm template version.
+	*
+	* @return the status of this ddm template version
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the status by user ID of this ddm template version.
-	 *
-	 * @return the status by user ID of this ddm template version
-	 */
+	* Returns the status by user ID of this ddm template version.
+	*
+	* @return the status by user ID of this ddm template version
+	*/
 	@Override
 	public long getStatusByUserId() {
 		return model.getStatusByUserId();
 	}
 
 	/**
-	 * Returns the status by user name of this ddm template version.
-	 *
-	 * @return the status by user name of this ddm template version
-	 */
+	* Returns the status by user name of this ddm template version.
+	*
+	* @return the status by user name of this ddm template version
+	*/
 	@Override
 	public String getStatusByUserName() {
 		return model.getStatusByUserName();
 	}
 
 	/**
-	 * Returns the status by user uuid of this ddm template version.
-	 *
-	 * @return the status by user uuid of this ddm template version
-	 */
+	* Returns the status by user uuid of this ddm template version.
+	*
+	* @return the status by user uuid of this ddm template version
+	*/
 	@Override
 	public String getStatusByUserUuid() {
 		return model.getStatusByUserUuid();
 	}
 
 	/**
-	 * Returns the status date of this ddm template version.
-	 *
-	 * @return the status date of this ddm template version
-	 */
+	* Returns the status date of this ddm template version.
+	*
+	* @return the status date of this ddm template version
+	*/
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
@@ -483,145 +481,144 @@ public class DDMTemplateVersionWrapper
 	@Override
 	public DDMTemplate getTemplate()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getTemplate();
 	}
 
 	/**
-	 * Returns the template ID of this ddm template version.
-	 *
-	 * @return the template ID of this ddm template version
-	 */
+	* Returns the template ID of this ddm template version.
+	*
+	* @return the template ID of this ddm template version
+	*/
 	@Override
 	public long getTemplateId() {
 		return model.getTemplateId();
 	}
 
 	/**
-	 * Returns the template version ID of this ddm template version.
-	 *
-	 * @return the template version ID of this ddm template version
-	 */
+	* Returns the template version ID of this ddm template version.
+	*
+	* @return the template version ID of this ddm template version
+	*/
 	@Override
 	public long getTemplateVersionId() {
 		return model.getTemplateVersionId();
 	}
 
 	/**
-	 * Returns the user ID of this ddm template version.
-	 *
-	 * @return the user ID of this ddm template version
-	 */
+	* Returns the user ID of this ddm template version.
+	*
+	* @return the user ID of this ddm template version
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this ddm template version.
-	 *
-	 * @return the user name of this ddm template version
-	 */
+	* Returns the user name of this ddm template version.
+	*
+	* @return the user name of this ddm template version
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this ddm template version.
-	 *
-	 * @return the user uuid of this ddm template version
-	 */
+	* Returns the user uuid of this ddm template version.
+	*
+	* @return the user uuid of this ddm template version
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the version of this ddm template version.
-	 *
-	 * @return the version of this ddm template version
-	 */
+	* Returns the version of this ddm template version.
+	*
+	* @return the version of this ddm template version
+	*/
 	@Override
 	public String getVersion() {
 		return model.getVersion();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is approved.
-	 *
-	 * @return <code>true</code> if this ddm template version is approved; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is approved.
+	*
+	* @return <code>true</code> if this ddm template version is approved; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isApproved() {
 		return model.isApproved();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is denied.
-	 *
-	 * @return <code>true</code> if this ddm template version is denied; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is denied.
+	*
+	* @return <code>true</code> if this ddm template version is denied; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDenied() {
 		return model.isDenied();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is a draft.
-	 *
-	 * @return <code>true</code> if this ddm template version is a draft; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is a draft.
+	*
+	* @return <code>true</code> if this ddm template version is a draft; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDraft() {
 		return model.isDraft();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is expired.
-	 *
-	 * @return <code>true</code> if this ddm template version is expired; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is expired.
+	*
+	* @return <code>true</code> if this ddm template version is expired; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isExpired() {
 		return model.isExpired();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is inactive.
-	 *
-	 * @return <code>true</code> if this ddm template version is inactive; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is inactive.
+	*
+	* @return <code>true</code> if this ddm template version is inactive; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isInactive() {
 		return model.isInactive();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is incomplete.
-	 *
-	 * @return <code>true</code> if this ddm template version is incomplete; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is incomplete.
+	*
+	* @return <code>true</code> if this ddm template version is incomplete; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isIncomplete() {
 		return model.isIncomplete();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is pending.
-	 *
-	 * @return <code>true</code> if this ddm template version is pending; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is pending.
+	*
+	* @return <code>true</code> if this ddm template version is pending; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isPending() {
 		return model.isPending();
 	}
 
 	/**
-	 * Returns <code>true</code> if this ddm template version is scheduled.
-	 *
-	 * @return <code>true</code> if this ddm template version is scheduled; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this ddm template version is scheduled.
+	*
+	* @return <code>true</code> if this ddm template version is scheduled; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isScheduled() {
 		return model.isScheduled();
@@ -635,15 +632,13 @@ public class DDMTemplateVersionWrapper
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-
 		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
-			java.util.Locale defaultImportLocale)
+		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
@@ -653,78 +648,76 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this ddm template version.
-	 *
-	 * @param classNameId the class name ID of this ddm template version
-	 */
+	* Sets the class name ID of this ddm template version.
+	*
+	* @param classNameId the class name ID of this ddm template version
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this ddm template version.
-	 *
-	 * @param classPK the class pk of this ddm template version
-	 */
+	* Sets the class pk of this ddm template version.
+	*
+	* @param classPK the class pk of this ddm template version
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this ddm template version.
-	 *
-	 * @param companyId the company ID of this ddm template version
-	 */
+	* Sets the company ID of this ddm template version.
+	*
+	* @param companyId the company ID of this ddm template version
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this ddm template version.
-	 *
-	 * @param createDate the create date of this ddm template version
-	 */
+	* Sets the create date of this ddm template version.
+	*
+	* @param createDate the create date of this ddm template version
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the description of this ddm template version.
-	 *
-	 * @param description the description of this ddm template version
-	 */
+	* Sets the description of this ddm template version.
+	*
+	* @param description the description of this ddm template version
+	*/
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	 * Sets the localized description of this ddm template version in the language.
-	 *
-	 * @param description the localized description of this ddm template version
-	 * @param locale the locale of the language
-	 */
+	* Sets the localized description of this ddm template version in the language.
+	*
+	* @param description the localized description of this ddm template version
+	* @param locale the locale of the language
+	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
 		model.setDescription(description, locale);
 	}
 
 	/**
-	 * Sets the localized description of this ddm template version in the language, and sets the default locale.
-	 *
-	 * @param description the localized description of this ddm template version
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized description of this ddm template version in the language, and sets the default locale.
+	*
+	* @param description the localized description of this ddm template version
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setDescription(
-		String description, java.util.Locale locale,
+	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-
 		model.setDescription(description, locale, defaultLocale);
 	}
 
@@ -734,83 +727,79 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Sets the localized descriptions of this ddm template version from the map of locales and localized descriptions.
-	 *
-	 * @param descriptionMap the locales and localized descriptions of this ddm template version
-	 */
+	* Sets the localized descriptions of this ddm template version from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this ddm template version
+	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, String> descriptionMap) {
-
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
-	 * Sets the localized descriptions of this ddm template version from the map of locales and localized descriptions, and sets the default locale.
-	 *
-	 * @param descriptionMap the locales and localized descriptions of this ddm template version
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized descriptions of this ddm template version from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this ddm template version
+	* @param defaultLocale the default locale
+	*/
 	@Override
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-
 		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
-	 * Sets the group ID of this ddm template version.
-	 *
-	 * @param groupId the group ID of this ddm template version
-	 */
+	* Sets the group ID of this ddm template version.
+	*
+	* @param groupId the group ID of this ddm template version
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the language of this ddm template version.
-	 *
-	 * @param language the language of this ddm template version
-	 */
+	* Sets the language of this ddm template version.
+	*
+	* @param language the language of this ddm template version
+	*/
 	@Override
 	public void setLanguage(String language) {
 		model.setLanguage(language);
 	}
 
 	/**
-	 * Sets the name of this ddm template version.
-	 *
-	 * @param name the name of this ddm template version
-	 */
+	* Sets the name of this ddm template version.
+	*
+	* @param name the name of this ddm template version
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the localized name of this ddm template version in the language.
-	 *
-	 * @param name the localized name of this ddm template version
-	 * @param locale the locale of the language
-	 */
+	* Sets the localized name of this ddm template version in the language.
+	*
+	* @param name the localized name of this ddm template version
+	* @param locale the locale of the language
+	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
 		model.setName(name, locale);
 	}
 
 	/**
-	 * Sets the localized name of this ddm template version in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this ddm template version
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized name of this ddm template version in the language, and sets the default locale.
+	*
+	* @param name the localized name of this ddm template version
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setName(
-		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
-
+	public void setName(String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		model.setName(name, locale, defaultLocale);
 	}
 
@@ -820,153 +809,152 @@ public class DDMTemplateVersionWrapper
 	}
 
 	/**
-	 * Sets the localized names of this ddm template version from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this ddm template version
-	 */
+	* Sets the localized names of this ddm template version from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this ddm template version
+	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		model.setNameMap(nameMap);
 	}
 
 	/**
-	 * Sets the localized names of this ddm template version from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this ddm template version
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized names of this ddm template version from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this ddm template version
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setNameMap(
-		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
-
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
+		java.util.Locale defaultLocale) {
 		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
-	 * Sets the primary key of this ddm template version.
-	 *
-	 * @param primaryKey the primary key of this ddm template version
-	 */
+	* Sets the primary key of this ddm template version.
+	*
+	* @param primaryKey the primary key of this ddm template version
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the script of this ddm template version.
-	 *
-	 * @param script the script of this ddm template version
-	 */
+	* Sets the script of this ddm template version.
+	*
+	* @param script the script of this ddm template version
+	*/
 	@Override
 	public void setScript(String script) {
 		model.setScript(script);
 	}
 
 	/**
-	 * Sets the status of this ddm template version.
-	 *
-	 * @param status the status of this ddm template version
-	 */
+	* Sets the status of this ddm template version.
+	*
+	* @param status the status of this ddm template version
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the status by user ID of this ddm template version.
-	 *
-	 * @param statusByUserId the status by user ID of this ddm template version
-	 */
+	* Sets the status by user ID of this ddm template version.
+	*
+	* @param statusByUserId the status by user ID of this ddm template version
+	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
 		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
-	 * Sets the status by user name of this ddm template version.
-	 *
-	 * @param statusByUserName the status by user name of this ddm template version
-	 */
+	* Sets the status by user name of this ddm template version.
+	*
+	* @param statusByUserName the status by user name of this ddm template version
+	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
 		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
-	 * Sets the status by user uuid of this ddm template version.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this ddm template version
-	 */
+	* Sets the status by user uuid of this ddm template version.
+	*
+	* @param statusByUserUuid the status by user uuid of this ddm template version
+	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
 		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
-	 * Sets the status date of this ddm template version.
-	 *
-	 * @param statusDate the status date of this ddm template version
-	 */
+	* Sets the status date of this ddm template version.
+	*
+	* @param statusDate the status date of this ddm template version
+	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
 	}
 
 	/**
-	 * Sets the template ID of this ddm template version.
-	 *
-	 * @param templateId the template ID of this ddm template version
-	 */
+	* Sets the template ID of this ddm template version.
+	*
+	* @param templateId the template ID of this ddm template version
+	*/
 	@Override
 	public void setTemplateId(long templateId) {
 		model.setTemplateId(templateId);
 	}
 
 	/**
-	 * Sets the template version ID of this ddm template version.
-	 *
-	 * @param templateVersionId the template version ID of this ddm template version
-	 */
+	* Sets the template version ID of this ddm template version.
+	*
+	* @param templateVersionId the template version ID of this ddm template version
+	*/
 	@Override
 	public void setTemplateVersionId(long templateVersionId) {
 		model.setTemplateVersionId(templateVersionId);
 	}
 
 	/**
-	 * Sets the user ID of this ddm template version.
-	 *
-	 * @param userId the user ID of this ddm template version
-	 */
+	* Sets the user ID of this ddm template version.
+	*
+	* @param userId the user ID of this ddm template version
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this ddm template version.
-	 *
-	 * @param userName the user name of this ddm template version
-	 */
+	* Sets the user name of this ddm template version.
+	*
+	* @param userName the user name of this ddm template version
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this ddm template version.
-	 *
-	 * @param userUuid the user uuid of this ddm template version
-	 */
+	* Sets the user uuid of this ddm template version.
+	*
+	* @param userUuid the user uuid of this ddm template version
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the version of this ddm template version.
-	 *
-	 * @param version the version of this ddm template version
-	 */
+	* Sets the version of this ddm template version.
+	*
+	* @param version the version of this ddm template version
+	*/
 	@Override
 	public void setVersion(String version) {
 		model.setVersion(version);
@@ -975,8 +963,6 @@ public class DDMTemplateVersionWrapper
 	@Override
 	protected DDMTemplateVersionWrapper wrap(
 		DDMTemplateVersion ddmTemplateVersion) {
-
 		return new DDMTemplateVersionWrapper(ddmTemplateVersion);
 	}
-
 }

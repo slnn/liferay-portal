@@ -33,9 +33,7 @@ import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServic
  */
 @ProviderType
 public abstract class PushNotificationsDeviceBaseImpl
-	extends PushNotificationsDeviceModelImpl
-	implements PushNotificationsDevice {
-
+	extends PushNotificationsDeviceModelImpl implements PushNotificationsDevice {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +42,10 @@ public abstract class PushNotificationsDeviceBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			PushNotificationsDeviceLocalServiceUtil.addPushNotificationsDevice(
-				this);
+			PushNotificationsDeviceLocalServiceUtil.addPushNotificationsDevice(this);
 		}
 		else {
-			PushNotificationsDeviceLocalServiceUtil.
-				updatePushNotificationsDevice(this);
+			PushNotificationsDeviceLocalServiceUtil.updatePushNotificationsDevice(this);
 		}
 	}
-
 }

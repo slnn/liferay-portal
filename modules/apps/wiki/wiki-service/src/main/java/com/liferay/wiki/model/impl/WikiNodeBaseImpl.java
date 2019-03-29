@@ -32,9 +32,8 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class WikiNodeBaseImpl
-	extends WikiNodeModelImpl implements WikiNode {
-
+public abstract class WikiNodeBaseImpl extends WikiNodeModelImpl
+	implements WikiNode {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class WikiNodeBaseImpl
 			WikiNodeLocalServiceUtil.updateWikiNode(this);
 		}
 	}
-
 }

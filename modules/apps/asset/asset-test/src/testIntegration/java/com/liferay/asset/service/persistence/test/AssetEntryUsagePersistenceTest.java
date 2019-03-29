@@ -15,11 +15,13 @@
 package com.liferay.asset.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.asset.exception.NoSuchEntryUsageException;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.asset.service.persistence.AssetEntryUsagePersistence;
 import com.liferay.asset.service.persistence.AssetEntryUsageUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class AssetEntryUsagePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.asset.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.asset.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class AssetEntryUsagePersistenceTest {
 
 		_persistence.remove(newAssetEntryUsage);
 
-		AssetEntryUsage existingAssetEntryUsage =
-			_persistence.fetchByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
+		AssetEntryUsage existingAssetEntryUsage = _persistence.fetchByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
 
 		Assert.assertNull(existingAssetEntryUsage);
 	}
@@ -150,46 +150,35 @@ public class AssetEntryUsagePersistenceTest {
 
 		_assetEntryUsages.add(_persistence.update(newAssetEntryUsage));
 
-		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(
-			newAssetEntryUsage.getPrimaryKey());
+		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAssetEntryUsage.getUuid(), newAssetEntryUsage.getUuid());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getAssetEntryUsageId(),
+		Assert.assertEquals(existingAssetEntryUsage.getUuid(),
+			newAssetEntryUsage.getUuid());
+		Assert.assertEquals(existingAssetEntryUsage.getAssetEntryUsageId(),
 			newAssetEntryUsage.getAssetEntryUsageId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getGroupId(),
+		Assert.assertEquals(existingAssetEntryUsage.getGroupId(),
 			newAssetEntryUsage.getGroupId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getCompanyId(),
+		Assert.assertEquals(existingAssetEntryUsage.getCompanyId(),
 			newAssetEntryUsage.getCompanyId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getUserId(),
+		Assert.assertEquals(existingAssetEntryUsage.getUserId(),
 			newAssetEntryUsage.getUserId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getUserName(),
+		Assert.assertEquals(existingAssetEntryUsage.getUserName(),
 			newAssetEntryUsage.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingAssetEntryUsage.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetEntryUsage.getCreateDate()),
 			Time.getShortTimestamp(newAssetEntryUsage.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingAssetEntryUsage.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetEntryUsage.getModifiedDate()),
 			Time.getShortTimestamp(newAssetEntryUsage.getModifiedDate()));
-		Assert.assertEquals(
-			existingAssetEntryUsage.getAssetEntryId(),
+		Assert.assertEquals(existingAssetEntryUsage.getAssetEntryId(),
 			newAssetEntryUsage.getAssetEntryId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getClassNameId(),
+		Assert.assertEquals(existingAssetEntryUsage.getClassNameId(),
 			newAssetEntryUsage.getClassNameId());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getClassPK(),
+		Assert.assertEquals(existingAssetEntryUsage.getClassPK(),
 			newAssetEntryUsage.getClassPK());
-		Assert.assertEquals(
-			existingAssetEntryUsage.getPortletId(),
+		Assert.assertEquals(existingAssetEntryUsage.getPortletId(),
 			newAssetEntryUsage.getPortletId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetEntryUsage.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetEntryUsage.getLastPublishDate()));
 	}
@@ -230,8 +219,8 @@ public class AssetEntryUsagePersistenceTest {
 
 	@Test
 	public void testCountByA_C() throws Exception {
-		_persistence.countByA_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByA_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByA_C(0L, 0L);
 	}
@@ -247,8 +236,8 @@ public class AssetEntryUsagePersistenceTest {
 
 	@Test
 	public void testCountByC_C_P() throws Exception {
-		_persistence.countByC_C_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+		_persistence.countByC_C_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
 		_persistence.countByC_C_P(0L, 0L, "null");
 
@@ -257,9 +246,8 @@ public class AssetEntryUsagePersistenceTest {
 
 	@Test
 	public void testCountByA_C_C_P() throws Exception {
-		_persistence.countByA_C_C_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "");
+		_persistence.countByA_C_C_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
 
 		_persistence.countByA_C_C_P(0L, 0L, 0L, "null");
 
@@ -270,8 +258,7 @@ public class AssetEntryUsagePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
 
-		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(
-			newAssetEntryUsage.getPrimaryKey());
+		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
 
 		Assert.assertEquals(existingAssetEntryUsage, newAssetEntryUsage);
 	}
@@ -285,25 +272,23 @@ public class AssetEntryUsagePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<AssetEntryUsage> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"AssetEntryUsage", "uuid", true, "assetEntryUsageId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "assetEntryId",
-			true, "classNameId", true, "classPK", true, "portletId", true,
-			"lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("AssetEntryUsage", "uuid",
+			true, "assetEntryUsageId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "assetEntryId", true, "classNameId", true,
+			"classPK", true, "portletId", true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
 
-		AssetEntryUsage existingAssetEntryUsage =
-			_persistence.fetchByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
+		AssetEntryUsage existingAssetEntryUsage = _persistence.fetchByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
 
 		Assert.assertEquals(existingAssetEntryUsage, newAssetEntryUsage);
 	}
@@ -312,8 +297,7 @@ public class AssetEntryUsagePersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		AssetEntryUsage missingAssetEntryUsage = _persistence.fetchByPrimaryKey(
-			pk);
+		AssetEntryUsage missingAssetEntryUsage = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingAssetEntryUsage);
 	}
@@ -321,7 +305,6 @@ public class AssetEntryUsagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		AssetEntryUsage newAssetEntryUsage1 = addAssetEntryUsage();
 		AssetEntryUsage newAssetEntryUsage2 = addAssetEntryUsage();
 
@@ -330,22 +313,18 @@ public class AssetEntryUsagePersistenceTest {
 		primaryKeys.add(newAssetEntryUsage1.getPrimaryKey());
 		primaryKeys.add(newAssetEntryUsage2.getPrimaryKey());
 
-		Map<Serializable, AssetEntryUsage> assetEntryUsages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetEntryUsage> assetEntryUsages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, assetEntryUsages.size());
-		Assert.assertEquals(
-			newAssetEntryUsage1,
+		Assert.assertEquals(newAssetEntryUsage1,
 			assetEntryUsages.get(newAssetEntryUsage1.getPrimaryKey()));
-		Assert.assertEquals(
-			newAssetEntryUsage2,
+		Assert.assertEquals(newAssetEntryUsage2,
 			assetEntryUsages.get(newAssetEntryUsage2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -355,8 +334,7 @@ public class AssetEntryUsagePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, AssetEntryUsage> assetEntryUsages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetEntryUsage> assetEntryUsages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(assetEntryUsages.isEmpty());
 	}
@@ -364,7 +342,6 @@ public class AssetEntryUsagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
 
 		long pk = RandomTestUtil.nextLong();
@@ -374,39 +351,36 @@ public class AssetEntryUsagePersistenceTest {
 		primaryKeys.add(newAssetEntryUsage.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, AssetEntryUsage> assetEntryUsages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetEntryUsage> assetEntryUsages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, assetEntryUsages.size());
-		Assert.assertEquals(
-			newAssetEntryUsage,
+		Assert.assertEquals(newAssetEntryUsage,
 			assetEntryUsages.get(newAssetEntryUsage.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntryUsage> assetEntryUsages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetEntryUsage> assetEntryUsages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(assetEntryUsages.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newAssetEntryUsage.getPrimaryKey());
 
-		Map<Serializable, AssetEntryUsage> assetEntryUsages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetEntryUsage> assetEntryUsages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, assetEntryUsages.size());
-		Assert.assertEquals(
-			newAssetEntryUsage,
+		Assert.assertEquals(newAssetEntryUsage,
 			assetEntryUsages.get(newAssetEntryUsage.getPrimaryKey()));
 	}
 
@@ -414,19 +388,15 @@ public class AssetEntryUsagePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			AssetEntryUsageLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = AssetEntryUsageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AssetEntryUsage>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetEntryUsage>() {
 				@Override
 				public void performAction(AssetEntryUsage assetEntryUsage) {
 					Assert.assertNotNull(assetEntryUsage);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -435,19 +405,17 @@ public class AssetEntryUsagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryUsage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryUsage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"assetEntryUsageId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("assetEntryUsageId",
 				newAssetEntryUsage.getAssetEntryUsageId()));
 
-		List<AssetEntryUsage> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<AssetEntryUsage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -458,34 +426,32 @@ public class AssetEntryUsagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryUsage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryUsage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"assetEntryUsageId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("assetEntryUsageId",
+				RandomTestUtil.nextLong()));
 
-		List<AssetEntryUsage> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<AssetEntryUsage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryUsage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryUsage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("assetEntryUsageId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"assetEntryUsageId"));
 
 		Object newAssetEntryUsageId = newAssetEntryUsage.getAssetEntryUsageId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"assetEntryUsageId", new Object[] {newAssetEntryUsageId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("assetEntryUsageId",
+				new Object[] { newAssetEntryUsageId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -498,15 +464,14 @@ public class AssetEntryUsagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryUsage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryUsage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("assetEntryUsageId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"assetEntryUsageId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"assetEntryUsageId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("assetEntryUsageId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -519,42 +484,30 @@ public class AssetEntryUsagePersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(
-			newAssetEntryUsage.getPrimaryKey());
+		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(newAssetEntryUsage.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetEntryUsage.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingAssetEntryUsage, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingAssetEntryUsage.getUuid(),
+				ReflectionTestUtil.invoke(existingAssetEntryUsage,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingAssetEntryUsage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getAssetEntryId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalAssetEntryId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalClassPK",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingAssetEntryUsage.getAssetEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
+				"getOriginalAssetEntryId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingAssetEntryUsage.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetEntryUsage.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingAssetEntryUsage.getPortletId(),
-				ReflectionTestUtil.invoke(
-					existingAssetEntryUsage, "getOriginalPortletId",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingAssetEntryUsage,
+					"getOriginalPortletId", new Class<?>[0])));
 	}
 
 	protected AssetEntryUsage addAssetEntryUsage() throws Exception {
@@ -591,9 +544,7 @@ public class AssetEntryUsagePersistenceTest {
 		return assetEntryUsage;
 	}
 
-	private List<AssetEntryUsage> _assetEntryUsages =
-		new ArrayList<AssetEntryUsage>();
+	private List<AssetEntryUsage> _assetEntryUsages = new ArrayList<AssetEntryUsage>();
 	private AssetEntryUsagePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

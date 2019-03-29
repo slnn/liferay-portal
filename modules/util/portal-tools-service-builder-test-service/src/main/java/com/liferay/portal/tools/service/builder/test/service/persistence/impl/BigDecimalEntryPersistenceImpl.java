@@ -62,24 +62,18 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class BigDecimalEntryPersistenceImpl
-	extends BasePersistenceImpl<BigDecimalEntry>
+public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecimalEntry>
 	implements BigDecimalEntryPersistence {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>BigDecimalEntryUtil</code> to access the big decimal entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY =
-		BigDecimalEntryImpl.class.getName();
-
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List1";
-
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List2";
-
+	public static final String FINDER_CLASS_NAME_ENTITY = BigDecimalEntryImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -96,9 +90,8 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue) {
-
-		return findByBigDecimalValue(
-			bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByBigDecimalValue(bigDecimalValue, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -116,7 +109,6 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end) {
-
 		return findByBigDecimalValue(bigDecimalValue, start, end, null);
 	}
 
@@ -137,9 +129,8 @@ public class BigDecimalEntryPersistenceImpl
 	public List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return findByBigDecimalValue(
-			bigDecimalValue, start, end, orderByComparator, true);
+		return findByBigDecimalValue(bigDecimalValue, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -161,37 +152,35 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByBigDecimalValue;
-			finderArgs = new Object[] {bigDecimalValue};
+			finderArgs = new Object[] { bigDecimalValue };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByBigDecimalValue;
 			finderArgs = new Object[] {
-				bigDecimalValue, start, end, orderByComparator
-			};
+					bigDecimalValue,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<BigDecimalEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<BigDecimalEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
-					if (!Objects.equals(
-							bigDecimalValue,
-							bigDecimalEntry.getBigDecimalValue())) {
-
+					if (!Objects.equals(bigDecimalValue,
+								bigDecimalEntry.getBigDecimalValue())) {
 						list = null;
 
 						break;
@@ -204,8 +193,8 @@ public class BigDecimalEntryPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -225,10 +214,11 @@ public class BigDecimalEntryPersistenceImpl
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(BigDecimalEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -248,16 +238,16 @@ public class BigDecimalEntryPersistenceImpl
 				}
 
 				if (!pagination) {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -287,12 +277,11 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry findByBigDecimalValue_First(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByBigDecimalValue_First(
-			bigDecimalValue, orderByComparator);
+		BigDecimalEntry bigDecimalEntry = fetchByBigDecimalValue_First(bigDecimalValue,
+				orderByComparator);
 
 		if (bigDecimalEntry != null) {
 			return bigDecimalEntry;
@@ -321,9 +310,8 @@ public class BigDecimalEntryPersistenceImpl
 	public BigDecimalEntry fetchByBigDecimalValue_First(
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		List<BigDecimalEntry> list = findByBigDecimalValue(
-			bigDecimalValue, 0, 1, orderByComparator);
+		List<BigDecimalEntry> list = findByBigDecimalValue(bigDecimalValue, 0,
+				1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -342,12 +330,11 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry findByBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
+		BigDecimalEntry bigDecimalEntry = fetchByBigDecimalValue_Last(bigDecimalValue,
+				orderByComparator);
 
 		if (bigDecimalEntry != null) {
 			return bigDecimalEntry;
@@ -376,15 +363,14 @@ public class BigDecimalEntryPersistenceImpl
 	public BigDecimalEntry fetchByBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
 		int count = countByBigDecimalValue(bigDecimalValue);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<BigDecimalEntry> list = findByBigDecimalValue(
-			bigDecimalValue, count - 1, count, orderByComparator);
+		List<BigDecimalEntry> list = findByBigDecimalValue(bigDecimalValue,
+				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -404,10 +390,9 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry[] findByBigDecimalValue_PrevAndNext(
-			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		long bigDecimalEntryId, BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
 		BigDecimalEntry bigDecimalEntry = findByPrimaryKey(bigDecimalEntryId);
 
 		Session session = null;
@@ -417,15 +402,13 @@ public class BigDecimalEntryPersistenceImpl
 
 			BigDecimalEntry[] array = new BigDecimalEntryImpl[3];
 
-			array[0] = getByBigDecimalValue_PrevAndNext(
-				session, bigDecimalEntry, bigDecimalValue, orderByComparator,
-				true);
+			array[0] = getByBigDecimalValue_PrevAndNext(session,
+					bigDecimalEntry, bigDecimalValue, orderByComparator, true);
 
 			array[1] = bigDecimalEntry;
 
-			array[2] = getByBigDecimalValue_PrevAndNext(
-				session, bigDecimalEntry, bigDecimalValue, orderByComparator,
-				false);
+			array[2] = getByBigDecimalValue_PrevAndNext(session,
+					bigDecimalEntry, bigDecimalValue, orderByComparator, false);
 
 			return array;
 		}
@@ -440,14 +423,12 @@ public class BigDecimalEntryPersistenceImpl
 	protected BigDecimalEntry getByBigDecimalValue_PrevAndNext(
 		Session session, BigDecimalEntry bigDecimalEntry,
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean previous) {
-
+		OrderByComparator<BigDecimalEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -468,8 +449,7 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -541,10 +521,8 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						bigDecimalEntry)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					bigDecimalEntry)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -566,11 +544,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByBigDecimalValue(BigDecimal bigDecimalValue) {
-		for (BigDecimalEntry bigDecimalEntry :
-				findByBigDecimalValue(
-					bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
+		for (BigDecimalEntry bigDecimalEntry : findByBigDecimalValue(
+				bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(bigDecimalEntry);
 		}
 	}
@@ -585,7 +560,7 @@ public class BigDecimalEntryPersistenceImpl
 	public int countByBigDecimalValue(BigDecimal bigDecimalValue) {
 		FinderPath finderPath = _finderPathCountByBigDecimalValue;
 
-		Object[] finderArgs = new Object[] {bigDecimalValue};
+		Object[] finderArgs = new Object[] { bigDecimalValue };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -637,14 +612,10 @@ public class BigDecimalEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_BIGDECIMALVALUE_BIGDECIMALVALUE_1 =
-			"bigDecimalEntry.bigDecimalValue IS NULL";
-
-	private static final String
-		_FINDER_COLUMN_BIGDECIMALVALUE_BIGDECIMALVALUE_2 =
-			"bigDecimalEntry.bigDecimalValue = ?";
-
+	private static final String _FINDER_COLUMN_BIGDECIMALVALUE_BIGDECIMALVALUE_1 =
+		"bigDecimalEntry.bigDecimalValue IS NULL";
+	private static final String _FINDER_COLUMN_BIGDECIMALVALUE_BIGDECIMALVALUE_2 =
+		"bigDecimalEntry.bigDecimalValue = ?";
 	private FinderPath _finderPathWithPaginationFindByGtBigDecimalValue;
 	private FinderPath _finderPathWithPaginationCountByGtBigDecimalValue;
 
@@ -657,9 +628,8 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue) {
-
-		return findByGtBigDecimalValue(
-			bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByGtBigDecimalValue(bigDecimalValue, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -677,7 +647,6 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end) {
-
 		return findByGtBigDecimalValue(bigDecimalValue, start, end, null);
 	}
 
@@ -698,9 +667,8 @@ public class BigDecimalEntryPersistenceImpl
 	public List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return findByGtBigDecimalValue(
-			bigDecimalValue, start, end, orderByComparator, true);
+		return findByGtBigDecimalValue(bigDecimalValue, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -722,27 +690,23 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		finderPath = _finderPathWithPaginationFindByGtBigDecimalValue;
-		finderArgs = new Object[] {
-			bigDecimalValue, start, end, orderByComparator
-		};
+		finderArgs = new Object[] { bigDecimalValue, start, end, orderByComparator };
 
 		List<BigDecimalEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<BigDecimalEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
 					if ((bigDecimalValue.compareTo(
-							bigDecimalEntry.getBigDecimalValue()) >= 0)) {
-
+								bigDecimalEntry.getBigDecimalValue()) >= 0)) {
 						list = null;
 
 						break;
@@ -755,8 +719,8 @@ public class BigDecimalEntryPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -767,21 +731,20 @@ public class BigDecimalEntryPersistenceImpl
 			boolean bindBigDecimalValue = false;
 
 			if (bigDecimalValue == null) {
-				query.append(
-					_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
+				query.append(_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
 			}
 			else {
 				bindBigDecimalValue = true;
 
-				query.append(
-					_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
+				query.append(_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(BigDecimalEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -801,16 +764,16 @@ public class BigDecimalEntryPersistenceImpl
 				}
 
 				if (!pagination) {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -840,12 +803,11 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry findByGtBigDecimalValue_First(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByGtBigDecimalValue_First(
-			bigDecimalValue, orderByComparator);
+		BigDecimalEntry bigDecimalEntry = fetchByGtBigDecimalValue_First(bigDecimalValue,
+				orderByComparator);
 
 		if (bigDecimalEntry != null) {
 			return bigDecimalEntry;
@@ -874,9 +836,8 @@ public class BigDecimalEntryPersistenceImpl
 	public BigDecimalEntry fetchByGtBigDecimalValue_First(
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		List<BigDecimalEntry> list = findByGtBigDecimalValue(
-			bigDecimalValue, 0, 1, orderByComparator);
+		List<BigDecimalEntry> list = findByGtBigDecimalValue(bigDecimalValue,
+				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -895,12 +856,11 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry findByGtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByGtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
+		BigDecimalEntry bigDecimalEntry = fetchByGtBigDecimalValue_Last(bigDecimalValue,
+				orderByComparator);
 
 		if (bigDecimalEntry != null) {
 			return bigDecimalEntry;
@@ -929,15 +889,14 @@ public class BigDecimalEntryPersistenceImpl
 	public BigDecimalEntry fetchByGtBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
 		int count = countByGtBigDecimalValue(bigDecimalValue);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<BigDecimalEntry> list = findByGtBigDecimalValue(
-			bigDecimalValue, count - 1, count, orderByComparator);
+		List<BigDecimalEntry> list = findByGtBigDecimalValue(bigDecimalValue,
+				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -957,10 +916,9 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry[] findByGtBigDecimalValue_PrevAndNext(
-			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		long bigDecimalEntryId, BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
 		BigDecimalEntry bigDecimalEntry = findByPrimaryKey(bigDecimalEntryId);
 
 		Session session = null;
@@ -970,15 +928,13 @@ public class BigDecimalEntryPersistenceImpl
 
 			BigDecimalEntry[] array = new BigDecimalEntryImpl[3];
 
-			array[0] = getByGtBigDecimalValue_PrevAndNext(
-				session, bigDecimalEntry, bigDecimalValue, orderByComparator,
-				true);
+			array[0] = getByGtBigDecimalValue_PrevAndNext(session,
+					bigDecimalEntry, bigDecimalValue, orderByComparator, true);
 
 			array[1] = bigDecimalEntry;
 
-			array[2] = getByGtBigDecimalValue_PrevAndNext(
-				session, bigDecimalEntry, bigDecimalValue, orderByComparator,
-				false);
+			array[2] = getByGtBigDecimalValue_PrevAndNext(session,
+					bigDecimalEntry, bigDecimalValue, orderByComparator, false);
 
 			return array;
 		}
@@ -993,14 +949,12 @@ public class BigDecimalEntryPersistenceImpl
 	protected BigDecimalEntry getByGtBigDecimalValue_PrevAndNext(
 		Session session, BigDecimalEntry bigDecimalEntry,
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean previous) {
-
+		OrderByComparator<BigDecimalEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1021,8 +975,7 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1094,10 +1047,8 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						bigDecimalEntry)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					bigDecimalEntry)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1119,11 +1070,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGtBigDecimalValue(BigDecimal bigDecimalValue) {
-		for (BigDecimalEntry bigDecimalEntry :
-				findByGtBigDecimalValue(
-					bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
+		for (BigDecimalEntry bigDecimalEntry : findByGtBigDecimalValue(
+				bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(bigDecimalEntry);
 		}
 	}
@@ -1136,10 +1084,9 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGtBigDecimalValue(BigDecimal bigDecimalValue) {
-		FinderPath finderPath =
-			_finderPathWithPaginationCountByGtBigDecimalValue;
+		FinderPath finderPath = _finderPathWithPaginationCountByGtBigDecimalValue;
 
-		Object[] finderArgs = new Object[] {bigDecimalValue};
+		Object[] finderArgs = new Object[] { bigDecimalValue };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1151,14 +1098,12 @@ public class BigDecimalEntryPersistenceImpl
 			boolean bindBigDecimalValue = false;
 
 			if (bigDecimalValue == null) {
-				query.append(
-					_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
+				query.append(_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
 			}
 			else {
 				bindBigDecimalValue = true;
 
-				query.append(
-					_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
+				query.append(_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
 			}
 
 			String sql = query.toString();
@@ -1193,14 +1138,10 @@ public class BigDecimalEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_1 =
-			"bigDecimalEntry.bigDecimalValue IS NULL";
-
-	private static final String
-		_FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_2 =
-			"bigDecimalEntry.bigDecimalValue > ?";
-
+	private static final String _FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_1 =
+		"bigDecimalEntry.bigDecimalValue IS NULL";
+	private static final String _FINDER_COLUMN_GTBIGDECIMALVALUE_BIGDECIMALVALUE_2 =
+		"bigDecimalEntry.bigDecimalValue > ?";
 	private FinderPath _finderPathWithPaginationFindByLtBigDecimalValue;
 	private FinderPath _finderPathWithPaginationCountByLtBigDecimalValue;
 
@@ -1213,9 +1154,8 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue) {
-
-		return findByLtBigDecimalValue(
-			bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByLtBigDecimalValue(bigDecimalValue, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1233,7 +1173,6 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end) {
-
 		return findByLtBigDecimalValue(bigDecimalValue, start, end, null);
 	}
 
@@ -1254,9 +1193,8 @@ public class BigDecimalEntryPersistenceImpl
 	public List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return findByLtBigDecimalValue(
-			bigDecimalValue, start, end, orderByComparator, true);
+		return findByLtBigDecimalValue(bigDecimalValue, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -1278,27 +1216,23 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimal bigDecimalValue, int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		finderPath = _finderPathWithPaginationFindByLtBigDecimalValue;
-		finderArgs = new Object[] {
-			bigDecimalValue, start, end, orderByComparator
-		};
+		finderArgs = new Object[] { bigDecimalValue, start, end, orderByComparator };
 
 		List<BigDecimalEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<BigDecimalEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
 					if ((bigDecimalValue.compareTo(
-							bigDecimalEntry.getBigDecimalValue()) <= 0)) {
-
+								bigDecimalEntry.getBigDecimalValue()) <= 0)) {
 						list = null;
 
 						break;
@@ -1311,8 +1245,8 @@ public class BigDecimalEntryPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1323,21 +1257,20 @@ public class BigDecimalEntryPersistenceImpl
 			boolean bindBigDecimalValue = false;
 
 			if (bigDecimalValue == null) {
-				query.append(
-					_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
+				query.append(_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
 			}
 			else {
 				bindBigDecimalValue = true;
 
-				query.append(
-					_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
+				query.append(_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(BigDecimalEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1357,16 +1290,16 @@ public class BigDecimalEntryPersistenceImpl
 				}
 
 				if (!pagination) {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1396,12 +1329,11 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry findByLtBigDecimalValue_First(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByLtBigDecimalValue_First(
-			bigDecimalValue, orderByComparator);
+		BigDecimalEntry bigDecimalEntry = fetchByLtBigDecimalValue_First(bigDecimalValue,
+				orderByComparator);
 
 		if (bigDecimalEntry != null) {
 			return bigDecimalEntry;
@@ -1430,9 +1362,8 @@ public class BigDecimalEntryPersistenceImpl
 	public BigDecimalEntry fetchByLtBigDecimalValue_First(
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		List<BigDecimalEntry> list = findByLtBigDecimalValue(
-			bigDecimalValue, 0, 1, orderByComparator);
+		List<BigDecimalEntry> list = findByLtBigDecimalValue(bigDecimalValue,
+				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1451,12 +1382,11 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry findByLtBigDecimalValue_Last(
-			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByLtBigDecimalValue_Last(
-			bigDecimalValue, orderByComparator);
+		BigDecimalEntry bigDecimalEntry = fetchByLtBigDecimalValue_Last(bigDecimalValue,
+				orderByComparator);
 
 		if (bigDecimalEntry != null) {
 			return bigDecimalEntry;
@@ -1485,15 +1415,14 @@ public class BigDecimalEntryPersistenceImpl
 	public BigDecimalEntry fetchByLtBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
 		int count = countByLtBigDecimalValue(bigDecimalValue);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<BigDecimalEntry> list = findByLtBigDecimalValue(
-			bigDecimalValue, count - 1, count, orderByComparator);
+		List<BigDecimalEntry> list = findByLtBigDecimalValue(bigDecimalValue,
+				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1513,10 +1442,9 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry[] findByLtBigDecimalValue_PrevAndNext(
-			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+		long bigDecimalEntryId, BigDecimal bigDecimalValue,
+		OrderByComparator<BigDecimalEntry> orderByComparator)
 		throws NoSuchBigDecimalEntryException {
-
 		BigDecimalEntry bigDecimalEntry = findByPrimaryKey(bigDecimalEntryId);
 
 		Session session = null;
@@ -1526,15 +1454,13 @@ public class BigDecimalEntryPersistenceImpl
 
 			BigDecimalEntry[] array = new BigDecimalEntryImpl[3];
 
-			array[0] = getByLtBigDecimalValue_PrevAndNext(
-				session, bigDecimalEntry, bigDecimalValue, orderByComparator,
-				true);
+			array[0] = getByLtBigDecimalValue_PrevAndNext(session,
+					bigDecimalEntry, bigDecimalValue, orderByComparator, true);
 
 			array[1] = bigDecimalEntry;
 
-			array[2] = getByLtBigDecimalValue_PrevAndNext(
-				session, bigDecimalEntry, bigDecimalValue, orderByComparator,
-				false);
+			array[2] = getByLtBigDecimalValue_PrevAndNext(session,
+					bigDecimalEntry, bigDecimalValue, orderByComparator, false);
 
 			return array;
 		}
@@ -1549,14 +1475,12 @@ public class BigDecimalEntryPersistenceImpl
 	protected BigDecimalEntry getByLtBigDecimalValue_PrevAndNext(
 		Session session, BigDecimalEntry bigDecimalEntry,
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean previous) {
-
+		OrderByComparator<BigDecimalEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1577,8 +1501,7 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1650,10 +1573,8 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						bigDecimalEntry)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					bigDecimalEntry)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1675,11 +1596,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtBigDecimalValue(BigDecimal bigDecimalValue) {
-		for (BigDecimalEntry bigDecimalEntry :
-				findByLtBigDecimalValue(
-					bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
+		for (BigDecimalEntry bigDecimalEntry : findByLtBigDecimalValue(
+				bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(bigDecimalEntry);
 		}
 	}
@@ -1692,10 +1610,9 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLtBigDecimalValue(BigDecimal bigDecimalValue) {
-		FinderPath finderPath =
-			_finderPathWithPaginationCountByLtBigDecimalValue;
+		FinderPath finderPath = _finderPathWithPaginationCountByLtBigDecimalValue;
 
-		Object[] finderArgs = new Object[] {bigDecimalValue};
+		Object[] finderArgs = new Object[] { bigDecimalValue };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1707,14 +1624,12 @@ public class BigDecimalEntryPersistenceImpl
 			boolean bindBigDecimalValue = false;
 
 			if (bigDecimalValue == null) {
-				query.append(
-					_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
+				query.append(_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_1);
 			}
 			else {
 				bindBigDecimalValue = true;
 
-				query.append(
-					_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
+				query.append(_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_2);
 			}
 
 			String sql = query.toString();
@@ -1749,13 +1664,10 @@ public class BigDecimalEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_1 =
-			"bigDecimalEntry.bigDecimalValue IS NULL";
-
-	private static final String
-		_FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_2 =
-			"bigDecimalEntry.bigDecimalValue < ?";
+	private static final String _FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_1 =
+		"bigDecimalEntry.bigDecimalValue IS NULL";
+	private static final String _FINDER_COLUMN_LTBIGDECIMALVALUE_BIGDECIMALVALUE_2 =
+		"bigDecimalEntry.bigDecimalValue < ?";
 
 	public BigDecimalEntryPersistenceImpl() {
 		setModelClass(BigDecimalEntry.class);
@@ -1768,8 +1680,7 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(BigDecimalEntry bigDecimalEntry) {
-		entityCache.putResult(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BigDecimalEntryImpl.class, bigDecimalEntry.getPrimaryKey(),
 			bigDecimalEntry);
 
@@ -1785,10 +1696,9 @@ public class BigDecimalEntryPersistenceImpl
 	public void cacheResult(List<BigDecimalEntry> bigDecimalEntries) {
 		for (BigDecimalEntry bigDecimalEntry : bigDecimalEntries) {
 			if (entityCache.getResult(
-					BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BigDecimalEntryImpl.class,
-					bigDecimalEntry.getPrimaryKey()) == null) {
-
+						BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+						BigDecimalEntryImpl.class,
+						bigDecimalEntry.getPrimaryKey()) == null) {
 				cacheResult(bigDecimalEntry);
 			}
 			else {
@@ -1822,8 +1732,7 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void clearCache(BigDecimalEntry bigDecimalEntry) {
-		entityCache.removeResult(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BigDecimalEntryImpl.class, bigDecimalEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1836,8 +1745,7 @@ public class BigDecimalEntryPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (BigDecimalEntry bigDecimalEntry : bigDecimalEntries) {
-			entityCache.removeResult(
-				BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 				BigDecimalEntryImpl.class, bigDecimalEntry.getPrimaryKey());
 		}
 	}
@@ -1868,7 +1776,6 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public BigDecimalEntry remove(long bigDecimalEntryId)
 		throws NoSuchBigDecimalEntryException {
-
 		return remove((Serializable)bigDecimalEntryId);
 	}
 
@@ -1882,22 +1789,21 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public BigDecimalEntry remove(Serializable primaryKey)
 		throws NoSuchBigDecimalEntryException {
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BigDecimalEntry bigDecimalEntry = (BigDecimalEntry)session.get(
-				BigDecimalEntryImpl.class, primaryKey);
+			BigDecimalEntry bigDecimalEntry = (BigDecimalEntry)session.get(BigDecimalEntryImpl.class,
+					primaryKey);
 
 			if (bigDecimalEntry == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchBigDecimalEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				throw new NoSuchBigDecimalEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					primaryKey);
 			}
 
 			return remove(bigDecimalEntry);
@@ -1921,9 +1827,8 @@ public class BigDecimalEntryPersistenceImpl
 			session = openSession();
 
 			if (!session.contains(bigDecimalEntry)) {
-				bigDecimalEntry = (BigDecimalEntry)session.get(
-					BigDecimalEntryImpl.class,
-					bigDecimalEntry.getPrimaryKeyObj());
+				bigDecimalEntry = (BigDecimalEntry)session.get(BigDecimalEntryImpl.class,
+						bigDecimalEntry.getPrimaryKeyObj());
 			}
 
 			if (bigDecimalEntry != null) {
@@ -1952,21 +1857,19 @@ public class BigDecimalEntryPersistenceImpl
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(bigDecimalEntry.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(
-					bigDecimalEntry);
+				invocationHandler = ProxyUtil.getInvocationHandler(bigDecimalEntry);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in bigDecimalEntry proxy " +
-						invocationHandler.getClass());
+					invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom BigDecimalEntry implementation " +
-					bigDecimalEntry.getClass());
+				bigDecimalEntry.getClass());
 		}
 
-		BigDecimalEntryModelImpl bigDecimalEntryModelImpl =
-			(BigDecimalEntryModelImpl)bigDecimalEntry;
+		BigDecimalEntryModelImpl bigDecimalEntryModelImpl = (BigDecimalEntryModelImpl)bigDecimalEntry;
 
 		Session session = null;
 
@@ -1979,8 +1882,7 @@ public class BigDecimalEntryPersistenceImpl
 				bigDecimalEntry.setNew(false);
 			}
 			else {
-				bigDecimalEntry = (BigDecimalEntry)session.merge(
-					bigDecimalEntry);
+				bigDecimalEntry = (BigDecimalEntry)session.merge(bigDecimalEntry);
 			}
 		}
 		catch (Exception e) {
@@ -1995,46 +1897,43 @@ public class BigDecimalEntryPersistenceImpl
 		if (!BigDecimalEntryModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else if (isNew) {
+		else
+		 if (isNew) {
 			Object[] args = new Object[] {
-				bigDecimalEntryModelImpl.getBigDecimalValue()
-			};
-
-			finderCache.removeResult(_finderPathCountByBigDecimalValue, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByBigDecimalValue, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((bigDecimalEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByBigDecimalValue.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					bigDecimalEntryModelImpl.getOriginalBigDecimalValue()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByBigDecimalValue, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByBigDecimalValue, args);
-
-				args = new Object[] {
 					bigDecimalEntryModelImpl.getBigDecimalValue()
 				};
 
-				finderCache.removeResult(
-					_finderPathCountByBigDecimalValue, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByBigDecimalValue, args);
+			finderCache.removeResult(_finderPathCountByBigDecimalValue, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByBigDecimalValue,
+				args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
+				FINDER_ARGS_EMPTY);
+		}
+
+		else {
+			if ((bigDecimalEntryModelImpl.getColumnBitmask() &
+					_finderPathWithoutPaginationFindByBigDecimalValue.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						bigDecimalEntryModelImpl.getOriginalBigDecimalValue()
+					};
+
+				finderCache.removeResult(_finderPathCountByBigDecimalValue, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByBigDecimalValue,
+					args);
+
+				args = new Object[] {
+						bigDecimalEntryModelImpl.getBigDecimalValue()
+					};
+
+				finderCache.removeResult(_finderPathCountByBigDecimalValue, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByBigDecimalValue,
+					args);
 			}
 		}
 
-		entityCache.putResult(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BigDecimalEntryImpl.class, bigDecimalEntry.getPrimaryKey(),
 			bigDecimalEntry, false);
 
@@ -2053,7 +1952,6 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public BigDecimalEntry findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchBigDecimalEntryException {
-
 		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(primaryKey);
 
 		if (bigDecimalEntry == null) {
@@ -2061,8 +1959,8 @@ public class BigDecimalEntryPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchBigDecimalEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			throw new NoSuchBigDecimalEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
 		}
 
 		return bigDecimalEntry;
@@ -2078,7 +1976,6 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public BigDecimalEntry findByPrimaryKey(long bigDecimalEntryId)
 		throws NoSuchBigDecimalEntryException {
-
 		return findByPrimaryKey((Serializable)bigDecimalEntryId);
 	}
 
@@ -2090,9 +1987,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public BigDecimalEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -2106,21 +2002,19 @@ public class BigDecimalEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				bigDecimalEntry = (BigDecimalEntry)session.get(
-					BigDecimalEntryImpl.class, primaryKey);
+				bigDecimalEntry = (BigDecimalEntry)session.get(BigDecimalEntryImpl.class,
+						primaryKey);
 
 				if (bigDecimalEntry != null) {
 					cacheResult(bigDecimalEntry);
 				}
 				else {
-					entityCache.putResult(
-						BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 						BigDecimalEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(
-					BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 					BigDecimalEntryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2147,13 +2041,11 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public Map<Serializable, BigDecimalEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		Map<Serializable, BigDecimalEntry> map =
-			new HashMap<Serializable, BigDecimalEntry>();
+		Map<Serializable, BigDecimalEntry> map = new HashMap<Serializable, BigDecimalEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
@@ -2172,9 +2064,8 @@ public class BigDecimalEntryPersistenceImpl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-				BigDecimalEntryImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+					BigDecimalEntryImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2194,8 +2085,8 @@ public class BigDecimalEntryPersistenceImpl
 			return map;
 		}
 
-		StringBundler query = new StringBundler(
-			uncachedPrimaryKeys.size() * 2 + 1);
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
 
 		query.append(_SQL_SELECT_BIGDECIMALENTRY_WHERE_PKS_IN);
 
@@ -2218,9 +2109,7 @@ public class BigDecimalEntryPersistenceImpl
 
 			Query q = session.createQuery(sql);
 
-			for (BigDecimalEntry bigDecimalEntry :
-					(List<BigDecimalEntry>)q.list()) {
-
+			for (BigDecimalEntry bigDecimalEntry : (List<BigDecimalEntry>)q.list()) {
 				map.put(bigDecimalEntry.getPrimaryKeyObj(), bigDecimalEntry);
 
 				cacheResult(bigDecimalEntry);
@@ -2229,8 +2118,7 @@ public class BigDecimalEntryPersistenceImpl
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(
-					BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
 					BigDecimalEntryImpl.class, primaryKey, nullModel);
 			}
 		}
@@ -2283,10 +2171,8 @@ public class BigDecimalEntryPersistenceImpl
 	 * @return the ordered range of big decimal entries
 	 */
 	@Override
-	public List<BigDecimalEntry> findAll(
-		int start, int end,
+	public List<BigDecimalEntry> findAll(int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -2304,32 +2190,29 @@ public class BigDecimalEntryPersistenceImpl
 	 * @return the ordered range of big decimal entries
 	 */
 	@Override
-	public List<BigDecimalEntry> findAll(
-		int start, int end,
+	public List<BigDecimalEntry> findAll(int start, int end,
 		OrderByComparator<BigDecimalEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
+			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
 		List<BigDecimalEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<BigDecimalEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2337,13 +2220,13 @@ public class BigDecimalEntryPersistenceImpl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(2 +
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_BIGDECIMALENTRY);
 
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2363,16 +2246,16 @@ public class BigDecimalEntryPersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<BigDecimalEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<BigDecimalEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2410,8 +2293,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2423,12 +2306,11 @@ public class BigDecimalEntryPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2449,80 +2331,83 @@ public class BigDecimalEntryPersistenceImpl
 	 * Initializes the big decimal entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
-			BigDecimalEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
+				BigDecimalEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
-			BigDecimalEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
+				BigDecimalEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
 
-		_finderPathCountAll = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathCountAll = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
 
-		_finderPathWithPaginationFindByBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
-			BigDecimalEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByBigDecimalValue",
-			new String[] {
-				BigDecimal.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
+				BigDecimalEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByBigDecimalValue",
+				new String[] {
+					BigDecimal.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
-			BigDecimalEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBigDecimalValue",
-			new String[] {BigDecimal.class.getName()},
-			BigDecimalEntryModelImpl.BIGDECIMALVALUE_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
+				BigDecimalEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByBigDecimalValue",
+				new String[] { BigDecimal.class.getName() },
+				BigDecimalEntryModelImpl.BIGDECIMALVALUE_COLUMN_BITMASK);
 
-		_finderPathCountByBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBigDecimalValue",
-			new String[] {BigDecimal.class.getName()});
+		_finderPathCountByBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByBigDecimalValue",
+				new String[] { BigDecimal.class.getName() });
 
-		_finderPathWithPaginationFindByGtBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
-			BigDecimalEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGtBigDecimalValue",
-			new String[] {
-				BigDecimal.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByGtBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
+				BigDecimalEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByGtBigDecimalValue",
+				new String[] {
+					BigDecimal.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithPaginationCountByGtBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtBigDecimalValue",
-			new String[] {BigDecimal.class.getName()});
+		_finderPathWithPaginationCountByGtBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"countByGtBigDecimalValue",
+				new String[] { BigDecimal.class.getName() });
 
-		_finderPathWithPaginationFindByLtBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
-			BigDecimalEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLtBigDecimalValue",
-			new String[] {
-				BigDecimal.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByLtBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED,
+				BigDecimalEntryImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByLtBigDecimalValue",
+				new String[] {
+					BigDecimal.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithPaginationCountByLtBigDecimalValue = new FinderPath(
-			BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtBigDecimalValue",
-			new String[] {BigDecimal.class.getName()});
+		_finderPathWithPaginationCountByLtBigDecimalValue = new FinderPath(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED,
+				BigDecimalEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"countByLtBigDecimalValue",
+				new String[] { BigDecimal.class.getName() });
 	}
 
 	public void destroy() {
@@ -2534,34 +2419,15 @@ public class BigDecimalEntryPersistenceImpl
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
-
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-
-	private static final String _SQL_SELECT_BIGDECIMALENTRY =
-		"SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry";
-
-	private static final String _SQL_SELECT_BIGDECIMALENTRY_WHERE_PKS_IN =
-		"SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry WHERE bigDecimalEntryId IN (";
-
-	private static final String _SQL_SELECT_BIGDECIMALENTRY_WHERE =
-		"SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry WHERE ";
-
-	private static final String _SQL_COUNT_BIGDECIMALENTRY =
-		"SELECT COUNT(bigDecimalEntry) FROM BigDecimalEntry bigDecimalEntry";
-
-	private static final String _SQL_COUNT_BIGDECIMALENTRY_WHERE =
-		"SELECT COUNT(bigDecimalEntry) FROM BigDecimalEntry bigDecimalEntry WHERE ";
-
+	private static final String _SQL_SELECT_BIGDECIMALENTRY = "SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry";
+	private static final String _SQL_SELECT_BIGDECIMALENTRY_WHERE_PKS_IN = "SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry WHERE bigDecimalEntryId IN (";
+	private static final String _SQL_SELECT_BIGDECIMALENTRY_WHERE = "SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry WHERE ";
+	private static final String _SQL_COUNT_BIGDECIMALENTRY = "SELECT COUNT(bigDecimalEntry) FROM BigDecimalEntry bigDecimalEntry";
+	private static final String _SQL_COUNT_BIGDECIMALENTRY_WHERE = "SELECT COUNT(bigDecimalEntry) FROM BigDecimalEntry bigDecimalEntry WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "bigDecimalEntry.";
-
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BigDecimalEntry exists with the primary key ";
-
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No BigDecimalEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BigDecimalEntryPersistenceImpl.class);
-
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BigDecimalEntry exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BigDecimalEntry exists with the key {";
+	private static final Log _log = LogFactoryUtil.getLog(BigDecimalEntryPersistenceImpl.class);
 }

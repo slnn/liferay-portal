@@ -27,20 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MicroblogsEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.microblogs.model.impl.MicroblogsEntryImpl"
-)
+@ImplementationClassName("com.liferay.microblogs.model.impl.MicroblogsEntryImpl")
 @ProviderType
 public interface MicroblogsEntry extends MicroblogsEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.microblogs.model.impl.MicroblogsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MicroblogsEntry, Long>
-		MICROBLOGS_ENTRY_ID_ACCESSOR = new Accessor<MicroblogsEntry, Long>() {
-
+	public static final Accessor<MicroblogsEntry, Long> MICROBLOGS_ENTRY_ID_ACCESSOR =
+		new Accessor<MicroblogsEntry, Long>() {
 			@Override
 			public Long get(MicroblogsEntry microblogsEntry) {
 				return microblogsEntry.getMicroblogsEntryId();
@@ -55,12 +51,10 @@ public interface MicroblogsEntry extends MicroblogsEntryModel, PersistedModel {
 			public Class<MicroblogsEntry> getTypeClass() {
 				return MicroblogsEntry.class;
 			}
-
 		};
 
 	public long fetchParentMicroblogsEntryUserId();
 
 	public long getParentMicroblogsEntryUserId()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

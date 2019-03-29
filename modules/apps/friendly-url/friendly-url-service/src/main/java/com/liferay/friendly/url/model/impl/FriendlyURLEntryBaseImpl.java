@@ -32,9 +32,8 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class FriendlyURLEntryBaseImpl
-	extends FriendlyURLEntryModelImpl implements FriendlyURLEntry {
-
+public abstract class FriendlyURLEntryBaseImpl extends FriendlyURLEntryModelImpl
+	implements FriendlyURLEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class FriendlyURLEntryBaseImpl
 			FriendlyURLEntryLocalServiceUtil.updateFriendlyURLEntry(this);
 		}
 	}
-
 }

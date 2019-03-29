@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MDRRuleModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.mobile.device.rules.model.impl.MDRRuleImpl"
-)
+@ImplementationClassName("com.liferay.mobile.device.rules.model.impl.MDRRuleImpl")
 @ProviderType
 public interface MDRRule extends MDRRuleModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRRuleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MDRRule, Long> RULE_ID_ACCESSOR =
-		new Accessor<MDRRule, Long>() {
-
+	public static final Accessor<MDRRule, Long> RULE_ID_ACCESSOR = new Accessor<MDRRule, Long>() {
 			@Override
 			public Long get(MDRRule mdrRule) {
 				return mdrRule.getRuleId();
@@ -55,14 +50,10 @@ public interface MDRRule extends MDRRuleModel, PersistedModel {
 			public Class<MDRRule> getTypeClass() {
 				return MDRRule.class;
 			}
-
 		};
 
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
-
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
 }

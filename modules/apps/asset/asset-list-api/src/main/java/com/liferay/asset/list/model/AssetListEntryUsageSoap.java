@@ -30,10 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class AssetListEntryUsageSoap implements Serializable {
-
-	public static AssetListEntryUsageSoap toSoapModel(
-		AssetListEntryUsage model) {
-
+	public static AssetListEntryUsageSoap toSoapModel(AssetListEntryUsage model) {
 		AssetListEntryUsageSoap soapModel = new AssetListEntryUsageSoap();
 
 		soapModel.setUuid(model.getUuid());
@@ -55,9 +52,7 @@ public class AssetListEntryUsageSoap implements Serializable {
 
 	public static AssetListEntryUsageSoap[] toSoapModels(
 		AssetListEntryUsage[] models) {
-
-		AssetListEntryUsageSoap[] soapModels =
-			new AssetListEntryUsageSoap[models.length];
+		AssetListEntryUsageSoap[] soapModels = new AssetListEntryUsageSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -68,12 +63,10 @@ public class AssetListEntryUsageSoap implements Serializable {
 
 	public static AssetListEntryUsageSoap[][] toSoapModels(
 		AssetListEntryUsage[][] models) {
-
 		AssetListEntryUsageSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new AssetListEntryUsageSoap[models.length][models[0].length];
+			soapModels = new AssetListEntryUsageSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new AssetListEntryUsageSoap[0][0];
@@ -88,16 +81,13 @@ public class AssetListEntryUsageSoap implements Serializable {
 
 	public static AssetListEntryUsageSoap[] toSoapModels(
 		List<AssetListEntryUsage> models) {
-
-		List<AssetListEntryUsageSoap> soapModels =
-			new ArrayList<AssetListEntryUsageSoap>(models.size());
+		List<AssetListEntryUsageSoap> soapModels = new ArrayList<AssetListEntryUsageSoap>(models.size());
 
 		for (AssetListEntryUsage model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new AssetListEntryUsageSoap[soapModels.size()]);
+		return soapModels.toArray(new AssetListEntryUsageSoap[soapModels.size()]);
 	}
 
 	public AssetListEntryUsageSoap() {
@@ -228,5 +218,4 @@ public class AssetListEntryUsageSoap implements Serializable {
 	private long _classPK;
 	private String _portletId;
 	private Date _lastPublishDate;
-
 }

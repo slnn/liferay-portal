@@ -17,6 +17,7 @@ package com.liferay.polls.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.model.PollsVote;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -38,34 +39,24 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=polls",
-		"json.web.service.context.path=PollsVote"
-	},
-	service = PollsVoteService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=polls", "json.web.service.context.path=PollsVote"}, service = PollsVoteService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface PollsVoteService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsVoteServiceUtil} to access the polls vote remote service. Add custom service methods to <code>com.liferay.polls.service.impl.PollsVoteServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PollsVote addVote(
-			long questionId, long choiceId, ServiceContext serviceContext)
-		throws PortalException;
+	public PollsVote addVote(long questionId, long choiceId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

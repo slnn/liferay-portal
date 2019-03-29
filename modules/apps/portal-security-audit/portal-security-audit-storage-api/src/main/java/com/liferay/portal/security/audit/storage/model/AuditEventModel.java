@@ -35,7 +35,6 @@ import java.util.Date;
  */
 @ProviderType
 public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -291,5 +290,4 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	 * @param additionalInfo the additional info of this audit event
 	 */
 	public void setAdditionalInfo(String additionalInfo);
-
 }

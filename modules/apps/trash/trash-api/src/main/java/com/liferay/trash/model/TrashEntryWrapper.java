@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class TrashEntryWrapper
-	extends BaseModelWrapper<TrashEntry>
+public class TrashEntryWrapper extends BaseModelWrapper<TrashEntry>
 	implements TrashEntry, ModelWrapper<TrashEntry> {
-
 	public TrashEntryWrapper(TrashEntry trashEntry) {
 		super(trashEntry);
 	}
@@ -130,80 +128,80 @@ public class TrashEntryWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this trash entry.
-	 *
-	 * @return the fully qualified class name of this trash entry
-	 */
+	* Returns the fully qualified class name of this trash entry.
+	*
+	* @return the fully qualified class name of this trash entry
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this trash entry.
-	 *
-	 * @return the class name ID of this trash entry
-	 */
+	* Returns the class name ID of this trash entry.
+	*
+	* @return the class name ID of this trash entry
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this trash entry.
-	 *
-	 * @return the class pk of this trash entry
-	 */
+	* Returns the class pk of this trash entry.
+	*
+	* @return the class pk of this trash entry
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this trash entry.
-	 *
-	 * @return the company ID of this trash entry
-	 */
+	* Returns the company ID of this trash entry.
+	*
+	* @return the company ID of this trash entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this trash entry.
-	 *
-	 * @return the create date of this trash entry
-	 */
+	* Returns the create date of this trash entry.
+	*
+	* @return the create date of this trash entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the entry ID of this trash entry.
-	 *
-	 * @return the entry ID of this trash entry
-	 */
+	* Returns the entry ID of this trash entry.
+	*
+	* @return the entry ID of this trash entry
+	*/
 	@Override
 	public long getEntryId() {
 		return model.getEntryId();
 	}
 
 	/**
-	 * Returns the group ID of this trash entry.
-	 *
-	 * @return the group ID of this trash entry
-	 */
+	* Returns the group ID of this trash entry.
+	*
+	* @return the group ID of this trash entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the primary key of this trash entry.
-	 *
-	 * @return the primary key of this trash entry
-	 */
+	* Returns the primary key of this trash entry.
+	*
+	* @return the primary key of this trash entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -215,39 +213,37 @@ public class TrashEntryWrapper
 	}
 
 	/**
-	 * Returns the status of this trash entry.
-	 *
-	 * @return the status of this trash entry
-	 */
+	* Returns the status of this trash entry.
+	*
+	* @return the status of this trash entry
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the system event set key of this trash entry.
-	 *
-	 * @return the system event set key of this trash entry
-	 */
+	* Returns the system event set key of this trash entry.
+	*
+	* @return the system event set key of this trash entry
+	*/
 	@Override
 	public long getSystemEventSetKey() {
 		return model.getSystemEventSetKey();
 	}
 
 	/**
-	 * Returns the type settings of this trash entry.
-	 *
-	 * @return the type settings of this trash entry
-	 */
+	* Returns the type settings of this trash entry.
+	*
+	* @return the type settings of this trash entry
+	*/
 	@Override
 	public String getTypeSettings() {
 		return model.getTypeSettings();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties() {
-
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return model.getTypeSettingsProperties();
 	}
 
@@ -262,30 +258,30 @@ public class TrashEntryWrapper
 	}
 
 	/**
-	 * Returns the user ID of this trash entry.
-	 *
-	 * @return the user ID of this trash entry
-	 */
+	* Returns the user ID of this trash entry.
+	*
+	* @return the user ID of this trash entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this trash entry.
-	 *
-	 * @return the user name of this trash entry
-	 */
+	* Returns the user name of this trash entry.
+	*
+	* @return the user name of this trash entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this trash entry.
-	 *
-	 * @return the user uuid of this trash entry
-	 */
+	* Returns the user uuid of this trash entry.
+	*
+	* @return the user uuid of this trash entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -312,70 +308,70 @@ public class TrashEntryWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this trash entry.
-	 *
-	 * @param classNameId the class name ID of this trash entry
-	 */
+	* Sets the class name ID of this trash entry.
+	*
+	* @param classNameId the class name ID of this trash entry
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this trash entry.
-	 *
-	 * @param classPK the class pk of this trash entry
-	 */
+	* Sets the class pk of this trash entry.
+	*
+	* @param classPK the class pk of this trash entry
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this trash entry.
-	 *
-	 * @param companyId the company ID of this trash entry
-	 */
+	* Sets the company ID of this trash entry.
+	*
+	* @param companyId the company ID of this trash entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this trash entry.
-	 *
-	 * @param createDate the create date of this trash entry
-	 */
+	* Sets the create date of this trash entry.
+	*
+	* @param createDate the create date of this trash entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the entry ID of this trash entry.
-	 *
-	 * @param entryId the entry ID of this trash entry
-	 */
+	* Sets the entry ID of this trash entry.
+	*
+	* @param entryId the entry ID of this trash entry
+	*/
 	@Override
 	public void setEntryId(long entryId) {
 		model.setEntryId(entryId);
 	}
 
 	/**
-	 * Sets the group ID of this trash entry.
-	 *
-	 * @param groupId the group ID of this trash entry
-	 */
+	* Sets the group ID of this trash entry.
+	*
+	* @param groupId the group ID of this trash entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the primary key of this trash entry.
-	 *
-	 * @param primaryKey the primary key of this trash entry
-	 */
+	* Sets the primary key of this trash entry.
+	*
+	* @param primaryKey the primary key of this trash entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
@@ -387,30 +383,30 @@ public class TrashEntryWrapper
 	}
 
 	/**
-	 * Sets the status of this trash entry.
-	 *
-	 * @param status the status of this trash entry
-	 */
+	* Sets the status of this trash entry.
+	*
+	* @param status the status of this trash entry
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the system event set key of this trash entry.
-	 *
-	 * @param systemEventSetKey the system event set key of this trash entry
-	 */
+	* Sets the system event set key of this trash entry.
+	*
+	* @param systemEventSetKey the system event set key of this trash entry
+	*/
 	@Override
 	public void setSystemEventSetKey(long systemEventSetKey) {
 		model.setSystemEventSetKey(systemEventSetKey);
 	}
 
 	/**
-	 * Sets the type settings of this trash entry.
-	 *
-	 * @param typeSettings the type settings of this trash entry
-	 */
+	* Sets the type settings of this trash entry.
+	*
+	* @param typeSettings the type settings of this trash entry
+	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
@@ -418,37 +414,35 @@ public class TrashEntryWrapper
 
 	@Override
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties) {
-
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
-	 * Sets the user ID of this trash entry.
-	 *
-	 * @param userId the user ID of this trash entry
-	 */
+	* Sets the user ID of this trash entry.
+	*
+	* @param userId the user ID of this trash entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this trash entry.
-	 *
-	 * @param userName the user name of this trash entry
-	 */
+	* Sets the user name of this trash entry.
+	*
+	* @param userName the user name of this trash entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this trash entry.
-	 *
-	 * @param userUuid the user uuid of this trash entry
-	 */
+	* Sets the user uuid of this trash entry.
+	*
+	* @param userUuid the user uuid of this trash entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -458,5 +452,4 @@ public class TrashEntryWrapper
 	protected TrashEntryWrapper wrap(TrashEntry trashEntry) {
 		return new TrashEntryWrapper(trashEntry);
 	}
-
 }

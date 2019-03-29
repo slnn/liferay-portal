@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class MBMessageSoap implements Serializable {
-
 	public static MBMessageSoap toSoapModel(MBMessage model) {
 		MBMessageSoap soapModel = new MBMessageSoap();
 
@@ -92,8 +91,7 @@ public class MBMessageSoap implements Serializable {
 	}
 
 	public static MBMessageSoap[] toSoapModels(List<MBMessage> models) {
-		List<MBMessageSoap> soapModels = new ArrayList<MBMessageSoap>(
-			models.size());
+		List<MBMessageSoap> soapModels = new ArrayList<MBMessageSoap>(models.size());
 
 		for (MBMessage model : models) {
 			soapModels.add(toSoapModel(model));
@@ -359,5 +357,4 @@ public class MBMessageSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

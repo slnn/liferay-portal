@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,17 +35,16 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class BackgroundTaskServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.background.task.service.impl.BackgroundTaskServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static int getBackgroundTasksCount(
-		long groupId, String taskExecutorClassName, String completed) {
-
-		return getService().getBackgroundTasksCount(
-			groupId, taskExecutorClassName, completed);
+	public static int getBackgroundTasksCount(long groupId,
+		String taskExecutorClassName, String completed) {
+		return getService()
+				   .getBackgroundTasksCount(groupId, taskExecutorClassName,
+			completed);
 	}
 
 	public static String getBackgroundTaskStatusJSON(long backgroundTaskId) {
@@ -52,10 +52,10 @@ public class BackgroundTaskServiceUtil {
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -64,22 +64,17 @@ public class BackgroundTaskServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<BackgroundTaskService, BackgroundTaskService>
-		_serviceTracker;
+	private static ServiceTracker<BackgroundTaskService, BackgroundTaskService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(BackgroundTaskService.class);
 
-		ServiceTracker<BackgroundTaskService, BackgroundTaskService>
-			serviceTracker =
-				new ServiceTracker
-					<BackgroundTaskService, BackgroundTaskService>(
-						bundle.getBundleContext(), BackgroundTaskService.class,
-						null);
+		ServiceTracker<BackgroundTaskService, BackgroundTaskService> serviceTracker =
+			new ServiceTracker<BackgroundTaskService, BackgroundTaskService>(bundle.getBundleContext(),
+				BackgroundTaskService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

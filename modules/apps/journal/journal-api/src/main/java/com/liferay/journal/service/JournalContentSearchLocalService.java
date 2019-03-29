@@ -17,6 +17,7 @@ package com.liferay.journal.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.journal.model.JournalContentSearch;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -48,13 +49,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface JournalContentSearchLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface JournalContentSearchLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,11 +60,11 @@ public interface JournalContentSearchLocalService
 	 */
 
 	/**
-	 * Adds the journal content search to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalContentSearch the journal content search
-	 * @return the journal content search that was added
-	 */
+	* Adds the journal content search to the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalContentSearch the journal content search
+	* @return the journal content search that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalContentSearch addJournalContentSearch(
 		JournalContentSearch journalContentSearch);
@@ -74,53 +72,51 @@ public interface JournalContentSearchLocalService
 	public void checkContentSearches(long companyId) throws PortalException;
 
 	/**
-	 * Creates a new journal content search with the primary key. Does not add the journal content search to the database.
-	 *
-	 * @param contentSearchId the primary key for the new journal content search
-	 * @return the new journal content search
-	 */
+	* Creates a new journal content search with the primary key. Does not add the journal content search to the database.
+	*
+	* @param contentSearchId the primary key for the new journal content search
+	* @return the new journal content search
+	*/
 	@Transactional(enabled = false)
-	public JournalContentSearch createJournalContentSearch(
-		long contentSearchId);
+	public JournalContentSearch createJournalContentSearch(long contentSearchId);
 
-	public void deleteArticleContentSearch(
-		long groupId, boolean privateLayout, long layoutId, String portletId);
+	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
+		long layoutId, String portletId);
 
-	public void deleteArticleContentSearch(
-		long groupId, boolean privateLayout, long layoutId, String portletId,
-		String articleId);
+	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
+		long layoutId, String portletId, String articleId);
 
 	public void deleteArticleContentSearches(long groupId, String articleId);
 
 	/**
-	 * Deletes the journal content search from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalContentSearch the journal content search
-	 * @return the journal content search that was removed
-	 */
+	* Deletes the journal content search from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalContentSearch the journal content search
+	* @return the journal content search that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public JournalContentSearch deleteJournalContentSearch(
 		JournalContentSearch journalContentSearch);
 
 	/**
-	 * Deletes the journal content search with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param contentSearchId the primary key of the journal content search
-	 * @return the journal content search that was removed
-	 * @throws PortalException if a journal content search with the primary key could not be found
-	 */
+	* Deletes the journal content search with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param contentSearchId the primary key of the journal content search
+	* @return the journal content search that was removed
+	* @throws PortalException if a journal content search with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public JournalContentSearch deleteJournalContentSearch(long contentSearchId)
 		throws PortalException;
 
-	public void deleteLayoutContentSearches(
-		long groupId, boolean privateLayout, long layoutId);
+	public void deleteLayoutContentSearches(long groupId,
+		boolean privateLayout, long layoutId);
 
 	public void deleteOwnerContentSearches(long groupId, boolean privateLayout);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -129,67 +125,66 @@ public interface JournalContentSearchLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalContentSearchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalContentSearchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalContentSearchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalContentSearchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalContentSearch fetchJournalContentSearch(long contentSearchId);
@@ -201,8 +196,8 @@ public interface JournalContentSearchLocalService
 	public List<JournalContentSearch> getArticleContentSearches();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalContentSearch> getArticleContentSearches(
-		long groupId, String articleId);
+	public List<JournalContentSearch> getArticleContentSearches(long groupId,
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalContentSearch> getArticleContentSearches(
@@ -212,55 +207,55 @@ public interface JournalContentSearchLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the journal content search with the primary key.
-	 *
-	 * @param contentSearchId the primary key of the journal content search
-	 * @return the journal content search
-	 * @throws PortalException if a journal content search with the primary key could not be found
-	 */
+	* Returns the journal content search with the primary key.
+	*
+	* @param contentSearchId the primary key of the journal content search
+	* @return the journal content search
+	* @throws PortalException if a journal content search with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalContentSearch getJournalContentSearch(long contentSearchId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the journal content searchs.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalContentSearchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of journal content searchs
-	 */
+	* Returns a range of all the journal content searchs.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalContentSearchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of journal content searchs
+	* @param end the upper bound of the range of journal content searchs (not inclusive)
+	* @return the range of journal content searchs
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalContentSearch> getJournalContentSearchs(
-		int start, int end);
+	public List<JournalContentSearch> getJournalContentSearchs(int start,
+		int end);
 
 	/**
-	 * Returns the number of journal content searchs.
-	 *
-	 * @return the number of journal content searchs
-	 */
+	* Returns the number of journal content searchs.
+	*
+	* @return the number of journal content searchs
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getJournalContentSearchsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getLayoutIds(
-		long groupId, boolean privateLayout, String articleId);
+	public List<Long> getLayoutIds(long groupId, boolean privateLayout,
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutIdsCount(
-		long groupId, boolean privateLayout, String articleId);
+	public int getLayoutIdsCount(long groupId, boolean privateLayout,
+		String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutIdsCount(String articleId);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -272,29 +267,25 @@ public interface JournalContentSearchLocalService
 	public List<JournalContentSearch> getPortletContentSearches(
 		String portletId);
 
-	public JournalContentSearch updateContentSearch(
-			long groupId, boolean privateLayout, long layoutId,
-			String portletId, String articleId)
+	public JournalContentSearch updateContentSearch(long groupId,
+		boolean privateLayout, long layoutId, String portletId, String articleId)
 		throws PortalException;
 
-	public JournalContentSearch updateContentSearch(
-			long groupId, boolean privateLayout, long layoutId,
-			String portletId, String articleId, boolean purge)
-		throws PortalException;
+	public JournalContentSearch updateContentSearch(long groupId,
+		boolean privateLayout, long layoutId, String portletId,
+		String articleId, boolean purge) throws PortalException;
 
-	public List<JournalContentSearch> updateContentSearch(
-			long groupId, boolean privateLayout, long layoutId,
-			String portletId, String[] articleIds)
-		throws PortalException;
+	public List<JournalContentSearch> updateContentSearch(long groupId,
+		boolean privateLayout, long layoutId, String portletId,
+		String[] articleIds) throws PortalException;
 
 	/**
-	 * Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalContentSearch the journal content search
-	 * @return the journal content search that was updated
-	 */
+	* Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param journalContentSearch the journal content search
+	* @return the journal content search that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalContentSearch updateJournalContentSearch(
 		JournalContentSearch journalContentSearch);
-
 }

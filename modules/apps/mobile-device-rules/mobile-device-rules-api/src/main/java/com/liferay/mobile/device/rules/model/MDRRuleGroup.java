@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MDRRuleGroupModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl"
-)
+@ImplementationClassName("com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl")
 @ProviderType
 public interface MDRRuleGroup extends MDRRuleGroupModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MDRRuleGroup, Long> RULE_GROUP_ID_ACCESSOR =
-		new Accessor<MDRRuleGroup, Long>() {
-
+	public static final Accessor<MDRRuleGroup, Long> RULE_GROUP_ID_ACCESSOR = new Accessor<MDRRuleGroup, Long>() {
 			@Override
 			public Long get(MDRRuleGroup mdrRuleGroup) {
 				return mdrRuleGroup.getRuleGroupId();
@@ -55,9 +50,7 @@ public interface MDRRuleGroup extends MDRRuleGroupModel, PersistedModel {
 			public Class<MDRRuleGroup> getTypeClass() {
 				return MDRRuleGroup.class;
 			}
-
 		};
 
 	public java.util.List<MDRRule> getRules();
-
 }

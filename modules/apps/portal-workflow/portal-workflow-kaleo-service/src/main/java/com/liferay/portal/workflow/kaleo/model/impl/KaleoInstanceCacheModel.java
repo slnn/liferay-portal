@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoInstanceCacheModel
-	implements CacheModel<KaleoInstance>, Externalizable, MVCCModel {
-
+public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class KaleoInstanceCacheModel
 			return false;
 		}
 
-		KaleoInstanceCacheModel kaleoInstanceCacheModel =
-			(KaleoInstanceCacheModel)obj;
+		KaleoInstanceCacheModel kaleoInstanceCacheModel = (KaleoInstanceCacheModel)obj;
 
 		if ((kaleoInstanceId == kaleoInstanceCacheModel.kaleoInstanceId) &&
-			(mvccVersion == kaleoInstanceCacheModel.mvccVersion)) {
-
+				(mvccVersion == kaleoInstanceCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -224,7 +222,8 @@ public class KaleoInstanceCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoInstanceId);
@@ -295,5 +294,4 @@ public class KaleoInstanceCacheModel
 	public boolean completed;
 	public long completionDate;
 	public String workflowContext;
-
 }

@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class WeDeployAuthTokenWrapper
-	extends BaseModelWrapper<WeDeployAuthToken>
+public class WeDeployAuthTokenWrapper extends BaseModelWrapper<WeDeployAuthToken>
 	implements WeDeployAuthToken, ModelWrapper<WeDeployAuthToken> {
-
 	public WeDeployAuthTokenWrapper(WeDeployAuthToken weDeployAuthToken) {
 		super(weDeployAuthToken);
 	}
@@ -116,110 +114,110 @@ public class WeDeployAuthTokenWrapper
 	}
 
 	/**
-	 * Returns the client ID of this we deploy auth token.
-	 *
-	 * @return the client ID of this we deploy auth token
-	 */
+	* Returns the client ID of this we deploy auth token.
+	*
+	* @return the client ID of this we deploy auth token
+	*/
 	@Override
 	public String getClientId() {
 		return model.getClientId();
 	}
 
 	/**
-	 * Returns the company ID of this we deploy auth token.
-	 *
-	 * @return the company ID of this we deploy auth token
-	 */
+	* Returns the company ID of this we deploy auth token.
+	*
+	* @return the company ID of this we deploy auth token
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this we deploy auth token.
-	 *
-	 * @return the create date of this we deploy auth token
-	 */
+	* Returns the create date of this we deploy auth token.
+	*
+	* @return the create date of this we deploy auth token
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the modified date of this we deploy auth token.
-	 *
-	 * @return the modified date of this we deploy auth token
-	 */
+	* Returns the modified date of this we deploy auth token.
+	*
+	* @return the modified date of this we deploy auth token
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this we deploy auth token.
-	 *
-	 * @return the primary key of this we deploy auth token
-	 */
+	* Returns the primary key of this we deploy auth token.
+	*
+	* @return the primary key of this we deploy auth token
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the token of this we deploy auth token.
-	 *
-	 * @return the token of this we deploy auth token
-	 */
+	* Returns the token of this we deploy auth token.
+	*
+	* @return the token of this we deploy auth token
+	*/
 	@Override
 	public String getToken() {
 		return model.getToken();
 	}
 
 	/**
-	 * Returns the type of this we deploy auth token.
-	 *
-	 * @return the type of this we deploy auth token
-	 */
+	* Returns the type of this we deploy auth token.
+	*
+	* @return the type of this we deploy auth token
+	*/
 	@Override
 	public int getType() {
 		return model.getType();
 	}
 
 	/**
-	 * Returns the user ID of this we deploy auth token.
-	 *
-	 * @return the user ID of this we deploy auth token
-	 */
+	* Returns the user ID of this we deploy auth token.
+	*
+	* @return the user ID of this we deploy auth token
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this we deploy auth token.
-	 *
-	 * @return the user name of this we deploy auth token
-	 */
+	* Returns the user name of this we deploy auth token.
+	*
+	* @return the user name of this we deploy auth token
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this we deploy auth token.
-	 *
-	 * @return the user uuid of this we deploy auth token
-	 */
+	* Returns the user uuid of this we deploy auth token.
+	*
+	* @return the user uuid of this we deploy auth token
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the we deploy auth token ID of this we deploy auth token.
-	 *
-	 * @return the we deploy auth token ID of this we deploy auth token
-	 */
+	* Returns the we deploy auth token ID of this we deploy auth token.
+	*
+	* @return the we deploy auth token ID of this we deploy auth token
+	*/
 	@Override
 	public long getWeDeployAuthTokenId() {
 		return model.getWeDeployAuthTokenId();
@@ -231,120 +229,117 @@ public class WeDeployAuthTokenWrapper
 	}
 
 	/**
-	 * Sets the client ID of this we deploy auth token.
-	 *
-	 * @param clientId the client ID of this we deploy auth token
-	 */
+	* Sets the client ID of this we deploy auth token.
+	*
+	* @param clientId the client ID of this we deploy auth token
+	*/
 	@Override
 	public void setClientId(String clientId) {
 		model.setClientId(clientId);
 	}
 
 	/**
-	 * Sets the company ID of this we deploy auth token.
-	 *
-	 * @param companyId the company ID of this we deploy auth token
-	 */
+	* Sets the company ID of this we deploy auth token.
+	*
+	* @param companyId the company ID of this we deploy auth token
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this we deploy auth token.
-	 *
-	 * @param createDate the create date of this we deploy auth token
-	 */
+	* Sets the create date of this we deploy auth token.
+	*
+	* @param createDate the create date of this we deploy auth token
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the modified date of this we deploy auth token.
-	 *
-	 * @param modifiedDate the modified date of this we deploy auth token
-	 */
+	* Sets the modified date of this we deploy auth token.
+	*
+	* @param modifiedDate the modified date of this we deploy auth token
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this we deploy auth token.
-	 *
-	 * @param primaryKey the primary key of this we deploy auth token
-	 */
+	* Sets the primary key of this we deploy auth token.
+	*
+	* @param primaryKey the primary key of this we deploy auth token
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the token of this we deploy auth token.
-	 *
-	 * @param token the token of this we deploy auth token
-	 */
+	* Sets the token of this we deploy auth token.
+	*
+	* @param token the token of this we deploy auth token
+	*/
 	@Override
 	public void setToken(String token) {
 		model.setToken(token);
 	}
 
 	/**
-	 * Sets the type of this we deploy auth token.
-	 *
-	 * @param type the type of this we deploy auth token
-	 */
+	* Sets the type of this we deploy auth token.
+	*
+	* @param type the type of this we deploy auth token
+	*/
 	@Override
 	public void setType(int type) {
 		model.setType(type);
 	}
 
 	/**
-	 * Sets the user ID of this we deploy auth token.
-	 *
-	 * @param userId the user ID of this we deploy auth token
-	 */
+	* Sets the user ID of this we deploy auth token.
+	*
+	* @param userId the user ID of this we deploy auth token
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this we deploy auth token.
-	 *
-	 * @param userName the user name of this we deploy auth token
-	 */
+	* Sets the user name of this we deploy auth token.
+	*
+	* @param userName the user name of this we deploy auth token
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this we deploy auth token.
-	 *
-	 * @param userUuid the user uuid of this we deploy auth token
-	 */
+	* Sets the user uuid of this we deploy auth token.
+	*
+	* @param userUuid the user uuid of this we deploy auth token
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the we deploy auth token ID of this we deploy auth token.
-	 *
-	 * @param weDeployAuthTokenId the we deploy auth token ID of this we deploy auth token
-	 */
+	* Sets the we deploy auth token ID of this we deploy auth token.
+	*
+	* @param weDeployAuthTokenId the we deploy auth token ID of this we deploy auth token
+	*/
 	@Override
 	public void setWeDeployAuthTokenId(long weDeployAuthTokenId) {
 		model.setWeDeployAuthTokenId(weDeployAuthTokenId);
 	}
 
 	@Override
-	protected WeDeployAuthTokenWrapper wrap(
-		WeDeployAuthToken weDeployAuthToken) {
-
+	protected WeDeployAuthTokenWrapper wrap(WeDeployAuthToken weDeployAuthToken) {
 		return new WeDeployAuthTokenWrapper(weDeployAuthToken);
 	}
-
 }

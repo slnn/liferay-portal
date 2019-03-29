@@ -27,39 +27,32 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMStructureLayoutModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl")
 @ProviderType
-public interface DDMStructureLayout
-	extends DDMStructureLayoutModel, PersistedModel {
-
+public interface DDMStructureLayout extends DDMStructureLayoutModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMStructureLayout, Long>
-		STRUCTURE_LAYOUT_ID_ACCESSOR =
-			new Accessor<DDMStructureLayout, Long>() {
+	public static final Accessor<DDMStructureLayout, Long> STRUCTURE_LAYOUT_ID_ACCESSOR =
+		new Accessor<DDMStructureLayout, Long>() {
+			@Override
+			public Long get(DDMStructureLayout ddmStructureLayout) {
+				return ddmStructureLayout.getStructureLayoutId();
+			}
 
-				@Override
-				public Long get(DDMStructureLayout ddmStructureLayout) {
-					return ddmStructureLayout.getStructureLayoutId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<DDMStructureLayout> getTypeClass() {
-					return DDMStructureLayout.class;
-				}
-
-			};
+			@Override
+			public Class<DDMStructureLayout> getTypeClass() {
+				return DDMStructureLayout.class;
+			}
+		};
 
 	public DDMFormLayout getDDMFormLayout();
-
 }

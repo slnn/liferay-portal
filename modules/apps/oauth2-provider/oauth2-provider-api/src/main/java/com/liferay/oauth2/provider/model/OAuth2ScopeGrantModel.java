@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface OAuth2ScopeGrantModel
-	extends BaseModel<OAuth2ScopeGrant>, ShardedModel {
-
+public interface OAuth2ScopeGrantModel extends BaseModel<OAuth2ScopeGrant>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -144,5 +143,4 @@ public interface OAuth2ScopeGrantModel
 	 * @param scope the scope of this o auth2 scope grant
 	 */
 	public void setScope(String scope);
-
 }

@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.mapping.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDMStructureLinkPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
@@ -106,8 +106,7 @@ public class DDMStructureLinkPersistenceTest {
 
 		_persistence.remove(newDDMStructureLink);
 
-		DDMStructureLink existingDDMStructureLink =
-			_persistence.fetchByPrimaryKey(newDDMStructureLink.getPrimaryKey());
+		DDMStructureLink existingDDMStructureLink = _persistence.fetchByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
 		Assert.assertNull(existingDDMStructureLink);
 	}
@@ -133,23 +132,17 @@ public class DDMStructureLinkPersistenceTest {
 
 		_ddmStructureLinks.add(_persistence.update(newDDMStructureLink));
 
-		DDMStructureLink existingDDMStructureLink =
-			_persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
+		DDMStructureLink existingDDMStructureLink = _persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMStructureLink.getStructureLinkId(),
+		Assert.assertEquals(existingDDMStructureLink.getStructureLinkId(),
 			newDDMStructureLink.getStructureLinkId());
-		Assert.assertEquals(
-			existingDDMStructureLink.getCompanyId(),
+		Assert.assertEquals(existingDDMStructureLink.getCompanyId(),
 			newDDMStructureLink.getCompanyId());
-		Assert.assertEquals(
-			existingDDMStructureLink.getClassNameId(),
+		Assert.assertEquals(existingDDMStructureLink.getClassNameId(),
 			newDDMStructureLink.getClassNameId());
-		Assert.assertEquals(
-			existingDDMStructureLink.getClassPK(),
+		Assert.assertEquals(existingDDMStructureLink.getClassPK(),
 			newDDMStructureLink.getClassPK());
-		Assert.assertEquals(
-			existingDDMStructureLink.getStructureId(),
+		Assert.assertEquals(existingDDMStructureLink.getStructureId(),
 			newDDMStructureLink.getStructureId());
 	}
 
@@ -169,17 +162,16 @@ public class DDMStructureLinkPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C_S() throws Exception {
-		_persistence.countByC_C_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C_S(0L, 0L, 0L);
 	}
@@ -188,8 +180,7 @@ public class DDMStructureLinkPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
-		DDMStructureLink existingDDMStructureLink =
-			_persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
+		DDMStructureLink existingDDMStructureLink = _persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
 		Assert.assertEquals(existingDDMStructureLink, newDDMStructureLink);
 	}
@@ -203,22 +194,21 @@ public class DDMStructureLinkPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMStructureLink> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DDMStructureLink", "structureLinkId", true, "companyId", true,
-			"classNameId", true, "classPK", true, "structureId", true);
+		return OrderByComparatorFactoryUtil.create("DDMStructureLink",
+			"structureLinkId", true, "companyId", true, "classNameId", true,
+			"classPK", true, "structureId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
-		DDMStructureLink existingDDMStructureLink =
-			_persistence.fetchByPrimaryKey(newDDMStructureLink.getPrimaryKey());
+		DDMStructureLink existingDDMStructureLink = _persistence.fetchByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
 		Assert.assertEquals(existingDDMStructureLink, newDDMStructureLink);
 	}
@@ -227,8 +217,7 @@ public class DDMStructureLinkPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMStructureLink missingDDMStructureLink =
-			_persistence.fetchByPrimaryKey(pk);
+		DDMStructureLink missingDDMStructureLink = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDMStructureLink);
 	}
@@ -236,7 +225,6 @@ public class DDMStructureLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		DDMStructureLink newDDMStructureLink1 = addDDMStructureLink();
 		DDMStructureLink newDDMStructureLink2 = addDDMStructureLink();
 
@@ -245,22 +233,18 @@ public class DDMStructureLinkPersistenceTest {
 		primaryKeys.add(newDDMStructureLink1.getPrimaryKey());
 		primaryKeys.add(newDDMStructureLink2.getPrimaryKey());
 
-		Map<Serializable, DDMStructureLink> ddmStructureLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureLink> ddmStructureLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddmStructureLinks.size());
-		Assert.assertEquals(
-			newDDMStructureLink1,
+		Assert.assertEquals(newDDMStructureLink1,
 			ddmStructureLinks.get(newDDMStructureLink1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDMStructureLink2,
+		Assert.assertEquals(newDDMStructureLink2,
 			ddmStructureLinks.get(newDDMStructureLink2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -270,8 +254,7 @@ public class DDMStructureLinkPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDMStructureLink> ddmStructureLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureLink> ddmStructureLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmStructureLinks.isEmpty());
 	}
@@ -279,7 +262,6 @@ public class DDMStructureLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
 		long pk = RandomTestUtil.nextLong();
@@ -289,39 +271,36 @@ public class DDMStructureLinkPersistenceTest {
 		primaryKeys.add(newDDMStructureLink.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDMStructureLink> ddmStructureLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureLink> ddmStructureLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmStructureLinks.size());
-		Assert.assertEquals(
-			newDDMStructureLink,
+		Assert.assertEquals(newDDMStructureLink,
 			ddmStructureLinks.get(newDDMStructureLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStructureLink> ddmStructureLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureLink> ddmStructureLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmStructureLinks.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMStructureLink.getPrimaryKey());
 
-		Map<Serializable, DDMStructureLink> ddmStructureLinks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureLink> ddmStructureLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmStructureLinks.size());
-		Assert.assertEquals(
-			newDDMStructureLink,
+		Assert.assertEquals(newDDMStructureLink,
 			ddmStructureLinks.get(newDDMStructureLink.getPrimaryKey()));
 	}
 
@@ -329,19 +308,15 @@ public class DDMStructureLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDMStructureLinkLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDMStructureLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDMStructureLink>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStructureLink>() {
 				@Override
 				public void performAction(DDMStructureLink ddmStructureLink) {
 					Assert.assertNotNull(ddmStructureLink);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -350,18 +325,17 @@ public class DDMStructureLinkPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"structureLinkId", newDDMStructureLink.getStructureLinkId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureLinkId",
+				newDDMStructureLink.getStructureLinkId()));
 
-		List<DDMStructureLink> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMStructureLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -372,34 +346,32 @@ public class DDMStructureLinkPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"structureLinkId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureLinkId",
+				RandomTestUtil.nextLong()));
 
-		List<DDMStructureLink> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMStructureLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("structureLinkId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"structureLinkId"));
 
 		Object newStructureLinkId = newDDMStructureLink.getStructureLinkId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"structureLinkId", new Object[] {newStructureLinkId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("structureLinkId",
+				new Object[] { newStructureLinkId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -412,15 +384,14 @@ public class DDMStructureLinkPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("structureLinkId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"structureLinkId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"structureLinkId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("structureLinkId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -433,24 +404,19 @@ public class DDMStructureLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMStructureLink existingDDMStructureLink =
-			_persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
+		DDMStructureLink existingDDMStructureLink = _persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLink.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLink, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLink.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLink, "getOriginalClassPK",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureLink.getStructureId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureLink, "getOriginalStructureId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureLink.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLink,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDDMStructureLink.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLink,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureLink.getStructureId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLink,
+				"getOriginalStructureId", new Class<?>[0]));
 	}
 
 	protected DDMStructureLink addDDMStructureLink() throws Exception {
@@ -471,9 +437,7 @@ public class DDMStructureLinkPersistenceTest {
 		return ddmStructureLink;
 	}
 
-	private List<DDMStructureLink> _ddmStructureLinks =
-		new ArrayList<DDMStructureLink>();
+	private List<DDMStructureLink> _ddmStructureLinks = new ArrayList<DDMStructureLink>();
 	private DDMStructureLinkPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

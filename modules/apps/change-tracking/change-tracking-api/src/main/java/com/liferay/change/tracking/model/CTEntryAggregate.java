@@ -27,39 +27,31 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see CTEntryAggregateModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.change.tracking.model.impl.CTEntryAggregateImpl"
-)
+@ImplementationClassName("com.liferay.change.tracking.model.impl.CTEntryAggregateImpl")
 @ProviderType
-public interface CTEntryAggregate
-	extends CTEntryAggregateModel, PersistedModel {
-
+public interface CTEntryAggregate extends CTEntryAggregateModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTEntryAggregateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CTEntryAggregate, Long>
-		CT_ENTRY_AGGREGATE_ID_ACCESSOR =
-			new Accessor<CTEntryAggregate, Long>() {
+	public static final Accessor<CTEntryAggregate, Long> CT_ENTRY_AGGREGATE_ID_ACCESSOR =
+		new Accessor<CTEntryAggregate, Long>() {
+			@Override
+			public Long get(CTEntryAggregate ctEntryAggregate) {
+				return ctEntryAggregate.getCtEntryAggregateId();
+			}
 
-				@Override
-				public Long get(CTEntryAggregate ctEntryAggregate) {
-					return ctEntryAggregate.getCtEntryAggregateId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<CTEntryAggregate> getTypeClass() {
-					return CTEntryAggregate.class;
-				}
-
-			};
+			@Override
+			public Class<CTEntryAggregate> getTypeClass() {
+				return CTEntryAggregate.class;
+			}
+		};
 
 	public java.util.List<CTEntry> getRelatedCTEntries();
-
 }

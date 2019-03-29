@@ -38,10 +38,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ReadingTimeEntryModel
-	extends AttachedModel, BaseModel<ReadingTimeEntry>, ShardedModel,
-			StagedModel, TrashedModel {
-
+public interface ReadingTimeEntryModel extends AttachedModel,
+	BaseModel<ReadingTimeEntry>, ShardedModel, StagedModel, TrashedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -267,5 +265,4 @@ public interface ReadingTimeEntryModel
 
 	@Override
 	public boolean isInTrashImplicitly();
-
 }

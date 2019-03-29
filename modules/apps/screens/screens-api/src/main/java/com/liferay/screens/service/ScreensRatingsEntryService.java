@@ -38,34 +38,25 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=screens",
-		"json.web.service.context.path=ScreensRatingsEntry"
-	},
-	service = ScreensRatingsEntryService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=screens", "json.web.service.context.path=ScreensRatingsEntry"}, service = ScreensRatingsEntryService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface ScreensRatingsEntryService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public JSONObject deleteRatingsEntry(
-			long classPK, String className, int ratingsLength)
-		throws PortalException;
+	public JSONObject deleteRatingsEntry(long classPK, String className,
+		int ratingsLength) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -73,12 +64,9 @@ public interface ScreensRatingsEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getRatingsEntries(
-			long classPK, String className, int ratingsLength)
-		throws PortalException;
+	public JSONObject getRatingsEntries(long classPK, String className,
+		int ratingsLength) throws PortalException;
 
-	public JSONObject updateRatingsEntry(
-			long classPK, String className, double score, int ratingsLength)
-		throws PortalException;
-
+	public JSONObject updateRatingsEntry(long classPK, String className,
+		double score, int ratingsLength) throws PortalException;
 }

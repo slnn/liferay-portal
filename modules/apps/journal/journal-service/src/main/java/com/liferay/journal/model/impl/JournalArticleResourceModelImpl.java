@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalArticleResourceModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -52,25 +55,22 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class JournalArticleResourceModelImpl
-	extends BaseModelImpl<JournalArticleResource>
+public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticleResource>
 	implements JournalArticleResourceModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a journal article resource model instance should use the <code>JournalArticleResource</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "JournalArticleResource";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"resourcePrimKey", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"articleId", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "resourcePrimKey", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "articleId", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -80,52 +80,29 @@ public class JournalArticleResourceModelImpl
 		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticleResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,articleId VARCHAR(75) null)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table JournalArticleResource";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY journalArticleResource.resourcePrimKey ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY JournalArticleResource.resourcePrimKey ASC";
-
+	public static final String TABLE_SQL_CREATE = "create table JournalArticleResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,articleId VARCHAR(75) null)";
+	public static final String TABLE_SQL_DROP = "drop table JournalArticleResource";
+	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleResource.resourcePrimKey ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleResource.resourcePrimKey ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticleResource"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticleResource"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticleResource"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticleResource"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticleResource"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticleResource"),
+			true);
 	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long UUID_COLUMN_BITMASK = 8L;
-
 	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 16L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.journal.model.JournalArticleResource"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.journal.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.journal.model.JournalArticleResource"));
 
 	public JournalArticleResourceModelImpl() {
 	}
@@ -164,18 +141,14 @@ public class JournalArticleResourceModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<JournalArticleResource, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalArticleResource, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalArticleResource, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((JournalArticleResource)this));
 		}
 
@@ -187,84 +160,54 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<JournalArticleResource, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<JournalArticleResource, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<JournalArticleResource, Object>
-				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
-					attributeName);
+			BiConsumer<JournalArticleResource, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(JournalArticleResource)this, entry.getValue());
+				attributeSetterBiConsumer.accept((JournalArticleResource)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<JournalArticleResource, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<JournalArticleResource, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<JournalArticleResource, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<JournalArticleResource, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<JournalArticleResource, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<JournalArticleResource, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<JournalArticleResource, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalArticleResource, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<JournalArticleResource, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<JournalArticleResource, Object>>();
-		Map<String, BiConsumer<JournalArticleResource, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<JournalArticleResource, ?>>();
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<JournalArticleResource, Object>>();
+		Map<String, BiConsumer<JournalArticleResource, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<JournalArticleResource, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", JournalArticleResource::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<JournalArticleResource, String>)
-				JournalArticleResource::setUuid);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", JournalArticleResource::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setResourcePrimKey);
-		attributeGetterFunctions.put(
-			"groupId", JournalArticleResource::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", JournalArticleResource::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setCompanyId);
-		attributeGetterFunctions.put(
-			"articleId", JournalArticleResource::getArticleId);
-		attributeSetterBiConsumers.put(
-			"articleId",
-			(BiConsumer<JournalArticleResource, String>)
-				JournalArticleResource::setArticleId);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<JournalArticleResource, String>)JournalArticleResource::setUuid);
+		attributeGetterFunctions.put("resourcePrimKey", JournalArticleResource::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<JournalArticleResource, Long>)JournalArticleResource::setResourcePrimKey);
+		attributeGetterFunctions.put("groupId", JournalArticleResource::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<JournalArticleResource, Long>)JournalArticleResource::setGroupId);
+		attributeGetterFunctions.put("companyId", JournalArticleResource::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalArticleResource, Long>)JournalArticleResource::setCompanyId);
+		attributeGetterFunctions.put("articleId", JournalArticleResource::getArticleId);
+		attributeSetterBiConsumers.put("articleId", (BiConsumer<JournalArticleResource, String>)JournalArticleResource::setArticleId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -377,9 +320,8 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), JournalArticleResource.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			JournalArticleResource.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -392,9 +334,8 @@ public class JournalArticleResourceModelImpl
 	@Override
 	public JournalArticleResource toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (JournalArticleResource)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (JournalArticleResource)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -402,8 +343,7 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public Object clone() {
-		JournalArticleResourceImpl journalArticleResourceImpl =
-			new JournalArticleResourceImpl();
+		JournalArticleResourceImpl journalArticleResourceImpl = new JournalArticleResourceImpl();
 
 		journalArticleResourceImpl.setUuid(getUuid());
 		journalArticleResourceImpl.setResourcePrimKey(getResourcePrimKey());
@@ -441,8 +381,7 @@ public class JournalArticleResourceModelImpl
 			return false;
 		}
 
-		JournalArticleResource journalArticleResource =
-			(JournalArticleResource)obj;
+		JournalArticleResource journalArticleResource = (JournalArticleResource)obj;
 
 		long primaryKey = journalArticleResource.getPrimaryKey();
 
@@ -473,29 +412,24 @@ public class JournalArticleResourceModelImpl
 	public void resetOriginalValues() {
 		JournalArticleResourceModelImpl journalArticleResourceModelImpl = this;
 
-		journalArticleResourceModelImpl._originalUuid =
-			journalArticleResourceModelImpl._uuid;
+		journalArticleResourceModelImpl._originalUuid = journalArticleResourceModelImpl._uuid;
 
-		journalArticleResourceModelImpl._originalGroupId =
-			journalArticleResourceModelImpl._groupId;
+		journalArticleResourceModelImpl._originalGroupId = journalArticleResourceModelImpl._groupId;
 
 		journalArticleResourceModelImpl._setOriginalGroupId = false;
 
-		journalArticleResourceModelImpl._originalCompanyId =
-			journalArticleResourceModelImpl._companyId;
+		journalArticleResourceModelImpl._originalCompanyId = journalArticleResourceModelImpl._companyId;
 
 		journalArticleResourceModelImpl._setOriginalCompanyId = false;
 
-		journalArticleResourceModelImpl._originalArticleId =
-			journalArticleResourceModelImpl._articleId;
+		journalArticleResourceModelImpl._originalArticleId = journalArticleResourceModelImpl._articleId;
 
 		journalArticleResourceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<JournalArticleResource> toCacheModel() {
-		JournalArticleResourceCacheModel journalArticleResourceCacheModel =
-			new JournalArticleResourceCacheModel();
+		JournalArticleResourceCacheModel journalArticleResourceCacheModel = new JournalArticleResourceCacheModel();
 
 		journalArticleResourceCacheModel.uuid = getUuid();
 
@@ -524,25 +458,22 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<JournalArticleResource, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalArticleResource, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalArticleResource, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply((JournalArticleResource)this));
+			sb.append(attributeGetterFunction.apply(
+					(JournalArticleResource)this));
 			sb.append(", ");
 		}
 
@@ -557,28 +488,25 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<JournalArticleResource, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<JournalArticleResource, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalArticleResource, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalArticleResource, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalArticleResource, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply((JournalArticleResource)this));
+			sb.append(attributeGetterFunction.apply(
+					(JournalArticleResource)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -587,12 +515,10 @@ public class JournalArticleResourceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		JournalArticleResource.class.getClassLoader();
+	private static final ClassLoader _classLoader = JournalArticleResource.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		JournalArticleResource.class, ModelWrapper.class
-	};
-
+			JournalArticleResource.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _resourcePrimKey;
@@ -606,5 +532,4 @@ public class JournalArticleResourceModelImpl
 	private String _originalArticleId;
 	private long _columnBitmask;
 	private JournalArticleResource _escapedModel;
-
 }

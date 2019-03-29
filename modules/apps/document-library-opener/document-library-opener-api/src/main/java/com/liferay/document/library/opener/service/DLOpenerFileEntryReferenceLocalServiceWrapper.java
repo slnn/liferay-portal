@@ -28,122 +28,95 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class DLOpenerFileEntryReferenceLocalServiceWrapper
 	implements DLOpenerFileEntryReferenceLocalService,
-			   ServiceWrapper<DLOpenerFileEntryReferenceLocalService> {
-
+		ServiceWrapper<DLOpenerFileEntryReferenceLocalService> {
 	public DLOpenerFileEntryReferenceLocalServiceWrapper(
-		DLOpenerFileEntryReferenceLocalService
-			dlOpenerFileEntryReferenceLocalService) {
-
-		_dlOpenerFileEntryReferenceLocalService =
-			dlOpenerFileEntryReferenceLocalService;
+		DLOpenerFileEntryReferenceLocalService dlOpenerFileEntryReferenceLocalService) {
+		_dlOpenerFileEntryReferenceLocalService = dlOpenerFileEntryReferenceLocalService;
 	}
 
 	/**
-	 * Adds the dl opener file entry reference to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlOpenerFileEntryReference the dl opener file entry reference
-	 * @return the dl opener file entry reference that was added
-	 */
+	* Adds the dl opener file entry reference to the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlOpenerFileEntryReference the dl opener file entry reference
+	* @return the dl opener file entry reference that was added
+	*/
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		addDLOpenerFileEntryReference(
-			com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-				dlOpenerFileEntryReference) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			addDLOpenerFileEntryReference(dlOpenerFileEntryReference);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference addDLOpenerFileEntryReference(
+		com.liferay.document.library.opener.model.DLOpenerFileEntryReference dlOpenerFileEntryReference) {
+		return _dlOpenerFileEntryReferenceLocalService.addDLOpenerFileEntryReference(dlOpenerFileEntryReference);
 	}
 
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-			addDLOpenerFileEntryReference(
-				long userId, String referenceKey,
-				com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-				int type)
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference addDLOpenerFileEntryReference(
+		long userId, String referenceKey,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			addDLOpenerFileEntryReference(
-				userId, referenceKey, fileEntry, type);
+		return _dlOpenerFileEntryReferenceLocalService.addDLOpenerFileEntryReference(userId,
+			referenceKey, fileEntry, type);
 	}
 
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-			addPlaceholderDLOpenerFileEntryReference(
-				long userId,
-				com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-				int type)
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference addPlaceholderDLOpenerFileEntryReference(
+		long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			addPlaceholderDLOpenerFileEntryReference(userId, fileEntry, type);
+		return _dlOpenerFileEntryReferenceLocalService.addPlaceholderDLOpenerFileEntryReference(userId,
+			fileEntry, type);
 	}
 
 	/**
-	 * Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
-	 *
-	 * @param dlOpenerFileEntryReferenceId the primary key for the new dl opener file entry reference
-	 * @return the new dl opener file entry reference
-	 */
+	* Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
+	*
+	* @param dlOpenerFileEntryReferenceId the primary key for the new dl opener file entry reference
+	* @return the new dl opener file entry reference
+	*/
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		createDLOpenerFileEntryReference(long dlOpenerFileEntryReferenceId) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			createDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference createDLOpenerFileEntryReference(
+		long dlOpenerFileEntryReferenceId) {
+		return _dlOpenerFileEntryReferenceLocalService.createDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
 	}
 
 	/**
-	 * Deletes the dl opener file entry reference from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlOpenerFileEntryReference the dl opener file entry reference
-	 * @return the dl opener file entry reference that was removed
-	 */
+	* Deletes the dl opener file entry reference from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlOpenerFileEntryReference the dl opener file entry reference
+	* @return the dl opener file entry reference that was removed
+	*/
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		deleteDLOpenerFileEntryReference(
-			com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-				dlOpenerFileEntryReference) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			deleteDLOpenerFileEntryReference(dlOpenerFileEntryReference);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference deleteDLOpenerFileEntryReference(
+		com.liferay.document.library.opener.model.DLOpenerFileEntryReference dlOpenerFileEntryReference) {
+		return _dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(dlOpenerFileEntryReference);
 	}
 
 	@Override
 	public void deleteDLOpenerFileEntryReference(
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_dlOpenerFileEntryReferenceLocalService.
-			deleteDLOpenerFileEntryReference(fileEntry);
+		_dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(fileEntry);
 	}
 
 	/**
-	 * Deletes the dl opener file entry reference with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlOpenerFileEntryReferenceId the primary key of the dl opener file entry reference
-	 * @return the dl opener file entry reference that was removed
-	 * @throws PortalException if a dl opener file entry reference with the primary key could not be found
-	 */
+	* Deletes the dl opener file entry reference with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlOpenerFileEntryReferenceId the primary key of the dl opener file entry reference
+	* @return the dl opener file entry reference that was removed
+	* @throws PortalException if a dl opener file entry reference with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-			deleteDLOpenerFileEntryReference(long dlOpenerFileEntryReferenceId)
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference deleteDLOpenerFileEntryReference(
+		long dlOpenerFileEntryReferenceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			deleteDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+		return _dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
 	}
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.deletePersistedModel(
-			persistedModel);
+		return _dlOpenerFileEntryReferenceLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -152,227 +125,192 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
-		return _dlOpenerFileEntryReferenceLocalService.dynamicQuery(
-			dynamicQuery);
+		return _dlOpenerFileEntryReferenceLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-
-		return _dlOpenerFileEntryReferenceLocalService.dynamicQuery(
-			dynamicQuery, start, end);
+		return _dlOpenerFileEntryReferenceLocalService.dynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-
-		return _dlOpenerFileEntryReferenceLocalService.dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return _dlOpenerFileEntryReferenceLocalService.dynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
-		return _dlOpenerFileEntryReferenceLocalService.dynamicQueryCount(
-			dynamicQuery);
+		return _dlOpenerFileEntryReferenceLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
-		return _dlOpenerFileEntryReferenceLocalService.dynamicQueryCount(
-			dynamicQuery, projection);
+		return _dlOpenerFileEntryReferenceLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		fetchDLOpenerFileEntryReference(
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			fetchDLOpenerFileEntryReference(fileEntry);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
+		return _dlOpenerFileEntryReferenceLocalService.fetchDLOpenerFileEntryReference(fileEntry);
 	}
 
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		fetchDLOpenerFileEntryReference(long dlOpenerFileEntryReferenceId) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			fetchDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference fetchDLOpenerFileEntryReference(
+		long dlOpenerFileEntryReferenceId) {
+		return _dlOpenerFileEntryReferenceLocalService.fetchDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			getActionableDynamicQuery();
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlOpenerFileEntryReferenceLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-			getDLOpenerFileEntryReference(
-				com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference getDLOpenerFileEntryReference(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			getDLOpenerFileEntryReference(fileEntry);
+		return _dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReference(fileEntry);
 	}
 
 	/**
-	 * Returns the dl opener file entry reference with the primary key.
-	 *
-	 * @param dlOpenerFileEntryReferenceId the primary key of the dl opener file entry reference
-	 * @return the dl opener file entry reference
-	 * @throws PortalException if a dl opener file entry reference with the primary key could not be found
-	 */
+	* Returns the dl opener file entry reference with the primary key.
+	*
+	* @param dlOpenerFileEntryReferenceId the primary key of the dl opener file entry reference
+	* @return the dl opener file entry reference
+	* @throws PortalException if a dl opener file entry reference with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-			getDLOpenerFileEntryReference(long dlOpenerFileEntryReferenceId)
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference getDLOpenerFileEntryReference(
+		long dlOpenerFileEntryReferenceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			getDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+		return _dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
 	}
 
 	/**
-	 * Returns a range of all the dl opener file entry references.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of dl opener file entry references
-	 * @param end the upper bound of the range of dl opener file entry references (not inclusive)
-	 * @return the range of dl opener file entry references
-	 */
+	* Returns a range of all the dl opener file entry references.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of dl opener file entry references
+	* @param end the upper bound of the range of dl opener file entry references (not inclusive)
+	* @return the range of dl opener file entry references
+	*/
 	@Override
-	public java.util.List
-		<com.liferay.document.library.opener.model.DLOpenerFileEntryReference>
-			getDLOpenerFileEntryReferences(int start, int end) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			getDLOpenerFileEntryReferences(start, end);
+	public java.util.List<com.liferay.document.library.opener.model.DLOpenerFileEntryReference> getDLOpenerFileEntryReferences(
+		int start, int end) {
+		return _dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReferences(start,
+			end);
 	}
 
 	/**
-	 * Returns the number of dl opener file entry references.
-	 *
-	 * @return the number of dl opener file entry references
-	 */
+	* Returns the number of dl opener file entry references.
+	*
+	* @return the number of dl opener file entry references
+	*/
 	@Override
 	public int getDLOpenerFileEntryReferencesCount() {
-		return _dlOpenerFileEntryReferenceLocalService.
-			getDLOpenerFileEntryReferencesCount();
+		return _dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReferencesCount();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			getIndexableActionableDynamicQuery();
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _dlOpenerFileEntryReferenceLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return _dlOpenerFileEntryReferenceLocalService.
-			getOSGiServiceIdentifier();
+		return _dlOpenerFileEntryReferenceLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-			java.io.Serializable primaryKeyObj)
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlOpenerFileEntryReferenceLocalService.getPersistedModel(
-			primaryKeyObj);
+		return _dlOpenerFileEntryReferenceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	 * Updates the dl opener file entry reference in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlOpenerFileEntryReference the dl opener file entry reference
-	 * @return the dl opener file entry reference that was updated
-	 */
+	* Updates the dl opener file entry reference in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlOpenerFileEntryReference the dl opener file entry reference
+	* @return the dl opener file entry reference that was updated
+	*/
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		updateDLOpenerFileEntryReference(
-			com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-				dlOpenerFileEntryReference) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			updateDLOpenerFileEntryReference(dlOpenerFileEntryReference);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
+		com.liferay.document.library.opener.model.DLOpenerFileEntryReference dlOpenerFileEntryReference) {
+		return _dlOpenerFileEntryReferenceLocalService.updateDLOpenerFileEntryReference(dlOpenerFileEntryReference);
 	}
 
 	@Override
-	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference
-		updateDLOpenerFileEntryReference(
-			String referenceKey,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
-
-		return _dlOpenerFileEntryReferenceLocalService.
-			updateDLOpenerFileEntryReference(referenceKey, fileEntry);
+	public com.liferay.document.library.opener.model.DLOpenerFileEntryReference updateDLOpenerFileEntryReference(
+		String referenceKey,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
+		return _dlOpenerFileEntryReferenceLocalService.updateDLOpenerFileEntryReference(referenceKey,
+			fileEntry);
 	}
 
 	@Override
@@ -382,14 +320,9 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 
 	@Override
 	public void setWrappedService(
-		DLOpenerFileEntryReferenceLocalService
-			dlOpenerFileEntryReferenceLocalService) {
-
-		_dlOpenerFileEntryReferenceLocalService =
-			dlOpenerFileEntryReferenceLocalService;
+		DLOpenerFileEntryReferenceLocalService dlOpenerFileEntryReferenceLocalService) {
+		_dlOpenerFileEntryReferenceLocalService = dlOpenerFileEntryReferenceLocalService;
 	}
 
-	private DLOpenerFileEntryReferenceLocalService
-		_dlOpenerFileEntryReferenceLocalService;
-
+	private DLOpenerFileEntryReferenceLocalService _dlOpenerFileEntryReferenceLocalService;
 }

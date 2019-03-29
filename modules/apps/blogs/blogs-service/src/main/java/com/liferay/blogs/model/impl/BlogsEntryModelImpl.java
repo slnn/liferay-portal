@@ -19,10 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
 import com.liferay.blogs.model.BlogsEntrySoap;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,36 +73,46 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class BlogsEntryModelImpl
-	extends BaseModelImpl<BlogsEntry> implements BlogsEntryModel {
-
+public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
+	implements BlogsEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a blogs entry model instance should use the <code>BlogsEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "BlogsEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"title", Types.VARCHAR}, {"subtitle", Types.VARCHAR},
-		{"urlTitle", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"content", Types.CLOB}, {"displayDate", Types.TIMESTAMP},
-		{"allowPingbacks", Types.BOOLEAN}, {"allowTrackbacks", Types.BOOLEAN},
-		{"trackbacks", Types.CLOB}, {"coverImageCaption", Types.VARCHAR},
-		{"coverImageFileEntryId", Types.BIGINT},
-		{"coverImageURL", Types.VARCHAR}, {"smallImage", Types.BOOLEAN},
-		{"smallImageFileEntryId", Types.BIGINT}, {"smallImageId", Types.BIGINT},
-		{"smallImageURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "entryId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "title", Types.VARCHAR },
+			{ "subtitle", Types.VARCHAR },
+			{ "urlTitle", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "content", Types.CLOB },
+			{ "displayDate", Types.TIMESTAMP },
+			{ "allowPingbacks", Types.BOOLEAN },
+			{ "allowTrackbacks", Types.BOOLEAN },
+			{ "trackbacks", Types.CLOB },
+			{ "coverImageCaption", Types.VARCHAR },
+			{ "coverImageFileEntryId", Types.BIGINT },
+			{ "coverImageURL", Types.VARCHAR },
+			{ "smallImage", Types.BOOLEAN },
+			{ "smallImageFileEntryId", Types.BIGINT },
+			{ "smallImageId", Types.BIGINT },
+			{ "smallImageURL", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -132,37 +146,20 @@ public class BlogsEntryModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(255) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(255) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY BlogsEntry.displayDate DESC, BlogsEntry.createDate DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY BlogsEntry.displayDate DESC, BlogsEntry.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long STATUS_COLUMN_BITMASK = 8L;
-
 	public static final long URLTITLE_COLUMN_BITMASK = 16L;
-
 	public static final long USERID_COLUMN_BITMASK = 32L;
-
 	public static final long UUID_COLUMN_BITMASK = 64L;
-
 	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
@@ -276,18 +273,14 @@ public class BlogsEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<BlogsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<BlogsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<BlogsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<BlogsEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((BlogsEntry)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((BlogsEntry)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -298,171 +291,98 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<BlogsEntry, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<BlogsEntry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<BlogsEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<BlogsEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(BlogsEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((BlogsEntry)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<BlogsEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<BlogsEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<BlogsEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<BlogsEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<BlogsEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<BlogsEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<BlogsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<BlogsEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<BlogsEntry, Object>>();
-		Map<String, BiConsumer<BlogsEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<BlogsEntry, ?>>();
+		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<BlogsEntry, Object>>();
+		Map<String, BiConsumer<BlogsEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<BlogsEntry, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", BlogsEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
 		attributeGetterFunctions.put("entryId", BlogsEntry::getEntryId);
-		attributeSetterBiConsumers.put(
-			"entryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setEntryId);
 		attributeGetterFunctions.put("groupId", BlogsEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setGroupId);
 		attributeGetterFunctions.put("companyId", BlogsEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setCompanyId);
 		attributeGetterFunctions.put("userId", BlogsEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setUserId);
 		attributeGetterFunctions.put("userName", BlogsEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUserName);
 		attributeGetterFunctions.put("createDate", BlogsEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", BlogsEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", BlogsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setModifiedDate);
 		attributeGetterFunctions.put("title", BlogsEntry::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTitle);
 		attributeGetterFunctions.put("subtitle", BlogsEntry::getSubtitle);
-		attributeSetterBiConsumers.put(
-			"subtitle",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setSubtitle);
+		attributeSetterBiConsumers.put("subtitle", (BiConsumer<BlogsEntry, String>)BlogsEntry::setSubtitle);
 		attributeGetterFunctions.put("urlTitle", BlogsEntry::getUrlTitle);
-		attributeSetterBiConsumers.put(
-			"urlTitle",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setUrlTitle);
+		attributeSetterBiConsumers.put("urlTitle", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUrlTitle);
 		attributeGetterFunctions.put("description", BlogsEntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<BlogsEntry, String>)BlogsEntry::setDescription);
 		attributeGetterFunctions.put("content", BlogsEntry::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<BlogsEntry, String>)BlogsEntry::setContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<BlogsEntry, String>)BlogsEntry::setContent);
 		attributeGetterFunctions.put("displayDate", BlogsEntry::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setDisplayDate);
-		attributeGetterFunctions.put(
-			"allowPingbacks", BlogsEntry::getAllowPingbacks);
-		attributeSetterBiConsumers.put(
-			"allowPingbacks",
-			(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowPingbacks);
-		attributeGetterFunctions.put(
-			"allowTrackbacks", BlogsEntry::getAllowTrackbacks);
-		attributeSetterBiConsumers.put(
-			"allowTrackbacks",
-			(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowTrackbacks);
+		attributeSetterBiConsumers.put("displayDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setDisplayDate);
+		attributeGetterFunctions.put("allowPingbacks", BlogsEntry::getAllowPingbacks);
+		attributeSetterBiConsumers.put("allowPingbacks", (BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowPingbacks);
+		attributeGetterFunctions.put("allowTrackbacks", BlogsEntry::getAllowTrackbacks);
+		attributeSetterBiConsumers.put("allowTrackbacks", (BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowTrackbacks);
 		attributeGetterFunctions.put("trackbacks", BlogsEntry::getTrackbacks);
-		attributeSetterBiConsumers.put(
-			"trackbacks",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setTrackbacks);
-		attributeGetterFunctions.put(
-			"coverImageCaption", BlogsEntry::getCoverImageCaption);
-		attributeSetterBiConsumers.put(
-			"coverImageCaption",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageCaption);
-		attributeGetterFunctions.put(
-			"coverImageFileEntryId", BlogsEntry::getCoverImageFileEntryId);
-		attributeSetterBiConsumers.put(
-			"coverImageFileEntryId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCoverImageFileEntryId);
-		attributeGetterFunctions.put(
-			"coverImageURL", BlogsEntry::getCoverImageURL);
-		attributeSetterBiConsumers.put(
-			"coverImageURL",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageURL);
+		attributeSetterBiConsumers.put("trackbacks", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTrackbacks);
+		attributeGetterFunctions.put("coverImageCaption", BlogsEntry::getCoverImageCaption);
+		attributeSetterBiConsumers.put("coverImageCaption", (BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageCaption);
+		attributeGetterFunctions.put("coverImageFileEntryId", BlogsEntry::getCoverImageFileEntryId);
+		attributeSetterBiConsumers.put("coverImageFileEntryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setCoverImageFileEntryId);
+		attributeGetterFunctions.put("coverImageURL", BlogsEntry::getCoverImageURL);
+		attributeSetterBiConsumers.put("coverImageURL", (BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageURL);
 		attributeGetterFunctions.put("smallImage", BlogsEntry::getSmallImage);
-		attributeSetterBiConsumers.put(
-			"smallImage",
-			(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setSmallImage);
-		attributeGetterFunctions.put(
-			"smallImageFileEntryId", BlogsEntry::getSmallImageFileEntryId);
-		attributeSetterBiConsumers.put(
-			"smallImageFileEntryId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageFileEntryId);
-		attributeGetterFunctions.put(
-			"smallImageId", BlogsEntry::getSmallImageId);
-		attributeSetterBiConsumers.put(
-			"smallImageId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageId);
-		attributeGetterFunctions.put(
-			"smallImageURL", BlogsEntry::getSmallImageURL);
-		attributeSetterBiConsumers.put(
-			"smallImageURL",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setSmallImageURL);
-		attributeGetterFunctions.put(
-			"lastPublishDate", BlogsEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setLastPublishDate);
+		attributeSetterBiConsumers.put("smallImage", (BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setSmallImage);
+		attributeGetterFunctions.put("smallImageFileEntryId", BlogsEntry::getSmallImageFileEntryId);
+		attributeSetterBiConsumers.put("smallImageFileEntryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageFileEntryId);
+		attributeGetterFunctions.put("smallImageId", BlogsEntry::getSmallImageId);
+		attributeSetterBiConsumers.put("smallImageId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageId);
+		attributeGetterFunctions.put("smallImageURL", BlogsEntry::getSmallImageURL);
+		attributeSetterBiConsumers.put("smallImageURL", (BiConsumer<BlogsEntry, String>)BlogsEntry::setSmallImageURL);
+		attributeGetterFunctions.put("lastPublishDate", BlogsEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setLastPublishDate);
 		attributeGetterFunctions.put("status", BlogsEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<BlogsEntry, Integer>)BlogsEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", BlogsEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", BlogsEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setStatusByUserName);
+		attributeSetterBiConsumers.put("status", (BiConsumer<BlogsEntry, Integer>)BlogsEntry::setStatus);
+		attributeGetterFunctions.put("statusByUserId", BlogsEntry::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", BlogsEntry::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<BlogsEntry, String>)BlogsEntry::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", BlogsEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -982,32 +902,28 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(BlogsEntry.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				BlogsEntry.class.getName()));
 	}
 
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
-
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -1024,18 +940,14 @@ public class BlogsEntryModelImpl
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
+				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -1048,13 +960,12 @@ public class BlogsEntryModelImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -1069,19 +980,16 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -1103,9 +1011,8 @@ public class BlogsEntryModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -1120,9 +1027,8 @@ public class BlogsEntryModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -1217,8 +1123,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), BlogsEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			BlogsEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1231,9 +1137,8 @@ public class BlogsEntryModelImpl
 	@Override
 	public BlogsEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BlogsEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (BlogsEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1282,8 +1187,7 @@ public class BlogsEntryModelImpl
 	public int compareTo(BlogsEntry blogsEntry) {
 		int value = 0;
 
-		value = DateUtil.compareTo(
-			getDisplayDate(), blogsEntry.getDisplayDate());
+		value = DateUtil.compareTo(getDisplayDate(), blogsEntry.getDisplayDate());
 
 		value = value * -1;
 
@@ -1361,8 +1265,7 @@ public class BlogsEntryModelImpl
 
 		blogsEntryModelImpl._originalUrlTitle = blogsEntryModelImpl._urlTitle;
 
-		blogsEntryModelImpl._originalDisplayDate =
-			blogsEntryModelImpl._displayDate;
+		blogsEntryModelImpl._originalDisplayDate = blogsEntryModelImpl._displayDate;
 
 		blogsEntryModelImpl._originalStatus = blogsEntryModelImpl._status;
 
@@ -1545,20 +1448,16 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<BlogsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<BlogsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<BlogsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<BlogsEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1577,22 +1476,18 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<BlogsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<BlogsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<BlogsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<BlogsEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1606,14 +1501,12 @@ public class BlogsEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BlogsEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = BlogsEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BlogsEntry.class, ModelWrapper.class
-	};
+			BlogsEntry.class, ModelWrapper.class
+		};
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
-
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;
@@ -1657,5 +1550,4 @@ public class BlogsEntryModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private BlogsEntry _escapedModel;
-
 }

@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.knowledge.base.model.impl.KBTemplateImpl")
 @ProviderType
 public interface KBTemplate extends KBTemplateModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.knowledge.base.model.impl.KBTemplateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KBTemplate, Long> KB_TEMPLATE_ID_ACCESSOR =
-		new Accessor<KBTemplate, Long>() {
-
+	public static final Accessor<KBTemplate, Long> KB_TEMPLATE_ID_ACCESSOR = new Accessor<KBTemplate, Long>() {
 			@Override
 			public Long get(KBTemplate kbTemplate) {
 				return kbTemplate.getKbTemplateId();
@@ -53,7 +50,5 @@ public interface KBTemplate extends KBTemplateModel, PersistedModel {
 			public Class<KBTemplate> getTypeClass() {
 				return KBTemplate.class;
 			}
-
 		};
-
 }

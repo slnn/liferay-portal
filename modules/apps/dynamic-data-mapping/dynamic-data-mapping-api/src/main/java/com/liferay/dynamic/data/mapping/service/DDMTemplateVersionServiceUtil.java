@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,51 +35,43 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class DDMTemplateVersionServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
-			getLatestTemplateVersion(long templateId)
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
+		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getLatestTemplateVersion(templateId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
-			getTemplateVersion(long templateVersionId)
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
+		long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getTemplateVersion(templateVersionId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>
-				getTemplateVersions(
-					long templateId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMTemplateVersion> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getTemplateVersions(
-			templateId, start, end, orderByComparator);
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
+		long templateId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getTemplateVersions(templateId, start, end,
+			orderByComparator);
 	}
 
 	public static int getTemplateVersionsCount(long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getTemplateVersionsCount(templateId);
 	}
 
@@ -86,23 +79,17 @@ public class DDMTemplateVersionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<DDMTemplateVersionService, DDMTemplateVersionService> _serviceTracker;
+	private static ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMTemplateVersionService.class);
+		Bundle bundle = FrameworkUtil.getBundle(DDMTemplateVersionService.class);
 
-		ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService>
-			serviceTracker =
-				new ServiceTracker
-					<DDMTemplateVersionService, DDMTemplateVersionService>(
-						bundle.getBundleContext(),
-						DDMTemplateVersionService.class, null);
+		ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService> serviceTracker =
+			new ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService>(bundle.getBundleContext(),
+				DDMTemplateVersionService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

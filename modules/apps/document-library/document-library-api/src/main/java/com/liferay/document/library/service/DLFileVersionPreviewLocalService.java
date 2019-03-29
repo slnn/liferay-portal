@@ -17,6 +17,7 @@ package com.liferay.document.library.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.model.DLFileVersionPreview;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -48,13 +49,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface DLFileVersionPreviewLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface DLFileVersionPreviewLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,25 +60,24 @@ public interface DLFileVersionPreviewLocalService
 	 */
 
 	/**
-	 * Adds the dl file version preview to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileVersionPreview the dl file version preview
-	 * @return the dl file version preview that was added
-	 */
+	* Adds the dl file version preview to the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersionPreview the dl file version preview
+	* @return the dl file version preview that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileVersionPreview addDLFileVersionPreview(
 		DLFileVersionPreview dlFileVersionPreview);
 
-	public void addDLFileVersionPreview(
-			long fileEntryId, long fileVersionId, int previewStatus)
-		throws PortalException;
+	public void addDLFileVersionPreview(long fileEntryId, long fileVersionId,
+		int previewStatus) throws PortalException;
 
 	/**
-	 * Creates a new dl file version preview with the primary key. Does not add the dl file version preview to the database.
-	 *
-	 * @param dlFileVersionPreviewId the primary key for the new dl file version preview
-	 * @return the new dl file version preview
-	 */
+	* Creates a new dl file version preview with the primary key. Does not add the dl file version preview to the database.
+	*
+	* @param dlFileVersionPreviewId the primary key for the new dl file version preview
+	* @return the new dl file version preview
+	*/
 	@Transactional(enabled = false)
 	public DLFileVersionPreview createDLFileVersionPreview(
 		long dlFileVersionPreviewId);
@@ -88,30 +85,29 @@ public interface DLFileVersionPreviewLocalService
 	public void deleteDLFileEntryFileVersionPreviews(long fileEntryId);
 
 	/**
-	 * Deletes the dl file version preview from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileVersionPreview the dl file version preview
-	 * @return the dl file version preview that was removed
-	 */
+	* Deletes the dl file version preview from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersionPreview the dl file version preview
+	* @return the dl file version preview that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileVersionPreview deleteDLFileVersionPreview(
 		DLFileVersionPreview dlFileVersionPreview);
 
 	/**
-	 * Deletes the dl file version preview with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileVersionPreviewId the primary key of the dl file version preview
-	 * @return the dl file version preview that was removed
-	 * @throws PortalException if a dl file version preview with the primary key could not be found
-	 */
+	* Deletes the dl file version preview with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersionPreviewId the primary key of the dl file version preview
+	* @return the dl file version preview that was removed
+	* @throws PortalException if a dl file version preview with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileVersionPreview deleteDLFileVersionPreview(
-			long dlFileVersionPreviewId)
-		throws PortalException;
+		long dlFileVersionPreviewId) throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -120,125 +116,121 @@ public interface DLFileVersionPreviewLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileVersionPreview fetchDLFileVersionPreview(
 		long dlFileVersionPreviewId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersionPreview fetchDLFileVersionPreview(
-		long fileEntryId, long fileVersionId);
+	public DLFileVersionPreview fetchDLFileVersionPreview(long fileEntryId,
+		long fileVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersionPreview fetchDLFileVersionPreview(
-		long fileEntryId, long fileVersionId, int previewStatus);
+	public DLFileVersionPreview fetchDLFileVersionPreview(long fileEntryId,
+		long fileVersionId, int previewStatus);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns the dl file version preview with the primary key.
-	 *
-	 * @param dlFileVersionPreviewId the primary key of the dl file version preview
-	 * @return the dl file version preview
-	 * @throws PortalException if a dl file version preview with the primary key could not be found
-	 */
+	* Returns the dl file version preview with the primary key.
+	*
+	* @param dlFileVersionPreviewId the primary key of the dl file version preview
+	* @return the dl file version preview
+	* @throws PortalException if a dl file version preview with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileVersionPreview getDLFileVersionPreview(
-			long dlFileVersionPreviewId)
-		throws PortalException;
+		long dlFileVersionPreviewId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersionPreview getDLFileVersionPreview(
-			long fileEntryId, long fileVersionId)
-		throws PortalException;
+	public DLFileVersionPreview getDLFileVersionPreview(long fileEntryId,
+		long fileVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersionPreview getDLFileVersionPreview(
-			long fileEntryId, long fileVersionId, int previewStatus)
-		throws PortalException;
+	public DLFileVersionPreview getDLFileVersionPreview(long fileEntryId,
+		long fileVersionId, int previewStatus) throws PortalException;
 
 	/**
-	 * Returns a range of all the dl file version previews.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of dl file version previews
-	 * @param end the upper bound of the range of dl file version previews (not inclusive)
-	 * @return the range of dl file version previews
-	 */
+	* Returns a range of all the dl file version previews.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of dl file version previews
+	* @param end the upper bound of the range of dl file version previews (not inclusive)
+	* @return the range of dl file version previews
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileVersionPreview> getDLFileVersionPreviews(
-		int start, int end);
+	public List<DLFileVersionPreview> getDLFileVersionPreviews(int start,
+		int end);
 
 	/**
-	 * Returns the number of dl file version previews.
-	 *
-	 * @return the number of dl file version previews
-	 */
+	* Returns the number of dl file version previews.
+	*
+	* @return the number of dl file version previews
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFileVersionPreviewsCount();
 
@@ -250,10 +242,10 @@ public interface DLFileVersionPreviewLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -262,21 +254,19 @@ public interface DLFileVersionPreviewLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFileVersionPreview(
-		long fileEntryId, long fileVersionId, int previewStatus);
+	public boolean hasDLFileVersionPreview(long fileEntryId,
+		long fileVersionId, int previewStatus);
 
 	/**
-	 * Updates the dl file version preview in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileVersionPreview the dl file version preview
-	 * @return the dl file version preview that was updated
-	 */
+	* Updates the dl file version preview in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersionPreview the dl file version preview
+	* @return the dl file version preview that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileVersionPreview updateDLFileVersionPreview(
 		DLFileVersionPreview dlFileVersionPreview);
 
-	public void updateDLFileVersionPreview(
-			long dlFileVersionPreviewId, int previewStatus)
-		throws PortalException;
-
+	public void updateDLFileVersionPreview(long dlFileVersionPreviewId,
+		int previewStatus) throws PortalException;
 }

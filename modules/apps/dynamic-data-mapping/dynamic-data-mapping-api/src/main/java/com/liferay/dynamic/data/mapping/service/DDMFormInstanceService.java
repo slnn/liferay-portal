@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -47,36 +48,26 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=ddm",
-		"json.web.service.context.path=DDMFormInstance"
-	},
-	service = DDMFormInstanceService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=ddm", "json.web.service.context.path=DDMFormInstance"}, service = DDMFormInstanceService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface DDMFormInstanceService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceServiceUtil} to access the ddm form instance remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public DDMFormInstance addFormInstance(
-			long groupId, long ddmStructureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap,
-			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
+	public DDMFormInstance addFormInstance(long groupId, long ddmStructureId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
-	public DDMFormInstance addFormInstance(
-			long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
-			ServiceContext serviceContext)
+	public DDMFormInstance addFormInstance(long groupId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFormInstance(long ddmFormInstanceId)
@@ -91,57 +82,52 @@ public interface DDMFormInstanceService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMFormInstance> getFormInstances(
-		long companyId, long groupId, int start, int end);
+	public List<DDMFormInstance> getFormInstances(long companyId, long groupId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFormInstancesCount(long companyId, long groupId);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMFormInstance> search(
-		long companyId, long groupId, String keywords, int start, int end,
+	public List<DDMFormInstance> search(long companyId, long groupId,
+		String keywords, int start, int end,
 		OrderByComparator<DDMFormInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMFormInstance> search(
-		long companyId, long groupId, String[] names, String[] descriptions,
-		boolean andOperator, int start, int end,
-		OrderByComparator<DDMFormInstance> orderByComparator);
+	public List<DDMFormInstance> search(long companyId, long groupId,
+		String[] names, String[] descriptions, boolean andOperator, int start,
+		int end, OrderByComparator<DDMFormInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId, String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		long companyId, long groupId, String[] names, String[] descriptions,
-		boolean andOperator);
+	public int searchCount(long companyId, long groupId, String[] names,
+		String[] descriptions, boolean andOperator);
 
 	/**
-	 * Updates the the record set's settings.
-	 *
-	 * @param formInstanceId the primary key of the form instance
-	 * @param settingsDDMFormValues the record set's settings. For more
-	 information see <code>DDMFormValues</code> in the
-	 <code>dynamic.data.mapping.api</code> module.
-	 * @return the record set
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public DDMFormInstance updateFormInstance(
-			long formInstanceId, DDMFormValues settingsDDMFormValues)
-		throws PortalException;
+	* Updates the the record set's settings.
+	*
+	* @param formInstanceId the primary key of the form instance
+	* @param settingsDDMFormValues the record set's settings. For more
+	information see <code>DDMFormValues</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDMFormInstance updateFormInstance(long formInstanceId,
+		DDMFormValues settingsDDMFormValues) throws PortalException;
 
-	public DDMFormInstance updateFormInstance(
-			long ddmFormInstanceId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
-			ServiceContext serviceContext)
+	public DDMFormInstance updateFormInstance(long ddmFormInstanceId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
-
 }

@@ -34,11 +34,9 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 public abstract class FriendlyURLEntryLocalizationBaseImpl
 	extends FriendlyURLEntryLocalizationModelImpl
 	implements FriendlyURLEntryLocalization {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a friendly url entry localization model instance should use the <code>FriendlyURLEntryLocalization</code> interface instead.
 	 */
-
 }

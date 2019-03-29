@@ -17,9 +17,11 @@ package com.liferay.document.library.opener.uad.anonymizer;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.uad.constants.DLOpenerUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,28 +40,22 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDLOpenerFileEntryReferenceUADAnonymizer
 	extends DynamicQueryUADAnonymizer<DLOpenerFileEntryReference> {
-
 	@Override
 	public void autoAnonymize(
-			DLOpenerFileEntryReference dlOpenerFileEntryReference, long userId,
-			User anonymousUser)
-		throws PortalException {
-
+		DLOpenerFileEntryReference dlOpenerFileEntryReference, long userId,
+		User anonymousUser) throws PortalException {
 		if (dlOpenerFileEntryReference.getUserId() == userId) {
 			dlOpenerFileEntryReference.setUserId(anonymousUser.getUserId());
 			dlOpenerFileEntryReference.setUserName(anonymousUser.getFullName());
 		}
 
-		dlOpenerFileEntryReferenceLocalService.updateDLOpenerFileEntryReference(
-			dlOpenerFileEntryReference);
+		dlOpenerFileEntryReferenceLocalService.updateDLOpenerFileEntryReference(dlOpenerFileEntryReference);
 	}
 
 	@Override
 	public void delete(DLOpenerFileEntryReference dlOpenerFileEntryReference)
 		throws PortalException {
-
-		dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(
-			dlOpenerFileEntryReference);
+		dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(dlOpenerFileEntryReference);
 	}
 
 	@Override
@@ -69,18 +65,14 @@ public abstract class BaseDLOpenerFileEntryReferenceUADAnonymizer
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return dlOpenerFileEntryReferenceLocalService.
-			getActionableDynamicQuery();
+		return dlOpenerFileEntryReferenceLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return DLOpenerUADConstants.
-			USER_ID_FIELD_NAMES_DL_OPENER_FILE_ENTRY_REFERENCE;
+		return DLOpenerUADConstants.USER_ID_FIELD_NAMES_DL_OPENER_FILE_ENTRY_REFERENCE;
 	}
 
 	@Reference
-	protected DLOpenerFileEntryReferenceLocalService
-		dlOpenerFileEntryReferenceLocalService;
-
+	protected DLOpenerFileEntryReferenceLocalService dlOpenerFileEntryReferenceLocalService;
 }

@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.lock.model.impl.LockImpl")
 @ProviderType
 public interface Lock extends LockModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.lock.model.impl.LockImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Lock, Long> LOCK_ID_ACCESSOR =
-		new Accessor<Lock, Long>() {
-
+	public static final Accessor<Lock, Long> LOCK_ID_ACCESSOR = new Accessor<Lock, Long>() {
 			@Override
 			public Long get(Lock lock) {
 				return lock.getLockId();
@@ -53,7 +50,6 @@ public interface Lock extends LockModel, PersistedModel {
 			public Class<Lock> getTypeClass() {
 				return Lock.class;
 			}
-
 		};
 
 	public long getExpirationTime();
@@ -61,5 +57,4 @@ public interface Lock extends LockModel, PersistedModel {
 	public boolean isExpired();
 
 	public boolean isNeverExpires();
-
 }

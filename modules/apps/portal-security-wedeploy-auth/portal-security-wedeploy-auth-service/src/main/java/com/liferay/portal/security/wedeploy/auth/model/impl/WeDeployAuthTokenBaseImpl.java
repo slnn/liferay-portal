@@ -34,7 +34,6 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalS
 @ProviderType
 public abstract class WeDeployAuthTokenBaseImpl
 	extends WeDeployAuthTokenModelImpl implements WeDeployAuthToken {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class WeDeployAuthTokenBaseImpl
 			WeDeployAuthTokenLocalServiceUtil.updateWeDeployAuthToken(this);
 		}
 	}
-
 }

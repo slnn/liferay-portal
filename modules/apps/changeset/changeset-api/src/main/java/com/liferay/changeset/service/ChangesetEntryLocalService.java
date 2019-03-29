@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -50,13 +51,10 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface ChangesetEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface ChangesetEntryLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,25 +62,24 @@ public interface ChangesetEntryLocalService
 	 */
 
 	/**
-	 * Adds the changeset entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntry the changeset entry
-	 * @return the changeset entry that was added
-	 */
+	* Adds the changeset entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntry the changeset entry
+	* @return the changeset entry that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public ChangesetEntry addChangesetEntry(ChangesetEntry changesetEntry);
 
-	public ChangesetEntry addChangesetEntry(
-			long userId, long changesetCollectionId, long classNameId,
-			long classPK)
+	public ChangesetEntry addChangesetEntry(long userId,
+		long changesetCollectionId, long classNameId, long classPK)
 		throws PortalException;
 
 	/**
-	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
-	 *
-	 * @param changesetEntryId the primary key for the new changeset entry
-	 * @return the new changeset entry
-	 */
+	* Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
+	*
+	* @param changesetEntryId the primary key for the new changeset entry
+	* @return the new changeset entry
+	*/
 	@Transactional(enabled = false)
 	public ChangesetEntry createChangesetEntry(long changesetEntryId);
 
@@ -93,21 +90,21 @@ public interface ChangesetEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntry the changeset entry
-	 * @return the changeset entry that was removed
-	 */
+	* Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntry the changeset entry
+	* @return the changeset entry that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public ChangesetEntry deleteChangesetEntry(ChangesetEntry changesetEntry);
 
 	/**
-	 * Deletes the changeset entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntryId the primary key of the changeset entry
-	 * @return the changeset entry that was removed
-	 * @throws PortalException if a changeset entry with the primary key could not be found
-	 */
+	* Deletes the changeset entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntryId the primary key of the changeset entry
+	* @return the changeset entry that was removed
+	* @throws PortalException if a changeset entry with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public ChangesetEntry deleteChangesetEntry(long changesetEntryId)
 		throws PortalException;
@@ -115,8 +112,8 @@ public interface ChangesetEntryLocalService
 	public void deleteEntry(long changesetId, long classNameId, long classPK);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -125,94 +122,92 @@ public interface ChangesetEntryLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ChangesetEntry fetchChangesetEntry(long changesetEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ChangesetEntry fetchChangesetEntry(
-		long changesetCollectionId, long classNameId, long classPK);
+	public ChangesetEntry fetchChangesetEntry(long changesetCollectionId,
+		long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ChangesetEntry fetchOrAddChangesetEntry(
-			long changesetCollectionId, long classNameId, long classPK)
-		throws PortalException;
+	public ChangesetEntry fetchOrAddChangesetEntry(long changesetCollectionId,
+		long classNameId, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns a range of all the changeset entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of changeset entries
-	 * @param end the upper bound of the range of changeset entries (not inclusive)
-	 * @return the range of changeset entries
-	 */
+	* Returns a range of all the changeset entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of changeset entries
+	* @param end the upper bound of the range of changeset entries (not inclusive)
+	* @return the range of changeset entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ChangesetEntry> getChangesetEntries(int start, int end);
 
@@ -221,10 +216,10 @@ public interface ChangesetEntryLocalService
 		long changesetCollectionId, long classNameId);
 
 	/**
-	 * Returns the number of changeset entries.
-	 *
-	 * @return the number of changeset entries
-	 */
+	* Returns the number of changeset entries.
+	*
+	* @return the number of changeset entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getChangesetEntriesCount();
 
@@ -232,37 +227,36 @@ public interface ChangesetEntryLocalService
 	public long getChangesetEntriesCount(long changesetCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getChangesetEntriesCount(
-		long changesetCollectionId, long classNameId);
+	public long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getChangesetEntriesCount(
-		long changesetCollectionId, long classNameId, Set<Long> classPKs);
+	public long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId, Set<Long> classPKs);
 
 	/**
-	 * Returns the changeset entry with the primary key.
-	 *
-	 * @param changesetEntryId the primary key of the changeset entry
-	 * @return the changeset entry
-	 * @throws PortalException if a changeset entry with the primary key could not be found
-	 */
+	* Returns the changeset entry with the primary key.
+	*
+	* @param changesetEntryId the primary key of the changeset entry
+	* @return the changeset entry
+	* @throws PortalException if a changeset entry with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ChangesetEntry getChangesetEntry(long changesetEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ChangesetEntry getChangesetEntry(
-			long changesetCollectionId, long classNameId, long classPK)
-		throws NoSuchEntryException;
+	public ChangesetEntry getChangesetEntry(long changesetCollectionId,
+		long classNameId, long classPK) throws NoSuchEntryException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -271,12 +265,11 @@ public interface ChangesetEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the changeset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntry the changeset entry
-	 * @return the changeset entry that was updated
-	 */
+	* Updates the changeset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntry the changeset entry
+	* @return the changeset entry that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public ChangesetEntry updateChangesetEntry(ChangesetEntry changesetEntry);
-
 }

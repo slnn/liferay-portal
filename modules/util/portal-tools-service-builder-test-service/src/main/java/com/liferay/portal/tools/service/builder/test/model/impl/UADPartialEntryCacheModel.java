@@ -33,9 +33,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class UADPartialEntryCacheModel
-	implements CacheModel<UADPartialEntry>, Externalizable {
-
+public class UADPartialEntryCacheModel implements CacheModel<UADPartialEntry>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -46,8 +45,7 @@ public class UADPartialEntryCacheModel
 			return false;
 		}
 
-		UADPartialEntryCacheModel uadPartialEntryCacheModel =
-			(UADPartialEntryCacheModel)obj;
+		UADPartialEntryCacheModel uadPartialEntryCacheModel = (UADPartialEntryCacheModel)obj;
 
 		if (uadPartialEntryId == uadPartialEntryCacheModel.uadPartialEntryId) {
 			return true;
@@ -114,7 +112,8 @@ public class UADPartialEntryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(uadPartialEntryId);
 
 		objectOutput.writeLong(userId);
@@ -138,5 +137,4 @@ public class UADPartialEntryCacheModel
 	public long userId;
 	public String userName;
 	public String message;
-
 }

@@ -33,11 +33,9 @@ import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion
 @ProviderType
 public abstract class VersionedEntryVersionBaseImpl
 	extends VersionedEntryVersionModelImpl implements VersionedEntryVersion {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a versioned entry version model instance should use the <code>VersionedEntryVersion</code> interface instead.
 	 */
-
 }

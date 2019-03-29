@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class CTEntrySoap implements Serializable {
-
 	public static CTEntrySoap toSoapModel(CTEntry model) {
 		CTEntrySoap soapModel = new CTEntrySoap();
 
@@ -77,8 +76,7 @@ public class CTEntrySoap implements Serializable {
 	}
 
 	public static CTEntrySoap[] toSoapModels(List<CTEntry> models) {
-		List<CTEntrySoap> soapModels = new ArrayList<CTEntrySoap>(
-			models.size());
+		List<CTEntrySoap> soapModels = new ArrayList<CTEntrySoap>(models.size());
 
 		for (CTEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -197,5 +195,4 @@ public class CTEntrySoap implements Serializable {
 	private long _resourcePrimKey;
 	private int _changeType;
 	private int _status;
-
 }

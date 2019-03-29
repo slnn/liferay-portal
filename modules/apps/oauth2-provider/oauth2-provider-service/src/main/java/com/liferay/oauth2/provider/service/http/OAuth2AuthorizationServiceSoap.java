@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -63,26 +64,16 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class OAuth2AuthorizationServiceSoap {
-
-	public static com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap[]
-			getApplicationOAuth2Authorizations(
-				long oAuth2ApplicationId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.oauth2.provider.model.OAuth2Authorization>
-						orderByComparator)
+	public static com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap[] getApplicationOAuth2Authorizations(
+		long oAuth2ApplicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
 		throws RemoteException {
-
 		try {
-			java.util.List
-				<com.liferay.oauth2.provider.model.OAuth2Authorization>
-					returnValue =
-						OAuth2AuthorizationServiceUtil.
-							getApplicationOAuth2Authorizations(
-								oAuth2ApplicationId, start, end,
-								orderByComparator);
+			java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> returnValue =
+				OAuth2AuthorizationServiceUtil.getApplicationOAuth2Authorizations(oAuth2ApplicationId,
+					start, end, orderByComparator);
 
-			return com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap.
-				toSoapModels(returnValue);
+			return com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -92,14 +83,9 @@ public class OAuth2AuthorizationServiceSoap {
 	}
 
 	public static int getApplicationOAuth2AuthorizationsCount(
-			long oAuth2ApplicationId)
-		throws RemoteException {
-
+		long oAuth2ApplicationId) throws RemoteException {
 		try {
-			int returnValue =
-				OAuth2AuthorizationServiceUtil.
-					getApplicationOAuth2AuthorizationsCount(
-						oAuth2ApplicationId);
+			int returnValue = OAuth2AuthorizationServiceUtil.getApplicationOAuth2AuthorizationsCount(oAuth2ApplicationId);
 
 			return returnValue;
 		}
@@ -110,24 +96,16 @@ public class OAuth2AuthorizationServiceSoap {
 		}
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap[]
-			getUserOAuth2Authorizations(
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.oauth2.provider.model.OAuth2Authorization>
-						orderByComparator)
+	public static com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap[] getUserOAuth2Authorizations(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
 		throws RemoteException {
-
 		try {
-			java.util.List
-				<com.liferay.oauth2.provider.model.OAuth2Authorization>
-					returnValue =
-						OAuth2AuthorizationServiceUtil.
-							getUserOAuth2Authorizations(
-								start, end, orderByComparator);
+			java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> returnValue =
+				OAuth2AuthorizationServiceUtil.getUserOAuth2Authorizations(start,
+					end, orderByComparator);
 
-			return com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap.
-				toSoapModels(returnValue);
+			return com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -138,11 +116,8 @@ public class OAuth2AuthorizationServiceSoap {
 
 	public static int getUserOAuth2AuthorizationsCount()
 		throws RemoteException {
-
 		try {
-			int returnValue =
-				OAuth2AuthorizationServiceUtil.
-					getUserOAuth2AuthorizationsCount();
+			int returnValue = OAuth2AuthorizationServiceUtil.getUserOAuth2AuthorizationsCount();
 
 			return returnValue;
 		}
@@ -155,10 +130,8 @@ public class OAuth2AuthorizationServiceSoap {
 
 	public static void revokeOAuth2Authorization(long oAuth2AuthorizationId)
 		throws RemoteException {
-
 		try {
-			OAuth2AuthorizationServiceUtil.revokeOAuth2Authorization(
-				oAuth2AuthorizationId);
+			OAuth2AuthorizationServiceUtil.revokeOAuth2Authorization(oAuth2AuthorizationId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -167,7 +140,5 @@ public class OAuth2AuthorizationServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		OAuth2AuthorizationServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(OAuth2AuthorizationServiceSoap.class);
 }

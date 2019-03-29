@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLSyncEventModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.document.library.sync.model.impl.DLSyncEventImpl"
-)
+@ImplementationClassName("com.liferay.document.library.sync.model.impl.DLSyncEventImpl")
 @ProviderType
 public interface DLSyncEvent extends DLSyncEventModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.sync.model.impl.DLSyncEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DLSyncEvent, Long> SYNC_EVENT_ID_ACCESSOR =
-		new Accessor<DLSyncEvent, Long>() {
-
+	public static final Accessor<DLSyncEvent, Long> SYNC_EVENT_ID_ACCESSOR = new Accessor<DLSyncEvent, Long>() {
 			@Override
 			public Long get(DLSyncEvent dlSyncEvent) {
 				return dlSyncEvent.getSyncEventId();
@@ -55,7 +50,5 @@ public interface DLSyncEvent extends DLSyncEventModel, PersistedModel {
 			public Class<DLSyncEvent> getTypeClass() {
 				return DLSyncEvent.class;
 			}
-
 		};
-
 }

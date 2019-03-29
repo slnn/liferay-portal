@@ -33,9 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class EntryWrapper
-	extends BaseModelWrapper<Entry> implements Entry, ModelWrapper<Entry> {
-
+public class EntryWrapper extends BaseModelWrapper<Entry> implements Entry,
+	ModelWrapper<Entry> {
 	public EntryWrapper(Entry entry) {
 		super(entry);
 	}
@@ -122,120 +121,120 @@ public class EntryWrapper
 	}
 
 	/**
-	 * Returns the comments of this entry.
-	 *
-	 * @return the comments of this entry
-	 */
+	* Returns the comments of this entry.
+	*
+	* @return the comments of this entry
+	*/
 	@Override
 	public String getComments() {
 		return model.getComments();
 	}
 
 	/**
-	 * Returns the company ID of this entry.
-	 *
-	 * @return the company ID of this entry
-	 */
+	* Returns the company ID of this entry.
+	*
+	* @return the company ID of this entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this entry.
-	 *
-	 * @return the create date of this entry
-	 */
+	* Returns the create date of this entry.
+	*
+	* @return the create date of this entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the email address of this entry.
-	 *
-	 * @return the email address of this entry
-	 */
+	* Returns the email address of this entry.
+	*
+	* @return the email address of this entry
+	*/
 	@Override
 	public String getEmailAddress() {
 		return model.getEmailAddress();
 	}
 
 	/**
-	 * Returns the entry ID of this entry.
-	 *
-	 * @return the entry ID of this entry
-	 */
+	* Returns the entry ID of this entry.
+	*
+	* @return the entry ID of this entry
+	*/
 	@Override
 	public long getEntryId() {
 		return model.getEntryId();
 	}
 
 	/**
-	 * Returns the full name of this entry.
-	 *
-	 * @return the full name of this entry
-	 */
+	* Returns the full name of this entry.
+	*
+	* @return the full name of this entry
+	*/
 	@Override
 	public String getFullName() {
 		return model.getFullName();
 	}
 
 	/**
-	 * Returns the group ID of this entry.
-	 *
-	 * @return the group ID of this entry
-	 */
+	* Returns the group ID of this entry.
+	*
+	* @return the group ID of this entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the modified date of this entry.
-	 *
-	 * @return the modified date of this entry
-	 */
+	* Returns the modified date of this entry.
+	*
+	* @return the modified date of this entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this entry.
-	 *
-	 * @return the primary key of this entry
-	 */
+	* Returns the primary key of this entry.
+	*
+	* @return the primary key of this entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the user ID of this entry.
-	 *
-	 * @return the user ID of this entry
-	 */
+	* Returns the user ID of this entry.
+	*
+	* @return the user ID of this entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this entry.
-	 *
-	 * @return the user name of this entry
-	 */
+	* Returns the user name of this entry.
+	*
+	* @return the user name of this entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this entry.
-	 *
-	 * @return the user uuid of this entry
-	 */
+	* Returns the user uuid of this entry.
+	*
+	* @return the user uuid of this entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -247,120 +246,120 @@ public class EntryWrapper
 	}
 
 	/**
-	 * Sets the comments of this entry.
-	 *
-	 * @param comments the comments of this entry
-	 */
+	* Sets the comments of this entry.
+	*
+	* @param comments the comments of this entry
+	*/
 	@Override
 	public void setComments(String comments) {
 		model.setComments(comments);
 	}
 
 	/**
-	 * Sets the company ID of this entry.
-	 *
-	 * @param companyId the company ID of this entry
-	 */
+	* Sets the company ID of this entry.
+	*
+	* @param companyId the company ID of this entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this entry.
-	 *
-	 * @param createDate the create date of this entry
-	 */
+	* Sets the create date of this entry.
+	*
+	* @param createDate the create date of this entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the email address of this entry.
-	 *
-	 * @param emailAddress the email address of this entry
-	 */
+	* Sets the email address of this entry.
+	*
+	* @param emailAddress the email address of this entry
+	*/
 	@Override
 	public void setEmailAddress(String emailAddress) {
 		model.setEmailAddress(emailAddress);
 	}
 
 	/**
-	 * Sets the entry ID of this entry.
-	 *
-	 * @param entryId the entry ID of this entry
-	 */
+	* Sets the entry ID of this entry.
+	*
+	* @param entryId the entry ID of this entry
+	*/
 	@Override
 	public void setEntryId(long entryId) {
 		model.setEntryId(entryId);
 	}
 
 	/**
-	 * Sets the full name of this entry.
-	 *
-	 * @param fullName the full name of this entry
-	 */
+	* Sets the full name of this entry.
+	*
+	* @param fullName the full name of this entry
+	*/
 	@Override
 	public void setFullName(String fullName) {
 		model.setFullName(fullName);
 	}
 
 	/**
-	 * Sets the group ID of this entry.
-	 *
-	 * @param groupId the group ID of this entry
-	 */
+	* Sets the group ID of this entry.
+	*
+	* @param groupId the group ID of this entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the modified date of this entry.
-	 *
-	 * @param modifiedDate the modified date of this entry
-	 */
+	* Sets the modified date of this entry.
+	*
+	* @param modifiedDate the modified date of this entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this entry.
-	 *
-	 * @param primaryKey the primary key of this entry
-	 */
+	* Sets the primary key of this entry.
+	*
+	* @param primaryKey the primary key of this entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this entry.
-	 *
-	 * @param userId the user ID of this entry
-	 */
+	* Sets the user ID of this entry.
+	*
+	* @param userId the user ID of this entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this entry.
-	 *
-	 * @param userName the user name of this entry
-	 */
+	* Sets the user name of this entry.
+	*
+	* @param userName the user name of this entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this entry.
-	 *
-	 * @param userUuid the user uuid of this entry
-	 */
+	* Sets the user uuid of this entry.
+	*
+	* @param userUuid the user uuid of this entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -370,5 +369,4 @@ public class EntryWrapper
 	protected EntryWrapper wrap(Entry entry) {
 		return new EntryWrapper(entry);
 	}
-
 }

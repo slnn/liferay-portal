@@ -17,17 +17,18 @@ package com.liferay.asset.category.property.service.persistence.impl;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.asset.category.property.service.persistence.impl.constants.AssetPersistenceConstants;
+
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Set;
 
 import javax.sql.DataSource;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetCategoryPropertyFinderBaseImpl
 	extends BasePersistenceImpl<AssetCategoryProperty> {
-
 	public AssetCategoryPropertyFinderBaseImpl() {
 		setModelClass(AssetCategoryProperty.class);
 	}
@@ -46,36 +46,24 @@ public abstract class AssetCategoryPropertyFinderBaseImpl
 	}
 
 	@Override
-	@Reference(
-		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
-		unbind = "-"
-	)
+	@Reference(target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
 	public void setConfiguration(Configuration configuration) {
 		super.setConfiguration(configuration);
 	}
 
 	@Override
-	@Reference(
-		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
-		unbind = "-"
-	)
+	@Reference(target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 	}
 
 	@Override
-	@Reference(
-		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
-		unbind = "-"
-	)
+	@Reference(target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
 
 	@Reference
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategoryPropertyFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(AssetCategoryPropertyFinderBaseImpl.class);
 }

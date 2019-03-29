@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,32 +35,30 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class ERAssetCategoryLocalServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAssetCategoryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.asset.kernel.model.AssetCategory
-			addOrUpdateCategory(
-				String externalReferenceCode, long userId, long groupId,
-				long parentCategoryId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				long vocabularyId, String[] categoryProperties,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.asset.kernel.model.AssetCategory addOrUpdateCategory(
+		String externalReferenceCode, long userId, long groupId,
+		long parentCategoryId,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long vocabularyId, String[] categoryProperties,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addOrUpdateCategory(
-			externalReferenceCode, userId, groupId, parentCategoryId, titleMap,
-			descriptionMap, vocabularyId, categoryProperties, serviceContext);
+		return getService()
+				   .addOrUpdateCategory(externalReferenceCode, userId, groupId,
+			parentCategoryId, titleMap, descriptionMap, vocabularyId,
+			categoryProperties, serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -68,24 +67,17 @@ public class ERAssetCategoryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<ERAssetCategoryLocalService, ERAssetCategoryLocalService>
-			_serviceTracker;
+	private static ServiceTracker<ERAssetCategoryLocalService, ERAssetCategoryLocalService> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ERAssetCategoryLocalService.class);
+		Bundle bundle = FrameworkUtil.getBundle(ERAssetCategoryLocalService.class);
 
-		ServiceTracker<ERAssetCategoryLocalService, ERAssetCategoryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<ERAssetCategoryLocalService, ERAssetCategoryLocalService>(
-						bundle.getBundleContext(),
-						ERAssetCategoryLocalService.class, null);
+		ServiceTracker<ERAssetCategoryLocalService, ERAssetCategoryLocalService> serviceTracker =
+			new ServiceTracker<ERAssetCategoryLocalService, ERAssetCategoryLocalService>(bundle.getBundleContext(),
+				ERAssetCategoryLocalService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

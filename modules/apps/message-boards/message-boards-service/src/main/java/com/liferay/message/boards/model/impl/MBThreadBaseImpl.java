@@ -32,9 +32,8 @@ import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class MBThreadBaseImpl
-	extends MBThreadModelImpl implements MBThread {
-
+public abstract class MBThreadBaseImpl extends MBThreadModelImpl
+	implements MBThread {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class MBThreadBaseImpl
 			MBThreadLocalServiceUtil.updateMBThread(this);
 		}
 	}
-
 }

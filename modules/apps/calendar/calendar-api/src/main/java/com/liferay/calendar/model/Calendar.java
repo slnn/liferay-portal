@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.calendar.model.impl.CalendarImpl")
 @ProviderType
 public interface Calendar extends CalendarModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Calendar, Long> CALENDAR_ID_ACCESSOR =
-		new Accessor<Calendar, Long>() {
-
+	public static final Accessor<Calendar, Long> CALENDAR_ID_ACCESSOR = new Accessor<Calendar, Long>() {
 			@Override
 			public Long get(Calendar calendar) {
 				return calendar.getCalendarId();
@@ -53,12 +50,10 @@ public interface Calendar extends CalendarModel, PersistedModel {
 			public Class<Calendar> getTypeClass() {
 				return Calendar.class;
 			}
-
 		};
 
 	public CalendarResource getCalendarResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.TimeZone getTimeZone();
-
 }

@@ -22,6 +22,7 @@ import com.liferay.mail.reader.service.persistence.AccountPersistence;
 import com.liferay.mail.reader.service.persistence.AttachmentPersistence;
 import com.liferay.mail.reader.service.persistence.FolderPersistence;
 import com.liferay.mail.reader.service.persistence.MessagePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -66,10 +67,8 @@ import javax.sql.DataSource;
  * @generated
  */
 @ProviderType
-public abstract class AccountLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
+public abstract class AccountLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements AccountLocalService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -132,8 +131,8 @@ public abstract class AccountLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			Account.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Account.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -160,11 +159,9 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return accountPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return accountPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
@@ -181,12 +178,10 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return accountPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return accountPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -208,11 +203,9 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return accountPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return accountPersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
@@ -234,8 +227,7 @@ public abstract class AccountLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(accountLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -247,14 +239,10 @@ public abstract class AccountLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			accountLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(accountLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(Account.class);
 
@@ -265,7 +253,6 @@ public abstract class AccountLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(accountLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Account.class);
@@ -279,14 +266,12 @@ public abstract class AccountLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
 		return accountLocalService.deleteAccount((Account)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return accountPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -342,9 +327,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @param accountLocalService the account local service
 	 */
-	public void setAccountLocalService(
-		AccountLocalService accountLocalService) {
-
+	public void setAccountLocalService(AccountLocalService accountLocalService) {
 		this.accountLocalService = accountLocalService;
 	}
 
@@ -371,9 +354,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the attachment local service
 	 */
-	public com.liferay.mail.reader.service.AttachmentLocalService
-		getAttachmentLocalService() {
-
+	public com.liferay.mail.reader.service.AttachmentLocalService getAttachmentLocalService() {
 		return attachmentLocalService;
 	}
 
@@ -383,9 +364,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @param attachmentLocalService the attachment local service
 	 */
 	public void setAttachmentLocalService(
-		com.liferay.mail.reader.service.AttachmentLocalService
-			attachmentLocalService) {
-
+		com.liferay.mail.reader.service.AttachmentLocalService attachmentLocalService) {
 		this.attachmentLocalService = attachmentLocalService;
 	}
 
@@ -405,7 +384,6 @@ public abstract class AccountLocalServiceBaseImpl
 	 */
 	public void setAttachmentPersistence(
 		AttachmentPersistence attachmentPersistence) {
-
 		this.attachmentPersistence = attachmentPersistence;
 	}
 
@@ -414,9 +392,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the folder local service
 	 */
-	public com.liferay.mail.reader.service.FolderLocalService
-		getFolderLocalService() {
-
+	public com.liferay.mail.reader.service.FolderLocalService getFolderLocalService() {
 		return folderLocalService;
 	}
 
@@ -427,7 +403,6 @@ public abstract class AccountLocalServiceBaseImpl
 	 */
 	public void setFolderLocalService(
 		com.liferay.mail.reader.service.FolderLocalService folderLocalService) {
-
 		this.folderLocalService = folderLocalService;
 	}
 
@@ -454,9 +429,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the message local service
 	 */
-	public com.liferay.mail.reader.service.MessageLocalService
-		getMessageLocalService() {
-
+	public com.liferay.mail.reader.service.MessageLocalService getMessageLocalService() {
 		return messageLocalService;
 	}
 
@@ -466,9 +439,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @param messageLocalService the message local service
 	 */
 	public void setMessageLocalService(
-		com.liferay.mail.reader.service.MessageLocalService
-			messageLocalService) {
-
+		com.liferay.mail.reader.service.MessageLocalService messageLocalService) {
 		this.messageLocalService = messageLocalService;
 	}
 
@@ -495,9 +466,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -507,9 +476,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -518,9 +485,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -530,9 +495,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -552,7 +515,6 @@ public abstract class AccountLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -561,9 +523,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -573,9 +533,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -584,9 +542,7 @@ public abstract class AccountLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -597,7 +553,6 @@ public abstract class AccountLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -620,8 +575,8 @@ public abstract class AccountLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.mail.reader.model.Account", accountLocalService);
+		persistedModelLocalServiceRegistry.register("com.liferay.mail.reader.model.Account",
+			accountLocalService);
 	}
 
 	public void destroy() {
@@ -661,8 +616,8 @@ public abstract class AccountLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -673,69 +628,32 @@ public abstract class AccountLocalServiceBaseImpl
 
 	@BeanReference(type = AccountLocalService.class)
 	protected AccountLocalService accountLocalService;
-
 	@BeanReference(type = AccountPersistence.class)
 	protected AccountPersistence accountPersistence;
-
-	@BeanReference(
-		type = com.liferay.mail.reader.service.AttachmentLocalService.class
-	)
-	protected com.liferay.mail.reader.service.AttachmentLocalService
-		attachmentLocalService;
-
+	@BeanReference(type = com.liferay.mail.reader.service.AttachmentLocalService.class)
+	protected com.liferay.mail.reader.service.AttachmentLocalService attachmentLocalService;
 	@BeanReference(type = AttachmentPersistence.class)
 	protected AttachmentPersistence attachmentPersistence;
-
-	@BeanReference(
-		type = com.liferay.mail.reader.service.FolderLocalService.class
-	)
-	protected com.liferay.mail.reader.service.FolderLocalService
-		folderLocalService;
-
+	@BeanReference(type = com.liferay.mail.reader.service.FolderLocalService.class)
+	protected com.liferay.mail.reader.service.FolderLocalService folderLocalService;
 	@BeanReference(type = FolderPersistence.class)
 	protected FolderPersistence folderPersistence;
-
-	@BeanReference(
-		type = com.liferay.mail.reader.service.MessageLocalService.class
-	)
-	protected com.liferay.mail.reader.service.MessageLocalService
-		messageLocalService;
-
+	@BeanReference(type = com.liferay.mail.reader.service.MessageLocalService.class)
+	protected com.liferay.mail.reader.service.MessageLocalService messageLocalService;
 	@BeanReference(type = MessagePersistence.class)
 	protected MessagePersistence messagePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRActionModel;
 import com.liferay.mobile.device.rules.model.MDRActionSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,29 +74,33 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class MDRActionModelImpl
-	extends BaseModelImpl<MDRAction> implements MDRActionModel {
-
+public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
+	implements MDRActionModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a mdr action model instance should use the <code>MDRAction</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MDRAction";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"actionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"ruleGroupInstanceId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"typeSettings", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "actionId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "ruleGroupInstanceId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "type_", Types.VARCHAR },
+			{ "typeSettings", Types.CLOB },
+			{ "lastPublishDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -113,46 +121,26 @@ public class MDRActionModelImpl
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MDRAction";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY mdrAction.actionId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MDRAction.actionId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY mdrAction.actionId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MDRAction.actionId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mobile.device.rules.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.mobile.device.rules.model.MDRAction"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mobile.device.rules.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.mobile.device.rules.model.MDRAction"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mobile.device.rules.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.mobile.device.rules.model.MDRAction"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.mobile.device.rules.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.mobile.device.rules.model.MDRAction"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.mobile.device.rules.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.mobile.device.rules.model.MDRAction"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.mobile.device.rules.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.mobile.device.rules.model.MDRAction"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-
 	public static final long RULEGROUPINSTANCEID_COLUMN_BITMASK = 4L;
-
 	public static final long UUID_COLUMN_BITMASK = 8L;
-
 	public static final long ACTIONID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -208,9 +196,8 @@ public class MDRActionModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.mobile.device.rules.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.mobile.device.rules.model.MDRAction"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.mobile.device.rules.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.mobile.device.rules.model.MDRAction"));
 
 	public MDRActionModelImpl() {
 	}
@@ -249,18 +236,14 @@ public class MDRActionModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MDRAction, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MDRAction, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MDRAction, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MDRAction, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MDRAction, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MDRAction, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((MDRAction)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MDRAction)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -271,109 +254,72 @@ public class MDRActionModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MDRAction, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MDRAction, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MDRAction, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MDRAction, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MDRAction)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MDRAction)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MDRAction, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MDRAction, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MDRAction, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MDRAction, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MDRAction, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MDRAction, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MDRAction, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MDRAction, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MDRAction, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MDRAction, Object>>();
-		Map<String, BiConsumer<MDRAction, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MDRAction, ?>>();
+		Map<String, Function<MDRAction, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MDRAction, Object>>();
+		Map<String, BiConsumer<MDRAction, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MDRAction, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", MDRAction::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<MDRAction, String>)MDRAction::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MDRAction, String>)MDRAction::setUuid);
 		attributeGetterFunctions.put("actionId", MDRAction::getActionId);
-		attributeSetterBiConsumers.put(
-			"actionId", (BiConsumer<MDRAction, Long>)MDRAction::setActionId);
+		attributeSetterBiConsumers.put("actionId", (BiConsumer<MDRAction, Long>)MDRAction::setActionId);
 		attributeGetterFunctions.put("groupId", MDRAction::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<MDRAction, Long>)MDRAction::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MDRAction, Long>)MDRAction::setGroupId);
 		attributeGetterFunctions.put("companyId", MDRAction::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<MDRAction, Long>)MDRAction::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MDRAction, Long>)MDRAction::setCompanyId);
 		attributeGetterFunctions.put("userId", MDRAction::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<MDRAction, Long>)MDRAction::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MDRAction, Long>)MDRAction::setUserId);
 		attributeGetterFunctions.put("userName", MDRAction::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<MDRAction, String>)MDRAction::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MDRAction, String>)MDRAction::setUserName);
 		attributeGetterFunctions.put("createDate", MDRAction::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MDRAction, Date>)MDRAction::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MDRAction::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MDRAction, Date>)MDRAction::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MDRAction, Date>)MDRAction::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MDRAction::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MDRAction, Date>)MDRAction::setModifiedDate);
 		attributeGetterFunctions.put("classNameId", MDRAction::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<MDRAction, Long>)MDRAction::setClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<MDRAction, Long>)MDRAction::setClassNameId);
 		attributeGetterFunctions.put("classPK", MDRAction::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<MDRAction, Long>)MDRAction::setClassPK);
-		attributeGetterFunctions.put(
-			"ruleGroupInstanceId", MDRAction::getRuleGroupInstanceId);
-		attributeSetterBiConsumers.put(
-			"ruleGroupInstanceId",
-			(BiConsumer<MDRAction, Long>)MDRAction::setRuleGroupInstanceId);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<MDRAction, Long>)MDRAction::setClassPK);
+		attributeGetterFunctions.put("ruleGroupInstanceId", MDRAction::getRuleGroupInstanceId);
+		attributeSetterBiConsumers.put("ruleGroupInstanceId", (BiConsumer<MDRAction, Long>)MDRAction::setRuleGroupInstanceId);
 		attributeGetterFunctions.put("name", MDRAction::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<MDRAction, String>)MDRAction::setName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<MDRAction, String>)MDRAction::setName);
 		attributeGetterFunctions.put("description", MDRAction::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<MDRAction, String>)MDRAction::setDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<MDRAction, String>)MDRAction::setDescription);
 		attributeGetterFunctions.put("type", MDRAction::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<MDRAction, String>)MDRAction::setType);
-		attributeGetterFunctions.put(
-			"typeSettings", MDRAction::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<MDRAction, String>)MDRAction::setTypeSettings);
-		attributeGetterFunctions.put(
-			"lastPublishDate", MDRAction::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<MDRAction, Date>)MDRAction::setLastPublishDate);
+		attributeSetterBiConsumers.put("type", (BiConsumer<MDRAction, String>)MDRAction::setType);
+		attributeGetterFunctions.put("typeSettings", MDRAction::getTypeSettings);
+		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<MDRAction, String>)MDRAction::setTypeSettings);
+		attributeGetterFunctions.put("lastPublishDate", MDRAction::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MDRAction, Date>)MDRAction::setLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -627,8 +573,8 @@ public class MDRActionModelImpl
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -665,14 +611,12 @@ public class MDRActionModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
 		}
 	}
 
@@ -692,9 +636,7 @@ public class MDRActionModelImpl
 			return;
 		}
 
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -730,8 +672,8 @@ public class MDRActionModelImpl
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -763,21 +705,18 @@ public class MDRActionModelImpl
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
-
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
+			setDescription(LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
+			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -793,16 +732,14 @@ public class MDRActionModelImpl
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -851,9 +788,8 @@ public class MDRActionModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(MDRAction.class.getName()),
-			getClassNameId());
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MDRAction.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -862,8 +798,8 @@ public class MDRActionModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MDRAction.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MDRAction.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -899,8 +835,7 @@ public class MDRActionModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -918,15 +853,12 @@ public class MDRActionModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			MDRAction.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(MDRAction.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -935,7 +867,6 @@ public class MDRActionModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -952,21 +883,19 @@ public class MDRActionModelImpl
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(
-				getDescription(defaultLocale), defaultLocale, defaultLocale);
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 	}
 
 	@Override
 	public MDRAction toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MDRAction)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MDRAction)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1066,8 +995,7 @@ public class MDRActionModelImpl
 
 		mdrActionModelImpl._setModifiedDate = false;
 
-		mdrActionModelImpl._originalRuleGroupInstanceId =
-			mdrActionModelImpl._ruleGroupInstanceId;
+		mdrActionModelImpl._originalRuleGroupInstanceId = mdrActionModelImpl._ruleGroupInstanceId;
 
 		mdrActionModelImpl._setOriginalRuleGroupInstanceId = false;
 
@@ -1172,20 +1100,16 @@ public class MDRActionModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MDRAction, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MDRAction, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MDRAction, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MDRAction, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MDRAction, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MDRAction, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1204,22 +1128,18 @@ public class MDRActionModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MDRAction, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MDRAction, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MDRAction, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MDRAction, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MDRAction, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MDRAction, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1233,12 +1153,10 @@ public class MDRActionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MDRAction.class.getClassLoader();
+	private static final ClassLoader _classLoader = MDRAction.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MDRAction.class, ModelWrapper.class
-	};
-
+			MDRAction.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _actionId;
@@ -1267,5 +1185,4 @@ public class MDRActionModelImpl
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MDRAction _escapedModel;
-
 }

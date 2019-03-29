@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMTemplateModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl")
 @ProviderType
 public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMTemplate, Long> TEMPLATE_ID_ACCESSOR =
-		new Accessor<DDMTemplate, Long>() {
-
+	public static final Accessor<DDMTemplate, Long> TEMPLATE_ID_ACCESSOR = new Accessor<DDMTemplate, Long>() {
 			@Override
 			public Long get(DDMTemplate ddmTemplate) {
 				return ddmTemplate.getTemplateId();
@@ -55,7 +50,6 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 			public Class<DDMTemplate> getTypeClass() {
 				return DDMTemplate.class;
 			}
-
 		};
 
 	public DDMTemplateVersion getLatestTemplateVersion()
@@ -73,14 +67,14 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	 * Returns the WebDAV URL to access the template.
-	 *
-	 * @param themeDisplay the theme display needed to build the URL. It can
-	 set HTTPS access, the server name, the server port, the path
-	 context, and the scope group.
-	 * @param webDAVToken the WebDAV token for the URL
-	 * @return the WebDAV URL
-	 */
+	* Returns the WebDAV URL to access the template.
+	*
+	* @param themeDisplay the theme display needed to build the URL. It can
+	set HTTPS access, the server name, the server port, the path
+	context, and the scope group.
+	* @param webDAVToken the WebDAV token for the URL
+	* @return the WebDAV URL
+	*/
 	public String getWebDavURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		String webDAVToken);
@@ -88,5 +82,4 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 	public void setResourceClassName(String resourceClassName);
 
 	public void setSmallImageType(String smallImageType);
-
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +38,15 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocal
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +56,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoNotificationRecipientPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.service"));
 
 	@Before
@@ -80,8 +79,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<KaleoNotificationRecipient> iterator =
-			_kaleoNotificationRecipients.iterator();
+		Iterator<KaleoNotificationRecipient> iterator = _kaleoNotificationRecipients.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -94,8 +92,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoNotificationRecipient kaleoNotificationRecipient =
-			_persistence.create(pk);
+		KaleoNotificationRecipient kaleoNotificationRecipient = _persistence.create(pk);
 
 		Assert.assertNotNull(kaleoNotificationRecipient);
 
@@ -104,14 +101,11 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
 		_persistence.remove(newKaleoNotificationRecipient);
 
-		KaleoNotificationRecipient existingKaleoNotificationRecipient =
-			_persistence.fetchByPrimaryKey(
-				newKaleoNotificationRecipient.getPrimaryKey());
+		KaleoNotificationRecipient existingKaleoNotificationRecipient = _persistence.fetchByPrimaryKey(newKaleoNotificationRecipient.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoNotificationRecipient);
 	}
@@ -125,8 +119,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			_persistence.create(pk);
+		KaleoNotificationRecipient newKaleoNotificationRecipient = _persistence.create(pk);
 
 		newKaleoNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -136,108 +129,77 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		newKaleoNotificationRecipient.setUserId(RandomTestUtil.nextLong());
 
-		newKaleoNotificationRecipient.setUserName(
-			RandomTestUtil.randomString());
+		newKaleoNotificationRecipient.setUserName(RandomTestUtil.randomString());
 
 		newKaleoNotificationRecipient.setCreateDate(RandomTestUtil.nextDate());
 
-		newKaleoNotificationRecipient.setModifiedDate(
-			RandomTestUtil.nextDate());
+		newKaleoNotificationRecipient.setModifiedDate(RandomTestUtil.nextDate());
 
-		newKaleoNotificationRecipient.setKaleoDefinitionVersionId(
-			RandomTestUtil.nextLong());
+		newKaleoNotificationRecipient.setKaleoDefinitionVersionId(RandomTestUtil.nextLong());
 
-		newKaleoNotificationRecipient.setKaleoNotificationId(
-			RandomTestUtil.nextLong());
+		newKaleoNotificationRecipient.setKaleoNotificationId(RandomTestUtil.nextLong());
 
-		newKaleoNotificationRecipient.setRecipientClassName(
-			RandomTestUtil.randomString());
+		newKaleoNotificationRecipient.setRecipientClassName(RandomTestUtil.randomString());
 
-		newKaleoNotificationRecipient.setRecipientClassPK(
-			RandomTestUtil.nextLong());
+		newKaleoNotificationRecipient.setRecipientClassPK(RandomTestUtil.nextLong());
 
-		newKaleoNotificationRecipient.setRecipientRoleType(
-			RandomTestUtil.nextInt());
+		newKaleoNotificationRecipient.setRecipientRoleType(RandomTestUtil.nextInt());
 
-		newKaleoNotificationRecipient.setRecipientScript(
-			RandomTestUtil.randomString());
+		newKaleoNotificationRecipient.setRecipientScript(RandomTestUtil.randomString());
 
-		newKaleoNotificationRecipient.setRecipientScriptLanguage(
-			RandomTestUtil.randomString());
+		newKaleoNotificationRecipient.setRecipientScriptLanguage(RandomTestUtil.randomString());
 
-		newKaleoNotificationRecipient.setRecipientScriptContexts(
-			RandomTestUtil.randomString());
+		newKaleoNotificationRecipient.setRecipientScriptContexts(RandomTestUtil.randomString());
 
 		newKaleoNotificationRecipient.setAddress(RandomTestUtil.randomString());
 
-		newKaleoNotificationRecipient.setNotificationReceptionType(
-			RandomTestUtil.randomString(3));
+		newKaleoNotificationRecipient.setNotificationReceptionType(RandomTestUtil.randomString(
+				3));
 
-		_kaleoNotificationRecipients.add(
-			_persistence.update(newKaleoNotificationRecipient));
+		_kaleoNotificationRecipients.add(_persistence.update(
+				newKaleoNotificationRecipient));
 
-		KaleoNotificationRecipient existingKaleoNotificationRecipient =
-			_persistence.findByPrimaryKey(
-				newKaleoNotificationRecipient.getPrimaryKey());
+		KaleoNotificationRecipient existingKaleoNotificationRecipient = _persistence.findByPrimaryKey(newKaleoNotificationRecipient.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getMvccVersion(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getMvccVersion(),
 			newKaleoNotificationRecipient.getMvccVersion());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.
-				getKaleoNotificationRecipientId(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getKaleoNotificationRecipientId(),
 			newKaleoNotificationRecipient.getKaleoNotificationRecipientId());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getGroupId(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getGroupId(),
 			newKaleoNotificationRecipient.getGroupId());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getCompanyId(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getCompanyId(),
 			newKaleoNotificationRecipient.getCompanyId());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getUserId(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getUserId(),
 			newKaleoNotificationRecipient.getUserId());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getUserName(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getUserName(),
 			newKaleoNotificationRecipient.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoNotificationRecipient.getCreateDate()),
 			Time.getShortTimestamp(
 				newKaleoNotificationRecipient.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoNotificationRecipient.getModifiedDate()),
 			Time.getShortTimestamp(
 				newKaleoNotificationRecipient.getModifiedDate()));
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getKaleoDefinitionVersionId(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getKaleoDefinitionVersionId(),
 			newKaleoNotificationRecipient.getKaleoDefinitionVersionId());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getKaleoNotificationId(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getKaleoNotificationId(),
 			newKaleoNotificationRecipient.getKaleoNotificationId());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getRecipientClassName(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientClassName(),
 			newKaleoNotificationRecipient.getRecipientClassName());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getRecipientClassPK(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientClassPK(),
 			newKaleoNotificationRecipient.getRecipientClassPK());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getRecipientRoleType(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientRoleType(),
 			newKaleoNotificationRecipient.getRecipientRoleType());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getRecipientScript(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientScript(),
 			newKaleoNotificationRecipient.getRecipientScript());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getRecipientScriptLanguage(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientScriptLanguage(),
 			newKaleoNotificationRecipient.getRecipientScriptLanguage());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getRecipientScriptContexts(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientScriptContexts(),
 			newKaleoNotificationRecipient.getRecipientScriptContexts());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getAddress(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getAddress(),
 			newKaleoNotificationRecipient.getAddress());
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient.getNotificationReceptionType(),
+		Assert.assertEquals(existingKaleoNotificationRecipient.getNotificationReceptionType(),
 			newKaleoNotificationRecipient.getNotificationReceptionType());
 	}
 
@@ -264,15 +226,12 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
-		KaleoNotificationRecipient existingKaleoNotificationRecipient =
-			_persistence.findByPrimaryKey(
-				newKaleoNotificationRecipient.getPrimaryKey());
+		KaleoNotificationRecipient existingKaleoNotificationRecipient = _persistence.findByPrimaryKey(newKaleoNotificationRecipient.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient, newKaleoNotificationRecipient);
+		Assert.assertEquals(existingKaleoNotificationRecipient,
+			newKaleoNotificationRecipient);
 	}
 
 	@Test(expected = NoSuchNotificationRecipientException.class)
@@ -284,43 +243,37 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
-	protected OrderByComparator<KaleoNotificationRecipient>
-		getOrderByComparator() {
-
-		return OrderByComparatorFactoryUtil.create(
-			"KaleoNotificationRecipient", "mvccVersion", true,
-			"kaleoNotificationRecipientId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoNotificationId", true, "recipientClassName", true,
-			"recipientClassPK", true, "recipientRoleType", true,
-			"recipientScriptLanguage", true, "recipientScriptContexts", true,
-			"address", true, "notificationReceptionType", true);
+	protected OrderByComparator<KaleoNotificationRecipient> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("KaleoNotificationRecipient",
+			"mvccVersion", true, "kaleoNotificationRecipientId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionVersionId", true, "kaleoNotificationId", true,
+			"recipientClassName", true, "recipientClassPK", true,
+			"recipientRoleType", true, "recipientScriptLanguage", true,
+			"recipientScriptContexts", true, "address", true,
+			"notificationReceptionType", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
-		KaleoNotificationRecipient existingKaleoNotificationRecipient =
-			_persistence.fetchByPrimaryKey(
-				newKaleoNotificationRecipient.getPrimaryKey());
+		KaleoNotificationRecipient existingKaleoNotificationRecipient = _persistence.fetchByPrimaryKey(newKaleoNotificationRecipient.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient, newKaleoNotificationRecipient);
+		Assert.assertEquals(existingKaleoNotificationRecipient,
+			newKaleoNotificationRecipient);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoNotificationRecipient missingKaleoNotificationRecipient =
-			_persistence.fetchByPrimaryKey(pk);
+		KaleoNotificationRecipient missingKaleoNotificationRecipient = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingKaleoNotificationRecipient);
 	}
@@ -328,28 +281,22 @@ public class KaleoNotificationRecipientPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		KaleoNotificationRecipient newKaleoNotificationRecipient1 =
-			addKaleoNotificationRecipient();
-		KaleoNotificationRecipient newKaleoNotificationRecipient2 =
-			addKaleoNotificationRecipient();
+		KaleoNotificationRecipient newKaleoNotificationRecipient1 = addKaleoNotificationRecipient();
+		KaleoNotificationRecipient newKaleoNotificationRecipient2 = addKaleoNotificationRecipient();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoNotificationRecipient1.getPrimaryKey());
 		primaryKeys.add(newKaleoNotificationRecipient2.getPrimaryKey());
 
-		Map<Serializable, KaleoNotificationRecipient>
-			kaleoNotificationRecipients = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, KaleoNotificationRecipient> kaleoNotificationRecipients =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoNotificationRecipients.size());
-		Assert.assertEquals(
-			newKaleoNotificationRecipient1,
+		Assert.assertEquals(newKaleoNotificationRecipient1,
 			kaleoNotificationRecipients.get(
 				newKaleoNotificationRecipient1.getPrimaryKey()));
-		Assert.assertEquals(
-			newKaleoNotificationRecipient2,
+		Assert.assertEquals(newKaleoNotificationRecipient2,
 			kaleoNotificationRecipients.get(
 				newKaleoNotificationRecipient2.getPrimaryKey()));
 	}
@@ -357,7 +304,6 @@ public class KaleoNotificationRecipientPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -367,9 +313,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoNotificationRecipient>
-			kaleoNotificationRecipients = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, KaleoNotificationRecipient> kaleoNotificationRecipients =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoNotificationRecipients.isEmpty());
 	}
@@ -377,9 +322,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -388,44 +331,40 @@ public class KaleoNotificationRecipientPersistenceTest {
 		primaryKeys.add(newKaleoNotificationRecipient.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoNotificationRecipient>
-			kaleoNotificationRecipients = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, KaleoNotificationRecipient> kaleoNotificationRecipients =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoNotificationRecipients.size());
-		Assert.assertEquals(
-			newKaleoNotificationRecipient,
+		Assert.assertEquals(newKaleoNotificationRecipient,
 			kaleoNotificationRecipients.get(
 				newKaleoNotificationRecipient.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoNotificationRecipient>
-			kaleoNotificationRecipients = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, KaleoNotificationRecipient> kaleoNotificationRecipients =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoNotificationRecipients.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoNotificationRecipient.getPrimaryKey());
 
-		Map<Serializable, KaleoNotificationRecipient>
-			kaleoNotificationRecipients = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, KaleoNotificationRecipient> kaleoNotificationRecipients =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoNotificationRecipients.size());
-		Assert.assertEquals(
-			newKaleoNotificationRecipient,
+		Assert.assertEquals(newKaleoNotificationRecipient,
 			kaleoNotificationRecipients.get(
 				newKaleoNotificationRecipient.getPrimaryKey()));
 	}
@@ -434,23 +373,16 @@ public class KaleoNotificationRecipientPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			KaleoNotificationRecipientLocalServiceUtil.
-				getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = KaleoNotificationRecipientLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<KaleoNotificationRecipient>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoNotificationRecipient>() {
 				@Override
 				public void performAction(
 					KaleoNotificationRecipient kaleoNotificationRecipient) {
-
 					Assert.assertNotNull(kaleoNotificationRecipient);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -459,64 +391,56 @@ public class KaleoNotificationRecipientPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoNotificationRecipient.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoNotificationRecipient.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"kaleoNotificationRecipientId",
-				newKaleoNotificationRecipient.
-					getKaleoNotificationRecipientId()));
+				newKaleoNotificationRecipient.getKaleoNotificationRecipientId()));
 
-		List<KaleoNotificationRecipient> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<KaleoNotificationRecipient> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		KaleoNotificationRecipient existingKaleoNotificationRecipient =
-			result.get(0);
+		KaleoNotificationRecipient existingKaleoNotificationRecipient = result.get(0);
 
-		Assert.assertEquals(
-			existingKaleoNotificationRecipient, newKaleoNotificationRecipient);
+		Assert.assertEquals(existingKaleoNotificationRecipient,
+			newKaleoNotificationRecipient);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoNotificationRecipient.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoNotificationRecipient.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"kaleoNotificationRecipientId", RandomTestUtil.nextLong()));
 
-		List<KaleoNotificationRecipient> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<KaleoNotificationRecipient> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		KaleoNotificationRecipient newKaleoNotificationRecipient =
-			addKaleoNotificationRecipient();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		KaleoNotificationRecipient newKaleoNotificationRecipient = addKaleoNotificationRecipient();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoNotificationRecipient.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoNotificationRecipient.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoNotificationRecipientId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoNotificationRecipientId"));
 
-		Object newKaleoNotificationRecipientId =
-			newKaleoNotificationRecipient.getKaleoNotificationRecipientId();
+		Object newKaleoNotificationRecipientId = newKaleoNotificationRecipient.getKaleoNotificationRecipientId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"kaleoNotificationRecipientId",
-				new Object[] {newKaleoNotificationRecipientId}));
+				new Object[] { newKaleoNotificationRecipientId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -524,23 +448,21 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		Object existingKaleoNotificationRecipientId = result.get(0);
 
-		Assert.assertEquals(
-			existingKaleoNotificationRecipientId,
+		Assert.assertEquals(existingKaleoNotificationRecipientId,
 			newKaleoNotificationRecipientId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoNotificationRecipient.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoNotificationRecipient.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoNotificationRecipientId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoNotificationRecipientId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"kaleoNotificationRecipientId",
-				new Object[] {RandomTestUtil.nextLong()}));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -549,11 +471,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	protected KaleoNotificationRecipient addKaleoNotificationRecipient()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoNotificationRecipient kaleoNotificationRecipient =
-			_persistence.create(pk);
+		KaleoNotificationRecipient kaleoNotificationRecipient = _persistence.create(pk);
 
 		kaleoNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -569,44 +489,34 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		kaleoNotificationRecipient.setModifiedDate(RandomTestUtil.nextDate());
 
-		kaleoNotificationRecipient.setKaleoDefinitionVersionId(
-			RandomTestUtil.nextLong());
+		kaleoNotificationRecipient.setKaleoDefinitionVersionId(RandomTestUtil.nextLong());
 
-		kaleoNotificationRecipient.setKaleoNotificationId(
-			RandomTestUtil.nextLong());
+		kaleoNotificationRecipient.setKaleoNotificationId(RandomTestUtil.nextLong());
 
-		kaleoNotificationRecipient.setRecipientClassName(
-			RandomTestUtil.randomString());
+		kaleoNotificationRecipient.setRecipientClassName(RandomTestUtil.randomString());
 
-		kaleoNotificationRecipient.setRecipientClassPK(
-			RandomTestUtil.nextLong());
+		kaleoNotificationRecipient.setRecipientClassPK(RandomTestUtil.nextLong());
 
-		kaleoNotificationRecipient.setRecipientRoleType(
-			RandomTestUtil.nextInt());
+		kaleoNotificationRecipient.setRecipientRoleType(RandomTestUtil.nextInt());
 
-		kaleoNotificationRecipient.setRecipientScript(
-			RandomTestUtil.randomString());
+		kaleoNotificationRecipient.setRecipientScript(RandomTestUtil.randomString());
 
-		kaleoNotificationRecipient.setRecipientScriptLanguage(
-			RandomTestUtil.randomString());
+		kaleoNotificationRecipient.setRecipientScriptLanguage(RandomTestUtil.randomString());
 
-		kaleoNotificationRecipient.setRecipientScriptContexts(
-			RandomTestUtil.randomString());
+		kaleoNotificationRecipient.setRecipientScriptContexts(RandomTestUtil.randomString());
 
 		kaleoNotificationRecipient.setAddress(RandomTestUtil.randomString());
 
-		kaleoNotificationRecipient.setNotificationReceptionType(
-			RandomTestUtil.randomString(3));
+		kaleoNotificationRecipient.setNotificationReceptionType(RandomTestUtil.randomString(
+				3));
 
-		_kaleoNotificationRecipients.add(
-			_persistence.update(kaleoNotificationRecipient));
+		_kaleoNotificationRecipients.add(_persistence.update(
+				kaleoNotificationRecipient));
 
 		return kaleoNotificationRecipient;
 	}
 
-	private List<KaleoNotificationRecipient> _kaleoNotificationRecipients =
-		new ArrayList<KaleoNotificationRecipient>();
+	private List<KaleoNotificationRecipient> _kaleoNotificationRecipients = new ArrayList<KaleoNotificationRecipient>();
 	private KaleoNotificationRecipientPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

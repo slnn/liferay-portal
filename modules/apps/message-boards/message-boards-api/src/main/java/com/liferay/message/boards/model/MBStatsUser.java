@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MBStatsUserModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.message.boards.model.impl.MBStatsUserImpl"
-)
+@ImplementationClassName("com.liferay.message.boards.model.impl.MBStatsUserImpl")
 @ProviderType
 public interface MBStatsUser extends MBStatsUserModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBStatsUserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MBStatsUser, Long> STATS_USER_ID_ACCESSOR =
-		new Accessor<MBStatsUser, Long>() {
-
+	public static final Accessor<MBStatsUser, Long> STATS_USER_ID_ACCESSOR = new Accessor<MBStatsUser, Long>() {
 			@Override
 			public Long get(MBStatsUser mbStatsUser) {
 				return mbStatsUser.getStatsUserId();
@@ -55,7 +50,5 @@ public interface MBStatsUser extends MBStatsUserModel, PersistedModel {
 			public Class<MBStatsUser> getTypeClass() {
 				return MBStatsUser.class;
 			}
-
 		};
-
 }

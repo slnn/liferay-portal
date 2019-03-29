@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,7 +35,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class DDLRecordVersionServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,105 +42,95 @@ public class DDLRecordVersionServiceUtil {
 	 */
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
-	 * Returns the record version matching the ID.
-	 *
-	 * @param recordVersionId the primary key of the record version
-	 * @return the record version with the ID
-	 * @throws PortalException if the matching record set could not be found or
-	 if the user did not have the required permission to access the
-	 record set
-	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getRecordVersion(long recordVersionId)
+	* Returns the record version matching the ID.
+	*
+	* @param recordVersionId the primary key of the record version
+	* @return the record version with the ID
+	* @throws PortalException if the matching record set could not be found or
+	if the user did not have the required permission to access the
+	record set
+	*/
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
+		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getRecordVersion(recordVersionId);
 	}
 
 	/**
-	 * Returns a record version matching the record and version.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param version the version of the record to return
-	 * @return the record version macthing the record primary key and version
-	 * @throws PortalException if the matching record set is not found or if the
-	 user do not have the required permission to access the record set
-	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getRecordVersion(long recordId, String version)
+	* Returns a record version matching the record and version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the version of the record to return
+	* @return the record version macthing the record primary key and version
+	* @throws PortalException if the matching record set is not found or if the
+	user do not have the required permission to access the record set
+	*/
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
+		long recordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getRecordVersion(recordId, version);
 	}
 
 	/**
-	 * Returns all the record versions matching the record.
-	 *
-	 * @param recordId the primary key of the record
-	 * @return the matching record versions
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-				getRecordVersions(long recordId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	* Returns all the record versions matching the record.
+	*
+	* @param recordId the primary key of the record
+	* @return the matching record versions
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersions(recordId);
 	}
 
 	/**
-	 * Returns an ordered range of record versions matching the record.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	 * full result set.
-	 * </p>
-	 *
-	 * @param recordId the primary key of the record
-	 * @param start the lower bound of the range of record versions to return
-	 * @param end the upper bound of the range of record versions to return
-	 (not inclusive)
-	 * @param orderByComparator the comparator used to order the record
-	 versions
-	 * @return the range of matching record versions ordered by the comparator
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-				getRecordVersions(
-					long recordId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getRecordVersions(
-			recordId, start, end, orderByComparator);
+	* Returns an ordered range of record versions matching the record.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordId the primary key of the record
+	* @param start the lower bound of the range of record versions to return
+	* @param end the upper bound of the range of record versions to return
+	(not inclusive)
+	* @param orderByComparator the comparator used to order the record
+	versions
+	* @return the range of matching record versions ordered by the comparator
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
+		long recordId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRecordVersions(recordId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of record versions matching the record.
-	 *
-	 * @param recordId the primary key of the record
-	 * @return the number of matching record versions
-	 * @throws PortalException if a portal exception occurred
-	 */
+	* Returns the number of record versions matching the record.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static int getRecordVersionsCount(long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getRecordVersionsCount(recordId);
 	}
 
@@ -148,22 +138,17 @@ public class DDLRecordVersionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<DDLRecordVersionService, DDLRecordVersionService> _serviceTracker;
+	private static ServiceTracker<DDLRecordVersionService, DDLRecordVersionService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(DDLRecordVersionService.class);
 
-		ServiceTracker<DDLRecordVersionService, DDLRecordVersionService>
-			serviceTracker =
-				new ServiceTracker
-					<DDLRecordVersionService, DDLRecordVersionService>(
-						bundle.getBundleContext(),
-						DDLRecordVersionService.class, null);
+		ServiceTracker<DDLRecordVersionService, DDLRecordVersionService> serviceTracker =
+			new ServiceTracker<DDLRecordVersionService, DDLRecordVersionService>(bundle.getBundleContext(),
+				DDLRecordVersionService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

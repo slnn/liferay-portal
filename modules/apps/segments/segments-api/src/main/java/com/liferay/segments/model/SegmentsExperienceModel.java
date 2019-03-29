@@ -40,10 +40,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface SegmentsExperienceModel
-	extends AttachedModel, BaseModel<SegmentsExperience>, GroupedModel,
-			LocalizedModel, ShardedModel {
-
+public interface SegmentsExperienceModel extends AttachedModel,
+	BaseModel<SegmentsExperience>, GroupedModel, LocalizedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -393,5 +391,4 @@ public interface SegmentsExperienceModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

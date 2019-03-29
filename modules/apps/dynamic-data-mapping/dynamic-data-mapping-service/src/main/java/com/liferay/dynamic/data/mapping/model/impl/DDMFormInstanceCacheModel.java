@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class DDMFormInstanceCacheModel
-	implements CacheModel<DDMFormInstance>, Externalizable {
-
+public class DDMFormInstanceCacheModel implements CacheModel<DDMFormInstance>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class DDMFormInstanceCacheModel
 			return false;
 		}
 
-		DDMFormInstanceCacheModel ddmFormInstanceCacheModel =
-			(DDMFormInstanceCacheModel)obj;
+		DDMFormInstanceCacheModel ddmFormInstanceCacheModel = (DDMFormInstanceCacheModel)obj;
 
 		if (formInstanceId == ddmFormInstanceCacheModel.formInstanceId) {
 			return true;
@@ -197,7 +197,6 @@ public class DDMFormInstanceCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
-
 		uuid = objectInput.readUTF();
 
 		formInstanceId = objectInput.readLong();
@@ -221,13 +220,12 @@ public class DDMFormInstanceCacheModel
 		settings = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
-		_ddmFormValues =
-			(com.liferay.dynamic.data.mapping.storage.DDMFormValues)
-				objectInput.readObject();
+		_ddmFormValues = (com.liferay.dynamic.data.mapping.storage.DDMFormValues)objectInput.readObject();
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -313,7 +311,5 @@ public class DDMFormInstanceCacheModel
 	public String description;
 	public String settings;
 	public long lastPublishDate;
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-		_ddmFormValues;
-
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues;
 }

@@ -32,9 +32,8 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CalendarBookingBaseImpl
-	extends CalendarBookingModelImpl implements CalendarBooking {
-
+public abstract class CalendarBookingBaseImpl extends CalendarBookingModelImpl
+	implements CalendarBooking {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class CalendarBookingBaseImpl
 			CalendarBookingLocalServiceUtil.updateCalendarBooking(this);
 		}
 	}
-
 }

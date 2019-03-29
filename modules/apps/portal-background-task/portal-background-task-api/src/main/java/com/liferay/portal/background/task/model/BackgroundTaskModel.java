@@ -39,9 +39,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface BackgroundTaskModel
-	extends BaseModel<BackgroundTask>, GroupedModel, MVCCModel, ShardedModel {
-
+public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -327,5 +326,4 @@ public interface BackgroundTaskModel
 	 * @param statusMessage the status message of this background task
 	 */
 	public void setStatusMessage(String statusMessage);
-
 }

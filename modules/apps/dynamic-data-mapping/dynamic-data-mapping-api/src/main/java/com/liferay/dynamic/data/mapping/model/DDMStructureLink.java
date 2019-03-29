@@ -27,21 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMStructureLinkModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl")
 @ProviderType
-public interface DDMStructureLink
-	extends DDMStructureLinkModel, PersistedModel {
-
+public interface DDMStructureLink extends DDMStructureLinkModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMStructureLink, Long>
-		STRUCTURE_LINK_ID_ACCESSOR = new Accessor<DDMStructureLink, Long>() {
-
+	public static final Accessor<DDMStructureLink, Long> STRUCTURE_LINK_ID_ACCESSOR =
+		new Accessor<DDMStructureLink, Long>() {
 			@Override
 			public Long get(DDMStructureLink ddmStructureLink) {
 				return ddmStructureLink.getStructureLinkId();
@@ -56,10 +51,8 @@ public interface DDMStructureLink
 			public Class<DDMStructureLink> getTypeClass() {
 				return DDMStructureLink.class;
 			}
-
 		};
 
 	public DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMStructureModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl")
 @ProviderType
 public interface DDMStructure extends DDMStructureModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMStructure, Long> STRUCTURE_ID_ACCESSOR =
-		new Accessor<DDMStructure, Long>() {
-
+	public static final Accessor<DDMStructure, Long> STRUCTURE_ID_ACCESSOR = new Accessor<DDMStructure, Long>() {
 			@Override
 			public Long get(DDMStructure ddmStructure) {
 				return ddmStructure.getStructureId();
@@ -55,7 +50,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 			public Class<DDMStructure> getTypeClass() {
 				return DDMStructure.class;
 			}
-
 		};
 
 	public DDMForm createFullHierarchyDDMForm()
@@ -119,20 +113,19 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public java.util.List<DDMTemplate> getTemplates();
 
-	public String getUnambiguousName(
-			java.util.List<DDMStructure> structures, long groupId,
-			java.util.Locale locale)
+	public String getUnambiguousName(java.util.List<DDMStructure> structures,
+		long groupId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	 * Returns the WebDAV URL to access the structure.
-	 *
-	 * @param themeDisplay the theme display needed to build the URL. It can
-	 set HTTPS access, the server name, the server port, the path
-	 context, and the scope group.
-	 * @param webDAVToken the WebDAV token for the URL
-	 * @return the WebDAV URL
-	 */
+	* Returns the WebDAV URL to access the structure.
+	*
+	* @param themeDisplay the theme display needed to build the URL. It can
+	set HTTPS access, the server name, the server port, the path
+	context, and the scope group.
+	* @param webDAVToken the WebDAV token for the URL
+	* @return the WebDAV URL
+	*/
 	public String getWebDavURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		String webDAVToken);
@@ -146,5 +139,4 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setDDMForm(DDMForm ddmForm);
-
 }

@@ -42,10 +42,9 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface CalendarBookingModel
-	extends BaseModel<CalendarBooking>, LocalizedModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
+	LocalizedModel, ShardedModel, StagedGroupedModel, TrashedModel,
+	WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -460,8 +459,8 @@ public interface CalendarBookingModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -478,8 +477,8 @@ public interface CalendarBookingModel
 	 * @param descriptionMap the locales and localized descriptions of this calendar booking
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the location of this calendar booking.
@@ -840,5 +839,4 @@ public interface CalendarBookingModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

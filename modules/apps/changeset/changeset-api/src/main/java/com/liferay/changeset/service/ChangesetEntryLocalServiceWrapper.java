@@ -28,109 +28,95 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class ChangesetEntryLocalServiceWrapper
 	implements ChangesetEntryLocalService,
-			   ServiceWrapper<ChangesetEntryLocalService> {
-
+		ServiceWrapper<ChangesetEntryLocalService> {
 	public ChangesetEntryLocalServiceWrapper(
 		ChangesetEntryLocalService changesetEntryLocalService) {
-
 		_changesetEntryLocalService = changesetEntryLocalService;
 	}
 
 	/**
-	 * Adds the changeset entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntry the changeset entry
-	 * @return the changeset entry that was added
-	 */
+	* Adds the changeset entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntry the changeset entry
+	* @return the changeset entry that was added
+	*/
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry addChangesetEntry(
 		com.liferay.changeset.model.ChangesetEntry changesetEntry) {
-
 		return _changesetEntryLocalService.addChangesetEntry(changesetEntry);
 	}
 
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry addChangesetEntry(
-			long userId, long changesetCollectionId, long classNameId,
-			long classPK)
+		long userId, long changesetCollectionId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _changesetEntryLocalService.addChangesetEntry(
-			userId, changesetCollectionId, classNameId, classPK);
+		return _changesetEntryLocalService.addChangesetEntry(userId,
+			changesetCollectionId, classNameId, classPK);
 	}
 
 	/**
-	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
-	 *
-	 * @param changesetEntryId the primary key for the new changeset entry
-	 * @return the new changeset entry
-	 */
+	* Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
+	*
+	* @param changesetEntryId the primary key for the new changeset entry
+	* @return the new changeset entry
+	*/
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry createChangesetEntry(
 		long changesetEntryId) {
-
-		return _changesetEntryLocalService.createChangesetEntry(
-			changesetEntryId);
+		return _changesetEntryLocalService.createChangesetEntry(changesetEntryId);
 	}
 
 	@Override
 	public void deleteChangesetEntries(long changesetCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_changesetEntryLocalService.deleteChangesetEntries(
-			changesetCollectionId);
+		_changesetEntryLocalService.deleteChangesetEntries(changesetCollectionId);
 	}
 
 	@Override
 	public void deleteChangesetEntries(java.util.Set<Long> changesetEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		_changesetEntryLocalService.deleteChangesetEntries(changesetEntryIds);
 	}
 
 	/**
-	 * Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntry the changeset entry
-	 * @return the changeset entry that was removed
-	 */
+	* Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntry the changeset entry
+	* @return the changeset entry that was removed
+	*/
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry deleteChangesetEntry(
 		com.liferay.changeset.model.ChangesetEntry changesetEntry) {
-
 		return _changesetEntryLocalService.deleteChangesetEntry(changesetEntry);
 	}
 
 	/**
-	 * Deletes the changeset entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntryId the primary key of the changeset entry
-	 * @return the changeset entry that was removed
-	 * @throws PortalException if a changeset entry with the primary key could not be found
-	 */
+	* Deletes the changeset entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntryId the primary key of the changeset entry
+	* @return the changeset entry that was removed
+	* @throws PortalException if a changeset entry with the primary key could not be found
+	*/
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry deleteChangesetEntry(
-			long changesetEntryId)
+		long changesetEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _changesetEntryLocalService.deleteChangesetEntry(
-			changesetEntryId);
+		return _changesetEntryLocalService.deleteChangesetEntry(changesetEntryId);
 	}
 
 	@Override
 	public void deleteEntry(long changesetId, long classNameId, long classPK) {
-		_changesetEntryLocalService.deleteEntry(
-			changesetId, classNameId, classPK);
+		_changesetEntryLocalService.deleteEntry(changesetId, classNameId,
+			classPK);
 	}
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _changesetEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
@@ -140,154 +126,140 @@ public class ChangesetEntryLocalServiceWrapper
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return _changesetEntryLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-
-		return _changesetEntryLocalService.dynamicQuery(
-			dynamicQuery, start, end);
+		return _changesetEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-
-		return _changesetEntryLocalService.dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return _changesetEntryLocalService.dynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return _changesetEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
-		return _changesetEntryLocalService.dynamicQueryCount(
-			dynamicQuery, projection);
+		return _changesetEntryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry fetchChangesetEntry(
 		long changesetEntryId) {
-
-		return _changesetEntryLocalService.fetchChangesetEntry(
-			changesetEntryId);
+		return _changesetEntryLocalService.fetchChangesetEntry(changesetEntryId);
 	}
 
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry fetchChangesetEntry(
 		long changesetCollectionId, long classNameId, long classPK) {
-
-		return _changesetEntryLocalService.fetchChangesetEntry(
-			changesetCollectionId, classNameId, classPK);
+		return _changesetEntryLocalService.fetchChangesetEntry(changesetCollectionId,
+			classNameId, classPK);
 	}
 
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry fetchOrAddChangesetEntry(
-			long changesetCollectionId, long classNameId, long classPK)
+		long changesetCollectionId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _changesetEntryLocalService.fetchOrAddChangesetEntry(
-			changesetCollectionId, classNameId, classPK);
+		return _changesetEntryLocalService.fetchOrAddChangesetEntry(changesetCollectionId,
+			classNameId, classPK);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _changesetEntryLocalService.getActionableDynamicQuery();
 	}
 
 	/**
-	 * Returns a range of all the changeset entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of changeset entries
-	 * @param end the upper bound of the range of changeset entries (not inclusive)
-	 * @return the range of changeset entries
-	 */
+	* Returns a range of all the changeset entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.changeset.model.impl.ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of changeset entries
+	* @param end the upper bound of the range of changeset entries (not inclusive)
+	* @return the range of changeset entries
+	*/
 	@Override
-	public java.util.List<com.liferay.changeset.model.ChangesetEntry>
-		getChangesetEntries(int start, int end) {
-
+	public java.util.List<com.liferay.changeset.model.ChangesetEntry> getChangesetEntries(
+		int start, int end) {
 		return _changesetEntryLocalService.getChangesetEntries(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.changeset.model.ChangesetEntry>
-		getChangesetEntries(long changesetCollectionId, long classNameId) {
-
-		return _changesetEntryLocalService.getChangesetEntries(
-			changesetCollectionId, classNameId);
+	public java.util.List<com.liferay.changeset.model.ChangesetEntry> getChangesetEntries(
+		long changesetCollectionId, long classNameId) {
+		return _changesetEntryLocalService.getChangesetEntries(changesetCollectionId,
+			classNameId);
 	}
 
 	/**
-	 * Returns the number of changeset entries.
-	 *
-	 * @return the number of changeset entries
-	 */
+	* Returns the number of changeset entries.
+	*
+	* @return the number of changeset entries
+	*/
 	@Override
 	public int getChangesetEntriesCount() {
 		return _changesetEntryLocalService.getChangesetEntriesCount();
@@ -295,63 +267,55 @@ public class ChangesetEntryLocalServiceWrapper
 
 	@Override
 	public long getChangesetEntriesCount(long changesetCollectionId) {
-		return _changesetEntryLocalService.getChangesetEntriesCount(
-			changesetCollectionId);
+		return _changesetEntryLocalService.getChangesetEntriesCount(changesetCollectionId);
 	}
 
 	@Override
-	public long getChangesetEntriesCount(
-		long changesetCollectionId, long classNameId) {
-
-		return _changesetEntryLocalService.getChangesetEntriesCount(
-			changesetCollectionId, classNameId);
+	public long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId) {
+		return _changesetEntryLocalService.getChangesetEntriesCount(changesetCollectionId,
+			classNameId);
 	}
 
 	@Override
-	public long getChangesetEntriesCount(
-		long changesetCollectionId, long classNameId,
-		java.util.Set<Long> classPKs) {
-
-		return _changesetEntryLocalService.getChangesetEntriesCount(
-			changesetCollectionId, classNameId, classPKs);
+	public long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId, java.util.Set<Long> classPKs) {
+		return _changesetEntryLocalService.getChangesetEntriesCount(changesetCollectionId,
+			classNameId, classPKs);
 	}
 
 	/**
-	 * Returns the changeset entry with the primary key.
-	 *
-	 * @param changesetEntryId the primary key of the changeset entry
-	 * @return the changeset entry
-	 * @throws PortalException if a changeset entry with the primary key could not be found
-	 */
+	* Returns the changeset entry with the primary key.
+	*
+	* @param changesetEntryId the primary key of the changeset entry
+	* @return the changeset entry
+	* @throws PortalException if a changeset entry with the primary key could not be found
+	*/
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry getChangesetEntry(
-			long changesetEntryId)
+		long changesetEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _changesetEntryLocalService.getChangesetEntry(changesetEntryId);
 	}
 
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry getChangesetEntry(
-			long changesetCollectionId, long classNameId, long classPK)
+		long changesetCollectionId, long classNameId, long classPK)
 		throws com.liferay.changeset.exception.NoSuchEntryException {
-
-		return _changesetEntryLocalService.getChangesetEntry(
-			changesetCollectionId, classNameId, classPK);
+		return _changesetEntryLocalService.getChangesetEntry(changesetCollectionId,
+			classNameId, classPK);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _changesetEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _changesetEntryLocalService.getOSGiServiceIdentifier();
@@ -359,22 +323,20 @@ public class ChangesetEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-			java.io.Serializable primaryKeyObj)
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _changesetEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	 * Updates the changeset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param changesetEntry the changeset entry
-	 * @return the changeset entry that was updated
-	 */
+	* Updates the changeset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param changesetEntry the changeset entry
+	* @return the changeset entry that was updated
+	*/
 	@Override
 	public com.liferay.changeset.model.ChangesetEntry updateChangesetEntry(
 		com.liferay.changeset.model.ChangesetEntry changesetEntry) {
-
 		return _changesetEntryLocalService.updateChangesetEntry(changesetEntry);
 	}
 
@@ -386,10 +348,8 @@ public class ChangesetEntryLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		ChangesetEntryLocalService changesetEntryLocalService) {
-
 		_changesetEntryLocalService = changesetEntryLocalService;
 	}
 
 	private ChangesetEntryLocalService _changesetEntryLocalService;
-
 }

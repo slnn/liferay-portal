@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class TrashEntrySoap implements Serializable {
-
 	public static TrashEntrySoap toSoapModel(TrashEntry model) {
 		TrashEntrySoap soapModel = new TrashEntrySoap();
 
@@ -77,8 +76,7 @@ public class TrashEntrySoap implements Serializable {
 	}
 
 	public static TrashEntrySoap[] toSoapModels(List<TrashEntry> models) {
-		List<TrashEntrySoap> soapModels = new ArrayList<TrashEntrySoap>(
-			models.size());
+		List<TrashEntrySoap> soapModels = new ArrayList<TrashEntrySoap>(models.size());
 
 		for (TrashEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -197,5 +195,4 @@ public class TrashEntrySoap implements Serializable {
 	private long _systemEventSetKey;
 	private String _typeSettings;
 	private int _status;
-
 }

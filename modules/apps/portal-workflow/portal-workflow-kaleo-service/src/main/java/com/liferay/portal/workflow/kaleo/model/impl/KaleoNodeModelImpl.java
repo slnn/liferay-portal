@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,29 +58,32 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class KaleoNodeModelImpl
-	extends BaseModelImpl<KaleoNode> implements KaleoNodeModel {
-
+public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
+	implements KaleoNodeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo node model instance should use the <code>KaleoNode</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "KaleoNode";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"kaleoNodeId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"kaleoDefinitionVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"metadata", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"initial_", Types.BOOLEAN},
-		{"terminal", Types.BOOLEAN}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "mvccVersion", Types.BIGINT },
+			{ "kaleoNodeId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "kaleoDefinitionVersionId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
+			{ "metadata", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "type_", Types.VARCHAR },
+			{ "initial_", Types.BOOLEAN },
+			{ "terminal", Types.BOOLEAN }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -98,47 +103,27 @@ public class KaleoNodeModelImpl
 		TABLE_COLUMNS_MAP.put("terminal", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table KaleoNode (mvccVersion LONG default 0 not null,kaleoNodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
-
+	public static final String TABLE_SQL_CREATE = "create table KaleoNode (mvccVersion LONG default 0 not null,kaleoNodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoNode";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY kaleoNode.kaleoNodeId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY KaleoNode.kaleoNodeId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY kaleoNode.kaleoNodeId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY KaleoNode.kaleoNodeId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNode"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNode"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNode"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNode"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNode"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoNode"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 2L;
-
 	public static final long KALEONODEID_COLUMN_BITMASK = 4L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.portal.workflow.kaleo.model.KaleoNode"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.portal.workflow.kaleo.model.KaleoNode"));
 
 	public KaleoNodeModelImpl() {
 	}
@@ -177,18 +162,14 @@ public class KaleoNodeModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<KaleoNode, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KaleoNode, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KaleoNode, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KaleoNode, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((KaleoNode)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((KaleoNode)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -199,104 +180,70 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<KaleoNode, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<KaleoNode, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<KaleoNode, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<KaleoNode, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(KaleoNode)this, entry.getValue());
+				attributeSetterBiConsumer.accept((KaleoNode)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<KaleoNode, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<KaleoNode, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<KaleoNode, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<KaleoNode, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<KaleoNode, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<KaleoNode, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<KaleoNode, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KaleoNode, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<KaleoNode, Object>>();
-		Map<String, BiConsumer<KaleoNode, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<KaleoNode, ?>>();
+		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<KaleoNode, Object>>();
+		Map<String, BiConsumer<KaleoNode, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KaleoNode, ?>>();
+
 
 		attributeGetterFunctions.put("mvccVersion", KaleoNode::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<KaleoNode, Long>)KaleoNode::setMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoNode, Long>)KaleoNode::setMvccVersion);
 		attributeGetterFunctions.put("kaleoNodeId", KaleoNode::getKaleoNodeId);
-		attributeSetterBiConsumers.put(
-			"kaleoNodeId",
-			(BiConsumer<KaleoNode, Long>)KaleoNode::setKaleoNodeId);
+		attributeSetterBiConsumers.put("kaleoNodeId", (BiConsumer<KaleoNode, Long>)KaleoNode::setKaleoNodeId);
 		attributeGetterFunctions.put("groupId", KaleoNode::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<KaleoNode, Long>)KaleoNode::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KaleoNode, Long>)KaleoNode::setGroupId);
 		attributeGetterFunctions.put("companyId", KaleoNode::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<KaleoNode, Long>)KaleoNode::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KaleoNode, Long>)KaleoNode::setCompanyId);
 		attributeGetterFunctions.put("userId", KaleoNode::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<KaleoNode, Long>)KaleoNode::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KaleoNode, Long>)KaleoNode::setUserId);
 		attributeGetterFunctions.put("userName", KaleoNode::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<KaleoNode, String>)KaleoNode::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KaleoNode, String>)KaleoNode::setUserName);
 		attributeGetterFunctions.put("createDate", KaleoNode::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<KaleoNode, Date>)KaleoNode::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", KaleoNode::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<KaleoNode, Date>)KaleoNode::setModifiedDate);
-		attributeGetterFunctions.put(
-			"kaleoDefinitionVersionId", KaleoNode::getKaleoDefinitionVersionId);
-		attributeSetterBiConsumers.put(
-			"kaleoDefinitionVersionId",
-			(BiConsumer<KaleoNode, Long>)
-				KaleoNode::setKaleoDefinitionVersionId);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KaleoNode, Date>)KaleoNode::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KaleoNode::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KaleoNode, Date>)KaleoNode::setModifiedDate);
+		attributeGetterFunctions.put("kaleoDefinitionVersionId", KaleoNode::getKaleoDefinitionVersionId);
+		attributeSetterBiConsumers.put("kaleoDefinitionVersionId", (BiConsumer<KaleoNode, Long>)KaleoNode::setKaleoDefinitionVersionId);
 		attributeGetterFunctions.put("name", KaleoNode::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<KaleoNode, String>)KaleoNode::setName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<KaleoNode, String>)KaleoNode::setName);
 		attributeGetterFunctions.put("metadata", KaleoNode::getMetadata);
-		attributeSetterBiConsumers.put(
-			"metadata", (BiConsumer<KaleoNode, String>)KaleoNode::setMetadata);
+		attributeSetterBiConsumers.put("metadata", (BiConsumer<KaleoNode, String>)KaleoNode::setMetadata);
 		attributeGetterFunctions.put("description", KaleoNode::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<KaleoNode, String>)KaleoNode::setDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<KaleoNode, String>)KaleoNode::setDescription);
 		attributeGetterFunctions.put("type", KaleoNode::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<KaleoNode, String>)KaleoNode::setType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<KaleoNode, String>)KaleoNode::setType);
 		attributeGetterFunctions.put("initial", KaleoNode::getInitial);
-		attributeSetterBiConsumers.put(
-			"initial", (BiConsumer<KaleoNode, Boolean>)KaleoNode::setInitial);
+		attributeSetterBiConsumers.put("initial", (BiConsumer<KaleoNode, Boolean>)KaleoNode::setInitial);
 		attributeGetterFunctions.put("terminal", KaleoNode::getTerminal);
-		attributeSetterBiConsumers.put(
-			"terminal", (BiConsumer<KaleoNode, Boolean>)KaleoNode::setTerminal);
+		attributeSetterBiConsumers.put("terminal", (BiConsumer<KaleoNode, Boolean>)KaleoNode::setTerminal);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -538,8 +485,8 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), KaleoNode.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			KaleoNode.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -552,9 +499,8 @@ public class KaleoNodeModelImpl
 	@Override
 	public KaleoNode toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoNode)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (KaleoNode)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -572,8 +518,7 @@ public class KaleoNodeModelImpl
 		kaleoNodeImpl.setUserName(getUserName());
 		kaleoNodeImpl.setCreateDate(getCreateDate());
 		kaleoNodeImpl.setModifiedDate(getModifiedDate());
-		kaleoNodeImpl.setKaleoDefinitionVersionId(
-			getKaleoDefinitionVersionId());
+		kaleoNodeImpl.setKaleoDefinitionVersionId(getKaleoDefinitionVersionId());
 		kaleoNodeImpl.setName(getName());
 		kaleoNodeImpl.setMetadata(getMetadata());
 		kaleoNodeImpl.setDescription(getDescription());
@@ -654,8 +599,7 @@ public class KaleoNodeModelImpl
 
 		kaleoNodeModelImpl._setModifiedDate = false;
 
-		kaleoNodeModelImpl._originalKaleoDefinitionVersionId =
-			kaleoNodeModelImpl._kaleoDefinitionVersionId;
+		kaleoNodeModelImpl._originalKaleoDefinitionVersionId = kaleoNodeModelImpl._kaleoDefinitionVersionId;
 
 		kaleoNodeModelImpl._setOriginalKaleoDefinitionVersionId = false;
 
@@ -702,8 +646,7 @@ public class KaleoNodeModelImpl
 			kaleoNodeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		kaleoNodeCacheModel.kaleoDefinitionVersionId =
-			getKaleoDefinitionVersionId();
+		kaleoNodeCacheModel.kaleoDefinitionVersionId = getKaleoDefinitionVersionId();
 
 		kaleoNodeCacheModel.name = getName();
 
@@ -746,20 +689,16 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<KaleoNode, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KaleoNode, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KaleoNode, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KaleoNode, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -778,22 +717,18 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<KaleoNode, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<KaleoNode, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KaleoNode, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KaleoNode, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KaleoNode, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -807,12 +742,10 @@ public class KaleoNodeModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoNode.class.getClassLoader();
+	private static final ClassLoader _classLoader = KaleoNode.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoNode.class, ModelWrapper.class
-	};
-
+			KaleoNode.class, ModelWrapper.class
+		};
 	private long _mvccVersion;
 	private long _kaleoNodeId;
 	private long _groupId;
@@ -835,5 +768,4 @@ public class KaleoNodeModelImpl
 	private boolean _terminal;
 	private long _columnBitmask;
 	private KaleoNode _escapedModel;
-
 }

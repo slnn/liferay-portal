@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.wiki.model.impl.WikiNodeImpl")
 @ProviderType
 public interface WikiNode extends WikiNodeModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.wiki.model.impl.WikiNodeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WikiNode, Long> NODE_ID_ACCESSOR =
-		new Accessor<WikiNode, Long>() {
-
+	public static final Accessor<WikiNode, Long> NODE_ID_ACCESSOR = new Accessor<WikiNode, Long>() {
 			@Override
 			public Long get(WikiNode wikiNode) {
 				return wikiNode.getNodeId();
@@ -53,17 +50,13 @@ public interface WikiNode extends WikiNodeModel, PersistedModel {
 			public Class<WikiNode> getTypeClass() {
 				return WikiNode.class;
 			}
-
 		};
 
-	public com.liferay.portal.kernel.repository.model.Folder
-			addAttachmentsFolder()
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getAttachmentsFolderId();
 
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>
-			getDeletedAttachmentsFiles()
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

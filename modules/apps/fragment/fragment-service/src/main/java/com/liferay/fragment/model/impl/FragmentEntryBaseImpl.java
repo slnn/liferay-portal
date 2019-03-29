@@ -32,9 +32,8 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class FragmentEntryBaseImpl
-	extends FragmentEntryModelImpl implements FragmentEntry {
-
+public abstract class FragmentEntryBaseImpl extends FragmentEntryModelImpl
+	implements FragmentEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class FragmentEntryBaseImpl
 			FragmentEntryLocalServiceUtil.updateFragmentEntry(this);
 		}
 	}
-
 }

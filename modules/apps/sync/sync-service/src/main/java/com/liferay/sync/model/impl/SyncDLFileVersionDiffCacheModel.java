@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
+
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SyncDLFileVersionDiffCacheModel
-	implements CacheModel<SyncDLFileVersionDiff>, Externalizable {
-
+public class SyncDLFileVersionDiffCacheModel implements CacheModel<SyncDLFileVersionDiff>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class SyncDLFileVersionDiffCacheModel
 			return false;
 		}
 
-		SyncDLFileVersionDiffCacheModel syncDLFileVersionDiffCacheModel =
-			(SyncDLFileVersionDiffCacheModel)obj;
+		SyncDLFileVersionDiffCacheModel syncDLFileVersionDiffCacheModel = (SyncDLFileVersionDiffCacheModel)obj;
 
-		if (syncDLFileVersionDiffId ==
-				syncDLFileVersionDiffCacheModel.syncDLFileVersionDiffId) {
-
+		if (syncDLFileVersionDiffId == syncDLFileVersionDiffCacheModel.syncDLFileVersionDiffId) {
 			return true;
 		}
 
@@ -90,11 +88,9 @@ public class SyncDLFileVersionDiffCacheModel
 
 	@Override
 	public SyncDLFileVersionDiff toEntityModel() {
-		SyncDLFileVersionDiffImpl syncDLFileVersionDiffImpl =
-			new SyncDLFileVersionDiffImpl();
+		SyncDLFileVersionDiffImpl syncDLFileVersionDiffImpl = new SyncDLFileVersionDiffImpl();
 
-		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(
-			syncDLFileVersionDiffId);
+		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(syncDLFileVersionDiffId);
 		syncDLFileVersionDiffImpl.setFileEntryId(fileEntryId);
 		syncDLFileVersionDiffImpl.setSourceFileVersionId(sourceFileVersionId);
 		syncDLFileVersionDiffImpl.setTargetFileVersionId(targetFileVersionId);
@@ -105,8 +101,7 @@ public class SyncDLFileVersionDiffCacheModel
 			syncDLFileVersionDiffImpl.setExpirationDate(null);
 		}
 		else {
-			syncDLFileVersionDiffImpl.setExpirationDate(
-				new Date(expirationDate));
+			syncDLFileVersionDiffImpl.setExpirationDate(new Date(expirationDate));
 		}
 
 		syncDLFileVersionDiffImpl.resetOriginalValues();
@@ -131,7 +126,8 @@ public class SyncDLFileVersionDiffCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(syncDLFileVersionDiffId);
 
 		objectOutput.writeLong(fileEntryId);
@@ -153,5 +149,4 @@ public class SyncDLFileVersionDiffCacheModel
 	public long dataFileEntryId;
 	public long size;
 	public long expirationDate;
-
 }

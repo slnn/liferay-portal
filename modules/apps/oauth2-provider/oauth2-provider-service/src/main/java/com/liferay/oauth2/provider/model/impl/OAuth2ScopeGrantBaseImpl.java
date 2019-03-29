@@ -32,9 +32,8 @@ import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class OAuth2ScopeGrantBaseImpl
-	extends OAuth2ScopeGrantModelImpl implements OAuth2ScopeGrant {
-
+public abstract class OAuth2ScopeGrantBaseImpl extends OAuth2ScopeGrantModelImpl
+	implements OAuth2ScopeGrant {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class OAuth2ScopeGrantBaseImpl
 			OAuth2ScopeGrantLocalServiceUtil.updateOAuth2ScopeGrant(this);
 		}
 	}
-
 }

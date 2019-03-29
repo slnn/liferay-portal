@@ -35,10 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface CalendarNotificationTemplateModel
-	extends BaseModel<CalendarNotificationTemplate>, ShardedModel,
-			StagedGroupedModel {
-
+public interface CalendarNotificationTemplateModel extends BaseModel<CalendarNotificationTemplate>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -308,5 +306,4 @@ public interface CalendarNotificationTemplateModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

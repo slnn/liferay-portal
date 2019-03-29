@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
+
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -42,13 +43,13 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the asset auto tagger entry local service.
@@ -63,10 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @ProviderType
 public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements AssetAutoTaggerEntryLocalService, AopService,
-			   IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements AssetAutoTaggerEntryLocalService,
+		AopService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -83,7 +82,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	@Override
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
-
 		assetAutoTaggerEntry.setNew(true);
 
 		return assetAutoTaggerEntryPersistence.update(assetAutoTaggerEntry);
@@ -99,7 +97,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public AssetAutoTaggerEntry createAssetAutoTaggerEntry(
 		long assetAutoTaggerEntryId) {
-
 		return assetAutoTaggerEntryPersistence.create(assetAutoTaggerEntryId);
 	}
 
@@ -113,9 +110,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AssetAutoTaggerEntry deleteAssetAutoTaggerEntry(
-			long assetAutoTaggerEntryId)
-		throws PortalException {
-
+		long assetAutoTaggerEntryId) throws PortalException {
 		return assetAutoTaggerEntryPersistence.remove(assetAutoTaggerEntryId);
 	}
 
@@ -129,7 +124,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	@Override
 	public AssetAutoTaggerEntry deleteAssetAutoTaggerEntry(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
-
 		return assetAutoTaggerEntryPersistence.remove(assetAutoTaggerEntry);
 	}
 
@@ -137,8 +131,8 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			AssetAutoTaggerEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(AssetAutoTaggerEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -149,8 +143,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return assetAutoTaggerEntryPersistence.findWithDynamicQuery(
-			dynamicQuery);
+		return assetAutoTaggerEntryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -166,11 +159,10 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return assetAutoTaggerEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return assetAutoTaggerEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -187,12 +179,10 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return assetAutoTaggerEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return assetAutoTaggerEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -203,8 +193,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return assetAutoTaggerEntryPersistence.countWithDynamicQuery(
-			dynamicQuery);
+		return assetAutoTaggerEntryPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -215,19 +204,16 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return assetAutoTaggerEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return assetAutoTaggerEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(
 		long assetAutoTaggerEntryId) {
-
-		return assetAutoTaggerEntryPersistence.fetchByPrimaryKey(
-			assetAutoTaggerEntryId);
+		return assetAutoTaggerEntryPersistence.fetchByPrimaryKey(assetAutoTaggerEntryId);
 	}
 
 	/**
@@ -239,20 +225,15 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 */
 	@Override
 	public AssetAutoTaggerEntry getAssetAutoTaggerEntry(
-			long assetAutoTaggerEntryId)
-		throws PortalException {
-
-		return assetAutoTaggerEntryPersistence.findByPrimaryKey(
-			assetAutoTaggerEntryId);
+		long assetAutoTaggerEntryId) throws PortalException {
+		return assetAutoTaggerEntryPersistence.findByPrimaryKey(assetAutoTaggerEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			assetAutoTaggerEntryLocalService);
+		actionableDynamicQuery.setBaseLocalService(assetAutoTaggerEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetAutoTaggerEntry.class);
 
@@ -263,17 +244,12 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			assetAutoTaggerEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(assetAutoTaggerEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(
-			AssetAutoTaggerEntry.class);
+		indexableActionableDynamicQuery.setModelClass(AssetAutoTaggerEntry.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"assetAutoTaggerEntryId");
@@ -283,9 +259,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			assetAutoTaggerEntryLocalService);
+		actionableDynamicQuery.setBaseLocalService(assetAutoTaggerEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetAutoTaggerEntry.class);
 
@@ -299,15 +273,12 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return assetAutoTaggerEntryLocalService.deleteAssetAutoTaggerEntry(
-			(AssetAutoTaggerEntry)persistedModel);
+		return assetAutoTaggerEntryLocalService.deleteAssetAutoTaggerEntry((AssetAutoTaggerEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return assetAutoTaggerEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -323,9 +294,8 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 * @return the range of asset auto tagger entries
 	 */
 	@Override
-	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
-		int start, int end) {
-
+	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(int start,
+		int end) {
 		return assetAutoTaggerEntryPersistence.findAll(start, end);
 	}
 
@@ -349,7 +319,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	@Override
 	public AssetAutoTaggerEntry updateAssetAutoTaggerEntry(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
-
 		return assetAutoTaggerEntryPersistence.update(assetAutoTaggerEntry);
 	}
 
@@ -363,8 +332,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 
 	@Override
 	public void setAopProxy(Object aopProxy) {
-		assetAutoTaggerEntryLocalService =
-			(AssetAutoTaggerEntryLocalService)aopProxy;
+		assetAutoTaggerEntryLocalService = (AssetAutoTaggerEntryLocalService)aopProxy;
 	}
 
 	/**
@@ -392,16 +360,15 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				assetAutoTaggerEntryPersistence.getDataSource();
+			DataSource dataSource = assetAutoTaggerEntryPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -411,12 +378,8 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	}
 
 	protected AssetAutoTaggerEntryLocalService assetAutoTaggerEntryLocalService;
-
 	@Reference
 	protected AssetAutoTaggerEntryPersistence assetAutoTaggerEntryPersistence;
-
 	@Reference
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 }

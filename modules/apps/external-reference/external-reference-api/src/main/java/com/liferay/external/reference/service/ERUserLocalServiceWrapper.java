@@ -26,43 +26,38 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class ERUserLocalServiceWrapper
-	implements ERUserLocalService, ServiceWrapper<ERUserLocalService> {
-
+public class ERUserLocalServiceWrapper implements ERUserLocalService,
+	ServiceWrapper<ERUserLocalService> {
 	public ERUserLocalServiceWrapper(ERUserLocalService erUserLocalService) {
 		_erUserLocalService = erUserLocalService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.User addOrUpdateUser(
-			String externalReferenceCode, long creatorUserId, long companyId,
-			boolean autoPassword, String password1, String password2,
-			boolean autoScreenName, String screenName, String emailAddress,
-			java.util.Locale locale, String firstName, String middleName,
-			String lastName, long prefixId, long suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
-			long[] roleIds,
-			java.util.List<com.liferay.portal.kernel.model.UserGroupRole>
-				userGroupRoles,
-			long[] userGroupIds, boolean sendEmail,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		String externalReferenceCode, long creatorUserId, long companyId,
+		boolean autoPassword, String password1, String password2,
+		boolean autoScreenName, String screenName, String emailAddress,
+		java.util.Locale locale, String firstName, String middleName,
+		String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
+		long[] groupIds, long[] organizationIds, long[] roleIds,
+		java.util.List<com.liferay.portal.kernel.model.UserGroupRole> userGroupRoles,
+		long[] userGroupIds, boolean sendEmail,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _erUserLocalService.addOrUpdateUser(
-			externalReferenceCode, creatorUserId, companyId, autoPassword,
-			password1, password2, autoScreenName, screenName, emailAddress,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds, sendEmail,
-			serviceContext);
+		return _erUserLocalService.addOrUpdateUser(externalReferenceCode,
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _erUserLocalService.getOSGiServiceIdentifier();
@@ -79,5 +74,4 @@ public class ERUserLocalServiceWrapper
 	}
 
 	private ERUserLocalService _erUserLocalService;
-
 }

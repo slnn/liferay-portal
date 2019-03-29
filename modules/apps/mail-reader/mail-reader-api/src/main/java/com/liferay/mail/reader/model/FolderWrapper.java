@@ -33,9 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class FolderWrapper
-	extends BaseModelWrapper<Folder> implements Folder, ModelWrapper<Folder> {
-
+public class FolderWrapper extends BaseModelWrapper<Folder> implements Folder,
+	ModelWrapper<Folder> {
 	public FolderWrapper(Folder folder) {
 		super(folder);
 	}
@@ -115,7 +114,7 @@ public class FolderWrapper
 		}
 
 		Integer remoteMessageCount = (Integer)attributes.get(
-			"remoteMessageCount");
+				"remoteMessageCount");
 
 		if (remoteMessageCount != null) {
 			setRemoteMessageCount(remoteMessageCount);
@@ -123,120 +122,120 @@ public class FolderWrapper
 	}
 
 	/**
-	 * Returns the account ID of this folder.
-	 *
-	 * @return the account ID of this folder
-	 */
+	* Returns the account ID of this folder.
+	*
+	* @return the account ID of this folder
+	*/
 	@Override
 	public long getAccountId() {
 		return model.getAccountId();
 	}
 
 	/**
-	 * Returns the company ID of this folder.
-	 *
-	 * @return the company ID of this folder
-	 */
+	* Returns the company ID of this folder.
+	*
+	* @return the company ID of this folder
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this folder.
-	 *
-	 * @return the create date of this folder
-	 */
+	* Returns the create date of this folder.
+	*
+	* @return the create date of this folder
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the display name of this folder.
-	 *
-	 * @return the display name of this folder
-	 */
+	* Returns the display name of this folder.
+	*
+	* @return the display name of this folder
+	*/
 	@Override
 	public String getDisplayName() {
 		return model.getDisplayName();
 	}
 
 	/**
-	 * Returns the folder ID of this folder.
-	 *
-	 * @return the folder ID of this folder
-	 */
+	* Returns the folder ID of this folder.
+	*
+	* @return the folder ID of this folder
+	*/
 	@Override
 	public long getFolderId() {
 		return model.getFolderId();
 	}
 
 	/**
-	 * Returns the full name of this folder.
-	 *
-	 * @return the full name of this folder
-	 */
+	* Returns the full name of this folder.
+	*
+	* @return the full name of this folder
+	*/
 	@Override
 	public String getFullName() {
 		return model.getFullName();
 	}
 
 	/**
-	 * Returns the modified date of this folder.
-	 *
-	 * @return the modified date of this folder
-	 */
+	* Returns the modified date of this folder.
+	*
+	* @return the modified date of this folder
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this folder.
-	 *
-	 * @return the primary key of this folder
-	 */
+	* Returns the primary key of this folder.
+	*
+	* @return the primary key of this folder
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the remote message count of this folder.
-	 *
-	 * @return the remote message count of this folder
-	 */
+	* Returns the remote message count of this folder.
+	*
+	* @return the remote message count of this folder
+	*/
 	@Override
 	public int getRemoteMessageCount() {
 		return model.getRemoteMessageCount();
 	}
 
 	/**
-	 * Returns the user ID of this folder.
-	 *
-	 * @return the user ID of this folder
-	 */
+	* Returns the user ID of this folder.
+	*
+	* @return the user ID of this folder
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this folder.
-	 *
-	 * @return the user name of this folder
-	 */
+	* Returns the user name of this folder.
+	*
+	* @return the user name of this folder
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this folder.
-	 *
-	 * @return the user uuid of this folder
-	 */
+	* Returns the user uuid of this folder.
+	*
+	* @return the user uuid of this folder
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -248,120 +247,120 @@ public class FolderWrapper
 	}
 
 	/**
-	 * Sets the account ID of this folder.
-	 *
-	 * @param accountId the account ID of this folder
-	 */
+	* Sets the account ID of this folder.
+	*
+	* @param accountId the account ID of this folder
+	*/
 	@Override
 	public void setAccountId(long accountId) {
 		model.setAccountId(accountId);
 	}
 
 	/**
-	 * Sets the company ID of this folder.
-	 *
-	 * @param companyId the company ID of this folder
-	 */
+	* Sets the company ID of this folder.
+	*
+	* @param companyId the company ID of this folder
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this folder.
-	 *
-	 * @param createDate the create date of this folder
-	 */
+	* Sets the create date of this folder.
+	*
+	* @param createDate the create date of this folder
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the display name of this folder.
-	 *
-	 * @param displayName the display name of this folder
-	 */
+	* Sets the display name of this folder.
+	*
+	* @param displayName the display name of this folder
+	*/
 	@Override
 	public void setDisplayName(String displayName) {
 		model.setDisplayName(displayName);
 	}
 
 	/**
-	 * Sets the folder ID of this folder.
-	 *
-	 * @param folderId the folder ID of this folder
-	 */
+	* Sets the folder ID of this folder.
+	*
+	* @param folderId the folder ID of this folder
+	*/
 	@Override
 	public void setFolderId(long folderId) {
 		model.setFolderId(folderId);
 	}
 
 	/**
-	 * Sets the full name of this folder.
-	 *
-	 * @param fullName the full name of this folder
-	 */
+	* Sets the full name of this folder.
+	*
+	* @param fullName the full name of this folder
+	*/
 	@Override
 	public void setFullName(String fullName) {
 		model.setFullName(fullName);
 	}
 
 	/**
-	 * Sets the modified date of this folder.
-	 *
-	 * @param modifiedDate the modified date of this folder
-	 */
+	* Sets the modified date of this folder.
+	*
+	* @param modifiedDate the modified date of this folder
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this folder.
-	 *
-	 * @param primaryKey the primary key of this folder
-	 */
+	* Sets the primary key of this folder.
+	*
+	* @param primaryKey the primary key of this folder
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the remote message count of this folder.
-	 *
-	 * @param remoteMessageCount the remote message count of this folder
-	 */
+	* Sets the remote message count of this folder.
+	*
+	* @param remoteMessageCount the remote message count of this folder
+	*/
 	@Override
 	public void setRemoteMessageCount(int remoteMessageCount) {
 		model.setRemoteMessageCount(remoteMessageCount);
 	}
 
 	/**
-	 * Sets the user ID of this folder.
-	 *
-	 * @param userId the user ID of this folder
-	 */
+	* Sets the user ID of this folder.
+	*
+	* @param userId the user ID of this folder
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this folder.
-	 *
-	 * @param userName the user name of this folder
-	 */
+	* Sets the user name of this folder.
+	*
+	* @param userName the user name of this folder
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this folder.
-	 *
-	 * @param userUuid the user uuid of this folder
-	 */
+	* Sets the user uuid of this folder.
+	*
+	* @param userUuid the user uuid of this folder
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -371,5 +370,4 @@ public class FolderWrapper
 	protected FolderWrapper wrap(Folder folder) {
 		return new FolderWrapper(folder);
 	}
-
 }

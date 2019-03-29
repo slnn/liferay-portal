@@ -39,10 +39,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface DDMStructureVersionModel
-	extends BaseModel<DDMStructureVersion>, LocalizedModel, ShardedModel,
-			WorkflowedModel {
-
+public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>,
+	LocalizedModel, ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -386,8 +384,8 @@ public interface DDMStructureVersionModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -404,8 +402,8 @@ public interface DDMStructureVersionModel
 	 * @param descriptionMap the locales and localized descriptions of this ddm structure version
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the definition of this ddm structure version.
@@ -608,5 +606,4 @@ public interface DDMStructureVersionModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

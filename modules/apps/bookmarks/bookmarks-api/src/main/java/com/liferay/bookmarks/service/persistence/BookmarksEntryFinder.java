@@ -24,8 +24,5 @@ import aQute.bnd.annotation.ProviderType;
 @Deprecated
 @ProviderType
 public interface BookmarksEntryFinder {
-
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry>
-		findByNoAssets();
-
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByNoAssets();
 }

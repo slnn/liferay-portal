@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AssetListEntryUsageModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.asset.list.model.impl.AssetListEntryUsageImpl"
-)
+@ImplementationClassName("com.liferay.asset.list.model.impl.AssetListEntryUsageImpl")
 @ProviderType
-public interface AssetListEntryUsage
-	extends AssetListEntryUsageModel, PersistedModel {
-
+public interface AssetListEntryUsage extends AssetListEntryUsageModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.list.model.impl.AssetListEntryUsageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetListEntryUsage, Long>
-		ASSET_LIST_ENTRY_USAGE_ID_ACCESSOR =
-			new Accessor<AssetListEntryUsage, Long>() {
+	public static final Accessor<AssetListEntryUsage, Long> ASSET_LIST_ENTRY_USAGE_ID_ACCESSOR =
+		new Accessor<AssetListEntryUsage, Long>() {
+			@Override
+			public Long get(AssetListEntryUsage assetListEntryUsage) {
+				return assetListEntryUsage.getAssetListEntryUsageId();
+			}
 
-				@Override
-				public Long get(AssetListEntryUsage assetListEntryUsage) {
-					return assetListEntryUsage.getAssetListEntryUsageId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<AssetListEntryUsage> getTypeClass() {
-					return AssetListEntryUsage.class;
-				}
-
-			};
-
+			@Override
+			public Class<AssetListEntryUsage> getTypeClass() {
+				return AssetListEntryUsage.class;
+			}
+		};
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.security.service.access.policy.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SAPEntryWrapper
-	extends BaseModelWrapper<SAPEntry>
+public class SAPEntryWrapper extends BaseModelWrapper<SAPEntry>
 	implements SAPEntry, ModelWrapper<SAPEntry> {
-
 	public SAPEntryWrapper(SAPEntry sapEntry) {
 		super(sapEntry);
 	}
@@ -53,8 +52,7 @@ public class SAPEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put(
-			"allowedServiceSignatures", getAllowedServiceSignatures());
+		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
 		attributes.put("defaultSAPEntry", isDefaultSAPEntry());
 		attributes.put("enabled", isEnabled());
 		attributes.put("name", getName());
@@ -108,7 +106,7 @@ public class SAPEntryWrapper
 		}
 
 		String allowedServiceSignatures = (String)attributes.get(
-			"allowedServiceSignatures");
+				"allowedServiceSignatures");
 
 		if (allowedServiceSignatures != null) {
 			setAllowedServiceSignatures(allowedServiceSignatures);
@@ -140,10 +138,10 @@ public class SAPEntryWrapper
 	}
 
 	/**
-	 * Returns the allowed service signatures of this sap entry.
-	 *
-	 * @return the allowed service signatures of this sap entry
-	 */
+	* Returns the allowed service signatures of this sap entry.
+	*
+	* @return the allowed service signatures of this sap entry
+	*/
 	@Override
 	public String getAllowedServiceSignatures() {
 		return model.getAllowedServiceSignatures();
@@ -160,20 +158,20 @@ public class SAPEntryWrapper
 	}
 
 	/**
-	 * Returns the company ID of this sap entry.
-	 *
-	 * @return the company ID of this sap entry
-	 */
+	* Returns the company ID of this sap entry.
+	*
+	* @return the company ID of this sap entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this sap entry.
-	 *
-	 * @return the create date of this sap entry
-	 */
+	* Returns the create date of this sap entry.
+	*
+	* @return the create date of this sap entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
@@ -185,116 +183,116 @@ public class SAPEntryWrapper
 	}
 
 	/**
-	 * Returns the default sap entry of this sap entry.
-	 *
-	 * @return the default sap entry of this sap entry
-	 */
+	* Returns the default sap entry of this sap entry.
+	*
+	* @return the default sap entry of this sap entry
+	*/
 	@Override
 	public boolean getDefaultSAPEntry() {
 		return model.getDefaultSAPEntry();
 	}
 
 	/**
-	 * Returns the enabled of this sap entry.
-	 *
-	 * @return the enabled of this sap entry
-	 */
+	* Returns the enabled of this sap entry.
+	*
+	* @return the enabled of this sap entry
+	*/
 	@Override
 	public boolean getEnabled() {
 		return model.getEnabled();
 	}
 
 	/**
-	 * Returns the modified date of this sap entry.
-	 *
-	 * @return the modified date of this sap entry
-	 */
+	* Returns the modified date of this sap entry.
+	*
+	* @return the modified date of this sap entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the name of this sap entry.
-	 *
-	 * @return the name of this sap entry
-	 */
+	* Returns the name of this sap entry.
+	*
+	* @return the name of this sap entry
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	 * Returns the primary key of this sap entry.
-	 *
-	 * @return the primary key of this sap entry
-	 */
+	* Returns the primary key of this sap entry.
+	*
+	* @return the primary key of this sap entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the sap entry ID of this sap entry.
-	 *
-	 * @return the sap entry ID of this sap entry
-	 */
+	* Returns the sap entry ID of this sap entry.
+	*
+	* @return the sap entry ID of this sap entry
+	*/
 	@Override
 	public long getSapEntryId() {
 		return model.getSapEntryId();
 	}
 
 	/**
-	 * Returns the title of this sap entry.
-	 *
-	 * @return the title of this sap entry
-	 */
+	* Returns the title of this sap entry.
+	*
+	* @return the title of this sap entry
+	*/
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	 * Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized title of this sap entry
-	 */
+	* Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this sap entry
+	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
 		return model.getTitle(locale);
 	}
 
 	/**
-	 * Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this sap entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
+	* Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this sap entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return model.getTitle(locale, useDefault);
 	}
 
 	/**
-	 * Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized title of this sap entry
-	 */
+	* Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this sap entry
+	*/
 	@Override
 	public String getTitle(String languageId) {
 		return model.getTitle(languageId);
 	}
 
 	/**
-	 * Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this sap entry
-	 */
+	* Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this sap entry
+	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
 		return model.getTitle(languageId, useDefault);
@@ -311,70 +309,70 @@ public class SAPEntryWrapper
 	}
 
 	/**
-	 * Returns a map of the locales and localized titles of this sap entry.
-	 *
-	 * @return the locales and localized titles of this sap entry
-	 */
+	* Returns a map of the locales and localized titles of this sap entry.
+	*
+	* @return the locales and localized titles of this sap entry
+	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
 		return model.getTitleMap();
 	}
 
 	/**
-	 * Returns the user ID of this sap entry.
-	 *
-	 * @return the user ID of this sap entry
-	 */
+	* Returns the user ID of this sap entry.
+	*
+	* @return the user ID of this sap entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this sap entry.
-	 *
-	 * @return the user name of this sap entry
-	 */
+	* Returns the user name of this sap entry.
+	*
+	* @return the user name of this sap entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this sap entry.
-	 *
-	 * @return the user uuid of this sap entry
-	 */
+	* Returns the user uuid of this sap entry.
+	*
+	* @return the user uuid of this sap entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this sap entry.
-	 *
-	 * @return the uuid of this sap entry
-	 */
+	* Returns the uuid of this sap entry.
+	*
+	* @return the uuid of this sap entry
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	 * Returns <code>true</code> if this sap entry is default sap entry.
-	 *
-	 * @return <code>true</code> if this sap entry is default sap entry; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this sap entry is default sap entry.
+	*
+	* @return <code>true</code> if this sap entry is default sap entry; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDefaultSAPEntry() {
 		return model.isDefaultSAPEntry();
 	}
 
 	/**
-	 * Returns <code>true</code> if this sap entry is enabled.
-	 *
-	 * @return <code>true</code> if this sap entry is enabled; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this sap entry is enabled.
+	*
+	* @return <code>true</code> if this sap entry is enabled; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isEnabled() {
 		return model.isEnabled();
@@ -382,9 +380,7 @@ public class SAPEntryWrapper
 
 	@Override
 	public boolean isSystem()
-		throws com.liferay.portal.kernel.module.configuration.
-			ConfigurationException {
-
+		throws com.liferay.portal.kernel.module.configuration.ConfigurationException {
 		return model.isSystem();
 	}
 
@@ -396,140 +392,137 @@ public class SAPEntryWrapper
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-
 		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
-			java.util.Locale defaultImportLocale)
+		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
-	 * Sets the allowed service signatures of this sap entry.
-	 *
-	 * @param allowedServiceSignatures the allowed service signatures of this sap entry
-	 */
+	* Sets the allowed service signatures of this sap entry.
+	*
+	* @param allowedServiceSignatures the allowed service signatures of this sap entry
+	*/
 	@Override
 	public void setAllowedServiceSignatures(String allowedServiceSignatures) {
 		model.setAllowedServiceSignatures(allowedServiceSignatures);
 	}
 
 	/**
-	 * Sets the company ID of this sap entry.
-	 *
-	 * @param companyId the company ID of this sap entry
-	 */
+	* Sets the company ID of this sap entry.
+	*
+	* @param companyId the company ID of this sap entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this sap entry.
-	 *
-	 * @param createDate the create date of this sap entry
-	 */
+	* Sets the create date of this sap entry.
+	*
+	* @param createDate the create date of this sap entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets whether this sap entry is default sap entry.
-	 *
-	 * @param defaultSAPEntry the default sap entry of this sap entry
-	 */
+	* Sets whether this sap entry is default sap entry.
+	*
+	* @param defaultSAPEntry the default sap entry of this sap entry
+	*/
 	@Override
 	public void setDefaultSAPEntry(boolean defaultSAPEntry) {
 		model.setDefaultSAPEntry(defaultSAPEntry);
 	}
 
 	/**
-	 * Sets whether this sap entry is enabled.
-	 *
-	 * @param enabled the enabled of this sap entry
-	 */
+	* Sets whether this sap entry is enabled.
+	*
+	* @param enabled the enabled of this sap entry
+	*/
 	@Override
 	public void setEnabled(boolean enabled) {
 		model.setEnabled(enabled);
 	}
 
 	/**
-	 * Sets the modified date of this sap entry.
-	 *
-	 * @param modifiedDate the modified date of this sap entry
-	 */
+	* Sets the modified date of this sap entry.
+	*
+	* @param modifiedDate the modified date of this sap entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the name of this sap entry.
-	 *
-	 * @param name the name of this sap entry
-	 */
+	* Sets the name of this sap entry.
+	*
+	* @param name the name of this sap entry
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the primary key of this sap entry.
-	 *
-	 * @param primaryKey the primary key of this sap entry
-	 */
+	* Sets the primary key of this sap entry.
+	*
+	* @param primaryKey the primary key of this sap entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the sap entry ID of this sap entry.
-	 *
-	 * @param sapEntryId the sap entry ID of this sap entry
-	 */
+	* Sets the sap entry ID of this sap entry.
+	*
+	* @param sapEntryId the sap entry ID of this sap entry
+	*/
 	@Override
 	public void setSapEntryId(long sapEntryId) {
 		model.setSapEntryId(sapEntryId);
 	}
 
 	/**
-	 * Sets the title of this sap entry.
-	 *
-	 * @param title the title of this sap entry
-	 */
+	* Sets the title of this sap entry.
+	*
+	* @param title the title of this sap entry
+	*/
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
 	}
 
 	/**
-	 * Sets the localized title of this sap entry in the language.
-	 *
-	 * @param title the localized title of this sap entry
-	 * @param locale the locale of the language
-	 */
+	* Sets the localized title of this sap entry in the language.
+	*
+	* @param title the localized title of this sap entry
+	* @param locale the locale of the language
+	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
 		model.setTitle(title, locale);
 	}
 
 	/**
-	 * Sets the localized title of this sap entry in the language, and sets the default locale.
-	 *
-	 * @param title the localized title of this sap entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized title of this sap entry in the language, and sets the default locale.
+	*
+	* @param title the localized title of this sap entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setTitle(
-		String title, java.util.Locale locale, java.util.Locale defaultLocale) {
-
+	public void setTitle(String title, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		model.setTitle(title, locale, defaultLocale);
 	}
 
@@ -539,64 +532,62 @@ public class SAPEntryWrapper
 	}
 
 	/**
-	 * Sets the localized titles of this sap entry from the map of locales and localized titles.
-	 *
-	 * @param titleMap the locales and localized titles of this sap entry
-	 */
+	* Sets the localized titles of this sap entry from the map of locales and localized titles.
+	*
+	* @param titleMap the locales and localized titles of this sap entry
+	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		model.setTitleMap(titleMap);
 	}
 
 	/**
-	 * Sets the localized titles of this sap entry from the map of locales and localized titles, and sets the default locale.
-	 *
-	 * @param titleMap the locales and localized titles of this sap entry
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized titles of this sap entry from the map of locales and localized titles, and sets the default locale.
+	*
+	* @param titleMap the locales and localized titles of this sap entry
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setTitleMap(
-		Map<java.util.Locale, String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-
 		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
-	 * Sets the user ID of this sap entry.
-	 *
-	 * @param userId the user ID of this sap entry
-	 */
+	* Sets the user ID of this sap entry.
+	*
+	* @param userId the user ID of this sap entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this sap entry.
-	 *
-	 * @param userName the user name of this sap entry
-	 */
+	* Sets the user name of this sap entry.
+	*
+	* @param userName the user name of this sap entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this sap entry.
-	 *
-	 * @param userUuid the user uuid of this sap entry
-	 */
+	* Sets the user uuid of this sap entry.
+	*
+	* @param userUuid the user uuid of this sap entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this sap entry.
-	 *
-	 * @param uuid the uuid of this sap entry
-	 */
+	* Sets the uuid of this sap entry.
+	*
+	* @param uuid the uuid of this sap entry
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -611,5 +602,4 @@ public class SAPEntryWrapper
 	protected SAPEntryWrapper wrap(SAPEntry sapEntry) {
 		return new SAPEntryWrapper(sapEntry);
 	}
-
 }

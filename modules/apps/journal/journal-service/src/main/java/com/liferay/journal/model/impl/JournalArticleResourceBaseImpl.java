@@ -34,7 +34,6 @@ import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 @ProviderType
 public abstract class JournalArticleResourceBaseImpl
 	extends JournalArticleResourceModelImpl implements JournalArticleResource {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,13 +42,10 @@ public abstract class JournalArticleResourceBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			JournalArticleResourceLocalServiceUtil.addJournalArticleResource(
-				this);
+			JournalArticleResourceLocalServiceUtil.addJournalArticleResource(this);
 		}
 		else {
-			JournalArticleResourceLocalServiceUtil.updateJournalArticleResource(
-				this);
+			JournalArticleResourceLocalServiceUtil.updateJournalArticleResource(this);
 		}
 	}
-
 }

@@ -17,6 +17,7 @@ package com.liferay.flags.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.flags.service.FlagsEntryServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -52,18 +53,15 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class FlagsEntryServiceSoap {
-
-	public static void addEntry(
-			String className, long classPK, String reporterEmailAddress,
-			long reportedUserId, String contentTitle, String contentURL,
-			String reason,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void addEntry(String className, long classPK,
+		String reporterEmailAddress, long reportedUserId, String contentTitle,
+		String contentURL, String reason,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			FlagsEntryServiceUtil.addEntry(
-				className, classPK, reporterEmailAddress, reportedUserId,
-				contentTitle, contentURL, reason, serviceContext);
+			FlagsEntryServiceUtil.addEntry(className, classPK,
+				reporterEmailAddress, reportedUserId, contentTitle, contentURL,
+				reason, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -72,7 +70,5 @@ public class FlagsEntryServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		FlagsEntryServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(FlagsEntryServiceSoap.class);
 }

@@ -38,20 +38,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=screens",
-		"json.web.service.context.path=ScreensDDMStructureVersion"
-	},
-	service = ScreensDDMStructureVersionService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=screens", "json.web.service.context.path=ScreensDDMStructureVersion"}, service = ScreensDDMStructureVersionService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface ScreensDDMStructureVersionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,10 +54,9 @@ public interface ScreensDDMStructureVersionService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

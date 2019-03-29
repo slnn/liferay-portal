@@ -27,20 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoTaskFormModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormImpl")
 @ProviderType
 public interface KaleoTaskForm extends KaleoTaskFormModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoTaskForm, Long>
-		KALEO_TASK_FORM_ID_ACCESSOR = new Accessor<KaleoTaskForm, Long>() {
-
+	public static final Accessor<KaleoTaskForm, Long> KALEO_TASK_FORM_ID_ACCESSOR =
+		new Accessor<KaleoTaskForm, Long>() {
 			@Override
 			public Long get(KaleoTaskForm kaleoTaskForm) {
 				return kaleoTaskForm.getKaleoTaskFormId();
@@ -55,7 +51,5 @@ public interface KaleoTaskForm extends KaleoTaskFormModel, PersistedModel {
 			public Class<KaleoTaskForm> getTypeClass() {
 				return KaleoTaskForm.class;
 			}
-
 		};
-
 }

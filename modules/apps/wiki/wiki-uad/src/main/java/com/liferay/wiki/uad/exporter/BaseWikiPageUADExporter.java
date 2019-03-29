@@ -15,8 +15,11 @@
 package com.liferay.wiki.uad.exporter;
 
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
+
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
@@ -35,9 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseWikiPageUADExporter
-	extends DynamicQueryUADExporter<WikiPage> {
-
+public abstract class BaseWikiPageUADExporter extends DynamicQueryUADExporter<WikiPage> {
 	@Override
 	public Class<WikiPage> getTypeClass() {
 		return WikiPage.class;
@@ -101,5 +102,4 @@ public abstract class BaseWikiPageUADExporter
 
 	@Reference
 	protected WikiPageLocalService wikiPageLocalService;
-
 }

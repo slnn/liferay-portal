@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordVersionService;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,10 +44,8 @@ import javax.sql.DataSource;
  * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl
  * @generated
  */
-public abstract class DDLRecordVersionServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 	implements DDLRecordVersionService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,9 +57,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 *
 	 * @return the ddl record version local service
 	 */
-	public com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService
-		getDDLRecordVersionLocalService() {
-
+	public com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService getDDLRecordVersionLocalService() {
 		return ddlRecordVersionLocalService;
 	}
 
@@ -70,9 +67,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 * @param ddlRecordVersionLocalService the ddl record version local service
 	 */
 	public void setDDLRecordVersionLocalService(
-		com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService
-			ddlRecordVersionLocalService) {
-
+		com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService ddlRecordVersionLocalService) {
 		this.ddlRecordVersionLocalService = ddlRecordVersionLocalService;
 	}
 
@@ -92,7 +87,6 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 */
 	public void setDDLRecordVersionService(
 		DDLRecordVersionService ddlRecordVersionService) {
-
 		this.ddlRecordVersionService = ddlRecordVersionService;
 	}
 
@@ -112,7 +106,6 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 */
 	public void setDDLRecordVersionPersistence(
 		DDLRecordVersionPersistence ddlRecordVersionPersistence) {
-
 		this.ddlRecordVersionPersistence = ddlRecordVersionPersistence;
 	}
 
@@ -121,9 +114,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -133,9 +124,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -144,9 +133,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 *
 	 * @return the ddl record local service
 	 */
-	public com.liferay.dynamic.data.lists.service.DDLRecordLocalService
-		getDDLRecordLocalService() {
-
+	public com.liferay.dynamic.data.lists.service.DDLRecordLocalService getDDLRecordLocalService() {
 		return ddlRecordLocalService;
 	}
 
@@ -156,9 +143,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 * @param ddlRecordLocalService the ddl record local service
 	 */
 	public void setDDLRecordLocalService(
-		com.liferay.dynamic.data.lists.service.DDLRecordLocalService
-			ddlRecordLocalService) {
-
+		com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService) {
 		this.ddlRecordLocalService = ddlRecordLocalService;
 	}
 
@@ -167,9 +152,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 *
 	 * @return the ddl record remote service
 	 */
-	public com.liferay.dynamic.data.lists.service.DDLRecordService
-		getDDLRecordService() {
-
+	public com.liferay.dynamic.data.lists.service.DDLRecordService getDDLRecordService() {
 		return ddlRecordService;
 	}
 
@@ -179,9 +162,7 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 * @param ddlRecordService the ddl record remote service
 	 */
 	public void setDDLRecordService(
-		com.liferay.dynamic.data.lists.service.DDLRecordService
-			ddlRecordService) {
-
+		com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService) {
 		this.ddlRecordService = ddlRecordService;
 	}
 
@@ -201,7 +182,6 @@ public abstract class DDLRecordVersionServiceBaseImpl
 	 */
 	public void setDDLRecordPersistence(
 		DDLRecordPersistence ddlRecordPersistence) {
-
 		this.ddlRecordPersistence = ddlRecordPersistence;
 	}
 
@@ -261,8 +241,8 @@ public abstract class DDLRecordVersionServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -271,41 +251,20 @@ public abstract class DDLRecordVersionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService
-			ddlRecordVersionLocalService;
-
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService ddlRecordVersionLocalService;
 	@BeanReference(type = DDLRecordVersionService.class)
 	protected DDLRecordVersionService ddlRecordVersionService;
-
 	@BeanReference(type = DDLRecordVersionPersistence.class)
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class
-	)
-	protected com.liferay.dynamic.data.lists.service.DDLRecordLocalService
-		ddlRecordLocalService;
-
-	@BeanReference(
-		type = com.liferay.dynamic.data.lists.service.DDLRecordService.class
-	)
-	protected com.liferay.dynamic.data.lists.service.DDLRecordService
-		ddlRecordService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService;
 	@BeanReference(type = DDLRecordPersistence.class)
 	protected DDLRecordPersistence ddlRecordPersistence;
-
 	@BeanReference(type = DDLRecordFinder.class)
 	protected DDLRecordFinder ddlRecordFinder;
-
 }

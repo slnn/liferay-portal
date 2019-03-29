@@ -19,13 +19,10 @@ package com.liferay.wiki.uad.constants;
  * @generated
  */
 public class WikiUADConstants {
-
 	public static final String[] USER_ID_FIELD_NAMES_WIKI_NODE = {
-		"userId", "statusByUserId"
-	};
-
+			"userId", "statusByUserId"
+		};
 	public static final String[] USER_ID_FIELD_NAMES_WIKI_PAGE = {
-		"userId", "statusByUserId"
-	};
-
+			"userId", "statusByUserId"
+		};
 }

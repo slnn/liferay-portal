@@ -17,6 +17,7 @@ package com.liferay.asset.list.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,14 +35,11 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AssetListEntryAssetEntryRelWrapper
-	extends BaseModelWrapper<AssetListEntryAssetEntryRel>
+public class AssetListEntryAssetEntryRelWrapper extends BaseModelWrapper<AssetListEntryAssetEntryRel>
 	implements AssetListEntryAssetEntryRel,
-			   ModelWrapper<AssetListEntryAssetEntryRel> {
-
+		ModelWrapper<AssetListEntryAssetEntryRel> {
 	public AssetListEntryAssetEntryRelWrapper(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
-
 		super(assetListEntryAssetEntryRel);
 	}
 
@@ -50,8 +48,7 @@ public class AssetListEntryAssetEntryRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put(
-			"assetListEntryAssetEntryRelId",
+		attributes.put("assetListEntryAssetEntryRelId",
 			getAssetListEntryAssetEntryRelId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -76,7 +73,7 @@ public class AssetListEntryAssetEntryRelWrapper
 		}
 
 		Long assetListEntryAssetEntryRelId = (Long)attributes.get(
-			"assetListEntryAssetEntryRelId");
+				"assetListEntryAssetEntryRelId");
 
 		if (assetListEntryAssetEntryRelId != null) {
 			setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
@@ -144,10 +141,10 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the asset entry ID of this asset list entry asset entry rel.
-	 *
-	 * @return the asset entry ID of this asset list entry asset entry rel
-	 */
+	* Returns the asset entry ID of this asset list entry asset entry rel.
+	*
+	* @return the asset entry ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getAssetEntryId() {
 		return model.getAssetEntryId();
@@ -159,130 +156,130 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rel ID of this asset list entry asset entry rel.
-	 *
-	 * @return the asset list entry asset entry rel ID of this asset list entry asset entry rel
-	 */
+	* Returns the asset list entry asset entry rel ID of this asset list entry asset entry rel.
+	*
+	* @return the asset list entry asset entry rel ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getAssetListEntryAssetEntryRelId() {
 		return model.getAssetListEntryAssetEntryRelId();
 	}
 
 	/**
-	 * Returns the asset list entry ID of this asset list entry asset entry rel.
-	 *
-	 * @return the asset list entry ID of this asset list entry asset entry rel
-	 */
+	* Returns the asset list entry ID of this asset list entry asset entry rel.
+	*
+	* @return the asset list entry ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getAssetListEntryId() {
 		return model.getAssetListEntryId();
 	}
 
 	/**
-	 * Returns the company ID of this asset list entry asset entry rel.
-	 *
-	 * @return the company ID of this asset list entry asset entry rel
-	 */
+	* Returns the company ID of this asset list entry asset entry rel.
+	*
+	* @return the company ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this asset list entry asset entry rel.
-	 *
-	 * @return the create date of this asset list entry asset entry rel
-	 */
+	* Returns the create date of this asset list entry asset entry rel.
+	*
+	* @return the create date of this asset list entry asset entry rel
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this asset list entry asset entry rel.
-	 *
-	 * @return the group ID of this asset list entry asset entry rel
-	 */
+	* Returns the group ID of this asset list entry asset entry rel.
+	*
+	* @return the group ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last publish date of this asset list entry asset entry rel.
-	 *
-	 * @return the last publish date of this asset list entry asset entry rel
-	 */
+	* Returns the last publish date of this asset list entry asset entry rel.
+	*
+	* @return the last publish date of this asset list entry asset entry rel
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this asset list entry asset entry rel.
-	 *
-	 * @return the modified date of this asset list entry asset entry rel
-	 */
+	* Returns the modified date of this asset list entry asset entry rel.
+	*
+	* @return the modified date of this asset list entry asset entry rel
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the position of this asset list entry asset entry rel.
-	 *
-	 * @return the position of this asset list entry asset entry rel
-	 */
+	* Returns the position of this asset list entry asset entry rel.
+	*
+	* @return the position of this asset list entry asset entry rel
+	*/
 	@Override
 	public int getPosition() {
 		return model.getPosition();
 	}
 
 	/**
-	 * Returns the primary key of this asset list entry asset entry rel.
-	 *
-	 * @return the primary key of this asset list entry asset entry rel
-	 */
+	* Returns the primary key of this asset list entry asset entry rel.
+	*
+	* @return the primary key of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the user ID of this asset list entry asset entry rel.
-	 *
-	 * @return the user ID of this asset list entry asset entry rel
-	 */
+	* Returns the user ID of this asset list entry asset entry rel.
+	*
+	* @return the user ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this asset list entry asset entry rel.
-	 *
-	 * @return the user name of this asset list entry asset entry rel
-	 */
+	* Returns the user name of this asset list entry asset entry rel.
+	*
+	* @return the user name of this asset list entry asset entry rel
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this asset list entry asset entry rel.
-	 *
-	 * @return the user uuid of this asset list entry asset entry rel
-	 */
+	* Returns the user uuid of this asset list entry asset entry rel.
+	*
+	* @return the user uuid of this asset list entry asset entry rel
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this asset list entry asset entry rel.
-	 *
-	 * @return the uuid of this asset list entry asset entry rel
-	 */
+	* Returns the uuid of this asset list entry asset entry rel.
+	*
+	* @return the uuid of this asset list entry asset entry rel
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -294,142 +291,141 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the asset entry ID of this asset list entry asset entry rel.
-	 *
-	 * @param assetEntryId the asset entry ID of this asset list entry asset entry rel
-	 */
+	* Sets the asset entry ID of this asset list entry asset entry rel.
+	*
+	* @param assetEntryId the asset entry ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
 		model.setAssetEntryId(assetEntryId);
 	}
 
 	/**
-	 * Sets the asset list entry asset entry rel ID of this asset list entry asset entry rel.
-	 *
-	 * @param assetListEntryAssetEntryRelId the asset list entry asset entry rel ID of this asset list entry asset entry rel
-	 */
+	* Sets the asset list entry asset entry rel ID of this asset list entry asset entry rel.
+	*
+	* @param assetListEntryAssetEntryRelId the asset list entry asset entry rel ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setAssetListEntryAssetEntryRelId(
 		long assetListEntryAssetEntryRelId) {
-
 		model.setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
 	}
 
 	/**
-	 * Sets the asset list entry ID of this asset list entry asset entry rel.
-	 *
-	 * @param assetListEntryId the asset list entry ID of this asset list entry asset entry rel
-	 */
+	* Sets the asset list entry ID of this asset list entry asset entry rel.
+	*
+	* @param assetListEntryId the asset list entry ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setAssetListEntryId(long assetListEntryId) {
 		model.setAssetListEntryId(assetListEntryId);
 	}
 
 	/**
-	 * Sets the company ID of this asset list entry asset entry rel.
-	 *
-	 * @param companyId the company ID of this asset list entry asset entry rel
-	 */
+	* Sets the company ID of this asset list entry asset entry rel.
+	*
+	* @param companyId the company ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this asset list entry asset entry rel.
-	 *
-	 * @param createDate the create date of this asset list entry asset entry rel
-	 */
+	* Sets the create date of this asset list entry asset entry rel.
+	*
+	* @param createDate the create date of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this asset list entry asset entry rel.
-	 *
-	 * @param groupId the group ID of this asset list entry asset entry rel
-	 */
+	* Sets the group ID of this asset list entry asset entry rel.
+	*
+	* @param groupId the group ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last publish date of this asset list entry asset entry rel.
-	 *
-	 * @param lastPublishDate the last publish date of this asset list entry asset entry rel
-	 */
+	* Sets the last publish date of this asset list entry asset entry rel.
+	*
+	* @param lastPublishDate the last publish date of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this asset list entry asset entry rel.
-	 *
-	 * @param modifiedDate the modified date of this asset list entry asset entry rel
-	 */
+	* Sets the modified date of this asset list entry asset entry rel.
+	*
+	* @param modifiedDate the modified date of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the position of this asset list entry asset entry rel.
-	 *
-	 * @param position the position of this asset list entry asset entry rel
-	 */
+	* Sets the position of this asset list entry asset entry rel.
+	*
+	* @param position the position of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setPosition(int position) {
 		model.setPosition(position);
 	}
 
 	/**
-	 * Sets the primary key of this asset list entry asset entry rel.
-	 *
-	 * @param primaryKey the primary key of this asset list entry asset entry rel
-	 */
+	* Sets the primary key of this asset list entry asset entry rel.
+	*
+	* @param primaryKey the primary key of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this asset list entry asset entry rel.
-	 *
-	 * @param userId the user ID of this asset list entry asset entry rel
-	 */
+	* Sets the user ID of this asset list entry asset entry rel.
+	*
+	* @param userId the user ID of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this asset list entry asset entry rel.
-	 *
-	 * @param userName the user name of this asset list entry asset entry rel
-	 */
+	* Sets the user name of this asset list entry asset entry rel.
+	*
+	* @param userName the user name of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this asset list entry asset entry rel.
-	 *
-	 * @param userUuid the user uuid of this asset list entry asset entry rel
-	 */
+	* Sets the user uuid of this asset list entry asset entry rel.
+	*
+	* @param userUuid the user uuid of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this asset list entry asset entry rel.
-	 *
-	 * @param uuid the uuid of this asset list entry asset entry rel
-	 */
+	* Sets the uuid of this asset list entry asset entry rel.
+	*
+	* @param uuid the uuid of this asset list entry asset entry rel
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -443,9 +439,6 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	protected AssetListEntryAssetEntryRelWrapper wrap(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
-
-		return new AssetListEntryAssetEntryRelWrapper(
-			assetListEntryAssetEntryRel);
+		return new AssetListEntryAssetEntryRelWrapper(assetListEntryAssetEntryRel);
 	}
-
 }

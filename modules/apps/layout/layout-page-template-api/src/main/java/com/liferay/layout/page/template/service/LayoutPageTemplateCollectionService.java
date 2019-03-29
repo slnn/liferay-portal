@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -42,42 +43,30 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=layout",
-		"json.web.service.context.path=LayoutPageTemplateCollection"
-	},
-	service = LayoutPageTemplateCollectionService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=layout", "json.web.service.context.path=LayoutPageTemplateCollection"}, service = LayoutPageTemplateCollectionService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface LayoutPageTemplateCollectionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateCollectionServiceUtil} to access the layout page template collection remote service. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
+		long groupId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
-			long layoutPageTemplateCollectionId)
-		throws PortalException;
+		long layoutPageTemplateCollectionId) throws PortalException;
 
 	public void deleteLayoutPageTemplateCollections(
-			long[] layoutPageTemplateCollectionIds)
-		throws PortalException;
+		long[] layoutPageTemplateCollectionIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
-			long layoutPageTemplateCollectionId)
-		throws PortalException;
+		long layoutPageTemplateCollectionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
@@ -104,15 +93,13 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 	public int getLayoutPageTemplateCollectionsCount(long groupId, String name);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
-			long layoutPageTemplateCollectionId, String name,
-			String description)
+		long layoutPageTemplateCollectionId, String name, String description)
 		throws PortalException;
-
 }

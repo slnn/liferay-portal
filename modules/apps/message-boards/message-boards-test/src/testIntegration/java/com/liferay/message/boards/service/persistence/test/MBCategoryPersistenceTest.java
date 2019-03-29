@@ -15,11 +15,13 @@
 package com.liferay.message.boards.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBCategoryUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class MBCategoryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.message.boards.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.message.boards.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class MBCategoryPersistenceTest {
 
 		_persistence.remove(newMBCategory);
 
-		MBCategory existingMBCategory = _persistence.fetchByPrimaryKey(
-			newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory = _persistence.fetchByPrimaryKey(newMBCategory.getPrimaryKey());
 
 		Assert.assertNull(existingMBCategory);
 	}
@@ -164,60 +164,52 @@ public class MBCategoryPersistenceTest {
 
 		_mbCategories.add(_persistence.update(newMBCategory));
 
-		MBCategory existingMBCategory = _persistence.findByPrimaryKey(
-			newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingMBCategory.getUuid(), newMBCategory.getUuid());
-		Assert.assertEquals(
-			existingMBCategory.getCategoryId(), newMBCategory.getCategoryId());
-		Assert.assertEquals(
-			existingMBCategory.getGroupId(), newMBCategory.getGroupId());
-		Assert.assertEquals(
-			existingMBCategory.getCompanyId(), newMBCategory.getCompanyId());
-		Assert.assertEquals(
-			existingMBCategory.getUserId(), newMBCategory.getUserId());
-		Assert.assertEquals(
-			existingMBCategory.getUserName(), newMBCategory.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBCategory.getCreateDate()),
+		Assert.assertEquals(existingMBCategory.getUuid(),
+			newMBCategory.getUuid());
+		Assert.assertEquals(existingMBCategory.getCategoryId(),
+			newMBCategory.getCategoryId());
+		Assert.assertEquals(existingMBCategory.getGroupId(),
+			newMBCategory.getGroupId());
+		Assert.assertEquals(existingMBCategory.getCompanyId(),
+			newMBCategory.getCompanyId());
+		Assert.assertEquals(existingMBCategory.getUserId(),
+			newMBCategory.getUserId());
+		Assert.assertEquals(existingMBCategory.getUserName(),
+			newMBCategory.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getCreateDate()),
 			Time.getShortTimestamp(newMBCategory.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBCategory.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getModifiedDate()),
 			Time.getShortTimestamp(newMBCategory.getModifiedDate()));
-		Assert.assertEquals(
-			existingMBCategory.getParentCategoryId(),
+		Assert.assertEquals(existingMBCategory.getParentCategoryId(),
 			newMBCategory.getParentCategoryId());
-		Assert.assertEquals(
-			existingMBCategory.getName(), newMBCategory.getName());
-		Assert.assertEquals(
-			existingMBCategory.getDescription(),
+		Assert.assertEquals(existingMBCategory.getName(),
+			newMBCategory.getName());
+		Assert.assertEquals(existingMBCategory.getDescription(),
 			newMBCategory.getDescription());
-		Assert.assertEquals(
-			existingMBCategory.getDisplayStyle(),
+		Assert.assertEquals(existingMBCategory.getDisplayStyle(),
 			newMBCategory.getDisplayStyle());
-		Assert.assertEquals(
-			existingMBCategory.getThreadCount(),
+		Assert.assertEquals(existingMBCategory.getThreadCount(),
 			newMBCategory.getThreadCount());
-		Assert.assertEquals(
-			existingMBCategory.getMessageCount(),
+		Assert.assertEquals(existingMBCategory.getMessageCount(),
 			newMBCategory.getMessageCount());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBCategory.getLastPostDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getLastPostDate()),
 			Time.getShortTimestamp(newMBCategory.getLastPostDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBCategory.getLastPublishDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getLastPublishDate()),
 			Time.getShortTimestamp(newMBCategory.getLastPublishDate()));
-		Assert.assertEquals(
-			existingMBCategory.getStatus(), newMBCategory.getStatus());
-		Assert.assertEquals(
-			existingMBCategory.getStatusByUserId(),
+		Assert.assertEquals(existingMBCategory.getStatus(),
+			newMBCategory.getStatus());
+		Assert.assertEquals(existingMBCategory.getStatusByUserId(),
 			newMBCategory.getStatusByUserId());
-		Assert.assertEquals(
-			existingMBCategory.getStatusByUserName(),
+		Assert.assertEquals(existingMBCategory.getStatusByUserName(),
 			newMBCategory.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBCategory.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getStatusDate()),
 			Time.getShortTimestamp(newMBCategory.getStatusDate()));
 	}
 
@@ -264,101 +256,93 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_P(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_PArrayable() throws Exception {
-		_persistence.countByG_P(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByNotC_G_P() throws Exception {
-		_persistence.countByNotC_G_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByNotC_G_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByNotC_G_P(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByNotC_G_PArrayable() throws Exception {
-		_persistence.countByNotC_G_P(
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByNotC_G_P(new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByG_P_S() throws Exception {
-		_persistence.countByG_P_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_P_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_P_SArrayable() throws Exception {
-		_persistence.countByG_P_S(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_P_NotS() throws Exception {
-		_persistence.countByG_P_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_P_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_P_NotS(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_P_NotSArrayable() throws Exception {
-		_persistence.countByG_P_NotS(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_P_NotS(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByNotC_G_P_S() throws Exception {
-		_persistence.countByNotC_G_P_S(
+		_persistence.countByNotC_G_P_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByNotC_G_P_S(0L, 0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByNotC_G_P_SArrayable() throws Exception {
-		_persistence.countByNotC_G_P_S(
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByNotC_G_P_S(new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
@@ -366,8 +350,7 @@ public class MBCategoryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
-		MBCategory existingMBCategory = _persistence.findByPrimaryKey(
-			newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
 		Assert.assertEquals(existingMBCategory, newMBCategory);
 	}
@@ -381,33 +364,31 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<MBCategory> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MBCategory", "uuid", true, "categoryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentCategoryId", true, "name", true,
-			"description", true, "displayStyle", true, "threadCount", true,
-			"messageCount", true, "lastPostDate", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+		return OrderByComparatorFactoryUtil.create("MBCategory", "uuid", true,
+			"categoryId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"parentCategoryId", true, "name", true, "description", true,
+			"displayStyle", true, "threadCount", true, "messageCount", true,
+			"lastPostDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
-		MBCategory existingMBCategory = _persistence.fetchByPrimaryKey(
-			newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory = _persistence.fetchByPrimaryKey(newMBCategory.getPrimaryKey());
 
 		Assert.assertEquals(existingMBCategory, newMBCategory);
 	}
@@ -424,7 +405,6 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MBCategory newMBCategory1 = addMBCategory();
 		MBCategory newMBCategory2 = addMBCategory();
 
@@ -433,20 +413,18 @@ public class MBCategoryPersistenceTest {
 		primaryKeys.add(newMBCategory1.getPrimaryKey());
 		primaryKeys.add(newMBCategory2.getPrimaryKey());
 
-		Map<Serializable, MBCategory> mbCategories =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBCategory> mbCategories = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, mbCategories.size());
-		Assert.assertEquals(
-			newMBCategory1, mbCategories.get(newMBCategory1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMBCategory2, mbCategories.get(newMBCategory2.getPrimaryKey()));
+		Assert.assertEquals(newMBCategory1,
+			mbCategories.get(newMBCategory1.getPrimaryKey()));
+		Assert.assertEquals(newMBCategory2,
+			mbCategories.get(newMBCategory2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -456,8 +434,7 @@ public class MBCategoryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MBCategory> mbCategories =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBCategory> mbCategories = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbCategories.isEmpty());
 	}
@@ -465,7 +442,6 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MBCategory newMBCategory = addMBCategory();
 
 		long pk = RandomTestUtil.nextLong();
@@ -475,57 +451,52 @@ public class MBCategoryPersistenceTest {
 		primaryKeys.add(newMBCategory.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MBCategory> mbCategories =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBCategory> mbCategories = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbCategories.size());
-		Assert.assertEquals(
-			newMBCategory, mbCategories.get(newMBCategory.getPrimaryKey()));
+		Assert.assertEquals(newMBCategory,
+			mbCategories.get(newMBCategory.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBCategory> mbCategories =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBCategory> mbCategories = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbCategories.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMBCategory.getPrimaryKey());
 
-		Map<Serializable, MBCategory> mbCategories =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBCategory> mbCategories = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbCategories.size());
-		Assert.assertEquals(
-			newMBCategory, mbCategories.get(newMBCategory.getPrimaryKey()));
+		Assert.assertEquals(newMBCategory,
+			mbCategories.get(newMBCategory.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MBCategoryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MBCategoryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBCategory>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBCategory>() {
 				@Override
 				public void performAction(MBCategory mbCategory) {
 					Assert.assertNotNull(mbCategory);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -534,18 +505,17 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBCategory.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"categoryId", newMBCategory.getCategoryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
+				newMBCategory.getCategoryId()));
 
-		List<MBCategory> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -556,34 +526,31 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBCategory.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"categoryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
+				RandomTestUtil.nextLong()));
 
-		List<MBCategory> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBCategory.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("categoryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
 		Object newCategoryId = newMBCategory.getCategoryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"categoryId", new Object[] {newCategoryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
+				new Object[] { newCategoryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -596,15 +563,13 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBCategory.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("categoryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"categoryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -617,18 +582,14 @@ public class MBCategoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBCategory existingMBCategory = _persistence.findByPrimaryKey(
-			newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingMBCategory.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingMBCategory, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingMBCategory.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMBCategory, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingMBCategory.getUuid(),
+				ReflectionTestUtil.invoke(existingMBCategory,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingMBCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBCategory,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {
@@ -682,5 +643,4 @@ public class MBCategoryPersistenceTest {
 	private List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	private MBCategoryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

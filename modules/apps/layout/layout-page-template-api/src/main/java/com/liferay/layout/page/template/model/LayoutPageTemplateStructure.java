@@ -27,40 +27,31 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see LayoutPageTemplateStructureModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl"
-)
+@ImplementationClassName("com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl")
 @ProviderType
 public interface LayoutPageTemplateStructure
 	extends LayoutPageTemplateStructureModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutPageTemplateStructure, Long>
-		LAYOUT_PAGE_TEMPLATE_STRUCTURE_ID_ACCESSOR =
-			new Accessor<LayoutPageTemplateStructure, Long>() {
+	public static final Accessor<LayoutPageTemplateStructure, Long> LAYOUT_PAGE_TEMPLATE_STRUCTURE_ID_ACCESSOR =
+		new Accessor<LayoutPageTemplateStructure, Long>() {
+			@Override
+			public Long get(
+				LayoutPageTemplateStructure layoutPageTemplateStructure) {
+				return layoutPageTemplateStructure.getLayoutPageTemplateStructureId();
+			}
 
-				@Override
-				public Long get(
-					LayoutPageTemplateStructure layoutPageTemplateStructure) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<LayoutPageTemplateStructure> getTypeClass() {
-					return LayoutPageTemplateStructure.class;
-				}
-
-			};
-
+			@Override
+			public Class<LayoutPageTemplateStructure> getTypeClass() {
+				return LayoutPageTemplateStructure.class;
+			}
+		};
 }

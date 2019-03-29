@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface CTCollectionModel
-	extends AuditedModel, BaseModel<CTCollection>, ShardedModel,
-			WorkflowedModel {
-
+public interface CTCollectionModel extends AuditedModel, BaseModel<CTCollection>,
+	ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -345,5 +343,4 @@ public interface CTCollectionModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

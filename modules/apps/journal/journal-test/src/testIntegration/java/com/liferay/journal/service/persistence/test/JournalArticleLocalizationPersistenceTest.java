@@ -15,10 +15,12 @@
 package com.liferay.journal.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.journal.exception.NoSuchArticleLocalizationException;
 import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationUtil;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -34,6 +36,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -44,27 +55,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class JournalArticleLocalizationPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.journal.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.journal.service"));
 
 	@Before
 	public void setUp() {
@@ -77,8 +78,7 @@ public class JournalArticleLocalizationPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<JournalArticleLocalization> iterator =
-			_journalArticleLocalizations.iterator();
+		Iterator<JournalArticleLocalization> iterator = _journalArticleLocalizations.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -91,8 +91,7 @@ public class JournalArticleLocalizationPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		JournalArticleLocalization journalArticleLocalization =
-			_persistence.create(pk);
+		JournalArticleLocalization journalArticleLocalization = _persistence.create(pk);
 
 		Assert.assertNotNull(journalArticleLocalization);
 
@@ -101,14 +100,11 @@ public class JournalArticleLocalizationPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
 		_persistence.remove(newJournalArticleLocalization);
 
-		JournalArticleLocalization existingJournalArticleLocalization =
-			_persistence.fetchByPrimaryKey(
-				newJournalArticleLocalization.getPrimaryKey());
+		JournalArticleLocalization existingJournalArticleLocalization = _persistence.fetchByPrimaryKey(newJournalArticleLocalization.getPrimaryKey());
 
 		Assert.assertNull(existingJournalArticleLocalization);
 	}
@@ -122,8 +118,7 @@ public class JournalArticleLocalizationPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		JournalArticleLocalization newJournalArticleLocalization =
-			_persistence.create(pk);
+		JournalArticleLocalization newJournalArticleLocalization = _persistence.create(pk);
 
 		newJournalArticleLocalization.setCompanyId(RandomTestUtil.nextLong());
 
@@ -131,36 +126,26 @@ public class JournalArticleLocalizationPersistenceTest {
 
 		newJournalArticleLocalization.setTitle(RandomTestUtil.randomString());
 
-		newJournalArticleLocalization.setDescription(
-			RandomTestUtil.randomString());
+		newJournalArticleLocalization.setDescription(RandomTestUtil.randomString());
 
-		newJournalArticleLocalization.setLanguageId(
-			RandomTestUtil.randomString());
+		newJournalArticleLocalization.setLanguageId(RandomTestUtil.randomString());
 
-		_journalArticleLocalizations.add(
-			_persistence.update(newJournalArticleLocalization));
+		_journalArticleLocalizations.add(_persistence.update(
+				newJournalArticleLocalization));
 
-		JournalArticleLocalization existingJournalArticleLocalization =
-			_persistence.findByPrimaryKey(
-				newJournalArticleLocalization.getPrimaryKey());
+		JournalArticleLocalization existingJournalArticleLocalization = _persistence.findByPrimaryKey(newJournalArticleLocalization.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingJournalArticleLocalization.getArticleLocalizationId(),
+		Assert.assertEquals(existingJournalArticleLocalization.getArticleLocalizationId(),
 			newJournalArticleLocalization.getArticleLocalizationId());
-		Assert.assertEquals(
-			existingJournalArticleLocalization.getCompanyId(),
+		Assert.assertEquals(existingJournalArticleLocalization.getCompanyId(),
 			newJournalArticleLocalization.getCompanyId());
-		Assert.assertEquals(
-			existingJournalArticleLocalization.getArticlePK(),
+		Assert.assertEquals(existingJournalArticleLocalization.getArticlePK(),
 			newJournalArticleLocalization.getArticlePK());
-		Assert.assertEquals(
-			existingJournalArticleLocalization.getTitle(),
+		Assert.assertEquals(existingJournalArticleLocalization.getTitle(),
 			newJournalArticleLocalization.getTitle());
-		Assert.assertEquals(
-			existingJournalArticleLocalization.getDescription(),
+		Assert.assertEquals(existingJournalArticleLocalization.getDescription(),
 			newJournalArticleLocalization.getDescription());
-		Assert.assertEquals(
-			existingJournalArticleLocalization.getLanguageId(),
+		Assert.assertEquals(existingJournalArticleLocalization.getLanguageId(),
 			newJournalArticleLocalization.getLanguageId());
 	}
 
@@ -182,15 +167,12 @@ public class JournalArticleLocalizationPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
-		JournalArticleLocalization existingJournalArticleLocalization =
-			_persistence.findByPrimaryKey(
-				newJournalArticleLocalization.getPrimaryKey());
+		JournalArticleLocalization existingJournalArticleLocalization = _persistence.findByPrimaryKey(newJournalArticleLocalization.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingJournalArticleLocalization, newJournalArticleLocalization);
+		Assert.assertEquals(existingJournalArticleLocalization,
+			newJournalArticleLocalization);
 	}
 
 	@Test(expected = NoSuchArticleLocalizationException.class)
@@ -202,38 +184,31 @@ public class JournalArticleLocalizationPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
-	protected OrderByComparator<JournalArticleLocalization>
-		getOrderByComparator() {
-
-		return OrderByComparatorFactoryUtil.create(
-			"JournalArticleLocalization", "articleLocalizationId", true,
-			"companyId", true, "articlePK", true, "title", true, "description",
-			true, "languageId", true);
+	protected OrderByComparator<JournalArticleLocalization> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("JournalArticleLocalization",
+			"articleLocalizationId", true, "companyId", true, "articlePK",
+			true, "title", true, "description", true, "languageId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
-		JournalArticleLocalization existingJournalArticleLocalization =
-			_persistence.fetchByPrimaryKey(
-				newJournalArticleLocalization.getPrimaryKey());
+		JournalArticleLocalization existingJournalArticleLocalization = _persistence.fetchByPrimaryKey(newJournalArticleLocalization.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingJournalArticleLocalization, newJournalArticleLocalization);
+		Assert.assertEquals(existingJournalArticleLocalization,
+			newJournalArticleLocalization);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		JournalArticleLocalization missingJournalArticleLocalization =
-			_persistence.fetchByPrimaryKey(pk);
+		JournalArticleLocalization missingJournalArticleLocalization = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingJournalArticleLocalization);
 	}
@@ -241,28 +216,22 @@ public class JournalArticleLocalizationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		JournalArticleLocalization newJournalArticleLocalization1 =
-			addJournalArticleLocalization();
-		JournalArticleLocalization newJournalArticleLocalization2 =
-			addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization1 = addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization2 = addJournalArticleLocalization();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newJournalArticleLocalization1.getPrimaryKey());
 		primaryKeys.add(newJournalArticleLocalization2.getPrimaryKey());
 
-		Map<Serializable, JournalArticleLocalization>
-			journalArticleLocalizations = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, JournalArticleLocalization> journalArticleLocalizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, journalArticleLocalizations.size());
-		Assert.assertEquals(
-			newJournalArticleLocalization1,
+		Assert.assertEquals(newJournalArticleLocalization1,
 			journalArticleLocalizations.get(
 				newJournalArticleLocalization1.getPrimaryKey()));
-		Assert.assertEquals(
-			newJournalArticleLocalization2,
+		Assert.assertEquals(newJournalArticleLocalization2,
 			journalArticleLocalizations.get(
 				newJournalArticleLocalization2.getPrimaryKey()));
 	}
@@ -270,7 +239,6 @@ public class JournalArticleLocalizationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -280,9 +248,8 @@ public class JournalArticleLocalizationPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, JournalArticleLocalization>
-			journalArticleLocalizations = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, JournalArticleLocalization> journalArticleLocalizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(journalArticleLocalizations.isEmpty());
 	}
@@ -290,9 +257,7 @@ public class JournalArticleLocalizationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -301,106 +266,93 @@ public class JournalArticleLocalizationPersistenceTest {
 		primaryKeys.add(newJournalArticleLocalization.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, JournalArticleLocalization>
-			journalArticleLocalizations = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, JournalArticleLocalization> journalArticleLocalizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, journalArticleLocalizations.size());
-		Assert.assertEquals(
-			newJournalArticleLocalization,
+		Assert.assertEquals(newJournalArticleLocalization,
 			journalArticleLocalizations.get(
 				newJournalArticleLocalization.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalArticleLocalization>
-			journalArticleLocalizations = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, JournalArticleLocalization> journalArticleLocalizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(journalArticleLocalizations.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newJournalArticleLocalization.getPrimaryKey());
 
-		Map<Serializable, JournalArticleLocalization>
-			journalArticleLocalizations = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, JournalArticleLocalization> journalArticleLocalizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, journalArticleLocalizations.size());
-		Assert.assertEquals(
-			newJournalArticleLocalization,
+		Assert.assertEquals(newJournalArticleLocalization,
 			journalArticleLocalizations.get(
 				newJournalArticleLocalization.getPrimaryKey()));
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleLocalization.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleLocalization.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"articleLocalizationId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleLocalizationId",
 				newJournalArticleLocalization.getArticleLocalizationId()));
 
-		List<JournalArticleLocalization> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<JournalArticleLocalization> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		JournalArticleLocalization existingJournalArticleLocalization =
-			result.get(0);
+		JournalArticleLocalization existingJournalArticleLocalization = result.get(0);
 
-		Assert.assertEquals(
-			existingJournalArticleLocalization, newJournalArticleLocalization);
+		Assert.assertEquals(existingJournalArticleLocalization,
+			newJournalArticleLocalization);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleLocalization.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleLocalization.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"articleLocalizationId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleLocalizationId",
+				RandomTestUtil.nextLong()));
 
-		List<JournalArticleLocalization> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<JournalArticleLocalization> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleLocalization.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleLocalization.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("articleLocalizationId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"articleLocalizationId"));
 
-		Object newArticleLocalizationId =
-			newJournalArticleLocalization.getArticleLocalizationId();
+		Object newArticleLocalizationId = newJournalArticleLocalization.getArticleLocalizationId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"articleLocalizationId",
-				new Object[] {newArticleLocalizationId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("articleLocalizationId",
+				new Object[] { newArticleLocalizationId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -408,22 +360,20 @@ public class JournalArticleLocalizationPersistenceTest {
 
 		Object existingArticleLocalizationId = result.get(0);
 
-		Assert.assertEquals(
-			existingArticleLocalizationId, newArticleLocalizationId);
+		Assert.assertEquals(existingArticleLocalizationId,
+			newArticleLocalizationId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			JournalArticleLocalization.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleLocalization.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("articleLocalizationId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"articleLocalizationId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"articleLocalizationId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("articleLocalizationId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -432,35 +382,28 @@ public class JournalArticleLocalizationPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		JournalArticleLocalization newJournalArticleLocalization =
-			addJournalArticleLocalization();
+		JournalArticleLocalization newJournalArticleLocalization = addJournalArticleLocalization();
 
 		_persistence.clearCache();
 
-		JournalArticleLocalization existingJournalArticleLocalization =
-			_persistence.findByPrimaryKey(
-				newJournalArticleLocalization.getPrimaryKey());
+		JournalArticleLocalization existingJournalArticleLocalization = _persistence.findByPrimaryKey(newJournalArticleLocalization.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingJournalArticleLocalization.getArticlePK()),
+		Assert.assertEquals(Long.valueOf(
+				existingJournalArticleLocalization.getArticlePK()),
 			ReflectionTestUtil.<Long>invoke(
 				existingJournalArticleLocalization, "getOriginalArticlePK",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleLocalization.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					existingJournalArticleLocalization, "getOriginalLanguageId",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingJournalArticleLocalization,
+					"getOriginalLanguageId", new Class<?>[0])));
 	}
 
 	protected JournalArticleLocalization addJournalArticleLocalization()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
-		JournalArticleLocalization journalArticleLocalization =
-			_persistence.create(pk);
+		JournalArticleLocalization journalArticleLocalization = _persistence.create(pk);
 
 		journalArticleLocalization.setCompanyId(RandomTestUtil.nextLong());
 
@@ -468,20 +411,17 @@ public class JournalArticleLocalizationPersistenceTest {
 
 		journalArticleLocalization.setTitle(RandomTestUtil.randomString());
 
-		journalArticleLocalization.setDescription(
-			RandomTestUtil.randomString());
+		journalArticleLocalization.setDescription(RandomTestUtil.randomString());
 
 		journalArticleLocalization.setLanguageId(RandomTestUtil.randomString());
 
-		_journalArticleLocalizations.add(
-			_persistence.update(journalArticleLocalization));
+		_journalArticleLocalizations.add(_persistence.update(
+				journalArticleLocalization));
 
 		return journalArticleLocalization;
 	}
 
-	private List<JournalArticleLocalization> _journalArticleLocalizations =
-		new ArrayList<JournalArticleLocalization>();
+	private List<JournalArticleLocalization> _journalArticleLocalizations = new ArrayList<JournalArticleLocalization>();
 	private JournalArticleLocalizationPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

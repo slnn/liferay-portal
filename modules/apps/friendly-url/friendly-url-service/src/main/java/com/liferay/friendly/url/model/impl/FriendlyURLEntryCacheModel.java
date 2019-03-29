@@ -17,8 +17,10 @@ package com.liferay.friendly.url.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 
@@ -36,9 +38,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class FriendlyURLEntryCacheModel
-	implements CacheModel<FriendlyURLEntry>, Externalizable, MVCCModel {
-
+public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +50,10 @@ public class FriendlyURLEntryCacheModel
 			return false;
 		}
 
-		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel =
-			(FriendlyURLEntryCacheModel)obj;
+		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel = (FriendlyURLEntryCacheModel)obj;
 
-		if ((friendlyURLEntryId ==
-				friendlyURLEntryCacheModel.friendlyURLEntryId) &&
-			(mvccVersion == friendlyURLEntryCacheModel.mvccVersion)) {
-
+		if ((friendlyURLEntryId == friendlyURLEntryCacheModel.friendlyURLEntryId) &&
+				(mvccVersion == friendlyURLEntryCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -174,7 +172,8 @@ public class FriendlyURLEntryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -214,5 +213,4 @@ public class FriendlyURLEntryCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-
 }

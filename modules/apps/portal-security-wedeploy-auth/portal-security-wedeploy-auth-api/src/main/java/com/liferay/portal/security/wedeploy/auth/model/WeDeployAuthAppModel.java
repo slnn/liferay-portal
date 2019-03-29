@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WeDeployAuthAppModel
-	extends AuditedModel, BaseModel<WeDeployAuthApp>, ShardedModel {
-
+public interface WeDeployAuthAppModel extends AuditedModel,
+	BaseModel<WeDeployAuthApp>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -228,5 +227,4 @@ public interface WeDeployAuthAppModel
 	 * @param clientSecret the client secret of this we deploy auth app
 	 */
 	public void setClientSecret(String clientSecret);
-
 }

@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class KaleoTransitionSoap implements Serializable {
-
 	public static KaleoTransitionSoap toSoapModel(KaleoTransition model) {
 		KaleoTransitionSoap soapModel = new KaleoTransitionSoap();
 
@@ -42,8 +41,7 @@ public class KaleoTransitionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setKaleoDefinitionVersionId(
-			model.getKaleoDefinitionVersionId());
+		soapModel.setKaleoDefinitionVersionId(model.getKaleoDefinitionVersionId());
 		soapModel.setKaleoNodeId(model.getKaleoNodeId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
@@ -57,8 +55,7 @@ public class KaleoTransitionSoap implements Serializable {
 	}
 
 	public static KaleoTransitionSoap[] toSoapModels(KaleoTransition[] models) {
-		KaleoTransitionSoap[] soapModels =
-			new KaleoTransitionSoap[models.length];
+		KaleoTransitionSoap[] soapModels = new KaleoTransitionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -69,12 +66,10 @@ public class KaleoTransitionSoap implements Serializable {
 
 	public static KaleoTransitionSoap[][] toSoapModels(
 		KaleoTransition[][] models) {
-
 		KaleoTransitionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new KaleoTransitionSoap[models.length][models[0].length];
+			soapModels = new KaleoTransitionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new KaleoTransitionSoap[0][0];
@@ -89,9 +84,7 @@ public class KaleoTransitionSoap implements Serializable {
 
 	public static KaleoTransitionSoap[] toSoapModels(
 		List<KaleoTransition> models) {
-
-		List<KaleoTransitionSoap> soapModels =
-			new ArrayList<KaleoTransitionSoap>(models.size());
+		List<KaleoTransitionSoap> soapModels = new ArrayList<KaleoTransitionSoap>(models.size());
 
 		for (KaleoTransition model : models) {
 			soapModels.add(toSoapModel(model));
@@ -268,5 +261,4 @@ public class KaleoTransitionSoap implements Serializable {
 	private long _targetKaleoNodeId;
 	private String _targetKaleoNodeName;
 	private boolean _defaultTransition;
-
 }

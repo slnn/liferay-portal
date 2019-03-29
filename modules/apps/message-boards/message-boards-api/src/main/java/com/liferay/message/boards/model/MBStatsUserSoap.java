@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class MBStatsUserSoap implements Serializable {
-
 	public static MBStatsUserSoap toSoapModel(MBStatsUser model) {
 		MBStatsUserSoap soapModel = new MBStatsUserSoap();
 
@@ -72,8 +71,7 @@ public class MBStatsUserSoap implements Serializable {
 	}
 
 	public static MBStatsUserSoap[] toSoapModels(List<MBStatsUser> models) {
-		List<MBStatsUserSoap> soapModels = new ArrayList<MBStatsUserSoap>(
-			models.size());
+		List<MBStatsUserSoap> soapModels = new ArrayList<MBStatsUserSoap>(models.size());
 
 		for (MBStatsUser model : models) {
 			soapModels.add(toSoapModel(model));
@@ -147,5 +145,4 @@ public class MBStatsUserSoap implements Serializable {
 	private long _userId;
 	private int _messageCount;
 	private Date _lastPostDate;
-
 }

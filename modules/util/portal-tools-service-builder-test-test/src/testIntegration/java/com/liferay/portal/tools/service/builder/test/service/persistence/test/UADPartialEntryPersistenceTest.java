@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -36,6 +37,15 @@ import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLoca
 import com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -45,27 +55,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class UADPartialEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.tools.service.builder.test.service"));
 
 	@Before
@@ -105,8 +104,7 @@ public class UADPartialEntryPersistenceTest {
 
 		_persistence.remove(newUADPartialEntry);
 
-		UADPartialEntry existingUADPartialEntry =
-			_persistence.fetchByPrimaryKey(newUADPartialEntry.getPrimaryKey());
+		UADPartialEntry existingUADPartialEntry = _persistence.fetchByPrimaryKey(newUADPartialEntry.getPrimaryKey());
 
 		Assert.assertNull(existingUADPartialEntry);
 	}
@@ -130,20 +128,15 @@ public class UADPartialEntryPersistenceTest {
 
 		_uadPartialEntries.add(_persistence.update(newUADPartialEntry));
 
-		UADPartialEntry existingUADPartialEntry = _persistence.findByPrimaryKey(
-			newUADPartialEntry.getPrimaryKey());
+		UADPartialEntry existingUADPartialEntry = _persistence.findByPrimaryKey(newUADPartialEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingUADPartialEntry.getUadPartialEntryId(),
+		Assert.assertEquals(existingUADPartialEntry.getUadPartialEntryId(),
 			newUADPartialEntry.getUadPartialEntryId());
-		Assert.assertEquals(
-			existingUADPartialEntry.getUserId(),
+		Assert.assertEquals(existingUADPartialEntry.getUserId(),
 			newUADPartialEntry.getUserId());
-		Assert.assertEquals(
-			existingUADPartialEntry.getUserName(),
+		Assert.assertEquals(existingUADPartialEntry.getUserName(),
 			newUADPartialEntry.getUserName());
-		Assert.assertEquals(
-			existingUADPartialEntry.getMessage(),
+		Assert.assertEquals(existingUADPartialEntry.getMessage(),
 			newUADPartialEntry.getMessage());
 	}
 
@@ -151,8 +144,7 @@ public class UADPartialEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UADPartialEntry newUADPartialEntry = addUADPartialEntry();
 
-		UADPartialEntry existingUADPartialEntry = _persistence.findByPrimaryKey(
-			newUADPartialEntry.getPrimaryKey());
+		UADPartialEntry existingUADPartialEntry = _persistence.findByPrimaryKey(newUADPartialEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingUADPartialEntry, newUADPartialEntry);
 	}
@@ -166,22 +158,21 @@ public class UADPartialEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<UADPartialEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"UADPartialEntry", "uadPartialEntryId", true, "userId", true,
-			"userName", true, "message", true);
+		return OrderByComparatorFactoryUtil.create("UADPartialEntry",
+			"uadPartialEntryId", true, "userId", true, "userName", true,
+			"message", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UADPartialEntry newUADPartialEntry = addUADPartialEntry();
 
-		UADPartialEntry existingUADPartialEntry =
-			_persistence.fetchByPrimaryKey(newUADPartialEntry.getPrimaryKey());
+		UADPartialEntry existingUADPartialEntry = _persistence.fetchByPrimaryKey(newUADPartialEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingUADPartialEntry, newUADPartialEntry);
 	}
@@ -190,8 +181,7 @@ public class UADPartialEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		UADPartialEntry missingUADPartialEntry = _persistence.fetchByPrimaryKey(
-			pk);
+		UADPartialEntry missingUADPartialEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingUADPartialEntry);
 	}
@@ -199,7 +189,6 @@ public class UADPartialEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		UADPartialEntry newUADPartialEntry1 = addUADPartialEntry();
 		UADPartialEntry newUADPartialEntry2 = addUADPartialEntry();
 
@@ -208,22 +197,18 @@ public class UADPartialEntryPersistenceTest {
 		primaryKeys.add(newUADPartialEntry1.getPrimaryKey());
 		primaryKeys.add(newUADPartialEntry2.getPrimaryKey());
 
-		Map<Serializable, UADPartialEntry> uadPartialEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UADPartialEntry> uadPartialEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, uadPartialEntries.size());
-		Assert.assertEquals(
-			newUADPartialEntry1,
+		Assert.assertEquals(newUADPartialEntry1,
 			uadPartialEntries.get(newUADPartialEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newUADPartialEntry2,
+		Assert.assertEquals(newUADPartialEntry2,
 			uadPartialEntries.get(newUADPartialEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -233,8 +218,7 @@ public class UADPartialEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, UADPartialEntry> uadPartialEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UADPartialEntry> uadPartialEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(uadPartialEntries.isEmpty());
 	}
@@ -242,7 +226,6 @@ public class UADPartialEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		UADPartialEntry newUADPartialEntry = addUADPartialEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -252,39 +235,36 @@ public class UADPartialEntryPersistenceTest {
 		primaryKeys.add(newUADPartialEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, UADPartialEntry> uadPartialEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UADPartialEntry> uadPartialEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, uadPartialEntries.size());
-		Assert.assertEquals(
-			newUADPartialEntry,
+		Assert.assertEquals(newUADPartialEntry,
 			uadPartialEntries.get(newUADPartialEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UADPartialEntry> uadPartialEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UADPartialEntry> uadPartialEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(uadPartialEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		UADPartialEntry newUADPartialEntry = addUADPartialEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUADPartialEntry.getPrimaryKey());
 
-		Map<Serializable, UADPartialEntry> uadPartialEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UADPartialEntry> uadPartialEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, uadPartialEntries.size());
-		Assert.assertEquals(
-			newUADPartialEntry,
+		Assert.assertEquals(newUADPartialEntry,
 			uadPartialEntries.get(newUADPartialEntry.getPrimaryKey()));
 	}
 
@@ -292,19 +272,15 @@ public class UADPartialEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			UADPartialEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = UADPartialEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<UADPartialEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UADPartialEntry>() {
 				@Override
 				public void performAction(UADPartialEntry uadPartialEntry) {
 					Assert.assertNotNull(uadPartialEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -313,19 +289,17 @@ public class UADPartialEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		UADPartialEntry newUADPartialEntry = addUADPartialEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UADPartialEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UADPartialEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"uadPartialEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("uadPartialEntryId",
 				newUADPartialEntry.getUadPartialEntryId()));
 
-		List<UADPartialEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<UADPartialEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -336,34 +310,32 @@ public class UADPartialEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UADPartialEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UADPartialEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"uadPartialEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("uadPartialEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<UADPartialEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<UADPartialEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		UADPartialEntry newUADPartialEntry = addUADPartialEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UADPartialEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UADPartialEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("uadPartialEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"uadPartialEntryId"));
 
 		Object newUadPartialEntryId = newUADPartialEntry.getUadPartialEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"uadPartialEntryId", new Object[] {newUadPartialEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("uadPartialEntryId",
+				new Object[] { newUadPartialEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -376,15 +348,14 @@ public class UADPartialEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UADPartialEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UADPartialEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("uadPartialEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"uadPartialEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"uadPartialEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("uadPartialEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -407,9 +378,7 @@ public class UADPartialEntryPersistenceTest {
 		return uadPartialEntry;
 	}
 
-	private List<UADPartialEntry> _uadPartialEntries =
-		new ArrayList<UADPartialEntry>();
+	private List<UADPartialEntry> _uadPartialEntries = new ArrayList<UADPartialEntry>();
 	private UADPartialEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

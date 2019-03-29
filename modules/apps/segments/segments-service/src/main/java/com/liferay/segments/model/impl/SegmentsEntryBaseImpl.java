@@ -32,9 +32,8 @@ import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SegmentsEntryBaseImpl
-	extends SegmentsEntryModelImpl implements SegmentsEntry {
-
+public abstract class SegmentsEntryBaseImpl extends SegmentsEntryModelImpl
+	implements SegmentsEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class SegmentsEntryBaseImpl
 			SegmentsEntryLocalServiceUtil.updateSegmentsEntry(this);
 		}
 	}
-
 }

@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MBMailingListModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.message.boards.model.impl.MBMailingListImpl"
-)
+@ImplementationClassName("com.liferay.message.boards.model.impl.MBMailingListImpl")
 @ProviderType
 public interface MBMailingList extends MBMailingListModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBMailingListImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MBMailingList, Long> MAILING_LIST_ID_ACCESSOR =
-		new Accessor<MBMailingList, Long>() {
-
+	public static final Accessor<MBMailingList, Long> MAILING_LIST_ID_ACCESSOR = new Accessor<MBMailingList, Long>() {
 			@Override
 			public Long get(MBMailingList mbMailingList) {
 				return mbMailingList.getMailingListId();
@@ -55,7 +50,5 @@ public interface MBMailingList extends MBMailingListModel, PersistedModel {
 			public Class<MBMailingList> getTypeClass() {
 				return MBMailingList.class;
 			}
-
 		};
-
 }

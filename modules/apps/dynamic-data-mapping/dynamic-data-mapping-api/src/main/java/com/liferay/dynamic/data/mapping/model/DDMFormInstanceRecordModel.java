@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DDMFormInstanceRecordModel
-	extends BaseModel<DDMFormInstanceRecord>, ShardedModel, StagedGroupedModel {
-
+public interface DDMFormInstanceRecordModel extends BaseModel<DDMFormInstanceRecord>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -318,5 +317,4 @@ public interface DDMFormInstanceRecordModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

@@ -36,20 +36,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=sbtest",
-		"json.web.service.context.path=UADPartialEntry"
-	},
-	service = UADPartialEntryService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=sbtest", "json.web.service.context.path=UADPartialEntry"}, service = UADPartialEntryService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface UADPartialEntryService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,10 +49,9 @@ public interface UADPartialEntryService extends BaseService {
 	 */
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

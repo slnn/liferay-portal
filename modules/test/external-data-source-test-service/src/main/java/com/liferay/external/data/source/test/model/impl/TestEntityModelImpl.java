@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.model.TestEntityModel;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -52,58 +54,41 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class TestEntityModelImpl
-	extends BaseModelImpl<TestEntity> implements TestEntityModel {
-
+public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
+	implements TestEntityModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a test entity model instance should use the <code>TestEntity</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "TestEntity";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"id_", Types.BIGINT}, {"data_", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "id_", Types.BIGINT },
+			{ "data_", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("id_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("data_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table TestEntity (id_ LONG not null primary key,data_ VARCHAR(75) null)";
-
+	public static final String TABLE_SQL_CREATE = "create table TestEntity (id_ LONG not null primary key,data_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table TestEntity";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY testEntity.id ASC";
-
 	public static final String ORDER_BY_SQL = " ORDER BY TestEntity.id_ ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.external.data.source.test.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.external.data.source.test.model.TestEntity"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.external.data.source.test.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.external.data.source.test.model.TestEntity"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.external.data.source.test.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.external.data.source.test.model.TestEntity"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.external.data.source.test.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.external.data.source.test.model.TestEntity"),
+			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = false;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.external.data.source.test.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.external.data.source.test.model.TestEntity"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.external.data.source.test.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.external.data.source.test.model.TestEntity"));
 
 	public TestEntityModelImpl() {
 	}
@@ -142,18 +127,14 @@ public class TestEntityModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<TestEntity, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<TestEntity, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<TestEntity, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((TestEntity)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((TestEntity)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -164,44 +145,35 @@ public class TestEntityModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<TestEntity, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<TestEntity, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<TestEntity, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<TestEntity, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(TestEntity)this, entry.getValue());
+				attributeSetterBiConsumer.accept((TestEntity)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<TestEntity, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<TestEntity, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<TestEntity, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<TestEntity, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<TestEntity, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<TestEntity, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<TestEntity, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<TestEntity, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<TestEntity, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<TestEntity, Object>>();
-		Map<String, BiConsumer<TestEntity, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<TestEntity, ?>>();
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<TestEntity, Object>>();
+		Map<String, BiConsumer<TestEntity, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<TestEntity, ?>>();
+
 
 		attributeGetterFunctions.put(
 			"id",
@@ -244,10 +216,9 @@ public class TestEntityModelImpl
 
 			});
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -277,8 +248,8 @@ public class TestEntityModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, TestEntity.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			TestEntity.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -291,9 +262,8 @@ public class TestEntityModelImpl
 	@Override
 	public TestEntity toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TestEntity)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (TestEntity)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -386,20 +356,16 @@ public class TestEntityModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<TestEntity, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<TestEntity, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<TestEntity, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -418,22 +384,18 @@ public class TestEntityModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<TestEntity, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<TestEntity, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<TestEntity, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -447,14 +409,11 @@ public class TestEntityModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TestEntity.class.getClassLoader();
+	private static final ClassLoader _classLoader = TestEntity.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TestEntity.class, ModelWrapper.class
-	};
-
+			TestEntity.class, ModelWrapper.class
+		};
 	private long _id;
 	private String _data;
 	private TestEntity _escapedModel;
-
 }

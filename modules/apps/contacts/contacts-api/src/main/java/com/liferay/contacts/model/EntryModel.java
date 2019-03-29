@@ -35,9 +35,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface EntryModel
-	extends BaseModel<Entry>, GroupedModel, ShardedModel {
-
+public interface EntryModel extends BaseModel<Entry>, GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -229,5 +227,4 @@ public interface EntryModel
 	 * @param comments the comments of this entry
 	 */
 	public void setComments(String comments);
-
 }

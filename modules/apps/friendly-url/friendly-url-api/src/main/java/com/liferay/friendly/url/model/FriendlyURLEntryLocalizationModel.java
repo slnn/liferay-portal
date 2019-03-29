@@ -34,10 +34,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface FriendlyURLEntryLocalizationModel
-	extends AttachedModel, BaseModel<FriendlyURLEntryLocalization>, MVCCModel,
-			ShardedModel {
-
+public interface FriendlyURLEntryLocalizationModel extends AttachedModel,
+	BaseModel<FriendlyURLEntryLocalization>, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -204,5 +202,4 @@ public interface FriendlyURLEntryLocalizationModel
 	 */
 	@Override
 	public void setClassPK(long classPK);
-
 }

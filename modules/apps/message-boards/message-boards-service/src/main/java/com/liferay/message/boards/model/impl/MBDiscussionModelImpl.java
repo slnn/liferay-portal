@@ -18,10 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBDiscussionModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,27 +63,29 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class MBDiscussionModelImpl
-	extends BaseModelImpl<MBDiscussion> implements MBDiscussionModel {
-
+public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
+	implements MBDiscussionModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards discussion model instance should use the <code>MBDiscussion</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MBDiscussion";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"discussionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"threadId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "discussionId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "threadId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -96,55 +102,31 @@ public class MBDiscussionModelImpl
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY mbDiscussion.discussionId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MBDiscussion.discussionId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY mbDiscussion.discussionId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBDiscussion.discussionId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBDiscussion"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBDiscussion"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBDiscussion"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBDiscussion"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBDiscussion"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBDiscussion"),
+			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-
 	public static final long THREADID_COLUMN_BITMASK = 16L;
-
 	public static final long UUID_COLUMN_BITMASK = 32L;
-
 	public static final long DISCUSSIONID_COLUMN_BITMASK = 64L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.message.boards.model.MBDiscussion"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBDiscussion"));
 
 	public MBDiscussionModelImpl() {
 	}
@@ -183,18 +165,13 @@ public class MBDiscussionModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MBDiscussion, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBDiscussion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBDiscussion, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBDiscussion, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((MBDiscussion)this));
 		}
 
@@ -206,100 +183,65 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MBDiscussion, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MBDiscussion, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MBDiscussion, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MBDiscussion, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MBDiscussion)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MBDiscussion)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MBDiscussion, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MBDiscussion, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MBDiscussion, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MBDiscussion, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBDiscussion, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBDiscussion, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MBDiscussion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBDiscussion, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MBDiscussion, Object>>();
-		Map<String, BiConsumer<MBDiscussion, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MBDiscussion, ?>>();
+		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBDiscussion, Object>>();
+		Map<String, BiConsumer<MBDiscussion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBDiscussion, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", MBDiscussion::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<MBDiscussion, String>)MBDiscussion::setUuid);
-		attributeGetterFunctions.put(
-			"discussionId", MBDiscussion::getDiscussionId);
-		attributeSetterBiConsumers.put(
-			"discussionId",
-			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setDiscussionId);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBDiscussion, String>)MBDiscussion::setUuid);
+		attributeGetterFunctions.put("discussionId", MBDiscussion::getDiscussionId);
+		attributeSetterBiConsumers.put("discussionId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setDiscussionId);
 		attributeGetterFunctions.put("groupId", MBDiscussion::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setGroupId);
 		attributeGetterFunctions.put("companyId", MBDiscussion::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setCompanyId);
 		attributeGetterFunctions.put("userId", MBDiscussion::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setUserId);
 		attributeGetterFunctions.put("userName", MBDiscussion::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<MBDiscussion, String>)MBDiscussion::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBDiscussion, String>)MBDiscussion::setUserName);
 		attributeGetterFunctions.put("createDate", MBDiscussion::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MBDiscussion, Date>)MBDiscussion::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MBDiscussion::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MBDiscussion, Date>)MBDiscussion::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", MBDiscussion::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setClassNameId);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBDiscussion, Date>)MBDiscussion::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBDiscussion::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBDiscussion, Date>)MBDiscussion::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", MBDiscussion::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setClassNameId);
 		attributeGetterFunctions.put("classPK", MBDiscussion::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setClassPK);
 		attributeGetterFunctions.put("threadId", MBDiscussion::getThreadId);
-		attributeSetterBiConsumers.put(
-			"threadId",
-			(BiConsumer<MBDiscussion, Long>)MBDiscussion::setThreadId);
-		attributeGetterFunctions.put(
-			"lastPublishDate", MBDiscussion::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<MBDiscussion, Date>)MBDiscussion::setLastPublishDate);
+		attributeSetterBiConsumers.put("threadId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setThreadId);
+		attributeGetterFunctions.put("lastPublishDate", MBDiscussion::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MBDiscussion, Date>)MBDiscussion::setLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -546,9 +488,8 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(MBDiscussion.class.getName()),
-			getClassNameId());
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MBDiscussion.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -557,8 +498,8 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MBDiscussion.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBDiscussion.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -571,9 +512,8 @@ public class MBDiscussionModelImpl
 	@Override
 	public MBDiscussion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBDiscussion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MBDiscussion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -663,15 +603,13 @@ public class MBDiscussionModelImpl
 
 		mbDiscussionModelImpl._setOriginalGroupId = false;
 
-		mbDiscussionModelImpl._originalCompanyId =
-			mbDiscussionModelImpl._companyId;
+		mbDiscussionModelImpl._originalCompanyId = mbDiscussionModelImpl._companyId;
 
 		mbDiscussionModelImpl._setOriginalCompanyId = false;
 
 		mbDiscussionModelImpl._setModifiedDate = false;
 
-		mbDiscussionModelImpl._originalClassNameId =
-			mbDiscussionModelImpl._classNameId;
+		mbDiscussionModelImpl._originalClassNameId = mbDiscussionModelImpl._classNameId;
 
 		mbDiscussionModelImpl._setOriginalClassNameId = false;
 
@@ -679,8 +617,7 @@ public class MBDiscussionModelImpl
 
 		mbDiscussionModelImpl._setOriginalClassPK = false;
 
-		mbDiscussionModelImpl._originalThreadId =
-			mbDiscussionModelImpl._threadId;
+		mbDiscussionModelImpl._originalThreadId = mbDiscussionModelImpl._threadId;
 
 		mbDiscussionModelImpl._setOriginalThreadId = false;
 
@@ -689,8 +626,7 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public CacheModel<MBDiscussion> toCacheModel() {
-		MBDiscussionCacheModel mbDiscussionCacheModel =
-			new MBDiscussionCacheModel();
+		MBDiscussionCacheModel mbDiscussionCacheModel = new MBDiscussionCacheModel();
 
 		mbDiscussionCacheModel.uuid = getUuid();
 
@@ -754,20 +690,16 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MBDiscussion, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBDiscussion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBDiscussion, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBDiscussion, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -786,22 +718,18 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MBDiscussion, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBDiscussion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBDiscussion, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBDiscussion, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -815,12 +743,10 @@ public class MBDiscussionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBDiscussion.class.getClassLoader();
+	private static final ClassLoader _classLoader = MBDiscussion.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBDiscussion.class, ModelWrapper.class
-	};
-
+			MBDiscussion.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _discussionId;
@@ -847,5 +773,4 @@ public class MBDiscussionModelImpl
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MBDiscussion _escapedModel;
-
 }

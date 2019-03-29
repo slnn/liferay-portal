@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class BackgroundTaskFinderBaseImpl
-	extends BasePersistenceImpl<BackgroundTask> {
-
+public class BackgroundTaskFinderBaseImpl extends BasePersistenceImpl<BackgroundTask> {
 	public BackgroundTaskFinderBaseImpl() {
 		setModelClass(BackgroundTask.class);
 	}
@@ -46,11 +44,9 @@ public class BackgroundTaskFinderBaseImpl
 	 */
 	public void setBackgroundTaskPersistence(
 		BackgroundTaskPersistence backgroundTaskPersistence) {
-
 		this.backgroundTaskPersistence = backgroundTaskPersistence;
 	}
 
 	@BeanReference(type = BackgroundTaskPersistence.class)
 	protected BackgroundTaskPersistence backgroundTaskPersistence;
-
 }

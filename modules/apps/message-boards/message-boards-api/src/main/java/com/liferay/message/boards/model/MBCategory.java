@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.message.boards.model.impl.MBCategoryImpl")
 @ProviderType
 public interface MBCategory extends MBCategoryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBCategoryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MBCategory, Long> CATEGORY_ID_ACCESSOR =
-		new Accessor<MBCategory, Long>() {
-
+	public static final Accessor<MBCategory, Long> CATEGORY_ID_ACCESSOR = new Accessor<MBCategory, Long>() {
 			@Override
 			public Long get(MBCategory mbCategory) {
 				return mbCategory.getCategoryId();
@@ -53,7 +50,6 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 			public Class<MBCategory> getTypeClass() {
 				return MBCategory.class;
 			}
-
 		};
 
 	public java.util.List<Long> getAncestorCategoryIds()
@@ -66,5 +62,4 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isRoot();
-
 }

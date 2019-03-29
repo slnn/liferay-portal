@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,7 +35,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class AppServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,34 +42,30 @@ public class AppServiceUtil {
 	 */
 	public static com.liferay.marketplace.model.App deleteApp(long appId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().deleteApp(appId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void installApp(long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		getService().installApp(remoteAppId);
 	}
 
 	public static void uninstallApp(long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		getService().uninstallApp(remoteAppId);
 	}
 
 	public static com.liferay.marketplace.model.App updateApp(java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().updateApp(file);
 	}
 
@@ -82,13 +78,11 @@ public class AppServiceUtil {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(AppService.class);
 
-		ServiceTracker<AppService, AppService> serviceTracker =
-			new ServiceTracker<AppService, AppService>(
-				bundle.getBundleContext(), AppService.class, null);
+		ServiceTracker<AppService, AppService> serviceTracker = new ServiceTracker<AppService, AppService>(bundle.getBundleContext(),
+				AppService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

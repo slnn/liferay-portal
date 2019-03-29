@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.service.base;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
+
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -27,9 +28,9 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import javax.sql.DataSource;
-
 import org.osgi.service.component.annotations.Reference;
+
+import javax.sql.DataSource;
 
 /**
  * Provides the base implementation for the o auth2 application remote service.
@@ -42,10 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.oauth2.provider.service.impl.OAuth2ApplicationServiceImpl
  * @generated
  */
-public abstract class OAuth2ApplicationServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class OAuth2ApplicationServiceBaseImpl extends BaseServiceImpl
 	implements OAuth2ApplicationService, AopService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,16 +87,15 @@ public abstract class OAuth2ApplicationServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				oAuth2ApplicationPersistence.getDataSource();
+			DataSource dataSource = oAuth2ApplicationPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -107,34 +105,20 @@ public abstract class OAuth2ApplicationServiceBaseImpl
 	}
 
 	@Reference
-	protected com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService
-		oAuth2ApplicationLocalService;
-
+	protected com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService oAuth2ApplicationLocalService;
 	protected OAuth2ApplicationService oAuth2ApplicationService;
-
 	@Reference
 	protected OAuth2ApplicationPersistence oAuth2ApplicationPersistence;
-
 	@Reference
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@Reference
 	protected com.liferay.portal.kernel.service.GroupService groupService;
-
 	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 }

@@ -39,10 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBMessageModel
-	extends AttachedModel, BaseModel<MBMessage>, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
+	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -636,5 +634,4 @@ public interface MBMessageModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

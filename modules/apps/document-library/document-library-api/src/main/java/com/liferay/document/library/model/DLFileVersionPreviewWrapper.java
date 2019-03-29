@@ -32,13 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DLFileVersionPreviewWrapper
-	extends BaseModelWrapper<DLFileVersionPreview>
+public class DLFileVersionPreviewWrapper extends BaseModelWrapper<DLFileVersionPreview>
 	implements DLFileVersionPreview, ModelWrapper<DLFileVersionPreview> {
-
 	public DLFileVersionPreviewWrapper(
 		DLFileVersionPreview dlFileVersionPreview) {
-
 		super(dlFileVersionPreview);
 	}
 
@@ -58,7 +55,7 @@ public class DLFileVersionPreviewWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long dlFileVersionPreviewId = (Long)attributes.get(
-			"dlFileVersionPreviewId");
+				"dlFileVersionPreviewId");
 
 		if (dlFileVersionPreviewId != null) {
 			setDlFileVersionPreviewId(dlFileVersionPreviewId);
@@ -90,60 +87,60 @@ public class DLFileVersionPreviewWrapper
 	}
 
 	/**
-	 * Returns the dl file version preview ID of this dl file version preview.
-	 *
-	 * @return the dl file version preview ID of this dl file version preview
-	 */
+	* Returns the dl file version preview ID of this dl file version preview.
+	*
+	* @return the dl file version preview ID of this dl file version preview
+	*/
 	@Override
 	public long getDlFileVersionPreviewId() {
 		return model.getDlFileVersionPreviewId();
 	}
 
 	/**
-	 * Returns the file entry ID of this dl file version preview.
-	 *
-	 * @return the file entry ID of this dl file version preview
-	 */
+	* Returns the file entry ID of this dl file version preview.
+	*
+	* @return the file entry ID of this dl file version preview
+	*/
 	@Override
 	public long getFileEntryId() {
 		return model.getFileEntryId();
 	}
 
 	/**
-	 * Returns the file version ID of this dl file version preview.
-	 *
-	 * @return the file version ID of this dl file version preview
-	 */
+	* Returns the file version ID of this dl file version preview.
+	*
+	* @return the file version ID of this dl file version preview
+	*/
 	@Override
 	public long getFileVersionId() {
 		return model.getFileVersionId();
 	}
 
 	/**
-	 * Returns the group ID of this dl file version preview.
-	 *
-	 * @return the group ID of this dl file version preview
-	 */
+	* Returns the group ID of this dl file version preview.
+	*
+	* @return the group ID of this dl file version preview
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the preview status of this dl file version preview.
-	 *
-	 * @return the preview status of this dl file version preview
-	 */
+	* Returns the preview status of this dl file version preview.
+	*
+	* @return the preview status of this dl file version preview
+	*/
 	@Override
 	public int getPreviewStatus() {
 		return model.getPreviewStatus();
 	}
 
 	/**
-	 * Returns the primary key of this dl file version preview.
-	 *
-	 * @return the primary key of this dl file version preview
-	 */
+	* Returns the primary key of this dl file version preview.
+	*
+	* @return the primary key of this dl file version preview
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -155,60 +152,60 @@ public class DLFileVersionPreviewWrapper
 	}
 
 	/**
-	 * Sets the dl file version preview ID of this dl file version preview.
-	 *
-	 * @param dlFileVersionPreviewId the dl file version preview ID of this dl file version preview
-	 */
+	* Sets the dl file version preview ID of this dl file version preview.
+	*
+	* @param dlFileVersionPreviewId the dl file version preview ID of this dl file version preview
+	*/
 	@Override
 	public void setDlFileVersionPreviewId(long dlFileVersionPreviewId) {
 		model.setDlFileVersionPreviewId(dlFileVersionPreviewId);
 	}
 
 	/**
-	 * Sets the file entry ID of this dl file version preview.
-	 *
-	 * @param fileEntryId the file entry ID of this dl file version preview
-	 */
+	* Sets the file entry ID of this dl file version preview.
+	*
+	* @param fileEntryId the file entry ID of this dl file version preview
+	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
 		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
-	 * Sets the file version ID of this dl file version preview.
-	 *
-	 * @param fileVersionId the file version ID of this dl file version preview
-	 */
+	* Sets the file version ID of this dl file version preview.
+	*
+	* @param fileVersionId the file version ID of this dl file version preview
+	*/
 	@Override
 	public void setFileVersionId(long fileVersionId) {
 		model.setFileVersionId(fileVersionId);
 	}
 
 	/**
-	 * Sets the group ID of this dl file version preview.
-	 *
-	 * @param groupId the group ID of this dl file version preview
-	 */
+	* Sets the group ID of this dl file version preview.
+	*
+	* @param groupId the group ID of this dl file version preview
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the preview status of this dl file version preview.
-	 *
-	 * @param previewStatus the preview status of this dl file version preview
-	 */
+	* Sets the preview status of this dl file version preview.
+	*
+	* @param previewStatus the preview status of this dl file version preview
+	*/
 	@Override
 	public void setPreviewStatus(int previewStatus) {
 		model.setPreviewStatus(previewStatus);
 	}
 
 	/**
-	 * Sets the primary key of this dl file version preview.
-	 *
-	 * @param primaryKey the primary key of this dl file version preview
-	 */
+	* Sets the primary key of this dl file version preview.
+	*
+	* @param primaryKey the primary key of this dl file version preview
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
@@ -217,8 +214,6 @@ public class DLFileVersionPreviewWrapper
 	@Override
 	protected DLFileVersionPreviewWrapper wrap(
 		DLFileVersionPreview dlFileVersionPreview) {
-
 		return new DLFileVersionPreviewWrapper(dlFileVersionPreview);
 	}
-
 }

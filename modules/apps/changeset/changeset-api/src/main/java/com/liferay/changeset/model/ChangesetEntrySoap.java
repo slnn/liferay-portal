@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class ChangesetEntrySoap implements Serializable {
-
 	public static ChangesetEntrySoap toSoapModel(ChangesetEntry model) {
 		ChangesetEntrySoap soapModel = new ChangesetEntrySoap();
 
@@ -58,14 +57,11 @@ public class ChangesetEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ChangesetEntrySoap[][] toSoapModels(
-		ChangesetEntry[][] models) {
-
+	public static ChangesetEntrySoap[][] toSoapModels(ChangesetEntry[][] models) {
 		ChangesetEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new ChangesetEntrySoap[models.length][models[0].length];
+			soapModels = new ChangesetEntrySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new ChangesetEntrySoap[0][0];
@@ -78,11 +74,8 @@ public class ChangesetEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ChangesetEntrySoap[] toSoapModels(
-		List<ChangesetEntry> models) {
-
-		List<ChangesetEntrySoap> soapModels = new ArrayList<ChangesetEntrySoap>(
-			models.size());
+	public static ChangesetEntrySoap[] toSoapModels(List<ChangesetEntry> models) {
+		List<ChangesetEntrySoap> soapModels = new ArrayList<ChangesetEntrySoap>(models.size());
 
 		for (ChangesetEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -192,5 +185,4 @@ public class ChangesetEntrySoap implements Serializable {
 	private long _changesetCollectionId;
 	private long _classNameId;
 	private long _classPK;
-
 }

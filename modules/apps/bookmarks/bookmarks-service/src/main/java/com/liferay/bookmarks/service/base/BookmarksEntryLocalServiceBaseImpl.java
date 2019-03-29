@@ -22,6 +22,7 @@ import com.liferay.bookmarks.service.persistence.BookmarksEntryFinder;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
+
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -29,6 +30,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -60,13 +62,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the bookmarks entry local service.
@@ -81,9 +83,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @ProviderType
 public abstract class BookmarksEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements BookmarksEntryLocalService, AopService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements BookmarksEntryLocalService,
+		AopService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -127,7 +128,6 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Override
 	public BookmarksEntry deleteBookmarksEntry(long entryId)
 		throws PortalException {
-
 		return bookmarksEntryPersistence.remove(entryId);
 	}
 
@@ -147,8 +147,8 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -175,11 +175,10 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return bookmarksEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return bookmarksEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -196,12 +195,10 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return bookmarksEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return bookmarksEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -223,11 +220,10 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return bookmarksEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return bookmarksEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -243,9 +239,8 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	 * @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	 */
 	@Override
-	public BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-
+	public BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(String uuid,
+		long groupId) {
 		return bookmarksEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -259,14 +254,12 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Override
 	public BookmarksEntry getBookmarksEntry(long entryId)
 		throws PortalException {
-
 		return bookmarksEntryPersistence.findByPrimaryKey(entryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(bookmarksEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -278,14 +271,10 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			bookmarksEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(bookmarksEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BookmarksEntry.class);
 
@@ -296,7 +285,6 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(bookmarksEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BookmarksEntry.class);
@@ -307,59 +295,48 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
+							"modifiedDate");
 
 					if (modifiedDateCriterion != null) {
-						Conjunction conjunction =
-							RestrictionsFactoryUtil.conjunction();
+						Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
 
 						conjunction.add(modifiedDateCriterion);
 
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-						disjunction.add(
-							RestrictionsFactoryUtil.gtProperty(
+						disjunction.add(RestrictionsFactoryUtil.gtProperty(
 								"modifiedDate", "lastPublishDate"));
 
-						Property lastPublishDateProperty =
-							PropertyFactoryUtil.forName("lastPublishDate");
+						Property lastPublishDateProperty = PropertyFactoryUtil.forName(
+								"lastPublishDate");
 
 						disjunction.add(lastPublishDateProperty.isNull());
 
@@ -368,14 +345,12 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 						modifiedDateCriterion = conjunction;
 					}
 
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
+							"statusDate");
 
 					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+							(statusDateCriterion != null)) {
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 						disjunction.add(modifiedDateCriterion);
 						disjunction.add(statusDateCriterion);
@@ -383,49 +358,35 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 						dynamicQuery.add(disjunction);
 					}
 
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
+					Property workflowStatusProperty = PropertyFactoryUtil.forName(
+							"status");
 
 					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							workflowStatusProperty.ne(
+						dynamicQuery.add(workflowStatusProperty.ne(
 								WorkflowConstants.STATUS_IN_TRASH));
 					}
 					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									BookmarksEntry.class.getName());
+						StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(BookmarksEntry.class.getName());
 
-						dynamicQuery.add(
-							workflowStatusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
+						dynamicQuery.add(workflowStatusProperty.in(
+								stagedModelDataHandler.getExportableStatuses()));
 					}
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 				@Override
 				public void performAction(BookmarksEntry bookmarksEntry)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, bookmarksEntry);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						bookmarksEntry);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(BookmarksEntry.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -437,15 +398,12 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return bookmarksEntryLocalService.deleteBookmarksEntry(
-			(BookmarksEntry)persistedModel);
+		return bookmarksEntryLocalService.deleteBookmarksEntry((BookmarksEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return bookmarksEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -459,7 +417,6 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Override
 	public List<BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
 		String uuid, long companyId) {
-
 		return bookmarksEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -477,9 +434,8 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	public List<BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
-
-		return bookmarksEntryPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return bookmarksEntryPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -491,10 +447,8 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	 * @throws PortalException if a matching bookmarks entry could not be found
 	 */
 	@Override
-	public BookmarksEntry getBookmarksEntryByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException {
-
+	public BookmarksEntry getBookmarksEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException {
 		return bookmarksEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -581,8 +535,8 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -592,57 +546,32 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	}
 
 	protected BookmarksEntryLocalService bookmarksEntryLocalService;
-
 	@Reference
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
-
 	@Reference
 	protected BookmarksEntryFinder bookmarksEntryFinder;
-
 	@Reference
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
-
 	@Reference
 	protected BookmarksFolderFinder bookmarksFolderFinder;
-
 	@Reference
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@Reference
-	protected com.liferay.asset.kernel.service.AssetEntryLocalService
-		assetEntryLocalService;
-
+	protected com.liferay.asset.kernel.service.AssetEntryLocalService assetEntryLocalService;
 	@Reference
-	protected com.liferay.asset.kernel.service.AssetLinkLocalService
-		assetLinkLocalService;
-
+	protected com.liferay.asset.kernel.service.AssetLinkLocalService assetLinkLocalService;
 	@Reference
-	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
-		expandoRowLocalService;
-
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@Reference
-	protected com.liferay.ratings.kernel.service.RatingsStatsLocalService
-		ratingsStatsLocalService;
-
+	protected com.liferay.ratings.kernel.service.RatingsStatsLocalService ratingsStatsLocalService;
 	@Reference
-	protected com.liferay.social.kernel.service.SocialActivityLocalService
-		socialActivityLocalService;
-
+	protected com.liferay.social.kernel.service.SocialActivityLocalService socialActivityLocalService;
 }

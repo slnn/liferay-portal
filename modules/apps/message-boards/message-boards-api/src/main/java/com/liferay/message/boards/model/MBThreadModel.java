@@ -39,10 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBThreadModel
-	extends BaseModel<MBThread>, ContainerModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
+	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -632,5 +630,4 @@ public interface MBThreadModel
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
-
 }

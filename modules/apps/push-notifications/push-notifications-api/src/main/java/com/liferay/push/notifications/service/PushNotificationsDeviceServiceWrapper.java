@@ -28,46 +28,39 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class PushNotificationsDeviceServiceWrapper
 	implements PushNotificationsDeviceService,
-			   ServiceWrapper<PushNotificationsDeviceService> {
-
+		ServiceWrapper<PushNotificationsDeviceService> {
 	public PushNotificationsDeviceServiceWrapper(
 		PushNotificationsDeviceService pushNotificationsDeviceService) {
-
 		_pushNotificationsDeviceService = pushNotificationsDeviceService;
 	}
 
 	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice
-			addPushNotificationsDevice(String token, String platform)
+	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		String token, String platform)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _pushNotificationsDeviceService.addPushNotificationsDevice(
-			token, platform);
+		return _pushNotificationsDeviceService.addPushNotificationsDevice(token,
+			platform);
 	}
 
 	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice
-			deletePushNotificationsDevice(long pushNotificationsDeviceId)
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _pushNotificationsDeviceService.deletePushNotificationsDevice(
-			pushNotificationsDeviceId);
+		return _pushNotificationsDeviceService.deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
 	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice
-			deletePushNotificationsDevice(String token)
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _pushNotificationsDeviceService.deletePushNotificationsDevice(
-			token);
+		return _pushNotificationsDeviceService.deletePushNotificationsDevice(token);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _pushNotificationsDeviceService.getOSGiServiceIdentifier();
@@ -76,18 +69,15 @@ public class PushNotificationsDeviceServiceWrapper
 	@Override
 	public void sendPushNotification(long[] toUserIds, String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_pushNotificationsDeviceService.sendPushNotification(
-			toUserIds, payload);
+		_pushNotificationsDeviceService.sendPushNotification(toUserIds, payload);
 	}
 
 	@Override
-	public void sendPushNotification(
-			String platform, java.util.List<String> tokens, String payload)
+	public void sendPushNotification(String platform,
+		java.util.List<String> tokens, String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_pushNotificationsDeviceService.sendPushNotification(
-			platform, tokens, payload);
+		_pushNotificationsDeviceService.sendPushNotification(platform, tokens,
+			payload);
 	}
 
 	@Override
@@ -98,10 +88,8 @@ public class PushNotificationsDeviceServiceWrapper
 	@Override
 	public void setWrappedService(
 		PushNotificationsDeviceService pushNotificationsDeviceService) {
-
 		_pushNotificationsDeviceService = pushNotificationsDeviceService;
 	}
 
 	private PushNotificationsDeviceService _pushNotificationsDeviceService;
-
 }

@@ -40,10 +40,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface DDMTemplateVersionModel
-	extends AttachedModel, BaseModel<DDMTemplateVersion>, LocalizedModel,
-			ShardedModel, WorkflowedModel {
-
+public interface DDMTemplateVersionModel extends AttachedModel,
+	BaseModel<DDMTemplateVersion>, LocalizedModel, ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -415,8 +413,8 @@ public interface DDMTemplateVersionModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -433,8 +431,8 @@ public interface DDMTemplateVersionModel
 	 * @param descriptionMap the locales and localized descriptions of this ddm template version
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the language of this ddm template version.
@@ -623,5 +621,4 @@ public interface DDMTemplateVersionModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

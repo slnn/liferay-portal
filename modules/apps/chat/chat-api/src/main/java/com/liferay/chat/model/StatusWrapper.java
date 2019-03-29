@@ -32,9 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class StatusWrapper
-	extends BaseModelWrapper<Status> implements Status, ModelWrapper<Status> {
-
+public class StatusWrapper extends BaseModelWrapper<Status> implements Status,
+	ModelWrapper<Status> {
 	public StatusWrapper(Status status) {
 		super(status);
 	}
@@ -107,130 +106,130 @@ public class StatusWrapper
 	}
 
 	/**
-	 * Returns the active panel IDs of this status.
-	 *
-	 * @return the active panel IDs of this status
-	 */
+	* Returns the active panel IDs of this status.
+	*
+	* @return the active panel IDs of this status
+	*/
 	@Override
 	public String getActivePanelIds() {
 		return model.getActivePanelIds();
 	}
 
 	/**
-	 * Returns the awake of this status.
-	 *
-	 * @return the awake of this status
-	 */
+	* Returns the awake of this status.
+	*
+	* @return the awake of this status
+	*/
 	@Override
 	public boolean getAwake() {
 		return model.getAwake();
 	}
 
 	/**
-	 * Returns the message of this status.
-	 *
-	 * @return the message of this status
-	 */
+	* Returns the message of this status.
+	*
+	* @return the message of this status
+	*/
 	@Override
 	public String getMessage() {
 		return model.getMessage();
 	}
 
 	/**
-	 * Returns the modified date of this status.
-	 *
-	 * @return the modified date of this status
-	 */
+	* Returns the modified date of this status.
+	*
+	* @return the modified date of this status
+	*/
 	@Override
 	public long getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the online of this status.
-	 *
-	 * @return the online of this status
-	 */
+	* Returns the online of this status.
+	*
+	* @return the online of this status
+	*/
 	@Override
 	public boolean getOnline() {
 		return model.getOnline();
 	}
 
 	/**
-	 * Returns the play sound of this status.
-	 *
-	 * @return the play sound of this status
-	 */
+	* Returns the play sound of this status.
+	*
+	* @return the play sound of this status
+	*/
 	@Override
 	public boolean getPlaySound() {
 		return model.getPlaySound();
 	}
 
 	/**
-	 * Returns the primary key of this status.
-	 *
-	 * @return the primary key of this status
-	 */
+	* Returns the primary key of this status.
+	*
+	* @return the primary key of this status
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the status ID of this status.
-	 *
-	 * @return the status ID of this status
-	 */
+	* Returns the status ID of this status.
+	*
+	* @return the status ID of this status
+	*/
 	@Override
 	public long getStatusId() {
 		return model.getStatusId();
 	}
 
 	/**
-	 * Returns the user ID of this status.
-	 *
-	 * @return the user ID of this status
-	 */
+	* Returns the user ID of this status.
+	*
+	* @return the user ID of this status
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user uuid of this status.
-	 *
-	 * @return the user uuid of this status
-	 */
+	* Returns the user uuid of this status.
+	*
+	* @return the user uuid of this status
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns <code>true</code> if this status is awake.
-	 *
-	 * @return <code>true</code> if this status is awake; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this status is awake.
+	*
+	* @return <code>true</code> if this status is awake; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isAwake() {
 		return model.isAwake();
 	}
 
 	/**
-	 * Returns <code>true</code> if this status is online.
-	 *
-	 * @return <code>true</code> if this status is online; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this status is online.
+	*
+	* @return <code>true</code> if this status is online; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isOnline() {
 		return model.isOnline();
 	}
 
 	/**
-	 * Returns <code>true</code> if this status is play sound.
-	 *
-	 * @return <code>true</code> if this status is play sound; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this status is play sound.
+	*
+	* @return <code>true</code> if this status is play sound; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isPlaySound() {
 		return model.isPlaySound();
@@ -242,100 +241,100 @@ public class StatusWrapper
 	}
 
 	/**
-	 * Sets the active panel IDs of this status.
-	 *
-	 * @param activePanelIds the active panel IDs of this status
-	 */
+	* Sets the active panel IDs of this status.
+	*
+	* @param activePanelIds the active panel IDs of this status
+	*/
 	@Override
 	public void setActivePanelIds(String activePanelIds) {
 		model.setActivePanelIds(activePanelIds);
 	}
 
 	/**
-	 * Sets whether this status is awake.
-	 *
-	 * @param awake the awake of this status
-	 */
+	* Sets whether this status is awake.
+	*
+	* @param awake the awake of this status
+	*/
 	@Override
 	public void setAwake(boolean awake) {
 		model.setAwake(awake);
 	}
 
 	/**
-	 * Sets the message of this status.
-	 *
-	 * @param message the message of this status
-	 */
+	* Sets the message of this status.
+	*
+	* @param message the message of this status
+	*/
 	@Override
 	public void setMessage(String message) {
 		model.setMessage(message);
 	}
 
 	/**
-	 * Sets the modified date of this status.
-	 *
-	 * @param modifiedDate the modified date of this status
-	 */
+	* Sets the modified date of this status.
+	*
+	* @param modifiedDate the modified date of this status
+	*/
 	@Override
 	public void setModifiedDate(long modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets whether this status is online.
-	 *
-	 * @param online the online of this status
-	 */
+	* Sets whether this status is online.
+	*
+	* @param online the online of this status
+	*/
 	@Override
 	public void setOnline(boolean online) {
 		model.setOnline(online);
 	}
 
 	/**
-	 * Sets whether this status is play sound.
-	 *
-	 * @param playSound the play sound of this status
-	 */
+	* Sets whether this status is play sound.
+	*
+	* @param playSound the play sound of this status
+	*/
 	@Override
 	public void setPlaySound(boolean playSound) {
 		model.setPlaySound(playSound);
 	}
 
 	/**
-	 * Sets the primary key of this status.
-	 *
-	 * @param primaryKey the primary key of this status
-	 */
+	* Sets the primary key of this status.
+	*
+	* @param primaryKey the primary key of this status
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the status ID of this status.
-	 *
-	 * @param statusId the status ID of this status
-	 */
+	* Sets the status ID of this status.
+	*
+	* @param statusId the status ID of this status
+	*/
 	@Override
 	public void setStatusId(long statusId) {
 		model.setStatusId(statusId);
 	}
 
 	/**
-	 * Sets the user ID of this status.
-	 *
-	 * @param userId the user ID of this status
-	 */
+	* Sets the user ID of this status.
+	*
+	* @param userId the user ID of this status
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user uuid of this status.
-	 *
-	 * @param userUuid the user uuid of this status
-	 */
+	* Sets the user uuid of this status.
+	*
+	* @param userUuid the user uuid of this status
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -345,5 +344,4 @@ public class StatusWrapper
 	protected StatusWrapper wrap(Status status) {
 		return new StatusWrapper(status);
 	}
-
 }

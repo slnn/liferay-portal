@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class SharingEntrySoap implements Serializable {
-
 	public static SharingEntrySoap toSoapModel(SharingEntry model) {
 		SharingEntrySoap soapModel = new SharingEntrySoap();
 
@@ -79,8 +78,7 @@ public class SharingEntrySoap implements Serializable {
 	}
 
 	public static SharingEntrySoap[] toSoapModels(List<SharingEntry> models) {
-		List<SharingEntrySoap> soapModels = new ArrayList<SharingEntrySoap>(
-			models.size());
+		List<SharingEntrySoap> soapModels = new ArrayList<SharingEntrySoap>(models.size());
 
 		for (SharingEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -221,5 +219,4 @@ public class SharingEntrySoap implements Serializable {
 	private boolean _shareable;
 	private long _actionIds;
 	private Date _expirationDate;
-
 }

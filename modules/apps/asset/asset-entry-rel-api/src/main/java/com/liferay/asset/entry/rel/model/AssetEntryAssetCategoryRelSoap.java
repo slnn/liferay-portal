@@ -29,15 +29,11 @@ import java.util.List;
  */
 @ProviderType
 public class AssetEntryAssetCategoryRelSoap implements Serializable {
-
 	public static AssetEntryAssetCategoryRelSoap toSoapModel(
 		AssetEntryAssetCategoryRel model) {
+		AssetEntryAssetCategoryRelSoap soapModel = new AssetEntryAssetCategoryRelSoap();
 
-		AssetEntryAssetCategoryRelSoap soapModel =
-			new AssetEntryAssetCategoryRelSoap();
-
-		soapModel.setAssetEntryAssetCategoryRelId(
-			model.getAssetEntryAssetCategoryRelId());
+		soapModel.setAssetEntryAssetCategoryRelId(model.getAssetEntryAssetCategoryRelId());
 		soapModel.setAssetEntryId(model.getAssetEntryId());
 		soapModel.setAssetCategoryId(model.getAssetCategoryId());
 		soapModel.setPriority(model.getPriority());
@@ -47,9 +43,7 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 
 	public static AssetEntryAssetCategoryRelSoap[] toSoapModels(
 		AssetEntryAssetCategoryRel[] models) {
-
-		AssetEntryAssetCategoryRelSoap[] soapModels =
-			new AssetEntryAssetCategoryRelSoap[models.length];
+		AssetEntryAssetCategoryRelSoap[] soapModels = new AssetEntryAssetCategoryRelSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -60,13 +54,10 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 
 	public static AssetEntryAssetCategoryRelSoap[][] toSoapModels(
 		AssetEntryAssetCategoryRel[][] models) {
-
 		AssetEntryAssetCategoryRelSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new AssetEntryAssetCategoryRelSoap
-					[models.length][models[0].length];
+			soapModels = new AssetEntryAssetCategoryRelSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new AssetEntryAssetCategoryRelSoap[0][0];
@@ -81,16 +72,13 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 
 	public static AssetEntryAssetCategoryRelSoap[] toSoapModels(
 		List<AssetEntryAssetCategoryRel> models) {
-
-		List<AssetEntryAssetCategoryRelSoap> soapModels =
-			new ArrayList<AssetEntryAssetCategoryRelSoap>(models.size());
+		List<AssetEntryAssetCategoryRelSoap> soapModels = new ArrayList<AssetEntryAssetCategoryRelSoap>(models.size());
 
 		for (AssetEntryAssetCategoryRel model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new AssetEntryAssetCategoryRelSoap[soapModels.size()]);
+		return soapModels.toArray(new AssetEntryAssetCategoryRelSoap[soapModels.size()]);
 	}
 
 	public AssetEntryAssetCategoryRelSoap() {
@@ -110,7 +98,6 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 
 	public void setAssetEntryAssetCategoryRelId(
 		long assetEntryAssetCategoryRelId) {
-
 		_assetEntryAssetCategoryRelId = assetEntryAssetCategoryRelId;
 	}
 
@@ -142,5 +129,4 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 	private long _assetEntryId;
 	private long _assetCategoryId;
 	private int _priority;
-
 }

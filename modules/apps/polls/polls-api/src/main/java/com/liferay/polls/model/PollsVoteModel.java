@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PollsVoteModel
-	extends BaseModel<PollsVote>, ShardedModel, StagedGroupedModel {
-
+public interface PollsVoteModel extends BaseModel<PollsVote>, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -259,5 +258,4 @@ public interface PollsVoteModel
 	 * @param voteDate the vote date of this polls vote
 	 */
 	public void setVoteDate(Date voteDate);
-
 }

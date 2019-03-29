@@ -30,15 +30,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.asset.model.impl.AssetEntryUsageImpl")
 @ProviderType
 public interface AssetEntryUsage extends AssetEntryUsageModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.model.impl.AssetEntryUsageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetEntryUsage, Long>
-		ASSET_ENTRY_USAGE_ID_ACCESSOR = new Accessor<AssetEntryUsage, Long>() {
-
+	public static final Accessor<AssetEntryUsage, Long> ASSET_ENTRY_USAGE_ID_ACCESSOR =
+		new Accessor<AssetEntryUsage, Long>() {
 			@Override
 			public Long get(AssetEntryUsage assetEntryUsage) {
 				return assetEntryUsage.getAssetEntryUsageId();
@@ -53,7 +51,5 @@ public interface AssetEntryUsage extends AssetEntryUsageModel, PersistedModel {
 			public Class<AssetEntryUsage> getTypeClass() {
 				return AssetEntryUsage.class;
 			}
-
 		};
-
 }

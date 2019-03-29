@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,14 +35,11 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateStructureWrapper
-	extends BaseModelWrapper<LayoutPageTemplateStructure>
+public class LayoutPageTemplateStructureWrapper extends BaseModelWrapper<LayoutPageTemplateStructure>
 	implements LayoutPageTemplateStructure,
-			   ModelWrapper<LayoutPageTemplateStructure> {
-
+		ModelWrapper<LayoutPageTemplateStructure> {
 	public LayoutPageTemplateStructureWrapper(
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
-
 		super(layoutPageTemplateStructure);
 	}
 
@@ -50,8 +48,7 @@ public class LayoutPageTemplateStructureWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put(
-			"layoutPageTemplateStructureId",
+		attributes.put("layoutPageTemplateStructureId",
 			getLayoutPageTemplateStructureId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,7 +72,7 @@ public class LayoutPageTemplateStructureWrapper
 		}
 
 		Long layoutPageTemplateStructureId = (Long)attributes.get(
-			"layoutPageTemplateStructureId");
+				"layoutPageTemplateStructureId");
 
 		if (layoutPageTemplateStructureId != null) {
 			setLayoutPageTemplateStructureId(layoutPageTemplateStructureId);
@@ -137,140 +134,140 @@ public class LayoutPageTemplateStructureWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this layout page template structure.
-	 *
-	 * @return the fully qualified class name of this layout page template structure
-	 */
+	* Returns the fully qualified class name of this layout page template structure.
+	*
+	* @return the fully qualified class name of this layout page template structure
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this layout page template structure.
-	 *
-	 * @return the class name ID of this layout page template structure
-	 */
+	* Returns the class name ID of this layout page template structure.
+	*
+	* @return the class name ID of this layout page template structure
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this layout page template structure.
-	 *
-	 * @return the class pk of this layout page template structure
-	 */
+	* Returns the class pk of this layout page template structure.
+	*
+	* @return the class pk of this layout page template structure
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this layout page template structure.
-	 *
-	 * @return the company ID of this layout page template structure
-	 */
+	* Returns the company ID of this layout page template structure.
+	*
+	* @return the company ID of this layout page template structure
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this layout page template structure.
-	 *
-	 * @return the create date of this layout page template structure
-	 */
+	* Returns the create date of this layout page template structure.
+	*
+	* @return the create date of this layout page template structure
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the data of this layout page template structure.
-	 *
-	 * @return the data of this layout page template structure
-	 */
+	* Returns the data of this layout page template structure.
+	*
+	* @return the data of this layout page template structure
+	*/
 	@Override
 	public String getData() {
 		return model.getData();
 	}
 
 	/**
-	 * Returns the group ID of this layout page template structure.
-	 *
-	 * @return the group ID of this layout page template structure
-	 */
+	* Returns the group ID of this layout page template structure.
+	*
+	* @return the group ID of this layout page template structure
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the layout page template structure ID of this layout page template structure.
-	 *
-	 * @return the layout page template structure ID of this layout page template structure
-	 */
+	* Returns the layout page template structure ID of this layout page template structure.
+	*
+	* @return the layout page template structure ID of this layout page template structure
+	*/
 	@Override
 	public long getLayoutPageTemplateStructureId() {
 		return model.getLayoutPageTemplateStructureId();
 	}
 
 	/**
-	 * Returns the modified date of this layout page template structure.
-	 *
-	 * @return the modified date of this layout page template structure
-	 */
+	* Returns the modified date of this layout page template structure.
+	*
+	* @return the modified date of this layout page template structure
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this layout page template structure.
-	 *
-	 * @return the primary key of this layout page template structure
-	 */
+	* Returns the primary key of this layout page template structure.
+	*
+	* @return the primary key of this layout page template structure
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the user ID of this layout page template structure.
-	 *
-	 * @return the user ID of this layout page template structure
-	 */
+	* Returns the user ID of this layout page template structure.
+	*
+	* @return the user ID of this layout page template structure
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this layout page template structure.
-	 *
-	 * @return the user name of this layout page template structure
-	 */
+	* Returns the user name of this layout page template structure.
+	*
+	* @return the user name of this layout page template structure
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this layout page template structure.
-	 *
-	 * @return the user uuid of this layout page template structure
-	 */
+	* Returns the user uuid of this layout page template structure.
+	*
+	* @return the user uuid of this layout page template structure
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this layout page template structure.
-	 *
-	 * @return the uuid of this layout page template structure
-	 */
+	* Returns the uuid of this layout page template structure.
+	*
+	* @return the uuid of this layout page template structure
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -287,132 +284,131 @@ public class LayoutPageTemplateStructureWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this layout page template structure.
-	 *
-	 * @param classNameId the class name ID of this layout page template structure
-	 */
+	* Sets the class name ID of this layout page template structure.
+	*
+	* @param classNameId the class name ID of this layout page template structure
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this layout page template structure.
-	 *
-	 * @param classPK the class pk of this layout page template structure
-	 */
+	* Sets the class pk of this layout page template structure.
+	*
+	* @param classPK the class pk of this layout page template structure
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this layout page template structure.
-	 *
-	 * @param companyId the company ID of this layout page template structure
-	 */
+	* Sets the company ID of this layout page template structure.
+	*
+	* @param companyId the company ID of this layout page template structure
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this layout page template structure.
-	 *
-	 * @param createDate the create date of this layout page template structure
-	 */
+	* Sets the create date of this layout page template structure.
+	*
+	* @param createDate the create date of this layout page template structure
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the data of this layout page template structure.
-	 *
-	 * @param data the data of this layout page template structure
-	 */
+	* Sets the data of this layout page template structure.
+	*
+	* @param data the data of this layout page template structure
+	*/
 	@Override
 	public void setData(String data) {
 		model.setData(data);
 	}
 
 	/**
-	 * Sets the group ID of this layout page template structure.
-	 *
-	 * @param groupId the group ID of this layout page template structure
-	 */
+	* Sets the group ID of this layout page template structure.
+	*
+	* @param groupId the group ID of this layout page template structure
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the layout page template structure ID of this layout page template structure.
-	 *
-	 * @param layoutPageTemplateStructureId the layout page template structure ID of this layout page template structure
-	 */
+	* Sets the layout page template structure ID of this layout page template structure.
+	*
+	* @param layoutPageTemplateStructureId the layout page template structure ID of this layout page template structure
+	*/
 	@Override
 	public void setLayoutPageTemplateStructureId(
 		long layoutPageTemplateStructureId) {
-
 		model.setLayoutPageTemplateStructureId(layoutPageTemplateStructureId);
 	}
 
 	/**
-	 * Sets the modified date of this layout page template structure.
-	 *
-	 * @param modifiedDate the modified date of this layout page template structure
-	 */
+	* Sets the modified date of this layout page template structure.
+	*
+	* @param modifiedDate the modified date of this layout page template structure
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this layout page template structure.
-	 *
-	 * @param primaryKey the primary key of this layout page template structure
-	 */
+	* Sets the primary key of this layout page template structure.
+	*
+	* @param primaryKey the primary key of this layout page template structure
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this layout page template structure.
-	 *
-	 * @param userId the user ID of this layout page template structure
-	 */
+	* Sets the user ID of this layout page template structure.
+	*
+	* @param userId the user ID of this layout page template structure
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this layout page template structure.
-	 *
-	 * @param userName the user name of this layout page template structure
-	 */
+	* Sets the user name of this layout page template structure.
+	*
+	* @param userName the user name of this layout page template structure
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this layout page template structure.
-	 *
-	 * @param userUuid the user uuid of this layout page template structure
-	 */
+	* Sets the user uuid of this layout page template structure.
+	*
+	* @param userUuid the user uuid of this layout page template structure
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this layout page template structure.
-	 *
-	 * @param uuid the uuid of this layout page template structure
-	 */
+	* Sets the uuid of this layout page template structure.
+	*
+	* @param uuid the uuid of this layout page template structure
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -426,9 +422,6 @@ public class LayoutPageTemplateStructureWrapper
 	@Override
 	protected LayoutPageTemplateStructureWrapper wrap(
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
-
-		return new LayoutPageTemplateStructureWrapper(
-			layoutPageTemplateStructure);
+		return new LayoutPageTemplateStructureWrapper(layoutPageTemplateStructure);
 	}
-
 }

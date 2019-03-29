@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoTaskModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskImpl")
 @ProviderType
 public interface KaleoTask extends KaleoTaskModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoTask, Long> KALEO_TASK_ID_ACCESSOR =
-		new Accessor<KaleoTask, Long>() {
-
+	public static final Accessor<KaleoTask, Long> KALEO_TASK_ID_ACCESSOR = new Accessor<KaleoTask, Long>() {
 			@Override
 			public Long get(KaleoTask kaleoTask) {
 				return kaleoTask.getKaleoTaskId();
@@ -55,12 +50,10 @@ public interface KaleoTask extends KaleoTaskModel, PersistedModel {
 			public Class<KaleoTask> getTypeClass() {
 				return KaleoTask.class;
 			}
-
 		};
 
 	public KaleoNode getKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<KaleoTaskAssignment> getKaleoTaskAssignments();
-
 }

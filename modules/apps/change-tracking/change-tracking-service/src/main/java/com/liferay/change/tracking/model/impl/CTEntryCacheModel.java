@@ -17,8 +17,10 @@ package com.liferay.change.tracking.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.model.CTEntry;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -36,7 +38,6 @@ import java.util.Date;
  */
 @ProviderType
 public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -155,7 +156,8 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(ctEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -194,5 +196,4 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 	public long resourcePrimKey;
 	public int changeType;
 	public int status;
-
 }

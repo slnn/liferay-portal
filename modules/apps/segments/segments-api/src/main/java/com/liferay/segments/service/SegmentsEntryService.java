@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
 import com.liferay.segments.model.SegmentsEntry;
 
 import java.util.List;
@@ -46,49 +47,40 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=segments",
-		"json.web.service.context.path=SegmentsEntry"
-	},
-	service = SegmentsEntryService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=segments", "json.web.service.context.path=SegmentsEntry"}, service = SegmentsEntryService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface SegmentsEntryService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryServiceUtil} to access the segments entry remote service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SegmentsEntry addSegmentsEntry(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type, ServiceContext serviceContext)
+	public SegmentsEntry addSegmentsEntry(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, boolean active, String criteria,
+		String key, String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsEntry deleteSegmentsEntry(long segmentsEntryId)
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean includeAncestorSegmentsEntries, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator);
+	public List<SegmentsEntry> getSegmentsEntries(long groupId,
+		boolean includeAncestorSegmentsEntries, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsEntriesCount(
-		long groupId, boolean includeAncestorSegmentsEntries);
+	public int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
@@ -96,15 +88,12 @@ public interface SegmentsEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords,
-			boolean includeAncestorSegmentsEntries, int start, int end,
-			Sort sort)
+		long companyId, long groupId, String keywords,
+		boolean includeAncestorSegmentsEntries, int start, int end, Sort sort)
 		throws PortalException;
 
-	public SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String key, ServiceContext serviceContext)
-		throws PortalException;
-
+	public SegmentsEntry updateSegmentsEntry(long segmentsEntryId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, String criteria, String key,
+		ServiceContext serviceContext) throws PortalException;
 }

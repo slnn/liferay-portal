@@ -29,15 +29,11 @@ import java.util.List;
  */
 @ProviderType
 public class LVEntryLocalizationVersionSoap implements Serializable {
-
 	public static LVEntryLocalizationVersionSoap toSoapModel(
 		LVEntryLocalizationVersion model) {
+		LVEntryLocalizationVersionSoap soapModel = new LVEntryLocalizationVersionSoap();
 
-		LVEntryLocalizationVersionSoap soapModel =
-			new LVEntryLocalizationVersionSoap();
-
-		soapModel.setLvEntryLocalizationVersionId(
-			model.getLvEntryLocalizationVersionId());
+		soapModel.setLvEntryLocalizationVersionId(model.getLvEntryLocalizationVersionId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setLvEntryLocalizationId(model.getLvEntryLocalizationId());
 		soapModel.setLvEntryId(model.getLvEntryId());
@@ -50,9 +46,7 @@ public class LVEntryLocalizationVersionSoap implements Serializable {
 
 	public static LVEntryLocalizationVersionSoap[] toSoapModels(
 		LVEntryLocalizationVersion[] models) {
-
-		LVEntryLocalizationVersionSoap[] soapModels =
-			new LVEntryLocalizationVersionSoap[models.length];
+		LVEntryLocalizationVersionSoap[] soapModels = new LVEntryLocalizationVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,13 +57,10 @@ public class LVEntryLocalizationVersionSoap implements Serializable {
 
 	public static LVEntryLocalizationVersionSoap[][] toSoapModels(
 		LVEntryLocalizationVersion[][] models) {
-
 		LVEntryLocalizationVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new LVEntryLocalizationVersionSoap
-					[models.length][models[0].length];
+			soapModels = new LVEntryLocalizationVersionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LVEntryLocalizationVersionSoap[0][0];
@@ -84,16 +75,13 @@ public class LVEntryLocalizationVersionSoap implements Serializable {
 
 	public static LVEntryLocalizationVersionSoap[] toSoapModels(
 		List<LVEntryLocalizationVersion> models) {
-
-		List<LVEntryLocalizationVersionSoap> soapModels =
-			new ArrayList<LVEntryLocalizationVersionSoap>(models.size());
+		List<LVEntryLocalizationVersionSoap> soapModels = new ArrayList<LVEntryLocalizationVersionSoap>(models.size());
 
 		for (LVEntryLocalizationVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new LVEntryLocalizationVersionSoap[soapModels.size()]);
+		return soapModels.toArray(new LVEntryLocalizationVersionSoap[soapModels.size()]);
 	}
 
 	public LVEntryLocalizationVersionSoap() {
@@ -113,7 +101,6 @@ public class LVEntryLocalizationVersionSoap implements Serializable {
 
 	public void setLvEntryLocalizationVersionId(
 		long lvEntryLocalizationVersionId) {
-
 		_lvEntryLocalizationVersionId = lvEntryLocalizationVersionId;
 	}
 
@@ -172,5 +159,4 @@ public class LVEntryLocalizationVersionSoap implements Serializable {
 	private String _languageId;
 	private String _title;
 	private String _content;
-
 }

@@ -65,24 +65,17 @@ import java.rmi.RemoteException;
 @Deprecated
 @ProviderType
 public class KaleoDefinitionServiceSoap {
-
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap[]
-			getKaleoDefinitions(int start, int end)
-		throws RemoteException {
-
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap[] getKaleoDefinitions(
+		int start, int end) throws RemoteException {
 		try {
-			java.util.List
-				<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-					returnValue =
-						KaleoDefinitionServiceUtil.getKaleoDefinitions(
-							start, end);
+			java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> returnValue =
+				KaleoDefinitionServiceUtil.getKaleoDefinitions(start, end);
 
-			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.
-				toSoapModels(returnValue);
+			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -92,22 +85,17 @@ public class KaleoDefinitionServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap[]
-			getKaleoDefinitions(long companyId, int start, int end)
-		throws RemoteException {
-
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap[] getKaleoDefinitions(
+		long companyId, int start, int end) throws RemoteException {
 		try {
-			java.util.List
-				<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-					returnValue =
-						KaleoDefinitionServiceUtil.getKaleoDefinitions(
-							companyId, start, end);
+			java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> returnValue =
+				KaleoDefinitionServiceUtil.getKaleoDefinitions(companyId,
+					start, end);
 
-			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.
-				toSoapModels(returnValue);
+			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -116,7 +104,5 @@ public class KaleoDefinitionServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		KaleoDefinitionServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(KaleoDefinitionServiceSoap.class);
 }

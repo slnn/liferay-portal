@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -33,6 +34,15 @@ import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -44,27 +54,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class BigDecimalEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.tools.service.builder.test.service"));
 
 	@Before
@@ -104,8 +103,7 @@ public class BigDecimalEntryPersistenceTest {
 
 		_persistence.remove(newBigDecimalEntry);
 
-		BigDecimalEntry existingBigDecimalEntry =
-			_persistence.fetchByPrimaryKey(newBigDecimalEntry.getPrimaryKey());
+		BigDecimalEntry existingBigDecimalEntry = _persistence.fetchByPrimaryKey(newBigDecimalEntry.getPrimaryKey());
 
 		Assert.assertNull(existingBigDecimalEntry);
 	}
@@ -121,19 +119,16 @@ public class BigDecimalEntryPersistenceTest {
 
 		BigDecimalEntry newBigDecimalEntry = _persistence.create(pk);
 
-		newBigDecimalEntry.setBigDecimalValue(
-			new BigDecimal(RandomTestUtil.nextDouble()));
+		newBigDecimalEntry.setBigDecimalValue(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		_bigDecimalEntries.add(_persistence.update(newBigDecimalEntry));
 
-		BigDecimalEntry existingBigDecimalEntry = _persistence.findByPrimaryKey(
-			newBigDecimalEntry.getPrimaryKey());
+		BigDecimalEntry existingBigDecimalEntry = _persistence.findByPrimaryKey(newBigDecimalEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingBigDecimalEntry.getBigDecimalEntryId(),
+		Assert.assertEquals(existingBigDecimalEntry.getBigDecimalEntryId(),
 			newBigDecimalEntry.getBigDecimalEntryId());
-		Assert.assertEquals(
-			existingBigDecimalEntry.getBigDecimalValue(),
+		Assert.assertEquals(existingBigDecimalEntry.getBigDecimalValue(),
 			newBigDecimalEntry.getBigDecimalValue());
 	}
 
@@ -162,8 +157,7 @@ public class BigDecimalEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BigDecimalEntry newBigDecimalEntry = addBigDecimalEntry();
 
-		BigDecimalEntry existingBigDecimalEntry = _persistence.findByPrimaryKey(
-			newBigDecimalEntry.getPrimaryKey());
+		BigDecimalEntry existingBigDecimalEntry = _persistence.findByPrimaryKey(newBigDecimalEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingBigDecimalEntry, newBigDecimalEntry);
 	}
@@ -177,22 +171,20 @@ public class BigDecimalEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<BigDecimalEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"BigDecimalEntry", "bigDecimalEntryId", true, "bigDecimalValue",
-			true);
+		return OrderByComparatorFactoryUtil.create("BigDecimalEntry",
+			"bigDecimalEntryId", true, "bigDecimalValue", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BigDecimalEntry newBigDecimalEntry = addBigDecimalEntry();
 
-		BigDecimalEntry existingBigDecimalEntry =
-			_persistence.fetchByPrimaryKey(newBigDecimalEntry.getPrimaryKey());
+		BigDecimalEntry existingBigDecimalEntry = _persistence.fetchByPrimaryKey(newBigDecimalEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingBigDecimalEntry, newBigDecimalEntry);
 	}
@@ -201,8 +193,7 @@ public class BigDecimalEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		BigDecimalEntry missingBigDecimalEntry = _persistence.fetchByPrimaryKey(
-			pk);
+		BigDecimalEntry missingBigDecimalEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingBigDecimalEntry);
 	}
@@ -210,7 +201,6 @@ public class BigDecimalEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		BigDecimalEntry newBigDecimalEntry1 = addBigDecimalEntry();
 		BigDecimalEntry newBigDecimalEntry2 = addBigDecimalEntry();
 
@@ -219,22 +209,18 @@ public class BigDecimalEntryPersistenceTest {
 		primaryKeys.add(newBigDecimalEntry1.getPrimaryKey());
 		primaryKeys.add(newBigDecimalEntry2.getPrimaryKey());
 
-		Map<Serializable, BigDecimalEntry> bigDecimalEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BigDecimalEntry> bigDecimalEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, bigDecimalEntries.size());
-		Assert.assertEquals(
-			newBigDecimalEntry1,
+		Assert.assertEquals(newBigDecimalEntry1,
 			bigDecimalEntries.get(newBigDecimalEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newBigDecimalEntry2,
+		Assert.assertEquals(newBigDecimalEntry2,
 			bigDecimalEntries.get(newBigDecimalEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -244,8 +230,7 @@ public class BigDecimalEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, BigDecimalEntry> bigDecimalEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BigDecimalEntry> bigDecimalEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(bigDecimalEntries.isEmpty());
 	}
@@ -253,7 +238,6 @@ public class BigDecimalEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		BigDecimalEntry newBigDecimalEntry = addBigDecimalEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -263,56 +247,51 @@ public class BigDecimalEntryPersistenceTest {
 		primaryKeys.add(newBigDecimalEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, BigDecimalEntry> bigDecimalEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BigDecimalEntry> bigDecimalEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, bigDecimalEntries.size());
-		Assert.assertEquals(
-			newBigDecimalEntry,
+		Assert.assertEquals(newBigDecimalEntry,
 			bigDecimalEntries.get(newBigDecimalEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BigDecimalEntry> bigDecimalEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BigDecimalEntry> bigDecimalEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(bigDecimalEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		BigDecimalEntry newBigDecimalEntry = addBigDecimalEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newBigDecimalEntry.getPrimaryKey());
 
-		Map<Serializable, BigDecimalEntry> bigDecimalEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BigDecimalEntry> bigDecimalEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, bigDecimalEntries.size());
-		Assert.assertEquals(
-			newBigDecimalEntry,
+		Assert.assertEquals(newBigDecimalEntry,
 			bigDecimalEntries.get(newBigDecimalEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		BigDecimalEntry newBigDecimalEntry = addBigDecimalEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BigDecimalEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BigDecimalEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"bigDecimalEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("bigDecimalEntryId",
 				newBigDecimalEntry.getBigDecimalEntryId()));
 
-		List<BigDecimalEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<BigDecimalEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -323,34 +302,32 @@ public class BigDecimalEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BigDecimalEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BigDecimalEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"bigDecimalEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("bigDecimalEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<BigDecimalEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<BigDecimalEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		BigDecimalEntry newBigDecimalEntry = addBigDecimalEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BigDecimalEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BigDecimalEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("bigDecimalEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"bigDecimalEntryId"));
 
 		Object newBigDecimalEntryId = newBigDecimalEntry.getBigDecimalEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"bigDecimalEntryId", new Object[] {newBigDecimalEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("bigDecimalEntryId",
+				new Object[] { newBigDecimalEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -363,15 +340,14 @@ public class BigDecimalEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BigDecimalEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BigDecimalEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("bigDecimalEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"bigDecimalEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"bigDecimalEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("bigDecimalEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -383,17 +359,15 @@ public class BigDecimalEntryPersistenceTest {
 
 		BigDecimalEntry bigDecimalEntry = _persistence.create(pk);
 
-		bigDecimalEntry.setBigDecimalValue(
-			new BigDecimal(RandomTestUtil.nextDouble()));
+		bigDecimalEntry.setBigDecimalValue(new BigDecimal(
+				RandomTestUtil.nextDouble()));
 
 		_bigDecimalEntries.add(_persistence.update(bigDecimalEntry));
 
 		return bigDecimalEntry;
 	}
 
-	private List<BigDecimalEntry> _bigDecimalEntries =
-		new ArrayList<BigDecimalEntry>();
+	private List<BigDecimalEntry> _bigDecimalEntries = new ArrayList<BigDecimalEntry>();
 	private BigDecimalEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

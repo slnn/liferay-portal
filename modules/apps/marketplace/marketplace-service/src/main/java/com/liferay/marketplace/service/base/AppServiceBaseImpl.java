@@ -18,6 +18,7 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppService;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -44,9 +45,8 @@ import javax.sql.DataSource;
  * @see com.liferay.marketplace.service.impl.AppServiceImpl
  * @generated
  */
-public abstract class AppServiceBaseImpl
-	extends BaseServiceImpl implements AppService, IdentifiableOSGiService {
-
+public abstract class AppServiceBaseImpl extends BaseServiceImpl
+	implements AppService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,9 +58,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the app local service
 	 */
-	public com.liferay.marketplace.service.AppLocalService
-		getAppLocalService() {
-
+	public com.liferay.marketplace.service.AppLocalService getAppLocalService() {
 		return appLocalService;
 	}
 
@@ -71,7 +69,6 @@ public abstract class AppServiceBaseImpl
 	 */
 	public void setAppLocalService(
 		com.liferay.marketplace.service.AppLocalService appLocalService) {
-
 		this.appLocalService = appLocalService;
 	}
 
@@ -116,9 +113,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the module local service
 	 */
-	public com.liferay.marketplace.service.ModuleLocalService
-		getModuleLocalService() {
-
+	public com.liferay.marketplace.service.ModuleLocalService getModuleLocalService() {
 		return moduleLocalService;
 	}
 
@@ -129,7 +124,6 @@ public abstract class AppServiceBaseImpl
 	 */
 	public void setModuleLocalService(
 		com.liferay.marketplace.service.ModuleLocalService moduleLocalService) {
-
 		this.moduleLocalService = moduleLocalService;
 	}
 
@@ -156,9 +150,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -168,9 +160,7 @@ public abstract class AppServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -179,9 +169,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -191,9 +179,7 @@ public abstract class AppServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -202,9 +188,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -215,7 +199,6 @@ public abstract class AppServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -235,7 +218,6 @@ public abstract class AppServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -244,9 +226,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -256,9 +236,7 @@ public abstract class AppServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -267,9 +245,7 @@ public abstract class AppServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -280,7 +256,6 @@ public abstract class AppServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -300,7 +275,6 @@ public abstract class AppServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -360,8 +334,8 @@ public abstract class AppServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -372,61 +346,28 @@ public abstract class AppServiceBaseImpl
 
 	@BeanReference(type = com.liferay.marketplace.service.AppLocalService.class)
 	protected com.liferay.marketplace.service.AppLocalService appLocalService;
-
 	@BeanReference(type = AppService.class)
 	protected AppService appService;
-
 	@BeanReference(type = AppPersistence.class)
 	protected AppPersistence appPersistence;
-
-	@BeanReference(
-		type = com.liferay.marketplace.service.ModuleLocalService.class
-	)
-	protected com.liferay.marketplace.service.ModuleLocalService
-		moduleLocalService;
-
+	@BeanReference(type = com.liferay.marketplace.service.ModuleLocalService.class)
+	protected com.liferay.marketplace.service.ModuleLocalService moduleLocalService;
 	@BeanReference(type = ModulePersistence.class)
 	protected ModulePersistence modulePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 }

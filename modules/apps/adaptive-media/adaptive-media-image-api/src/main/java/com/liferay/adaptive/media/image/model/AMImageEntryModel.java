@@ -34,9 +34,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AMImageEntryModel
-	extends BaseModel<AMImageEntry>, ShardedModel {
-
+public interface AMImageEntryModel extends BaseModel<AMImageEntry>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -215,5 +213,4 @@ public interface AMImageEntryModel
 	 * @param size the size of this am image entry
 	 */
 	public void setSize(long size);
-
 }

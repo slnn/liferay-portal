@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
 import com.liferay.segments.model.SegmentsExperience;
 
 import java.io.Serializable;
@@ -53,47 +54,43 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface SegmentsExperienceLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface SegmentsExperienceLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsExperienceLocalServiceUtil} to access the segments experience local service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperienceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, int priority, boolean active,
-			ServiceContext serviceContext)
+	public SegmentsExperience addSegmentsExperience(long segmentsEntryId,
+		long classNameId, long classPK, Map<Locale, String> nameMap,
+		int priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Adds the segments experience to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsExperience the segments experience
-	 * @return the segments experience that was added
-	 */
+	* Adds the segments experience to the database. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsExperience the segments experience
+	* @return the segments experience that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsExperience addSegmentsExperience(
 		SegmentsExperience segmentsExperience);
 
 	/**
-	 * Creates a new segments experience with the primary key. Does not add the segments experience to the database.
-	 *
-	 * @param segmentsExperienceId the primary key for the new segments experience
-	 * @return the new segments experience
-	 */
+	* Creates a new segments experience with the primary key. Does not add the segments experience to the database.
+	*
+	* @param segmentsExperienceId the primary key for the new segments experience
+	* @return the new segments experience
+	*/
 	@Transactional(enabled = false)
 	public SegmentsExperience createSegmentsExperience(
 		long segmentsExperienceId);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -102,109 +99,103 @@ public interface SegmentsExperienceLocalService
 		throws PortalException;
 
 	/**
-	 * Deletes the segments experience with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsExperienceId the primary key of the segments experience
-	 * @return the segments experience that was removed
-	 * @throws PortalException if a segments experience with the primary key could not be found
-	 */
+	* Deletes the segments experience with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsExperienceId the primary key of the segments experience
+	* @return the segments experience that was removed
+	* @throws PortalException if a segments experience with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public SegmentsExperience deleteSegmentsExperience(
-			long segmentsExperienceId)
-		throws PortalException;
+		long segmentsExperienceId) throws PortalException;
 
 	/**
-	 * Deletes the segments experience from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsExperience the segments experience
-	 * @return the segments experience that was removed
-	 * @throws PortalException
-	 */
+	* Deletes the segments experience from the database. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsExperience the segments experience
+	* @return the segments experience that was removed
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperience deleteSegmentsExperience(
-			SegmentsExperience segmentsExperience)
-		throws PortalException;
+		SegmentsExperience segmentsExperience) throws PortalException;
 
-	public void deleteSegmentsExperiences(
-			long groupId, long classNameId, long classPK)
-		throws PortalException;
+	public void deleteSegmentsExperiences(long groupId, long classNameId,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsExperience fetchDefaultSegmentsExperience(
-			long groupId, long classNameId, long classPK,
-			boolean addDefaultExperience)
+	public SegmentsExperience fetchDefaultSegmentsExperience(long groupId,
+		long classNameId, long classPK, boolean addDefaultExperience)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsExperience fetchSegmentsExperience(
-		long segmentsExperienceId);
+	public SegmentsExperience fetchSegmentsExperience(long segmentsExperienceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -213,10 +204,10 @@ public interface SegmentsExperienceLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -225,91 +216,86 @@ public interface SegmentsExperienceLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the segments experience with the primary key.
-	 *
-	 * @param segmentsExperienceId the primary key of the segments experience
-	 * @return the segments experience
-	 * @throws PortalException if a segments experience with the primary key could not be found
-	 */
+	* Returns the segments experience with the primary key.
+	*
+	* @param segmentsExperienceId the primary key of the segments experience
+	* @return the segments experience
+	* @throws PortalException if a segments experience with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the segments experiences.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of segments experiences
-	 */
+	* Returns a range of all the segments experiences.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of segments experiences
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean addDefaultExperience, int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long classNameId, long classPK, boolean active,
+		boolean addDefaultExperience, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long classNameId, long classPK, boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK, boolean active, boolean addDefaultExperience,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, boolean addDefaultExperience, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK, boolean active, int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException;
 
 	/**
-	 * Returns the number of segments experiences.
-	 *
-	 * @return the number of segments experiences
-	 */
+	* Returns the number of segments experiences.
+	*
+	* @return the number of segments experiences
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperiencesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
-		throws PortalException;
+	public int getSegmentsExperiencesCount(long groupId, long classNameId,
+		long classPK, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean addDefaultExperience)
+	public int getSegmentsExperiencesCount(long groupId, long classNameId,
+		long classPK, boolean active, boolean addDefaultExperience)
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, int priority, boolean active)
+		long segmentsExperienceId, long segmentsEntryId,
+		Map<Locale, String> nameMap, int priority, boolean active)
 		throws PortalException;
 
 	/**
-	 * Updates the segments experience in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsExperience the segments experience
-	 * @return the segments experience that was updated
-	 */
+	* Updates the segments experience in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsExperience the segments experience
+	* @return the segments experience that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsExperience updateSegmentsExperience(
 		SegmentsExperience segmentsExperience);
-
 }

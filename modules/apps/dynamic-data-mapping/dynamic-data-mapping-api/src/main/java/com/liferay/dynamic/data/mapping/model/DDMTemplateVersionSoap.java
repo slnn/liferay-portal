@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class DDMTemplateVersionSoap implements Serializable {
-
 	public static DDMTemplateVersionSoap toSoapModel(DDMTemplateVersion model) {
 		DDMTemplateVersionSoap soapModel = new DDMTemplateVersionSoap();
 
@@ -58,9 +57,7 @@ public class DDMTemplateVersionSoap implements Serializable {
 
 	public static DDMTemplateVersionSoap[] toSoapModels(
 		DDMTemplateVersion[] models) {
-
-		DDMTemplateVersionSoap[] soapModels =
-			new DDMTemplateVersionSoap[models.length];
+		DDMTemplateVersionSoap[] soapModels = new DDMTemplateVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -71,12 +68,10 @@ public class DDMTemplateVersionSoap implements Serializable {
 
 	public static DDMTemplateVersionSoap[][] toSoapModels(
 		DDMTemplateVersion[][] models) {
-
 		DDMTemplateVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new DDMTemplateVersionSoap[models.length][models[0].length];
+			soapModels = new DDMTemplateVersionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new DDMTemplateVersionSoap[0][0];
@@ -91,16 +86,13 @@ public class DDMTemplateVersionSoap implements Serializable {
 
 	public static DDMTemplateVersionSoap[] toSoapModels(
 		List<DDMTemplateVersion> models) {
-
-		List<DDMTemplateVersionSoap> soapModels =
-			new ArrayList<DDMTemplateVersionSoap>(models.size());
+		List<DDMTemplateVersionSoap> soapModels = new ArrayList<DDMTemplateVersionSoap>(models.size());
 
 		for (DDMTemplateVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new DDMTemplateVersionSoap[soapModels.size()]);
+		return soapModels.toArray(new DDMTemplateVersionSoap[soapModels.size()]);
 	}
 
 	public DDMTemplateVersionSoap() {
@@ -276,5 +268,4 @@ public class DDMTemplateVersionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

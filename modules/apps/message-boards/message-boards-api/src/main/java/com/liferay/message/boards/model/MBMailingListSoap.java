@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class MBMailingListSoap implements Serializable {
-
 	public static MBMailingListSoap toSoapModel(MBMailingList model) {
 		MBMailingListSoap soapModel = new MBMailingListSoap();
 
@@ -92,8 +91,7 @@ public class MBMailingListSoap implements Serializable {
 	}
 
 	public static MBMailingListSoap[] toSoapModels(List<MBMailingList> models) {
-		List<MBMailingListSoap> soapModels = new ArrayList<MBMailingListSoap>(
-			models.size());
+		List<MBMailingListSoap> soapModels = new ArrayList<MBMailingListSoap>(models.size());
 
 		for (MBMailingList model : models) {
 			soapModels.add(toSoapModel(model));
@@ -367,5 +365,4 @@ public class MBMailingListSoap implements Serializable {
 	private String _outPassword;
 	private boolean _allowAnonymous;
 	private boolean _active;
-
 }

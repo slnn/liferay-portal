@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class CalendarBookingSoap implements Serializable {
-
 	public static CalendarBookingSoap toSoapModel(CalendarBooking model) {
 		CalendarBookingSoap soapModel = new CalendarBookingSoap();
 
@@ -44,10 +43,8 @@ public class CalendarBookingSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCalendarId(model.getCalendarId());
 		soapModel.setCalendarResourceId(model.getCalendarResourceId());
-		soapModel.setParentCalendarBookingId(
-			model.getParentCalendarBookingId());
-		soapModel.setRecurringCalendarBookingId(
-			model.getRecurringCalendarBookingId());
+		soapModel.setParentCalendarBookingId(model.getParentCalendarBookingId());
+		soapModel.setRecurringCalendarBookingId(model.getRecurringCalendarBookingId());
 		soapModel.setVEventUid(model.getVEventUid());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
@@ -70,8 +67,7 @@ public class CalendarBookingSoap implements Serializable {
 	}
 
 	public static CalendarBookingSoap[] toSoapModels(CalendarBooking[] models) {
-		CalendarBookingSoap[] soapModels =
-			new CalendarBookingSoap[models.length];
+		CalendarBookingSoap[] soapModels = new CalendarBookingSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -82,12 +78,10 @@ public class CalendarBookingSoap implements Serializable {
 
 	public static CalendarBookingSoap[][] toSoapModels(
 		CalendarBooking[][] models) {
-
 		CalendarBookingSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new CalendarBookingSoap[models.length][models[0].length];
+			soapModels = new CalendarBookingSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new CalendarBookingSoap[0][0];
@@ -102,9 +96,7 @@ public class CalendarBookingSoap implements Serializable {
 
 	public static CalendarBookingSoap[] toSoapModels(
 		List<CalendarBooking> models) {
-
-		List<CalendarBookingSoap> soapModels =
-			new ArrayList<CalendarBookingSoap>(models.size());
+		List<CalendarBookingSoap> soapModels = new ArrayList<CalendarBookingSoap>(models.size());
 
 		for (CalendarBooking model : models) {
 			soapModels.add(toSoapModel(model));
@@ -389,5 +381,4 @@ public class CalendarBookingSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDLRecordModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl")
 @ProviderType
 public interface DDLRecord extends DDLRecordModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDLRecord, Long> RECORD_ID_ACCESSOR =
-		new Accessor<DDLRecord, Long>() {
-
+	public static final Accessor<DDLRecord, Long> RECORD_ID_ACCESSOR = new Accessor<DDLRecord, Long>() {
 			@Override
 			public Long get(DDLRecord ddlRecord) {
 				return ddlRecord.getRecordId();
@@ -55,22 +50,20 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 			public Class<DDLRecord> getTypeClass() {
 				return DDLRecord.class;
 			}
-
 		};
 
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue>
-				getDDMFormFieldValues(String fieldName)
-			throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.List<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
+		String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-			getDDMFormValues()
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.io.Serializable getFieldDataType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.io.Serializable getFieldType(String fieldName) throws Exception;
+	public java.io.Serializable getFieldType(String fieldName)
+		throws Exception;
 
 	public DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -86,5 +79,4 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 
 	public int getStatus()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

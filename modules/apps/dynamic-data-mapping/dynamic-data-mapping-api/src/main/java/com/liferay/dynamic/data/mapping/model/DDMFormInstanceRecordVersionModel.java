@@ -35,10 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DDMFormInstanceRecordVersionModel
-	extends BaseModel<DDMFormInstanceRecordVersion>, ShardedModel,
-			WorkflowedModel {
-
+public interface DDMFormInstanceRecordVersionModel extends BaseModel<DDMFormInstanceRecordVersion>,
+	ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,8 +69,7 @@ public interface DDMFormInstanceRecordVersionModel
 	 *
 	 * @param formInstanceRecordVersionId the form instance record version ID of this ddm form instance record version
 	 */
-	public void setFormInstanceRecordVersionId(
-		long formInstanceRecordVersionId);
+	public void setFormInstanceRecordVersionId(long formInstanceRecordVersionId);
 
 	/**
 	 * Returns the group ID of this ddm form instance record version.
@@ -377,5 +374,4 @@ public interface DDMFormInstanceRecordVersionModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

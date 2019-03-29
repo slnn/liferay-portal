@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
 import com.liferay.sync.model.SyncDevice;
 
 /**
@@ -37,20 +38,12 @@ import com.liferay.sync.model.SyncDevice;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=sync",
-		"json.web.service.context.path=SyncDevice"
-	},
-	service = SyncDeviceService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=sync", "json.web.service.context.path=SyncDevice"}, service = SyncDeviceService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface SyncDeviceService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,16 +51,14 @@ public interface SyncDeviceService extends BaseService {
 	 */
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
-	public SyncDevice registerSyncDevice(
-			String type, long buildNumber, int featureSet, String uuid)
-		throws PortalException;
+	public SyncDevice registerSyncDevice(String type, long buildNumber,
+		int featureSet, String uuid) throws PortalException;
 
 	public void unregisterSyncDevice(String uuid) throws PortalException;
-
 }

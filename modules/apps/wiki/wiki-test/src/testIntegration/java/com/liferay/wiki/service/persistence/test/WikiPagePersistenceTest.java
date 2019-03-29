@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -33,11 +34,21 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
 import com.liferay.wiki.service.persistence.WikiPageUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -49,27 +60,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class WikiPagePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.wiki.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.wiki.service"));
 
 	@Before
 	public void setUp() {
@@ -108,8 +109,7 @@ public class WikiPagePersistenceTest {
 
 		_persistence.remove(newWikiPage);
 
-		WikiPage existingWikiPage = _persistence.fetchByPrimaryKey(
-			newWikiPage.getPrimaryKey());
+		WikiPage existingWikiPage = _persistence.fetchByPrimaryKey(newWikiPage.getPrimaryKey());
 
 		Assert.assertNull(existingWikiPage);
 	}
@@ -173,62 +173,56 @@ public class WikiPagePersistenceTest {
 
 		_wikiPages.add(_persistence.update(newWikiPage));
 
-		WikiPage existingWikiPage = _persistence.findByPrimaryKey(
-			newWikiPage.getPrimaryKey());
+		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
 		Assert.assertEquals(existingWikiPage.getUuid(), newWikiPage.getUuid());
-		Assert.assertEquals(
-			existingWikiPage.getPageId(), newWikiPage.getPageId());
-		Assert.assertEquals(
-			existingWikiPage.getResourcePrimKey(),
+		Assert.assertEquals(existingWikiPage.getPageId(),
+			newWikiPage.getPageId());
+		Assert.assertEquals(existingWikiPage.getResourcePrimKey(),
 			newWikiPage.getResourcePrimKey());
-		Assert.assertEquals(
-			existingWikiPage.getGroupId(), newWikiPage.getGroupId());
-		Assert.assertEquals(
-			existingWikiPage.getCompanyId(), newWikiPage.getCompanyId());
-		Assert.assertEquals(
-			existingWikiPage.getUserId(), newWikiPage.getUserId());
-		Assert.assertEquals(
-			existingWikiPage.getUserName(), newWikiPage.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiPage.getCreateDate()),
+		Assert.assertEquals(existingWikiPage.getGroupId(),
+			newWikiPage.getGroupId());
+		Assert.assertEquals(existingWikiPage.getCompanyId(),
+			newWikiPage.getCompanyId());
+		Assert.assertEquals(existingWikiPage.getUserId(),
+			newWikiPage.getUserId());
+		Assert.assertEquals(existingWikiPage.getUserName(),
+			newWikiPage.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getCreateDate()),
 			Time.getShortTimestamp(newWikiPage.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiPage.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getModifiedDate()),
 			Time.getShortTimestamp(newWikiPage.getModifiedDate()));
-		Assert.assertEquals(
-			existingWikiPage.getNodeId(), newWikiPage.getNodeId());
-		Assert.assertEquals(
-			existingWikiPage.getTitle(), newWikiPage.getTitle());
-		AssertUtils.assertEquals(
-			existingWikiPage.getVersion(), newWikiPage.getVersion());
-		Assert.assertEquals(
-			existingWikiPage.isMinorEdit(), newWikiPage.isMinorEdit());
-		Assert.assertEquals(
-			existingWikiPage.getContent(), newWikiPage.getContent());
-		Assert.assertEquals(
-			existingWikiPage.getSummary(), newWikiPage.getSummary());
-		Assert.assertEquals(
-			existingWikiPage.getFormat(), newWikiPage.getFormat());
+		Assert.assertEquals(existingWikiPage.getNodeId(),
+			newWikiPage.getNodeId());
+		Assert.assertEquals(existingWikiPage.getTitle(), newWikiPage.getTitle());
+		AssertUtils.assertEquals(existingWikiPage.getVersion(),
+			newWikiPage.getVersion());
+		Assert.assertEquals(existingWikiPage.isMinorEdit(),
+			newWikiPage.isMinorEdit());
+		Assert.assertEquals(existingWikiPage.getContent(),
+			newWikiPage.getContent());
+		Assert.assertEquals(existingWikiPage.getSummary(),
+			newWikiPage.getSummary());
+		Assert.assertEquals(existingWikiPage.getFormat(),
+			newWikiPage.getFormat());
 		Assert.assertEquals(existingWikiPage.isHead(), newWikiPage.isHead());
-		Assert.assertEquals(
-			existingWikiPage.getParentTitle(), newWikiPage.getParentTitle());
-		Assert.assertEquals(
-			existingWikiPage.getRedirectTitle(),
+		Assert.assertEquals(existingWikiPage.getParentTitle(),
+			newWikiPage.getParentTitle());
+		Assert.assertEquals(existingWikiPage.getRedirectTitle(),
 			newWikiPage.getRedirectTitle());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiPage.getLastPublishDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getLastPublishDate()),
 			Time.getShortTimestamp(newWikiPage.getLastPublishDate()));
-		Assert.assertEquals(
-			existingWikiPage.getStatus(), newWikiPage.getStatus());
-		Assert.assertEquals(
-			existingWikiPage.getStatusByUserId(),
+		Assert.assertEquals(existingWikiPage.getStatus(),
+			newWikiPage.getStatus());
+		Assert.assertEquals(existingWikiPage.getStatusByUserId(),
 			newWikiPage.getStatusByUserId());
-		Assert.assertEquals(
-			existingWikiPage.getStatusByUserName(),
+		Assert.assertEquals(existingWikiPage.getStatusByUserName(),
 			newWikiPage.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingWikiPage.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getStatusDate()),
 			Time.getShortTimestamp(newWikiPage.getStatusDate()));
 	}
 
@@ -284,16 +278,16 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testCountByR_N() throws Exception {
-		_persistence.countByR_N(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByR_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByR_N(0L, 0L);
 	}
 
 	@Test
 	public void testCountByR_S() throws Exception {
-		_persistence.countByR_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByR_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByR_S(0L, 0);
 	}
@@ -309,8 +303,8 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testCountByN_H() throws Exception {
-		_persistence.countByN_H(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+		_persistence.countByN_H(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByN_H(0L, RandomTestUtil.randomBoolean());
 	}
@@ -335,70 +329,64 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testCountByN_S() throws Exception {
-		_persistence.countByN_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByN_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByN_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByR_N_V() throws Exception {
-		_persistence.countByR_N_V(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDouble());
+		_persistence.countByR_N_V(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextDouble());
 
 		_persistence.countByR_N_V(0L, 0L, 0D);
 	}
 
 	@Test
 	public void testCountByR_N_H() throws Exception {
-		_persistence.countByR_N_H(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByR_N_H(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByR_N_H(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByR_N_S() throws Exception {
-		_persistence.countByR_N_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByR_N_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByR_N_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_N_H() throws Exception {
-		_persistence.countByG_N_H(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_N_H(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_N_H(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_N_S() throws Exception {
-		_persistence.countByG_N_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_N_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_N_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByU_N_S() throws Exception {
-		_persistence.countByU_N_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByU_N_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByU_N_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByN_T_V() throws Exception {
-		_persistence.countByN_T_V(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextDouble());
+		_persistence.countByN_T_V(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextDouble());
 
 		_persistence.countByN_T_V(0L, "null", 0D);
 
@@ -407,19 +395,19 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testCountByN_T_H() throws Exception {
-		_persistence.countByN_T_H(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+		_persistence.countByN_T_H(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByN_T_H(0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByN_T_H(
-			0L, (String)null, RandomTestUtil.randomBoolean());
+		_persistence.countByN_T_H(0L, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByN_T_S() throws Exception {
-		_persistence.countByN_T_S(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+		_persistence.countByN_T_S(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
 
 		_persistence.countByN_T_S(0L, "null", 0);
 
@@ -428,146 +416,138 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testCountByN_H_P() throws Exception {
-		_persistence.countByN_H_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+		_persistence.countByN_H_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "");
 
 		_persistence.countByN_H_P(0L, RandomTestUtil.randomBoolean(), "null");
 
-		_persistence.countByN_H_P(
-			0L, RandomTestUtil.randomBoolean(), (String)null);
+		_persistence.countByN_H_P(0L, RandomTestUtil.randomBoolean(),
+			(String)null);
 	}
 
 	@Test
 	public void testCountByN_H_R() throws Exception {
-		_persistence.countByN_H_R(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+		_persistence.countByN_H_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "");
 
 		_persistence.countByN_H_R(0L, RandomTestUtil.randomBoolean(), "null");
 
-		_persistence.countByN_H_R(
-			0L, RandomTestUtil.randomBoolean(), (String)null);
+		_persistence.countByN_H_R(0L, RandomTestUtil.randomBoolean(),
+			(String)null);
 	}
 
 	@Test
 	public void testCountByN_H_S() throws Exception {
-		_persistence.countByN_H_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextInt());
+		_persistence.countByN_H_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
 
 		_persistence.countByN_H_S(0L, RandomTestUtil.randomBoolean(), 0);
 	}
 
 	@Test
 	public void testCountByN_H_NotS() throws Exception {
-		_persistence.countByN_H_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextInt());
+		_persistence.countByN_H_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
 
 		_persistence.countByN_H_NotS(0L, RandomTestUtil.randomBoolean(), 0);
 	}
 
 	@Test
 	public void testCountByG_U_N_S() throws Exception {
-		_persistence.countByG_U_N_S(
+		_persistence.countByG_U_N_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_U_N_S(0L, 0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_N_T_H() throws Exception {
-		_persistence.countByG_N_T_H(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+		_persistence.countByG_N_T_H(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_N_T_H(0L, 0L, "null",
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_N_T_H(
-			0L, 0L, "null", RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_N_T_H(
-			0L, 0L, (String)null, RandomTestUtil.randomBoolean());
+		_persistence.countByG_N_T_H(0L, 0L, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_N_H_S() throws Exception {
-		_persistence.countByG_N_H_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+		_persistence.countByG_N_H_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_N_H_S(0L, 0L, RandomTestUtil.randomBoolean(), 0);
 	}
 
 	@Test
 	public void testCountByN_H_P_S() throws Exception {
-		_persistence.countByN_H_P_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
-			RandomTestUtil.nextInt());
+		_persistence.countByN_H_P_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByN_H_P_S(
-			0L, RandomTestUtil.randomBoolean(), "null", 0);
+		_persistence.countByN_H_P_S(0L, RandomTestUtil.randomBoolean(), "null",
+			0);
 
-		_persistence.countByN_H_P_S(
-			0L, RandomTestUtil.randomBoolean(), (String)null, 0);
+		_persistence.countByN_H_P_S(0L, RandomTestUtil.randomBoolean(),
+			(String)null, 0);
 	}
 
 	@Test
 	public void testCountByN_H_P_NotS() throws Exception {
-		_persistence.countByN_H_P_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
-			RandomTestUtil.nextInt());
+		_persistence.countByN_H_P_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByN_H_P_NotS(
-			0L, RandomTestUtil.randomBoolean(), "null", 0);
+		_persistence.countByN_H_P_NotS(0L, RandomTestUtil.randomBoolean(),
+			"null", 0);
 
-		_persistence.countByN_H_P_NotS(
-			0L, RandomTestUtil.randomBoolean(), (String)null, 0);
+		_persistence.countByN_H_P_NotS(0L, RandomTestUtil.randomBoolean(),
+			(String)null, 0);
 	}
 
 	@Test
 	public void testCountByN_H_R_S() throws Exception {
-		_persistence.countByN_H_R_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
-			RandomTestUtil.nextInt());
+		_persistence.countByN_H_R_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByN_H_R_S(
-			0L, RandomTestUtil.randomBoolean(), "null", 0);
+		_persistence.countByN_H_R_S(0L, RandomTestUtil.randomBoolean(), "null",
+			0);
 
-		_persistence.countByN_H_R_S(
-			0L, RandomTestUtil.randomBoolean(), (String)null, 0);
+		_persistence.countByN_H_R_S(0L, RandomTestUtil.randomBoolean(),
+			(String)null, 0);
 	}
 
 	@Test
 	public void testCountByN_H_R_NotS() throws Exception {
-		_persistence.countByN_H_R_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
-			RandomTestUtil.nextInt());
+		_persistence.countByN_H_R_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByN_H_R_NotS(
-			0L, RandomTestUtil.randomBoolean(), "null", 0);
+		_persistence.countByN_H_R_NotS(0L, RandomTestUtil.randomBoolean(),
+			"null", 0);
 
-		_persistence.countByN_H_R_NotS(
-			0L, RandomTestUtil.randomBoolean(), (String)null, 0);
+		_persistence.countByN_H_R_NotS(0L, RandomTestUtil.randomBoolean(),
+			(String)null, 0);
 	}
 
 	@Test
 	public void testCountByG_N_H_P_S() throws Exception {
-		_persistence.countByG_N_H_P_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), "", RandomTestUtil.nextInt());
+		_persistence.countByG_N_H_P_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
+			RandomTestUtil.nextInt());
 
-		_persistence.countByG_N_H_P_S(
-			0L, 0L, RandomTestUtil.randomBoolean(), "null", 0);
+		_persistence.countByG_N_H_P_S(0L, 0L, RandomTestUtil.randomBoolean(),
+			"null", 0);
 
-		_persistence.countByG_N_H_P_S(
-			0L, 0L, RandomTestUtil.randomBoolean(), (String)null, 0);
+		_persistence.countByG_N_H_P_S(0L, 0L, RandomTestUtil.randomBoolean(),
+			(String)null, 0);
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
-		WikiPage existingWikiPage = _persistence.findByPrimaryKey(
-			newWikiPage.getPrimaryKey());
+		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
 		Assert.assertEquals(existingWikiPage, newWikiPage);
 	}
@@ -581,27 +561,26 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<WikiPage> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"WikiPage", "uuid", true, "pageId", true, "resourcePrimKey", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "nodeId", true,
-			"title", true, "version", true, "minorEdit", true, "summary", true,
-			"format", true, "head", true, "parentTitle", true, "redirectTitle",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+		return OrderByComparatorFactoryUtil.create("WikiPage", "uuid", true,
+			"pageId", true, "resourcePrimKey", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "nodeId", true, "title", true,
+			"version", true, "minorEdit", true, "summary", true, "format",
+			true, "head", true, "parentTitle", true, "redirectTitle", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
-		WikiPage existingWikiPage = _persistence.fetchByPrimaryKey(
-			newWikiPage.getPrimaryKey());
+		WikiPage existingWikiPage = _persistence.fetchByPrimaryKey(newWikiPage.getPrimaryKey());
 
 		Assert.assertEquals(existingWikiPage, newWikiPage);
 	}
@@ -618,7 +597,6 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		WikiPage newWikiPage1 = addWikiPage();
 		WikiPage newWikiPage2 = addWikiPage();
 
@@ -627,20 +605,18 @@ public class WikiPagePersistenceTest {
 		primaryKeys.add(newWikiPage1.getPrimaryKey());
 		primaryKeys.add(newWikiPage2.getPrimaryKey());
 
-		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, wikiPages.size());
-		Assert.assertEquals(
-			newWikiPage1, wikiPages.get(newWikiPage1.getPrimaryKey()));
-		Assert.assertEquals(
-			newWikiPage2, wikiPages.get(newWikiPage2.getPrimaryKey()));
+		Assert.assertEquals(newWikiPage1,
+			wikiPages.get(newWikiPage1.getPrimaryKey()));
+		Assert.assertEquals(newWikiPage2,
+			wikiPages.get(newWikiPage2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -650,8 +626,7 @@ public class WikiPagePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(wikiPages.isEmpty());
 	}
@@ -659,7 +634,6 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		WikiPage newWikiPage = addWikiPage();
 
 		long pk = RandomTestUtil.nextLong();
@@ -669,57 +643,52 @@ public class WikiPagePersistenceTest {
 		primaryKeys.add(newWikiPage.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, wikiPages.size());
-		Assert.assertEquals(
-			newWikiPage, wikiPages.get(newWikiPage.getPrimaryKey()));
+		Assert.assertEquals(newWikiPage,
+			wikiPages.get(newWikiPage.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(wikiPages.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newWikiPage.getPrimaryKey());
 
-		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, WikiPage> wikiPages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, wikiPages.size());
-		Assert.assertEquals(
-			newWikiPage, wikiPages.get(newWikiPage.getPrimaryKey()));
+		Assert.assertEquals(newWikiPage,
+			wikiPages.get(newWikiPage.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = WikiPageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
 				@Override
 				public void performAction(WikiPage wikiPage) {
 					Assert.assertNotNull(wikiPage);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -728,14 +697,15 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("pageId", newWikiPage.getPageId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
+				newWikiPage.getPageId()));
 
 		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -748,11 +718,11 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("pageId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
+				RandomTestUtil.nextLong()));
 
 		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -760,18 +730,19 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("pageId"));
 
 		Object newPageId = newWikiPage.getPageId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("pageId", new Object[] {newPageId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("pageId",
+				new Object[] { newPageId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -784,14 +755,13 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("pageId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"pageId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("pageId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -804,46 +774,34 @@ public class WikiPagePersistenceTest {
 
 		_persistence.clearCache();
 
-		WikiPage existingWikiPage = _persistence.findByPrimaryKey(
-			newWikiPage.getPrimaryKey());
+		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiPage.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingWikiPage, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingWikiPage.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWikiPage, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingWikiPage.getUuid(),
+				ReflectionTestUtil.invoke(existingWikiPage, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingWikiPage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiPage,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingWikiPage.getResourcePrimKey()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWikiPage, "getOriginalResourcePrimKey",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingWikiPage.getNodeId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWikiPage, "getOriginalNodeId", new Class<?>[0]));
-		AssertUtils.assertEquals(
-			existingWikiPage.getVersion(),
-			ReflectionTestUtil.<Double>invoke(
-				existingWikiPage, "getOriginalVersion", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingWikiPage.getResourcePrimKey()),
+			ReflectionTestUtil.<Long>invoke(existingWikiPage,
+				"getOriginalResourcePrimKey", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingWikiPage.getNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiPage,
+				"getOriginalNodeId", new Class<?>[0]));
+		AssertUtils.assertEquals(existingWikiPage.getVersion(),
+			ReflectionTestUtil.<Double>invoke(existingWikiPage,
+				"getOriginalVersion", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingWikiPage.getNodeId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWikiPage, "getOriginalNodeId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiPage.getTitle(),
-				ReflectionTestUtil.invoke(
-					existingWikiPage, "getOriginalTitle", new Class<?>[0])));
-		AssertUtils.assertEquals(
-			existingWikiPage.getVersion(),
-			ReflectionTestUtil.<Double>invoke(
-				existingWikiPage, "getOriginalVersion", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingWikiPage.getNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiPage,
+				"getOriginalNodeId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingWikiPage.getTitle(),
+				ReflectionTestUtil.invoke(existingWikiPage, "getOriginalTitle",
+					new Class<?>[0])));
+		AssertUtils.assertEquals(existingWikiPage.getVersion(),
+			ReflectionTestUtil.<Double>invoke(existingWikiPage,
+				"getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected WikiPage addWikiPage() throws Exception {
@@ -905,5 +863,4 @@ public class WikiPagePersistenceTest {
 	private List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	private WikiPagePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

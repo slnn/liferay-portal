@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +39,15 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionVersionPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionVersionUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +58,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoDefinitionVersionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.service"));
 
 	@Before
@@ -82,8 +81,7 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<KaleoDefinitionVersion> iterator =
-			_kaleoDefinitionVersions.iterator();
+		Iterator<KaleoDefinitionVersion> iterator = _kaleoDefinitionVersions.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -105,14 +103,11 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
 		_persistence.remove(newKaleoDefinitionVersion);
 
-		KaleoDefinitionVersion existingKaleoDefinitionVersion =
-			_persistence.fetchByPrimaryKey(
-				newKaleoDefinitionVersion.getPrimaryKey());
+		KaleoDefinitionVersion existingKaleoDefinitionVersion = _persistence.fetchByPrimaryKey(newKaleoDefinitionVersion.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoDefinitionVersion);
 	}
@@ -126,8 +121,7 @@ public class KaleoDefinitionVersionPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoDefinitionVersion newKaleoDefinitionVersion = _persistence.create(
-			pk);
+		KaleoDefinitionVersion newKaleoDefinitionVersion = _persistence.create(pk);
 
 		newKaleoDefinitionVersion.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -141,8 +135,7 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		newKaleoDefinitionVersion.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newKaleoDefinitionVersion.setStatusByUserName(
-			RandomTestUtil.randomString());
+		newKaleoDefinitionVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		newKaleoDefinitionVersion.setStatusDate(RandomTestUtil.nextDate());
 
@@ -160,75 +153,53 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		newKaleoDefinitionVersion.setVersion(RandomTestUtil.randomString());
 
-		newKaleoDefinitionVersion.setStartKaleoNodeId(
-			RandomTestUtil.nextLong());
+		newKaleoDefinitionVersion.setStartKaleoNodeId(RandomTestUtil.nextLong());
 
 		newKaleoDefinitionVersion.setStatus(RandomTestUtil.nextInt());
 
-		_kaleoDefinitionVersions.add(
-			_persistence.update(newKaleoDefinitionVersion));
+		_kaleoDefinitionVersions.add(_persistence.update(
+				newKaleoDefinitionVersion));
 
-		KaleoDefinitionVersion existingKaleoDefinitionVersion =
-			_persistence.findByPrimaryKey(
-				newKaleoDefinitionVersion.getPrimaryKey());
+		KaleoDefinitionVersion existingKaleoDefinitionVersion = _persistence.findByPrimaryKey(newKaleoDefinitionVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getMvccVersion(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getMvccVersion(),
 			newKaleoDefinitionVersion.getMvccVersion());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getKaleoDefinitionVersionId(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getKaleoDefinitionVersionId(),
 			newKaleoDefinitionVersion.getKaleoDefinitionVersionId());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getGroupId(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getGroupId(),
 			newKaleoDefinitionVersion.getGroupId());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getCompanyId(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getCompanyId(),
 			newKaleoDefinitionVersion.getCompanyId());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getUserId(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getUserId(),
 			newKaleoDefinitionVersion.getUserId());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getUserName(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getUserName(),
 			newKaleoDefinitionVersion.getUserName());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getStatusByUserId(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getStatusByUserId(),
 			newKaleoDefinitionVersion.getStatusByUserId());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getStatusByUserName(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getStatusByUserName(),
 			newKaleoDefinitionVersion.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoDefinitionVersion.getStatusDate()),
 			Time.getShortTimestamp(newKaleoDefinitionVersion.getStatusDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoDefinitionVersion.getCreateDate()),
 			Time.getShortTimestamp(newKaleoDefinitionVersion.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoDefinitionVersion.getModifiedDate()),
-			Time.getShortTimestamp(
-				newKaleoDefinitionVersion.getModifiedDate()));
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getName(),
+			Time.getShortTimestamp(newKaleoDefinitionVersion.getModifiedDate()));
+		Assert.assertEquals(existingKaleoDefinitionVersion.getName(),
 			newKaleoDefinitionVersion.getName());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getTitle(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getTitle(),
 			newKaleoDefinitionVersion.getTitle());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getDescription(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getDescription(),
 			newKaleoDefinitionVersion.getDescription());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getContent(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getContent(),
 			newKaleoDefinitionVersion.getContent());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getVersion(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getVersion(),
 			newKaleoDefinitionVersion.getVersion());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getStartKaleoNodeId(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getStartKaleoNodeId(),
 			newKaleoDefinitionVersion.getStartKaleoNodeId());
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion.getStatus(),
+		Assert.assertEquals(existingKaleoDefinitionVersion.getStatus(),
 			newKaleoDefinitionVersion.getStatus());
 	}
 
@@ -259,15 +230,12 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
-		KaleoDefinitionVersion existingKaleoDefinitionVersion =
-			_persistence.findByPrimaryKey(
-				newKaleoDefinitionVersion.getPrimaryKey());
+		KaleoDefinitionVersion existingKaleoDefinitionVersion = _persistence.findByPrimaryKey(newKaleoDefinitionVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion, newKaleoDefinitionVersion);
+		Assert.assertEquals(existingKaleoDefinitionVersion,
+			newKaleoDefinitionVersion);
 	}
 
 	@Test(expected = NoSuchDefinitionVersionException.class)
@@ -279,39 +247,35 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<KaleoDefinitionVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"KaleoDefinitionVersion", "mvccVersion", true,
-			"kaleoDefinitionVersionId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true, "createDate", true,
-			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "version", true, "startKaleoNodeId", true, "status", true);
+		return OrderByComparatorFactoryUtil.create("KaleoDefinitionVersion",
+			"mvccVersion", true, "kaleoDefinitionVersionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"title", true, "description", true, "version", true,
+			"startKaleoNodeId", true, "status", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
-		KaleoDefinitionVersion existingKaleoDefinitionVersion =
-			_persistence.fetchByPrimaryKey(
-				newKaleoDefinitionVersion.getPrimaryKey());
+		KaleoDefinitionVersion existingKaleoDefinitionVersion = _persistence.fetchByPrimaryKey(newKaleoDefinitionVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion, newKaleoDefinitionVersion);
+		Assert.assertEquals(existingKaleoDefinitionVersion,
+			newKaleoDefinitionVersion);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoDefinitionVersion missingKaleoDefinitionVersion =
-			_persistence.fetchByPrimaryKey(pk);
+		KaleoDefinitionVersion missingKaleoDefinitionVersion = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingKaleoDefinitionVersion);
 	}
@@ -319,27 +283,21 @@ public class KaleoDefinitionVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		KaleoDefinitionVersion newKaleoDefinitionVersion1 =
-			addKaleoDefinitionVersion();
-		KaleoDefinitionVersion newKaleoDefinitionVersion2 =
-			addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion1 = addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion2 = addKaleoDefinitionVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoDefinitionVersion1.getPrimaryKey());
 		primaryKeys.add(newKaleoDefinitionVersion2.getPrimaryKey());
 
-		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoDefinitionVersions.size());
-		Assert.assertEquals(
-			newKaleoDefinitionVersion1,
+		Assert.assertEquals(newKaleoDefinitionVersion1,
 			kaleoDefinitionVersions.get(
 				newKaleoDefinitionVersion1.getPrimaryKey()));
-		Assert.assertEquals(
-			newKaleoDefinitionVersion2,
+		Assert.assertEquals(newKaleoDefinitionVersion2,
 			kaleoDefinitionVersions.get(
 				newKaleoDefinitionVersion2.getPrimaryKey()));
 	}
@@ -347,7 +305,6 @@ public class KaleoDefinitionVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -357,8 +314,7 @@ public class KaleoDefinitionVersionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoDefinitionVersions.isEmpty());
 	}
@@ -366,9 +322,7 @@ public class KaleoDefinitionVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -377,41 +331,37 @@ public class KaleoDefinitionVersionPersistenceTest {
 		primaryKeys.add(newKaleoDefinitionVersion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoDefinitionVersions.size());
-		Assert.assertEquals(
-			newKaleoDefinitionVersion,
+		Assert.assertEquals(newKaleoDefinitionVersion,
 			kaleoDefinitionVersions.get(
 				newKaleoDefinitionVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoDefinitionVersions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoDefinitionVersion.getPrimaryKey());
 
-		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoDefinitionVersion> kaleoDefinitionVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoDefinitionVersions.size());
-		Assert.assertEquals(
-			newKaleoDefinitionVersion,
+		Assert.assertEquals(newKaleoDefinitionVersion,
 			kaleoDefinitionVersions.get(
 				newKaleoDefinitionVersion.getPrimaryKey()));
 	}
@@ -420,22 +370,16 @@ public class KaleoDefinitionVersionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			KaleoDefinitionVersionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = KaleoDefinitionVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<KaleoDefinitionVersion>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoDefinitionVersion>() {
 				@Override
 				public void performAction(
 					KaleoDefinitionVersion kaleoDefinitionVersion) {
-
 					Assert.assertNotNull(kaleoDefinitionVersion);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -444,62 +388,56 @@ public class KaleoDefinitionVersionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoDefinitionVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoDefinitionVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"kaleoDefinitionVersionId",
 				newKaleoDefinitionVersion.getKaleoDefinitionVersionId()));
 
-		List<KaleoDefinitionVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoDefinitionVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		KaleoDefinitionVersion existingKaleoDefinitionVersion = result.get(0);
 
-		Assert.assertEquals(
-			existingKaleoDefinitionVersion, newKaleoDefinitionVersion);
+		Assert.assertEquals(existingKaleoDefinitionVersion,
+			newKaleoDefinitionVersion);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoDefinitionVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoDefinitionVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"kaleoDefinitionVersionId", RandomTestUtil.nextLong()));
 
-		List<KaleoDefinitionVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoDefinitionVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoDefinitionVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoDefinitionVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoDefinitionVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoDefinitionVersionId"));
 
-		Object newKaleoDefinitionVersionId =
-			newKaleoDefinitionVersion.getKaleoDefinitionVersionId();
+		Object newKaleoDefinitionVersionId = newKaleoDefinitionVersion.getKaleoDefinitionVersionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"kaleoDefinitionVersionId",
-				new Object[] {newKaleoDefinitionVersionId}));
+				new Object[] { newKaleoDefinitionVersionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -507,22 +445,21 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		Object existingKaleoDefinitionVersionId = result.get(0);
 
-		Assert.assertEquals(
-			existingKaleoDefinitionVersionId, newKaleoDefinitionVersionId);
+		Assert.assertEquals(existingKaleoDefinitionVersionId,
+			newKaleoDefinitionVersionId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoDefinitionVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoDefinitionVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoDefinitionVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoDefinitionVersionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"kaleoDefinitionVersionId",
-				new Object[] {RandomTestUtil.nextLong()}));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -531,37 +468,28 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		KaleoDefinitionVersion newKaleoDefinitionVersion =
-			addKaleoDefinitionVersion();
+		KaleoDefinitionVersion newKaleoDefinitionVersion = addKaleoDefinitionVersion();
 
 		_persistence.clearCache();
 
-		KaleoDefinitionVersion existingKaleoDefinitionVersion =
-			_persistence.findByPrimaryKey(
-				newKaleoDefinitionVersion.getPrimaryKey());
+		KaleoDefinitionVersion existingKaleoDefinitionVersion = _persistence.findByPrimaryKey(newKaleoDefinitionVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingKaleoDefinitionVersion.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKaleoDefinitionVersion, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingKaleoDefinitionVersion.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoDefinitionVersion,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingKaleoDefinitionVersion.getName(),
-				ReflectionTestUtil.invoke(
-					existingKaleoDefinitionVersion, "getOriginalName",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
+				ReflectionTestUtil.invoke(existingKaleoDefinitionVersion,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(
 				existingKaleoDefinitionVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingKaleoDefinitionVersion, "getOriginalVersion",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingKaleoDefinitionVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected KaleoDefinitionVersion addKaleoDefinitionVersion()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoDefinitionVersion kaleoDefinitionVersion = _persistence.create(pk);
@@ -578,8 +506,7 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		kaleoDefinitionVersion.setStatusByUserId(RandomTestUtil.nextLong());
 
-		kaleoDefinitionVersion.setStatusByUserName(
-			RandomTestUtil.randomString());
+		kaleoDefinitionVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		kaleoDefinitionVersion.setStatusDate(RandomTestUtil.nextDate());
 
@@ -601,15 +528,12 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		kaleoDefinitionVersion.setStatus(RandomTestUtil.nextInt());
 
-		_kaleoDefinitionVersions.add(
-			_persistence.update(kaleoDefinitionVersion));
+		_kaleoDefinitionVersions.add(_persistence.update(kaleoDefinitionVersion));
 
 		return kaleoDefinitionVersion;
 	}
 
-	private List<KaleoDefinitionVersion> _kaleoDefinitionVersions =
-		new ArrayList<KaleoDefinitionVersion>();
+	private List<KaleoDefinitionVersion> _kaleoDefinitionVersions = new ArrayList<KaleoDefinitionVersion>();
 	private KaleoDefinitionVersionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

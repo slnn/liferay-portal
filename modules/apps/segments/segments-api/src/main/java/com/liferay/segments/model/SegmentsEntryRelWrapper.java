@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SegmentsEntryRelWrapper
-	extends BaseModelWrapper<SegmentsEntryRel>
+public class SegmentsEntryRelWrapper extends BaseModelWrapper<SegmentsEntryRel>
 	implements SegmentsEntryRel, ModelWrapper<SegmentsEntryRel> {
-
 	public SegmentsEntryRelWrapper(SegmentsEntryRel segmentsEntryRel) {
 		super(segmentsEntryRel);
 	}
@@ -123,130 +121,130 @@ public class SegmentsEntryRelWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this segments entry rel.
-	 *
-	 * @return the fully qualified class name of this segments entry rel
-	 */
+	* Returns the fully qualified class name of this segments entry rel.
+	*
+	* @return the fully qualified class name of this segments entry rel
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this segments entry rel.
-	 *
-	 * @return the class name ID of this segments entry rel
-	 */
+	* Returns the class name ID of this segments entry rel.
+	*
+	* @return the class name ID of this segments entry rel
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this segments entry rel.
-	 *
-	 * @return the class pk of this segments entry rel
-	 */
+	* Returns the class pk of this segments entry rel.
+	*
+	* @return the class pk of this segments entry rel
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this segments entry rel.
-	 *
-	 * @return the company ID of this segments entry rel
-	 */
+	* Returns the company ID of this segments entry rel.
+	*
+	* @return the company ID of this segments entry rel
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this segments entry rel.
-	 *
-	 * @return the create date of this segments entry rel
-	 */
+	* Returns the create date of this segments entry rel.
+	*
+	* @return the create date of this segments entry rel
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this segments entry rel.
-	 *
-	 * @return the group ID of this segments entry rel
-	 */
+	* Returns the group ID of this segments entry rel.
+	*
+	* @return the group ID of this segments entry rel
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the modified date of this segments entry rel.
-	 *
-	 * @return the modified date of this segments entry rel
-	 */
+	* Returns the modified date of this segments entry rel.
+	*
+	* @return the modified date of this segments entry rel
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this segments entry rel.
-	 *
-	 * @return the primary key of this segments entry rel
-	 */
+	* Returns the primary key of this segments entry rel.
+	*
+	* @return the primary key of this segments entry rel
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the segments entry ID of this segments entry rel.
-	 *
-	 * @return the segments entry ID of this segments entry rel
-	 */
+	* Returns the segments entry ID of this segments entry rel.
+	*
+	* @return the segments entry ID of this segments entry rel
+	*/
 	@Override
 	public long getSegmentsEntryId() {
 		return model.getSegmentsEntryId();
 	}
 
 	/**
-	 * Returns the segments entry rel ID of this segments entry rel.
-	 *
-	 * @return the segments entry rel ID of this segments entry rel
-	 */
+	* Returns the segments entry rel ID of this segments entry rel.
+	*
+	* @return the segments entry rel ID of this segments entry rel
+	*/
 	@Override
 	public long getSegmentsEntryRelId() {
 		return model.getSegmentsEntryRelId();
 	}
 
 	/**
-	 * Returns the user ID of this segments entry rel.
-	 *
-	 * @return the user ID of this segments entry rel
-	 */
+	* Returns the user ID of this segments entry rel.
+	*
+	* @return the user ID of this segments entry rel
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this segments entry rel.
-	 *
-	 * @return the user name of this segments entry rel
-	 */
+	* Returns the user name of this segments entry rel.
+	*
+	* @return the user name of this segments entry rel
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this segments entry rel.
-	 *
-	 * @return the user uuid of this segments entry rel
-	 */
+	* Returns the user uuid of this segments entry rel.
+	*
+	* @return the user uuid of this segments entry rel
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -263,120 +261,120 @@ public class SegmentsEntryRelWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this segments entry rel.
-	 *
-	 * @param classNameId the class name ID of this segments entry rel
-	 */
+	* Sets the class name ID of this segments entry rel.
+	*
+	* @param classNameId the class name ID of this segments entry rel
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this segments entry rel.
-	 *
-	 * @param classPK the class pk of this segments entry rel
-	 */
+	* Sets the class pk of this segments entry rel.
+	*
+	* @param classPK the class pk of this segments entry rel
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this segments entry rel.
-	 *
-	 * @param companyId the company ID of this segments entry rel
-	 */
+	* Sets the company ID of this segments entry rel.
+	*
+	* @param companyId the company ID of this segments entry rel
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this segments entry rel.
-	 *
-	 * @param createDate the create date of this segments entry rel
-	 */
+	* Sets the create date of this segments entry rel.
+	*
+	* @param createDate the create date of this segments entry rel
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this segments entry rel.
-	 *
-	 * @param groupId the group ID of this segments entry rel
-	 */
+	* Sets the group ID of this segments entry rel.
+	*
+	* @param groupId the group ID of this segments entry rel
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the modified date of this segments entry rel.
-	 *
-	 * @param modifiedDate the modified date of this segments entry rel
-	 */
+	* Sets the modified date of this segments entry rel.
+	*
+	* @param modifiedDate the modified date of this segments entry rel
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this segments entry rel.
-	 *
-	 * @param primaryKey the primary key of this segments entry rel
-	 */
+	* Sets the primary key of this segments entry rel.
+	*
+	* @param primaryKey the primary key of this segments entry rel
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the segments entry ID of this segments entry rel.
-	 *
-	 * @param segmentsEntryId the segments entry ID of this segments entry rel
-	 */
+	* Sets the segments entry ID of this segments entry rel.
+	*
+	* @param segmentsEntryId the segments entry ID of this segments entry rel
+	*/
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
 		model.setSegmentsEntryId(segmentsEntryId);
 	}
 
 	/**
-	 * Sets the segments entry rel ID of this segments entry rel.
-	 *
-	 * @param segmentsEntryRelId the segments entry rel ID of this segments entry rel
-	 */
+	* Sets the segments entry rel ID of this segments entry rel.
+	*
+	* @param segmentsEntryRelId the segments entry rel ID of this segments entry rel
+	*/
 	@Override
 	public void setSegmentsEntryRelId(long segmentsEntryRelId) {
 		model.setSegmentsEntryRelId(segmentsEntryRelId);
 	}
 
 	/**
-	 * Sets the user ID of this segments entry rel.
-	 *
-	 * @param userId the user ID of this segments entry rel
-	 */
+	* Sets the user ID of this segments entry rel.
+	*
+	* @param userId the user ID of this segments entry rel
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this segments entry rel.
-	 *
-	 * @param userName the user name of this segments entry rel
-	 */
+	* Sets the user name of this segments entry rel.
+	*
+	* @param userName the user name of this segments entry rel
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this segments entry rel.
-	 *
-	 * @param userUuid the user uuid of this segments entry rel
-	 */
+	* Sets the user uuid of this segments entry rel.
+	*
+	* @param userUuid the user uuid of this segments entry rel
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -386,5 +384,4 @@ public class SegmentsEntryRelWrapper
 	protected SegmentsEntryRelWrapper wrap(SegmentsEntryRel segmentsEntryRel) {
 		return new SegmentsEntryRelWrapper(segmentsEntryRel);
 	}
-
 }

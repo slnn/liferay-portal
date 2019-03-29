@@ -65,9 +65,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class WeDeployAuthTokenLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements WeDeployAuthTokenLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements WeDeployAuthTokenLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -84,7 +83,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public WeDeployAuthToken addWeDeployAuthToken(
 		WeDeployAuthToken weDeployAuthToken) {
-
 		weDeployAuthToken.setNew(true);
 
 		return weDeployAuthTokenPersistence.update(weDeployAuthToken);
@@ -113,7 +111,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public WeDeployAuthToken deleteWeDeployAuthToken(long weDeployAuthTokenId)
 		throws PortalException {
-
 		return weDeployAuthTokenPersistence.remove(weDeployAuthTokenId);
 	}
 
@@ -127,7 +124,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public WeDeployAuthToken deleteWeDeployAuthToken(
 		WeDeployAuthToken weDeployAuthToken) {
-
 		return weDeployAuthTokenPersistence.remove(weDeployAuthToken);
 	}
 
@@ -135,8 +131,8 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			WeDeployAuthToken.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(WeDeployAuthToken.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -163,11 +159,10 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return weDeployAuthTokenPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return weDeployAuthTokenPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -184,12 +179,10 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return weDeployAuthTokenPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return weDeployAuthTokenPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -211,17 +204,15 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return weDeployAuthTokenPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return weDeployAuthTokenPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public WeDeployAuthToken fetchWeDeployAuthToken(long weDeployAuthTokenId) {
-		return weDeployAuthTokenPersistence.fetchByPrimaryKey(
-			weDeployAuthTokenId);
+		return weDeployAuthTokenPersistence.fetchByPrimaryKey(weDeployAuthTokenId);
 	}
 
 	/**
@@ -234,18 +225,14 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public WeDeployAuthToken getWeDeployAuthToken(long weDeployAuthTokenId)
 		throws PortalException {
-
-		return weDeployAuthTokenPersistence.findByPrimaryKey(
-			weDeployAuthTokenId);
+		return weDeployAuthTokenPersistence.findByPrimaryKey(weDeployAuthTokenId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			weDeployAuthTokenLocalService);
+		actionableDynamicQuery.setBaseLocalService(weDeployAuthTokenLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WeDeployAuthToken.class);
 
@@ -255,14 +242,10 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			weDeployAuthTokenLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(weDeployAuthTokenLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(WeDeployAuthToken.class);
 
@@ -274,9 +257,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			weDeployAuthTokenLocalService);
+		actionableDynamicQuery.setBaseLocalService(weDeployAuthTokenLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WeDeployAuthToken.class);
 
@@ -289,15 +270,12 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return weDeployAuthTokenLocalService.deleteWeDeployAuthToken(
-			(WeDeployAuthToken)persistedModel);
+		return weDeployAuthTokenLocalService.deleteWeDeployAuthToken((WeDeployAuthToken)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return weDeployAuthTokenPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -337,7 +315,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public WeDeployAuthToken updateWeDeployAuthToken(
 		WeDeployAuthToken weDeployAuthToken) {
-
 		return weDeployAuthTokenPersistence.update(weDeployAuthToken);
 	}
 
@@ -346,9 +323,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 *
 	 * @return the we deploy auth app local service
 	 */
-	public com.liferay.portal.security.wedeploy.auth.service.
-		WeDeployAuthAppLocalService getWeDeployAuthAppLocalService() {
-
+	public com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService getWeDeployAuthAppLocalService() {
 		return weDeployAuthAppLocalService;
 	}
 
@@ -358,9 +333,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @param weDeployAuthAppLocalService the we deploy auth app local service
 	 */
 	public void setWeDeployAuthAppLocalService(
-		com.liferay.portal.security.wedeploy.auth.service.
-			WeDeployAuthAppLocalService weDeployAuthAppLocalService) {
-
+		com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService weDeployAuthAppLocalService) {
 		this.weDeployAuthAppLocalService = weDeployAuthAppLocalService;
 	}
 
@@ -380,7 +353,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 */
 	public void setWeDeployAuthAppPersistence(
 		WeDeployAuthAppPersistence weDeployAuthAppPersistence) {
-
 		this.weDeployAuthAppPersistence = weDeployAuthAppPersistence;
 	}
 
@@ -400,7 +372,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 */
 	public void setWeDeployAuthTokenLocalService(
 		WeDeployAuthTokenLocalService weDeployAuthTokenLocalService) {
-
 		this.weDeployAuthTokenLocalService = weDeployAuthTokenLocalService;
 	}
 
@@ -420,7 +391,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 */
 	public void setWeDeployAuthTokenPersistence(
 		WeDeployAuthTokenPersistence weDeployAuthTokenPersistence) {
-
 		this.weDeployAuthTokenPersistence = weDeployAuthTokenPersistence;
 	}
 
@@ -429,9 +399,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -441,9 +409,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -452,9 +418,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -464,9 +428,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -486,7 +448,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -495,9 +456,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -507,9 +466,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -518,9 +475,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -531,7 +486,6 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -554,8 +508,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken",
 			weDeployAuthTokenLocalService);
 	}
 
@@ -589,16 +542,15 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				weDeployAuthTokenPersistence.getDataSource();
+			DataSource dataSource = weDeployAuthTokenPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -607,53 +559,26 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService.class
-	)
-	protected com.liferay.portal.security.wedeploy.auth.service.
-		WeDeployAuthAppLocalService weDeployAuthAppLocalService;
-
+	@BeanReference(type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService.class)
+	protected com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService weDeployAuthAppLocalService;
 	@BeanReference(type = WeDeployAuthAppPersistence.class)
 	protected WeDeployAuthAppPersistence weDeployAuthAppPersistence;
-
 	@BeanReference(type = WeDeployAuthTokenLocalService.class)
 	protected WeDeployAuthTokenLocalService weDeployAuthTokenLocalService;
-
 	@BeanReference(type = WeDeployAuthTokenPersistence.class)
 	protected WeDeployAuthTokenPersistence weDeployAuthTokenPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

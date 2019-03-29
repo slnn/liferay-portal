@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class AssetTagStatsSoap implements Serializable {
-
 	public static AssetTagStatsSoap toSoapModel(AssetTagStats model) {
 		AssetTagStatsSoap soapModel = new AssetTagStatsSoap();
 
@@ -70,8 +69,7 @@ public class AssetTagStatsSoap implements Serializable {
 	}
 
 	public static AssetTagStatsSoap[] toSoapModels(List<AssetTagStats> models) {
-		List<AssetTagStatsSoap> soapModels = new ArrayList<AssetTagStatsSoap>(
-			models.size());
+		List<AssetTagStatsSoap> soapModels = new ArrayList<AssetTagStatsSoap>(models.size());
 
 		for (AssetTagStats model : models) {
 			soapModels.add(toSoapModel(model));
@@ -136,5 +134,4 @@ public class AssetTagStatsSoap implements Serializable {
 	private long _tagId;
 	private long _classNameId;
 	private int _assetCount;
-
 }

@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -56,6 +57,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
@@ -80,10 +82,8 @@ import javax.sql.DataSource;
  * @generated
  */
 @ProviderType
-public abstract class WikiNodeLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
+public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements WikiNodeLocalService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -145,8 +145,8 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(WikiNode.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -173,11 +173,9 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return wikiNodePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return wikiNodePersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
@@ -194,12 +192,10 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return wikiNodePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return wikiNodePersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -221,11 +217,10 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return wikiNodePersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return wikiNodePersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -259,8 +254,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(wikiNodeLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -272,14 +266,10 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			wikiNodeLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(wikiNodeLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(WikiNode.class);
 
@@ -290,7 +280,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(wikiNodeLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WikiNode.class);
@@ -301,59 +290,48 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
+							"modifiedDate");
 
 					if (modifiedDateCriterion != null) {
-						Conjunction conjunction =
-							RestrictionsFactoryUtil.conjunction();
+						Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
 
 						conjunction.add(modifiedDateCriterion);
 
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-						disjunction.add(
-							RestrictionsFactoryUtil.gtProperty(
+						disjunction.add(RestrictionsFactoryUtil.gtProperty(
 								"modifiedDate", "lastPublishDate"));
 
-						Property lastPublishDateProperty =
-							PropertyFactoryUtil.forName("lastPublishDate");
+						Property lastPublishDateProperty = PropertyFactoryUtil.forName(
+								"lastPublishDate");
 
 						disjunction.add(lastPublishDateProperty.isNull());
 
@@ -362,14 +340,12 @@ public abstract class WikiNodeLocalServiceBaseImpl
 						modifiedDateCriterion = conjunction;
 					}
 
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
+							"statusDate");
 
 					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+							(statusDateCriterion != null)) {
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 						disjunction.add(modifiedDateCriterion);
 						disjunction.add(statusDateCriterion);
@@ -377,49 +353,35 @@ public abstract class WikiNodeLocalServiceBaseImpl
 						dynamicQuery.add(disjunction);
 					}
 
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
+					Property workflowStatusProperty = PropertyFactoryUtil.forName(
+							"status");
 
 					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							workflowStatusProperty.ne(
+						dynamicQuery.add(workflowStatusProperty.ne(
 								WorkflowConstants.STATUS_IN_TRASH));
 					}
 					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									WikiNode.class.getName());
+						StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(WikiNode.class.getName());
 
-						dynamicQuery.add(
-							workflowStatusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
+						dynamicQuery.add(workflowStatusProperty.in(
+								stagedModelDataHandler.getExportableStatuses()));
 					}
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
 				@Override
 				public void performAction(WikiNode wikiNode)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, wikiNode);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						wikiNode);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(WikiNode.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -431,14 +393,12 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
 		return wikiNodeLocalService.deleteWikiNode((WikiNode)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return wikiNodePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -450,9 +410,8 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the matching wiki nodes, or an empty list if no matches were found
 	 */
 	@Override
-	public List<WikiNode> getWikiNodesByUuidAndCompanyId(
-		String uuid, long companyId) {
-
+	public List<WikiNode> getWikiNodesByUuidAndCompanyId(String uuid,
+		long companyId) {
 		return wikiNodePersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -467,12 +426,11 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the range of matching wiki nodes, or an empty list if no matches were found
 	 */
 	@Override
-	public List<WikiNode> getWikiNodesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+	public List<WikiNode> getWikiNodesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<WikiNode> orderByComparator) {
-
-		return wikiNodePersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return wikiNodePersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -486,7 +444,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	@Override
 	public WikiNode getWikiNodeByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
-
 		return wikiNodePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -544,7 +501,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 */
 	public void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
-
 		this.wikiNodeLocalService = wikiNodeLocalService;
 	}
 
@@ -562,9 +518,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @param wikiNodePersistence the wiki node persistence
 	 */
-	public void setWikiNodePersistence(
-		WikiNodePersistence wikiNodePersistence) {
-
+	public void setWikiNodePersistence(WikiNodePersistence wikiNodePersistence) {
 		this.wikiNodePersistence = wikiNodePersistence;
 	}
 
@@ -573,9 +527,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -585,9 +537,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -596,9 +546,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
 		return groupLocalService;
 	}
 
@@ -609,7 +557,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -636,9 +583,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -648,9 +593,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -659,9 +602,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -672,7 +613,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -699,9 +639,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @return the wiki page local service
 	 */
-	public com.liferay.wiki.service.WikiPageLocalService
-		getWikiPageLocalService() {
-
+	public com.liferay.wiki.service.WikiPageLocalService getWikiPageLocalService() {
 		return wikiPageLocalService;
 	}
 
@@ -712,7 +650,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 */
 	public void setWikiPageLocalService(
 		com.liferay.wiki.service.WikiPageLocalService wikiPageLocalService) {
-
 		this.wikiPageLocalService = wikiPageLocalService;
 	}
 
@@ -730,9 +667,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 *
 	 * @param wikiPagePersistence the wiki page persistence
 	 */
-	public void setWikiPagePersistence(
-		WikiPagePersistence wikiPagePersistence) {
-
+	public void setWikiPagePersistence(WikiPagePersistence wikiPagePersistence) {
 		this.wikiPagePersistence = wikiPagePersistence;
 	}
 
@@ -755,8 +690,8 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.wiki.model.WikiNode", wikiNodeLocalService);
+		persistedModelLocalServiceRegistry.register("com.liferay.wiki.model.WikiNode",
+			wikiNodeLocalService);
 	}
 
 	public void destroy() {
@@ -796,8 +731,8 @@ public abstract class WikiNodeLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -808,52 +743,26 @@ public abstract class WikiNodeLocalServiceBaseImpl
 
 	@BeanReference(type = WikiNodeLocalService.class)
 	protected WikiNodeLocalService wikiNodeLocalService;
-
 	@BeanReference(type = WikiNodePersistence.class)
 	protected WikiNodePersistence wikiNodePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@BeanReference(type = com.liferay.wiki.service.WikiPageLocalService.class)
-	protected com.liferay.wiki.service.WikiPageLocalService
-		wikiPageLocalService;
-
+	protected com.liferay.wiki.service.WikiPageLocalService wikiPageLocalService;
 	@BeanReference(type = WikiPagePersistence.class)
 	protected WikiPagePersistence wikiPagePersistence;
-
 	@BeanReference(type = WikiPageFinder.class)
 	protected WikiPageFinder wikiPageFinder;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

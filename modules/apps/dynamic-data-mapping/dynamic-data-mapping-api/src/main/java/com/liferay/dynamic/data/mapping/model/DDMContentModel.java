@@ -40,10 +40,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface DDMContentModel
-	extends BaseModel<DDMContent>, GroupedModel, LocalizedModel, ShardedModel,
-			StagedAuditedModel {
-
+public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
+	LocalizedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -349,5 +347,4 @@ public interface DDMContentModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

@@ -28,86 +28,70 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class DDMStructureVersionLocalServiceWrapper
 	implements DDMStructureVersionLocalService,
-			   ServiceWrapper<DDMStructureVersionLocalService> {
-
+		ServiceWrapper<DDMStructureVersionLocalService> {
 	public DDMStructureVersionLocalServiceWrapper(
 		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-
 		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
 	/**
-	 * Adds the ddm structure version to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmStructureVersion the ddm structure version
-	 * @return the ddm structure version that was added
-	 */
+	* Adds the ddm structure version to the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStructureVersion the ddm structure version
+	* @return the ddm structure version that was added
+	*/
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-		addDDMStructureVersion(
-			com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-				ddmStructureVersion) {
-
-		return _ddmStructureVersionLocalService.addDDMStructureVersion(
-			ddmStructureVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion addDDMStructureVersion(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion) {
+		return _ddmStructureVersionLocalService.addDDMStructureVersion(ddmStructureVersion);
 	}
 
 	/**
-	 * Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
-	 *
-	 * @param structureVersionId the primary key for the new ddm structure version
-	 * @return the new ddm structure version
-	 */
+	* Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
+	*
+	* @param structureVersionId the primary key for the new ddm structure version
+	* @return the new ddm structure version
+	*/
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-		createDDMStructureVersion(long structureVersionId) {
-
-		return _ddmStructureVersionLocalService.createDDMStructureVersion(
-			structureVersionId);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion createDDMStructureVersion(
+		long structureVersionId) {
+		return _ddmStructureVersionLocalService.createDDMStructureVersion(structureVersionId);
 	}
 
 	/**
-	 * Deletes the ddm structure version from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmStructureVersion the ddm structure version
-	 * @return the ddm structure version that was removed
-	 */
+	* Deletes the ddm structure version from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStructureVersion the ddm structure version
+	* @return the ddm structure version that was removed
+	*/
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-		deleteDDMStructureVersion(
-			com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-				ddmStructureVersion) {
-
-		return _ddmStructureVersionLocalService.deleteDDMStructureVersion(
-			ddmStructureVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion deleteDDMStructureVersion(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion) {
+		return _ddmStructureVersionLocalService.deleteDDMStructureVersion(ddmStructureVersion);
 	}
 
 	/**
-	 * Deletes the ddm structure version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param structureVersionId the primary key of the ddm structure version
-	 * @return the ddm structure version that was removed
-	 * @throws PortalException if a ddm structure version with the primary key could not be found
-	 */
+	* Deletes the ddm structure version with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param structureVersionId the primary key of the ddm structure version
+	* @return the ddm structure version that was removed
+	* @throws PortalException if a ddm structure version with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			deleteDDMStructureVersion(long structureVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion deleteDDMStructureVersion(
+		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.deleteDDMStructureVersion(
-			structureVersionId);
+		return _ddmStructureVersionLocalService.deleteDDMStructureVersion(structureVersionId);
 	}
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.deletePersistedModel(
-			persistedModel);
+		return _ddmStructureVersionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -116,174 +100,156 @@ public class DDMStructureVersionLocalServiceWrapper
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return _ddmStructureVersionLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-
-		return _ddmStructureVersionLocalService.dynamicQuery(
-			dynamicQuery, start, end);
+		return _ddmStructureVersionLocalService.dynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-
-		return _ddmStructureVersionLocalService.dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return _ddmStructureVersionLocalService.dynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return _ddmStructureVersionLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
-		return _ddmStructureVersionLocalService.dynamicQueryCount(
-			dynamicQuery, projection);
+		return _ddmStructureVersionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-		fetchDDMStructureVersion(long structureVersionId) {
-
-		return _ddmStructureVersionLocalService.fetchDDMStructureVersion(
-			structureVersionId);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion fetchDDMStructureVersion(
+		long structureVersionId) {
+		return _ddmStructureVersionLocalService.fetchDDMStructureVersion(structureVersionId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ddmStructureVersionLocalService.getActionableDynamicQuery();
 	}
 
 	/**
-	 * Returns the ddm structure version with the primary key.
-	 *
-	 * @param structureVersionId the primary key of the ddm structure version
-	 * @return the ddm structure version
-	 * @throws PortalException if a ddm structure version with the primary key could not be found
-	 */
+	* Returns the ddm structure version with the primary key.
+	*
+	* @param structureVersionId the primary key of the ddm structure version
+	* @return the ddm structure version
+	* @throws PortalException if a ddm structure version with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			getDDMStructureVersion(long structureVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getDDMStructureVersion(
+		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.getDDMStructureVersion(
-			structureVersionId);
+		return _ddmStructureVersionLocalService.getDDMStructureVersion(structureVersionId);
 	}
 
 	/**
-	 * Returns a range of all the ddm structure versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @return the range of ddm structure versions
-	 */
+	* Returns a range of all the ddm structure versions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @return the range of ddm structure versions
+	*/
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
-			getDDMStructureVersions(int start, int end) {
-
-		return _ddmStructureVersionLocalService.getDDMStructureVersions(
-			start, end);
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getDDMStructureVersions(
+		int start, int end) {
+		return _ddmStructureVersionLocalService.getDDMStructureVersions(start,
+			end);
 	}
 
 	/**
-	 * Returns the number of ddm structure versions.
-	 *
-	 * @return the number of ddm structure versions
-	 */
+	* Returns the number of ddm structure versions.
+	*
+	* @return the number of ddm structure versions
+	*/
 	@Override
 	public int getDDMStructureVersionsCount() {
 		return _ddmStructureVersionLocalService.getDDMStructureVersionsCount();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _ddmStructureVersionLocalService.
-			getIndexableActionableDynamicQuery();
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _ddmStructureVersionLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			getLatestStructureVersion(long structureId)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getLatestStructureVersion(
+		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.getLatestStructureVersion(
-			structureId);
+		return _ddmStructureVersionLocalService.getLatestStructureVersion(structureId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _ddmStructureVersionLocalService.getOSGiServiceIdentifier();
@@ -291,84 +257,62 @@ public class DDMStructureVersionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-			java.io.Serializable primaryKeyObj)
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.getPersistedModel(
-			primaryKeyObj);
+		return _ddmStructureVersionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			getStructureVersion(long structureVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
+		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.getStructureVersion(
-			structureVersionId);
+		return _ddmStructureVersionLocalService.getStructureVersion(structureVersionId);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			getStructureVersion(long structureId, String version)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
+		long structureId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.getStructureVersion(
-			structureId, version);
+		return _ddmStructureVersionLocalService.getStructureVersion(structureId,
+			version);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMForm
-			getStructureVersionDDMForm(
-				com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-					structureVersion)
+	public com.liferay.dynamic.data.mapping.model.DDMForm getStructureVersionDDMForm(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion structureVersion)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureVersionLocalService.getStructureVersionDDMForm(
-			structureVersion);
+		return _ddmStructureVersionLocalService.getStructureVersionDDMForm(structureVersion);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
-			getStructureVersions(long structureId) {
-
-		return _ddmStructureVersionLocalService.getStructureVersions(
-			structureId);
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
+		long structureId) {
+		return _ddmStructureVersionLocalService.getStructureVersions(structureId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
-			getStructureVersions(
-				long structureId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
-						orderByComparator) {
-
-		return _ddmStructureVersionLocalService.getStructureVersions(
-			structureId, start, end, orderByComparator);
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
+		long structureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> orderByComparator) {
+		return _ddmStructureVersionLocalService.getStructureVersions(structureId,
+			start, end, orderByComparator);
 	}
 
 	@Override
 	public int getStructureVersionsCount(long structureId) {
-		return _ddmStructureVersionLocalService.getStructureVersionsCount(
-			structureId);
+		return _ddmStructureVersionLocalService.getStructureVersionsCount(structureId);
 	}
 
 	/**
-	 * Updates the ddm structure version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmStructureVersion the ddm structure version
-	 * @return the ddm structure version that was updated
-	 */
+	* Updates the ddm structure version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStructureVersion the ddm structure version
+	* @return the ddm structure version that was updated
+	*/
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-		updateDDMStructureVersion(
-			com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-				ddmStructureVersion) {
-
-		return _ddmStructureVersionLocalService.updateDDMStructureVersion(
-			ddmStructureVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion updateDDMStructureVersion(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion) {
+		return _ddmStructureVersionLocalService.updateDDMStructureVersion(ddmStructureVersion);
 	}
 
 	@Override
@@ -379,10 +323,8 @@ public class DDMStructureVersionLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-
 		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
-
 }

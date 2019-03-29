@@ -19,11 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence;
+
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -69,9 +71,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class DDMContentLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements DDMContentLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements DDMContentLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -113,7 +114,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DDMContent deleteDDMContent(long contentId) throws PortalException {
+	public DDMContent deleteDDMContent(long contentId)
+		throws PortalException {
 		return ddmContentPersistence.remove(contentId);
 	}
 
@@ -133,8 +135,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			DDMContent.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(DDMContent.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -161,11 +163,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return ddmContentPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -182,12 +183,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return ddmContentPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -209,11 +208,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return ddmContentPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return ddmContentPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -229,9 +227,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	 */
 	@Override
-	public DDMContent fetchDDMContentByUuidAndGroupId(
-		String uuid, long groupId) {
-
+	public DDMContent fetchDDMContentByUuidAndGroupId(String uuid, long groupId) {
 		return ddmContentPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -249,8 +245,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(ddmContentLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -262,14 +257,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			ddmContentLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(ddmContentLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DDMContent.class);
 
@@ -280,7 +271,6 @@ public abstract class DDMContentLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(ddmContentLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMContent.class);
@@ -291,64 +281,49 @@ public abstract class DDMContentLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDMContent>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMContent>() {
 				@Override
 				public void performAction(DDMContent ddmContent)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, ddmContent);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						ddmContent);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(DDMContent.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -360,15 +335,12 @@ public abstract class DDMContentLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return ddmContentLocalService.deleteDDMContent(
-			(DDMContent)persistedModel);
+		return ddmContentLocalService.deleteDDMContent((DDMContent)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return ddmContentPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -380,9 +352,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the matching ddm contents, or an empty list if no matches were found
 	 */
 	@Override
-	public List<DDMContent> getDDMContentsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
+	public List<DDMContent> getDDMContentsByUuidAndCompanyId(String uuid,
+		long companyId) {
 		return ddmContentPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -397,12 +368,11 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the range of matching ddm contents, or an empty list if no matches were found
 	 */
 	@Override
-	public List<DDMContent> getDDMContentsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+	public List<DDMContent> getDDMContentsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<DDMContent> orderByComparator) {
-
-		return ddmContentPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return ddmContentPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -416,7 +386,6 @@ public abstract class DDMContentLocalServiceBaseImpl
 	@Override
 	public DDMContent getDDMContentByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
-
 		return ddmContentPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -474,7 +443,6 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 */
 	public void setDDMContentLocalService(
 		DDMContentLocalService ddmContentLocalService) {
-
 		this.ddmContentLocalService = ddmContentLocalService;
 	}
 
@@ -494,7 +462,6 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 */
 	public void setDDMContentPersistence(
 		DDMContentPersistence ddmContentPersistence) {
-
 		this.ddmContentPersistence = ddmContentPersistence;
 	}
 
@@ -503,9 +470,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -515,9 +480,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -526,9 +489,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -539,7 +500,6 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -562,8 +522,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.dynamic.data.mapping.model.DDMContent",
+		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMContent",
 			ddmContentLocalService);
 	}
 
@@ -604,8 +563,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -616,27 +575,14 @@ public abstract class DDMContentLocalServiceBaseImpl
 
 	@BeanReference(type = DDMContentLocalService.class)
 	protected DDMContentLocalService ddmContentLocalService;
-
 	@BeanReference(type = DDMContentPersistence.class)
 	protected DDMContentPersistence ddmContentPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

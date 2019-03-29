@@ -36,9 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoNodeModel
-	extends BaseModel<KaleoNode>, GroupedModel, MVCCModel, ShardedModel {
-
+public interface KaleoNodeModel extends BaseModel<KaleoNode>, GroupedModel,
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -317,5 +316,4 @@ public interface KaleoNodeModel
 	 * @param terminal the terminal of this kaleo node
 	 */
 	public void setTerminal(boolean terminal);
-
 }

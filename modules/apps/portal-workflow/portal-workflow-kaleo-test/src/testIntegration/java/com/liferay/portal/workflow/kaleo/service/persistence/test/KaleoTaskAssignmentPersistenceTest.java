@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +38,15 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +56,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoTaskAssignmentPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.service"));
 
 	@Before
@@ -80,8 +79,7 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<KaleoTaskAssignment> iterator =
-			_kaleoTaskAssignments.iterator();
+		Iterator<KaleoTaskAssignment> iterator = _kaleoTaskAssignments.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -107,9 +105,7 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		_persistence.remove(newKaleoTaskAssignment);
 
-		KaleoTaskAssignment existingKaleoTaskAssignment =
-			_persistence.fetchByPrimaryKey(
-				newKaleoTaskAssignment.getPrimaryKey());
+		KaleoTaskAssignment existingKaleoTaskAssignment = _persistence.fetchByPrimaryKey(newKaleoTaskAssignment.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoTaskAssignment);
 	}
@@ -143,87 +139,63 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		newKaleoTaskAssignment.setKaleoClassPK(RandomTestUtil.nextLong());
 
-		newKaleoTaskAssignment.setKaleoDefinitionVersionId(
-			RandomTestUtil.nextLong());
+		newKaleoTaskAssignment.setKaleoDefinitionVersionId(RandomTestUtil.nextLong());
 
 		newKaleoTaskAssignment.setKaleoNodeId(RandomTestUtil.nextLong());
 
-		newKaleoTaskAssignment.setAssigneeClassName(
-			RandomTestUtil.randomString());
+		newKaleoTaskAssignment.setAssigneeClassName(RandomTestUtil.randomString());
 
 		newKaleoTaskAssignment.setAssigneeClassPK(RandomTestUtil.nextLong());
 
-		newKaleoTaskAssignment.setAssigneeActionId(
-			RandomTestUtil.randomString());
+		newKaleoTaskAssignment.setAssigneeActionId(RandomTestUtil.randomString());
 
 		newKaleoTaskAssignment.setAssigneeScript(RandomTestUtil.randomString());
 
-		newKaleoTaskAssignment.setAssigneeScriptLanguage(
-			RandomTestUtil.randomString());
+		newKaleoTaskAssignment.setAssigneeScriptLanguage(RandomTestUtil.randomString());
 
-		newKaleoTaskAssignment.setAssigneeScriptRequiredContexts(
-			RandomTestUtil.randomString());
+		newKaleoTaskAssignment.setAssigneeScriptRequiredContexts(RandomTestUtil.randomString());
 
 		_kaleoTaskAssignments.add(_persistence.update(newKaleoTaskAssignment));
 
-		KaleoTaskAssignment existingKaleoTaskAssignment =
-			_persistence.findByPrimaryKey(
-				newKaleoTaskAssignment.getPrimaryKey());
+		KaleoTaskAssignment existingKaleoTaskAssignment = _persistence.findByPrimaryKey(newKaleoTaskAssignment.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getMvccVersion(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getMvccVersion(),
 			newKaleoTaskAssignment.getMvccVersion());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getKaleoTaskAssignmentId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getKaleoTaskAssignmentId(),
 			newKaleoTaskAssignment.getKaleoTaskAssignmentId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getGroupId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getGroupId(),
 			newKaleoTaskAssignment.getGroupId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getCompanyId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getCompanyId(),
 			newKaleoTaskAssignment.getCompanyId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getUserId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getUserId(),
 			newKaleoTaskAssignment.getUserId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getUserName(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getUserName(),
 			newKaleoTaskAssignment.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKaleoTaskAssignment.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKaleoTaskAssignment.getCreateDate()),
 			Time.getShortTimestamp(newKaleoTaskAssignment.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingKaleoTaskAssignment.getModifiedDate()),
 			Time.getShortTimestamp(newKaleoTaskAssignment.getModifiedDate()));
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getKaleoClassName(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getKaleoClassName(),
 			newKaleoTaskAssignment.getKaleoClassName());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getKaleoClassPK(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getKaleoClassPK(),
 			newKaleoTaskAssignment.getKaleoClassPK());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getKaleoDefinitionVersionId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getKaleoDefinitionVersionId(),
 			newKaleoTaskAssignment.getKaleoDefinitionVersionId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getKaleoNodeId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getKaleoNodeId(),
 			newKaleoTaskAssignment.getKaleoNodeId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getAssigneeClassName(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeClassName(),
 			newKaleoTaskAssignment.getAssigneeClassName());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getAssigneeClassPK(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeClassPK(),
 			newKaleoTaskAssignment.getAssigneeClassPK());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getAssigneeActionId(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeActionId(),
 			newKaleoTaskAssignment.getAssigneeActionId());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getAssigneeScript(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeScript(),
 			newKaleoTaskAssignment.getAssigneeScript());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getAssigneeScriptLanguage(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeScriptLanguage(),
 			newKaleoTaskAssignment.getAssigneeScriptLanguage());
-		Assert.assertEquals(
-			existingKaleoTaskAssignment.getAssigneeScriptRequiredContexts(),
+		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeScriptRequiredContexts(),
 			newKaleoTaskAssignment.getAssigneeScriptRequiredContexts());
 	}
 
@@ -263,12 +235,9 @@ public class KaleoTaskAssignmentPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoTaskAssignment newKaleoTaskAssignment = addKaleoTaskAssignment();
 
-		KaleoTaskAssignment existingKaleoTaskAssignment =
-			_persistence.findByPrimaryKey(
-				newKaleoTaskAssignment.getPrimaryKey());
+		KaleoTaskAssignment existingKaleoTaskAssignment = _persistence.findByPrimaryKey(newKaleoTaskAssignment.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoTaskAssignment, newKaleoTaskAssignment);
+		Assert.assertEquals(existingKaleoTaskAssignment, newKaleoTaskAssignment);
 	}
 
 	@Test(expected = NoSuchTaskAssignmentException.class)
@@ -280,19 +249,18 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<KaleoTaskAssignment> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"KaleoTaskAssignment", "mvccVersion", true, "kaleoTaskAssignmentId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionVersionId", true, "kaleoNodeId", true,
-			"assigneeClassName", true, "assigneeClassPK", true,
-			"assigneeActionId", true, "assigneeScriptLanguage", true,
+		return OrderByComparatorFactoryUtil.create("KaleoTaskAssignment",
+			"mvccVersion", true, "kaleoTaskAssignmentId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "kaleoClassName", true,
+			"kaleoClassPK", true, "kaleoDefinitionVersionId", true,
+			"kaleoNodeId", true, "assigneeClassName", true, "assigneeClassPK",
+			true, "assigneeActionId", true, "assigneeScriptLanguage", true,
 			"assigneeScriptRequiredContexts", true);
 	}
 
@@ -300,20 +268,16 @@ public class KaleoTaskAssignmentPersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		KaleoTaskAssignment newKaleoTaskAssignment = addKaleoTaskAssignment();
 
-		KaleoTaskAssignment existingKaleoTaskAssignment =
-			_persistence.fetchByPrimaryKey(
-				newKaleoTaskAssignment.getPrimaryKey());
+		KaleoTaskAssignment existingKaleoTaskAssignment = _persistence.fetchByPrimaryKey(newKaleoTaskAssignment.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoTaskAssignment, newKaleoTaskAssignment);
+		Assert.assertEquals(existingKaleoTaskAssignment, newKaleoTaskAssignment);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoTaskAssignment missingKaleoTaskAssignment =
-			_persistence.fetchByPrimaryKey(pk);
+		KaleoTaskAssignment missingKaleoTaskAssignment = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingKaleoTaskAssignment);
 	}
@@ -321,7 +285,6 @@ public class KaleoTaskAssignmentPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		KaleoTaskAssignment newKaleoTaskAssignment1 = addKaleoTaskAssignment();
 		KaleoTaskAssignment newKaleoTaskAssignment2 = addKaleoTaskAssignment();
 
@@ -330,22 +293,18 @@ public class KaleoTaskAssignmentPersistenceTest {
 		primaryKeys.add(newKaleoTaskAssignment1.getPrimaryKey());
 		primaryKeys.add(newKaleoTaskAssignment2.getPrimaryKey());
 
-		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoTaskAssignments.size());
-		Assert.assertEquals(
-			newKaleoTaskAssignment1,
+		Assert.assertEquals(newKaleoTaskAssignment1,
 			kaleoTaskAssignments.get(newKaleoTaskAssignment1.getPrimaryKey()));
-		Assert.assertEquals(
-			newKaleoTaskAssignment2,
+		Assert.assertEquals(newKaleoTaskAssignment2,
 			kaleoTaskAssignments.get(newKaleoTaskAssignment2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -355,8 +314,7 @@ public class KaleoTaskAssignmentPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoTaskAssignments.isEmpty());
 	}
@@ -364,7 +322,6 @@ public class KaleoTaskAssignmentPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		KaleoTaskAssignment newKaleoTaskAssignment = addKaleoTaskAssignment();
 
 		long pk = RandomTestUtil.nextLong();
@@ -374,39 +331,36 @@ public class KaleoTaskAssignmentPersistenceTest {
 		primaryKeys.add(newKaleoTaskAssignment.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoTaskAssignments.size());
-		Assert.assertEquals(
-			newKaleoTaskAssignment,
+		Assert.assertEquals(newKaleoTaskAssignment,
 			kaleoTaskAssignments.get(newKaleoTaskAssignment.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoTaskAssignments.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		KaleoTaskAssignment newKaleoTaskAssignment = addKaleoTaskAssignment();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoTaskAssignment.getPrimaryKey());
 
-		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskAssignment> kaleoTaskAssignments = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoTaskAssignments.size());
-		Assert.assertEquals(
-			newKaleoTaskAssignment,
+		Assert.assertEquals(newKaleoTaskAssignment,
 			kaleoTaskAssignments.get(newKaleoTaskAssignment.getPrimaryKey()));
 	}
 
@@ -414,22 +368,16 @@ public class KaleoTaskAssignmentPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			KaleoTaskAssignmentLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = KaleoTaskAssignmentLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<KaleoTaskAssignment>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTaskAssignment>() {
 				@Override
 				public void performAction(
 					KaleoTaskAssignment kaleoTaskAssignment) {
-
 					Assert.assertNotNull(kaleoTaskAssignment);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -438,60 +386,53 @@ public class KaleoTaskAssignmentPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		KaleoTaskAssignment newKaleoTaskAssignment = addKaleoTaskAssignment();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskAssignment.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskAssignment.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kaleoTaskAssignmentId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoTaskAssignmentId",
 				newKaleoTaskAssignment.getKaleoTaskAssignmentId()));
 
-		List<KaleoTaskAssignment> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoTaskAssignment> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		KaleoTaskAssignment existingKaleoTaskAssignment = result.get(0);
 
-		Assert.assertEquals(
-			existingKaleoTaskAssignment, newKaleoTaskAssignment);
+		Assert.assertEquals(existingKaleoTaskAssignment, newKaleoTaskAssignment);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskAssignment.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskAssignment.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kaleoTaskAssignmentId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoTaskAssignmentId",
+				RandomTestUtil.nextLong()));
 
-		List<KaleoTaskAssignment> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoTaskAssignment> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		KaleoTaskAssignment newKaleoTaskAssignment = addKaleoTaskAssignment();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskAssignment.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskAssignment.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoTaskAssignmentId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoTaskAssignmentId"));
 
-		Object newKaleoTaskAssignmentId =
-			newKaleoTaskAssignment.getKaleoTaskAssignmentId();
+		Object newKaleoTaskAssignmentId = newKaleoTaskAssignment.getKaleoTaskAssignmentId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kaleoTaskAssignmentId",
-				new Object[] {newKaleoTaskAssignmentId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoTaskAssignmentId",
+				new Object[] { newKaleoTaskAssignmentId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -499,29 +440,28 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		Object existingKaleoTaskAssignmentId = result.get(0);
 
-		Assert.assertEquals(
-			existingKaleoTaskAssignmentId, newKaleoTaskAssignmentId);
+		Assert.assertEquals(existingKaleoTaskAssignmentId,
+			newKaleoTaskAssignmentId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskAssignment.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskAssignment.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoTaskAssignmentId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoTaskAssignmentId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kaleoTaskAssignmentId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoTaskAssignmentId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
-	protected KaleoTaskAssignment addKaleoTaskAssignment() throws Exception {
+	protected KaleoTaskAssignment addKaleoTaskAssignment()
+		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoTaskAssignment kaleoTaskAssignment = _persistence.create(pk);
@@ -544,8 +484,7 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		kaleoTaskAssignment.setKaleoClassPK(RandomTestUtil.nextLong());
 
-		kaleoTaskAssignment.setKaleoDefinitionVersionId(
-			RandomTestUtil.nextLong());
+		kaleoTaskAssignment.setKaleoDefinitionVersionId(RandomTestUtil.nextLong());
 
 		kaleoTaskAssignment.setKaleoNodeId(RandomTestUtil.nextLong());
 
@@ -557,20 +496,16 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		kaleoTaskAssignment.setAssigneeScript(RandomTestUtil.randomString());
 
-		kaleoTaskAssignment.setAssigneeScriptLanguage(
-			RandomTestUtil.randomString());
+		kaleoTaskAssignment.setAssigneeScriptLanguage(RandomTestUtil.randomString());
 
-		kaleoTaskAssignment.setAssigneeScriptRequiredContexts(
-			RandomTestUtil.randomString());
+		kaleoTaskAssignment.setAssigneeScriptRequiredContexts(RandomTestUtil.randomString());
 
 		_kaleoTaskAssignments.add(_persistence.update(kaleoTaskAssignment));
 
 		return kaleoTaskAssignment;
 	}
 
-	private List<KaleoTaskAssignment> _kaleoTaskAssignments =
-		new ArrayList<KaleoTaskAssignment>();
+	private List<KaleoTaskAssignment> _kaleoTaskAssignments = new ArrayList<KaleoTaskAssignment>();
 	private KaleoTaskAssignmentPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

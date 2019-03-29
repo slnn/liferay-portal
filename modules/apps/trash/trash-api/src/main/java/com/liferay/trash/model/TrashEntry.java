@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.trash.model.impl.TrashEntryImpl")
 @ProviderType
 public interface TrashEntry extends TrashEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.trash.model.impl.TrashEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<TrashEntry, Long> ENTRY_ID_ACCESSOR =
-		new Accessor<TrashEntry, Long>() {
-
+	public static final Accessor<TrashEntry, Long> ENTRY_ID_ACCESSOR = new Accessor<TrashEntry, Long>() {
 			@Override
 			public Long get(TrashEntry trashEntry) {
 				return trashEntry.getEntryId();
@@ -53,13 +50,11 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 			public Class<TrashEntry> getTypeClass() {
 				return TrashEntry.class;
 			}
-
 		};
 
 	public TrashEntry getRootEntry();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
 	public String getTypeSettingsProperty(String key);
 
@@ -72,7 +67,5 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 	public void setRootEntry(TrashEntry rootEntry);
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
-
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
 }

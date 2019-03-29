@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoTaskFormCacheModel
-	implements CacheModel<KaleoTaskForm>, Externalizable, MVCCModel {
-
+public class KaleoTaskFormCacheModel implements CacheModel<KaleoTaskForm>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class KaleoTaskFormCacheModel
 			return false;
 		}
 
-		KaleoTaskFormCacheModel kaleoTaskFormCacheModel =
-			(KaleoTaskFormCacheModel)obj;
+		KaleoTaskFormCacheModel kaleoTaskFormCacheModel = (KaleoTaskFormCacheModel)obj;
 
 		if ((kaleoTaskFormId == kaleoTaskFormCacheModel.kaleoTaskFormId) &&
-			(mvccVersion == kaleoTaskFormCacheModel.mvccVersion)) {
-
+				(mvccVersion == kaleoTaskFormCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -255,7 +253,8 @@ public class KaleoTaskFormCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoTaskFormId);
@@ -354,5 +353,4 @@ public class KaleoTaskFormCacheModel
 	public String formUuid;
 	public String metadata;
 	public int priority;
-
 }

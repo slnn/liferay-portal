@@ -28,34 +28,29 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class EROrganizationLocalServiceWrapper
 	implements EROrganizationLocalService,
-			   ServiceWrapper<EROrganizationLocalService> {
-
+		ServiceWrapper<EROrganizationLocalService> {
 	public EROrganizationLocalServiceWrapper(
 		EROrganizationLocalService erOrganizationLocalService) {
-
 		_erOrganizationLocalService = erOrganizationLocalService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Organization addOrUpdateOrganization(
-			String externalReferenceCode, long userId,
-			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusId, String comments, boolean site,
-			boolean logo, byte[] logoBytes,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		String externalReferenceCode, long userId, long parentOrganizationId,
+		String name, String type, long regionId, long countryId, long statusId,
+		String comments, boolean site, boolean logo, byte[] logoBytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _erOrganizationLocalService.addOrUpdateOrganization(
-			externalReferenceCode, userId, parentOrganizationId, name, type,
-			regionId, countryId, statusId, comments, site, logo, logoBytes,
-			serviceContext);
+		return _erOrganizationLocalService.addOrUpdateOrganization(externalReferenceCode,
+			userId, parentOrganizationId, name, type, regionId, countryId,
+			statusId, comments, site, logo, logoBytes, serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _erOrganizationLocalService.getOSGiServiceIdentifier();
@@ -69,10 +64,8 @@ public class EROrganizationLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		EROrganizationLocalService erOrganizationLocalService) {
-
 		_erOrganizationLocalService = erOrganizationLocalService;
 	}
 
 	private EROrganizationLocalService _erOrganizationLocalService;
-
 }

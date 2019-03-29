@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class KaleoInstanceSoap implements Serializable {
-
 	public static KaleoInstanceSoap toSoapModel(KaleoInstance model) {
 		KaleoInstanceSoap soapModel = new KaleoInstanceSoap();
 
@@ -42,12 +41,10 @@ public class KaleoInstanceSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setKaleoDefinitionVersionId(
-			model.getKaleoDefinitionVersionId());
+		soapModel.setKaleoDefinitionVersionId(model.getKaleoDefinitionVersionId());
 		soapModel.setKaleoDefinitionName(model.getKaleoDefinitionName());
 		soapModel.setKaleoDefinitionVersion(model.getKaleoDefinitionVersion());
-		soapModel.setRootKaleoInstanceTokenId(
-			model.getRootKaleoInstanceTokenId());
+		soapModel.setRootKaleoInstanceTokenId(model.getRootKaleoInstanceTokenId());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setCompleted(model.isCompleted());
@@ -85,8 +82,7 @@ public class KaleoInstanceSoap implements Serializable {
 	}
 
 	public static KaleoInstanceSoap[] toSoapModels(List<KaleoInstance> models) {
-		List<KaleoInstanceSoap> soapModels = new ArrayList<KaleoInstanceSoap>(
-			models.size());
+		List<KaleoInstanceSoap> soapModels = new ArrayList<KaleoInstanceSoap>(models.size());
 
 		for (KaleoInstance model : models) {
 			soapModels.add(toSoapModel(model));
@@ -263,5 +259,4 @@ public class KaleoInstanceSoap implements Serializable {
 	private boolean _completed;
 	private Date _completionDate;
 	private String _workflowContext;
-
 }

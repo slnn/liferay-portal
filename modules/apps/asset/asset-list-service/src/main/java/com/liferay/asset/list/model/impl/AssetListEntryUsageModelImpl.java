@@ -18,10 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.model.AssetListEntryUsageModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,29 +63,30 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class AssetListEntryUsageModelImpl
-	extends BaseModelImpl<AssetListEntryUsage>
+public class AssetListEntryUsageModelImpl extends BaseModelImpl<AssetListEntryUsage>
 	implements AssetListEntryUsageModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset list entry usage model instance should use the <code>AssetListEntryUsage</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "AssetListEntryUsage";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"assetListEntryUsageId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetListEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"portletId", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "assetListEntryUsageId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "assetListEntryId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "portletId", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -99,58 +104,32 @@ public class AssetListEntryUsageModelImpl
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryUsage (uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(200) null,lastPublishDate DATE null)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table AssetListEntryUsage";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY assetListEntryUsage.assetListEntryUsageId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY AssetListEntryUsage.assetListEntryUsageId ASC";
-
+	public static final String TABLE_SQL_CREATE = "create table AssetListEntryUsage (uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(200) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_DROP = "drop table AssetListEntryUsage";
+	public static final String ORDER_BY_JPQL = " ORDER BY assetListEntryUsage.assetListEntryUsageId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY AssetListEntryUsage.assetListEntryUsageId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.list.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.asset.list.model.AssetListEntryUsage"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.list.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.asset.list.model.AssetListEntryUsage"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.list.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.asset.list.model.AssetListEntryUsage"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.asset.list.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.asset.list.model.AssetListEntryUsage"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.asset.list.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.asset.list.model.AssetListEntryUsage"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.asset.list.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.asset.list.model.AssetListEntryUsage"),
+			true);
 	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
-
 	public static final long PORTLETID_COLUMN_BITMASK = 32L;
-
 	public static final long UUID_COLUMN_BITMASK = 64L;
-
 	public static final long ASSETLISTENTRYUSAGEID_COLUMN_BITMASK = 128L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.asset.list.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.asset.list.model.AssetListEntryUsage"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.list.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.asset.list.model.AssetListEntryUsage"));
 
 	public AssetListEntryUsageModelImpl() {
 	}
@@ -189,18 +168,14 @@ public class AssetListEntryUsageModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<AssetListEntryUsage, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetListEntryUsage, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<AssetListEntryUsage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<AssetListEntryUsage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<AssetListEntryUsage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<AssetListEntryUsage, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((AssetListEntryUsage)this));
 		}
 
@@ -212,130 +187,69 @@ public class AssetListEntryUsageModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<AssetListEntryUsage, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<AssetListEntryUsage, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<AssetListEntryUsage, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<AssetListEntryUsage, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(AssetListEntryUsage)this, entry.getValue());
+				attributeSetterBiConsumer.accept((AssetListEntryUsage)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<AssetListEntryUsage, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<AssetListEntryUsage, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<AssetListEntryUsage, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<AssetListEntryUsage, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AssetListEntryUsage, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AssetListEntryUsage, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<AssetListEntryUsage, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetListEntryUsage, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<AssetListEntryUsage, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AssetListEntryUsage, Object>>();
-		Map<String, BiConsumer<AssetListEntryUsage, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<AssetListEntryUsage, ?>>();
+		Map<String, Function<AssetListEntryUsage, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetListEntryUsage, Object>>();
+		Map<String, BiConsumer<AssetListEntryUsage, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetListEntryUsage, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", AssetListEntryUsage::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<AssetListEntryUsage, String>)
-				AssetListEntryUsage::setUuid);
-		attributeGetterFunctions.put(
-			"assetListEntryUsageId",
-			AssetListEntryUsage::getAssetListEntryUsageId);
-		attributeSetterBiConsumers.put(
-			"assetListEntryUsageId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setAssetListEntryUsageId);
-		attributeGetterFunctions.put(
-			"groupId", AssetListEntryUsage::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", AssetListEntryUsage::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setCompanyId);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<AssetListEntryUsage, String>)AssetListEntryUsage::setUuid);
+		attributeGetterFunctions.put("assetListEntryUsageId", AssetListEntryUsage::getAssetListEntryUsageId);
+		attributeSetterBiConsumers.put("assetListEntryUsageId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setAssetListEntryUsageId);
+		attributeGetterFunctions.put("groupId", AssetListEntryUsage::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setGroupId);
+		attributeGetterFunctions.put("companyId", AssetListEntryUsage::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setCompanyId);
 		attributeGetterFunctions.put("userId", AssetListEntryUsage::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setUserId);
-		attributeGetterFunctions.put(
-			"userName", AssetListEntryUsage::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<AssetListEntryUsage, String>)
-				AssetListEntryUsage::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", AssetListEntryUsage::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<AssetListEntryUsage, Date>)
-				AssetListEntryUsage::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", AssetListEntryUsage::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<AssetListEntryUsage, Date>)
-				AssetListEntryUsage::setModifiedDate);
-		attributeGetterFunctions.put(
-			"assetListEntryId", AssetListEntryUsage::getAssetListEntryId);
-		attributeSetterBiConsumers.put(
-			"assetListEntryId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setAssetListEntryId);
-		attributeGetterFunctions.put(
-			"classNameId", AssetListEntryUsage::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", AssetListEntryUsage::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<AssetListEntryUsage, Long>)
-				AssetListEntryUsage::setClassPK);
-		attributeGetterFunctions.put(
-			"portletId", AssetListEntryUsage::getPortletId);
-		attributeSetterBiConsumers.put(
-			"portletId",
-			(BiConsumer<AssetListEntryUsage, String>)
-				AssetListEntryUsage::setPortletId);
-		attributeGetterFunctions.put(
-			"lastPublishDate", AssetListEntryUsage::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<AssetListEntryUsage, Date>)
-				AssetListEntryUsage::setLastPublishDate);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setUserId);
+		attributeGetterFunctions.put("userName", AssetListEntryUsage::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetListEntryUsage, String>)AssetListEntryUsage::setUserName);
+		attributeGetterFunctions.put("createDate", AssetListEntryUsage::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetListEntryUsage, Date>)AssetListEntryUsage::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AssetListEntryUsage::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetListEntryUsage, Date>)AssetListEntryUsage::setModifiedDate);
+		attributeGetterFunctions.put("assetListEntryId", AssetListEntryUsage::getAssetListEntryId);
+		attributeSetterBiConsumers.put("assetListEntryId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setAssetListEntryId);
+		attributeGetterFunctions.put("classNameId", AssetListEntryUsage::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setClassNameId);
+		attributeGetterFunctions.put("classPK", AssetListEntryUsage::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setClassPK);
+		attributeGetterFunctions.put("portletId", AssetListEntryUsage::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<AssetListEntryUsage, String>)AssetListEntryUsage::setPortletId);
+		attributeGetterFunctions.put("lastPublishDate", AssetListEntryUsage::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<AssetListEntryUsage, Date>)AssetListEntryUsage::setLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -607,9 +521,8 @@ public class AssetListEntryUsageModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(AssetListEntryUsage.class.getName()),
-			getClassNameId());
+		return new StagedModelType(PortalUtil.getClassNameId(
+				AssetListEntryUsage.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -618,9 +531,8 @@ public class AssetListEntryUsageModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), AssetListEntryUsage.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			AssetListEntryUsage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -633,9 +545,8 @@ public class AssetListEntryUsageModelImpl
 	@Override
 	public AssetListEntryUsage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetListEntryUsage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (AssetListEntryUsage)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -643,12 +554,10 @@ public class AssetListEntryUsageModelImpl
 
 	@Override
 	public Object clone() {
-		AssetListEntryUsageImpl assetListEntryUsageImpl =
-			new AssetListEntryUsageImpl();
+		AssetListEntryUsageImpl assetListEntryUsageImpl = new AssetListEntryUsageImpl();
 
 		assetListEntryUsageImpl.setUuid(getUuid());
-		assetListEntryUsageImpl.setAssetListEntryUsageId(
-			getAssetListEntryUsageId());
+		assetListEntryUsageImpl.setAssetListEntryUsageId(getAssetListEntryUsageId());
 		assetListEntryUsageImpl.setGroupId(getGroupId());
 		assetListEntryUsageImpl.setCompanyId(getCompanyId());
 		assetListEntryUsageImpl.setUserId(getUserId());
@@ -722,46 +631,38 @@ public class AssetListEntryUsageModelImpl
 	public void resetOriginalValues() {
 		AssetListEntryUsageModelImpl assetListEntryUsageModelImpl = this;
 
-		assetListEntryUsageModelImpl._originalUuid =
-			assetListEntryUsageModelImpl._uuid;
+		assetListEntryUsageModelImpl._originalUuid = assetListEntryUsageModelImpl._uuid;
 
-		assetListEntryUsageModelImpl._originalGroupId =
-			assetListEntryUsageModelImpl._groupId;
+		assetListEntryUsageModelImpl._originalGroupId = assetListEntryUsageModelImpl._groupId;
 
 		assetListEntryUsageModelImpl._setOriginalGroupId = false;
 
-		assetListEntryUsageModelImpl._originalCompanyId =
-			assetListEntryUsageModelImpl._companyId;
+		assetListEntryUsageModelImpl._originalCompanyId = assetListEntryUsageModelImpl._companyId;
 
 		assetListEntryUsageModelImpl._setOriginalCompanyId = false;
 
 		assetListEntryUsageModelImpl._setModifiedDate = false;
 
-		assetListEntryUsageModelImpl._originalAssetListEntryId =
-			assetListEntryUsageModelImpl._assetListEntryId;
+		assetListEntryUsageModelImpl._originalAssetListEntryId = assetListEntryUsageModelImpl._assetListEntryId;
 
 		assetListEntryUsageModelImpl._setOriginalAssetListEntryId = false;
 
-		assetListEntryUsageModelImpl._originalClassNameId =
-			assetListEntryUsageModelImpl._classNameId;
+		assetListEntryUsageModelImpl._originalClassNameId = assetListEntryUsageModelImpl._classNameId;
 
 		assetListEntryUsageModelImpl._setOriginalClassNameId = false;
 
-		assetListEntryUsageModelImpl._originalClassPK =
-			assetListEntryUsageModelImpl._classPK;
+		assetListEntryUsageModelImpl._originalClassPK = assetListEntryUsageModelImpl._classPK;
 
 		assetListEntryUsageModelImpl._setOriginalClassPK = false;
 
-		assetListEntryUsageModelImpl._originalPortletId =
-			assetListEntryUsageModelImpl._portletId;
+		assetListEntryUsageModelImpl._originalPortletId = assetListEntryUsageModelImpl._portletId;
 
 		assetListEntryUsageModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<AssetListEntryUsage> toCacheModel() {
-		AssetListEntryUsageCacheModel assetListEntryUsageCacheModel =
-			new AssetListEntryUsageCacheModel();
+		AssetListEntryUsageCacheModel assetListEntryUsageCacheModel = new AssetListEntryUsageCacheModel();
 
 		assetListEntryUsageCacheModel.uuid = getUuid();
 
@@ -771,8 +672,7 @@ public class AssetListEntryUsageModelImpl
 			assetListEntryUsageCacheModel.uuid = null;
 		}
 
-		assetListEntryUsageCacheModel.assetListEntryUsageId =
-			getAssetListEntryUsageId();
+		assetListEntryUsageCacheModel.assetListEntryUsageId = getAssetListEntryUsageId();
 
 		assetListEntryUsageCacheModel.groupId = getGroupId();
 
@@ -823,8 +723,7 @@ public class AssetListEntryUsageModelImpl
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
-			assetListEntryUsageCacheModel.lastPublishDate =
-				lastPublishDate.getTime();
+			assetListEntryUsageCacheModel.lastPublishDate = lastPublishDate.getTime();
 		}
 		else {
 			assetListEntryUsageCacheModel.lastPublishDate = Long.MIN_VALUE;
@@ -835,20 +734,17 @@ public class AssetListEntryUsageModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<AssetListEntryUsage, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetListEntryUsage, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<AssetListEntryUsage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<AssetListEntryUsage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<AssetListEntryUsage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<AssetListEntryUsage, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -867,22 +763,19 @@ public class AssetListEntryUsageModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<AssetListEntryUsage, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetListEntryUsage, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<AssetListEntryUsage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<AssetListEntryUsage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<AssetListEntryUsage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<AssetListEntryUsage, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -896,12 +789,10 @@ public class AssetListEntryUsageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetListEntryUsage.class.getClassLoader();
+	private static final ClassLoader _classLoader = AssetListEntryUsage.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetListEntryUsage.class, ModelWrapper.class
-	};
-
+			AssetListEntryUsage.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _assetListEntryUsageId;
@@ -930,5 +821,4 @@ public class AssetListEntryUsageModelImpl
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetListEntryUsage _escapedModel;
-
 }

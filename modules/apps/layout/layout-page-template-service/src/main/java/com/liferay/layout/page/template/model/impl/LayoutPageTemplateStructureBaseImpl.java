@@ -35,7 +35,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 public abstract class LayoutPageTemplateStructureBaseImpl
 	extends LayoutPageTemplateStructureModelImpl
 	implements LayoutPageTemplateStructure {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +43,10 @@ public abstract class LayoutPageTemplateStructureBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			LayoutPageTemplateStructureLocalServiceUtil.
-				addLayoutPageTemplateStructure(this);
+			LayoutPageTemplateStructureLocalServiceUtil.addLayoutPageTemplateStructure(this);
 		}
 		else {
-			LayoutPageTemplateStructureLocalServiceUtil.
-				updateLayoutPageTemplateStructure(this);
+			LayoutPageTemplateStructureLocalServiceUtil.updateLayoutPageTemplateStructure(this);
 		}
 	}
-
 }

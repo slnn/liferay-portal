@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class WeDeployAuthTokenSoap implements Serializable {
-
 	public static WeDeployAuthTokenSoap toSoapModel(WeDeployAuthToken model) {
 		WeDeployAuthTokenSoap soapModel = new WeDeployAuthTokenSoap();
 
@@ -49,9 +48,7 @@ public class WeDeployAuthTokenSoap implements Serializable {
 
 	public static WeDeployAuthTokenSoap[] toSoapModels(
 		WeDeployAuthToken[] models) {
-
-		WeDeployAuthTokenSoap[] soapModels =
-			new WeDeployAuthTokenSoap[models.length];
+		WeDeployAuthTokenSoap[] soapModels = new WeDeployAuthTokenSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -62,12 +59,10 @@ public class WeDeployAuthTokenSoap implements Serializable {
 
 	public static WeDeployAuthTokenSoap[][] toSoapModels(
 		WeDeployAuthToken[][] models) {
-
 		WeDeployAuthTokenSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new WeDeployAuthTokenSoap[models.length][models[0].length];
+			soapModels = new WeDeployAuthTokenSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new WeDeployAuthTokenSoap[0][0];
@@ -82,9 +77,7 @@ public class WeDeployAuthTokenSoap implements Serializable {
 
 	public static WeDeployAuthTokenSoap[] toSoapModels(
 		List<WeDeployAuthToken> models) {
-
-		List<WeDeployAuthTokenSoap> soapModels =
-			new ArrayList<WeDeployAuthTokenSoap>(models.size());
+		List<WeDeployAuthTokenSoap> soapModels = new ArrayList<WeDeployAuthTokenSoap>(models.size());
 
 		for (WeDeployAuthToken model : models) {
 			soapModels.add(toSoapModel(model));
@@ -185,5 +178,4 @@ public class WeDeployAuthTokenSoap implements Serializable {
 	private String _clientId;
 	private String _token;
 	private int _type;
-
 }

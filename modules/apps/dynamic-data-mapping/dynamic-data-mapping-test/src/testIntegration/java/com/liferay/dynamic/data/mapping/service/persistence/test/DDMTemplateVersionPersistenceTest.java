@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.mapping.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDMTemplateVersionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
@@ -108,9 +108,7 @@ public class DDMTemplateVersionPersistenceTest {
 
 		_persistence.remove(newDDMTemplateVersion);
 
-		DDMTemplateVersion existingDDMTemplateVersion =
-			_persistence.fetchByPrimaryKey(
-				newDDMTemplateVersion.getPrimaryKey());
+		DDMTemplateVersion existingDDMTemplateVersion = _persistence.fetchByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
 		Assert.assertNull(existingDDMTemplateVersion);
 	}
@@ -156,70 +154,51 @@ public class DDMTemplateVersionPersistenceTest {
 
 		newDDMTemplateVersion.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newDDMTemplateVersion.setStatusByUserName(
-			RandomTestUtil.randomString());
+		newDDMTemplateVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		newDDMTemplateVersion.setStatusDate(RandomTestUtil.nextDate());
 
 		_ddmTemplateVersions.add(_persistence.update(newDDMTemplateVersion));
 
-		DDMTemplateVersion existingDDMTemplateVersion =
-			_persistence.findByPrimaryKey(
-				newDDMTemplateVersion.getPrimaryKey());
+		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getTemplateVersionId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getTemplateVersionId(),
 			newDDMTemplateVersion.getTemplateVersionId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getGroupId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getGroupId(),
 			newDDMTemplateVersion.getGroupId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getCompanyId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getCompanyId(),
 			newDDMTemplateVersion.getCompanyId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getUserId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getUserId(),
 			newDDMTemplateVersion.getUserId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getUserName(),
+		Assert.assertEquals(existingDDMTemplateVersion.getUserName(),
 			newDDMTemplateVersion.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDDMTemplateVersion.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDMTemplateVersion.getCreateDate()),
 			Time.getShortTimestamp(newDDMTemplateVersion.getCreateDate()));
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getClassNameId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getClassNameId(),
 			newDDMTemplateVersion.getClassNameId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getClassPK(),
+		Assert.assertEquals(existingDDMTemplateVersion.getClassPK(),
 			newDDMTemplateVersion.getClassPK());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getTemplateId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getTemplateId(),
 			newDDMTemplateVersion.getTemplateId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getVersion(),
+		Assert.assertEquals(existingDDMTemplateVersion.getVersion(),
 			newDDMTemplateVersion.getVersion());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getName(),
+		Assert.assertEquals(existingDDMTemplateVersion.getName(),
 			newDDMTemplateVersion.getName());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getDescription(),
+		Assert.assertEquals(existingDDMTemplateVersion.getDescription(),
 			newDDMTemplateVersion.getDescription());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getLanguage(),
+		Assert.assertEquals(existingDDMTemplateVersion.getLanguage(),
 			newDDMTemplateVersion.getLanguage());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getScript(),
+		Assert.assertEquals(existingDDMTemplateVersion.getScript(),
 			newDDMTemplateVersion.getScript());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getStatus(),
+		Assert.assertEquals(existingDDMTemplateVersion.getStatus(),
 			newDDMTemplateVersion.getStatus());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getStatusByUserId(),
+		Assert.assertEquals(existingDDMTemplateVersion.getStatusByUserId(),
 			newDDMTemplateVersion.getStatusByUserId());
-		Assert.assertEquals(
-			existingDDMTemplateVersion.getStatusByUserName(),
+		Assert.assertEquals(existingDDMTemplateVersion.getStatusByUserName(),
 			newDDMTemplateVersion.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDDMTemplateVersion.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDMTemplateVersion.getStatusDate()),
 			Time.getShortTimestamp(newDDMTemplateVersion.getStatusDate()));
 	}
 
@@ -241,8 +220,8 @@ public class DDMTemplateVersionPersistenceTest {
 
 	@Test
 	public void testCountByT_S() throws Exception {
-		_persistence.countByT_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByT_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByT_S(0L, 0);
 	}
@@ -251,9 +230,7 @@ public class DDMTemplateVersionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
-		DDMTemplateVersion existingDDMTemplateVersion =
-			_persistence.findByPrimaryKey(
-				newDDMTemplateVersion.getPrimaryKey());
+		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingDDMTemplateVersion, newDDMTemplateVersion);
 	}
@@ -267,26 +244,24 @@ public class DDMTemplateVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMTemplateVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DDMTemplateVersion", "templateVersionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "classNameId", true, "classPK", true, "templateId", true,
-			"version", true, "language", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+		return OrderByComparatorFactoryUtil.create("DDMTemplateVersion",
+			"templateVersionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"classNameId", true, "classPK", true, "templateId", true,
+			"version", true, "language", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
-		DDMTemplateVersion existingDDMTemplateVersion =
-			_persistence.fetchByPrimaryKey(
-				newDDMTemplateVersion.getPrimaryKey());
+		DDMTemplateVersion existingDDMTemplateVersion = _persistence.fetchByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingDDMTemplateVersion, newDDMTemplateVersion);
 	}
@@ -295,8 +270,7 @@ public class DDMTemplateVersionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMTemplateVersion missingDDMTemplateVersion =
-			_persistence.fetchByPrimaryKey(pk);
+		DDMTemplateVersion missingDDMTemplateVersion = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDMTemplateVersion);
 	}
@@ -304,7 +278,6 @@ public class DDMTemplateVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		DDMTemplateVersion newDDMTemplateVersion1 = addDDMTemplateVersion();
 		DDMTemplateVersion newDDMTemplateVersion2 = addDDMTemplateVersion();
 
@@ -313,22 +286,18 @@ public class DDMTemplateVersionPersistenceTest {
 		primaryKeys.add(newDDMTemplateVersion1.getPrimaryKey());
 		primaryKeys.add(newDDMTemplateVersion2.getPrimaryKey());
 
-		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddmTemplateVersions.size());
-		Assert.assertEquals(
-			newDDMTemplateVersion1,
+		Assert.assertEquals(newDDMTemplateVersion1,
 			ddmTemplateVersions.get(newDDMTemplateVersion1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDMTemplateVersion2,
+		Assert.assertEquals(newDDMTemplateVersion2,
 			ddmTemplateVersions.get(newDDMTemplateVersion2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -338,8 +307,7 @@ public class DDMTemplateVersionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmTemplateVersions.isEmpty());
 	}
@@ -347,7 +315,6 @@ public class DDMTemplateVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
 		long pk = RandomTestUtil.nextLong();
@@ -357,39 +324,36 @@ public class DDMTemplateVersionPersistenceTest {
 		primaryKeys.add(newDDMTemplateVersion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmTemplateVersions.size());
-		Assert.assertEquals(
-			newDDMTemplateVersion,
+		Assert.assertEquals(newDDMTemplateVersion,
 			ddmTemplateVersions.get(newDDMTemplateVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmTemplateVersions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMTemplateVersion.getPrimaryKey());
 
-		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMTemplateVersion> ddmTemplateVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmTemplateVersions.size());
-		Assert.assertEquals(
-			newDDMTemplateVersion,
+		Assert.assertEquals(newDDMTemplateVersion,
 			ddmTemplateVersions.get(newDDMTemplateVersion.getPrimaryKey()));
 	}
 
@@ -397,22 +361,15 @@ public class DDMTemplateVersionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDMTemplateVersionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDMTemplateVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<DDMTemplateVersion>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMTemplateVersion>() {
 				@Override
-				public void performAction(
-					DDMTemplateVersion ddmTemplateVersion) {
-
+				public void performAction(DDMTemplateVersion ddmTemplateVersion) {
 					Assert.assertNotNull(ddmTemplateVersion);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -421,19 +378,17 @@ public class DDMTemplateVersionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"templateVersionId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateVersionId",
 				newDDMTemplateVersion.getTemplateVersionId()));
 
-		List<DDMTemplateVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMTemplateVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -444,35 +399,32 @@ public class DDMTemplateVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"templateVersionId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateVersionId",
+				RandomTestUtil.nextLong()));
 
-		List<DDMTemplateVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMTemplateVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("templateVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"templateVersionId"));
 
-		Object newTemplateVersionId =
-			newDDMTemplateVersion.getTemplateVersionId();
+		Object newTemplateVersionId = newDDMTemplateVersion.getTemplateVersionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"templateVersionId", new Object[] {newTemplateVersionId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("templateVersionId",
+				new Object[] { newTemplateVersionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -485,15 +437,14 @@ public class DDMTemplateVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMTemplateVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("templateVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"templateVersionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"templateVersionId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("templateVersionId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -506,24 +457,20 @@ public class DDMTemplateVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMTemplateVersion existingDDMTemplateVersion =
-			_persistence.findByPrimaryKey(
-				newDDMTemplateVersion.getPrimaryKey());
+		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplateVersion.getTemplateId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplateVersion, "getOriginalTemplateId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingDDMTemplateVersion.getTemplateId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplateVersion,
+				"getOriginalTemplateId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingDDMTemplateVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingDDMTemplateVersion, "getOriginalVersion",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingDDMTemplateVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
-	protected DDMTemplateVersion addDDMTemplateVersion() throws Exception {
+	protected DDMTemplateVersion addDDMTemplateVersion()
+		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMTemplateVersion ddmTemplateVersion = _persistence.create(pk);
@@ -567,9 +514,7 @@ public class DDMTemplateVersionPersistenceTest {
 		return ddmTemplateVersion;
 	}
 
-	private List<DDMTemplateVersion> _ddmTemplateVersions =
-		new ArrayList<DDMTemplateVersion>();
+	private List<DDMTemplateVersion> _ddmTemplateVersions = new ArrayList<DDMTemplateVersion>();
 	private DDMTemplateVersionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

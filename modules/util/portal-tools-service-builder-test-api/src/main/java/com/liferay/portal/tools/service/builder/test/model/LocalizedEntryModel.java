@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,7 +40,6 @@ import java.util.Map;
  */
 @ProviderType
 public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -167,5 +167,4 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 
 	@Override
 	public String toXmlString();
-
 }

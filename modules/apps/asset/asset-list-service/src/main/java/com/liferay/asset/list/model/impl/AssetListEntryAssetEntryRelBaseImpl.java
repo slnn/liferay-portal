@@ -35,7 +35,6 @@ import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUti
 public abstract class AssetListEntryAssetEntryRelBaseImpl
 	extends AssetListEntryAssetEntryRelModelImpl
 	implements AssetListEntryAssetEntryRel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +43,10 @@ public abstract class AssetListEntryAssetEntryRelBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				addAssetListEntryAssetEntryRel(this);
+			AssetListEntryAssetEntryRelLocalServiceUtil.addAssetListEntryAssetEntryRel(this);
 		}
 		else {
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				updateAssetListEntryAssetEntryRel(this);
+			AssetListEntryAssetEntryRelLocalServiceUtil.updateAssetListEntryAssetEntryRel(this);
 		}
 	}
-
 }

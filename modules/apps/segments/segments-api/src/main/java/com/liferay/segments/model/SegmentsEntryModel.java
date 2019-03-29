@@ -39,10 +39,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface SegmentsEntryModel
-	extends BaseModel<SegmentsEntry>, GroupedModel, LocalizedModel,
-			ShardedModel {
-
+public interface SegmentsEntryModel extends BaseModel<SegmentsEntry>,
+	GroupedModel, LocalizedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -369,8 +367,8 @@ public interface SegmentsEntryModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -387,8 +385,8 @@ public interface SegmentsEntryModel
 	 * @param descriptionMap the locales and localized descriptions of this segments entry
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the active of this segments entry.
@@ -483,5 +481,4 @@ public interface SegmentsEntryModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

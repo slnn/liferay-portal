@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+
 import com.liferay.screens.service.ScreensAssetEntryServiceUtil;
 
 import java.rmi.RemoteException;
@@ -53,17 +54,12 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensAssetEntryServiceSoap {
-
 	public static String getAssetEntries(
-			com.liferay.asset.kernel.service.persistence.AssetEntryQuery
-				assetEntryQuery,
-			String locale)
-		throws RemoteException {
-
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery assetEntryQuery,
+		String locale) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue =
-				ScreensAssetEntryServiceUtil.getAssetEntries(
-					assetEntryQuery, LocaleUtil.fromLanguageId(locale));
+			com.liferay.portal.kernel.json.JSONArray returnValue = ScreensAssetEntryServiceUtil.getAssetEntries(assetEntryQuery,
+					LocaleUtil.fromLanguageId(locale));
 
 			return returnValue.toString();
 		}
@@ -74,15 +70,12 @@ public class ScreensAssetEntryServiceSoap {
 		}
 	}
 
-	public static String getAssetEntries(
-			long companyId, long groupId, String portletItemName, String locale,
-			int max)
+	public static String getAssetEntries(long companyId, long groupId,
+		String portletItemName, String locale, int max)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue =
-				ScreensAssetEntryServiceUtil.getAssetEntries(
-					companyId, groupId, portletItemName,
+			com.liferay.portal.kernel.json.JSONArray returnValue = ScreensAssetEntryServiceUtil.getAssetEntries(companyId,
+					groupId, portletItemName,
 					LocaleUtil.fromLanguageId(locale), max);
 
 			return returnValue.toString();
@@ -96,11 +89,9 @@ public class ScreensAssetEntryServiceSoap {
 
 	public static String getAssetEntry(long entryId, String locale)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensAssetEntryServiceUtil.getAssetEntry(
-					entryId, LocaleUtil.fromLanguageId(locale));
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensAssetEntryServiceUtil.getAssetEntry(entryId,
+					LocaleUtil.fromLanguageId(locale));
 
 			return returnValue.toString();
 		}
@@ -111,14 +102,11 @@ public class ScreensAssetEntryServiceSoap {
 		}
 	}
 
-	public static String getAssetEntry(
-			String className, long classPK, String locale)
-		throws RemoteException {
-
+	public static String getAssetEntry(String className, long classPK,
+		String locale) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensAssetEntryServiceUtil.getAssetEntry(
-					className, classPK, LocaleUtil.fromLanguageId(locale));
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensAssetEntryServiceUtil.getAssetEntry(className,
+					classPK, LocaleUtil.fromLanguageId(locale));
 
 			return returnValue.toString();
 		}
@@ -129,7 +117,5 @@ public class ScreensAssetEntryServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ScreensAssetEntryServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(ScreensAssetEntryServiceSoap.class);
 }

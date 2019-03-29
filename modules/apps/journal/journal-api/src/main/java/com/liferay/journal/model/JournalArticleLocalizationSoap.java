@@ -29,12 +29,9 @@ import java.util.List;
  */
 @ProviderType
 public class JournalArticleLocalizationSoap implements Serializable {
-
 	public static JournalArticleLocalizationSoap toSoapModel(
 		JournalArticleLocalization model) {
-
-		JournalArticleLocalizationSoap soapModel =
-			new JournalArticleLocalizationSoap();
+		JournalArticleLocalizationSoap soapModel = new JournalArticleLocalizationSoap();
 
 		soapModel.setArticleLocalizationId(model.getArticleLocalizationId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -48,9 +45,7 @@ public class JournalArticleLocalizationSoap implements Serializable {
 
 	public static JournalArticleLocalizationSoap[] toSoapModels(
 		JournalArticleLocalization[] models) {
-
-		JournalArticleLocalizationSoap[] soapModels =
-			new JournalArticleLocalizationSoap[models.length];
+		JournalArticleLocalizationSoap[] soapModels = new JournalArticleLocalizationSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -61,13 +56,10 @@ public class JournalArticleLocalizationSoap implements Serializable {
 
 	public static JournalArticleLocalizationSoap[][] toSoapModels(
 		JournalArticleLocalization[][] models) {
-
 		JournalArticleLocalizationSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new JournalArticleLocalizationSoap
-					[models.length][models[0].length];
+			soapModels = new JournalArticleLocalizationSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new JournalArticleLocalizationSoap[0][0];
@@ -82,16 +74,13 @@ public class JournalArticleLocalizationSoap implements Serializable {
 
 	public static JournalArticleLocalizationSoap[] toSoapModels(
 		List<JournalArticleLocalization> models) {
-
-		List<JournalArticleLocalizationSoap> soapModels =
-			new ArrayList<JournalArticleLocalizationSoap>(models.size());
+		List<JournalArticleLocalizationSoap> soapModels = new ArrayList<JournalArticleLocalizationSoap>(models.size());
 
 		for (JournalArticleLocalization model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new JournalArticleLocalizationSoap[soapModels.size()]);
+		return soapModels.toArray(new JournalArticleLocalizationSoap[soapModels.size()]);
 	}
 
 	public JournalArticleLocalizationSoap() {
@@ -159,5 +148,4 @@ public class JournalArticleLocalizationSoap implements Serializable {
 	private String _title;
 	private String _description;
 	private String _languageId;
-
 }

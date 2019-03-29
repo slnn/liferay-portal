@@ -32,9 +32,8 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class BookmarksEntryBaseImpl
-	extends BookmarksEntryModelImpl implements BookmarksEntry {
-
+public abstract class BookmarksEntryBaseImpl extends BookmarksEntryModelImpl
+	implements BookmarksEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,5 +57,4 @@ public abstract class BookmarksEntryBaseImpl
 
 		BookmarksEntryLocalServiceUtil.updateBookmarksEntry(bookmarksEntry);
 	}
-
 }

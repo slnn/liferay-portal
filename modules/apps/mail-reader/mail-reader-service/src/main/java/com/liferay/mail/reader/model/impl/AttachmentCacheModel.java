@@ -17,8 +17,10 @@ package com.liferay.mail.reader.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mail.reader.model.Attachment;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -33,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class AttachmentCacheModel
-	implements CacheModel<Attachment>, Externalizable {
-
+public class AttachmentCacheModel implements CacheModel<Attachment>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -139,7 +140,8 @@ public class AttachmentCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(attachmentId);
 
 		objectOutput.writeLong(companyId);
@@ -178,5 +180,4 @@ public class AttachmentCacheModel
 	public String contentPath;
 	public String fileName;
 	public long size;
-
 }

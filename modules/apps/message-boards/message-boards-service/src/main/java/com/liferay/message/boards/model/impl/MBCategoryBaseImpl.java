@@ -32,9 +32,8 @@ import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class MBCategoryBaseImpl
-	extends MBCategoryModelImpl implements MBCategory {
-
+public abstract class MBCategoryBaseImpl extends MBCategoryModelImpl
+	implements MBCategory {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class MBCategoryBaseImpl
 			MBCategoryLocalServiceUtil.updateMBCategory(this);
 		}
 	}
-
 }

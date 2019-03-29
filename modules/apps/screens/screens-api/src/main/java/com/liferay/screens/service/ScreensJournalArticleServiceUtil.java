@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,41 +35,37 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class ScreensJournalArticleServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensJournalArticleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static String getJournalArticleContent(
-			long classPK, java.util.Locale locale)
+	public static String getJournalArticleContent(long classPK,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getJournalArticleContent(classPK, locale);
 	}
 
-	public static String getJournalArticleContent(
-			long classPK, long ddmTemplateId, java.util.Locale locale)
+	public static String getJournalArticleContent(long classPK,
+		long ddmTemplateId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getJournalArticleContent(
-			classPK, ddmTemplateId, locale);
+		return getService()
+				   .getJournalArticleContent(classPK, ddmTemplateId, locale);
 	}
 
-	public static String getJournalArticleContent(
-			long groupId, String articleId, long ddmTemplateId,
-			java.util.Locale locale)
+	public static String getJournalArticleContent(long groupId,
+		String articleId, long ddmTemplateId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getJournalArticleContent(
-			groupId, articleId, ddmTemplateId, locale);
+		return getService()
+				   .getJournalArticleContent(groupId, articleId, ddmTemplateId,
+			locale);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -77,26 +74,17 @@ public class ScreensJournalArticleServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<ScreensJournalArticleService, ScreensJournalArticleService>
-			_serviceTracker;
+	private static ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ScreensJournalArticleService.class);
+		Bundle bundle = FrameworkUtil.getBundle(ScreensJournalArticleService.class);
 
-		ServiceTracker
-			<ScreensJournalArticleService, ScreensJournalArticleService>
-				serviceTracker =
-					new ServiceTracker
-						<ScreensJournalArticleService,
-						 ScreensJournalArticleService>(
-							 bundle.getBundleContext(),
-							 ScreensJournalArticleService.class, null);
+		ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService> serviceTracker =
+			new ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService>(bundle.getBundleContext(),
+				ScreensJournalArticleService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

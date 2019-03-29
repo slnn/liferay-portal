@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class AccountSoap implements Serializable {
-
 	public static AccountSoap toSoapModel(Account model) {
 		AccountSoap soapModel = new AccountSoap();
 
@@ -92,8 +91,7 @@ public class AccountSoap implements Serializable {
 	}
 
 	public static AccountSoap[] toSoapModels(List<Account> models) {
-		List<AccountSoap> soapModels = new ArrayList<AccountSoap>(
-			models.size());
+		List<AccountSoap> soapModels = new ArrayList<AccountSoap>(models.size());
 
 		for (Account model : models) {
 			soapModels.add(toSoapModel(model));
@@ -367,5 +365,4 @@ public class AccountSoap implements Serializable {
 	private long _sentFolderId;
 	private long _trashFolderId;
 	private boolean _defaultSender;
-
 }

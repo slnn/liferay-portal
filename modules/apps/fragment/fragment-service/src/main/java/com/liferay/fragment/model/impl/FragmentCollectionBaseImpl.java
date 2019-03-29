@@ -34,7 +34,6 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 @ProviderType
 public abstract class FragmentCollectionBaseImpl
 	extends FragmentCollectionModelImpl implements FragmentCollection {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class FragmentCollectionBaseImpl
 			FragmentCollectionLocalServiceUtil.updateFragmentCollection(this);
 		}
 	}
-
 }

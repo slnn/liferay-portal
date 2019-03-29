@@ -15,11 +15,13 @@
 package com.liferay.html.preview.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.html.preview.exception.NoSuchHtmlPreviewEntryException;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence;
 import com.liferay.html.preview.service.persistence.HtmlPreviewEntryUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +58,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class HtmlPreviewEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.html.preview.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.html.preview.service"));
 
 	@Before
 	public void setUp() {
@@ -106,8 +107,7 @@ public class HtmlPreviewEntryPersistenceTest {
 
 		_persistence.remove(newHtmlPreviewEntry);
 
-		HtmlPreviewEntry existingHtmlPreviewEntry =
-			_persistence.fetchByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
+		HtmlPreviewEntry existingHtmlPreviewEntry = _persistence.fetchByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
 
 		Assert.assertNull(existingHtmlPreviewEntry);
 	}
@@ -143,46 +143,36 @@ public class HtmlPreviewEntryPersistenceTest {
 
 		_htmlPreviewEntries.add(_persistence.update(newHtmlPreviewEntry));
 
-		HtmlPreviewEntry existingHtmlPreviewEntry =
-			_persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
+		HtmlPreviewEntry existingHtmlPreviewEntry = _persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getHtmlPreviewEntryId(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getHtmlPreviewEntryId(),
 			newHtmlPreviewEntry.getHtmlPreviewEntryId());
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getGroupId(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getGroupId(),
 			newHtmlPreviewEntry.getGroupId());
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getCompanyId(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getCompanyId(),
 			newHtmlPreviewEntry.getCompanyId());
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getUserId(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getUserId(),
 			newHtmlPreviewEntry.getUserId());
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getUserName(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getUserName(),
 			newHtmlPreviewEntry.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingHtmlPreviewEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingHtmlPreviewEntry.getCreateDate()),
 			Time.getShortTimestamp(newHtmlPreviewEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingHtmlPreviewEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingHtmlPreviewEntry.getModifiedDate()),
 			Time.getShortTimestamp(newHtmlPreviewEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getClassNameId(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getClassNameId(),
 			newHtmlPreviewEntry.getClassNameId());
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getClassPK(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getClassPK(),
 			newHtmlPreviewEntry.getClassPK());
-		Assert.assertEquals(
-			existingHtmlPreviewEntry.getFileEntryId(),
+		Assert.assertEquals(existingHtmlPreviewEntry.getFileEntryId(),
 			newHtmlPreviewEntry.getFileEntryId());
 	}
 
 	@Test
 	public void testCountByG_C_C() throws Exception {
-		_persistence.countByG_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
@@ -191,8 +181,7 @@ public class HtmlPreviewEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
 
-		HtmlPreviewEntry existingHtmlPreviewEntry =
-			_persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
+		HtmlPreviewEntry existingHtmlPreviewEntry = _persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingHtmlPreviewEntry, newHtmlPreviewEntry);
 	}
@@ -206,15 +195,15 @@ public class HtmlPreviewEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<HtmlPreviewEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"HtmlPreviewEntry", "htmlPreviewEntryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+		return OrderByComparatorFactoryUtil.create("HtmlPreviewEntry",
+			"htmlPreviewEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"fileEntryId", true);
 	}
 
@@ -222,8 +211,7 @@ public class HtmlPreviewEntryPersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
 
-		HtmlPreviewEntry existingHtmlPreviewEntry =
-			_persistence.fetchByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
+		HtmlPreviewEntry existingHtmlPreviewEntry = _persistence.fetchByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingHtmlPreviewEntry, newHtmlPreviewEntry);
 	}
@@ -232,8 +220,7 @@ public class HtmlPreviewEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		HtmlPreviewEntry missingHtmlPreviewEntry =
-			_persistence.fetchByPrimaryKey(pk);
+		HtmlPreviewEntry missingHtmlPreviewEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingHtmlPreviewEntry);
 	}
@@ -241,7 +228,6 @@ public class HtmlPreviewEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		HtmlPreviewEntry newHtmlPreviewEntry1 = addHtmlPreviewEntry();
 		HtmlPreviewEntry newHtmlPreviewEntry2 = addHtmlPreviewEntry();
 
@@ -250,22 +236,18 @@ public class HtmlPreviewEntryPersistenceTest {
 		primaryKeys.add(newHtmlPreviewEntry1.getPrimaryKey());
 		primaryKeys.add(newHtmlPreviewEntry2.getPrimaryKey());
 
-		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, htmlPreviewEntries.size());
-		Assert.assertEquals(
-			newHtmlPreviewEntry1,
+		Assert.assertEquals(newHtmlPreviewEntry1,
 			htmlPreviewEntries.get(newHtmlPreviewEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newHtmlPreviewEntry2,
+		Assert.assertEquals(newHtmlPreviewEntry2,
 			htmlPreviewEntries.get(newHtmlPreviewEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -275,8 +257,7 @@ public class HtmlPreviewEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(htmlPreviewEntries.isEmpty());
 	}
@@ -284,7 +265,6 @@ public class HtmlPreviewEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -294,39 +274,36 @@ public class HtmlPreviewEntryPersistenceTest {
 		primaryKeys.add(newHtmlPreviewEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, htmlPreviewEntries.size());
-		Assert.assertEquals(
-			newHtmlPreviewEntry,
+		Assert.assertEquals(newHtmlPreviewEntry,
 			htmlPreviewEntries.get(newHtmlPreviewEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(htmlPreviewEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newHtmlPreviewEntry.getPrimaryKey());
 
-		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, HtmlPreviewEntry> htmlPreviewEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, htmlPreviewEntries.size());
-		Assert.assertEquals(
-			newHtmlPreviewEntry,
+		Assert.assertEquals(newHtmlPreviewEntry,
 			htmlPreviewEntries.get(newHtmlPreviewEntry.getPrimaryKey()));
 	}
 
@@ -334,19 +311,15 @@ public class HtmlPreviewEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			HtmlPreviewEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = HtmlPreviewEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<HtmlPreviewEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<HtmlPreviewEntry>() {
 				@Override
 				public void performAction(HtmlPreviewEntry htmlPreviewEntry) {
 					Assert.assertNotNull(htmlPreviewEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -355,19 +328,17 @@ public class HtmlPreviewEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			HtmlPreviewEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(HtmlPreviewEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"htmlPreviewEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("htmlPreviewEntryId",
 				newHtmlPreviewEntry.getHtmlPreviewEntryId()));
 
-		List<HtmlPreviewEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<HtmlPreviewEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -378,35 +349,32 @@ public class HtmlPreviewEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			HtmlPreviewEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(HtmlPreviewEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"htmlPreviewEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("htmlPreviewEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<HtmlPreviewEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<HtmlPreviewEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		HtmlPreviewEntry newHtmlPreviewEntry = addHtmlPreviewEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			HtmlPreviewEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(HtmlPreviewEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("htmlPreviewEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"htmlPreviewEntryId"));
 
-		Object newHtmlPreviewEntryId =
-			newHtmlPreviewEntry.getHtmlPreviewEntryId();
+		Object newHtmlPreviewEntryId = newHtmlPreviewEntry.getHtmlPreviewEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"htmlPreviewEntryId", new Object[] {newHtmlPreviewEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("htmlPreviewEntryId",
+				new Object[] { newHtmlPreviewEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -419,16 +387,14 @@ public class HtmlPreviewEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			HtmlPreviewEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(HtmlPreviewEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("htmlPreviewEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"htmlPreviewEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"htmlPreviewEntryId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("htmlPreviewEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -441,24 +407,18 @@ public class HtmlPreviewEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		HtmlPreviewEntry existingHtmlPreviewEntry =
-			_persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
+		HtmlPreviewEntry existingHtmlPreviewEntry = _persistence.findByPrimaryKey(newHtmlPreviewEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingHtmlPreviewEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingHtmlPreviewEntry, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingHtmlPreviewEntry.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingHtmlPreviewEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingHtmlPreviewEntry.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingHtmlPreviewEntry, "getOriginalClassPK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingHtmlPreviewEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingHtmlPreviewEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingHtmlPreviewEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingHtmlPreviewEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingHtmlPreviewEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingHtmlPreviewEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected HtmlPreviewEntry addHtmlPreviewEntry() throws Exception {
@@ -489,9 +449,7 @@ public class HtmlPreviewEntryPersistenceTest {
 		return htmlPreviewEntry;
 	}
 
-	private List<HtmlPreviewEntry> _htmlPreviewEntries =
-		new ArrayList<HtmlPreviewEntry>();
+	private List<HtmlPreviewEntry> _htmlPreviewEntries = new ArrayList<HtmlPreviewEntry>();
 	private HtmlPreviewEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

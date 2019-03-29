@@ -37,37 +37,28 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=backgroundtask",
-		"json.web.service.context.path=BackgroundTask"
-	},
-	service = BackgroundTaskService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=backgroundtask", "json.web.service.context.path=BackgroundTask"}, service = BackgroundTaskService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface BackgroundTaskService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BackgroundTaskServiceUtil} to access the background task remote service. Add custom service methods to <code>com.liferay.portal.background.task.service.impl.BackgroundTaskServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBackgroundTasksCount(
-		long groupId, String taskExecutorClassName, String completed);
+	public int getBackgroundTasksCount(long groupId,
+		String taskExecutorClassName, String completed);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

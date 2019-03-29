@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class BookmarksEntrySoap implements Serializable {
-
 	public static BookmarksEntrySoap toSoapModel(BookmarksEntry model) {
 		BookmarksEntrySoap soapModel = new BookmarksEntrySoap();
 
@@ -68,14 +67,11 @@ public class BookmarksEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static BookmarksEntrySoap[][] toSoapModels(
-		BookmarksEntry[][] models) {
-
+	public static BookmarksEntrySoap[][] toSoapModels(BookmarksEntry[][] models) {
 		BookmarksEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new BookmarksEntrySoap[models.length][models[0].length];
+			soapModels = new BookmarksEntrySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new BookmarksEntrySoap[0][0];
@@ -88,11 +84,8 @@ public class BookmarksEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static BookmarksEntrySoap[] toSoapModels(
-		List<BookmarksEntry> models) {
-
-		List<BookmarksEntrySoap> soapModels = new ArrayList<BookmarksEntrySoap>(
-			models.size());
+	public static BookmarksEntrySoap[] toSoapModels(List<BookmarksEntry> models) {
+		List<BookmarksEntrySoap> soapModels = new ArrayList<BookmarksEntrySoap>(models.size());
 
 		for (BookmarksEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -292,5 +285,4 @@ public class BookmarksEntrySoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

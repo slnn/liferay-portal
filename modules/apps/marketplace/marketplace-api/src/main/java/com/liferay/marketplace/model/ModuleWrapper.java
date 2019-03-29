@@ -32,9 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ModuleWrapper
-	extends BaseModelWrapper<Module> implements Module, ModelWrapper<Module> {
-
+public class ModuleWrapper extends BaseModelWrapper<Module> implements Module,
+	ModelWrapper<Module> {
 	public ModuleWrapper(Module module) {
 		super(module);
 	}
@@ -80,8 +79,7 @@ public class ModuleWrapper
 			setAppId(appId);
 		}
 
-		String bundleSymbolicName = (String)attributes.get(
-			"bundleSymbolicName");
+		String bundleSymbolicName = (String)attributes.get("bundleSymbolicName");
 
 		if (bundleSymbolicName != null) {
 			setBundleSymbolicName(bundleSymbolicName);
@@ -101,80 +99,80 @@ public class ModuleWrapper
 	}
 
 	/**
-	 * Returns the app ID of this module.
-	 *
-	 * @return the app ID of this module
-	 */
+	* Returns the app ID of this module.
+	*
+	* @return the app ID of this module
+	*/
 	@Override
 	public long getAppId() {
 		return model.getAppId();
 	}
 
 	/**
-	 * Returns the bundle symbolic name of this module.
-	 *
-	 * @return the bundle symbolic name of this module
-	 */
+	* Returns the bundle symbolic name of this module.
+	*
+	* @return the bundle symbolic name of this module
+	*/
 	@Override
 	public String getBundleSymbolicName() {
 		return model.getBundleSymbolicName();
 	}
 
 	/**
-	 * Returns the bundle version of this module.
-	 *
-	 * @return the bundle version of this module
-	 */
+	* Returns the bundle version of this module.
+	*
+	* @return the bundle version of this module
+	*/
 	@Override
 	public String getBundleVersion() {
 		return model.getBundleVersion();
 	}
 
 	/**
-	 * Returns the company ID of this module.
-	 *
-	 * @return the company ID of this module
-	 */
+	* Returns the company ID of this module.
+	*
+	* @return the company ID of this module
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the context name of this module.
-	 *
-	 * @return the context name of this module
-	 */
+	* Returns the context name of this module.
+	*
+	* @return the context name of this module
+	*/
 	@Override
 	public String getContextName() {
 		return model.getContextName();
 	}
 
 	/**
-	 * Returns the module ID of this module.
-	 *
-	 * @return the module ID of this module
-	 */
+	* Returns the module ID of this module.
+	*
+	* @return the module ID of this module
+	*/
 	@Override
 	public long getModuleId() {
 		return model.getModuleId();
 	}
 
 	/**
-	 * Returns the primary key of this module.
-	 *
-	 * @return the primary key of this module
-	 */
+	* Returns the primary key of this module.
+	*
+	* @return the primary key of this module
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the uuid of this module.
-	 *
-	 * @return the uuid of this module
-	 */
+	* Returns the uuid of this module.
+	*
+	* @return the uuid of this module
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -191,80 +189,80 @@ public class ModuleWrapper
 	}
 
 	/**
-	 * Sets the app ID of this module.
-	 *
-	 * @param appId the app ID of this module
-	 */
+	* Sets the app ID of this module.
+	*
+	* @param appId the app ID of this module
+	*/
 	@Override
 	public void setAppId(long appId) {
 		model.setAppId(appId);
 	}
 
 	/**
-	 * Sets the bundle symbolic name of this module.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name of this module
-	 */
+	* Sets the bundle symbolic name of this module.
+	*
+	* @param bundleSymbolicName the bundle symbolic name of this module
+	*/
 	@Override
 	public void setBundleSymbolicName(String bundleSymbolicName) {
 		model.setBundleSymbolicName(bundleSymbolicName);
 	}
 
 	/**
-	 * Sets the bundle version of this module.
-	 *
-	 * @param bundleVersion the bundle version of this module
-	 */
+	* Sets the bundle version of this module.
+	*
+	* @param bundleVersion the bundle version of this module
+	*/
 	@Override
 	public void setBundleVersion(String bundleVersion) {
 		model.setBundleVersion(bundleVersion);
 	}
 
 	/**
-	 * Sets the company ID of this module.
-	 *
-	 * @param companyId the company ID of this module
-	 */
+	* Sets the company ID of this module.
+	*
+	* @param companyId the company ID of this module
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the context name of this module.
-	 *
-	 * @param contextName the context name of this module
-	 */
+	* Sets the context name of this module.
+	*
+	* @param contextName the context name of this module
+	*/
 	@Override
 	public void setContextName(String contextName) {
 		model.setContextName(contextName);
 	}
 
 	/**
-	 * Sets the module ID of this module.
-	 *
-	 * @param moduleId the module ID of this module
-	 */
+	* Sets the module ID of this module.
+	*
+	* @param moduleId the module ID of this module
+	*/
 	@Override
 	public void setModuleId(long moduleId) {
 		model.setModuleId(moduleId);
 	}
 
 	/**
-	 * Sets the primary key of this module.
-	 *
-	 * @param primaryKey the primary key of this module
-	 */
+	* Sets the primary key of this module.
+	*
+	* @param primaryKey the primary key of this module
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the uuid of this module.
-	 *
-	 * @param uuid the uuid of this module
-	 */
+	* Sets the uuid of this module.
+	*
+	* @param uuid the uuid of this module
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -274,5 +272,4 @@ public class ModuleWrapper
 	protected ModuleWrapper wrap(Module module) {
 		return new ModuleWrapper(module);
 	}
-
 }

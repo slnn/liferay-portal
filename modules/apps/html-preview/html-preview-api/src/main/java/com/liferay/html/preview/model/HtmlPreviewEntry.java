@@ -27,40 +27,32 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see HtmlPreviewEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl"
-)
+@ImplementationClassName("com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl")
 @ProviderType
-public interface HtmlPreviewEntry
-	extends HtmlPreviewEntryModel, PersistedModel {
-
+public interface HtmlPreviewEntry extends HtmlPreviewEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<HtmlPreviewEntry, Long>
-		HTML_PREVIEW_ENTRY_ID_ACCESSOR =
-			new Accessor<HtmlPreviewEntry, Long>() {
+	public static final Accessor<HtmlPreviewEntry, Long> HTML_PREVIEW_ENTRY_ID_ACCESSOR =
+		new Accessor<HtmlPreviewEntry, Long>() {
+			@Override
+			public Long get(HtmlPreviewEntry htmlPreviewEntry) {
+				return htmlPreviewEntry.getHtmlPreviewEntryId();
+			}
 
-				@Override
-				public Long get(HtmlPreviewEntry htmlPreviewEntry) {
-					return htmlPreviewEntry.getHtmlPreviewEntryId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<HtmlPreviewEntry> getTypeClass() {
-					return HtmlPreviewEntry.class;
-				}
-
-			};
+			@Override
+			public Class<HtmlPreviewEntry> getTypeClass() {
+				return HtmlPreviewEntry.class;
+			}
+		};
 
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
-
 }

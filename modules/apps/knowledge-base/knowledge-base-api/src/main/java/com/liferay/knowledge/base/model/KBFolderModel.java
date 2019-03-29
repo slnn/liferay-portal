@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KBFolderModel
-	extends BaseModel<KBFolder>, ShardedModel, StagedGroupedModel {
-
+public interface KBFolderModel extends BaseModel<KBFolder>, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -276,5 +275,4 @@ public interface KBFolderModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

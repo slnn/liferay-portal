@@ -35,7 +35,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 public abstract class LayoutPageTemplateCollectionBaseImpl
 	extends LayoutPageTemplateCollectionModelImpl
 	implements LayoutPageTemplateCollection {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +43,10 @@ public abstract class LayoutPageTemplateCollectionBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			LayoutPageTemplateCollectionLocalServiceUtil.
-				addLayoutPageTemplateCollection(this);
+			LayoutPageTemplateCollectionLocalServiceUtil.addLayoutPageTemplateCollection(this);
 		}
 		else {
-			LayoutPageTemplateCollectionLocalServiceUtil.
-				updateLayoutPageTemplateCollection(this);
+			LayoutPageTemplateCollectionLocalServiceUtil.updateLayoutPageTemplateCollection(this);
 		}
 	}
-
 }

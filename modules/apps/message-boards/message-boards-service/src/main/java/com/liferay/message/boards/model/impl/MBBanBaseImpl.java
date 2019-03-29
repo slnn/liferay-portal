@@ -33,7 +33,6 @@ import com.liferay.message.boards.service.MBBanLocalServiceUtil;
  */
 @ProviderType
 public abstract class MBBanBaseImpl extends MBBanModelImpl implements MBBan {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,5 +47,4 @@ public abstract class MBBanBaseImpl extends MBBanModelImpl implements MBBan {
 			MBBanLocalServiceUtil.updateMBBan(this);
 		}
 	}
-
 }

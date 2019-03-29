@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDMStructureFinderBaseImpl
-	extends BasePersistenceImpl<DDMStructure> {
-
+public class DDMStructureFinderBaseImpl extends BasePersistenceImpl<DDMStructure> {
 	public DDMStructureFinderBaseImpl() {
 		setModelClass(DDMStructure.class);
 	}
@@ -55,14 +54,10 @@ public class DDMStructureFinderBaseImpl
 	 */
 	public void setDDMStructurePersistence(
 		DDMStructurePersistence ddmStructurePersistence) {
-
 		this.ddmStructurePersistence = ddmStructurePersistence;
 	}
 
 	@BeanReference(type = DDMStructurePersistence.class)
 	protected DDMStructurePersistence ddmStructurePersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStructureFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(DDMStructureFinderBaseImpl.class);
 }

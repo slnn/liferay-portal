@@ -27,40 +27,31 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoNotificationRecipientModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientImpl")
 @ProviderType
 public interface KaleoNotificationRecipient
 	extends KaleoNotificationRecipientModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoNotificationRecipient, Long>
-		KALEO_NOTIFICATION_RECIPIENT_ID_ACCESSOR =
-			new Accessor<KaleoNotificationRecipient, Long>() {
+	public static final Accessor<KaleoNotificationRecipient, Long> KALEO_NOTIFICATION_RECIPIENT_ID_ACCESSOR =
+		new Accessor<KaleoNotificationRecipient, Long>() {
+			@Override
+			public Long get(
+				KaleoNotificationRecipient kaleoNotificationRecipient) {
+				return kaleoNotificationRecipient.getKaleoNotificationRecipientId();
+			}
 
-				@Override
-				public Long get(
-					KaleoNotificationRecipient kaleoNotificationRecipient) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return kaleoNotificationRecipient.
-						getKaleoNotificationRecipientId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<KaleoNotificationRecipient> getTypeClass() {
-					return KaleoNotificationRecipient.class;
-				}
-
-			};
-
+			@Override
+			public Class<KaleoNotificationRecipient> getTypeClass() {
+				return KaleoNotificationRecipient.class;
+			}
+		};
 }

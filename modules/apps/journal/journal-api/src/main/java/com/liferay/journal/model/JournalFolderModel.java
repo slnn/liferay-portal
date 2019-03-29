@@ -39,10 +39,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface JournalFolderModel
-	extends BaseModel<JournalFolder>, ContainerModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface JournalFolderModel extends BaseModel<JournalFolder>,
+	ContainerModel, ShardedModel, StagedGroupedModel, TrashedModel,
+	WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -529,5 +528,4 @@ public interface JournalFolderModel
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
-
 }

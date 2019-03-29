@@ -27,47 +27,36 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see CalendarNotificationTemplateModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl"
-)
+@ImplementationClassName("com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl")
 @ProviderType
 public interface CalendarNotificationTemplate
 	extends CalendarNotificationTemplateModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CalendarNotificationTemplate, Long>
-		CALENDAR_NOTIFICATION_TEMPLATE_ID_ACCESSOR =
-			new Accessor<CalendarNotificationTemplate, Long>() {
+	public static final Accessor<CalendarNotificationTemplate, Long> CALENDAR_NOTIFICATION_TEMPLATE_ID_ACCESSOR =
+		new Accessor<CalendarNotificationTemplate, Long>() {
+			@Override
+			public Long get(
+				CalendarNotificationTemplate calendarNotificationTemplate) {
+				return calendarNotificationTemplate.getCalendarNotificationTemplateId();
+			}
 
-				@Override
-				public Long get(
-					CalendarNotificationTemplate calendarNotificationTemplate) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return calendarNotificationTemplate.
-						getCalendarNotificationTemplateId();
-				}
+			@Override
+			public Class<CalendarNotificationTemplate> getTypeClass() {
+				return CalendarNotificationTemplate.class;
+			}
+		};
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<CalendarNotificationTemplate> getTypeClass() {
-					return CalendarNotificationTemplate.class;
-				}
-
-			};
-
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getNotificationTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties getNotificationTypeSettingsProperties();
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			notificationTypeSettingsProperties);
-
+		com.liferay.portal.kernel.util.UnicodeProperties notificationTypeSettingsProperties);
 }

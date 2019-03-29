@@ -32,9 +32,8 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil
  * @generated
  */
 @ProviderType
-public abstract class KaleoDefinitionBaseImpl
-	extends KaleoDefinitionModelImpl implements KaleoDefinition {
-
+public abstract class KaleoDefinitionBaseImpl extends KaleoDefinitionModelImpl
+	implements KaleoDefinition {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class KaleoDefinitionBaseImpl
 			KaleoDefinitionLocalServiceUtil.updateKaleoDefinition(this);
 		}
 	}
-
 }

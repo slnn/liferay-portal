@@ -27,42 +27,35 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MDRRuleGroupInstanceModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl"
-)
+@ImplementationClassName("com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl")
 @ProviderType
-public interface MDRRuleGroupInstance
-	extends MDRRuleGroupInstanceModel, PersistedModel {
-
+public interface MDRRuleGroupInstance extends MDRRuleGroupInstanceModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MDRRuleGroupInstance, Long>
-		RULE_GROUP_INSTANCE_ID_ACCESSOR =
-			new Accessor<MDRRuleGroupInstance, Long>() {
+	public static final Accessor<MDRRuleGroupInstance, Long> RULE_GROUP_INSTANCE_ID_ACCESSOR =
+		new Accessor<MDRRuleGroupInstance, Long>() {
+			@Override
+			public Long get(MDRRuleGroupInstance mdrRuleGroupInstance) {
+				return mdrRuleGroupInstance.getRuleGroupInstanceId();
+			}
 
-				@Override
-				public Long get(MDRRuleGroupInstance mdrRuleGroupInstance) {
-					return mdrRuleGroupInstance.getRuleGroupInstanceId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<MDRRuleGroupInstance> getTypeClass() {
-					return MDRRuleGroupInstance.class;
-				}
-
-			};
+			@Override
+			public Class<MDRRuleGroupInstance> getTypeClass() {
+				return MDRRuleGroupInstance.class;
+			}
+		};
 
 	public java.util.List<MDRAction> getActions();
 
 	public MDRRuleGroup getRuleGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

@@ -37,10 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface CTEntryModel
-	extends AttachedModel, AuditedModel, BaseModel<CTEntry>, ResourcedModel,
-			ShardedModel {
-
+public interface CTEntryModel extends AttachedModel, AuditedModel,
+	BaseModel<CTEntry>, ResourcedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -260,5 +258,4 @@ public interface CTEntryModel
 	 * @param status the status of this ct entry
 	 */
 	public void setStatus(int status);
-
 }

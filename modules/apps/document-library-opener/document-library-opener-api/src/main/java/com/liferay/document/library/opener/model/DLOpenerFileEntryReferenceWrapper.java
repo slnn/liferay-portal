@@ -33,14 +33,11 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DLOpenerFileEntryReferenceWrapper
-	extends BaseModelWrapper<DLOpenerFileEntryReference>
+public class DLOpenerFileEntryReferenceWrapper extends BaseModelWrapper<DLOpenerFileEntryReference>
 	implements DLOpenerFileEntryReference,
-			   ModelWrapper<DLOpenerFileEntryReference> {
-
+		ModelWrapper<DLOpenerFileEntryReference> {
 	public DLOpenerFileEntryReferenceWrapper(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
 		super(dlOpenerFileEntryReference);
 	}
 
@@ -48,8 +45,8 @@ public class DLOpenerFileEntryReferenceWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put(
-			"dlOpenerFileEntryReferenceId", getDlOpenerFileEntryReferenceId());
+		attributes.put("dlOpenerFileEntryReferenceId",
+			getDlOpenerFileEntryReferenceId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -66,7 +63,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long dlOpenerFileEntryReferenceId = (Long)attributes.get(
-			"dlOpenerFileEntryReferenceId");
+				"dlOpenerFileEntryReferenceId");
 
 		if (dlOpenerFileEntryReferenceId != null) {
 			setDlOpenerFileEntryReferenceId(dlOpenerFileEntryReferenceId);
@@ -128,120 +125,120 @@ public class DLOpenerFileEntryReferenceWrapper
 	}
 
 	/**
-	 * Returns the company ID of this dl opener file entry reference.
-	 *
-	 * @return the company ID of this dl opener file entry reference
-	 */
+	* Returns the company ID of this dl opener file entry reference.
+	*
+	* @return the company ID of this dl opener file entry reference
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this dl opener file entry reference.
-	 *
-	 * @return the create date of this dl opener file entry reference
-	 */
+	* Returns the create date of this dl opener file entry reference.
+	*
+	* @return the create date of this dl opener file entry reference
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the dl opener file entry reference ID of this dl opener file entry reference.
-	 *
-	 * @return the dl opener file entry reference ID of this dl opener file entry reference
-	 */
+	* Returns the dl opener file entry reference ID of this dl opener file entry reference.
+	*
+	* @return the dl opener file entry reference ID of this dl opener file entry reference
+	*/
 	@Override
 	public long getDlOpenerFileEntryReferenceId() {
 		return model.getDlOpenerFileEntryReferenceId();
 	}
 
 	/**
-	 * Returns the file entry ID of this dl opener file entry reference.
-	 *
-	 * @return the file entry ID of this dl opener file entry reference
-	 */
+	* Returns the file entry ID of this dl opener file entry reference.
+	*
+	* @return the file entry ID of this dl opener file entry reference
+	*/
 	@Override
 	public long getFileEntryId() {
 		return model.getFileEntryId();
 	}
 
 	/**
-	 * Returns the group ID of this dl opener file entry reference.
-	 *
-	 * @return the group ID of this dl opener file entry reference
-	 */
+	* Returns the group ID of this dl opener file entry reference.
+	*
+	* @return the group ID of this dl opener file entry reference
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the modified date of this dl opener file entry reference.
-	 *
-	 * @return the modified date of this dl opener file entry reference
-	 */
+	* Returns the modified date of this dl opener file entry reference.
+	*
+	* @return the modified date of this dl opener file entry reference
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this dl opener file entry reference.
-	 *
-	 * @return the primary key of this dl opener file entry reference
-	 */
+	* Returns the primary key of this dl opener file entry reference.
+	*
+	* @return the primary key of this dl opener file entry reference
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the reference key of this dl opener file entry reference.
-	 *
-	 * @return the reference key of this dl opener file entry reference
-	 */
+	* Returns the reference key of this dl opener file entry reference.
+	*
+	* @return the reference key of this dl opener file entry reference
+	*/
 	@Override
 	public String getReferenceKey() {
 		return model.getReferenceKey();
 	}
 
 	/**
-	 * Returns the type of this dl opener file entry reference.
-	 *
-	 * @return the type of this dl opener file entry reference
-	 */
+	* Returns the type of this dl opener file entry reference.
+	*
+	* @return the type of this dl opener file entry reference
+	*/
 	@Override
 	public int getType() {
 		return model.getType();
 	}
 
 	/**
-	 * Returns the user ID of this dl opener file entry reference.
-	 *
-	 * @return the user ID of this dl opener file entry reference
-	 */
+	* Returns the user ID of this dl opener file entry reference.
+	*
+	* @return the user ID of this dl opener file entry reference
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this dl opener file entry reference.
-	 *
-	 * @return the user name of this dl opener file entry reference
-	 */
+	* Returns the user name of this dl opener file entry reference.
+	*
+	* @return the user name of this dl opener file entry reference
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this dl opener file entry reference.
-	 *
-	 * @return the user uuid of this dl opener file entry reference
-	 */
+	* Returns the user uuid of this dl opener file entry reference.
+	*
+	* @return the user uuid of this dl opener file entry reference
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -253,122 +250,121 @@ public class DLOpenerFileEntryReferenceWrapper
 	}
 
 	/**
-	 * Sets the company ID of this dl opener file entry reference.
-	 *
-	 * @param companyId the company ID of this dl opener file entry reference
-	 */
+	* Sets the company ID of this dl opener file entry reference.
+	*
+	* @param companyId the company ID of this dl opener file entry reference
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this dl opener file entry reference.
-	 *
-	 * @param createDate the create date of this dl opener file entry reference
-	 */
+	* Sets the create date of this dl opener file entry reference.
+	*
+	* @param createDate the create date of this dl opener file entry reference
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the dl opener file entry reference ID of this dl opener file entry reference.
-	 *
-	 * @param dlOpenerFileEntryReferenceId the dl opener file entry reference ID of this dl opener file entry reference
-	 */
+	* Sets the dl opener file entry reference ID of this dl opener file entry reference.
+	*
+	* @param dlOpenerFileEntryReferenceId the dl opener file entry reference ID of this dl opener file entry reference
+	*/
 	@Override
 	public void setDlOpenerFileEntryReferenceId(
 		long dlOpenerFileEntryReferenceId) {
-
 		model.setDlOpenerFileEntryReferenceId(dlOpenerFileEntryReferenceId);
 	}
 
 	/**
-	 * Sets the file entry ID of this dl opener file entry reference.
-	 *
-	 * @param fileEntryId the file entry ID of this dl opener file entry reference
-	 */
+	* Sets the file entry ID of this dl opener file entry reference.
+	*
+	* @param fileEntryId the file entry ID of this dl opener file entry reference
+	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
 		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
-	 * Sets the group ID of this dl opener file entry reference.
-	 *
-	 * @param groupId the group ID of this dl opener file entry reference
-	 */
+	* Sets the group ID of this dl opener file entry reference.
+	*
+	* @param groupId the group ID of this dl opener file entry reference
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the modified date of this dl opener file entry reference.
-	 *
-	 * @param modifiedDate the modified date of this dl opener file entry reference
-	 */
+	* Sets the modified date of this dl opener file entry reference.
+	*
+	* @param modifiedDate the modified date of this dl opener file entry reference
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this dl opener file entry reference.
-	 *
-	 * @param primaryKey the primary key of this dl opener file entry reference
-	 */
+	* Sets the primary key of this dl opener file entry reference.
+	*
+	* @param primaryKey the primary key of this dl opener file entry reference
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the reference key of this dl opener file entry reference.
-	 *
-	 * @param referenceKey the reference key of this dl opener file entry reference
-	 */
+	* Sets the reference key of this dl opener file entry reference.
+	*
+	* @param referenceKey the reference key of this dl opener file entry reference
+	*/
 	@Override
 	public void setReferenceKey(String referenceKey) {
 		model.setReferenceKey(referenceKey);
 	}
 
 	/**
-	 * Sets the type of this dl opener file entry reference.
-	 *
-	 * @param type the type of this dl opener file entry reference
-	 */
+	* Sets the type of this dl opener file entry reference.
+	*
+	* @param type the type of this dl opener file entry reference
+	*/
 	@Override
 	public void setType(int type) {
 		model.setType(type);
 	}
 
 	/**
-	 * Sets the user ID of this dl opener file entry reference.
-	 *
-	 * @param userId the user ID of this dl opener file entry reference
-	 */
+	* Sets the user ID of this dl opener file entry reference.
+	*
+	* @param userId the user ID of this dl opener file entry reference
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this dl opener file entry reference.
-	 *
-	 * @param userName the user name of this dl opener file entry reference
-	 */
+	* Sets the user name of this dl opener file entry reference.
+	*
+	* @param userName the user name of this dl opener file entry reference
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this dl opener file entry reference.
-	 *
-	 * @param userUuid the user uuid of this dl opener file entry reference
-	 */
+	* Sets the user uuid of this dl opener file entry reference.
+	*
+	* @param userUuid the user uuid of this dl opener file entry reference
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -377,9 +373,6 @@ public class DLOpenerFileEntryReferenceWrapper
 	@Override
 	protected DLOpenerFileEntryReferenceWrapper wrap(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
-		return new DLOpenerFileEntryReferenceWrapper(
-			dlOpenerFileEntryReference);
+		return new DLOpenerFileEntryReferenceWrapper(dlOpenerFileEntryReference);
 	}
-
 }

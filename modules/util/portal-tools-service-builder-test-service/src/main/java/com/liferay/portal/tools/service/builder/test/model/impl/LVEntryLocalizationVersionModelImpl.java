@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -53,26 +54,24 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class LVEntryLocalizationVersionModelImpl
-	extends BaseModelImpl<LVEntryLocalizationVersion>
+public class LVEntryLocalizationVersionModelImpl extends BaseModelImpl<LVEntryLocalizationVersion>
 	implements LVEntryLocalizationVersionModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a lv entry localization version model instance should use the <code>LVEntryLocalizationVersion</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "LVEntryLocalizationVersion";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"lvEntryLocalizationVersionId", Types.BIGINT},
-		{"version", Types.INTEGER}, {"lvEntryLocalizationId", Types.BIGINT},
-		{"lvEntryId", Types.BIGINT}, {"languageId", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"content", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "lvEntryLocalizationVersionId", Types.BIGINT },
+			{ "version", Types.INTEGER },
+			{ "lvEntryLocalizationId", Types.BIGINT },
+			{ "lvEntryId", Types.BIGINT },
+			{ "languageId", Types.VARCHAR },
+			{ "title", Types.VARCHAR },
+			{ "content", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("lvEntryLocalizationVersionId", Types.BIGINT);
@@ -84,53 +83,27 @@ public class LVEntryLocalizationVersionModelImpl
 		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table LVEntryLocalizationVersion (lvEntryLocalizationVersionId LONG not null primary key,version INTEGER,lvEntryLocalizationId LONG,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table LVEntryLocalizationVersion";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY lvEntryLocalizationVersion.version DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY LVEntryLocalizationVersion.version DESC";
-
+	public static final String TABLE_SQL_CREATE = "create table LVEntryLocalizationVersion (lvEntryLocalizationVersionId LONG not null primary key,version INTEGER,lvEntryLocalizationId LONG,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null)";
+	public static final String TABLE_SQL_DROP = "drop table LVEntryLocalizationVersion";
+	public static final String ORDER_BY_JPQL = " ORDER BY lvEntryLocalizationVersion.version DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY LVEntryLocalizationVersion.version DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion"),
-		true);
-
+			true);
 	public static final long LANGUAGEID_COLUMN_BITMASK = 1L;
-
 	public static final long LVENTRYID_COLUMN_BITMASK = 2L;
-
 	public static final long LVENTRYLOCALIZATIONID_COLUMN_BITMASK = 4L;
-
 	public static final long VERSION_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion"));
 
 	public LVEntryLocalizationVersionModelImpl() {
@@ -170,20 +143,16 @@ public class LVEntryLocalizationVersionModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<LVEntryLocalizationVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<LVEntryLocalizationVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LVEntryLocalizationVersion, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<LVEntryLocalizationVersion, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(
-				attributeName,
-				attributeGetterFunction.apply(
-					(LVEntryLocalizationVersion)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((LVEntryLocalizationVersion)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -194,62 +163,47 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<LVEntryLocalizationVersion, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<LVEntryLocalizationVersion, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<LVEntryLocalizationVersion, Object>
-				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
-					attributeName);
+			BiConsumer<LVEntryLocalizationVersion, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(LVEntryLocalizationVersion)this, entry.getValue());
+				attributeSetterBiConsumer.accept((LVEntryLocalizationVersion)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<LVEntryLocalizationVersion, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<LVEntryLocalizationVersion, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<LVEntryLocalizationVersion, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<LVEntryLocalizationVersion, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<LVEntryLocalizationVersion, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<LVEntryLocalizationVersion, Object>>
-			_attributeSetterBiConsumers;
+	private static final Map<String, Function<LVEntryLocalizationVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LVEntryLocalizationVersion, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<LVEntryLocalizationVersion, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<LVEntryLocalizationVersion, Object>>();
-		Map<String, BiConsumer<LVEntryLocalizationVersion, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<LVEntryLocalizationVersion, ?>>();
+		Map<String, Function<LVEntryLocalizationVersion, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<LVEntryLocalizationVersion, Object>>();
+		Map<String, BiConsumer<LVEntryLocalizationVersion, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<LVEntryLocalizationVersion, ?>>();
+
 
 		attributeGetterFunctions.put(
 			"lvEntryLocalizationVersionId",
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.
-						getLvEntryLocalizationVersionId();
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
+					return lvEntryLocalizationVersion.getLvEntryLocalizationVersionId();
 				}
 
 			});
@@ -258,12 +212,8 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryLocalizationVersionId) {
-
-					lvEntryLocalizationVersion.setLvEntryLocalizationVersionId(
-						(Long)lvEntryLocalizationVersionId);
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object lvEntryLocalizationVersionId) {
+					lvEntryLocalizationVersion.setLvEntryLocalizationVersionId((Long)lvEntryLocalizationVersionId);
 				}
 
 			});
@@ -272,9 +222,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 					return lvEntryLocalizationVersion.getVersion();
 				}
 
@@ -284,10 +232,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object version) {
-
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object version) {
 					lvEntryLocalizationVersion.setVersion((Integer)version);
 				}
 
@@ -297,11 +242,8 @@ public class LVEntryLocalizationVersionModelImpl
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-					return lvEntryLocalizationVersion.
-						getLvEntryLocalizationId();
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
+					return lvEntryLocalizationVersion.getLvEntryLocalizationId();
 				}
 
 			});
@@ -310,12 +252,8 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryLocalizationId) {
-
-					lvEntryLocalizationVersion.setLvEntryLocalizationId(
-						(Long)lvEntryLocalizationId);
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object lvEntryLocalizationId) {
+					lvEntryLocalizationVersion.setLvEntryLocalizationId((Long)lvEntryLocalizationId);
 				}
 
 			});
@@ -324,9 +262,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 					return lvEntryLocalizationVersion.getLvEntryId();
 				}
 
@@ -336,10 +272,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryId) {
-
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object lvEntryId) {
 					lvEntryLocalizationVersion.setLvEntryId((Long)lvEntryId);
 				}
 
@@ -349,9 +282,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 					return lvEntryLocalizationVersion.getLanguageId();
 				}
 
@@ -361,12 +292,8 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object languageId) {
-
-					lvEntryLocalizationVersion.setLanguageId(
-						(String)languageId);
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object languageId) {
+					lvEntryLocalizationVersion.setLanguageId((String)languageId);
 				}
 
 			});
@@ -375,9 +302,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 					return lvEntryLocalizationVersion.getTitle();
 				}
 
@@ -387,10 +312,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object title) {
-
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object title) {
 					lvEntryLocalizationVersion.setTitle((String)title);
 				}
 
@@ -400,9 +322,7 @@ public class LVEntryLocalizationVersionModelImpl
 			new Function<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public Object apply(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
+				public Object apply(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 					return lvEntryLocalizationVersion.getContent();
 				}
 
@@ -412,19 +332,15 @@ public class LVEntryLocalizationVersionModelImpl
 			new BiConsumer<LVEntryLocalizationVersion, Object>() {
 
 				@Override
-				public void accept(
-					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object content) {
-
+				public void accept(LVEntryLocalizationVersion lvEntryLocalizationVersion, Object content) {
 					lvEntryLocalizationVersion.setContent((String)content);
 				}
 
 			});
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -433,9 +349,7 @@ public class LVEntryLocalizationVersionModelImpl
 	}
 
 	@Override
-	public void populateVersionedModel(
-		LVEntryLocalization lvEntryLocalization) {
-
+	public void populateVersionedModel(LVEntryLocalization lvEntryLocalization) {
 		lvEntryLocalization.setLvEntryId(getLvEntryId());
 		lvEntryLocalization.setLanguageId(getLanguageId());
 		lvEntryLocalization.setTitle(getTitle());
@@ -467,7 +381,6 @@ public class LVEntryLocalizationVersionModelImpl
 	@Override
 	public void setLvEntryLocalizationVersionId(
 		long lvEntryLocalizationVersionId) {
-
 		_lvEntryLocalizationVersionId = lvEntryLocalizationVersionId;
 	}
 
@@ -598,8 +511,8 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, LVEntryLocalizationVersion.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			LVEntryLocalizationVersion.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -612,10 +525,8 @@ public class LVEntryLocalizationVersionModelImpl
 	@Override
 	public LVEntryLocalizationVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(LVEntryLocalizationVersion)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = (LVEntryLocalizationVersion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -623,14 +534,11 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public Object clone() {
-		LVEntryLocalizationVersionImpl lvEntryLocalizationVersionImpl =
-			new LVEntryLocalizationVersionImpl();
+		LVEntryLocalizationVersionImpl lvEntryLocalizationVersionImpl = new LVEntryLocalizationVersionImpl();
 
-		lvEntryLocalizationVersionImpl.setLvEntryLocalizationVersionId(
-			getLvEntryLocalizationVersionId());
+		lvEntryLocalizationVersionImpl.setLvEntryLocalizationVersionId(getLvEntryLocalizationVersionId());
 		lvEntryLocalizationVersionImpl.setVersion(getVersion());
-		lvEntryLocalizationVersionImpl.setLvEntryLocalizationId(
-			getLvEntryLocalizationId());
+		lvEntryLocalizationVersionImpl.setLvEntryLocalizationId(getLvEntryLocalizationId());
 		lvEntryLocalizationVersionImpl.setLvEntryId(getLvEntryId());
 		lvEntryLocalizationVersionImpl.setLanguageId(getLanguageId());
 		lvEntryLocalizationVersionImpl.setTitle(getTitle());
@@ -642,9 +550,7 @@ public class LVEntryLocalizationVersionModelImpl
 	}
 
 	@Override
-	public int compareTo(
-		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
+	public int compareTo(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 		int value = 0;
 
 		if (getVersion() < lvEntryLocalizationVersion.getVersion()) {
@@ -676,8 +582,7 @@ public class LVEntryLocalizationVersionModelImpl
 			return false;
 		}
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			(LVEntryLocalizationVersion)obj;
+		LVEntryLocalizationVersion lvEntryLocalizationVersion = (LVEntryLocalizationVersion)obj;
 
 		long primaryKey = lvEntryLocalizationVersion.getPrimaryKey();
 
@@ -706,44 +611,35 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		LVEntryLocalizationVersionModelImpl
-			lvEntryLocalizationVersionModelImpl = this;
+		LVEntryLocalizationVersionModelImpl lvEntryLocalizationVersionModelImpl = this;
 
-		lvEntryLocalizationVersionModelImpl._originalVersion =
-			lvEntryLocalizationVersionModelImpl._version;
+		lvEntryLocalizationVersionModelImpl._originalVersion = lvEntryLocalizationVersionModelImpl._version;
 
 		lvEntryLocalizationVersionModelImpl._setOriginalVersion = false;
 
-		lvEntryLocalizationVersionModelImpl._originalLvEntryLocalizationId =
-			lvEntryLocalizationVersionModelImpl._lvEntryLocalizationId;
+		lvEntryLocalizationVersionModelImpl._originalLvEntryLocalizationId = lvEntryLocalizationVersionModelImpl._lvEntryLocalizationId;
 
-		lvEntryLocalizationVersionModelImpl._setOriginalLvEntryLocalizationId =
-			false;
+		lvEntryLocalizationVersionModelImpl._setOriginalLvEntryLocalizationId = false;
 
-		lvEntryLocalizationVersionModelImpl._originalLvEntryId =
-			lvEntryLocalizationVersionModelImpl._lvEntryId;
+		lvEntryLocalizationVersionModelImpl._originalLvEntryId = lvEntryLocalizationVersionModelImpl._lvEntryId;
 
 		lvEntryLocalizationVersionModelImpl._setOriginalLvEntryId = false;
 
-		lvEntryLocalizationVersionModelImpl._originalLanguageId =
-			lvEntryLocalizationVersionModelImpl._languageId;
+		lvEntryLocalizationVersionModelImpl._originalLanguageId = lvEntryLocalizationVersionModelImpl._languageId;
 
 		lvEntryLocalizationVersionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<LVEntryLocalizationVersion> toCacheModel() {
-		LVEntryLocalizationVersionCacheModel
-			lvEntryLocalizationVersionCacheModel =
-				new LVEntryLocalizationVersionCacheModel();
+		LVEntryLocalizationVersionCacheModel lvEntryLocalizationVersionCacheModel =
+			new LVEntryLocalizationVersionCacheModel();
 
-		lvEntryLocalizationVersionCacheModel.lvEntryLocalizationVersionId =
-			getLvEntryLocalizationVersionId();
+		lvEntryLocalizationVersionCacheModel.lvEntryLocalizationVersionId = getLvEntryLocalizationVersionId();
 
 		lvEntryLocalizationVersionCacheModel.version = getVersion();
 
-		lvEntryLocalizationVersionCacheModel.lvEntryLocalizationId =
-			getLvEntryLocalizationId();
+		lvEntryLocalizationVersionCacheModel.lvEntryLocalizationId = getLvEntryLocalizationId();
 
 		lvEntryLocalizationVersionCacheModel.lvEntryId = getLvEntryId();
 
@@ -776,25 +672,22 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<LVEntryLocalizationVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<LVEntryLocalizationVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LVEntryLocalizationVersion, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<LVEntryLocalizationVersion, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply(
+			sb.append(attributeGetterFunction.apply(
 					(LVEntryLocalizationVersion)this));
 			sb.append(", ");
 		}
@@ -810,28 +703,25 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<LVEntryLocalizationVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<LVEntryLocalizationVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LVEntryLocalizationVersion, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<LVEntryLocalizationVersion, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply(
+			sb.append(attributeGetterFunction.apply(
 					(LVEntryLocalizationVersion)this));
 			sb.append("]]></column-value></column>");
 		}
@@ -841,12 +731,10 @@ public class LVEntryLocalizationVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LVEntryLocalizationVersion.class.getClassLoader();
+	private static final ClassLoader _classLoader = LVEntryLocalizationVersion.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LVEntryLocalizationVersion.class, ModelWrapper.class
-	};
-
+			LVEntryLocalizationVersion.class, ModelWrapper.class
+		};
 	private long _lvEntryLocalizationVersionId;
 	private int _version;
 	private int _originalVersion;
@@ -863,5 +751,4 @@ public class LVEntryLocalizationVersionModelImpl
 	private String _content;
 	private long _columnBitmask;
 	private LVEntryLocalizationVersion _escapedModel;
-
 }

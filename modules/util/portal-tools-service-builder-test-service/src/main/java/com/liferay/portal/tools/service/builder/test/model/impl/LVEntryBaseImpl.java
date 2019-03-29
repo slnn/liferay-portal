@@ -34,9 +34,8 @@ import com.liferay.portal.tools.service.builder.test.service.LVEntryLocalService
  * @generated
  */
 @ProviderType
-public abstract class LVEntryBaseImpl
-	extends LVEntryModelImpl implements LVEntry {
-
+public abstract class LVEntryBaseImpl extends LVEntryModelImpl
+	implements LVEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -56,5 +55,4 @@ public abstract class LVEntryBaseImpl
 			}
 		}
 	}
-
 }

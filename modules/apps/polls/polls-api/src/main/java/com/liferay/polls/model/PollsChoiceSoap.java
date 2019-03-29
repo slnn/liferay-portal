@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class PollsChoiceSoap implements Serializable {
-
 	public static PollsChoiceSoap toSoapModel(PollsChoice model) {
 		PollsChoiceSoap soapModel = new PollsChoiceSoap();
 
@@ -78,8 +77,7 @@ public class PollsChoiceSoap implements Serializable {
 	}
 
 	public static PollsChoiceSoap[] toSoapModels(List<PollsChoice> models) {
-		List<PollsChoiceSoap> soapModels = new ArrayList<PollsChoiceSoap>(
-			models.size());
+		List<PollsChoiceSoap> soapModels = new ArrayList<PollsChoiceSoap>(models.size());
 
 		for (PollsChoice model : models) {
 			soapModels.add(toSoapModel(model));
@@ -207,5 +205,4 @@ public class PollsChoiceSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private Date _lastPublishDate;
-
 }

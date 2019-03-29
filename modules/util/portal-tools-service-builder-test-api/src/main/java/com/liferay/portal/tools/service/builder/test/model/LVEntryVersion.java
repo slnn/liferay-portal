@@ -26,20 +26,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see LVEntryVersionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl")
 @ProviderType
 public interface LVEntryVersion extends LVEntryVersionModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LVEntryVersion, Long>
-		LV_ENTRY_VERSION_ID_ACCESSOR = new Accessor<LVEntryVersion, Long>() {
-
+	public static final Accessor<LVEntryVersion, Long> LV_ENTRY_VERSION_ID_ACCESSOR =
+		new Accessor<LVEntryVersion, Long>() {
 			@Override
 			public Long get(LVEntryVersion lvEntryVersion) {
 				return lvEntryVersion.getLvEntryVersionId();
@@ -54,7 +50,5 @@ public interface LVEntryVersion extends LVEntryVersionModel {
 			public Class<LVEntryVersion> getTypeClass() {
 				return LVEntryVersion.class;
 			}
-
 		};
-
 }

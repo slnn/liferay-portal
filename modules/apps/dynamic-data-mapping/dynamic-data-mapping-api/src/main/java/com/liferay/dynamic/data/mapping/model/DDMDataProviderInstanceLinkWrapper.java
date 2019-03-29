@@ -32,14 +32,11 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DDMDataProviderInstanceLinkWrapper
-	extends BaseModelWrapper<DDMDataProviderInstanceLink>
+public class DDMDataProviderInstanceLinkWrapper extends BaseModelWrapper<DDMDataProviderInstanceLink>
 	implements DDMDataProviderInstanceLink,
-			   ModelWrapper<DDMDataProviderInstanceLink> {
-
+		ModelWrapper<DDMDataProviderInstanceLink> {
 	public DDMDataProviderInstanceLinkWrapper(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-
 		super(ddmDataProviderInstanceLink);
 	}
 
@@ -47,8 +44,8 @@ public class DDMDataProviderInstanceLinkWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put(
-			"dataProviderInstanceLinkId", getDataProviderInstanceLinkId());
+		attributes.put("dataProviderInstanceLinkId",
+			getDataProviderInstanceLinkId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("dataProviderInstanceId", getDataProviderInstanceId());
 		attributes.put("structureId", getStructureId());
@@ -59,7 +56,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long dataProviderInstanceLinkId = (Long)attributes.get(
-			"dataProviderInstanceLinkId");
+				"dataProviderInstanceLinkId");
 
 		if (dataProviderInstanceLinkId != null) {
 			setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
@@ -72,7 +69,7 @@ public class DDMDataProviderInstanceLinkWrapper
 		}
 
 		Long dataProviderInstanceId = (Long)attributes.get(
-			"dataProviderInstanceId");
+				"dataProviderInstanceId");
 
 		if (dataProviderInstanceId != null) {
 			setDataProviderInstanceId(dataProviderInstanceId);
@@ -86,50 +83,50 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	/**
-	 * Returns the company ID of this ddm data provider instance link.
-	 *
-	 * @return the company ID of this ddm data provider instance link
-	 */
+	* Returns the company ID of this ddm data provider instance link.
+	*
+	* @return the company ID of this ddm data provider instance link
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the data provider instance ID of this ddm data provider instance link.
-	 *
-	 * @return the data provider instance ID of this ddm data provider instance link
-	 */
+	* Returns the data provider instance ID of this ddm data provider instance link.
+	*
+	* @return the data provider instance ID of this ddm data provider instance link
+	*/
 	@Override
 	public long getDataProviderInstanceId() {
 		return model.getDataProviderInstanceId();
 	}
 
 	/**
-	 * Returns the data provider instance link ID of this ddm data provider instance link.
-	 *
-	 * @return the data provider instance link ID of this ddm data provider instance link
-	 */
+	* Returns the data provider instance link ID of this ddm data provider instance link.
+	*
+	* @return the data provider instance link ID of this ddm data provider instance link
+	*/
 	@Override
 	public long getDataProviderInstanceLinkId() {
 		return model.getDataProviderInstanceLinkId();
 	}
 
 	/**
-	 * Returns the primary key of this ddm data provider instance link.
-	 *
-	 * @return the primary key of this ddm data provider instance link
-	 */
+	* Returns the primary key of this ddm data provider instance link.
+	*
+	* @return the primary key of this ddm data provider instance link
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the structure ID of this ddm data provider instance link.
-	 *
-	 * @return the structure ID of this ddm data provider instance link
-	 */
+	* Returns the structure ID of this ddm data provider instance link.
+	*
+	* @return the structure ID of this ddm data provider instance link
+	*/
 	@Override
 	public long getStructureId() {
 		return model.getStructureId();
@@ -141,50 +138,50 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	/**
-	 * Sets the company ID of this ddm data provider instance link.
-	 *
-	 * @param companyId the company ID of this ddm data provider instance link
-	 */
+	* Sets the company ID of this ddm data provider instance link.
+	*
+	* @param companyId the company ID of this ddm data provider instance link
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the data provider instance ID of this ddm data provider instance link.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID of this ddm data provider instance link
-	 */
+	* Sets the data provider instance ID of this ddm data provider instance link.
+	*
+	* @param dataProviderInstanceId the data provider instance ID of this ddm data provider instance link
+	*/
 	@Override
 	public void setDataProviderInstanceId(long dataProviderInstanceId) {
 		model.setDataProviderInstanceId(dataProviderInstanceId);
 	}
 
 	/**
-	 * Sets the data provider instance link ID of this ddm data provider instance link.
-	 *
-	 * @param dataProviderInstanceLinkId the data provider instance link ID of this ddm data provider instance link
-	 */
+	* Sets the data provider instance link ID of this ddm data provider instance link.
+	*
+	* @param dataProviderInstanceLinkId the data provider instance link ID of this ddm data provider instance link
+	*/
 	@Override
 	public void setDataProviderInstanceLinkId(long dataProviderInstanceLinkId) {
 		model.setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
 	}
 
 	/**
-	 * Sets the primary key of this ddm data provider instance link.
-	 *
-	 * @param primaryKey the primary key of this ddm data provider instance link
-	 */
+	* Sets the primary key of this ddm data provider instance link.
+	*
+	* @param primaryKey the primary key of this ddm data provider instance link
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the structure ID of this ddm data provider instance link.
-	 *
-	 * @param structureId the structure ID of this ddm data provider instance link
-	 */
+	* Sets the structure ID of this ddm data provider instance link.
+	*
+	* @param structureId the structure ID of this ddm data provider instance link
+	*/
 	@Override
 	public void setStructureId(long structureId) {
 		model.setStructureId(structureId);
@@ -193,9 +190,6 @@ public class DDMDataProviderInstanceLinkWrapper
 	@Override
 	protected DDMDataProviderInstanceLinkWrapper wrap(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-
-		return new DDMDataProviderInstanceLinkWrapper(
-			ddmDataProviderInstanceLink);
+		return new DDMDataProviderInstanceLinkWrapper(ddmDataProviderInstanceLink);
 	}
-
 }

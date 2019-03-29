@@ -15,6 +15,7 @@
 package com.liferay.portal.lock.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +58,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class LockPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.portal.lock.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.portal.lock.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +107,7 @@ public class LockPersistenceTest {
 
 		_persistence.remove(newLock);
 
-		Lock existingLock = _persistence.fetchByPrimaryKey(
-			newLock.getPrimaryKey());
+		Lock existingLock = _persistence.fetchByPrimaryKey(newLock.getPrimaryKey());
 
 		Assert.assertNull(existingLock);
 	}
@@ -148,28 +147,24 @@ public class LockPersistenceTest {
 
 		_locks.add(_persistence.update(newLock));
 
-		Lock existingLock = _persistence.findByPrimaryKey(
-			newLock.getPrimaryKey());
+		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingLock.getMvccVersion(), newLock.getMvccVersion());
+		Assert.assertEquals(existingLock.getMvccVersion(),
+			newLock.getMvccVersion());
 		Assert.assertEquals(existingLock.getUuid(), newLock.getUuid());
 		Assert.assertEquals(existingLock.getLockId(), newLock.getLockId());
-		Assert.assertEquals(
-			existingLock.getCompanyId(), newLock.getCompanyId());
+		Assert.assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
 		Assert.assertEquals(existingLock.getUserId(), newLock.getUserId());
 		Assert.assertEquals(existingLock.getUserName(), newLock.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingLock.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(existingLock.getCreateDate()),
 			Time.getShortTimestamp(newLock.getCreateDate()));
-		Assert.assertEquals(
-			existingLock.getClassName(), newLock.getClassName());
+		Assert.assertEquals(existingLock.getClassName(), newLock.getClassName());
 		Assert.assertEquals(existingLock.getKey(), newLock.getKey());
 		Assert.assertEquals(existingLock.getOwner(), newLock.getOwner());
-		Assert.assertEquals(
-			existingLock.isInheritable(), newLock.isInheritable());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingLock.getExpirationDate()),
+		Assert.assertEquals(existingLock.isInheritable(),
+			newLock.isInheritable());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingLock.getExpirationDate()),
 			Time.getShortTimestamp(newLock.getExpirationDate()));
 	}
 
@@ -211,8 +206,7 @@ public class LockPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Lock newLock = addLock();
 
-		Lock existingLock = _persistence.findByPrimaryKey(
-			newLock.getPrimaryKey());
+		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
 		Assert.assertEquals(existingLock, newLock);
 	}
@@ -226,24 +220,23 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Lock> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"Lock_", "mvccVersion", true, "uuid", true, "lockId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "className", true, "key", true, "owner", true, "inheritable",
-			true, "expirationDate", true);
+		return OrderByComparatorFactoryUtil.create("Lock_", "mvccVersion",
+			true, "uuid", true, "lockId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "className", true,
+			"key", true, "owner", true, "inheritable", true, "expirationDate",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Lock newLock = addLock();
 
-		Lock existingLock = _persistence.fetchByPrimaryKey(
-			newLock.getPrimaryKey());
+		Lock existingLock = _persistence.fetchByPrimaryKey(newLock.getPrimaryKey());
 
 		Assert.assertEquals(existingLock, newLock);
 	}
@@ -260,7 +253,6 @@ public class LockPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		Lock newLock1 = addLock();
 		Lock newLock2 = addLock();
 
@@ -269,8 +261,7 @@ public class LockPersistenceTest {
 		primaryKeys.add(newLock1.getPrimaryKey());
 		primaryKeys.add(newLock2.getPrimaryKey());
 
-		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, locks.size());
 		Assert.assertEquals(newLock1, locks.get(newLock1.getPrimaryKey()));
@@ -280,7 +271,6 @@ public class LockPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -290,8 +280,7 @@ public class LockPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(locks.isEmpty());
 	}
@@ -299,7 +288,6 @@ public class LockPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		Lock newLock = addLock();
 
 		long pk = RandomTestUtil.nextLong();
@@ -309,33 +297,32 @@ public class LockPersistenceTest {
 		primaryKeys.add(newLock.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, locks.size());
 		Assert.assertEquals(newLock, locks.get(newLock.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(locks.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		Lock newLock = addLock();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newLock.getPrimaryKey());
 
-		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Lock> locks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, locks.size());
 		Assert.assertEquals(newLock, locks.get(newLock.getPrimaryKey()));
@@ -345,19 +332,15 @@ public class LockPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			LockLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = LockLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Lock>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Lock>() {
 				@Override
 				public void performAction(Lock lock) {
 					Assert.assertNotNull(lock);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -366,14 +349,15 @@ public class LockPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		Lock newLock = addLock();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Lock.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("lockId", newLock.getLockId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
+				newLock.getLockId()));
 
 		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -386,11 +370,11 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Lock.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("lockId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
+				RandomTestUtil.nextLong()));
 
 		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -398,18 +382,19 @@ public class LockPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		Lock newLock = addLock();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Lock.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lockId"));
 
 		Object newLockId = newLock.getLockId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("lockId", new Object[] {newLockId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("lockId",
+				new Object[] { newLockId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -422,14 +407,13 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Lock.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lockId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"lockId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("lockId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -442,19 +426,14 @@ public class LockPersistenceTest {
 
 		_persistence.clearCache();
 
-		Lock existingLock = _persistence.findByPrimaryKey(
-			newLock.getPrimaryKey());
+		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingLock.getClassName(),
-				ReflectionTestUtil.invoke(
-					existingLock, "getOriginalClassName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingLock.getKey(),
-				ReflectionTestUtil.invoke(
-					existingLock, "getOriginalKey", new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(existingLock.getClassName(),
+				ReflectionTestUtil.invoke(existingLock, "getOriginalClassName",
+					new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(existingLock.getKey(),
+				ReflectionTestUtil.invoke(existingLock, "getOriginalKey",
+					new Class<?>[0])));
 	}
 
 	protected Lock addLock() throws Exception {
@@ -492,5 +471,4 @@ public class LockPersistenceTest {
 	private List<Lock> _locks = new ArrayList<Lock>();
 	private LockPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

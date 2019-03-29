@@ -15,11 +15,13 @@
 package com.liferay.fragment.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.fragment.exception.NoSuchCollectionException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentCollectionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class FragmentCollectionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.fragment.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.fragment.service"));
 
 	@Before
 	public void setUp() {
@@ -107,9 +108,7 @@ public class FragmentCollectionPersistenceTest {
 
 		_persistence.remove(newFragmentCollection);
 
-		FragmentCollection existingFragmentCollection =
-			_persistence.fetchByPrimaryKey(
-				newFragmentCollection.getPrimaryKey());
+		FragmentCollection existingFragmentCollection = _persistence.fetchByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
 		Assert.assertNull(existingFragmentCollection);
 	}
@@ -139,8 +138,7 @@ public class FragmentCollectionPersistenceTest {
 
 		newFragmentCollection.setModifiedDate(RandomTestUtil.nextDate());
 
-		newFragmentCollection.setFragmentCollectionKey(
-			RandomTestUtil.randomString());
+		newFragmentCollection.setFragmentCollectionKey(RandomTestUtil.randomString());
 
 		newFragmentCollection.setName(RandomTestUtil.randomString());
 
@@ -150,46 +148,33 @@ public class FragmentCollectionPersistenceTest {
 
 		_fragmentCollections.add(_persistence.update(newFragmentCollection));
 
-		FragmentCollection existingFragmentCollection =
-			_persistence.findByPrimaryKey(
-				newFragmentCollection.getPrimaryKey());
+		FragmentCollection existingFragmentCollection = _persistence.findByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingFragmentCollection.getUuid(),
+		Assert.assertEquals(existingFragmentCollection.getUuid(),
 			newFragmentCollection.getUuid());
-		Assert.assertEquals(
-			existingFragmentCollection.getFragmentCollectionId(),
+		Assert.assertEquals(existingFragmentCollection.getFragmentCollectionId(),
 			newFragmentCollection.getFragmentCollectionId());
-		Assert.assertEquals(
-			existingFragmentCollection.getGroupId(),
+		Assert.assertEquals(existingFragmentCollection.getGroupId(),
 			newFragmentCollection.getGroupId());
-		Assert.assertEquals(
-			existingFragmentCollection.getCompanyId(),
+		Assert.assertEquals(existingFragmentCollection.getCompanyId(),
 			newFragmentCollection.getCompanyId());
-		Assert.assertEquals(
-			existingFragmentCollection.getUserId(),
+		Assert.assertEquals(existingFragmentCollection.getUserId(),
 			newFragmentCollection.getUserId());
-		Assert.assertEquals(
-			existingFragmentCollection.getUserName(),
+		Assert.assertEquals(existingFragmentCollection.getUserName(),
 			newFragmentCollection.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingFragmentCollection.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFragmentCollection.getCreateDate()),
 			Time.getShortTimestamp(newFragmentCollection.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingFragmentCollection.getModifiedDate()),
 			Time.getShortTimestamp(newFragmentCollection.getModifiedDate()));
-		Assert.assertEquals(
-			existingFragmentCollection.getFragmentCollectionKey(),
+		Assert.assertEquals(existingFragmentCollection.getFragmentCollectionKey(),
 			newFragmentCollection.getFragmentCollectionKey());
-		Assert.assertEquals(
-			existingFragmentCollection.getName(),
+		Assert.assertEquals(existingFragmentCollection.getName(),
 			newFragmentCollection.getName());
-		Assert.assertEquals(
-			existingFragmentCollection.getDescription(),
+		Assert.assertEquals(existingFragmentCollection.getDescription(),
 			newFragmentCollection.getDescription());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingFragmentCollection.getLastPublishDate()),
 			Time.getShortTimestamp(newFragmentCollection.getLastPublishDate()));
 	}
@@ -250,9 +235,7 @@ public class FragmentCollectionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FragmentCollection newFragmentCollection = addFragmentCollection();
 
-		FragmentCollection existingFragmentCollection =
-			_persistence.findByPrimaryKey(
-				newFragmentCollection.getPrimaryKey());
+		FragmentCollection existingFragmentCollection = _persistence.findByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
 		Assert.assertEquals(existingFragmentCollection, newFragmentCollection);
 	}
@@ -266,32 +249,29 @@ public class FragmentCollectionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<FragmentCollection> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"FragmentCollection", "uuid", true, "fragmentCollectionId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true,
-			"fragmentCollectionKey", true, "name", true, "description", true,
-			"lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("FragmentCollection",
+			"uuid", true, "fragmentCollectionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "fragmentCollectionKey", true, "name",
+			true, "description", true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		FragmentCollection newFragmentCollection = addFragmentCollection();
 
-		FragmentCollection existingFragmentCollection =
-			_persistence.fetchByPrimaryKey(
-				newFragmentCollection.getPrimaryKey());
+		FragmentCollection existingFragmentCollection = _persistence.fetchByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
 		Assert.assertEquals(existingFragmentCollection, newFragmentCollection);
 	}
@@ -300,8 +280,7 @@ public class FragmentCollectionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		FragmentCollection missingFragmentCollection =
-			_persistence.fetchByPrimaryKey(pk);
+		FragmentCollection missingFragmentCollection = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingFragmentCollection);
 	}
@@ -309,7 +288,6 @@ public class FragmentCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		FragmentCollection newFragmentCollection1 = addFragmentCollection();
 		FragmentCollection newFragmentCollection2 = addFragmentCollection();
 
@@ -318,22 +296,18 @@ public class FragmentCollectionPersistenceTest {
 		primaryKeys.add(newFragmentCollection1.getPrimaryKey());
 		primaryKeys.add(newFragmentCollection2.getPrimaryKey());
 
-		Map<Serializable, FragmentCollection> fragmentCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FragmentCollection> fragmentCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, fragmentCollections.size());
-		Assert.assertEquals(
-			newFragmentCollection1,
+		Assert.assertEquals(newFragmentCollection1,
 			fragmentCollections.get(newFragmentCollection1.getPrimaryKey()));
-		Assert.assertEquals(
-			newFragmentCollection2,
+		Assert.assertEquals(newFragmentCollection2,
 			fragmentCollections.get(newFragmentCollection2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -343,8 +317,7 @@ public class FragmentCollectionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, FragmentCollection> fragmentCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FragmentCollection> fragmentCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(fragmentCollections.isEmpty());
 	}
@@ -352,7 +325,6 @@ public class FragmentCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		FragmentCollection newFragmentCollection = addFragmentCollection();
 
 		long pk = RandomTestUtil.nextLong();
@@ -362,39 +334,36 @@ public class FragmentCollectionPersistenceTest {
 		primaryKeys.add(newFragmentCollection.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, FragmentCollection> fragmentCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FragmentCollection> fragmentCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, fragmentCollections.size());
-		Assert.assertEquals(
-			newFragmentCollection,
+		Assert.assertEquals(newFragmentCollection,
 			fragmentCollections.get(newFragmentCollection.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, FragmentCollection> fragmentCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FragmentCollection> fragmentCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(fragmentCollections.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		FragmentCollection newFragmentCollection = addFragmentCollection();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newFragmentCollection.getPrimaryKey());
 
-		Map<Serializable, FragmentCollection> fragmentCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FragmentCollection> fragmentCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, fragmentCollections.size());
-		Assert.assertEquals(
-			newFragmentCollection,
+		Assert.assertEquals(newFragmentCollection,
 			fragmentCollections.get(newFragmentCollection.getPrimaryKey()));
 	}
 
@@ -402,22 +371,15 @@ public class FragmentCollectionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			FragmentCollectionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = FragmentCollectionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<FragmentCollection>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<FragmentCollection>() {
 				@Override
-				public void performAction(
-					FragmentCollection fragmentCollection) {
-
+				public void performAction(FragmentCollection fragmentCollection) {
 					Assert.assertNotNull(fragmentCollection);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -426,19 +388,17 @@ public class FragmentCollectionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		FragmentCollection newFragmentCollection = addFragmentCollection();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FragmentCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FragmentCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"fragmentCollectionId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("fragmentCollectionId",
 				newFragmentCollection.getFragmentCollectionId()));
 
-		List<FragmentCollection> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<FragmentCollection> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -449,36 +409,32 @@ public class FragmentCollectionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FragmentCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FragmentCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"fragmentCollectionId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("fragmentCollectionId",
+				RandomTestUtil.nextLong()));
 
-		List<FragmentCollection> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<FragmentCollection> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		FragmentCollection newFragmentCollection = addFragmentCollection();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FragmentCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FragmentCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("fragmentCollectionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"fragmentCollectionId"));
 
-		Object newFragmentCollectionId =
-			newFragmentCollection.getFragmentCollectionId();
+		Object newFragmentCollectionId = newFragmentCollection.getFragmentCollectionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"fragmentCollectionId",
-				new Object[] {newFragmentCollectionId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("fragmentCollectionId",
+				new Object[] { newFragmentCollectionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -486,22 +442,20 @@ public class FragmentCollectionPersistenceTest {
 
 		Object existingFragmentCollectionId = result.get(0);
 
-		Assert.assertEquals(
-			existingFragmentCollectionId, newFragmentCollectionId);
+		Assert.assertEquals(existingFragmentCollectionId,
+			newFragmentCollectionId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FragmentCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FragmentCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("fragmentCollectionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"fragmentCollectionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"fragmentCollectionId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("fragmentCollectionId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -514,36 +468,28 @@ public class FragmentCollectionPersistenceTest {
 
 		_persistence.clearCache();
 
-		FragmentCollection existingFragmentCollection =
-			_persistence.findByPrimaryKey(
-				newFragmentCollection.getPrimaryKey());
+		FragmentCollection existingFragmentCollection = _persistence.findByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingFragmentCollection.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingFragmentCollection, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingFragmentCollection.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingFragmentCollection, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingFragmentCollection.getUuid(),
+				ReflectionTestUtil.invoke(existingFragmentCollection,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingFragmentCollection.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingFragmentCollection,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingFragmentCollection.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingFragmentCollection, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingFragmentCollection.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingFragmentCollection,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingFragmentCollection.getFragmentCollectionKey(),
-				ReflectionTestUtil.invoke(
-					existingFragmentCollection,
+				ReflectionTestUtil.invoke(existingFragmentCollection,
 					"getOriginalFragmentCollectionKey", new Class<?>[0])));
 	}
 
-	protected FragmentCollection addFragmentCollection() throws Exception {
+	protected FragmentCollection addFragmentCollection()
+		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		FragmentCollection fragmentCollection = _persistence.create(pk);
@@ -562,8 +508,7 @@ public class FragmentCollectionPersistenceTest {
 
 		fragmentCollection.setModifiedDate(RandomTestUtil.nextDate());
 
-		fragmentCollection.setFragmentCollectionKey(
-			RandomTestUtil.randomString());
+		fragmentCollection.setFragmentCollectionKey(RandomTestUtil.randomString());
 
 		fragmentCollection.setName(RandomTestUtil.randomString());
 
@@ -576,9 +521,7 @@ public class FragmentCollectionPersistenceTest {
 		return fragmentCollection;
 	}
 
-	private List<FragmentCollection> _fragmentCollections =
-		new ArrayList<FragmentCollection>();
+	private List<FragmentCollection> _fragmentCollections = new ArrayList<FragmentCollection>();
 	private FragmentCollectionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

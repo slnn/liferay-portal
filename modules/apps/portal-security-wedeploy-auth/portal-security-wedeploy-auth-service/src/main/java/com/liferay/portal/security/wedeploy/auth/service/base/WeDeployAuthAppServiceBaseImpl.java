@@ -44,10 +44,8 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl
  * @generated
  */
-public abstract class WeDeployAuthAppServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class WeDeployAuthAppServiceBaseImpl extends BaseServiceImpl
 	implements WeDeployAuthAppService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,9 +57,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the we deploy auth app local service
 	 */
-	public com.liferay.portal.security.wedeploy.auth.service.
-		WeDeployAuthAppLocalService getWeDeployAuthAppLocalService() {
-
+	public com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService getWeDeployAuthAppLocalService() {
 		return weDeployAuthAppLocalService;
 	}
 
@@ -71,9 +67,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 * @param weDeployAuthAppLocalService the we deploy auth app local service
 	 */
 	public void setWeDeployAuthAppLocalService(
-		com.liferay.portal.security.wedeploy.auth.service.
-			WeDeployAuthAppLocalService weDeployAuthAppLocalService) {
-
+		com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService weDeployAuthAppLocalService) {
 		this.weDeployAuthAppLocalService = weDeployAuthAppLocalService;
 	}
 
@@ -93,7 +87,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setWeDeployAuthAppService(
 		WeDeployAuthAppService weDeployAuthAppService) {
-
 		this.weDeployAuthAppService = weDeployAuthAppService;
 	}
 
@@ -113,7 +106,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setWeDeployAuthAppPersistence(
 		WeDeployAuthAppPersistence weDeployAuthAppPersistence) {
-
 		this.weDeployAuthAppPersistence = weDeployAuthAppPersistence;
 	}
 
@@ -122,9 +114,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the we deploy auth token local service
 	 */
-	public com.liferay.portal.security.wedeploy.auth.service.
-		WeDeployAuthTokenLocalService getWeDeployAuthTokenLocalService() {
-
+	public com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService getWeDeployAuthTokenLocalService() {
 		return weDeployAuthTokenLocalService;
 	}
 
@@ -134,9 +124,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 * @param weDeployAuthTokenLocalService the we deploy auth token local service
 	 */
 	public void setWeDeployAuthTokenLocalService(
-		com.liferay.portal.security.wedeploy.auth.service.
-			WeDeployAuthTokenLocalService weDeployAuthTokenLocalService) {
-
+		com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService weDeployAuthTokenLocalService) {
 		this.weDeployAuthTokenLocalService = weDeployAuthTokenLocalService;
 	}
 
@@ -156,7 +144,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setWeDeployAuthTokenPersistence(
 		WeDeployAuthTokenPersistence weDeployAuthTokenPersistence) {
-
 		this.weDeployAuthTokenPersistence = weDeployAuthTokenPersistence;
 	}
 
@@ -165,9 +152,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -177,9 +162,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -188,9 +171,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -200,9 +181,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -211,9 +190,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -224,7 +201,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -244,7 +220,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -253,9 +228,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -265,9 +238,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -276,9 +247,7 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -289,7 +258,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -309,7 +277,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -369,8 +336,8 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -379,66 +346,30 @@ public abstract class WeDeployAuthAppServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService.class
-	)
-	protected com.liferay.portal.security.wedeploy.auth.service.
-		WeDeployAuthAppLocalService weDeployAuthAppLocalService;
-
+	@BeanReference(type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService.class)
+	protected com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService weDeployAuthAppLocalService;
 	@BeanReference(type = WeDeployAuthAppService.class)
 	protected WeDeployAuthAppService weDeployAuthAppService;
-
 	@BeanReference(type = WeDeployAuthAppPersistence.class)
 	protected WeDeployAuthAppPersistence weDeployAuthAppPersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService.class
-	)
-	protected com.liferay.portal.security.wedeploy.auth.service.
-		WeDeployAuthTokenLocalService weDeployAuthTokenLocalService;
-
+	@BeanReference(type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService.class)
+	protected com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService weDeployAuthTokenLocalService;
 	@BeanReference(type = WeDeployAuthTokenPersistence.class)
 	protected WeDeployAuthTokenPersistence weDeployAuthTokenPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 }

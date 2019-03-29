@@ -15,11 +15,13 @@
 package com.liferay.layout.page.template.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class LayoutPageTemplateCollectionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.layout.page.template.service"));
 
 	@Before
@@ -82,8 +82,7 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<LayoutPageTemplateCollection> iterator =
-			_layoutPageTemplateCollections.iterator();
+		Iterator<LayoutPageTemplateCollection> iterator = _layoutPageTemplateCollections.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -96,8 +95,7 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_persistence.create(pk);
+		LayoutPageTemplateCollection layoutPageTemplateCollection = _persistence.create(pk);
 
 		Assert.assertNotNull(layoutPageTemplateCollection);
 
@@ -106,14 +104,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
 		_persistence.remove(newLayoutPageTemplateCollection);
 
-		LayoutPageTemplateCollection existingLayoutPageTemplateCollection =
-			_persistence.fetchByPrimaryKey(
-				newLayoutPageTemplateCollection.getPrimaryKey());
+		LayoutPageTemplateCollection existingLayoutPageTemplateCollection = _persistence.fetchByPrimaryKey(newLayoutPageTemplateCollection.getPrimaryKey());
 
 		Assert.assertNull(existingLayoutPageTemplateCollection);
 	}
@@ -127,8 +122,7 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			_persistence.create(pk);
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = _persistence.create(pk);
 
 		newLayoutPageTemplateCollection.setUuid(RandomTestUtil.randomString());
 
@@ -138,68 +132,48 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		newLayoutPageTemplateCollection.setUserId(RandomTestUtil.nextLong());
 
-		newLayoutPageTemplateCollection.setUserName(
-			RandomTestUtil.randomString());
+		newLayoutPageTemplateCollection.setUserName(RandomTestUtil.randomString());
 
-		newLayoutPageTemplateCollection.setCreateDate(
-			RandomTestUtil.nextDate());
+		newLayoutPageTemplateCollection.setCreateDate(RandomTestUtil.nextDate());
 
-		newLayoutPageTemplateCollection.setModifiedDate(
-			RandomTestUtil.nextDate());
+		newLayoutPageTemplateCollection.setModifiedDate(RandomTestUtil.nextDate());
 
 		newLayoutPageTemplateCollection.setName(RandomTestUtil.randomString());
 
-		newLayoutPageTemplateCollection.setDescription(
-			RandomTestUtil.randomString());
+		newLayoutPageTemplateCollection.setDescription(RandomTestUtil.randomString());
 
-		newLayoutPageTemplateCollection.setLastPublishDate(
-			RandomTestUtil.nextDate());
+		newLayoutPageTemplateCollection.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_layoutPageTemplateCollections.add(
-			_persistence.update(newLayoutPageTemplateCollection));
+		_layoutPageTemplateCollections.add(_persistence.update(
+				newLayoutPageTemplateCollection));
 
-		LayoutPageTemplateCollection existingLayoutPageTemplateCollection =
-			_persistence.findByPrimaryKey(
-				newLayoutPageTemplateCollection.getPrimaryKey());
+		LayoutPageTemplateCollection existingLayoutPageTemplateCollection = _persistence.findByPrimaryKey(newLayoutPageTemplateCollection.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getUuid(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getUuid(),
 			newLayoutPageTemplateCollection.getUuid());
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.
-				getLayoutPageTemplateCollectionId(),
-			newLayoutPageTemplateCollection.
-				getLayoutPageTemplateCollectionId());
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getGroupId(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			newLayoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getGroupId(),
 			newLayoutPageTemplateCollection.getGroupId());
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getCompanyId(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getCompanyId(),
 			newLayoutPageTemplateCollection.getCompanyId());
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getUserId(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getUserId(),
 			newLayoutPageTemplateCollection.getUserId());
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getUserName(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getUserName(),
 			newLayoutPageTemplateCollection.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPageTemplateCollection.getCreateDate()),
 			Time.getShortTimestamp(
 				newLayoutPageTemplateCollection.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPageTemplateCollection.getModifiedDate()),
 			Time.getShortTimestamp(
 				newLayoutPageTemplateCollection.getModifiedDate()));
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getName(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getName(),
 			newLayoutPageTemplateCollection.getName());
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection.getDescription(),
+		Assert.assertEquals(existingLayoutPageTemplateCollection.getDescription(),
 			newLayoutPageTemplateCollection.getDescription());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPageTemplateCollection.getLastPublishDate()),
 			Time.getShortTimestamp(
 				newLayoutPageTemplateCollection.getLastPublishDate()));
@@ -259,15 +233,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
-		LayoutPageTemplateCollection existingLayoutPageTemplateCollection =
-			_persistence.findByPrimaryKey(
-				newLayoutPageTemplateCollection.getPrimaryKey());
+		LayoutPageTemplateCollection existingLayoutPageTemplateCollection = _persistence.findByPrimaryKey(newLayoutPageTemplateCollection.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection,
+		Assert.assertEquals(existingLayoutPageTemplateCollection,
 			newLayoutPageTemplateCollection);
 	}
 
@@ -280,38 +250,31 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
-	protected OrderByComparator<LayoutPageTemplateCollection>
-		getOrderByComparator() {
-
-		return OrderByComparatorFactoryUtil.create(
-			"LayoutPageTemplateCollection", "uuid", true,
-			"layoutPageTemplateCollectionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"lastPublishDate", true);
+	protected OrderByComparator<LayoutPageTemplateCollection> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("LayoutPageTemplateCollection",
+			"uuid", true, "layoutPageTemplateCollectionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true,
+			"description", true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
-		LayoutPageTemplateCollection existingLayoutPageTemplateCollection =
-			_persistence.fetchByPrimaryKey(
-				newLayoutPageTemplateCollection.getPrimaryKey());
+		LayoutPageTemplateCollection existingLayoutPageTemplateCollection = _persistence.fetchByPrimaryKey(newLayoutPageTemplateCollection.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection,
+		Assert.assertEquals(existingLayoutPageTemplateCollection,
 			newLayoutPageTemplateCollection);
 	}
 
@@ -319,8 +282,7 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		LayoutPageTemplateCollection missingLayoutPageTemplateCollection =
-			_persistence.fetchByPrimaryKey(pk);
+		LayoutPageTemplateCollection missingLayoutPageTemplateCollection = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingLayoutPageTemplateCollection);
 	}
@@ -328,28 +290,22 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection1 =
-			addLayoutPageTemplateCollection();
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection2 =
-			addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection1 = addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection2 = addLayoutPageTemplateCollection();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newLayoutPageTemplateCollection1.getPrimaryKey());
 		primaryKeys.add(newLayoutPageTemplateCollection2.getPrimaryKey());
 
-		Map<Serializable, LayoutPageTemplateCollection>
-			layoutPageTemplateCollections = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, layoutPageTemplateCollections.size());
-		Assert.assertEquals(
-			newLayoutPageTemplateCollection1,
+		Assert.assertEquals(newLayoutPageTemplateCollection1,
 			layoutPageTemplateCollections.get(
 				newLayoutPageTemplateCollection1.getPrimaryKey()));
-		Assert.assertEquals(
-			newLayoutPageTemplateCollection2,
+		Assert.assertEquals(newLayoutPageTemplateCollection2,
 			layoutPageTemplateCollections.get(
 				newLayoutPageTemplateCollection2.getPrimaryKey()));
 	}
@@ -357,7 +313,6 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -367,9 +322,8 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, LayoutPageTemplateCollection>
-			layoutPageTemplateCollections = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(layoutPageTemplateCollections.isEmpty());
 	}
@@ -377,9 +331,7 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -388,44 +340,40 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		primaryKeys.add(newLayoutPageTemplateCollection.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, LayoutPageTemplateCollection>
-			layoutPageTemplateCollections = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, layoutPageTemplateCollections.size());
-		Assert.assertEquals(
-			newLayoutPageTemplateCollection,
+		Assert.assertEquals(newLayoutPageTemplateCollection,
 			layoutPageTemplateCollections.get(
 				newLayoutPageTemplateCollection.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutPageTemplateCollection>
-			layoutPageTemplateCollections = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(layoutPageTemplateCollections.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newLayoutPageTemplateCollection.getPrimaryKey());
 
-		Map<Serializable, LayoutPageTemplateCollection>
-			layoutPageTemplateCollections = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, layoutPageTemplateCollections.size());
-		Assert.assertEquals(
-			newLayoutPageTemplateCollection,
+		Assert.assertEquals(newLayoutPageTemplateCollection,
 			layoutPageTemplateCollections.get(
 				newLayoutPageTemplateCollection.getPrimaryKey()));
 	}
@@ -434,23 +382,16 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			LayoutPageTemplateCollectionLocalServiceUtil.
-				getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = LayoutPageTemplateCollectionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<LayoutPageTemplateCollection>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutPageTemplateCollection>() {
 				@Override
 				public void performAction(
 					LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
 					Assert.assertNotNull(layoutPageTemplateCollection);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -459,65 +400,56 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LayoutPageTemplateCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"layoutPageTemplateCollectionId",
-				newLayoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId()));
+				newLayoutPageTemplateCollection.getLayoutPageTemplateCollectionId()));
 
-		List<LayoutPageTemplateCollection> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutPageTemplateCollection> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		LayoutPageTemplateCollection existingLayoutPageTemplateCollection =
-			result.get(0);
+		LayoutPageTemplateCollection existingLayoutPageTemplateCollection = result.get(0);
 
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollection,
+		Assert.assertEquals(existingLayoutPageTemplateCollection,
 			newLayoutPageTemplateCollection);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LayoutPageTemplateCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"layoutPageTemplateCollectionId", RandomTestUtil.nextLong()));
 
-		List<LayoutPageTemplateCollection> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutPageTemplateCollection> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LayoutPageTemplateCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("layoutPageTemplateCollectionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"layoutPageTemplateCollectionId"));
 
-		Object newLayoutPageTemplateCollectionId =
-			newLayoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+		Object newLayoutPageTemplateCollectionId = newLayoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"layoutPageTemplateCollectionId",
-				new Object[] {newLayoutPageTemplateCollectionId}));
+				new Object[] { newLayoutPageTemplateCollectionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -525,23 +457,21 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		Object existingLayoutPageTemplateCollectionId = result.get(0);
 
-		Assert.assertEquals(
-			existingLayoutPageTemplateCollectionId,
+		Assert.assertEquals(existingLayoutPageTemplateCollectionId,
 			newLayoutPageTemplateCollectionId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LayoutPageTemplateCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("layoutPageTemplateCollectionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"layoutPageTemplateCollectionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"layoutPageTemplateCollectionId",
-				new Object[] {RandomTestUtil.nextLong()}));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -550,34 +480,29 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		LayoutPageTemplateCollection newLayoutPageTemplateCollection =
-			addLayoutPageTemplateCollection();
+		LayoutPageTemplateCollection newLayoutPageTemplateCollection = addLayoutPageTemplateCollection();
 
 		_persistence.clearCache();
 
-		LayoutPageTemplateCollection existingLayoutPageTemplateCollection =
-			_persistence.findByPrimaryKey(
-				newLayoutPageTemplateCollection.getPrimaryKey());
+		LayoutPageTemplateCollection existingLayoutPageTemplateCollection = _persistence.findByPrimaryKey(newLayoutPageTemplateCollection.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingLayoutPageTemplateCollection.getUuid(),
 				ReflectionTestUtil.invoke(
 					existingLayoutPageTemplateCollection, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingLayoutPageTemplateCollection.getGroupId()),
+		Assert.assertEquals(Long.valueOf(
+				existingLayoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingLayoutPageTemplateCollection, "getOriginalGroupId",
 				new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingLayoutPageTemplateCollection.getGroupId()),
+		Assert.assertEquals(Long.valueOf(
+				existingLayoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingLayoutPageTemplateCollection, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingLayoutPageTemplateCollection.getName(),
 				ReflectionTestUtil.invoke(
 					existingLayoutPageTemplateCollection, "getOriginalName",
@@ -586,11 +511,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 	protected LayoutPageTemplateCollection addLayoutPageTemplateCollection()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_persistence.create(pk);
+		LayoutPageTemplateCollection layoutPageTemplateCollection = _persistence.create(pk);
 
 		layoutPageTemplateCollection.setUuid(RandomTestUtil.randomString());
 
@@ -608,21 +531,17 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		layoutPageTemplateCollection.setName(RandomTestUtil.randomString());
 
-		layoutPageTemplateCollection.setDescription(
-			RandomTestUtil.randomString());
+		layoutPageTemplateCollection.setDescription(RandomTestUtil.randomString());
 
-		layoutPageTemplateCollection.setLastPublishDate(
-			RandomTestUtil.nextDate());
+		layoutPageTemplateCollection.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_layoutPageTemplateCollections.add(
-			_persistence.update(layoutPageTemplateCollection));
+		_layoutPageTemplateCollections.add(_persistence.update(
+				layoutPageTemplateCollection));
 
 		return layoutPageTemplateCollection;
 	}
 
-	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections =
-		new ArrayList<LayoutPageTemplateCollection>();
+	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections = new ArrayList<LayoutPageTemplateCollection>();
 	private LayoutPageTemplateCollectionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

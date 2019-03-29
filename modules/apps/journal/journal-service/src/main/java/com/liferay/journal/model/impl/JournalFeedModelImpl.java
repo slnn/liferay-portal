@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFeedModel;
 import com.liferay.journal.model.JournalFeedSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -63,34 +67,40 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class JournalFeedModelImpl
-	extends BaseModelImpl<JournalFeed> implements JournalFeedModel {
-
+public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
+	implements JournalFeedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a journal feed model instance should use the <code>JournalFeed</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "JournalFeed";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"id_", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"feedId", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"DDMStructureKey", Types.VARCHAR},
-		{"DDMTemplateKey", Types.VARCHAR},
-		{"DDMRendererTemplateKey", Types.VARCHAR}, {"delta", Types.INTEGER},
-		{"orderByCol", Types.VARCHAR}, {"orderByType", Types.VARCHAR},
-		{"targetLayoutFriendlyUrl", Types.VARCHAR},
-		{"targetPortletId", Types.VARCHAR}, {"contentField", Types.VARCHAR},
-		{"feedFormat", Types.VARCHAR}, {"feedVersion", Types.DOUBLE},
-		{"lastPublishDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "id_", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "feedId", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "DDMStructureKey", Types.VARCHAR },
+			{ "DDMTemplateKey", Types.VARCHAR },
+			{ "DDMRendererTemplateKey", Types.VARCHAR },
+			{ "delta", Types.INTEGER },
+			{ "orderByCol", Types.VARCHAR },
+			{ "orderByType", Types.VARCHAR },
+			{ "targetLayoutFriendlyUrl", Types.VARCHAR },
+			{ "targetPortletId", Types.VARCHAR },
+			{ "contentField", Types.VARCHAR },
+			{ "feedFormat", Types.VARCHAR },
+			{ "feedVersion", Types.DOUBLE },
+			{ "lastPublishDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -118,44 +128,25 @@ public class JournalFeedModelImpl
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(200) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(200) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY journalFeed.feedId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY JournalFeed.feedId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY journalFeed.feedId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY JournalFeed.feedId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.journal.model.JournalFeed"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.journal.model.JournalFeed"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalFeed"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.journal.model.JournalFeed"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.journal.model.JournalFeed"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalFeed"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long FEEDID_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -188,8 +179,7 @@ public class JournalFeedModelImpl
 		model.setDelta(soapModel.getDelta());
 		model.setOrderByCol(soapModel.getOrderByCol());
 		model.setOrderByType(soapModel.getOrderByType());
-		model.setTargetLayoutFriendlyUrl(
-			soapModel.getTargetLayoutFriendlyUrl());
+		model.setTargetLayoutFriendlyUrl(soapModel.getTargetLayoutFriendlyUrl());
 		model.setTargetPortletId(soapModel.getTargetPortletId());
 		model.setContentField(soapModel.getContentField());
 		model.setFeedFormat(soapModel.getFeedFormat());
@@ -210,8 +200,7 @@ public class JournalFeedModelImpl
 			return null;
 		}
 
-		List<JournalFeed> models = new ArrayList<JournalFeed>(
-			soapModels.length);
+		List<JournalFeed> models = new ArrayList<JournalFeed>(soapModels.length);
 
 		for (JournalFeedSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -220,9 +209,8 @@ public class JournalFeedModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.journal.model.JournalFeed"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.journal.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.journal.model.JournalFeed"));
 
 	public JournalFeedModelImpl() {
 	}
@@ -261,18 +249,13 @@ public class JournalFeedModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<JournalFeed, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalFeed, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalFeed, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalFeed, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((JournalFeed)this));
 		}
 
@@ -284,148 +267,86 @@ public class JournalFeedModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<JournalFeed, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<JournalFeed, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<JournalFeed, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<JournalFeed, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(JournalFeed)this, entry.getValue());
+				attributeSetterBiConsumer.accept((JournalFeed)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<JournalFeed, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<JournalFeed, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<JournalFeed, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<JournalFeed, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<JournalFeed, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<JournalFeed, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<JournalFeed, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalFeed, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<JournalFeed, Object>>();
-		Map<String, BiConsumer<JournalFeed, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<JournalFeed, ?>>();
+		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<JournalFeed, Object>>();
+		Map<String, BiConsumer<JournalFeed, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<JournalFeed, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", JournalFeed::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<JournalFeed, String>)JournalFeed::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<JournalFeed, String>)JournalFeed::setUuid);
 		attributeGetterFunctions.put("id", JournalFeed::getId);
-		attributeSetterBiConsumers.put(
-			"id", (BiConsumer<JournalFeed, Long>)JournalFeed::setId);
+		attributeSetterBiConsumers.put("id", (BiConsumer<JournalFeed, Long>)JournalFeed::setId);
 		attributeGetterFunctions.put("groupId", JournalFeed::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<JournalFeed, Long>)JournalFeed::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<JournalFeed, Long>)JournalFeed::setGroupId);
 		attributeGetterFunctions.put("companyId", JournalFeed::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<JournalFeed, Long>)JournalFeed::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalFeed, Long>)JournalFeed::setCompanyId);
 		attributeGetterFunctions.put("userId", JournalFeed::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<JournalFeed, Long>)JournalFeed::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<JournalFeed, Long>)JournalFeed::setUserId);
 		attributeGetterFunctions.put("userName", JournalFeed::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<JournalFeed, String>)JournalFeed::setUserName);
 		attributeGetterFunctions.put("createDate", JournalFeed::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<JournalFeed, Date>)JournalFeed::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", JournalFeed::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<JournalFeed, Date>)JournalFeed::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<JournalFeed, Date>)JournalFeed::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", JournalFeed::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<JournalFeed, Date>)JournalFeed::setModifiedDate);
 		attributeGetterFunctions.put("feedId", JournalFeed::getFeedId);
-		attributeSetterBiConsumers.put(
-			"feedId", (BiConsumer<JournalFeed, String>)JournalFeed::setFeedId);
+		attributeSetterBiConsumers.put("feedId", (BiConsumer<JournalFeed, String>)JournalFeed::setFeedId);
 		attributeGetterFunctions.put("name", JournalFeed::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<JournalFeed, String>)JournalFeed::setName);
-		attributeGetterFunctions.put(
-			"description", JournalFeed::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setDescription);
-		attributeGetterFunctions.put(
-			"DDMStructureKey", JournalFeed::getDDMStructureKey);
-		attributeSetterBiConsumers.put(
-			"DDMStructureKey",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setDDMStructureKey);
-		attributeGetterFunctions.put(
-			"DDMTemplateKey", JournalFeed::getDDMTemplateKey);
-		attributeSetterBiConsumers.put(
-			"DDMTemplateKey",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setDDMTemplateKey);
-		attributeGetterFunctions.put(
-			"DDMRendererTemplateKey", JournalFeed::getDDMRendererTemplateKey);
-		attributeSetterBiConsumers.put(
-			"DDMRendererTemplateKey",
-			(BiConsumer<JournalFeed, String>)
-				JournalFeed::setDDMRendererTemplateKey);
+		attributeSetterBiConsumers.put("name", (BiConsumer<JournalFeed, String>)JournalFeed::setName);
+		attributeGetterFunctions.put("description", JournalFeed::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<JournalFeed, String>)JournalFeed::setDescription);
+		attributeGetterFunctions.put("DDMStructureKey", JournalFeed::getDDMStructureKey);
+		attributeSetterBiConsumers.put("DDMStructureKey", (BiConsumer<JournalFeed, String>)JournalFeed::setDDMStructureKey);
+		attributeGetterFunctions.put("DDMTemplateKey", JournalFeed::getDDMTemplateKey);
+		attributeSetterBiConsumers.put("DDMTemplateKey", (BiConsumer<JournalFeed, String>)JournalFeed::setDDMTemplateKey);
+		attributeGetterFunctions.put("DDMRendererTemplateKey", JournalFeed::getDDMRendererTemplateKey);
+		attributeSetterBiConsumers.put("DDMRendererTemplateKey", (BiConsumer<JournalFeed, String>)JournalFeed::setDDMRendererTemplateKey);
 		attributeGetterFunctions.put("delta", JournalFeed::getDelta);
-		attributeSetterBiConsumers.put(
-			"delta", (BiConsumer<JournalFeed, Integer>)JournalFeed::setDelta);
+		attributeSetterBiConsumers.put("delta", (BiConsumer<JournalFeed, Integer>)JournalFeed::setDelta);
 		attributeGetterFunctions.put("orderByCol", JournalFeed::getOrderByCol);
-		attributeSetterBiConsumers.put(
-			"orderByCol",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setOrderByCol);
-		attributeGetterFunctions.put(
-			"orderByType", JournalFeed::getOrderByType);
-		attributeSetterBiConsumers.put(
-			"orderByType",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setOrderByType);
-		attributeGetterFunctions.put(
-			"targetLayoutFriendlyUrl", JournalFeed::getTargetLayoutFriendlyUrl);
-		attributeSetterBiConsumers.put(
-			"targetLayoutFriendlyUrl",
-			(BiConsumer<JournalFeed, String>)
-				JournalFeed::setTargetLayoutFriendlyUrl);
-		attributeGetterFunctions.put(
-			"targetPortletId", JournalFeed::getTargetPortletId);
-		attributeSetterBiConsumers.put(
-			"targetPortletId",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setTargetPortletId);
-		attributeGetterFunctions.put(
-			"contentField", JournalFeed::getContentField);
-		attributeSetterBiConsumers.put(
-			"contentField",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setContentField);
+		attributeSetterBiConsumers.put("orderByCol", (BiConsumer<JournalFeed, String>)JournalFeed::setOrderByCol);
+		attributeGetterFunctions.put("orderByType", JournalFeed::getOrderByType);
+		attributeSetterBiConsumers.put("orderByType", (BiConsumer<JournalFeed, String>)JournalFeed::setOrderByType);
+		attributeGetterFunctions.put("targetLayoutFriendlyUrl", JournalFeed::getTargetLayoutFriendlyUrl);
+		attributeSetterBiConsumers.put("targetLayoutFriendlyUrl", (BiConsumer<JournalFeed, String>)JournalFeed::setTargetLayoutFriendlyUrl);
+		attributeGetterFunctions.put("targetPortletId", JournalFeed::getTargetPortletId);
+		attributeSetterBiConsumers.put("targetPortletId", (BiConsumer<JournalFeed, String>)JournalFeed::setTargetPortletId);
+		attributeGetterFunctions.put("contentField", JournalFeed::getContentField);
+		attributeSetterBiConsumers.put("contentField", (BiConsumer<JournalFeed, String>)JournalFeed::setContentField);
 		attributeGetterFunctions.put("feedFormat", JournalFeed::getFeedFormat);
-		attributeSetterBiConsumers.put(
-			"feedFormat",
-			(BiConsumer<JournalFeed, String>)JournalFeed::setFeedFormat);
-		attributeGetterFunctions.put(
-			"feedVersion", JournalFeed::getFeedVersion);
-		attributeSetterBiConsumers.put(
-			"feedVersion",
-			(BiConsumer<JournalFeed, Double>)JournalFeed::setFeedVersion);
-		attributeGetterFunctions.put(
-			"lastPublishDate", JournalFeed::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<JournalFeed, Date>)JournalFeed::setLastPublishDate);
+		attributeSetterBiConsumers.put("feedFormat", (BiConsumer<JournalFeed, String>)JournalFeed::setFeedFormat);
+		attributeGetterFunctions.put("feedVersion", JournalFeed::getFeedVersion);
+		attributeSetterBiConsumers.put("feedVersion", (BiConsumer<JournalFeed, Double>)JournalFeed::setFeedVersion);
+		attributeGetterFunctions.put("lastPublishDate", JournalFeed::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<JournalFeed, Date>)JournalFeed::setLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -819,8 +740,8 @@ public class JournalFeedModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(JournalFeed.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				JournalFeed.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -829,8 +750,8 @@ public class JournalFeedModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), JournalFeed.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			JournalFeed.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -843,9 +764,8 @@ public class JournalFeedModelImpl
 	@Override
 	public JournalFeed toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (JournalFeed)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (JournalFeed)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -872,8 +792,7 @@ public class JournalFeedModelImpl
 		journalFeedImpl.setDelta(getDelta());
 		journalFeedImpl.setOrderByCol(getOrderByCol());
 		journalFeedImpl.setOrderByType(getOrderByType());
-		journalFeedImpl.setTargetLayoutFriendlyUrl(
-			getTargetLayoutFriendlyUrl());
+		journalFeedImpl.setTargetLayoutFriendlyUrl(getTargetLayoutFriendlyUrl());
 		journalFeedImpl.setTargetPortletId(getTargetPortletId());
 		journalFeedImpl.setContentField(getContentField());
 		journalFeedImpl.setFeedFormat(getFeedFormat());
@@ -945,8 +864,7 @@ public class JournalFeedModelImpl
 
 		journalFeedModelImpl._setOriginalGroupId = false;
 
-		journalFeedModelImpl._originalCompanyId =
-			journalFeedModelImpl._companyId;
+		journalFeedModelImpl._originalCompanyId = journalFeedModelImpl._companyId;
 
 		journalFeedModelImpl._setOriginalCompanyId = false;
 
@@ -959,8 +877,7 @@ public class JournalFeedModelImpl
 
 	@Override
 	public CacheModel<JournalFeed> toCacheModel() {
-		JournalFeedCacheModel journalFeedCacheModel =
-			new JournalFeedCacheModel();
+		JournalFeedCacheModel journalFeedCacheModel = new JournalFeedCacheModel();
 
 		journalFeedCacheModel.uuid = getUuid();
 
@@ -1044,15 +961,12 @@ public class JournalFeedModelImpl
 			journalFeedCacheModel.DDMTemplateKey = null;
 		}
 
-		journalFeedCacheModel.DDMRendererTemplateKey =
-			getDDMRendererTemplateKey();
+		journalFeedCacheModel.DDMRendererTemplateKey = getDDMRendererTemplateKey();
 
-		String DDMRendererTemplateKey =
-			journalFeedCacheModel.DDMRendererTemplateKey;
+		String DDMRendererTemplateKey = journalFeedCacheModel.DDMRendererTemplateKey;
 
 		if ((DDMRendererTemplateKey != null) &&
-			(DDMRendererTemplateKey.length() == 0)) {
-
+				(DDMRendererTemplateKey.length() == 0)) {
 			journalFeedCacheModel.DDMRendererTemplateKey = null;
 		}
 
@@ -1074,15 +988,12 @@ public class JournalFeedModelImpl
 			journalFeedCacheModel.orderByType = null;
 		}
 
-		journalFeedCacheModel.targetLayoutFriendlyUrl =
-			getTargetLayoutFriendlyUrl();
+		journalFeedCacheModel.targetLayoutFriendlyUrl = getTargetLayoutFriendlyUrl();
 
-		String targetLayoutFriendlyUrl =
-			journalFeedCacheModel.targetLayoutFriendlyUrl;
+		String targetLayoutFriendlyUrl = journalFeedCacheModel.targetLayoutFriendlyUrl;
 
 		if ((targetLayoutFriendlyUrl != null) &&
-			(targetLayoutFriendlyUrl.length() == 0)) {
-
+				(targetLayoutFriendlyUrl.length() == 0)) {
 			journalFeedCacheModel.targetLayoutFriendlyUrl = null;
 		}
 
@@ -1126,20 +1037,16 @@ public class JournalFeedModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<JournalFeed, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalFeed, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalFeed, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalFeed, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1158,22 +1065,18 @@ public class JournalFeedModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<JournalFeed, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<JournalFeed, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalFeed, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalFeed, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalFeed, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1187,12 +1090,10 @@ public class JournalFeedModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		JournalFeed.class.getClassLoader();
+	private static final ClassLoader _classLoader = JournalFeed.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		JournalFeed.class, ModelWrapper.class
-	};
-
+			JournalFeed.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;
@@ -1225,5 +1126,4 @@ public class JournalFeedModelImpl
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private JournalFeed _escapedModel;
-
 }

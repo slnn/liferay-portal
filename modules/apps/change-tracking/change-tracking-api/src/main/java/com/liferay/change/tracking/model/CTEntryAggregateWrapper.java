@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class CTEntryAggregateWrapper
-	extends BaseModelWrapper<CTEntryAggregate>
+public class CTEntryAggregateWrapper extends BaseModelWrapper<CTEntryAggregate>
 	implements CTEntryAggregate, ModelWrapper<CTEntryAggregate> {
-
 	public CTEntryAggregateWrapper(CTEntryAggregate ctEntryAggregate) {
 		super(ctEntryAggregate);
 	}
@@ -109,70 +107,70 @@ public class CTEntryAggregateWrapper
 	}
 
 	/**
-	 * Returns the company ID of this ct entry aggregate.
-	 *
-	 * @return the company ID of this ct entry aggregate
-	 */
+	* Returns the company ID of this ct entry aggregate.
+	*
+	* @return the company ID of this ct entry aggregate
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this ct entry aggregate.
-	 *
-	 * @return the create date of this ct entry aggregate
-	 */
+	* Returns the create date of this ct entry aggregate.
+	*
+	* @return the create date of this ct entry aggregate
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the ct collection ID of this ct entry aggregate.
-	 *
-	 * @return the ct collection ID of this ct entry aggregate
-	 */
+	* Returns the ct collection ID of this ct entry aggregate.
+	*
+	* @return the ct collection ID of this ct entry aggregate
+	*/
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
 	}
 
 	/**
-	 * Returns the ct entry aggregate ID of this ct entry aggregate.
-	 *
-	 * @return the ct entry aggregate ID of this ct entry aggregate
-	 */
+	* Returns the ct entry aggregate ID of this ct entry aggregate.
+	*
+	* @return the ct entry aggregate ID of this ct entry aggregate
+	*/
 	@Override
 	public long getCtEntryAggregateId() {
 		return model.getCtEntryAggregateId();
 	}
 
 	/**
-	 * Returns the modified date of this ct entry aggregate.
-	 *
-	 * @return the modified date of this ct entry aggregate
-	 */
+	* Returns the modified date of this ct entry aggregate.
+	*
+	* @return the modified date of this ct entry aggregate
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the owner ct entry ID of this ct entry aggregate.
-	 *
-	 * @return the owner ct entry ID of this ct entry aggregate
-	 */
+	* Returns the owner ct entry ID of this ct entry aggregate.
+	*
+	* @return the owner ct entry ID of this ct entry aggregate
+	*/
 	@Override
 	public long getOwnerCTEntryId() {
 		return model.getOwnerCTEntryId();
 	}
 
 	/**
-	 * Returns the primary key of this ct entry aggregate.
-	 *
-	 * @return the primary key of this ct entry aggregate
-	 */
+	* Returns the primary key of this ct entry aggregate.
+	*
+	* @return the primary key of this ct entry aggregate
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -184,30 +182,30 @@ public class CTEntryAggregateWrapper
 	}
 
 	/**
-	 * Returns the user ID of this ct entry aggregate.
-	 *
-	 * @return the user ID of this ct entry aggregate
-	 */
+	* Returns the user ID of this ct entry aggregate.
+	*
+	* @return the user ID of this ct entry aggregate
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this ct entry aggregate.
-	 *
-	 * @return the user name of this ct entry aggregate
-	 */
+	* Returns the user name of this ct entry aggregate.
+	*
+	* @return the user name of this ct entry aggregate
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this ct entry aggregate.
-	 *
-	 * @return the user uuid of this ct entry aggregate
-	 */
+	* Returns the user uuid of this ct entry aggregate.
+	*
+	* @return the user uuid of this ct entry aggregate
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -219,100 +217,100 @@ public class CTEntryAggregateWrapper
 	}
 
 	/**
-	 * Sets the company ID of this ct entry aggregate.
-	 *
-	 * @param companyId the company ID of this ct entry aggregate
-	 */
+	* Sets the company ID of this ct entry aggregate.
+	*
+	* @param companyId the company ID of this ct entry aggregate
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this ct entry aggregate.
-	 *
-	 * @param createDate the create date of this ct entry aggregate
-	 */
+	* Sets the create date of this ct entry aggregate.
+	*
+	* @param createDate the create date of this ct entry aggregate
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the ct collection ID of this ct entry aggregate.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ct entry aggregate
-	 */
+	* Sets the ct collection ID of this ct entry aggregate.
+	*
+	* @param ctCollectionId the ct collection ID of this ct entry aggregate
+	*/
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
 	}
 
 	/**
-	 * Sets the ct entry aggregate ID of this ct entry aggregate.
-	 *
-	 * @param ctEntryAggregateId the ct entry aggregate ID of this ct entry aggregate
-	 */
+	* Sets the ct entry aggregate ID of this ct entry aggregate.
+	*
+	* @param ctEntryAggregateId the ct entry aggregate ID of this ct entry aggregate
+	*/
 	@Override
 	public void setCtEntryAggregateId(long ctEntryAggregateId) {
 		model.setCtEntryAggregateId(ctEntryAggregateId);
 	}
 
 	/**
-	 * Sets the modified date of this ct entry aggregate.
-	 *
-	 * @param modifiedDate the modified date of this ct entry aggregate
-	 */
+	* Sets the modified date of this ct entry aggregate.
+	*
+	* @param modifiedDate the modified date of this ct entry aggregate
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the owner ct entry ID of this ct entry aggregate.
-	 *
-	 * @param ownerCTEntryId the owner ct entry ID of this ct entry aggregate
-	 */
+	* Sets the owner ct entry ID of this ct entry aggregate.
+	*
+	* @param ownerCTEntryId the owner ct entry ID of this ct entry aggregate
+	*/
 	@Override
 	public void setOwnerCTEntryId(long ownerCTEntryId) {
 		model.setOwnerCTEntryId(ownerCTEntryId);
 	}
 
 	/**
-	 * Sets the primary key of this ct entry aggregate.
-	 *
-	 * @param primaryKey the primary key of this ct entry aggregate
-	 */
+	* Sets the primary key of this ct entry aggregate.
+	*
+	* @param primaryKey the primary key of this ct entry aggregate
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this ct entry aggregate.
-	 *
-	 * @param userId the user ID of this ct entry aggregate
-	 */
+	* Sets the user ID of this ct entry aggregate.
+	*
+	* @param userId the user ID of this ct entry aggregate
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this ct entry aggregate.
-	 *
-	 * @param userName the user name of this ct entry aggregate
-	 */
+	* Sets the user name of this ct entry aggregate.
+	*
+	* @param userName the user name of this ct entry aggregate
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this ct entry aggregate.
-	 *
-	 * @param userUuid the user uuid of this ct entry aggregate
-	 */
+	* Sets the user uuid of this ct entry aggregate.
+	*
+	* @param userUuid the user uuid of this ct entry aggregate
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -322,5 +320,4 @@ public class CTEntryAggregateWrapper
 	protected CTEntryAggregateWrapper wrap(CTEntryAggregate ctEntryAggregate) {
 		return new CTEntryAggregateWrapper(ctEntryAggregate);
 	}
-
 }

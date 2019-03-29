@@ -17,8 +17,10 @@ package com.liferay.message.boards.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBThreadFlag;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class MBThreadFlagCacheModel
-	implements CacheModel<MBThreadFlag>, Externalizable {
-
+public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class MBThreadFlagCacheModel
 			return false;
 		}
 
-		MBThreadFlagCacheModel mbThreadFlagCacheModel =
-			(MBThreadFlagCacheModel)obj;
+		MBThreadFlagCacheModel mbThreadFlagCacheModel = (MBThreadFlagCacheModel)obj;
 
 		if (threadFlagId == mbThreadFlagCacheModel.threadFlagId) {
 			return true;
@@ -163,7 +163,8 @@ public class MBThreadFlagCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -203,5 +204,4 @@ public class MBThreadFlagCacheModel
 	public long modifiedDate;
 	public long threadId;
 	public long lastPublishDate;
-
 }

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import java.util.Set;
  * @generated
  */
 public class DDLRecordFinderBaseImpl extends BasePersistenceImpl<DDLRecord> {
-
 	public DDLRecordFinderBaseImpl() {
 		setModelClass(DDLRecord.class);
 	}
@@ -54,14 +54,10 @@ public class DDLRecordFinderBaseImpl extends BasePersistenceImpl<DDLRecord> {
 	 */
 	public void setDDLRecordPersistence(
 		DDLRecordPersistence ddlRecordPersistence) {
-
 		this.ddlRecordPersistence = ddlRecordPersistence;
 	}
 
 	@BeanReference(type = DDLRecordPersistence.class)
 	protected DDLRecordPersistence ddlRecordPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLRecordFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(DDLRecordFinderBaseImpl.class);
 }

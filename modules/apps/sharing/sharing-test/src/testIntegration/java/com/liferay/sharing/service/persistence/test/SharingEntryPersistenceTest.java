@@ -15,6 +15,7 @@
 package com.liferay.sharing.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -32,11 +33,21 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalServiceUtil;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 import com.liferay.sharing.service.persistence.SharingEntryUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class SharingEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.sharing.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.sharing.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class SharingEntryPersistenceTest {
 
 		_persistence.remove(newSharingEntry);
 
-		SharingEntry existingSharingEntry = _persistence.fetchByPrimaryKey(
-			newSharingEntry.getPrimaryKey());
+		SharingEntry existingSharingEntry = _persistence.fetchByPrimaryKey(newSharingEntry.getPrimaryKey());
 
 		Assert.assertNull(existingSharingEntry);
 	}
@@ -150,42 +150,36 @@ public class SharingEntryPersistenceTest {
 
 		_sharingEntries.add(_persistence.update(newSharingEntry));
 
-		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(
-			newSharingEntry.getPrimaryKey());
+		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(newSharingEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingSharingEntry.getUuid(), newSharingEntry.getUuid());
-		Assert.assertEquals(
-			existingSharingEntry.getSharingEntryId(),
+		Assert.assertEquals(existingSharingEntry.getUuid(),
+			newSharingEntry.getUuid());
+		Assert.assertEquals(existingSharingEntry.getSharingEntryId(),
 			newSharingEntry.getSharingEntryId());
-		Assert.assertEquals(
-			existingSharingEntry.getGroupId(), newSharingEntry.getGroupId());
-		Assert.assertEquals(
-			existingSharingEntry.getCompanyId(),
+		Assert.assertEquals(existingSharingEntry.getGroupId(),
+			newSharingEntry.getGroupId());
+		Assert.assertEquals(existingSharingEntry.getCompanyId(),
 			newSharingEntry.getCompanyId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSharingEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSharingEntry.getCreateDate()),
 			Time.getShortTimestamp(newSharingEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSharingEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSharingEntry.getModifiedDate()),
 			Time.getShortTimestamp(newSharingEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingSharingEntry.getFromUserId(),
+		Assert.assertEquals(existingSharingEntry.getFromUserId(),
 			newSharingEntry.getFromUserId());
-		Assert.assertEquals(
-			existingSharingEntry.getToUserId(), newSharingEntry.getToUserId());
-		Assert.assertEquals(
-			existingSharingEntry.getClassNameId(),
+		Assert.assertEquals(existingSharingEntry.getToUserId(),
+			newSharingEntry.getToUserId());
+		Assert.assertEquals(existingSharingEntry.getClassNameId(),
 			newSharingEntry.getClassNameId());
-		Assert.assertEquals(
-			existingSharingEntry.getClassPK(), newSharingEntry.getClassPK());
-		Assert.assertEquals(
-			existingSharingEntry.isShareable(), newSharingEntry.isShareable());
-		Assert.assertEquals(
-			existingSharingEntry.getActionIds(),
+		Assert.assertEquals(existingSharingEntry.getClassPK(),
+			newSharingEntry.getClassPK());
+		Assert.assertEquals(existingSharingEntry.isShareable(),
+			newSharingEntry.isShareable());
+		Assert.assertEquals(existingSharingEntry.getActionIds(),
 			newSharingEntry.getActionIds());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSharingEntry.getExpirationDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSharingEntry.getExpirationDate()),
 			Time.getShortTimestamp(newSharingEntry.getExpirationDate()));
 	}
 
@@ -246,43 +240,41 @@ public class SharingEntryPersistenceTest {
 
 	@Test
 	public void testCountByTU_C() throws Exception {
-		_persistence.countByTU_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByTU_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByTU_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByFU_C_C() throws Exception {
-		_persistence.countByFU_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByFU_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByFU_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByTU_C_C() throws Exception {
-		_persistence.countByTU_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByTU_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByTU_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByFU_TU_C_C() throws Exception {
-		_persistence.countByFU_TU_C_C(
+		_persistence.countByFU_TU_C_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong());
 
 		_persistence.countByFU_TU_C_C(0L, 0L, 0L, 0L);
 	}
@@ -291,8 +283,7 @@ public class SharingEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
-		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(
-			newSharingEntry.getPrimaryKey());
+		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(newSharingEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingSharingEntry, newSharingEntry);
 	}
@@ -306,25 +297,23 @@ public class SharingEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SharingEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"SharingEntry", "uuid", true, "sharingEntryId", true, "groupId",
-			true, "companyId", true, "createDate", true, "modifiedDate", true,
-			"fromUserId", true, "toUserId", true, "classNameId", true,
-			"classPK", true, "shareable", true, "actionIds", true,
-			"expirationDate", true);
+		return OrderByComparatorFactoryUtil.create("SharingEntry", "uuid",
+			true, "sharingEntryId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "fromUserId", true,
+			"toUserId", true, "classNameId", true, "classPK", true,
+			"shareable", true, "actionIds", true, "expirationDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
-		SharingEntry existingSharingEntry = _persistence.fetchByPrimaryKey(
-			newSharingEntry.getPrimaryKey());
+		SharingEntry existingSharingEntry = _persistence.fetchByPrimaryKey(newSharingEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingSharingEntry, newSharingEntry);
 	}
@@ -341,7 +330,6 @@ public class SharingEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		SharingEntry newSharingEntry1 = addSharingEntry();
 		SharingEntry newSharingEntry2 = addSharingEntry();
 
@@ -350,22 +338,18 @@ public class SharingEntryPersistenceTest {
 		primaryKeys.add(newSharingEntry1.getPrimaryKey());
 		primaryKeys.add(newSharingEntry2.getPrimaryKey());
 
-		Map<Serializable, SharingEntry> sharingEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SharingEntry> sharingEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, sharingEntries.size());
-		Assert.assertEquals(
-			newSharingEntry1,
+		Assert.assertEquals(newSharingEntry1,
 			sharingEntries.get(newSharingEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newSharingEntry2,
+		Assert.assertEquals(newSharingEntry2,
 			sharingEntries.get(newSharingEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -375,8 +359,7 @@ public class SharingEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SharingEntry> sharingEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SharingEntry> sharingEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(sharingEntries.isEmpty());
 	}
@@ -384,7 +367,6 @@ public class SharingEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		SharingEntry newSharingEntry = addSharingEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -394,39 +376,36 @@ public class SharingEntryPersistenceTest {
 		primaryKeys.add(newSharingEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SharingEntry> sharingEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SharingEntry> sharingEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, sharingEntries.size());
-		Assert.assertEquals(
-			newSharingEntry,
+		Assert.assertEquals(newSharingEntry,
 			sharingEntries.get(newSharingEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SharingEntry> sharingEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SharingEntry> sharingEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(sharingEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSharingEntry.getPrimaryKey());
 
-		Map<Serializable, SharingEntry> sharingEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SharingEntry> sharingEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, sharingEntries.size());
-		Assert.assertEquals(
-			newSharingEntry,
+		Assert.assertEquals(newSharingEntry,
 			sharingEntries.get(newSharingEntry.getPrimaryKey()));
 	}
 
@@ -434,19 +413,15 @@ public class SharingEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			SharingEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = SharingEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<SharingEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SharingEntry>() {
 				@Override
 				public void performAction(SharingEntry sharingEntry) {
 					Assert.assertNotNull(sharingEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -455,18 +430,17 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SharingEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SharingEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"sharingEntryId", newSharingEntry.getSharingEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("sharingEntryId",
+				newSharingEntry.getSharingEntryId()));
 
-		List<SharingEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SharingEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -477,34 +451,32 @@ public class SharingEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SharingEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SharingEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"sharingEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("sharingEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<SharingEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SharingEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SharingEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SharingEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("sharingEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"sharingEntryId"));
 
 		Object newSharingEntryId = newSharingEntry.getSharingEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"sharingEntryId", new Object[] {newSharingEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("sharingEntryId",
+				new Object[] { newSharingEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -517,15 +489,14 @@ public class SharingEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SharingEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SharingEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("sharingEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"sharingEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"sharingEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("sharingEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -538,37 +509,27 @@ public class SharingEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(
-			newSharingEntry.getPrimaryKey());
+		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(newSharingEntry.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSharingEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingSharingEntry, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingSharingEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingSharingEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getFromUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalFromUserId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getToUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalToUserId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getFromUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalFromUserId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getToUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalToUserId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSharingEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingSharingEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected SharingEntry addSharingEntry() throws Exception {
@@ -608,5 +569,4 @@ public class SharingEntryPersistenceTest {
 	private List<SharingEntry> _sharingEntries = new ArrayList<SharingEntry>();
 	private SharingEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

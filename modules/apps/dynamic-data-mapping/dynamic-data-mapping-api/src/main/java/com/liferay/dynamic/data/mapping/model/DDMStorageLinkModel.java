@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface DDMStorageLinkModel
-	extends AttachedModel, BaseModel<DDMStorageLink>, ShardedModel {
-
+public interface DDMStorageLinkModel extends AttachedModel,
+	BaseModel<DDMStorageLink>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -170,5 +169,4 @@ public interface DDMStorageLinkModel
 	 * @param structureVersionId the structure version ID of this ddm storage link
 	 */
 	public void setStructureVersionId(long structureVersionId);
-
 }

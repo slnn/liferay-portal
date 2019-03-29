@@ -32,9 +32,8 @@ import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class WikiPageResourceBaseImpl
-	extends WikiPageResourceModelImpl implements WikiPageResource {
-
+public abstract class WikiPageResourceBaseImpl extends WikiPageResourceModelImpl
+	implements WikiPageResource {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class WikiPageResourceBaseImpl
 			WikiPageResourceLocalServiceUtil.updateWikiPageResource(this);
 		}
 	}
-
 }

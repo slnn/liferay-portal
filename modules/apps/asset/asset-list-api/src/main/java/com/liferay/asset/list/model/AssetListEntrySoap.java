@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class AssetListEntrySoap implements Serializable {
-
 	public static AssetListEntrySoap toSoapModel(AssetListEntry model) {
 		AssetListEntrySoap soapModel = new AssetListEntrySoap();
 
@@ -60,14 +59,11 @@ public class AssetListEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static AssetListEntrySoap[][] toSoapModels(
-		AssetListEntry[][] models) {
-
+	public static AssetListEntrySoap[][] toSoapModels(AssetListEntry[][] models) {
 		AssetListEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new AssetListEntrySoap[models.length][models[0].length];
+			soapModels = new AssetListEntrySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new AssetListEntrySoap[0][0];
@@ -80,11 +76,8 @@ public class AssetListEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static AssetListEntrySoap[] toSoapModels(
-		List<AssetListEntry> models) {
-
-		List<AssetListEntrySoap> soapModels = new ArrayList<AssetListEntrySoap>(
-			models.size());
+	public static AssetListEntrySoap[] toSoapModels(List<AssetListEntry> models) {
+		List<AssetListEntrySoap> soapModels = new ArrayList<AssetListEntrySoap>(models.size());
 
 		for (AssetListEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -212,5 +205,4 @@ public class AssetListEntrySoap implements Serializable {
 	private int _type;
 	private String _typeSettings;
 	private Date _lastPublishDate;
-
 }

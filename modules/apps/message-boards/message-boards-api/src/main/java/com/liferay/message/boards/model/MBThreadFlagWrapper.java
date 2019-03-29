@@ -17,6 +17,7 @@ package com.liferay.message.boards.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class MBThreadFlagWrapper
-	extends BaseModelWrapper<MBThreadFlag>
+public class MBThreadFlagWrapper extends BaseModelWrapper<MBThreadFlag>
 	implements MBThreadFlag, ModelWrapper<MBThreadFlag> {
-
 	public MBThreadFlagWrapper(MBThreadFlag mbThreadFlag) {
 		super(mbThreadFlag);
 	}
@@ -124,120 +123,120 @@ public class MBThreadFlagWrapper
 	}
 
 	/**
-	 * Returns the company ID of this message boards thread flag.
-	 *
-	 * @return the company ID of this message boards thread flag
-	 */
+	* Returns the company ID of this message boards thread flag.
+	*
+	* @return the company ID of this message boards thread flag
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this message boards thread flag.
-	 *
-	 * @return the create date of this message boards thread flag
-	 */
+	* Returns the create date of this message boards thread flag.
+	*
+	* @return the create date of this message boards thread flag
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this message boards thread flag.
-	 *
-	 * @return the group ID of this message boards thread flag
-	 */
+	* Returns the group ID of this message boards thread flag.
+	*
+	* @return the group ID of this message boards thread flag
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last publish date of this message boards thread flag.
-	 *
-	 * @return the last publish date of this message boards thread flag
-	 */
+	* Returns the last publish date of this message boards thread flag.
+	*
+	* @return the last publish date of this message boards thread flag
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this message boards thread flag.
-	 *
-	 * @return the modified date of this message boards thread flag
-	 */
+	* Returns the modified date of this message boards thread flag.
+	*
+	* @return the modified date of this message boards thread flag
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this message boards thread flag.
-	 *
-	 * @return the primary key of this message boards thread flag
-	 */
+	* Returns the primary key of this message boards thread flag.
+	*
+	* @return the primary key of this message boards thread flag
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the thread flag ID of this message boards thread flag.
-	 *
-	 * @return the thread flag ID of this message boards thread flag
-	 */
+	* Returns the thread flag ID of this message boards thread flag.
+	*
+	* @return the thread flag ID of this message boards thread flag
+	*/
 	@Override
 	public long getThreadFlagId() {
 		return model.getThreadFlagId();
 	}
 
 	/**
-	 * Returns the thread ID of this message boards thread flag.
-	 *
-	 * @return the thread ID of this message boards thread flag
-	 */
+	* Returns the thread ID of this message boards thread flag.
+	*
+	* @return the thread ID of this message boards thread flag
+	*/
 	@Override
 	public long getThreadId() {
 		return model.getThreadId();
 	}
 
 	/**
-	 * Returns the user ID of this message boards thread flag.
-	 *
-	 * @return the user ID of this message boards thread flag
-	 */
+	* Returns the user ID of this message boards thread flag.
+	*
+	* @return the user ID of this message boards thread flag
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this message boards thread flag.
-	 *
-	 * @return the user name of this message boards thread flag
-	 */
+	* Returns the user name of this message boards thread flag.
+	*
+	* @return the user name of this message boards thread flag
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this message boards thread flag.
-	 *
-	 * @return the user uuid of this message boards thread flag
-	 */
+	* Returns the user uuid of this message boards thread flag.
+	*
+	* @return the user uuid of this message boards thread flag
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this message boards thread flag.
-	 *
-	 * @return the uuid of this message boards thread flag
-	 */
+	* Returns the uuid of this message boards thread flag.
+	*
+	* @return the uuid of this message boards thread flag
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -249,120 +248,120 @@ public class MBThreadFlagWrapper
 	}
 
 	/**
-	 * Sets the company ID of this message boards thread flag.
-	 *
-	 * @param companyId the company ID of this message boards thread flag
-	 */
+	* Sets the company ID of this message boards thread flag.
+	*
+	* @param companyId the company ID of this message boards thread flag
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this message boards thread flag.
-	 *
-	 * @param createDate the create date of this message boards thread flag
-	 */
+	* Sets the create date of this message boards thread flag.
+	*
+	* @param createDate the create date of this message boards thread flag
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this message boards thread flag.
-	 *
-	 * @param groupId the group ID of this message boards thread flag
-	 */
+	* Sets the group ID of this message boards thread flag.
+	*
+	* @param groupId the group ID of this message boards thread flag
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last publish date of this message boards thread flag.
-	 *
-	 * @param lastPublishDate the last publish date of this message boards thread flag
-	 */
+	* Sets the last publish date of this message boards thread flag.
+	*
+	* @param lastPublishDate the last publish date of this message boards thread flag
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this message boards thread flag.
-	 *
-	 * @param modifiedDate the modified date of this message boards thread flag
-	 */
+	* Sets the modified date of this message boards thread flag.
+	*
+	* @param modifiedDate the modified date of this message boards thread flag
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this message boards thread flag.
-	 *
-	 * @param primaryKey the primary key of this message boards thread flag
-	 */
+	* Sets the primary key of this message boards thread flag.
+	*
+	* @param primaryKey the primary key of this message boards thread flag
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the thread flag ID of this message boards thread flag.
-	 *
-	 * @param threadFlagId the thread flag ID of this message boards thread flag
-	 */
+	* Sets the thread flag ID of this message boards thread flag.
+	*
+	* @param threadFlagId the thread flag ID of this message boards thread flag
+	*/
 	@Override
 	public void setThreadFlagId(long threadFlagId) {
 		model.setThreadFlagId(threadFlagId);
 	}
 
 	/**
-	 * Sets the thread ID of this message boards thread flag.
-	 *
-	 * @param threadId the thread ID of this message boards thread flag
-	 */
+	* Sets the thread ID of this message boards thread flag.
+	*
+	* @param threadId the thread ID of this message boards thread flag
+	*/
 	@Override
 	public void setThreadId(long threadId) {
 		model.setThreadId(threadId);
 	}
 
 	/**
-	 * Sets the user ID of this message boards thread flag.
-	 *
-	 * @param userId the user ID of this message boards thread flag
-	 */
+	* Sets the user ID of this message boards thread flag.
+	*
+	* @param userId the user ID of this message boards thread flag
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this message boards thread flag.
-	 *
-	 * @param userName the user name of this message boards thread flag
-	 */
+	* Sets the user name of this message boards thread flag.
+	*
+	* @param userName the user name of this message boards thread flag
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this message boards thread flag.
-	 *
-	 * @param userUuid the user uuid of this message boards thread flag
-	 */
+	* Sets the user uuid of this message boards thread flag.
+	*
+	* @param userUuid the user uuid of this message boards thread flag
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this message boards thread flag.
-	 *
-	 * @param uuid the uuid of this message boards thread flag
-	 */
+	* Sets the uuid of this message boards thread flag.
+	*
+	* @param uuid the uuid of this message boards thread flag
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -377,5 +376,4 @@ public class MBThreadFlagWrapper
 	protected MBThreadFlagWrapper wrap(MBThreadFlag mbThreadFlag) {
 		return new MBThreadFlagWrapper(mbThreadFlag);
 	}
-
 }

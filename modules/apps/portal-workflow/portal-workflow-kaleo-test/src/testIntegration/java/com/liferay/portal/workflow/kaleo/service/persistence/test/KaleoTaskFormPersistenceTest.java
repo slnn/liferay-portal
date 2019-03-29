@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +39,15 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +58,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoTaskFormPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.service"));
 
 	@Before
@@ -108,8 +107,7 @@ public class KaleoTaskFormPersistenceTest {
 
 		_persistence.remove(newKaleoTaskForm);
 
-		KaleoTaskForm existingKaleoTaskForm = _persistence.fetchByPrimaryKey(
-			newKaleoTaskForm.getPrimaryKey());
+		KaleoTaskForm existingKaleoTaskForm = _persistence.fetchByPrimaryKey(newKaleoTaskForm.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoTaskForm);
 	}
@@ -167,67 +165,51 @@ public class KaleoTaskFormPersistenceTest {
 
 		_kaleoTaskForms.add(_persistence.update(newKaleoTaskForm));
 
-		KaleoTaskForm existingKaleoTaskForm = _persistence.findByPrimaryKey(
-			newKaleoTaskForm.getPrimaryKey());
+		KaleoTaskForm existingKaleoTaskForm = _persistence.findByPrimaryKey(newKaleoTaskForm.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoTaskForm.getMvccVersion(),
+		Assert.assertEquals(existingKaleoTaskForm.getMvccVersion(),
 			newKaleoTaskForm.getMvccVersion());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getKaleoTaskFormId(),
+		Assert.assertEquals(existingKaleoTaskForm.getKaleoTaskFormId(),
 			newKaleoTaskForm.getKaleoTaskFormId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getGroupId(), newKaleoTaskForm.getGroupId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getCompanyId(),
+		Assert.assertEquals(existingKaleoTaskForm.getGroupId(),
+			newKaleoTaskForm.getGroupId());
+		Assert.assertEquals(existingKaleoTaskForm.getCompanyId(),
 			newKaleoTaskForm.getCompanyId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getUserId(), newKaleoTaskForm.getUserId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getUserName(),
+		Assert.assertEquals(existingKaleoTaskForm.getUserId(),
+			newKaleoTaskForm.getUserId());
+		Assert.assertEquals(existingKaleoTaskForm.getUserName(),
 			newKaleoTaskForm.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKaleoTaskForm.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKaleoTaskForm.getCreateDate()),
 			Time.getShortTimestamp(newKaleoTaskForm.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKaleoTaskForm.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKaleoTaskForm.getModifiedDate()),
 			Time.getShortTimestamp(newKaleoTaskForm.getModifiedDate()));
-		Assert.assertEquals(
-			existingKaleoTaskForm.getKaleoDefinitionVersionId(),
+		Assert.assertEquals(existingKaleoTaskForm.getKaleoDefinitionVersionId(),
 			newKaleoTaskForm.getKaleoDefinitionVersionId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getKaleoNodeId(),
+		Assert.assertEquals(existingKaleoTaskForm.getKaleoNodeId(),
 			newKaleoTaskForm.getKaleoNodeId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getKaleoTaskId(),
+		Assert.assertEquals(existingKaleoTaskForm.getKaleoTaskId(),
 			newKaleoTaskForm.getKaleoTaskId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getKaleoTaskName(),
+		Assert.assertEquals(existingKaleoTaskForm.getKaleoTaskName(),
 			newKaleoTaskForm.getKaleoTaskName());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getName(), newKaleoTaskForm.getName());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getDescription(),
+		Assert.assertEquals(existingKaleoTaskForm.getName(),
+			newKaleoTaskForm.getName());
+		Assert.assertEquals(existingKaleoTaskForm.getDescription(),
 			newKaleoTaskForm.getDescription());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getFormCompanyId(),
+		Assert.assertEquals(existingKaleoTaskForm.getFormCompanyId(),
 			newKaleoTaskForm.getFormCompanyId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getFormDefinition(),
+		Assert.assertEquals(existingKaleoTaskForm.getFormDefinition(),
 			newKaleoTaskForm.getFormDefinition());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getFormGroupId(),
+		Assert.assertEquals(existingKaleoTaskForm.getFormGroupId(),
 			newKaleoTaskForm.getFormGroupId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getFormId(), newKaleoTaskForm.getFormId());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getFormUuid(),
+		Assert.assertEquals(existingKaleoTaskForm.getFormId(),
+			newKaleoTaskForm.getFormId());
+		Assert.assertEquals(existingKaleoTaskForm.getFormUuid(),
 			newKaleoTaskForm.getFormUuid());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getMetadata(),
+		Assert.assertEquals(existingKaleoTaskForm.getMetadata(),
 			newKaleoTaskForm.getMetadata());
-		Assert.assertEquals(
-			existingKaleoTaskForm.getPriority(),
+		Assert.assertEquals(existingKaleoTaskForm.getPriority(),
 			newKaleoTaskForm.getPriority());
 	}
 
@@ -272,8 +254,7 @@ public class KaleoTaskFormPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
-		KaleoTaskForm existingKaleoTaskForm = _persistence.findByPrimaryKey(
-			newKaleoTaskForm.getPrimaryKey());
+		KaleoTaskForm existingKaleoTaskForm = _persistence.findByPrimaryKey(newKaleoTaskForm.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoTaskForm, newKaleoTaskForm);
 	}
@@ -287,28 +268,26 @@ public class KaleoTaskFormPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<KaleoTaskForm> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"KaleoTaskForm", "mvccVersion", true, "kaleoTaskFormId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true,
-			"kaleoDefinitionVersionId", true, "kaleoNodeId", true,
-			"kaleoTaskId", true, "kaleoTaskName", true, "name", true,
-			"description", true, "formCompanyId", true, "formDefinition", true,
-			"formGroupId", true, "formId", true, "formUuid", true, "metadata",
-			true, "priority", true);
+		return OrderByComparatorFactoryUtil.create("KaleoTaskForm",
+			"mvccVersion", true, "kaleoTaskFormId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "kaleoDefinitionVersionId", true,
+			"kaleoNodeId", true, "kaleoTaskId", true, "kaleoTaskName", true,
+			"name", true, "description", true, "formCompanyId", true,
+			"formDefinition", true, "formGroupId", true, "formId", true,
+			"formUuid", true, "metadata", true, "priority", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
-		KaleoTaskForm existingKaleoTaskForm = _persistence.fetchByPrimaryKey(
-			newKaleoTaskForm.getPrimaryKey());
+		KaleoTaskForm existingKaleoTaskForm = _persistence.fetchByPrimaryKey(newKaleoTaskForm.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoTaskForm, newKaleoTaskForm);
 	}
@@ -325,7 +304,6 @@ public class KaleoTaskFormPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		KaleoTaskForm newKaleoTaskForm1 = addKaleoTaskForm();
 		KaleoTaskForm newKaleoTaskForm2 = addKaleoTaskForm();
 
@@ -334,22 +312,18 @@ public class KaleoTaskFormPersistenceTest {
 		primaryKeys.add(newKaleoTaskForm1.getPrimaryKey());
 		primaryKeys.add(newKaleoTaskForm2.getPrimaryKey());
 
-		Map<Serializable, KaleoTaskForm> kaleoTaskForms =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskForm> kaleoTaskForms = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoTaskForms.size());
-		Assert.assertEquals(
-			newKaleoTaskForm1,
+		Assert.assertEquals(newKaleoTaskForm1,
 			kaleoTaskForms.get(newKaleoTaskForm1.getPrimaryKey()));
-		Assert.assertEquals(
-			newKaleoTaskForm2,
+		Assert.assertEquals(newKaleoTaskForm2,
 			kaleoTaskForms.get(newKaleoTaskForm2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -359,8 +333,7 @@ public class KaleoTaskFormPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoTaskForm> kaleoTaskForms =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskForm> kaleoTaskForms = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoTaskForms.isEmpty());
 	}
@@ -368,7 +341,6 @@ public class KaleoTaskFormPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
 		long pk = RandomTestUtil.nextLong();
@@ -378,39 +350,36 @@ public class KaleoTaskFormPersistenceTest {
 		primaryKeys.add(newKaleoTaskForm.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoTaskForm> kaleoTaskForms =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskForm> kaleoTaskForms = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoTaskForms.size());
-		Assert.assertEquals(
-			newKaleoTaskForm,
+		Assert.assertEquals(newKaleoTaskForm,
 			kaleoTaskForms.get(newKaleoTaskForm.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoTaskForm> kaleoTaskForms =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskForm> kaleoTaskForms = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoTaskForms.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoTaskForm.getPrimaryKey());
 
-		Map<Serializable, KaleoTaskForm> kaleoTaskForms =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTaskForm> kaleoTaskForms = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoTaskForms.size());
-		Assert.assertEquals(
-			newKaleoTaskForm,
+		Assert.assertEquals(newKaleoTaskForm,
 			kaleoTaskForms.get(newKaleoTaskForm.getPrimaryKey()));
 	}
 
@@ -418,19 +387,15 @@ public class KaleoTaskFormPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			KaleoTaskFormLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = KaleoTaskFormLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<KaleoTaskForm>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTaskForm>() {
 				@Override
 				public void performAction(KaleoTaskForm kaleoTaskForm) {
 					Assert.assertNotNull(kaleoTaskForm);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -439,18 +404,17 @@ public class KaleoTaskFormPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskForm.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskForm.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kaleoTaskFormId", newKaleoTaskForm.getKaleoTaskFormId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoTaskFormId",
+				newKaleoTaskForm.getKaleoTaskFormId()));
 
-		List<KaleoTaskForm> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoTaskForm> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -461,34 +425,32 @@ public class KaleoTaskFormPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskForm.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskForm.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kaleoTaskFormId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoTaskFormId",
+				RandomTestUtil.nextLong()));
 
-		List<KaleoTaskForm> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoTaskForm> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskForm.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskForm.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoTaskFormId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoTaskFormId"));
 
 		Object newKaleoTaskFormId = newKaleoTaskForm.getKaleoTaskFormId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kaleoTaskFormId", new Object[] {newKaleoTaskFormId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoTaskFormId",
+				new Object[] { newKaleoTaskFormId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -501,15 +463,14 @@ public class KaleoTaskFormPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskForm.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTaskForm.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoTaskFormId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoTaskFormId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kaleoTaskFormId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoTaskFormId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -522,20 +483,14 @@ public class KaleoTaskFormPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoTaskForm existingKaleoTaskForm = _persistence.findByPrimaryKey(
-			newKaleoTaskForm.getPrimaryKey());
+		KaleoTaskForm existingKaleoTaskForm = _persistence.findByPrimaryKey(newKaleoTaskForm.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingKaleoTaskForm.getKaleoTaskId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKaleoTaskForm, "getOriginalKaleoTaskId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKaleoTaskForm.getFormUuid(),
-				ReflectionTestUtil.invoke(
-					existingKaleoTaskForm, "getOriginalFormUuid",
-					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingKaleoTaskForm.getKaleoTaskId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoTaskForm,
+				"getOriginalKaleoTaskId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingKaleoTaskForm.getFormUuid(),
+				ReflectionTestUtil.invoke(existingKaleoTaskForm,
+					"getOriginalFormUuid", new Class<?>[0])));
 	}
 
 	protected KaleoTaskForm addKaleoTaskForm() throws Exception {
@@ -588,9 +543,7 @@ public class KaleoTaskFormPersistenceTest {
 		return kaleoTaskForm;
 	}
 
-	private List<KaleoTaskForm> _kaleoTaskForms =
-		new ArrayList<KaleoTaskForm>();
+	private List<KaleoTaskForm> _kaleoTaskForms = new ArrayList<KaleoTaskForm>();
 	private KaleoTaskFormPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

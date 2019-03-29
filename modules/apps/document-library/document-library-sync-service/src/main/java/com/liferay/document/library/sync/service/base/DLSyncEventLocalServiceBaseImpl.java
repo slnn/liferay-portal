@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -62,9 +63,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class DLSyncEventLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements DLSyncEventLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements DLSyncEventLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -108,7 +108,6 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public DLSyncEvent deleteDLSyncEvent(long syncEventId)
 		throws PortalException {
-
 		return dlSyncEventPersistence.remove(syncEventId);
 	}
 
@@ -128,8 +127,8 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			DLSyncEvent.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(DLSyncEvent.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -156,11 +155,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return dlSyncEventPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return dlSyncEventPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -177,12 +175,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return dlSyncEventPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return dlSyncEventPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -204,11 +200,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return dlSyncEventPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return dlSyncEventPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -224,14 +219,14 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @throws PortalException if a dl sync event with the primary key could not be found
 	 */
 	@Override
-	public DLSyncEvent getDLSyncEvent(long syncEventId) throws PortalException {
+	public DLSyncEvent getDLSyncEvent(long syncEventId)
+		throws PortalException {
 		return dlSyncEventPersistence.findByPrimaryKey(syncEventId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(dlSyncEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -243,26 +238,20 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			dlSyncEventLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(dlSyncEventLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DLSyncEvent.class);
 
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"syncEventId");
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("syncEventId");
 
 		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(dlSyncEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLSyncEvent.class);
@@ -276,15 +265,12 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return dlSyncEventLocalService.deleteDLSyncEvent(
-			(DLSyncEvent)persistedModel);
+		return dlSyncEventLocalService.deleteDLSyncEvent((DLSyncEvent)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return dlSyncEventPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -342,7 +328,6 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 */
 	public void setDLSyncEventLocalService(
 		DLSyncEventLocalService dlSyncEventLocalService) {
-
 		this.dlSyncEventLocalService = dlSyncEventLocalService;
 	}
 
@@ -362,7 +347,6 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 */
 	public void setDLSyncEventPersistence(
 		DLSyncEventPersistence dlSyncEventPersistence) {
-
 		this.dlSyncEventPersistence = dlSyncEventPersistence;
 	}
 
@@ -371,9 +355,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -383,15 +365,12 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.sync.model.DLSyncEvent",
+		persistedModelLocalServiceRegistry.register("com.liferay.document.library.sync.model.DLSyncEvent",
 			dlSyncEventLocalService);
 	}
 
@@ -432,8 +411,8 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -444,18 +423,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 
 	@BeanReference(type = DLSyncEventLocalService.class)
 	protected DLSyncEventLocalService dlSyncEventLocalService;
-
 	@BeanReference(type = DLSyncEventPersistence.class)
 	protected DLSyncEventPersistence dlSyncEventPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

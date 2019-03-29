@@ -32,9 +32,8 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class MBMessageBaseImpl
-	extends MBMessageModelImpl implements MBMessage {
-
+public abstract class MBMessageBaseImpl extends MBMessageModelImpl
+	implements MBMessage {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class MBMessageBaseImpl
 			MBMessageLocalServiceUtil.updateMBMessage(this);
 		}
 	}
-
 }

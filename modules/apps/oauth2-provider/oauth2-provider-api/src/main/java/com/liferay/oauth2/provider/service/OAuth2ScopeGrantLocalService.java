@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -51,13 +52,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface OAuth2ScopeGrantLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,11 +74,11 @@ public interface OAuth2ScopeGrantLocalService
 		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds);
 
 	/**
-	 * Adds the o auth2 scope grant to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 * @return the o auth2 scope grant that was added
-	 */
+	* Adds the o auth2 scope grant to the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuth2ScopeGrant the o auth2 scope grant
+	* @return the o auth2 scope grant that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuth2ScopeGrant addOAuth2ScopeGrant(
 		OAuth2ScopeGrant oAuth2ScopeGrant);
@@ -89,17 +87,17 @@ public interface OAuth2ScopeGrantLocalService
 		long oAuth2AuthorizationId);
 
 	/**
-	 * Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
-	 *
-	 * @param oAuth2ScopeGrantId the primary key for the new o auth2 scope grant
-	 * @return the new o auth2 scope grant
-	 */
+	* Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
+	*
+	* @param oAuth2ScopeGrantId the primary key for the new o auth2 scope grant
+	* @return the new o auth2 scope grant
+	*/
 	@Transactional(enabled = false)
 	public OAuth2ScopeGrant createOAuth2ScopeGrant(long oAuth2ScopeGrantId);
 
-	public OAuth2ScopeGrant createOAuth2ScopeGrant(
-			long companyId, long oAuth2ApplicationScopeAliasesId,
-			String applicationName, String bundleSymbolicName, String scope)
+	public OAuth2ScopeGrant createOAuth2ScopeGrant(long companyId,
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope)
 		throws DuplicateOAuth2ScopeGrantException;
 
 	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
@@ -115,29 +113,29 @@ public interface OAuth2ScopeGrantLocalService
 		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds);
 
 	/**
-	 * Deletes the o auth2 scope grant with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param oAuth2ScopeGrantId the primary key of the o auth2 scope grant
-	 * @return the o auth2 scope grant that was removed
-	 * @throws PortalException if a o auth2 scope grant with the primary key could not be found
-	 */
+	* Deletes the o auth2 scope grant with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuth2ScopeGrantId the primary key of the o auth2 scope grant
+	* @return the o auth2 scope grant that was removed
+	* @throws PortalException if a o auth2 scope grant with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public OAuth2ScopeGrant deleteOAuth2ScopeGrant(long oAuth2ScopeGrantId)
 		throws PortalException;
 
 	/**
-	 * Deletes the o auth2 scope grant from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 * @return the o auth2 scope grant that was removed
-	 */
+	* Deletes the o auth2 scope grant from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuth2ScopeGrant the o auth2 scope grant
+	* @return the o auth2 scope grant that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public OAuth2ScopeGrant deleteOAuth2ScopeGrant(
 		OAuth2ScopeGrant oAuth2ScopeGrant);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -146,67 +144,66 @@ public interface OAuth2ScopeGrantLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2ScopeGrant fetchOAuth2ScopeGrant(long oAuth2ScopeGrantId);
@@ -240,36 +237,36 @@ public interface OAuth2ScopeGrantLocalService
 		long oAuth2AuthorizationId);
 
 	/**
-	 * Returns the oAuth2AuthorizationIds of the o auth2 authorizations associated with the o auth2 scope grant.
-	 *
-	 * @param oAuth2ScopeGrantId the oAuth2ScopeGrantId of the o auth2 scope grant
-	 * @return long[] the oAuth2AuthorizationIds of o auth2 authorizations associated with the o auth2 scope grant
-	 */
+	* Returns the oAuth2AuthorizationIds of the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param oAuth2ScopeGrantId the oAuth2ScopeGrantId of the o auth2 scope grant
+	* @return long[] the oAuth2AuthorizationIds of o auth2 authorizations associated with the o auth2 scope grant
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getOAuth2AuthorizationPrimaryKeys(long oAuth2ScopeGrantId);
 
 	/**
-	 * Returns the o auth2 scope grant with the primary key.
-	 *
-	 * @param oAuth2ScopeGrantId the primary key of the o auth2 scope grant
-	 * @return the o auth2 scope grant
-	 * @throws PortalException if a o auth2 scope grant with the primary key could not be found
-	 */
+	* Returns the o auth2 scope grant with the primary key.
+	*
+	* @param oAuth2ScopeGrantId the primary key of the o auth2 scope grant
+	* @return the o auth2 scope grant
+	* @throws PortalException if a o auth2 scope grant with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2ScopeGrant getOAuth2ScopeGrant(long oAuth2ScopeGrantId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the o auth2 scope grants.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	 * @return the range of o auth2 scope grants
-	 */
+	* Returns a range of all the o auth2 scope grants.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of o auth2 scope grants
+	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	* @return the range of o auth2 scope grants
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2ScopeGrant> getOAuth2ScopeGrants(int start, int end);
 
@@ -279,23 +276,23 @@ public interface OAuth2ScopeGrantLocalService
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
-		long companyId, String applicationName, String bundleSymbolicName,
+	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(long companyId,
+		String applicationName, String bundleSymbolicName,
 		String accessTokenContent);
 
 	/**
-	 * Returns the number of o auth2 scope grants.
-	 *
-	 * @return the number of o auth2 scope grants
-	 */
+	* Returns the number of o auth2 scope grants.
+	*
+	* @return the number of o auth2 scope grants
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOAuth2ScopeGrantsCount();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -304,8 +301,8 @@ public interface OAuth2ScopeGrantLocalService
 		throws PortalException;
 
 	public Collection<OAuth2ScopeGrant> grantLiferayOAuth2Scopes(
-			long oAuth2AuthorizationId,
-			Collection<LiferayOAuth2Scope> liferayOAuth2Scopes)
+		long oAuth2AuthorizationId,
+		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -320,13 +317,12 @@ public interface OAuth2ScopeGrantLocalService
 		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds);
 
 	/**
-	 * Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 * @return the o auth2 scope grant that was updated
-	 */
+	* Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param oAuth2ScopeGrant the o auth2 scope grant
+	* @return the o auth2 scope grant that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuth2ScopeGrant updateOAuth2ScopeGrant(
 		OAuth2ScopeGrant oAuth2ScopeGrant);
-
 }

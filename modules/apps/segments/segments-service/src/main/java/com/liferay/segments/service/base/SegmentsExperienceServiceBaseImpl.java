@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
@@ -46,10 +47,8 @@ import javax.sql.DataSource;
  * @see com.liferay.segments.service.impl.SegmentsExperienceServiceImpl
  * @generated
  */
-public abstract class SegmentsExperienceServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class SegmentsExperienceServiceBaseImpl extends BaseServiceImpl
 	implements SegmentsExperienceService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,9 +60,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the segments entry local service
 	 */
-	public com.liferay.segments.service.SegmentsEntryLocalService
-		getSegmentsEntryLocalService() {
-
+	public com.liferay.segments.service.SegmentsEntryLocalService getSegmentsEntryLocalService() {
 		return segmentsEntryLocalService;
 	}
 
@@ -73,9 +70,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param segmentsEntryLocalService the segments entry local service
 	 */
 	public void setSegmentsEntryLocalService(
-		com.liferay.segments.service.SegmentsEntryLocalService
-			segmentsEntryLocalService) {
-
+		com.liferay.segments.service.SegmentsEntryLocalService segmentsEntryLocalService) {
 		this.segmentsEntryLocalService = segmentsEntryLocalService;
 	}
 
@@ -84,9 +79,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the segments entry remote service
 	 */
-	public com.liferay.segments.service.SegmentsEntryService
-		getSegmentsEntryService() {
-
+	public com.liferay.segments.service.SegmentsEntryService getSegmentsEntryService() {
 		return segmentsEntryService;
 	}
 
@@ -96,9 +89,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param segmentsEntryService the segments entry remote service
 	 */
 	public void setSegmentsEntryService(
-		com.liferay.segments.service.SegmentsEntryService
-			segmentsEntryService) {
-
+		com.liferay.segments.service.SegmentsEntryService segmentsEntryService) {
 		this.segmentsEntryService = segmentsEntryService;
 	}
 
@@ -118,7 +109,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setSegmentsEntryPersistence(
 		SegmentsEntryPersistence segmentsEntryPersistence) {
-
 		this.segmentsEntryPersistence = segmentsEntryPersistence;
 	}
 
@@ -127,9 +117,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the segments entry rel local service
 	 */
-	public com.liferay.segments.service.SegmentsEntryRelLocalService
-		getSegmentsEntryRelLocalService() {
-
+	public com.liferay.segments.service.SegmentsEntryRelLocalService getSegmentsEntryRelLocalService() {
 		return segmentsEntryRelLocalService;
 	}
 
@@ -139,9 +127,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param segmentsEntryRelLocalService the segments entry rel local service
 	 */
 	public void setSegmentsEntryRelLocalService(
-		com.liferay.segments.service.SegmentsEntryRelLocalService
-			segmentsEntryRelLocalService) {
-
+		com.liferay.segments.service.SegmentsEntryRelLocalService segmentsEntryRelLocalService) {
 		this.segmentsEntryRelLocalService = segmentsEntryRelLocalService;
 	}
 
@@ -150,9 +136,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the segments entry rel remote service
 	 */
-	public com.liferay.segments.service.SegmentsEntryRelService
-		getSegmentsEntryRelService() {
-
+	public com.liferay.segments.service.SegmentsEntryRelService getSegmentsEntryRelService() {
 		return segmentsEntryRelService;
 	}
 
@@ -162,9 +146,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param segmentsEntryRelService the segments entry rel remote service
 	 */
 	public void setSegmentsEntryRelService(
-		com.liferay.segments.service.SegmentsEntryRelService
-			segmentsEntryRelService) {
-
+		com.liferay.segments.service.SegmentsEntryRelService segmentsEntryRelService) {
 		this.segmentsEntryRelService = segmentsEntryRelService;
 	}
 
@@ -184,7 +166,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setSegmentsEntryRelPersistence(
 		SegmentsEntryRelPersistence segmentsEntryRelPersistence) {
-
 		this.segmentsEntryRelPersistence = segmentsEntryRelPersistence;
 	}
 
@@ -193,9 +174,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the segments experience local service
 	 */
-	public com.liferay.segments.service.SegmentsExperienceLocalService
-		getSegmentsExperienceLocalService() {
-
+	public com.liferay.segments.service.SegmentsExperienceLocalService getSegmentsExperienceLocalService() {
 		return segmentsExperienceLocalService;
 	}
 
@@ -205,9 +184,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param segmentsExperienceLocalService the segments experience local service
 	 */
 	public void setSegmentsExperienceLocalService(
-		com.liferay.segments.service.SegmentsExperienceLocalService
-			segmentsExperienceLocalService) {
-
+		com.liferay.segments.service.SegmentsExperienceLocalService segmentsExperienceLocalService) {
 		this.segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
@@ -227,7 +204,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setSegmentsExperienceService(
 		SegmentsExperienceService segmentsExperienceService) {
-
 		this.segmentsExperienceService = segmentsExperienceService;
 	}
 
@@ -247,7 +223,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setSegmentsExperiencePersistence(
 		SegmentsExperiencePersistence segmentsExperiencePersistence) {
-
 		this.segmentsExperiencePersistence = segmentsExperiencePersistence;
 	}
 
@@ -256,9 +231,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -268,9 +241,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -279,9 +250,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -291,9 +260,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -302,9 +269,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -315,7 +280,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -335,7 +299,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -344,9 +307,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
 		return groupLocalService;
 	}
 
@@ -357,7 +318,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -377,7 +337,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setGroupService(
 		com.liferay.portal.kernel.service.GroupService groupService) {
-
 		this.groupService = groupService;
 	}
 
@@ -404,9 +363,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -416,9 +373,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -427,9 +382,7 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -440,7 +393,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -460,7 +412,6 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -513,16 +464,15 @@ public abstract class SegmentsExperienceServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				segmentsExperiencePersistence.getDataSource();
+			DataSource dataSource = segmentsExperiencePersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -531,101 +481,44 @@ public abstract class SegmentsExperienceServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsEntryLocalService.class
-	)
-	protected com.liferay.segments.service.SegmentsEntryLocalService
-		segmentsEntryLocalService;
-
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsEntryService.class
-	)
-	protected com.liferay.segments.service.SegmentsEntryService
-		segmentsEntryService;
-
+	@BeanReference(type = com.liferay.segments.service.SegmentsEntryLocalService.class)
+	protected com.liferay.segments.service.SegmentsEntryLocalService segmentsEntryLocalService;
+	@BeanReference(type = com.liferay.segments.service.SegmentsEntryService.class)
+	protected com.liferay.segments.service.SegmentsEntryService segmentsEntryService;
 	@BeanReference(type = SegmentsEntryPersistence.class)
 	protected SegmentsEntryPersistence segmentsEntryPersistence;
-
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsEntryRelLocalService.class
-	)
-	protected com.liferay.segments.service.SegmentsEntryRelLocalService
-		segmentsEntryRelLocalService;
-
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsEntryRelService.class
-	)
-	protected com.liferay.segments.service.SegmentsEntryRelService
-		segmentsEntryRelService;
-
+	@BeanReference(type = com.liferay.segments.service.SegmentsEntryRelLocalService.class)
+	protected com.liferay.segments.service.SegmentsEntryRelLocalService segmentsEntryRelLocalService;
+	@BeanReference(type = com.liferay.segments.service.SegmentsEntryRelService.class)
+	protected com.liferay.segments.service.SegmentsEntryRelService segmentsEntryRelService;
 	@BeanReference(type = SegmentsEntryRelPersistence.class)
 	protected SegmentsEntryRelPersistence segmentsEntryRelPersistence;
-
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsExperienceLocalService.class
-	)
-	protected com.liferay.segments.service.SegmentsExperienceLocalService
-		segmentsExperienceLocalService;
-
+	@BeanReference(type = com.liferay.segments.service.SegmentsExperienceLocalService.class)
+	protected com.liferay.segments.service.SegmentsExperienceLocalService segmentsExperienceLocalService;
 	@BeanReference(type = SegmentsExperienceService.class)
 	protected SegmentsExperienceService segmentsExperienceService;
-
 	@BeanReference(type = SegmentsExperiencePersistence.class)
 	protected SegmentsExperiencePersistence segmentsExperiencePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupService.class)
 	protected com.liferay.portal.kernel.service.GroupService groupService;
-
 	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 }

@@ -34,7 +34,6 @@ import java.util.Date;
  */
 @ProviderType
 public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -168,5 +167,4 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
 	 * @param lastPostDate the last post date of this message boards stats user
 	 */
 	public void setLastPostDate(Date lastPostDate);
-
 }

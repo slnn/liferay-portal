@@ -26,20 +26,18 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class UADPartialEntryServiceWrapper
-	implements UADPartialEntryService, ServiceWrapper<UADPartialEntryService> {
-
+public class UADPartialEntryServiceWrapper implements UADPartialEntryService,
+	ServiceWrapper<UADPartialEntryService> {
 	public UADPartialEntryServiceWrapper(
 		UADPartialEntryService uadPartialEntryService) {
-
 		_uadPartialEntryService = uadPartialEntryService;
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _uadPartialEntryService.getOSGiServiceIdentifier();
@@ -51,12 +49,9 @@ public class UADPartialEntryServiceWrapper
 	}
 
 	@Override
-	public void setWrappedService(
-		UADPartialEntryService uadPartialEntryService) {
-
+	public void setWrappedService(UADPartialEntryService uadPartialEntryService) {
 		_uadPartialEntryService = uadPartialEntryService;
 	}
 
 	private UADPartialEntryService _uadPartialEntryService;
-
 }

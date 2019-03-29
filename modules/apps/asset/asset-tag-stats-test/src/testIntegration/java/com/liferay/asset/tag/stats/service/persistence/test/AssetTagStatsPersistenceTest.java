@@ -15,11 +15,13 @@
 package com.liferay.asset.tag.stats.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.asset.tag.stats.exception.NoSuchTagStatsException;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.AssetTagStatsLocalServiceUtil;
 import com.liferay.asset.tag.stats.service.persistence.AssetTagStatsPersistence;
 import com.liferay.asset.tag.stats.service.persistence.AssetTagStatsUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class AssetTagStatsPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.asset.tag.stats.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.asset.tag.stats.service"));
 
 	@Before
 	public void setUp() {
@@ -105,8 +106,7 @@ public class AssetTagStatsPersistenceTest {
 
 		_persistence.remove(newAssetTagStats);
 
-		AssetTagStats existingAssetTagStats = _persistence.fetchByPrimaryKey(
-			newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats = _persistence.fetchByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
 		Assert.assertNull(existingAssetTagStats);
 	}
@@ -132,22 +132,17 @@ public class AssetTagStatsPersistenceTest {
 
 		_assetTagStatses.add(_persistence.update(newAssetTagStats));
 
-		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(
-			newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAssetTagStats.getTagStatsId(),
+		Assert.assertEquals(existingAssetTagStats.getTagStatsId(),
 			newAssetTagStats.getTagStatsId());
-		Assert.assertEquals(
-			existingAssetTagStats.getCompanyId(),
+		Assert.assertEquals(existingAssetTagStats.getCompanyId(),
 			newAssetTagStats.getCompanyId());
-		Assert.assertEquals(
-			existingAssetTagStats.getTagId(), newAssetTagStats.getTagId());
-		Assert.assertEquals(
-			existingAssetTagStats.getClassNameId(),
+		Assert.assertEquals(existingAssetTagStats.getTagId(),
+			newAssetTagStats.getTagId());
+		Assert.assertEquals(existingAssetTagStats.getClassNameId(),
 			newAssetTagStats.getClassNameId());
-		Assert.assertEquals(
-			existingAssetTagStats.getAssetCount(),
+		Assert.assertEquals(existingAssetTagStats.getAssetCount(),
 			newAssetTagStats.getAssetCount());
 	}
 
@@ -167,8 +162,8 @@ public class AssetTagStatsPersistenceTest {
 
 	@Test
 	public void testCountByT_C() throws Exception {
-		_persistence.countByT_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByT_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByT_C(0L, 0L);
 	}
@@ -177,8 +172,7 @@ public class AssetTagStatsPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetTagStats newAssetTagStats = addAssetTagStats();
 
-		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(
-			newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
 		Assert.assertEquals(existingAssetTagStats, newAssetTagStats);
 	}
@@ -192,22 +186,21 @@ public class AssetTagStatsPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<AssetTagStats> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"AssetTagStats", "tagStatsId", true, "companyId", true, "tagId",
-			true, "classNameId", true, "assetCount", true);
+		return OrderByComparatorFactoryUtil.create("AssetTagStats",
+			"tagStatsId", true, "companyId", true, "tagId", true,
+			"classNameId", true, "assetCount", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AssetTagStats newAssetTagStats = addAssetTagStats();
 
-		AssetTagStats existingAssetTagStats = _persistence.fetchByPrimaryKey(
-			newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats = _persistence.fetchByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
 		Assert.assertEquals(existingAssetTagStats, newAssetTagStats);
 	}
@@ -224,7 +217,6 @@ public class AssetTagStatsPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		AssetTagStats newAssetTagStats1 = addAssetTagStats();
 		AssetTagStats newAssetTagStats2 = addAssetTagStats();
 
@@ -233,22 +225,18 @@ public class AssetTagStatsPersistenceTest {
 		primaryKeys.add(newAssetTagStats1.getPrimaryKey());
 		primaryKeys.add(newAssetTagStats2.getPrimaryKey());
 
-		Map<Serializable, AssetTagStats> assetTagStatses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetTagStats> assetTagStatses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, assetTagStatses.size());
-		Assert.assertEquals(
-			newAssetTagStats1,
+		Assert.assertEquals(newAssetTagStats1,
 			assetTagStatses.get(newAssetTagStats1.getPrimaryKey()));
-		Assert.assertEquals(
-			newAssetTagStats2,
+		Assert.assertEquals(newAssetTagStats2,
 			assetTagStatses.get(newAssetTagStats2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -258,8 +246,7 @@ public class AssetTagStatsPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, AssetTagStats> assetTagStatses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetTagStats> assetTagStatses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(assetTagStatses.isEmpty());
 	}
@@ -267,7 +254,6 @@ public class AssetTagStatsPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		AssetTagStats newAssetTagStats = addAssetTagStats();
 
 		long pk = RandomTestUtil.nextLong();
@@ -277,39 +263,36 @@ public class AssetTagStatsPersistenceTest {
 		primaryKeys.add(newAssetTagStats.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, AssetTagStats> assetTagStatses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetTagStats> assetTagStatses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, assetTagStatses.size());
-		Assert.assertEquals(
-			newAssetTagStats,
+		Assert.assertEquals(newAssetTagStats,
 			assetTagStatses.get(newAssetTagStats.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetTagStats> assetTagStatses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetTagStats> assetTagStatses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(assetTagStatses.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		AssetTagStats newAssetTagStats = addAssetTagStats();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newAssetTagStats.getPrimaryKey());
 
-		Map<Serializable, AssetTagStats> assetTagStatses =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AssetTagStats> assetTagStatses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, assetTagStatses.size());
-		Assert.assertEquals(
-			newAssetTagStats,
+		Assert.assertEquals(newAssetTagStats,
 			assetTagStatses.get(newAssetTagStats.getPrimaryKey()));
 	}
 
@@ -317,19 +300,15 @@ public class AssetTagStatsPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			AssetTagStatsLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = AssetTagStatsLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AssetTagStats>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetTagStats>() {
 				@Override
 				public void performAction(AssetTagStats assetTagStats) {
 					Assert.assertNotNull(assetTagStats);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -338,18 +317,17 @@ public class AssetTagStatsPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		AssetTagStats newAssetTagStats = addAssetTagStats();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetTagStats.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTagStats.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"tagStatsId", newAssetTagStats.getTagStatsId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagStatsId",
+				newAssetTagStats.getTagStatsId()));
 
-		List<AssetTagStats> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<AssetTagStats> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -360,34 +338,31 @@ public class AssetTagStatsPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetTagStats.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTagStats.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"tagStatsId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagStatsId",
+				RandomTestUtil.nextLong()));
 
-		List<AssetTagStats> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<AssetTagStats> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		AssetTagStats newAssetTagStats = addAssetTagStats();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetTagStats.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTagStats.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("tagStatsId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tagStatsId"));
 
 		Object newTagStatsId = newAssetTagStats.getTagStatsId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"tagStatsId", new Object[] {newTagStatsId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("tagStatsId",
+				new Object[] { newTagStatsId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -400,15 +375,13 @@ public class AssetTagStatsPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetTagStats.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTagStats.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("tagStatsId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tagStatsId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"tagStatsId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("tagStatsId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -421,18 +394,14 @@ public class AssetTagStatsPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(
-			newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingAssetTagStats.getTagId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetTagStats, "getOriginalTagId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingAssetTagStats.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetTagStats, "getOriginalClassNameId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetTagStats.getTagId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetTagStats,
+				"getOriginalTagId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetTagStats.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetTagStats,
+				"getOriginalClassNameId", new Class<?>[0]));
 	}
 
 	protected AssetTagStats addAssetTagStats() throws Exception {
@@ -453,9 +422,7 @@ public class AssetTagStatsPersistenceTest {
 		return assetTagStats;
 	}
 
-	private List<AssetTagStats> _assetTagStatses =
-		new ArrayList<AssetTagStats>();
+	private List<AssetTagStats> _assetTagStatses = new ArrayList<AssetTagStats>();
 	private AssetTagStatsPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

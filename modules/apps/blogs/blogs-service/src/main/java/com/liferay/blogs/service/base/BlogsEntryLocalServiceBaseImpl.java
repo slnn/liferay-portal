@@ -20,6 +20,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.persistence.BlogsEntryFinder;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
+
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -27,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -58,13 +60,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the blogs entry local service.
@@ -79,9 +81,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @ProviderType
 public abstract class BlogsEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements BlogsEntryLocalService, AopService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements BlogsEntryLocalService, AopService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,8 +144,8 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			BlogsEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -171,11 +172,10 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return blogsEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return blogsEntryPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -192,12 +192,10 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return blogsEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return blogsEntryPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -219,11 +217,10 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return blogsEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return blogsEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -239,9 +236,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	@Override
-	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-
+	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(String uuid, long groupId) {
 		return blogsEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -259,8 +254,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(blogsEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -272,14 +266,10 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			blogsEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(blogsEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BlogsEntry.class);
 
@@ -290,7 +280,6 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(blogsEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BlogsEntry.class);
@@ -301,59 +290,48 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
+							"modifiedDate");
 
 					if (modifiedDateCriterion != null) {
-						Conjunction conjunction =
-							RestrictionsFactoryUtil.conjunction();
+						Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
 
 						conjunction.add(modifiedDateCriterion);
 
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-						disjunction.add(
-							RestrictionsFactoryUtil.gtProperty(
+						disjunction.add(RestrictionsFactoryUtil.gtProperty(
 								"modifiedDate", "lastPublishDate"));
 
-						Property lastPublishDateProperty =
-							PropertyFactoryUtil.forName("lastPublishDate");
+						Property lastPublishDateProperty = PropertyFactoryUtil.forName(
+								"lastPublishDate");
 
 						disjunction.add(lastPublishDateProperty.isNull());
 
@@ -362,14 +340,12 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 						modifiedDateCriterion = conjunction;
 					}
 
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
+							"statusDate");
 
 					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+							(statusDateCriterion != null)) {
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 						disjunction.add(modifiedDateCriterion);
 						disjunction.add(statusDateCriterion);
@@ -377,49 +353,35 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 						dynamicQuery.add(disjunction);
 					}
 
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
+					Property workflowStatusProperty = PropertyFactoryUtil.forName(
+							"status");
 
 					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							workflowStatusProperty.ne(
+						dynamicQuery.add(workflowStatusProperty.ne(
 								WorkflowConstants.STATUS_IN_TRASH));
 					}
 					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									BlogsEntry.class.getName());
+						StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(BlogsEntry.class.getName());
 
-						dynamicQuery.add(
-							workflowStatusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
+						dynamicQuery.add(workflowStatusProperty.in(
+								stagedModelDataHandler.getExportableStatuses()));
 					}
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
 				@Override
 				public void performAction(BlogsEntry blogsEntry)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, blogsEntry);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						blogsEntry);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(BlogsEntry.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -431,15 +393,12 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return blogsEntryLocalService.deleteBlogsEntry(
-			(BlogsEntry)persistedModel);
+		return blogsEntryLocalService.deleteBlogsEntry((BlogsEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return blogsEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -451,9 +410,8 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @return the matching blogs entries, or an empty list if no matches were found
 	 */
 	@Override
-	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
-		String uuid, long companyId) {
-
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(String uuid,
+		long companyId) {
 		return blogsEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -468,12 +426,11 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @return the range of matching blogs entries, or an empty list if no matches were found
 	 */
 	@Override
-	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return blogsEntryPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return blogsEntryPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -487,7 +444,6 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	@Override
 	public BlogsEntry getBlogsEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
-
 		return blogsEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -574,8 +530,8 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -585,59 +541,32 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	protected BlogsEntryLocalService blogsEntryLocalService;
-
 	@Reference
 	protected BlogsEntryPersistence blogsEntryPersistence;
-
 	@Reference
 	protected BlogsEntryFinder blogsEntryFinder;
-
 	@Reference
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.CompanyLocalService
-		companyLocalService;
-
+	protected com.liferay.portal.kernel.service.CompanyLocalService companyLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.ImageLocalService
-		imageLocalService;
-
+	protected com.liferay.portal.kernel.service.ImageLocalService imageLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.OrganizationLocalService
-		organizationLocalService;
-
+	protected com.liferay.portal.kernel.service.OrganizationLocalService organizationLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@Reference
-	protected com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService
-		workflowInstanceLinkLocalService;
-
+	protected com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
 	@Reference
-	protected com.liferay.asset.kernel.service.AssetEntryLocalService
-		assetEntryLocalService;
-
+	protected com.liferay.asset.kernel.service.AssetEntryLocalService assetEntryLocalService;
 	@Reference
-	protected com.liferay.asset.kernel.service.AssetLinkLocalService
-		assetLinkLocalService;
-
+	protected com.liferay.asset.kernel.service.AssetLinkLocalService assetLinkLocalService;
 	@Reference
-	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
-		expandoRowLocalService;
-
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@Reference
-	protected com.liferay.ratings.kernel.service.RatingsStatsLocalService
-		ratingsStatsLocalService;
-
+	protected com.liferay.ratings.kernel.service.RatingsStatsLocalService ratingsStatsLocalService;
 }

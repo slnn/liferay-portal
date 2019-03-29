@@ -19,9 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionSoap;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,31 +72,35 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class DDMStructureVersionModelImpl
-	extends BaseModelImpl<DDMStructureVersion>
+public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVersion>
 	implements DDMStructureVersionModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm structure version model instance should use the <code>DDMStructureVersion</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructureVersion";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"structureVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"structureId", Types.BIGINT}, {"version", Types.VARCHAR},
-		{"parentStructureId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.CLOB}, {"definition", Types.CLOB},
-		{"storageType", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "structureVersionId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "structureId", Types.BIGINT },
+			{ "version", Types.VARCHAR },
+			{ "parentStructureId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.CLOB },
+			{ "definition", Types.CLOB },
+			{ "storageType", Types.VARCHAR },
+			{ "type_", Types.INTEGER },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
@@ -116,45 +123,25 @@ public class DDMStructureVersionModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table DDMStructureVersion";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY ddmStructureVersion.structureVersionId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY DDMStructureVersion.structureVersionId ASC";
-
+	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_DROP = "drop table DDMStructureVersion";
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureVersion.structureVersionId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMStructureVersion.structureVersionId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
+			true);
 	public static final long STATUS_COLUMN_BITMASK = 1L;
-
 	public static final long STRUCTUREID_COLUMN_BITMASK = 2L;
-
 	public static final long VERSION_COLUMN_BITMASK = 4L;
-
 	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -163,9 +150,7 @@ public class DDMStructureVersionModelImpl
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
 	 */
-	public static DDMStructureVersion toModel(
-		DDMStructureVersionSoap soapModel) {
-
+	public static DDMStructureVersion toModel(DDMStructureVersionSoap soapModel) {
 		if (soapModel == null) {
 			return null;
 		}
@@ -202,13 +187,11 @@ public class DDMStructureVersionModelImpl
 	 */
 	public static List<DDMStructureVersion> toModels(
 		DDMStructureVersionSoap[] soapModels) {
-
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<DDMStructureVersion> models = new ArrayList<DDMStructureVersion>(
-			soapModels.length);
+		List<DDMStructureVersion> models = new ArrayList<DDMStructureVersion>(soapModels.length);
 
 		for (DDMStructureVersionSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -217,9 +200,8 @@ public class DDMStructureVersionModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"));
 
 	public DDMStructureVersionModelImpl() {
 	}
@@ -258,18 +240,14 @@ public class DDMStructureVersionModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DDMStructureVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DDMStructureVersion, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureVersion, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureVersion, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((DDMStructureVersion)this));
 		}
 
@@ -281,157 +259,79 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DDMStructureVersion, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DDMStructureVersion, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DDMStructureVersion, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<DDMStructureVersion, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(DDMStructureVersion)this, entry.getValue());
+				attributeSetterBiConsumer.accept((DDMStructureVersion)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DDMStructureVersion, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<DDMStructureVersion, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DDMStructureVersion, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<DDMStructureVersion, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMStructureVersion, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMStructureVersion, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<DDMStructureVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMStructureVersion, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DDMStructureVersion, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<DDMStructureVersion, Object>>();
-		Map<String, BiConsumer<DDMStructureVersion, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<DDMStructureVersion, ?>>();
+		Map<String, Function<DDMStructureVersion, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMStructureVersion, Object>>();
+		Map<String, BiConsumer<DDMStructureVersion, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DDMStructureVersion, ?>>();
 
-		attributeGetterFunctions.put(
-			"structureVersionId", DDMStructureVersion::getStructureVersionId);
-		attributeSetterBiConsumers.put(
-			"structureVersionId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setStructureVersionId);
-		attributeGetterFunctions.put(
-			"groupId", DDMStructureVersion::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", DDMStructureVersion::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setCompanyId);
+
+		attributeGetterFunctions.put("structureVersionId", DDMStructureVersion::getStructureVersionId);
+		attributeSetterBiConsumers.put("structureVersionId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setStructureVersionId);
+		attributeGetterFunctions.put("groupId", DDMStructureVersion::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setGroupId);
+		attributeGetterFunctions.put("companyId", DDMStructureVersion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setCompanyId);
 		attributeGetterFunctions.put("userId", DDMStructureVersion::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setUserId);
-		attributeGetterFunctions.put(
-			"userName", DDMStructureVersion::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DDMStructureVersion::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DDMStructureVersion, Date>)
-				DDMStructureVersion::setCreateDate);
-		attributeGetterFunctions.put(
-			"structureId", DDMStructureVersion::getStructureId);
-		attributeSetterBiConsumers.put(
-			"structureId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setStructureId);
-		attributeGetterFunctions.put(
-			"version", DDMStructureVersion::getVersion);
-		attributeSetterBiConsumers.put(
-			"version",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setVersion);
-		attributeGetterFunctions.put(
-			"parentStructureId", DDMStructureVersion::getParentStructureId);
-		attributeSetterBiConsumers.put(
-			"parentStructureId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setParentStructureId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setUserId);
+		attributeGetterFunctions.put("userName", DDMStructureVersion::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setUserName);
+		attributeGetterFunctions.put("createDate", DDMStructureVersion::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDMStructureVersion, Date>)DDMStructureVersion::setCreateDate);
+		attributeGetterFunctions.put("structureId", DDMStructureVersion::getStructureId);
+		attributeSetterBiConsumers.put("structureId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setStructureId);
+		attributeGetterFunctions.put("version", DDMStructureVersion::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setVersion);
+		attributeGetterFunctions.put("parentStructureId", DDMStructureVersion::getParentStructureId);
+		attributeSetterBiConsumers.put("parentStructureId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setParentStructureId);
 		attributeGetterFunctions.put("name", DDMStructureVersion::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setName);
-		attributeGetterFunctions.put(
-			"description", DDMStructureVersion::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setDescription);
-		attributeGetterFunctions.put(
-			"definition", DDMStructureVersion::getDefinition);
-		attributeSetterBiConsumers.put(
-			"definition",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setDefinition);
-		attributeGetterFunctions.put(
-			"storageType", DDMStructureVersion::getStorageType);
-		attributeSetterBiConsumers.put(
-			"storageType",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setStorageType);
+		attributeSetterBiConsumers.put("name", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setName);
+		attributeGetterFunctions.put("description", DDMStructureVersion::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setDescription);
+		attributeGetterFunctions.put("definition", DDMStructureVersion::getDefinition);
+		attributeSetterBiConsumers.put("definition", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setDefinition);
+		attributeGetterFunctions.put("storageType", DDMStructureVersion::getStorageType);
+		attributeSetterBiConsumers.put("storageType", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setStorageType);
 		attributeGetterFunctions.put("type", DDMStructureVersion::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<DDMStructureVersion, Integer>)
-				DDMStructureVersion::setType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<DDMStructureVersion, Integer>)DDMStructureVersion::setType);
 		attributeGetterFunctions.put("status", DDMStructureVersion::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<DDMStructureVersion, Integer>)
-				DDMStructureVersion::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", DDMStructureVersion::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<DDMStructureVersion, Long>)
-				DDMStructureVersion::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", DDMStructureVersion::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<DDMStructureVersion, String>)
-				DDMStructureVersion::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", DDMStructureVersion::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<DDMStructureVersion, Date>)
-				DDMStructureVersion::setStatusDate);
+		attributeSetterBiConsumers.put("status", (BiConsumer<DDMStructureVersion, Integer>)DDMStructureVersion::setStatus);
+		attributeGetterFunctions.put("statusByUserId", DDMStructureVersion::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<DDMStructureVersion, Long>)DDMStructureVersion::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", DDMStructureVersion::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<DDMStructureVersion, String>)DDMStructureVersion::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", DDMStructureVersion::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<DDMStructureVersion, Date>)DDMStructureVersion::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -613,8 +513,8 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -651,14 +551,12 @@ public class DDMStructureVersionModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
 		}
 	}
 
@@ -678,9 +576,7 @@ public class DDMStructureVersionModelImpl
 			return;
 		}
 
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -716,8 +612,8 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -749,21 +645,18 @@ public class DDMStructureVersionModelImpl
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
-
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
+			setDescription(LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
+			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -779,16 +672,14 @@ public class DDMStructureVersionModelImpl
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -1006,9 +897,8 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), DDMStructureVersion.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DDMStructureVersion.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1044,8 +934,7 @@ public class DDMStructureVersionModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -1063,15 +952,12 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			DDMStructureVersion.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(DDMStructureVersion.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -1080,7 +966,6 @@ public class DDMStructureVersionModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -1097,21 +982,19 @@ public class DDMStructureVersionModelImpl
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(
-				getDescription(defaultLocale), defaultLocale, defaultLocale);
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 	}
 
 	@Override
 	public DDMStructureVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMStructureVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (DDMStructureVersion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1119,8 +1002,7 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public Object clone() {
-		DDMStructureVersionImpl ddmStructureVersionImpl =
-			new DDMStructureVersionImpl();
+		DDMStructureVersionImpl ddmStructureVersionImpl = new DDMStructureVersionImpl();
 
 		ddmStructureVersionImpl.setStructureVersionId(getStructureVersionId());
 		ddmStructureVersionImpl.setGroupId(getGroupId());
@@ -1202,16 +1084,13 @@ public class DDMStructureVersionModelImpl
 	public void resetOriginalValues() {
 		DDMStructureVersionModelImpl ddmStructureVersionModelImpl = this;
 
-		ddmStructureVersionModelImpl._originalStructureId =
-			ddmStructureVersionModelImpl._structureId;
+		ddmStructureVersionModelImpl._originalStructureId = ddmStructureVersionModelImpl._structureId;
 
 		ddmStructureVersionModelImpl._setOriginalStructureId = false;
 
-		ddmStructureVersionModelImpl._originalVersion =
-			ddmStructureVersionModelImpl._version;
+		ddmStructureVersionModelImpl._originalVersion = ddmStructureVersionModelImpl._version;
 
-		ddmStructureVersionModelImpl._originalStatus =
-			ddmStructureVersionModelImpl._status;
+		ddmStructureVersionModelImpl._originalStatus = ddmStructureVersionModelImpl._status;
 
 		ddmStructureVersionModelImpl._setOriginalStatus = false;
 
@@ -1222,11 +1101,9 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public CacheModel<DDMStructureVersion> toCacheModel() {
-		DDMStructureVersionCacheModel ddmStructureVersionCacheModel =
-			new DDMStructureVersionCacheModel();
+		DDMStructureVersionCacheModel ddmStructureVersionCacheModel = new DDMStructureVersionCacheModel();
 
-		ddmStructureVersionCacheModel.structureVersionId =
-			getStructureVersionId();
+		ddmStructureVersionCacheModel.structureVersionId = getStructureVersionId();
 
 		ddmStructureVersionCacheModel.groupId = getGroupId();
 
@@ -1261,8 +1138,7 @@ public class DDMStructureVersionModelImpl
 			ddmStructureVersionCacheModel.version = null;
 		}
 
-		ddmStructureVersionCacheModel.parentStructureId =
-			getParentStructureId();
+		ddmStructureVersionCacheModel.parentStructureId = getParentStructureId();
 
 		ddmStructureVersionCacheModel.name = getName();
 
@@ -1304,8 +1180,7 @@ public class DDMStructureVersionModelImpl
 
 		ddmStructureVersionCacheModel.statusByUserName = getStatusByUserName();
 
-		String statusByUserName =
-			ddmStructureVersionCacheModel.statusByUserName;
+		String statusByUserName = ddmStructureVersionCacheModel.statusByUserName;
 
 		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
 			ddmStructureVersionCacheModel.statusByUserName = null;
@@ -1327,20 +1202,17 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<DDMStructureVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DDMStructureVersion, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureVersion, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureVersion, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1359,22 +1231,19 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DDMStructureVersion, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureVersion, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DDMStructureVersion, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureVersion, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureVersion, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureVersion, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1388,12 +1257,10 @@ public class DDMStructureVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMStructureVersion.class.getClassLoader();
+	private static final ClassLoader _classLoader = DDMStructureVersion.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMStructureVersion.class, ModelWrapper.class
-	};
-
+			DDMStructureVersion.class, ModelWrapper.class
+		};
 	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -1421,5 +1288,4 @@ public class DDMStructureVersionModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private DDMStructureVersion _escapedModel;
-
 }

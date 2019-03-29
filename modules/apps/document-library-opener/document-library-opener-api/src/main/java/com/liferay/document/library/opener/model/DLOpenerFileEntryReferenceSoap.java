@@ -30,15 +30,11 @@ import java.util.List;
  */
 @ProviderType
 public class DLOpenerFileEntryReferenceSoap implements Serializable {
-
 	public static DLOpenerFileEntryReferenceSoap toSoapModel(
 		DLOpenerFileEntryReference model) {
+		DLOpenerFileEntryReferenceSoap soapModel = new DLOpenerFileEntryReferenceSoap();
 
-		DLOpenerFileEntryReferenceSoap soapModel =
-			new DLOpenerFileEntryReferenceSoap();
-
-		soapModel.setDlOpenerFileEntryReferenceId(
-			model.getDlOpenerFileEntryReferenceId());
+		soapModel.setDlOpenerFileEntryReferenceId(model.getDlOpenerFileEntryReferenceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -54,9 +50,7 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 
 	public static DLOpenerFileEntryReferenceSoap[] toSoapModels(
 		DLOpenerFileEntryReference[] models) {
-
-		DLOpenerFileEntryReferenceSoap[] soapModels =
-			new DLOpenerFileEntryReferenceSoap[models.length];
+		DLOpenerFileEntryReferenceSoap[] soapModels = new DLOpenerFileEntryReferenceSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -67,13 +61,10 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 
 	public static DLOpenerFileEntryReferenceSoap[][] toSoapModels(
 		DLOpenerFileEntryReference[][] models) {
-
 		DLOpenerFileEntryReferenceSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new DLOpenerFileEntryReferenceSoap
-					[models.length][models[0].length];
+			soapModels = new DLOpenerFileEntryReferenceSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new DLOpenerFileEntryReferenceSoap[0][0];
@@ -88,16 +79,13 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 
 	public static DLOpenerFileEntryReferenceSoap[] toSoapModels(
 		List<DLOpenerFileEntryReference> models) {
-
-		List<DLOpenerFileEntryReferenceSoap> soapModels =
-			new ArrayList<DLOpenerFileEntryReferenceSoap>(models.size());
+		List<DLOpenerFileEntryReferenceSoap> soapModels = new ArrayList<DLOpenerFileEntryReferenceSoap>(models.size());
 
 		for (DLOpenerFileEntryReference model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new DLOpenerFileEntryReferenceSoap[soapModels.size()]);
+		return soapModels.toArray(new DLOpenerFileEntryReferenceSoap[soapModels.size()]);
 	}
 
 	public DLOpenerFileEntryReferenceSoap() {
@@ -117,7 +105,6 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 
 	public void setDlOpenerFileEntryReferenceId(
 		long dlOpenerFileEntryReferenceId) {
-
 		_dlOpenerFileEntryReferenceId = dlOpenerFileEntryReferenceId;
 	}
 
@@ -203,5 +190,4 @@ public class DLOpenerFileEntryReferenceSoap implements Serializable {
 	private String _referenceKey;
 	private long _fileEntryId;
 	private int _type;
-
 }

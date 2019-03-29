@@ -34,7 +34,6 @@ import com.liferay.sync.service.SyncDLFileVersionDiffLocalServiceUtil;
 @ProviderType
 public abstract class SyncDLFileVersionDiffBaseImpl
 	extends SyncDLFileVersionDiffModelImpl implements SyncDLFileVersionDiff {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,13 +42,10 @@ public abstract class SyncDLFileVersionDiffBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			SyncDLFileVersionDiffLocalServiceUtil.addSyncDLFileVersionDiff(
-				this);
+			SyncDLFileVersionDiffLocalServiceUtil.addSyncDLFileVersionDiff(this);
 		}
 		else {
-			SyncDLFileVersionDiffLocalServiceUtil.updateSyncDLFileVersionDiff(
-				this);
+			SyncDLFileVersionDiffLocalServiceUtil.updateSyncDLFileVersionDiff(this);
 		}
 	}
-
 }

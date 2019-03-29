@@ -33,14 +33,11 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class OAuth2ApplicationScopeAliasesWrapper
-	extends BaseModelWrapper<OAuth2ApplicationScopeAliases>
+public class OAuth2ApplicationScopeAliasesWrapper extends BaseModelWrapper<OAuth2ApplicationScopeAliases>
 	implements OAuth2ApplicationScopeAliases,
-			   ModelWrapper<OAuth2ApplicationScopeAliases> {
-
+		ModelWrapper<OAuth2ApplicationScopeAliases> {
 	public OAuth2ApplicationScopeAliasesWrapper(
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
-
 		super(oAuth2ApplicationScopeAliases);
 	}
 
@@ -48,8 +45,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put(
-			"oAuth2ApplicationScopeAliasesId",
+		attributes.put("oAuth2ApplicationScopeAliasesId",
 			getOAuth2ApplicationScopeAliasesId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -65,7 +61,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long oAuth2ApplicationScopeAliasesId = (Long)attributes.get(
-			"oAuth2ApplicationScopeAliasesId");
+				"oAuth2ApplicationScopeAliasesId");
 
 		if (oAuth2ApplicationScopeAliasesId != null) {
 			setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
@@ -115,70 +111,70 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	/**
-	 * Returns the company ID of this o auth2 application scope aliases.
-	 *
-	 * @return the company ID of this o auth2 application scope aliases
-	 */
+	* Returns the company ID of this o auth2 application scope aliases.
+	*
+	* @return the company ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this o auth2 application scope aliases.
-	 *
-	 * @return the create date of this o auth2 application scope aliases
-	 */
+	* Returns the create date of this o auth2 application scope aliases.
+	*
+	* @return the create date of this o auth2 application scope aliases
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the o auth2 application ID of this o auth2 application scope aliases.
-	 *
-	 * @return the o auth2 application ID of this o auth2 application scope aliases
-	 */
+	* Returns the o auth2 application ID of this o auth2 application scope aliases.
+	*
+	* @return the o auth2 application ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public long getOAuth2ApplicationId() {
 		return model.getOAuth2ApplicationId();
 	}
 
 	/**
-	 * Returns the o auth2 application scope aliases ID of this o auth2 application scope aliases.
-	 *
-	 * @return the o auth2 application scope aliases ID of this o auth2 application scope aliases
-	 */
+	* Returns the o auth2 application scope aliases ID of this o auth2 application scope aliases.
+	*
+	* @return the o auth2 application scope aliases ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public long getOAuth2ApplicationScopeAliasesId() {
 		return model.getOAuth2ApplicationScopeAliasesId();
 	}
 
 	/**
-	 * Returns the primary key of this o auth2 application scope aliases.
-	 *
-	 * @return the primary key of this o auth2 application scope aliases
-	 */
+	* Returns the primary key of this o auth2 application scope aliases.
+	*
+	* @return the primary key of this o auth2 application scope aliases
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the scope aliases of this o auth2 application scope aliases.
-	 *
-	 * @return the scope aliases of this o auth2 application scope aliases
-	 */
+	* Returns the scope aliases of this o auth2 application scope aliases.
+	*
+	* @return the scope aliases of this o auth2 application scope aliases
+	*/
 	@Override
 	public String getScopeAliases() {
 		return model.getScopeAliases();
 	}
 
 	/**
-	 * Returns the scope aliases hash of this o auth2 application scope aliases.
-	 *
-	 * @return the scope aliases hash of this o auth2 application scope aliases
-	 */
+	* Returns the scope aliases hash of this o auth2 application scope aliases.
+	*
+	* @return the scope aliases hash of this o auth2 application scope aliases
+	*/
 	@Override
 	public long getScopeAliasesHash() {
 		return model.getScopeAliasesHash();
@@ -190,30 +186,30 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	/**
-	 * Returns the user ID of this o auth2 application scope aliases.
-	 *
-	 * @return the user ID of this o auth2 application scope aliases
-	 */
+	* Returns the user ID of this o auth2 application scope aliases.
+	*
+	* @return the user ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this o auth2 application scope aliases.
-	 *
-	 * @return the user name of this o auth2 application scope aliases
-	 */
+	* Returns the user name of this o auth2 application scope aliases.
+	*
+	* @return the user name of this o auth2 application scope aliases
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this o auth2 application scope aliases.
-	 *
-	 * @return the user uuid of this o auth2 application scope aliases
-	 */
+	* Returns the user uuid of this o auth2 application scope aliases.
+	*
+	* @return the user uuid of this o auth2 application scope aliases
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -225,73 +221,71 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	/**
-	 * Sets the company ID of this o auth2 application scope aliases.
-	 *
-	 * @param companyId the company ID of this o auth2 application scope aliases
-	 */
+	* Sets the company ID of this o auth2 application scope aliases.
+	*
+	* @param companyId the company ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this o auth2 application scope aliases.
-	 *
-	 * @param createDate the create date of this o auth2 application scope aliases
-	 */
+	* Sets the create date of this o auth2 application scope aliases.
+	*
+	* @param createDate the create date of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the o auth2 application ID of this o auth2 application scope aliases.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID of this o auth2 application scope aliases
-	 */
+	* Sets the o auth2 application ID of this o auth2 application scope aliases.
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setOAuth2ApplicationId(long oAuth2ApplicationId) {
 		model.setOAuth2ApplicationId(oAuth2ApplicationId);
 	}
 
 	/**
-	 * Sets the o auth2 application scope aliases ID of this o auth2 application scope aliases.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID of this o auth2 application scope aliases
-	 */
+	* Sets the o auth2 application scope aliases ID of this o auth2 application scope aliases.
+	*
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
-
-		model.setOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId);
+		model.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
-	 * Sets the primary key of this o auth2 application scope aliases.
-	 *
-	 * @param primaryKey the primary key of this o auth2 application scope aliases
-	 */
+	* Sets the primary key of this o auth2 application scope aliases.
+	*
+	* @param primaryKey the primary key of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the scope aliases of this o auth2 application scope aliases.
-	 *
-	 * @param scopeAliases the scope aliases of this o auth2 application scope aliases
-	 */
+	* Sets the scope aliases of this o auth2 application scope aliases.
+	*
+	* @param scopeAliases the scope aliases of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setScopeAliases(String scopeAliases) {
 		model.setScopeAliases(scopeAliases);
 	}
 
 	/**
-	 * Sets the scope aliases hash of this o auth2 application scope aliases.
-	 *
-	 * @param scopeAliasesHash the scope aliases hash of this o auth2 application scope aliases
-	 */
+	* Sets the scope aliases hash of this o auth2 application scope aliases.
+	*
+	* @param scopeAliasesHash the scope aliases hash of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setScopeAliasesHash(long scopeAliasesHash) {
 		model.setScopeAliasesHash(scopeAliasesHash);
@@ -303,30 +297,30 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	/**
-	 * Sets the user ID of this o auth2 application scope aliases.
-	 *
-	 * @param userId the user ID of this o auth2 application scope aliases
-	 */
+	* Sets the user ID of this o auth2 application scope aliases.
+	*
+	* @param userId the user ID of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this o auth2 application scope aliases.
-	 *
-	 * @param userName the user name of this o auth2 application scope aliases
-	 */
+	* Sets the user name of this o auth2 application scope aliases.
+	*
+	* @param userName the user name of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this o auth2 application scope aliases.
-	 *
-	 * @param userUuid the user uuid of this o auth2 application scope aliases
-	 */
+	* Sets the user uuid of this o auth2 application scope aliases.
+	*
+	* @param userUuid the user uuid of this o auth2 application scope aliases
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -335,9 +329,6 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	@Override
 	protected OAuth2ApplicationScopeAliasesWrapper wrap(
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
-
-		return new OAuth2ApplicationScopeAliasesWrapper(
-			oAuth2ApplicationScopeAliases);
+		return new OAuth2ApplicationScopeAliasesWrapper(oAuth2ApplicationScopeAliases);
 	}
-
 }

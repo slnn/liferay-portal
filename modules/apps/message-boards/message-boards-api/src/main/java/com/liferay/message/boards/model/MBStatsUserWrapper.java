@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class MBStatsUserWrapper
-	extends BaseModelWrapper<MBStatsUser>
+public class MBStatsUserWrapper extends BaseModelWrapper<MBStatsUser>
 	implements MBStatsUser, ModelWrapper<MBStatsUser> {
-
 	public MBStatsUserWrapper(MBStatsUser mbStatsUser) {
 		super(mbStatsUser);
 	}
@@ -95,90 +93,90 @@ public class MBStatsUserWrapper
 	}
 
 	/**
-	 * Returns the company ID of this message boards stats user.
-	 *
-	 * @return the company ID of this message boards stats user
-	 */
+	* Returns the company ID of this message boards stats user.
+	*
+	* @return the company ID of this message boards stats user
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the group ID of this message boards stats user.
-	 *
-	 * @return the group ID of this message boards stats user
-	 */
+	* Returns the group ID of this message boards stats user.
+	*
+	* @return the group ID of this message boards stats user
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last post date of this message boards stats user.
-	 *
-	 * @return the last post date of this message boards stats user
-	 */
+	* Returns the last post date of this message boards stats user.
+	*
+	* @return the last post date of this message boards stats user
+	*/
 	@Override
 	public Date getLastPostDate() {
 		return model.getLastPostDate();
 	}
 
 	/**
-	 * Returns the message count of this message boards stats user.
-	 *
-	 * @return the message count of this message boards stats user
-	 */
+	* Returns the message count of this message boards stats user.
+	*
+	* @return the message count of this message boards stats user
+	*/
 	@Override
 	public int getMessageCount() {
 		return model.getMessageCount();
 	}
 
 	/**
-	 * Returns the primary key of this message boards stats user.
-	 *
-	 * @return the primary key of this message boards stats user
-	 */
+	* Returns the primary key of this message boards stats user.
+	*
+	* @return the primary key of this message boards stats user
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the stats user ID of this message boards stats user.
-	 *
-	 * @return the stats user ID of this message boards stats user
-	 */
+	* Returns the stats user ID of this message boards stats user.
+	*
+	* @return the stats user ID of this message boards stats user
+	*/
 	@Override
 	public long getStatsUserId() {
 		return model.getStatsUserId();
 	}
 
 	/**
-	 * Returns the stats user uuid of this message boards stats user.
-	 *
-	 * @return the stats user uuid of this message boards stats user
-	 */
+	* Returns the stats user uuid of this message boards stats user.
+	*
+	* @return the stats user uuid of this message boards stats user
+	*/
 	@Override
 	public String getStatsUserUuid() {
 		return model.getStatsUserUuid();
 	}
 
 	/**
-	 * Returns the user ID of this message boards stats user.
-	 *
-	 * @return the user ID of this message boards stats user
-	 */
+	* Returns the user ID of this message boards stats user.
+	*
+	* @return the user ID of this message boards stats user
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user uuid of this message boards stats user.
-	 *
-	 * @return the user uuid of this message boards stats user
-	 */
+	* Returns the user uuid of this message boards stats user.
+	*
+	* @return the user uuid of this message boards stats user
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -190,90 +188,90 @@ public class MBStatsUserWrapper
 	}
 
 	/**
-	 * Sets the company ID of this message boards stats user.
-	 *
-	 * @param companyId the company ID of this message boards stats user
-	 */
+	* Sets the company ID of this message boards stats user.
+	*
+	* @param companyId the company ID of this message boards stats user
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the group ID of this message boards stats user.
-	 *
-	 * @param groupId the group ID of this message boards stats user
-	 */
+	* Sets the group ID of this message boards stats user.
+	*
+	* @param groupId the group ID of this message boards stats user
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last post date of this message boards stats user.
-	 *
-	 * @param lastPostDate the last post date of this message boards stats user
-	 */
+	* Sets the last post date of this message boards stats user.
+	*
+	* @param lastPostDate the last post date of this message boards stats user
+	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
-	 * Sets the message count of this message boards stats user.
-	 *
-	 * @param messageCount the message count of this message boards stats user
-	 */
+	* Sets the message count of this message boards stats user.
+	*
+	* @param messageCount the message count of this message boards stats user
+	*/
 	@Override
 	public void setMessageCount(int messageCount) {
 		model.setMessageCount(messageCount);
 	}
 
 	/**
-	 * Sets the primary key of this message boards stats user.
-	 *
-	 * @param primaryKey the primary key of this message boards stats user
-	 */
+	* Sets the primary key of this message boards stats user.
+	*
+	* @param primaryKey the primary key of this message boards stats user
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the stats user ID of this message boards stats user.
-	 *
-	 * @param statsUserId the stats user ID of this message boards stats user
-	 */
+	* Sets the stats user ID of this message boards stats user.
+	*
+	* @param statsUserId the stats user ID of this message boards stats user
+	*/
 	@Override
 	public void setStatsUserId(long statsUserId) {
 		model.setStatsUserId(statsUserId);
 	}
 
 	/**
-	 * Sets the stats user uuid of this message boards stats user.
-	 *
-	 * @param statsUserUuid the stats user uuid of this message boards stats user
-	 */
+	* Sets the stats user uuid of this message boards stats user.
+	*
+	* @param statsUserUuid the stats user uuid of this message boards stats user
+	*/
 	@Override
 	public void setStatsUserUuid(String statsUserUuid) {
 		model.setStatsUserUuid(statsUserUuid);
 	}
 
 	/**
-	 * Sets the user ID of this message boards stats user.
-	 *
-	 * @param userId the user ID of this message boards stats user
-	 */
+	* Sets the user ID of this message boards stats user.
+	*
+	* @param userId the user ID of this message boards stats user
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user uuid of this message boards stats user.
-	 *
-	 * @param userUuid the user uuid of this message boards stats user
-	 */
+	* Sets the user uuid of this message boards stats user.
+	*
+	* @param userUuid the user uuid of this message boards stats user
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -283,5 +281,4 @@ public class MBStatsUserWrapper
 	protected MBStatsUserWrapper wrap(MBStatsUser mbStatsUser) {
 		return new MBStatsUserWrapper(mbStatsUser);
 	}
-
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,24 +35,22 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class ScreensDDMStructureVersionServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensDDMStructureVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.json.JSONObject
-			getDDMStructureVersion(long structureId)
+	public static com.liferay.portal.kernel.json.JSONObject getDDMStructureVersion(
+		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getDDMStructureVersion(structureId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -60,26 +59,17 @@ public class ScreensDDMStructureVersionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<ScreensDDMStructureVersionService, ScreensDDMStructureVersionService>
-			_serviceTracker;
+	private static ServiceTracker<ScreensDDMStructureVersionService, ScreensDDMStructureVersionService> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ScreensDDMStructureVersionService.class);
+		Bundle bundle = FrameworkUtil.getBundle(ScreensDDMStructureVersionService.class);
 
-		ServiceTracker
-			<ScreensDDMStructureVersionService,
-			 ScreensDDMStructureVersionService> serviceTracker =
-				new ServiceTracker
-					<ScreensDDMStructureVersionService,
-					 ScreensDDMStructureVersionService>(
-						 bundle.getBundleContext(),
-						 ScreensDDMStructureVersionService.class, null);
+		ServiceTracker<ScreensDDMStructureVersionService, ScreensDDMStructureVersionService> serviceTracker =
+			new ServiceTracker<ScreensDDMStructureVersionService, ScreensDDMStructureVersionService>(bundle.getBundleContext(),
+				ScreensDDMStructureVersionService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

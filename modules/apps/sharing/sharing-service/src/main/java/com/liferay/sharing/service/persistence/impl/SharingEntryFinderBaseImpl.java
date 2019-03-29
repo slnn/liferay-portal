@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SharingEntryFinderBaseImpl
-	extends BasePersistenceImpl<SharingEntry> {
-
+public class SharingEntryFinderBaseImpl extends BasePersistenceImpl<SharingEntry> {
 	public SharingEntryFinderBaseImpl() {
 		setModelClass(SharingEntry.class);
 	}
@@ -55,14 +54,10 @@ public class SharingEntryFinderBaseImpl
 	 */
 	public void setSharingEntryPersistence(
 		SharingEntryPersistence sharingEntryPersistence) {
-
 		this.sharingEntryPersistence = sharingEntryPersistence;
 	}
 
 	@BeanReference(type = SharingEntryPersistence.class)
 	protected SharingEntryPersistence sharingEntryPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SharingEntryFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(SharingEntryFinderBaseImpl.class);
 }

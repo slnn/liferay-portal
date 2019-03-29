@@ -17,9 +17,11 @@ package com.liferay.bookmarks.uad.anonymizer;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseBookmarksFolderUADAnonymizer
 	extends DynamicQueryUADAnonymizer<BookmarksFolder> {
-
 	@Override
-	public void autoAnonymize(
-			BookmarksFolder bookmarksFolder, long userId, User anonymousUser)
-		throws PortalException {
-
+	public void autoAnonymize(BookmarksFolder bookmarksFolder, long userId,
+		User anonymousUser) throws PortalException {
 		if (bookmarksFolder.getUserId() == userId) {
 			bookmarksFolder.setUserId(anonymousUser.getUserId());
 			bookmarksFolder.setUserName(anonymousUser.getFullName());
@@ -58,7 +57,8 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 	}
 
 	@Override
-	public void delete(BookmarksFolder bookmarksFolder) throws PortalException {
+	public void delete(BookmarksFolder bookmarksFolder)
+		throws PortalException {
 		bookmarksFolderLocalService.deleteFolder(bookmarksFolder);
 	}
 
@@ -79,5 +79,4 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 
 	@Reference
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
-
 }

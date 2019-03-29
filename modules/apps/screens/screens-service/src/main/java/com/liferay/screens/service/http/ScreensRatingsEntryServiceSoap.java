@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
 
 import java.rmi.RemoteException;
@@ -52,15 +53,11 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensRatingsEntryServiceSoap {
-
-	public static String deleteRatingsEntry(
-			long classPK, String className, int ratingsLength)
-		throws RemoteException {
-
+	public static String deleteRatingsEntry(long classPK, String className,
+		int ratingsLength) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensRatingsEntryServiceUtil.deleteRatingsEntry(
-					classPK, className, ratingsLength);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.deleteRatingsEntry(classPK,
+					className, ratingsLength);
 
 			return returnValue.toString();
 		}
@@ -73,11 +70,9 @@ public class ScreensRatingsEntryServiceSoap {
 
 	public static String getRatingsEntries(long assetEntryId, int ratingsLength)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensRatingsEntryServiceUtil.getRatingsEntries(
-					assetEntryId, ratingsLength);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(assetEntryId,
+					ratingsLength);
 
 			return returnValue.toString();
 		}
@@ -88,14 +83,11 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static String getRatingsEntries(
-			long classPK, String className, int ratingsLength)
-		throws RemoteException {
-
+	public static String getRatingsEntries(long classPK, String className,
+		int ratingsLength) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensRatingsEntryServiceUtil.getRatingsEntries(
-					classPK, className, ratingsLength);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(classPK,
+					className, ratingsLength);
 
 			return returnValue.toString();
 		}
@@ -106,14 +98,11 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static String updateRatingsEntry(
-			long classPK, String className, double score, int ratingsLength)
-		throws RemoteException {
-
+	public static String updateRatingsEntry(long classPK, String className,
+		double score, int ratingsLength) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensRatingsEntryServiceUtil.updateRatingsEntry(
-					classPK, className, score, ratingsLength);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.updateRatingsEntry(classPK,
+					className, score, ratingsLength);
 
 			return returnValue.toString();
 		}
@@ -124,7 +113,5 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ScreensRatingsEntryServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(ScreensRatingsEntryServiceSoap.class);
 }

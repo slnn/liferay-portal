@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageModel;
 import com.liferay.message.boards.model.MBMessageSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,34 +73,43 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class MBMessageModelImpl
-	extends BaseModelImpl<MBMessage> implements MBMessageModel {
-
+public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
+	implements MBMessageModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message-boards message model instance should use the <code>MBMessage</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MBMessage";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"messageId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"categoryId", Types.BIGINT}, {"threadId", Types.BIGINT},
-		{"rootMessageId", Types.BIGINT}, {"parentMessageId", Types.BIGINT},
-		{"subject", Types.VARCHAR}, {"body", Types.CLOB},
-		{"format", Types.VARCHAR}, {"anonymous", Types.BOOLEAN},
-		{"priority", Types.DOUBLE}, {"allowPingbacks", Types.BOOLEAN},
-		{"answer", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "messageId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "categoryId", Types.BIGINT },
+			{ "threadId", Types.BIGINT },
+			{ "rootMessageId", Types.BIGINT },
+			{ "parentMessageId", Types.BIGINT },
+			{ "subject", Types.VARCHAR },
+			{ "body", Types.CLOB },
+			{ "format", Types.VARCHAR },
+			{ "anonymous", Types.BOOLEAN },
+			{ "priority", Types.DOUBLE },
+			{ "allowPingbacks", Types.BOOLEAN },
+			{ "answer", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -127,62 +140,34 @@ public class MBMessageModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY mbMessage.createDate ASC, mbMessage.messageId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MBMessage.createDate ASC, MBMessage.messageId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY mbMessage.createDate ASC, mbMessage.messageId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBMessage.createDate ASC, MBMessage.messageId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBMessage"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBMessage"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBMessage"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBMessage"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBMessage"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBMessage"),
+			true);
 	public static final long ANSWER_COLUMN_BITMASK = 1L;
-
 	public static final long CATEGORYID_COLUMN_BITMASK = 2L;
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 4L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 8L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 16L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
-
 	public static final long PARENTMESSAGEID_COLUMN_BITMASK = 64L;
-
 	public static final long STATUS_COLUMN_BITMASK = 128L;
-
 	public static final long THREADID_COLUMN_BITMASK = 256L;
-
 	public static final long USERID_COLUMN_BITMASK = 512L;
-
 	public static final long UUID_COLUMN_BITMASK = 1024L;
-
 	public static final long CREATEDATE_COLUMN_BITMASK = 2048L;
-
 	public static final long MESSAGEID_COLUMN_BITMASK = 4096L;
 
 	/**
@@ -248,9 +233,8 @@ public class MBMessageModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.message.boards.model.MBMessage"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBMessage"));
 
 	public MBMessageModelImpl() {
 	}
@@ -289,18 +273,14 @@ public class MBMessageModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MBMessage, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBMessage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MBMessage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBMessage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBMessage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBMessage, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((MBMessage)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MBMessage)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -311,147 +291,92 @@ public class MBMessageModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MBMessage, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MBMessage, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MBMessage, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MBMessage, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MBMessage)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MBMessage)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MBMessage, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MBMessage, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MBMessage, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MBMessage, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBMessage, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBMessage, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MBMessage, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBMessage, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MBMessage, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MBMessage, Object>>();
-		Map<String, BiConsumer<MBMessage, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MBMessage, ?>>();
+		Map<String, Function<MBMessage, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBMessage, Object>>();
+		Map<String, BiConsumer<MBMessage, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBMessage, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", MBMessage::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<MBMessage, String>)MBMessage::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBMessage, String>)MBMessage::setUuid);
 		attributeGetterFunctions.put("messageId", MBMessage::getMessageId);
-		attributeSetterBiConsumers.put(
-			"messageId", (BiConsumer<MBMessage, Long>)MBMessage::setMessageId);
+		attributeSetterBiConsumers.put("messageId", (BiConsumer<MBMessage, Long>)MBMessage::setMessageId);
 		attributeGetterFunctions.put("groupId", MBMessage::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<MBMessage, Long>)MBMessage::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBMessage, Long>)MBMessage::setGroupId);
 		attributeGetterFunctions.put("companyId", MBMessage::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<MBMessage, Long>)MBMessage::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBMessage, Long>)MBMessage::setCompanyId);
 		attributeGetterFunctions.put("userId", MBMessage::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<MBMessage, Long>)MBMessage::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBMessage, Long>)MBMessage::setUserId);
 		attributeGetterFunctions.put("userName", MBMessage::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<MBMessage, String>)MBMessage::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBMessage, String>)MBMessage::setUserName);
 		attributeGetterFunctions.put("createDate", MBMessage::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MBMessage, Date>)MBMessage::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MBMessage::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MBMessage, Date>)MBMessage::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBMessage, Date>)MBMessage::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBMessage::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBMessage, Date>)MBMessage::setModifiedDate);
 		attributeGetterFunctions.put("classNameId", MBMessage::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<MBMessage, Long>)MBMessage::setClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<MBMessage, Long>)MBMessage::setClassNameId);
 		attributeGetterFunctions.put("classPK", MBMessage::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<MBMessage, Long>)MBMessage::setClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<MBMessage, Long>)MBMessage::setClassPK);
 		attributeGetterFunctions.put("categoryId", MBMessage::getCategoryId);
-		attributeSetterBiConsumers.put(
-			"categoryId",
-			(BiConsumer<MBMessage, Long>)MBMessage::setCategoryId);
+		attributeSetterBiConsumers.put("categoryId", (BiConsumer<MBMessage, Long>)MBMessage::setCategoryId);
 		attributeGetterFunctions.put("threadId", MBMessage::getThreadId);
-		attributeSetterBiConsumers.put(
-			"threadId", (BiConsumer<MBMessage, Long>)MBMessage::setThreadId);
-		attributeGetterFunctions.put(
-			"rootMessageId", MBMessage::getRootMessageId);
-		attributeSetterBiConsumers.put(
-			"rootMessageId",
-			(BiConsumer<MBMessage, Long>)MBMessage::setRootMessageId);
-		attributeGetterFunctions.put(
-			"parentMessageId", MBMessage::getParentMessageId);
-		attributeSetterBiConsumers.put(
-			"parentMessageId",
-			(BiConsumer<MBMessage, Long>)MBMessage::setParentMessageId);
+		attributeSetterBiConsumers.put("threadId", (BiConsumer<MBMessage, Long>)MBMessage::setThreadId);
+		attributeGetterFunctions.put("rootMessageId", MBMessage::getRootMessageId);
+		attributeSetterBiConsumers.put("rootMessageId", (BiConsumer<MBMessage, Long>)MBMessage::setRootMessageId);
+		attributeGetterFunctions.put("parentMessageId", MBMessage::getParentMessageId);
+		attributeSetterBiConsumers.put("parentMessageId", (BiConsumer<MBMessage, Long>)MBMessage::setParentMessageId);
 		attributeGetterFunctions.put("subject", MBMessage::getSubject);
-		attributeSetterBiConsumers.put(
-			"subject", (BiConsumer<MBMessage, String>)MBMessage::setSubject);
+		attributeSetterBiConsumers.put("subject", (BiConsumer<MBMessage, String>)MBMessage::setSubject);
 		attributeGetterFunctions.put("body", MBMessage::getBody);
-		attributeSetterBiConsumers.put(
-			"body", (BiConsumer<MBMessage, String>)MBMessage::setBody);
+		attributeSetterBiConsumers.put("body", (BiConsumer<MBMessage, String>)MBMessage::setBody);
 		attributeGetterFunctions.put("format", MBMessage::getFormat);
-		attributeSetterBiConsumers.put(
-			"format", (BiConsumer<MBMessage, String>)MBMessage::setFormat);
+		attributeSetterBiConsumers.put("format", (BiConsumer<MBMessage, String>)MBMessage::setFormat);
 		attributeGetterFunctions.put("anonymous", MBMessage::getAnonymous);
-		attributeSetterBiConsumers.put(
-			"anonymous",
-			(BiConsumer<MBMessage, Boolean>)MBMessage::setAnonymous);
+		attributeSetterBiConsumers.put("anonymous", (BiConsumer<MBMessage, Boolean>)MBMessage::setAnonymous);
 		attributeGetterFunctions.put("priority", MBMessage::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority", (BiConsumer<MBMessage, Double>)MBMessage::setPriority);
-		attributeGetterFunctions.put(
-			"allowPingbacks", MBMessage::getAllowPingbacks);
-		attributeSetterBiConsumers.put(
-			"allowPingbacks",
-			(BiConsumer<MBMessage, Boolean>)MBMessage::setAllowPingbacks);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<MBMessage, Double>)MBMessage::setPriority);
+		attributeGetterFunctions.put("allowPingbacks", MBMessage::getAllowPingbacks);
+		attributeSetterBiConsumers.put("allowPingbacks", (BiConsumer<MBMessage, Boolean>)MBMessage::setAllowPingbacks);
 		attributeGetterFunctions.put("answer", MBMessage::getAnswer);
-		attributeSetterBiConsumers.put(
-			"answer", (BiConsumer<MBMessage, Boolean>)MBMessage::setAnswer);
-		attributeGetterFunctions.put(
-			"lastPublishDate", MBMessage::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<MBMessage, Date>)MBMessage::setLastPublishDate);
+		attributeSetterBiConsumers.put("answer", (BiConsumer<MBMessage, Boolean>)MBMessage::setAnswer);
+		attributeGetterFunctions.put("lastPublishDate", MBMessage::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MBMessage, Date>)MBMessage::setLastPublishDate);
 		attributeGetterFunctions.put("status", MBMessage::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<MBMessage, Integer>)MBMessage::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", MBMessage::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<MBMessage, Long>)MBMessage::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", MBMessage::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<MBMessage, String>)MBMessage::setStatusByUserName);
+		attributeSetterBiConsumers.put("status", (BiConsumer<MBMessage, Integer>)MBMessage::setStatus);
+		attributeGetterFunctions.put("statusByUserId", MBMessage::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<MBMessage, Long>)MBMessage::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", MBMessage::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<MBMessage, String>)MBMessage::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", MBMessage::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<MBMessage, Date>)MBMessage::setStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<MBMessage, Date>)MBMessage::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -982,33 +907,28 @@ public class MBMessageModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(MBMessage.class.getName()),
-			getClassNameId());
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MBMessage.class.getName()), getClassNameId());
 	}
 
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
-
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -1025,18 +945,14 @@ public class MBMessageModelImpl
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
+				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -1049,13 +965,12 @@ public class MBMessageModelImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -1070,19 +985,16 @@ public class MBMessageModelImpl
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -1104,9 +1016,8 @@ public class MBMessageModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -1121,9 +1032,8 @@ public class MBMessageModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -1218,8 +1128,8 @@ public class MBMessageModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MBMessage.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBMessage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1232,9 +1142,8 @@ public class MBMessageModelImpl
 	@Override
 	public MBMessage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBMessage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MBMessage)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1360,8 +1269,7 @@ public class MBMessageModelImpl
 
 		mbMessageModelImpl._setModifiedDate = false;
 
-		mbMessageModelImpl._originalClassNameId =
-			mbMessageModelImpl._classNameId;
+		mbMessageModelImpl._originalClassNameId = mbMessageModelImpl._classNameId;
 
 		mbMessageModelImpl._setOriginalClassNameId = false;
 
@@ -1377,8 +1285,7 @@ public class MBMessageModelImpl
 
 		mbMessageModelImpl._setOriginalThreadId = false;
 
-		mbMessageModelImpl._originalParentMessageId =
-			mbMessageModelImpl._parentMessageId;
+		mbMessageModelImpl._originalParentMessageId = mbMessageModelImpl._parentMessageId;
 
 		mbMessageModelImpl._setOriginalParentMessageId = false;
 
@@ -1518,20 +1425,16 @@ public class MBMessageModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MBMessage, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBMessage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MBMessage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBMessage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBMessage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBMessage, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1550,22 +1453,18 @@ public class MBMessageModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MBMessage, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBMessage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MBMessage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBMessage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBMessage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBMessage, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1579,12 +1478,10 @@ public class MBMessageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBMessage.class.getClassLoader();
+	private static final ClassLoader _classLoader = MBMessage.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBMessage.class, ModelWrapper.class
-	};
-
+			MBMessage.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _messageId;
@@ -1635,5 +1532,4 @@ public class MBMessageModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private MBMessage _escapedModel;
-
 }

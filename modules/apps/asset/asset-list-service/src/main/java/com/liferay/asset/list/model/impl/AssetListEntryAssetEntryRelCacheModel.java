@@ -17,8 +17,10 @@ package com.liferay.asset.list.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AssetListEntryAssetEntryRelCacheModel
-	implements CacheModel<AssetListEntryAssetEntryRel>, Externalizable {
-
+public class AssetListEntryAssetEntryRelCacheModel implements CacheModel<AssetListEntryAssetEntryRel>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,14 +49,10 @@ public class AssetListEntryAssetEntryRelCacheModel
 			return false;
 		}
 
-		AssetListEntryAssetEntryRelCacheModel
-			assetListEntryAssetEntryRelCacheModel =
-				(AssetListEntryAssetEntryRelCacheModel)obj;
+		AssetListEntryAssetEntryRelCacheModel assetListEntryAssetEntryRelCacheModel =
+			(AssetListEntryAssetEntryRelCacheModel)obj;
 
-		if (assetListEntryAssetEntryRelId ==
-				assetListEntryAssetEntryRelCacheModel.
-					assetListEntryAssetEntryRelId) {
-
+		if (assetListEntryAssetEntryRelId == assetListEntryAssetEntryRelCacheModel.assetListEntryAssetEntryRelId) {
 			return true;
 		}
 
@@ -102,8 +99,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 	@Override
 	public AssetListEntryAssetEntryRel toEntityModel() {
-		AssetListEntryAssetEntryRelImpl assetListEntryAssetEntryRelImpl =
-			new AssetListEntryAssetEntryRelImpl();
+		AssetListEntryAssetEntryRelImpl assetListEntryAssetEntryRelImpl = new AssetListEntryAssetEntryRelImpl();
 
 		if (uuid == null) {
 			assetListEntryAssetEntryRelImpl.setUuid("");
@@ -112,8 +108,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 			assetListEntryAssetEntryRelImpl.setUuid(uuid);
 		}
 
-		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(
-			assetListEntryAssetEntryRelId);
+		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
 		assetListEntryAssetEntryRelImpl.setGroupId(groupId);
 		assetListEntryAssetEntryRelImpl.setCompanyId(companyId);
 		assetListEntryAssetEntryRelImpl.setUserId(userId);
@@ -136,8 +131,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 			assetListEntryAssetEntryRelImpl.setModifiedDate(null);
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setModifiedDate(
-				new Date(modifiedDate));
+			assetListEntryAssetEntryRelImpl.setModifiedDate(new Date(
+					modifiedDate));
 		}
 
 		assetListEntryAssetEntryRelImpl.setAssetListEntryId(assetListEntryId);
@@ -148,8 +143,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 			assetListEntryAssetEntryRelImpl.setLastPublishDate(null);
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setLastPublishDate(
-				new Date(lastPublishDate));
+			assetListEntryAssetEntryRelImpl.setLastPublishDate(new Date(
+					lastPublishDate));
 		}
 
 		assetListEntryAssetEntryRelImpl.resetOriginalValues();
@@ -181,7 +176,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -227,5 +223,4 @@ public class AssetListEntryAssetEntryRelCacheModel
 	public long assetEntryId;
 	public int position;
 	public long lastPublishDate;
-
 }

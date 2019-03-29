@@ -39,10 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBCategoryModel
-	extends BaseModel<MBCategory>, ContainerModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
+	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -557,5 +555,4 @@ public interface MBCategoryModel
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
-
 }

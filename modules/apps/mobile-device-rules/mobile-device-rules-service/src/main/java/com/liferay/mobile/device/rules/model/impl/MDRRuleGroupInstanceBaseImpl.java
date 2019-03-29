@@ -34,7 +34,6 @@ import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceU
 @ProviderType
 public abstract class MDRRuleGroupInstanceBaseImpl
 	extends MDRRuleGroupInstanceModelImpl implements MDRRuleGroupInstance {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -46,9 +45,7 @@ public abstract class MDRRuleGroupInstanceBaseImpl
 			MDRRuleGroupInstanceLocalServiceUtil.addMDRRuleGroupInstance(this);
 		}
 		else {
-			MDRRuleGroupInstanceLocalServiceUtil.updateMDRRuleGroupInstance(
-				this);
+			MDRRuleGroupInstanceLocalServiceUtil.updateMDRRuleGroupInstance(this);
 		}
 	}
-
 }

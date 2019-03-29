@@ -22,63 +22,46 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface MBCategoryFinder {
+	public int countC_ByG_P(long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int countC_ByG_P(
+	public int countC_ByS_G_U_P(long groupId, long userId,
+		long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
+
+	public int countC_T_ByG_C(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+
+	public int filterCountC_ByG_P(long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+
+	public int filterCountC_ByS_G_U_P(long groupId, long userId,
+		long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
+
+	public int filterCountC_T_ByG_C(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+
+	public java.util.List<com.liferay.message.boards.model.MBCategory> filterFindC_ByG_P(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
 
-	public int countC_ByS_G_U_P(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> filterFindC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.message.boards.model.MBCategory> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
 
-	public int countC_T_ByG_C(
-		long groupId, long categoryId,
+	public java.util.List<Object> filterFindC_T_ByG_C(long groupId,
+		long categoryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int filterCountC_ByG_P(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> findC_ByG_P(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
 
-	public int filterCountC_ByS_G_U_P(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> findC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.message.boards.model.MBCategory> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
 
-	public int filterCountC_T_ByG_C(
-		long groupId, long categoryId,
+	public java.util.List<Object> findC_T_ByG_C(long groupId, long categoryId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
-
-	public java.util.List<com.liferay.message.boards.model.MBCategory>
-		filterFindC_ByG_P(
-			long groupId, long parentCategoryId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.message.boards.model.MBCategory> queryDefinition);
-
-	public java.util.List<com.liferay.message.boards.model.MBCategory>
-		filterFindC_ByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.message.boards.model.MBCategory> queryDefinition);
-
-	public java.util.List<Object> filterFindC_T_ByG_C(
-		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
-
-	public java.util.List<com.liferay.message.boards.model.MBCategory>
-		findC_ByG_P(
-			long groupId, long parentCategoryId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.message.boards.model.MBCategory> queryDefinition);
-
-	public java.util.List<com.liferay.message.boards.model.MBCategory>
-		findC_ByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.message.boards.model.MBCategory> queryDefinition);
-
-	public java.util.List<Object> findC_T_ByG_C(
-		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
-
 }

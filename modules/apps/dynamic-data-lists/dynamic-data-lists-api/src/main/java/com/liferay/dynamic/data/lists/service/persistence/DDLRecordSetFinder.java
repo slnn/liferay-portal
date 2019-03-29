@@ -22,70 +22,47 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface DDLRecordSetFinder {
+	public int countByKeywords(long companyId, long groupId, String keywords,
+		int scope);
 
-	public int countByKeywords(
-		long companyId, long groupId, String keywords, int scope);
+	public int countByG_D(long groupId, long ddmStructureId, boolean andOperator);
 
-	public int countByG_D(
-		long groupId, long ddmStructureId, boolean andOperator);
+	public int countByC_G_N_D_S(long companyId, long groupId, String name,
+		String description, int scope, boolean andOperator);
 
-	public int countByC_G_N_D_S(
+	public int filterCountByKeywords(long companyId, long groupId,
+		String keywords, int scope);
+
+	public int filterCountByC_G_N_D_S(long companyId, long groupId,
+		String name, String description, int scope, boolean andOperator);
+
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> filterFindByKeywords(
+		long companyId, long groupId, String keywords, int scope, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> filterFindByC_G_N_D_S(
 		long companyId, long groupId, String name, String description,
-		int scope, boolean andOperator);
+		int scope, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
 
-	public int filterCountByKeywords(
-		long companyId, long groupId, String keywords, int scope);
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> filterFindByC_G_N_D_S(
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int scope, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
 
-	public int filterCountByC_G_N_D_S(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> findByKeywords(
+		long companyId, long groupId, String keywords, int scope, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> findByC_G_N_D_S(
 		long companyId, long groupId, String name, String description,
-		int scope, boolean andOperator);
+		int scope, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-		filterFindByKeywords(
-			long companyId, long groupId, String keywords, int scope, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-					orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-		filterFindByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-					orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-		filterFindByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-					orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-		findByKeywords(
-			long companyId, long groupId, String keywords, int scope, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-					orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-		findByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-					orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-		findByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.lists.model.DDLRecordSet>
-					orderByComparator);
-
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> findByC_G_N_D_S(
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int scope, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
 }

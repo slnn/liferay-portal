@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class CTEntryWrapper
-	extends BaseModelWrapper<CTEntry>
-	implements CTEntry, ModelWrapper<CTEntry> {
-
+public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry,
+	ModelWrapper<CTEntry> {
 	public CTEntryWrapper(CTEntry ctEntry) {
 		super(ctEntry);
 	}
@@ -130,60 +128,60 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Returns the change type of this ct entry.
-	 *
-	 * @return the change type of this ct entry
-	 */
+	* Returns the change type of this ct entry.
+	*
+	* @return the change type of this ct entry
+	*/
 	@Override
 	public int getChangeType() {
 		return model.getChangeType();
 	}
 
 	/**
-	 * Returns the fully qualified class name of this ct entry.
-	 *
-	 * @return the fully qualified class name of this ct entry
-	 */
+	* Returns the fully qualified class name of this ct entry.
+	*
+	* @return the fully qualified class name of this ct entry
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this ct entry.
-	 *
-	 * @return the class name ID of this ct entry
-	 */
+	* Returns the class name ID of this ct entry.
+	*
+	* @return the class name ID of this ct entry
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this ct entry.
-	 *
-	 * @return the class pk of this ct entry
-	 */
+	* Returns the class pk of this ct entry.
+	*
+	* @return the class pk of this ct entry
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this ct entry.
-	 *
-	 * @return the company ID of this ct entry
-	 */
+	* Returns the company ID of this ct entry.
+	*
+	* @return the company ID of this ct entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this ct entry.
-	 *
-	 * @return the create date of this ct entry
-	 */
+	* Returns the create date of this ct entry.
+	*
+	* @return the create date of this ct entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
@@ -195,80 +193,80 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Returns the ct entry ID of this ct entry.
-	 *
-	 * @return the ct entry ID of this ct entry
-	 */
+	* Returns the ct entry ID of this ct entry.
+	*
+	* @return the ct entry ID of this ct entry
+	*/
 	@Override
 	public long getCtEntryId() {
 		return model.getCtEntryId();
 	}
 
 	/**
-	 * Returns the modified date of this ct entry.
-	 *
-	 * @return the modified date of this ct entry
-	 */
+	* Returns the modified date of this ct entry.
+	*
+	* @return the modified date of this ct entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this ct entry.
-	 *
-	 * @return the primary key of this ct entry
-	 */
+	* Returns the primary key of this ct entry.
+	*
+	* @return the primary key of this ct entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the resource prim key of this ct entry.
-	 *
-	 * @return the resource prim key of this ct entry
-	 */
+	* Returns the resource prim key of this ct entry.
+	*
+	* @return the resource prim key of this ct entry
+	*/
 	@Override
 	public long getResourcePrimKey() {
 		return model.getResourcePrimKey();
 	}
 
 	/**
-	 * Returns the status of this ct entry.
-	 *
-	 * @return the status of this ct entry
-	 */
+	* Returns the status of this ct entry.
+	*
+	* @return the status of this ct entry
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the user ID of this ct entry.
-	 *
-	 * @return the user ID of this ct entry
-	 */
+	* Returns the user ID of this ct entry.
+	*
+	* @return the user ID of this ct entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this ct entry.
-	 *
-	 * @return the user name of this ct entry
-	 */
+	* Returns the user name of this ct entry.
+	*
+	* @return the user name of this ct entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this ct entry.
-	 *
-	 * @return the user uuid of this ct entry
-	 */
+	* Returns the user uuid of this ct entry.
+	*
+	* @return the user uuid of this ct entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -290,10 +288,10 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Sets the change type of this ct entry.
-	 *
-	 * @param changeType the change type of this ct entry
-	 */
+	* Sets the change type of this ct entry.
+	*
+	* @param changeType the change type of this ct entry
+	*/
 	@Override
 	public void setChangeType(int changeType) {
 		model.setChangeType(changeType);
@@ -305,120 +303,120 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this ct entry.
-	 *
-	 * @param classNameId the class name ID of this ct entry
-	 */
+	* Sets the class name ID of this ct entry.
+	*
+	* @param classNameId the class name ID of this ct entry
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this ct entry.
-	 *
-	 * @param classPK the class pk of this ct entry
-	 */
+	* Sets the class pk of this ct entry.
+	*
+	* @param classPK the class pk of this ct entry
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this ct entry.
-	 *
-	 * @param companyId the company ID of this ct entry
-	 */
+	* Sets the company ID of this ct entry.
+	*
+	* @param companyId the company ID of this ct entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this ct entry.
-	 *
-	 * @param createDate the create date of this ct entry
-	 */
+	* Sets the create date of this ct entry.
+	*
+	* @param createDate the create date of this ct entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the ct entry ID of this ct entry.
-	 *
-	 * @param ctEntryId the ct entry ID of this ct entry
-	 */
+	* Sets the ct entry ID of this ct entry.
+	*
+	* @param ctEntryId the ct entry ID of this ct entry
+	*/
 	@Override
 	public void setCtEntryId(long ctEntryId) {
 		model.setCtEntryId(ctEntryId);
 	}
 
 	/**
-	 * Sets the modified date of this ct entry.
-	 *
-	 * @param modifiedDate the modified date of this ct entry
-	 */
+	* Sets the modified date of this ct entry.
+	*
+	* @param modifiedDate the modified date of this ct entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this ct entry.
-	 *
-	 * @param primaryKey the primary key of this ct entry
-	 */
+	* Sets the primary key of this ct entry.
+	*
+	* @param primaryKey the primary key of this ct entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the resource prim key of this ct entry.
-	 *
-	 * @param resourcePrimKey the resource prim key of this ct entry
-	 */
+	* Sets the resource prim key of this ct entry.
+	*
+	* @param resourcePrimKey the resource prim key of this ct entry
+	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
 		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
-	 * Sets the status of this ct entry.
-	 *
-	 * @param status the status of this ct entry
-	 */
+	* Sets the status of this ct entry.
+	*
+	* @param status the status of this ct entry
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the user ID of this ct entry.
-	 *
-	 * @param userId the user ID of this ct entry
-	 */
+	* Sets the user ID of this ct entry.
+	*
+	* @param userId the user ID of this ct entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this ct entry.
-	 *
-	 * @param userName the user name of this ct entry
-	 */
+	* Sets the user name of this ct entry.
+	*
+	* @param userName the user name of this ct entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this ct entry.
-	 *
-	 * @param userUuid the user uuid of this ct entry
-	 */
+	* Sets the user uuid of this ct entry.
+	*
+	* @param userUuid the user uuid of this ct entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -428,5 +426,4 @@ public class CTEntryWrapper
 	protected CTEntryWrapper wrap(CTEntry ctEntry) {
 		return new CTEntryWrapper(ctEntry);
 	}
-
 }

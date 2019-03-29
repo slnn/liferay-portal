@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,33 +58,34 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class KaleoInstanceTokenModelImpl
-	extends BaseModelImpl<KaleoInstanceToken>
+public class KaleoInstanceTokenModelImpl extends BaseModelImpl<KaleoInstanceToken>
 	implements KaleoInstanceTokenModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo instance token model instance should use the <code>KaleoInstanceToken</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "KaleoInstanceToken";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"kaleoInstanceTokenId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"kaleoDefinitionVersionId", Types.BIGINT},
-		{"kaleoInstanceId", Types.BIGINT},
-		{"parentKaleoInstanceTokenId", Types.BIGINT},
-		{"currentKaleoNodeId", Types.BIGINT},
-		{"currentKaleoNodeName", Types.VARCHAR}, {"className", Types.VARCHAR},
-		{"classPK", Types.BIGINT}, {"completed", Types.BOOLEAN},
-		{"completionDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "mvccVersion", Types.BIGINT },
+			{ "kaleoInstanceTokenId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "kaleoDefinitionVersionId", Types.BIGINT },
+			{ "kaleoInstanceId", Types.BIGINT },
+			{ "parentKaleoInstanceTokenId", Types.BIGINT },
+			{ "currentKaleoNodeId", Types.BIGINT },
+			{ "currentKaleoNodeName", Types.VARCHAR },
+			{ "className", Types.VARCHAR },
+			{ "classPK", Types.BIGINT },
+			{ "completed", Types.BOOLEAN },
+			{ "completionDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -104,53 +107,30 @@ public class KaleoInstanceTokenModelImpl
 		TABLE_COLUMNS_MAP.put("completionDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table KaleoInstanceToken (mvccVersion LONG default 0 not null,kaleoInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,parentKaleoInstanceTokenId LONG,currentKaleoNodeId LONG,currentKaleoNodeName VARCHAR(200) null,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table KaleoInstanceToken (mvccVersion LONG default 0 not null,kaleoInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,parentKaleoInstanceTokenId LONG,currentKaleoNodeId LONG,currentKaleoNodeName VARCHAR(200) null,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoInstanceToken";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY kaleoInstanceToken.kaleoInstanceTokenId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY KaleoInstanceToken.kaleoInstanceTokenId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY kaleoInstanceToken.kaleoInstanceTokenId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY KaleoInstanceToken.kaleoInstanceTokenId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long COMPLETIONDATE_COLUMN_BITMASK = 2L;
-
 	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 4L;
-
 	public static final long KALEOINSTANCEID_COLUMN_BITMASK = 8L;
-
 	public static final long PARENTKALEOINSTANCETOKENID_COLUMN_BITMASK = 16L;
-
 	public static final long KALEOINSTANCETOKENID_COLUMN_BITMASK = 32L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.kaleo.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken"));
 
 	public KaleoInstanceTokenModelImpl() {
 	}
@@ -189,18 +169,14 @@ public class KaleoInstanceTokenModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<KaleoInstanceToken, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<KaleoInstanceToken, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<KaleoInstanceToken, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KaleoInstanceToken, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KaleoInstanceToken, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KaleoInstanceToken, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((KaleoInstanceToken)this));
 		}
 
@@ -212,156 +188,77 @@ public class KaleoInstanceTokenModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<KaleoInstanceToken, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<KaleoInstanceToken, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<KaleoInstanceToken, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<KaleoInstanceToken, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(KaleoInstanceToken)this, entry.getValue());
+				attributeSetterBiConsumer.accept((KaleoInstanceToken)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<KaleoInstanceToken, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<KaleoInstanceToken, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<KaleoInstanceToken, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<KaleoInstanceToken, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<KaleoInstanceToken, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<KaleoInstanceToken, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<KaleoInstanceToken, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KaleoInstanceToken, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<KaleoInstanceToken, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<KaleoInstanceToken, Object>>();
-		Map<String, BiConsumer<KaleoInstanceToken, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<KaleoInstanceToken, ?>>();
+		Map<String, Function<KaleoInstanceToken, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<KaleoInstanceToken, Object>>();
+		Map<String, BiConsumer<KaleoInstanceToken, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<KaleoInstanceToken, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", KaleoInstanceToken::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setMvccVersion);
-		attributeGetterFunctions.put(
-			"kaleoInstanceTokenId",
-			KaleoInstanceToken::getKaleoInstanceTokenId);
-		attributeSetterBiConsumers.put(
-			"kaleoInstanceTokenId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setKaleoInstanceTokenId);
+
+		attributeGetterFunctions.put("mvccVersion", KaleoInstanceToken::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setMvccVersion);
+		attributeGetterFunctions.put("kaleoInstanceTokenId", KaleoInstanceToken::getKaleoInstanceTokenId);
+		attributeSetterBiConsumers.put("kaleoInstanceTokenId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setKaleoInstanceTokenId);
 		attributeGetterFunctions.put("groupId", KaleoInstanceToken::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", KaleoInstanceToken::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setCompanyId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setGroupId);
+		attributeGetterFunctions.put("companyId", KaleoInstanceToken::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setCompanyId);
 		attributeGetterFunctions.put("userId", KaleoInstanceToken::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setUserId);
-		attributeGetterFunctions.put(
-			"userName", KaleoInstanceToken::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<KaleoInstanceToken, String>)
-				KaleoInstanceToken::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", KaleoInstanceToken::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<KaleoInstanceToken, Date>)
-				KaleoInstanceToken::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", KaleoInstanceToken::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<KaleoInstanceToken, Date>)
-				KaleoInstanceToken::setModifiedDate);
-		attributeGetterFunctions.put(
-			"kaleoDefinitionVersionId",
-			KaleoInstanceToken::getKaleoDefinitionVersionId);
-		attributeSetterBiConsumers.put(
-			"kaleoDefinitionVersionId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setKaleoDefinitionVersionId);
-		attributeGetterFunctions.put(
-			"kaleoInstanceId", KaleoInstanceToken::getKaleoInstanceId);
-		attributeSetterBiConsumers.put(
-			"kaleoInstanceId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setKaleoInstanceId);
-		attributeGetterFunctions.put(
-			"parentKaleoInstanceTokenId",
-			KaleoInstanceToken::getParentKaleoInstanceTokenId);
-		attributeSetterBiConsumers.put(
-			"parentKaleoInstanceTokenId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setParentKaleoInstanceTokenId);
-		attributeGetterFunctions.put(
-			"currentKaleoNodeId", KaleoInstanceToken::getCurrentKaleoNodeId);
-		attributeSetterBiConsumers.put(
-			"currentKaleoNodeId",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setCurrentKaleoNodeId);
-		attributeGetterFunctions.put(
-			"currentKaleoNodeName",
-			KaleoInstanceToken::getCurrentKaleoNodeName);
-		attributeSetterBiConsumers.put(
-			"currentKaleoNodeName",
-			(BiConsumer<KaleoInstanceToken, String>)
-				KaleoInstanceToken::setCurrentKaleoNodeName);
-		attributeGetterFunctions.put(
-			"className", KaleoInstanceToken::getClassName);
-		attributeSetterBiConsumers.put(
-			"className",
-			(BiConsumer<KaleoInstanceToken, String>)
-				KaleoInstanceToken::setClassName);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setUserId);
+		attributeGetterFunctions.put("userName", KaleoInstanceToken::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KaleoInstanceToken, String>)KaleoInstanceToken::setUserName);
+		attributeGetterFunctions.put("createDate", KaleoInstanceToken::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KaleoInstanceToken, Date>)KaleoInstanceToken::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KaleoInstanceToken::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KaleoInstanceToken, Date>)KaleoInstanceToken::setModifiedDate);
+		attributeGetterFunctions.put("kaleoDefinitionVersionId", KaleoInstanceToken::getKaleoDefinitionVersionId);
+		attributeSetterBiConsumers.put("kaleoDefinitionVersionId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setKaleoDefinitionVersionId);
+		attributeGetterFunctions.put("kaleoInstanceId", KaleoInstanceToken::getKaleoInstanceId);
+		attributeSetterBiConsumers.put("kaleoInstanceId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setKaleoInstanceId);
+		attributeGetterFunctions.put("parentKaleoInstanceTokenId", KaleoInstanceToken::getParentKaleoInstanceTokenId);
+		attributeSetterBiConsumers.put("parentKaleoInstanceTokenId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setParentKaleoInstanceTokenId);
+		attributeGetterFunctions.put("currentKaleoNodeId", KaleoInstanceToken::getCurrentKaleoNodeId);
+		attributeSetterBiConsumers.put("currentKaleoNodeId", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setCurrentKaleoNodeId);
+		attributeGetterFunctions.put("currentKaleoNodeName", KaleoInstanceToken::getCurrentKaleoNodeName);
+		attributeSetterBiConsumers.put("currentKaleoNodeName", (BiConsumer<KaleoInstanceToken, String>)KaleoInstanceToken::setCurrentKaleoNodeName);
+		attributeGetterFunctions.put("className", KaleoInstanceToken::getClassName);
+		attributeSetterBiConsumers.put("className", (BiConsumer<KaleoInstanceToken, String>)KaleoInstanceToken::setClassName);
 		attributeGetterFunctions.put("classPK", KaleoInstanceToken::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<KaleoInstanceToken, Long>)
-				KaleoInstanceToken::setClassPK);
-		attributeGetterFunctions.put(
-			"completed", KaleoInstanceToken::getCompleted);
-		attributeSetterBiConsumers.put(
-			"completed",
-			(BiConsumer<KaleoInstanceToken, Boolean>)
-				KaleoInstanceToken::setCompleted);
-		attributeGetterFunctions.put(
-			"completionDate", KaleoInstanceToken::getCompletionDate);
-		attributeSetterBiConsumers.put(
-			"completionDate",
-			(BiConsumer<KaleoInstanceToken, Date>)
-				KaleoInstanceToken::setCompletionDate);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<KaleoInstanceToken, Long>)KaleoInstanceToken::setClassPK);
+		attributeGetterFunctions.put("completed", KaleoInstanceToken::getCompleted);
+		attributeSetterBiConsumers.put("completed", (BiConsumer<KaleoInstanceToken, Boolean>)KaleoInstanceToken::setCompleted);
+		attributeGetterFunctions.put("completionDate", KaleoInstanceToken::getCompletionDate);
+		attributeSetterBiConsumers.put("completionDate", (BiConsumer<KaleoInstanceToken, Date>)KaleoInstanceToken::setCompletionDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -642,9 +539,8 @@ public class KaleoInstanceTokenModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), KaleoInstanceToken.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			KaleoInstanceToken.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -657,9 +553,8 @@ public class KaleoInstanceTokenModelImpl
 	@Override
 	public KaleoInstanceToken toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoInstanceToken)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (KaleoInstanceToken)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -667,26 +562,21 @@ public class KaleoInstanceTokenModelImpl
 
 	@Override
 	public Object clone() {
-		KaleoInstanceTokenImpl kaleoInstanceTokenImpl =
-			new KaleoInstanceTokenImpl();
+		KaleoInstanceTokenImpl kaleoInstanceTokenImpl = new KaleoInstanceTokenImpl();
 
 		kaleoInstanceTokenImpl.setMvccVersion(getMvccVersion());
-		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(
-			getKaleoInstanceTokenId());
+		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(getKaleoInstanceTokenId());
 		kaleoInstanceTokenImpl.setGroupId(getGroupId());
 		kaleoInstanceTokenImpl.setCompanyId(getCompanyId());
 		kaleoInstanceTokenImpl.setUserId(getUserId());
 		kaleoInstanceTokenImpl.setUserName(getUserName());
 		kaleoInstanceTokenImpl.setCreateDate(getCreateDate());
 		kaleoInstanceTokenImpl.setModifiedDate(getModifiedDate());
-		kaleoInstanceTokenImpl.setKaleoDefinitionVersionId(
-			getKaleoDefinitionVersionId());
+		kaleoInstanceTokenImpl.setKaleoDefinitionVersionId(getKaleoDefinitionVersionId());
 		kaleoInstanceTokenImpl.setKaleoInstanceId(getKaleoInstanceId());
-		kaleoInstanceTokenImpl.setParentKaleoInstanceTokenId(
-			getParentKaleoInstanceTokenId());
+		kaleoInstanceTokenImpl.setParentKaleoInstanceTokenId(getParentKaleoInstanceTokenId());
 		kaleoInstanceTokenImpl.setCurrentKaleoNodeId(getCurrentKaleoNodeId());
-		kaleoInstanceTokenImpl.setCurrentKaleoNodeName(
-			getCurrentKaleoNodeName());
+		kaleoInstanceTokenImpl.setCurrentKaleoNodeName(getCurrentKaleoNodeName());
 		kaleoInstanceTokenImpl.setClassName(getClassName());
 		kaleoInstanceTokenImpl.setClassPK(getClassPK());
 		kaleoInstanceTokenImpl.setCompleted(isCompleted());
@@ -701,14 +591,10 @@ public class KaleoInstanceTokenModelImpl
 	public int compareTo(KaleoInstanceToken kaleoInstanceToken) {
 		int value = 0;
 
-		if (getKaleoInstanceTokenId() <
-				kaleoInstanceToken.getKaleoInstanceTokenId()) {
-
+		if (getKaleoInstanceTokenId() < kaleoInstanceToken.getKaleoInstanceTokenId()) {
 			value = -1;
 		}
-		else if (getKaleoInstanceTokenId() >
-					kaleoInstanceToken.getKaleoInstanceTokenId()) {
-
+		else if (getKaleoInstanceTokenId() > kaleoInstanceToken.getKaleoInstanceTokenId()) {
 			value = 1;
 		}
 		else {
@@ -763,45 +649,36 @@ public class KaleoInstanceTokenModelImpl
 	public void resetOriginalValues() {
 		KaleoInstanceTokenModelImpl kaleoInstanceTokenModelImpl = this;
 
-		kaleoInstanceTokenModelImpl._originalCompanyId =
-			kaleoInstanceTokenModelImpl._companyId;
+		kaleoInstanceTokenModelImpl._originalCompanyId = kaleoInstanceTokenModelImpl._companyId;
 
 		kaleoInstanceTokenModelImpl._setOriginalCompanyId = false;
 
 		kaleoInstanceTokenModelImpl._setModifiedDate = false;
 
-		kaleoInstanceTokenModelImpl._originalKaleoDefinitionVersionId =
-			kaleoInstanceTokenModelImpl._kaleoDefinitionVersionId;
+		kaleoInstanceTokenModelImpl._originalKaleoDefinitionVersionId = kaleoInstanceTokenModelImpl._kaleoDefinitionVersionId;
 
-		kaleoInstanceTokenModelImpl._setOriginalKaleoDefinitionVersionId =
-			false;
+		kaleoInstanceTokenModelImpl._setOriginalKaleoDefinitionVersionId = false;
 
-		kaleoInstanceTokenModelImpl._originalKaleoInstanceId =
-			kaleoInstanceTokenModelImpl._kaleoInstanceId;
+		kaleoInstanceTokenModelImpl._originalKaleoInstanceId = kaleoInstanceTokenModelImpl._kaleoInstanceId;
 
 		kaleoInstanceTokenModelImpl._setOriginalKaleoInstanceId = false;
 
-		kaleoInstanceTokenModelImpl._originalParentKaleoInstanceTokenId =
-			kaleoInstanceTokenModelImpl._parentKaleoInstanceTokenId;
+		kaleoInstanceTokenModelImpl._originalParentKaleoInstanceTokenId = kaleoInstanceTokenModelImpl._parentKaleoInstanceTokenId;
 
-		kaleoInstanceTokenModelImpl._setOriginalParentKaleoInstanceTokenId =
-			false;
+		kaleoInstanceTokenModelImpl._setOriginalParentKaleoInstanceTokenId = false;
 
-		kaleoInstanceTokenModelImpl._originalCompletionDate =
-			kaleoInstanceTokenModelImpl._completionDate;
+		kaleoInstanceTokenModelImpl._originalCompletionDate = kaleoInstanceTokenModelImpl._completionDate;
 
 		kaleoInstanceTokenModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<KaleoInstanceToken> toCacheModel() {
-		KaleoInstanceTokenCacheModel kaleoInstanceTokenCacheModel =
-			new KaleoInstanceTokenCacheModel();
+		KaleoInstanceTokenCacheModel kaleoInstanceTokenCacheModel = new KaleoInstanceTokenCacheModel();
 
 		kaleoInstanceTokenCacheModel.mvccVersion = getMvccVersion();
 
-		kaleoInstanceTokenCacheModel.kaleoInstanceTokenId =
-			getKaleoInstanceTokenId();
+		kaleoInstanceTokenCacheModel.kaleoInstanceTokenId = getKaleoInstanceTokenId();
 
 		kaleoInstanceTokenCacheModel.groupId = getGroupId();
 
@@ -835,26 +712,20 @@ public class KaleoInstanceTokenModelImpl
 			kaleoInstanceTokenCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		kaleoInstanceTokenCacheModel.kaleoDefinitionVersionId =
-			getKaleoDefinitionVersionId();
+		kaleoInstanceTokenCacheModel.kaleoDefinitionVersionId = getKaleoDefinitionVersionId();
 
 		kaleoInstanceTokenCacheModel.kaleoInstanceId = getKaleoInstanceId();
 
-		kaleoInstanceTokenCacheModel.parentKaleoInstanceTokenId =
-			getParentKaleoInstanceTokenId();
+		kaleoInstanceTokenCacheModel.parentKaleoInstanceTokenId = getParentKaleoInstanceTokenId();
 
-		kaleoInstanceTokenCacheModel.currentKaleoNodeId =
-			getCurrentKaleoNodeId();
+		kaleoInstanceTokenCacheModel.currentKaleoNodeId = getCurrentKaleoNodeId();
 
-		kaleoInstanceTokenCacheModel.currentKaleoNodeName =
-			getCurrentKaleoNodeName();
+		kaleoInstanceTokenCacheModel.currentKaleoNodeName = getCurrentKaleoNodeName();
 
-		String currentKaleoNodeName =
-			kaleoInstanceTokenCacheModel.currentKaleoNodeName;
+		String currentKaleoNodeName = kaleoInstanceTokenCacheModel.currentKaleoNodeName;
 
 		if ((currentKaleoNodeName != null) &&
-			(currentKaleoNodeName.length() == 0)) {
-
+				(currentKaleoNodeName.length() == 0)) {
 			kaleoInstanceTokenCacheModel.currentKaleoNodeName = null;
 		}
 
@@ -873,8 +744,7 @@ public class KaleoInstanceTokenModelImpl
 		Date completionDate = getCompletionDate();
 
 		if (completionDate != null) {
-			kaleoInstanceTokenCacheModel.completionDate =
-				completionDate.getTime();
+			kaleoInstanceTokenCacheModel.completionDate = completionDate.getTime();
 		}
 		else {
 			kaleoInstanceTokenCacheModel.completionDate = Long.MIN_VALUE;
@@ -885,20 +755,17 @@ public class KaleoInstanceTokenModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<KaleoInstanceToken, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<KaleoInstanceToken, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<KaleoInstanceToken, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KaleoInstanceToken, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KaleoInstanceToken, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KaleoInstanceToken, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -917,22 +784,19 @@ public class KaleoInstanceTokenModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<KaleoInstanceToken, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<KaleoInstanceToken, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<KaleoInstanceToken, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KaleoInstanceToken, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KaleoInstanceToken, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KaleoInstanceToken, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -946,12 +810,10 @@ public class KaleoInstanceTokenModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoInstanceToken.class.getClassLoader();
+	private static final ClassLoader _classLoader = KaleoInstanceToken.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoInstanceToken.class, ModelWrapper.class
-	};
-
+			KaleoInstanceToken.class, ModelWrapper.class
+		};
 	private long _mvccVersion;
 	private long _kaleoInstanceTokenId;
 	private long _groupId;
@@ -981,5 +843,4 @@ public class KaleoInstanceTokenModelImpl
 	private Date _originalCompletionDate;
 	private long _columnBitmask;
 	private KaleoInstanceToken _escapedModel;
-
 }

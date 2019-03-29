@@ -36,9 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoLogModel
-	extends BaseModel<KaleoLog>, GroupedModel, MVCCModel, ShardedModel {
-
+public interface KaleoLogModel extends BaseModel<KaleoLog>, GroupedModel,
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -540,5 +539,4 @@ public interface KaleoLogModel
 	 * @param workflowContext the workflow context of this kaleo log
 	 */
 	public void setWorkflowContext(String workflowContext);
-
 }

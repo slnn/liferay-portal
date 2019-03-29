@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MemberRequestModel
-	extends BaseModel<MemberRequest>, GroupedModel, ShardedModel {
-
+public interface MemberRequestModel extends BaseModel<MemberRequest>,
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -269,5 +268,4 @@ public interface MemberRequestModel
 	 * @param status the status of this member request
 	 */
 	public void setStatus(int status);
-
 }

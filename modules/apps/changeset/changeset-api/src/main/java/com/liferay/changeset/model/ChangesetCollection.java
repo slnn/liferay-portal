@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see ChangesetCollectionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.changeset.model.impl.ChangesetCollectionImpl"
-)
+@ImplementationClassName("com.liferay.changeset.model.impl.ChangesetCollectionImpl")
 @ProviderType
-public interface ChangesetCollection
-	extends ChangesetCollectionModel, PersistedModel {
-
+public interface ChangesetCollection extends ChangesetCollectionModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.changeset.model.impl.ChangesetCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ChangesetCollection, Long>
-		CHANGESET_COLLECTION_ID_ACCESSOR =
-			new Accessor<ChangesetCollection, Long>() {
+	public static final Accessor<ChangesetCollection, Long> CHANGESET_COLLECTION_ID_ACCESSOR =
+		new Accessor<ChangesetCollection, Long>() {
+			@Override
+			public Long get(ChangesetCollection changesetCollection) {
+				return changesetCollection.getChangesetCollectionId();
+			}
 
-				@Override
-				public Long get(ChangesetCollection changesetCollection) {
-					return changesetCollection.getChangesetCollectionId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<ChangesetCollection> getTypeClass() {
-					return ChangesetCollection.class;
-				}
-
-			};
-
+			@Override
+			public Class<ChangesetCollection> getTypeClass() {
+				return ChangesetCollection.class;
+			}
+		};
 }

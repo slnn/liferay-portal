@@ -27,20 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see UADPartialEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl")
 @ProviderType
 public interface UADPartialEntry extends UADPartialEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<UADPartialEntry, Long>
-		UAD_PARTIAL_ENTRY_ID_ACCESSOR = new Accessor<UADPartialEntry, Long>() {
-
+	public static final Accessor<UADPartialEntry, Long> UAD_PARTIAL_ENTRY_ID_ACCESSOR =
+		new Accessor<UADPartialEntry, Long>() {
 			@Override
 			public Long get(UADPartialEntry uadPartialEntry) {
 				return uadPartialEntry.getUadPartialEntryId();
@@ -55,7 +51,5 @@ public interface UADPartialEntry extends UADPartialEntryModel, PersistedModel {
 			public Class<UADPartialEntry> getTypeClass() {
 				return UADPartialEntry.class;
 			}
-
 		};
-
 }

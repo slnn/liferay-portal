@@ -15,11 +15,13 @@
 package com.liferay.change.tracking.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.change.tracking.exception.NoSuchCollectionException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTCollectionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class CTCollectionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.change.tracking.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.change.tracking.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class CTCollectionPersistenceTest {
 
 		_persistence.remove(newCTCollection);
 
-		CTCollection existingCTCollection = _persistence.fetchByPrimaryKey(
-			newCTCollection.getPrimaryKey());
+		CTCollection existingCTCollection = _persistence.fetchByPrimaryKey(newCTCollection.getPrimaryKey());
 
 		Assert.assertNull(existingCTCollection);
 	}
@@ -148,40 +148,34 @@ public class CTCollectionPersistenceTest {
 
 		_ctCollections.add(_persistence.update(newCTCollection));
 
-		CTCollection existingCTCollection = _persistence.findByPrimaryKey(
-			newCTCollection.getPrimaryKey());
+		CTCollection existingCTCollection = _persistence.findByPrimaryKey(newCTCollection.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCTCollection.getCtCollectionId(),
+		Assert.assertEquals(existingCTCollection.getCtCollectionId(),
 			newCTCollection.getCtCollectionId());
-		Assert.assertEquals(
-			existingCTCollection.getCompanyId(),
+		Assert.assertEquals(existingCTCollection.getCompanyId(),
 			newCTCollection.getCompanyId());
-		Assert.assertEquals(
-			existingCTCollection.getUserId(), newCTCollection.getUserId());
-		Assert.assertEquals(
-			existingCTCollection.getUserName(), newCTCollection.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCTCollection.getCreateDate()),
+		Assert.assertEquals(existingCTCollection.getUserId(),
+			newCTCollection.getUserId());
+		Assert.assertEquals(existingCTCollection.getUserName(),
+			newCTCollection.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCTCollection.getCreateDate()),
 			Time.getShortTimestamp(newCTCollection.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCTCollection.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCTCollection.getModifiedDate()),
 			Time.getShortTimestamp(newCTCollection.getModifiedDate()));
-		Assert.assertEquals(
-			existingCTCollection.getName(), newCTCollection.getName());
-		Assert.assertEquals(
-			existingCTCollection.getDescription(),
+		Assert.assertEquals(existingCTCollection.getName(),
+			newCTCollection.getName());
+		Assert.assertEquals(existingCTCollection.getDescription(),
 			newCTCollection.getDescription());
-		Assert.assertEquals(
-			existingCTCollection.getStatus(), newCTCollection.getStatus());
-		Assert.assertEquals(
-			existingCTCollection.getStatusByUserId(),
+		Assert.assertEquals(existingCTCollection.getStatus(),
+			newCTCollection.getStatus());
+		Assert.assertEquals(existingCTCollection.getStatusByUserId(),
 			newCTCollection.getStatusByUserId());
-		Assert.assertEquals(
-			existingCTCollection.getStatusByUserName(),
+		Assert.assertEquals(existingCTCollection.getStatusByUserName(),
 			newCTCollection.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCTCollection.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCTCollection.getStatusDate()),
 			Time.getShortTimestamp(newCTCollection.getStatusDate()));
 	}
 
@@ -205,8 +199,7 @@ public class CTCollectionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 
-		CTCollection existingCTCollection = _persistence.findByPrimaryKey(
-			newCTCollection.getPrimaryKey());
+		CTCollection existingCTCollection = _persistence.findByPrimaryKey(newCTCollection.getPrimaryKey());
 
 		Assert.assertEquals(existingCTCollection, newCTCollection);
 	}
@@ -220,24 +213,23 @@ public class CTCollectionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<CTCollection> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"CTCollection", "ctCollectionId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"name", true, "description", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+		return OrderByComparatorFactoryUtil.create("CTCollection",
+			"ctCollectionId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "description", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 
-		CTCollection existingCTCollection = _persistence.fetchByPrimaryKey(
-			newCTCollection.getPrimaryKey());
+		CTCollection existingCTCollection = _persistence.fetchByPrimaryKey(newCTCollection.getPrimaryKey());
 
 		Assert.assertEquals(existingCTCollection, newCTCollection);
 	}
@@ -254,7 +246,6 @@ public class CTCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		CTCollection newCTCollection1 = addCTCollection();
 		CTCollection newCTCollection2 = addCTCollection();
 
@@ -263,22 +254,18 @@ public class CTCollectionPersistenceTest {
 		primaryKeys.add(newCTCollection1.getPrimaryKey());
 		primaryKeys.add(newCTCollection2.getPrimaryKey());
 
-		Map<Serializable, CTCollection> ctCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTCollection> ctCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ctCollections.size());
-		Assert.assertEquals(
-			newCTCollection1,
+		Assert.assertEquals(newCTCollection1,
 			ctCollections.get(newCTCollection1.getPrimaryKey()));
-		Assert.assertEquals(
-			newCTCollection2,
+		Assert.assertEquals(newCTCollection2,
 			ctCollections.get(newCTCollection2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -288,8 +275,7 @@ public class CTCollectionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CTCollection> ctCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTCollection> ctCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ctCollections.isEmpty());
 	}
@@ -297,7 +283,6 @@ public class CTCollectionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		CTCollection newCTCollection = addCTCollection();
 
 		long pk = RandomTestUtil.nextLong();
@@ -307,39 +292,36 @@ public class CTCollectionPersistenceTest {
 		primaryKeys.add(newCTCollection.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CTCollection> ctCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTCollection> ctCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ctCollections.size());
-		Assert.assertEquals(
-			newCTCollection,
+		Assert.assertEquals(newCTCollection,
 			ctCollections.get(newCTCollection.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CTCollection> ctCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTCollection> ctCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ctCollections.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCTCollection.getPrimaryKey());
 
-		Map<Serializable, CTCollection> ctCollections =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CTCollection> ctCollections = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ctCollections.size());
-		Assert.assertEquals(
-			newCTCollection,
+		Assert.assertEquals(newCTCollection,
 			ctCollections.get(newCTCollection.getPrimaryKey()));
 	}
 
@@ -347,19 +329,15 @@ public class CTCollectionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			CTCollectionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CTCollectionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<CTCollection>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CTCollection>() {
 				@Override
 				public void performAction(CTCollection ctCollection) {
 					Assert.assertNotNull(ctCollection);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -368,18 +346,17 @@ public class CTCollectionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"ctCollectionId", newCTCollection.getCtCollectionId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ctCollectionId",
+				newCTCollection.getCtCollectionId()));
 
-		List<CTCollection> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CTCollection> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -390,34 +367,32 @@ public class CTCollectionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"ctCollectionId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ctCollectionId",
+				RandomTestUtil.nextLong()));
 
-		List<CTCollection> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CTCollection> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("ctCollectionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"ctCollectionId"));
 
 		Object newCtCollectionId = newCTCollection.getCtCollectionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ctCollectionId", new Object[] {newCtCollectionId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ctCollectionId",
+				new Object[] { newCtCollectionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -430,15 +405,14 @@ public class CTCollectionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTCollection.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CTCollection.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("ctCollectionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"ctCollectionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ctCollectionId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ctCollectionId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -451,18 +425,14 @@ public class CTCollectionPersistenceTest {
 
 		_persistence.clearCache();
 
-		CTCollection existingCTCollection = _persistence.findByPrimaryKey(
-			newCTCollection.getPrimaryKey());
+		CTCollection existingCTCollection = _persistence.findByPrimaryKey(newCTCollection.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingCTCollection.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCTCollection, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingCTCollection.getName(),
-				ReflectionTestUtil.invoke(
-					existingCTCollection, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingCTCollection.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingCTCollection,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCTCollection.getName(),
+				ReflectionTestUtil.invoke(existingCTCollection,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected CTCollection addCTCollection() throws Exception {
@@ -500,5 +470,4 @@ public class CTCollectionPersistenceTest {
 	private List<CTCollection> _ctCollections = new ArrayList<CTCollection>();
 	private CTCollectionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

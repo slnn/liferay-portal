@@ -15,11 +15,13 @@
 package com.liferay.bookmarks.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class BookmarksFolderPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.bookmarks.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.bookmarks.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class BookmarksFolderPersistenceTest {
 
 		_persistence.remove(newBookmarksFolder);
 
-		BookmarksFolder existingBookmarksFolder =
-			_persistence.fetchByPrimaryKey(newBookmarksFolder.getPrimaryKey());
+		BookmarksFolder existingBookmarksFolder = _persistence.fetchByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
 		Assert.assertNull(existingBookmarksFolder);
 	}
@@ -158,58 +158,45 @@ public class BookmarksFolderPersistenceTest {
 
 		_bookmarksFolders.add(_persistence.update(newBookmarksFolder));
 
-		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(
-			newBookmarksFolder.getPrimaryKey());
+		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingBookmarksFolder.getUuid(), newBookmarksFolder.getUuid());
-		Assert.assertEquals(
-			existingBookmarksFolder.getFolderId(),
+		Assert.assertEquals(existingBookmarksFolder.getUuid(),
+			newBookmarksFolder.getUuid());
+		Assert.assertEquals(existingBookmarksFolder.getFolderId(),
 			newBookmarksFolder.getFolderId());
-		Assert.assertEquals(
-			existingBookmarksFolder.getGroupId(),
+		Assert.assertEquals(existingBookmarksFolder.getGroupId(),
 			newBookmarksFolder.getGroupId());
-		Assert.assertEquals(
-			existingBookmarksFolder.getCompanyId(),
+		Assert.assertEquals(existingBookmarksFolder.getCompanyId(),
 			newBookmarksFolder.getCompanyId());
-		Assert.assertEquals(
-			existingBookmarksFolder.getUserId(),
+		Assert.assertEquals(existingBookmarksFolder.getUserId(),
 			newBookmarksFolder.getUserId());
-		Assert.assertEquals(
-			existingBookmarksFolder.getUserName(),
+		Assert.assertEquals(existingBookmarksFolder.getUserName(),
 			newBookmarksFolder.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksFolder.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksFolder.getCreateDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksFolder.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksFolder.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getModifiedDate()));
-		Assert.assertEquals(
-			existingBookmarksFolder.getParentFolderId(),
+		Assert.assertEquals(existingBookmarksFolder.getParentFolderId(),
 			newBookmarksFolder.getParentFolderId());
-		Assert.assertEquals(
-			existingBookmarksFolder.getTreePath(),
+		Assert.assertEquals(existingBookmarksFolder.getTreePath(),
 			newBookmarksFolder.getTreePath());
-		Assert.assertEquals(
-			existingBookmarksFolder.getName(), newBookmarksFolder.getName());
-		Assert.assertEquals(
-			existingBookmarksFolder.getDescription(),
+		Assert.assertEquals(existingBookmarksFolder.getName(),
+			newBookmarksFolder.getName());
+		Assert.assertEquals(existingBookmarksFolder.getDescription(),
 			newBookmarksFolder.getDescription());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksFolder.getLastPublishDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getLastPublishDate()));
-		Assert.assertEquals(
-			existingBookmarksFolder.getStatus(),
+		Assert.assertEquals(existingBookmarksFolder.getStatus(),
 			newBookmarksFolder.getStatus());
-		Assert.assertEquals(
-			existingBookmarksFolder.getStatusByUserId(),
+		Assert.assertEquals(existingBookmarksFolder.getStatusByUserId(),
 			newBookmarksFolder.getStatusByUserId());
-		Assert.assertEquals(
-			existingBookmarksFolder.getStatusByUserName(),
+		Assert.assertEquals(existingBookmarksFolder.getStatusByUserName(),
 			newBookmarksFolder.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingBookmarksFolder.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksFolder.getStatusDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getStatusDate()));
 	}
 
@@ -256,43 +243,41 @@ public class BookmarksFolderPersistenceTest {
 
 	@Test
 	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_P(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_P_S() throws Exception {
-		_persistence.countByG_P_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_P_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_P_NotS() throws Exception {
-		_persistence.countByG_P_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_P_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_P_NotS(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByF_C_P_NotS() throws Exception {
-		_persistence.countByF_C_P_NotS(
+		_persistence.countByF_C_P_NotS(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByF_C_P_NotS(0L, 0L, 0L, 0);
 	}
@@ -301,8 +286,7 @@ public class BookmarksFolderPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
-		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(
-			newBookmarksFolder.getPrimaryKey());
+		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
 		Assert.assertEquals(existingBookmarksFolder, newBookmarksFolder);
 	}
@@ -316,22 +300,22 @@ public class BookmarksFolderPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<BookmarksFolder> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"BookmarksFolder", "uuid", true, "folderId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentFolderId", true, "treePath",
-			true, "name", true, "description", true, "lastPublishDate", true,
+		return OrderByComparatorFactoryUtil.create("BookmarksFolder", "uuid",
+			true, "folderId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "parentFolderId", true, "treePath", true,
+			"name", true, "description", true, "lastPublishDate", true,
 			"status", true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
 	}
@@ -340,8 +324,7 @@ public class BookmarksFolderPersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
-		BookmarksFolder existingBookmarksFolder =
-			_persistence.fetchByPrimaryKey(newBookmarksFolder.getPrimaryKey());
+		BookmarksFolder existingBookmarksFolder = _persistence.fetchByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
 		Assert.assertEquals(existingBookmarksFolder, newBookmarksFolder);
 	}
@@ -350,8 +333,7 @@ public class BookmarksFolderPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		BookmarksFolder missingBookmarksFolder = _persistence.fetchByPrimaryKey(
-			pk);
+		BookmarksFolder missingBookmarksFolder = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingBookmarksFolder);
 	}
@@ -359,7 +341,6 @@ public class BookmarksFolderPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		BookmarksFolder newBookmarksFolder1 = addBookmarksFolder();
 		BookmarksFolder newBookmarksFolder2 = addBookmarksFolder();
 
@@ -368,22 +349,18 @@ public class BookmarksFolderPersistenceTest {
 		primaryKeys.add(newBookmarksFolder1.getPrimaryKey());
 		primaryKeys.add(newBookmarksFolder2.getPrimaryKey());
 
-		Map<Serializable, BookmarksFolder> bookmarksFolders =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksFolder> bookmarksFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, bookmarksFolders.size());
-		Assert.assertEquals(
-			newBookmarksFolder1,
+		Assert.assertEquals(newBookmarksFolder1,
 			bookmarksFolders.get(newBookmarksFolder1.getPrimaryKey()));
-		Assert.assertEquals(
-			newBookmarksFolder2,
+		Assert.assertEquals(newBookmarksFolder2,
 			bookmarksFolders.get(newBookmarksFolder2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -393,8 +370,7 @@ public class BookmarksFolderPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, BookmarksFolder> bookmarksFolders =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksFolder> bookmarksFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(bookmarksFolders.isEmpty());
 	}
@@ -402,7 +378,6 @@ public class BookmarksFolderPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
 		long pk = RandomTestUtil.nextLong();
@@ -412,39 +387,36 @@ public class BookmarksFolderPersistenceTest {
 		primaryKeys.add(newBookmarksFolder.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, BookmarksFolder> bookmarksFolders =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksFolder> bookmarksFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, bookmarksFolders.size());
-		Assert.assertEquals(
-			newBookmarksFolder,
+		Assert.assertEquals(newBookmarksFolder,
 			bookmarksFolders.get(newBookmarksFolder.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BookmarksFolder> bookmarksFolders =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksFolder> bookmarksFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(bookmarksFolders.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newBookmarksFolder.getPrimaryKey());
 
-		Map<Serializable, BookmarksFolder> bookmarksFolders =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BookmarksFolder> bookmarksFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, bookmarksFolders.size());
-		Assert.assertEquals(
-			newBookmarksFolder,
+		Assert.assertEquals(newBookmarksFolder,
 			bookmarksFolders.get(newBookmarksFolder.getPrimaryKey()));
 	}
 
@@ -452,19 +424,15 @@ public class BookmarksFolderPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksFolder>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BookmarksFolder>() {
 				@Override
 				public void performAction(BookmarksFolder bookmarksFolder) {
 					Assert.assertNotNull(bookmarksFolder);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -473,18 +441,17 @@ public class BookmarksFolderPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"folderId", newBookmarksFolder.getFolderId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId",
+				newBookmarksFolder.getFolderId()));
 
-		List<BookmarksFolder> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<BookmarksFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -495,31 +462,31 @@ public class BookmarksFolderPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("folderId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId",
+				RandomTestUtil.nextLong()));
 
-		List<BookmarksFolder> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<BookmarksFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("folderId"));
 
 		Object newFolderId = newBookmarksFolder.getFolderId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("folderId", new Object[] {newFolderId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("folderId",
+				new Object[] { newFolderId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -532,14 +499,13 @@ public class BookmarksFolderPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("folderId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"folderId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("folderId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -552,20 +518,14 @@ public class BookmarksFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(
-			newBookmarksFolder.getPrimaryKey());
+		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingBookmarksFolder.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingBookmarksFolder, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingBookmarksFolder.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingBookmarksFolder, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingBookmarksFolder.getUuid(),
+				ReflectionTestUtil.invoke(existingBookmarksFolder,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingBookmarksFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBookmarksFolder,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected BookmarksFolder addBookmarksFolder() throws Exception {
@@ -610,9 +570,7 @@ public class BookmarksFolderPersistenceTest {
 		return bookmarksFolder;
 	}
 
-	private List<BookmarksFolder> _bookmarksFolders =
-		new ArrayList<BookmarksFolder>();
+	private List<BookmarksFolder> _bookmarksFolders = new ArrayList<BookmarksFolder>();
 	private BookmarksFolderPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

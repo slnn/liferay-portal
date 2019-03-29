@@ -32,13 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class JournalContentSearchWrapper
-	extends BaseModelWrapper<JournalContentSearch>
+public class JournalContentSearchWrapper extends BaseModelWrapper<JournalContentSearch>
 	implements JournalContentSearch, ModelWrapper<JournalContentSearch> {
-
 	public JournalContentSearchWrapper(
 		JournalContentSearch journalContentSearch) {
-
 		super(journalContentSearch);
 	}
 
@@ -103,90 +100,90 @@ public class JournalContentSearchWrapper
 	}
 
 	/**
-	 * Returns the article ID of this journal content search.
-	 *
-	 * @return the article ID of this journal content search
-	 */
+	* Returns the article ID of this journal content search.
+	*
+	* @return the article ID of this journal content search
+	*/
 	@Override
 	public String getArticleId() {
 		return model.getArticleId();
 	}
 
 	/**
-	 * Returns the company ID of this journal content search.
-	 *
-	 * @return the company ID of this journal content search
-	 */
+	* Returns the company ID of this journal content search.
+	*
+	* @return the company ID of this journal content search
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the content search ID of this journal content search.
-	 *
-	 * @return the content search ID of this journal content search
-	 */
+	* Returns the content search ID of this journal content search.
+	*
+	* @return the content search ID of this journal content search
+	*/
 	@Override
 	public long getContentSearchId() {
 		return model.getContentSearchId();
 	}
 
 	/**
-	 * Returns the group ID of this journal content search.
-	 *
-	 * @return the group ID of this journal content search
-	 */
+	* Returns the group ID of this journal content search.
+	*
+	* @return the group ID of this journal content search
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the layout ID of this journal content search.
-	 *
-	 * @return the layout ID of this journal content search
-	 */
+	* Returns the layout ID of this journal content search.
+	*
+	* @return the layout ID of this journal content search
+	*/
 	@Override
 	public long getLayoutId() {
 		return model.getLayoutId();
 	}
 
 	/**
-	 * Returns the portlet ID of this journal content search.
-	 *
-	 * @return the portlet ID of this journal content search
-	 */
+	* Returns the portlet ID of this journal content search.
+	*
+	* @return the portlet ID of this journal content search
+	*/
 	@Override
 	public String getPortletId() {
 		return model.getPortletId();
 	}
 
 	/**
-	 * Returns the primary key of this journal content search.
-	 *
-	 * @return the primary key of this journal content search
-	 */
+	* Returns the primary key of this journal content search.
+	*
+	* @return the primary key of this journal content search
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the private layout of this journal content search.
-	 *
-	 * @return the private layout of this journal content search
-	 */
+	* Returns the private layout of this journal content search.
+	*
+	* @return the private layout of this journal content search
+	*/
 	@Override
 	public boolean getPrivateLayout() {
 		return model.getPrivateLayout();
 	}
 
 	/**
-	 * Returns <code>true</code> if this journal content search is private layout.
-	 *
-	 * @return <code>true</code> if this journal content search is private layout; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this journal content search is private layout.
+	*
+	* @return <code>true</code> if this journal content search is private layout; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isPrivateLayout() {
 		return model.isPrivateLayout();
@@ -198,80 +195,80 @@ public class JournalContentSearchWrapper
 	}
 
 	/**
-	 * Sets the article ID of this journal content search.
-	 *
-	 * @param articleId the article ID of this journal content search
-	 */
+	* Sets the article ID of this journal content search.
+	*
+	* @param articleId the article ID of this journal content search
+	*/
 	@Override
 	public void setArticleId(String articleId) {
 		model.setArticleId(articleId);
 	}
 
 	/**
-	 * Sets the company ID of this journal content search.
-	 *
-	 * @param companyId the company ID of this journal content search
-	 */
+	* Sets the company ID of this journal content search.
+	*
+	* @param companyId the company ID of this journal content search
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the content search ID of this journal content search.
-	 *
-	 * @param contentSearchId the content search ID of this journal content search
-	 */
+	* Sets the content search ID of this journal content search.
+	*
+	* @param contentSearchId the content search ID of this journal content search
+	*/
 	@Override
 	public void setContentSearchId(long contentSearchId) {
 		model.setContentSearchId(contentSearchId);
 	}
 
 	/**
-	 * Sets the group ID of this journal content search.
-	 *
-	 * @param groupId the group ID of this journal content search
-	 */
+	* Sets the group ID of this journal content search.
+	*
+	* @param groupId the group ID of this journal content search
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the layout ID of this journal content search.
-	 *
-	 * @param layoutId the layout ID of this journal content search
-	 */
+	* Sets the layout ID of this journal content search.
+	*
+	* @param layoutId the layout ID of this journal content search
+	*/
 	@Override
 	public void setLayoutId(long layoutId) {
 		model.setLayoutId(layoutId);
 	}
 
 	/**
-	 * Sets the portlet ID of this journal content search.
-	 *
-	 * @param portletId the portlet ID of this journal content search
-	 */
+	* Sets the portlet ID of this journal content search.
+	*
+	* @param portletId the portlet ID of this journal content search
+	*/
 	@Override
 	public void setPortletId(String portletId) {
 		model.setPortletId(portletId);
 	}
 
 	/**
-	 * Sets the primary key of this journal content search.
-	 *
-	 * @param primaryKey the primary key of this journal content search
-	 */
+	* Sets the primary key of this journal content search.
+	*
+	* @param primaryKey the primary key of this journal content search
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets whether this journal content search is private layout.
-	 *
-	 * @param privateLayout the private layout of this journal content search
-	 */
+	* Sets whether this journal content search is private layout.
+	*
+	* @param privateLayout the private layout of this journal content search
+	*/
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		model.setPrivateLayout(privateLayout);
@@ -280,8 +277,6 @@ public class JournalContentSearchWrapper
 	@Override
 	protected JournalContentSearchWrapper wrap(
 		JournalContentSearch journalContentSearch) {
-
 		return new JournalContentSearchWrapper(journalContentSearch);
 	}
-
 }

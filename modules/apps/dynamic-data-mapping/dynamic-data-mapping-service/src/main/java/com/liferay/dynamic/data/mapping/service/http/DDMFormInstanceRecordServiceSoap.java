@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -63,26 +64,17 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class DDMFormInstanceRecordServiceSoap {
-
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap
-				addFormInstanceRecord(
-					long groupId, long ddmFormInstanceId,
-					com.liferay.dynamic.data.mapping.storage.DDMFormValues
-						ddmFormValues,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws RemoteException {
-
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap addFormInstanceRecord(
+		long groupId, long ddmFormInstanceId,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-				returnValue =
-					DDMFormInstanceRecordServiceUtil.addFormInstanceRecord(
-						groupId, ddmFormInstanceId, ddmFormValues,
-						serviceContext);
+			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord returnValue =
+				DDMFormInstanceRecordServiceUtil.addFormInstanceRecord(groupId,
+					ddmFormInstanceId, ddmFormValues, serviceContext);
 
-			return com.liferay.dynamic.data.mapping.model.
-				DDMFormInstanceRecordSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,10 +85,8 @@ public class DDMFormInstanceRecordServiceSoap {
 
 	public static void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
 		throws RemoteException {
-
 		try {
-			DDMFormInstanceRecordServiceUtil.deleteFormInstanceRecord(
-				ddmFormInstanceRecordId);
+			DDMFormInstanceRecordServiceUtil.deleteFormInstanceRecord(ddmFormInstanceRecordId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -105,19 +95,13 @@ public class DDMFormInstanceRecordServiceSoap {
 		}
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap
-				getFormInstanceRecord(long ddmFormInstanceRecordId)
-			throws RemoteException {
-
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap getFormInstanceRecord(
+		long ddmFormInstanceRecordId) throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-				returnValue =
-					DDMFormInstanceRecordServiceUtil.getFormInstanceRecord(
-						ddmFormInstanceRecordId);
+			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord returnValue =
+				DDMFormInstanceRecordServiceUtil.getFormInstanceRecord(ddmFormInstanceRecordId);
 
-			return com.liferay.dynamic.data.mapping.model.
-				DDMFormInstanceRecordSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -126,20 +110,13 @@ public class DDMFormInstanceRecordServiceSoap {
 		}
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap[]
-				getFormInstanceRecords(long ddmFormInstanceId)
-			throws RemoteException {
-
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap[] getFormInstanceRecords(
+		long ddmFormInstanceId) throws RemoteException {
 		try {
-			java.util.List
-				<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord>
-					returnValue =
-						DDMFormInstanceRecordServiceUtil.getFormInstanceRecords(
-							ddmFormInstanceId);
+			java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> returnValue =
+				DDMFormInstanceRecordServiceUtil.getFormInstanceRecords(ddmFormInstanceId);
 
-			return com.liferay.dynamic.data.mapping.model.
-				DDMFormInstanceRecordSoap.toSoapModels(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -148,25 +125,16 @@ public class DDMFormInstanceRecordServiceSoap {
 		}
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap[]
-				getFormInstanceRecords(
-					long ddmFormInstanceId, int status, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMFormInstanceRecord> orderByComparator)
-			throws RemoteException {
-
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap[] getFormInstanceRecords(
+		long ddmFormInstanceId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator)
+		throws RemoteException {
 		try {
-			java.util.List
-				<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord>
-					returnValue =
-						DDMFormInstanceRecordServiceUtil.getFormInstanceRecords(
-							ddmFormInstanceId, status, start, end,
-							orderByComparator);
+			java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> returnValue =
+				DDMFormInstanceRecordServiceUtil.getFormInstanceRecords(ddmFormInstanceId,
+					status, start, end, orderByComparator);
 
-			return com.liferay.dynamic.data.mapping.model.
-				DDMFormInstanceRecordSoap.toSoapModels(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -177,11 +145,8 @@ public class DDMFormInstanceRecordServiceSoap {
 
 	public static int getFormInstanceRecordsCount(long ddmFormInstanceId)
 		throws RemoteException {
-
 		try {
-			int returnValue =
-				DDMFormInstanceRecordServiceUtil.getFormInstanceRecordsCount(
-					ddmFormInstanceId);
+			int returnValue = DDMFormInstanceRecordServiceUtil.getFormInstanceRecordsCount(ddmFormInstanceId);
 
 			return returnValue;
 		}
@@ -192,14 +157,13 @@ public class DDMFormInstanceRecordServiceSoap {
 		}
 	}
 
-	public static void revertFormInstanceRecord(
-			long ddmFormInstanceRecordId, String version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void revertFormInstanceRecord(long ddmFormInstanceRecordId,
+		String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			DDMFormInstanceRecordServiceUtil.revertFormInstanceRecord(
-				ddmFormInstanceRecordId, version, serviceContext);
+			DDMFormInstanceRecordServiceUtil.revertFormInstanceRecord(ddmFormInstanceRecordId,
+				version, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -208,25 +172,17 @@ public class DDMFormInstanceRecordServiceSoap {
 		}
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap
-				updateFormInstanceRecord(
-					long ddmFormInstanceRecordId, boolean majorVersion,
-					com.liferay.dynamic.data.mapping.storage.DDMFormValues
-						ddmFormValues,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws RemoteException {
-
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap updateFormInstanceRecord(
+		long ddmFormInstanceRecordId, boolean majorVersion,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-				returnValue =
-					DDMFormInstanceRecordServiceUtil.updateFormInstanceRecord(
-						ddmFormInstanceRecordId, majorVersion, ddmFormValues,
-						serviceContext);
+			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord returnValue =
+				DDMFormInstanceRecordServiceUtil.updateFormInstanceRecord(ddmFormInstanceRecordId,
+					majorVersion, ddmFormValues, serviceContext);
 
-			return com.liferay.dynamic.data.mapping.model.
-				DDMFormInstanceRecordSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -235,7 +191,5 @@ public class DDMFormInstanceRecordServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DDMFormInstanceRecordServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(DDMFormInstanceRecordServiceSoap.class);
 }

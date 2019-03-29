@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDLRecordSetModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl")
 @ProviderType
 public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDLRecordSet, Long> RECORD_SET_ID_ACCESSOR =
-		new Accessor<DDLRecordSet, Long>() {
-
+	public static final Accessor<DDLRecordSet, Long> RECORD_SET_ID_ACCESSOR = new Accessor<DDLRecordSet, Long>() {
 			@Override
 			public Long get(DDLRecordSet ddlRecordSet) {
 				return ddlRecordSet.getRecordSetId();
@@ -55,14 +50,13 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 			public Class<DDLRecordSet> getTypeClass() {
 				return DDLRecordSet.class;
 			}
-
 		};
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure(
-			long formDDMTemplateId)
+		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<DDLRecord> getRecords();
@@ -73,11 +67,9 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 	public DDLRecordSetVersion getRecordSetVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-			getSettingsDDMFormValues()
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DDLRecordSetSettings getSettingsModel()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

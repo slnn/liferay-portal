@@ -23,11 +23,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -80,9 +82,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class FragmentEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements FragmentEntryLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements FragmentEntryLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -126,7 +127,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException {
-
 		return fragmentEntryPersistence.remove(fragmentEntryId);
 	}
 
@@ -141,7 +141,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
-
 		return fragmentEntryPersistence.remove(fragmentEntry);
 	}
 
@@ -149,8 +148,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			FragmentEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(FragmentEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -177,11 +176,10 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return fragmentEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return fragmentEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -198,12 +196,10 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return fragmentEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return fragmentEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -225,11 +221,10 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return fragmentEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return fragmentEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -245,9 +240,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	 */
 	@Override
-	public FragmentEntry fetchFragmentEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-
+	public FragmentEntry fetchFragmentEntryByUuidAndGroupId(String uuid,
+		long groupId) {
 		return fragmentEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -261,14 +255,12 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public FragmentEntry getFragmentEntry(long fragmentEntryId)
 		throws PortalException {
-
 		return fragmentEntryPersistence.findByPrimaryKey(fragmentEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(fragmentEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -280,14 +272,10 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			fragmentEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(fragmentEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(FragmentEntry.class);
 
@@ -299,7 +287,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(fragmentEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(FragmentEntry.class);
@@ -310,59 +297,48 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
+							"modifiedDate");
 
 					if (modifiedDateCriterion != null) {
-						Conjunction conjunction =
-							RestrictionsFactoryUtil.conjunction();
+						Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
 
 						conjunction.add(modifiedDateCriterion);
 
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-						disjunction.add(
-							RestrictionsFactoryUtil.gtProperty(
+						disjunction.add(RestrictionsFactoryUtil.gtProperty(
 								"modifiedDate", "lastPublishDate"));
 
-						Property lastPublishDateProperty =
-							PropertyFactoryUtil.forName("lastPublishDate");
+						Property lastPublishDateProperty = PropertyFactoryUtil.forName(
+								"lastPublishDate");
 
 						disjunction.add(lastPublishDateProperty.isNull());
 
@@ -371,14 +347,12 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 						modifiedDateCriterion = conjunction;
 					}
 
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
+							"statusDate");
 
 					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+							(statusDateCriterion != null)) {
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 						disjunction.add(modifiedDateCriterion);
 						disjunction.add(statusDateCriterion);
@@ -386,49 +360,35 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 						dynamicQuery.add(disjunction);
 					}
 
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
+					Property workflowStatusProperty = PropertyFactoryUtil.forName(
+							"status");
 
 					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							workflowStatusProperty.ne(
+						dynamicQuery.add(workflowStatusProperty.ne(
 								WorkflowConstants.STATUS_IN_TRASH));
 					}
 					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									FragmentEntry.class.getName());
+						StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(FragmentEntry.class.getName());
 
-						dynamicQuery.add(
-							workflowStatusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
+						dynamicQuery.add(workflowStatusProperty.in(
+								stagedModelDataHandler.getExportableStatuses()));
 					}
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<FragmentEntry>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<FragmentEntry>() {
 				@Override
 				public void performAction(FragmentEntry fragmentEntry)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, fragmentEntry);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						fragmentEntry);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(FragmentEntry.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -440,15 +400,12 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return fragmentEntryLocalService.deleteFragmentEntry(
-			(FragmentEntry)persistedModel);
+		return fragmentEntryLocalService.deleteFragmentEntry((FragmentEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return fragmentEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -462,7 +419,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
 		String uuid, long companyId) {
-
 		return fragmentEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -480,9 +436,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
-
-		return fragmentEntryPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return fragmentEntryPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -494,10 +449,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @throws PortalException if a matching fragment entry could not be found
 	 */
 	@Override
-	public FragmentEntry getFragmentEntryByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException {
-
+	public FragmentEntry getFragmentEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException {
 		return fragmentEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -555,7 +508,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 */
 	public void setFragmentEntryLocalService(
 		FragmentEntryLocalService fragmentEntryLocalService) {
-
 		this.fragmentEntryLocalService = fragmentEntryLocalService;
 	}
 
@@ -575,7 +527,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 */
 	public void setFragmentEntryPersistence(
 		FragmentEntryPersistence fragmentEntryPersistence) {
-
 		this.fragmentEntryPersistence = fragmentEntryPersistence;
 	}
 
@@ -584,9 +535,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -596,9 +545,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -607,9 +554,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -619,9 +564,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -630,9 +573,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -643,7 +584,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -670,9 +610,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 *
 	 * @return the fragment entry link local service
 	 */
-	public com.liferay.fragment.service.FragmentEntryLinkLocalService
-		getFragmentEntryLinkLocalService() {
-
+	public com.liferay.fragment.service.FragmentEntryLinkLocalService getFragmentEntryLinkLocalService() {
 		return fragmentEntryLinkLocalService;
 	}
 
@@ -682,9 +620,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 * @param fragmentEntryLinkLocalService the fragment entry link local service
 	 */
 	public void setFragmentEntryLinkLocalService(
-		com.liferay.fragment.service.FragmentEntryLinkLocalService
-			fragmentEntryLinkLocalService) {
-
+		com.liferay.fragment.service.FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
 		this.fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 	}
 
@@ -704,7 +640,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 */
 	public void setFragmentEntryLinkPersistence(
 		FragmentEntryLinkPersistence fragmentEntryLinkPersistence) {
-
 		this.fragmentEntryLinkPersistence = fragmentEntryLinkPersistence;
 	}
 
@@ -724,13 +659,11 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 */
 	public void setFragmentEntryLinkFinder(
 		FragmentEntryLinkFinder fragmentEntryLinkFinder) {
-
 		this.fragmentEntryLinkFinder = fragmentEntryLinkFinder;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.fragment.model.FragmentEntry",
+		persistedModelLocalServiceRegistry.register("com.liferay.fragment.model.FragmentEntry",
 			fragmentEntryLocalService);
 	}
 
@@ -771,8 +704,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -783,45 +716,22 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 
 	@BeanReference(type = FragmentEntryLocalService.class)
 	protected FragmentEntryLocalService fragmentEntryLocalService;
-
 	@BeanReference(type = FragmentEntryPersistence.class)
 	protected FragmentEntryPersistence fragmentEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
-	@BeanReference(
-		type = com.liferay.fragment.service.FragmentEntryLinkLocalService.class
-	)
-	protected com.liferay.fragment.service.FragmentEntryLinkLocalService
-		fragmentEntryLinkLocalService;
-
+	@BeanReference(type = com.liferay.fragment.service.FragmentEntryLinkLocalService.class)
+	protected com.liferay.fragment.service.FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
 	@BeanReference(type = FragmentEntryLinkPersistence.class)
 	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;
-
 	@BeanReference(type = FragmentEntryLinkFinder.class)
 	protected FragmentEntryLinkFinder fragmentEntryLinkFinder;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

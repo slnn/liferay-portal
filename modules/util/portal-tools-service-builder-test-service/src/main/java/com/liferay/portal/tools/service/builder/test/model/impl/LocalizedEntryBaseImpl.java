@@ -32,9 +32,8 @@ import com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocal
  * @generated
  */
 @ProviderType
-public abstract class LocalizedEntryBaseImpl
-	extends LocalizedEntryModelImpl implements LocalizedEntry {
-
+public abstract class LocalizedEntryBaseImpl extends LocalizedEntryModelImpl
+	implements LocalizedEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class LocalizedEntryBaseImpl
 			LocalizedEntryLocalServiceUtil.updateLocalizedEntry(this);
 		}
 	}
-
 }

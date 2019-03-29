@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence.impl;
 
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +29,6 @@ import java.util.Set;
  * @generated
  */
 public class KBFolderFinderBaseImpl extends BasePersistenceImpl<KBFolder> {
-
 	public KBFolderFinderBaseImpl() {
 		setModelClass(KBFolder.class);
 	}
@@ -52,16 +52,11 @@ public class KBFolderFinderBaseImpl extends BasePersistenceImpl<KBFolder> {
 	 *
 	 * @param kbFolderPersistence the kb folder persistence
 	 */
-	public void setKBFolderPersistence(
-		KBFolderPersistence kbFolderPersistence) {
-
+	public void setKBFolderPersistence(KBFolderPersistence kbFolderPersistence) {
 		this.kbFolderPersistence = kbFolderPersistence;
 	}
 
 	@BeanReference(type = KBFolderPersistence.class)
 	protected KBFolderPersistence kbFolderPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KBFolderFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(KBFolderFinderBaseImpl.class);
 }

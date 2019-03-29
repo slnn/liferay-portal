@@ -35,7 +35,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocal
 public abstract class KaleoNotificationRecipientBaseImpl
 	extends KaleoNotificationRecipientModelImpl
 	implements KaleoNotificationRecipient {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +43,10 @@ public abstract class KaleoNotificationRecipientBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			KaleoNotificationRecipientLocalServiceUtil.
-				addKaleoNotificationRecipient(this);
+			KaleoNotificationRecipientLocalServiceUtil.addKaleoNotificationRecipient(this);
 		}
 		else {
-			KaleoNotificationRecipientLocalServiceUtil.
-				updateKaleoNotificationRecipient(this);
+			KaleoNotificationRecipientLocalServiceUtil.updateKaleoNotificationRecipient(this);
 		}
 	}
-
 }

@@ -39,10 +39,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface SAPEntryModel
-	extends BaseModel<SAPEntry>, LocalizedModel, ShardedModel,
-			StagedAuditedModel {
-
+public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -374,5 +372,4 @@ public interface SAPEntryModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

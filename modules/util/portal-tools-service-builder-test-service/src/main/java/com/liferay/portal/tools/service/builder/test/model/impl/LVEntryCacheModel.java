@@ -34,9 +34,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class LVEntryCacheModel
-	implements CacheModel<LVEntry>, Externalizable, MVCCModel {
-
+public class LVEntryCacheModel implements CacheModel<LVEntry>, Externalizable,
+	MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,8 +49,7 @@ public class LVEntryCacheModel
 		LVEntryCacheModel lvEntryCacheModel = (LVEntryCacheModel)obj;
 
 		if ((lvEntryId == lvEntryCacheModel.lvEntryId) &&
-			(mvccVersion == lvEntryCacheModel.mvccVersion)) {
-
+				(mvccVersion == lvEntryCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -112,6 +110,7 @@ public class LVEntryCacheModel
 		}
 
 		lvEntryImpl.setHeadId(headId);
+		lvEntryImpl.setHead(head);
 
 		if (defaultLanguageId == null) {
 			lvEntryImpl.setDefaultLanguageId("");
@@ -130,8 +129,6 @@ public class LVEntryCacheModel
 			lvEntryImpl.setUniqueGroupKey(uniqueGroupKey);
 		}
 
-		lvEntryImpl.setHead(head);
-
 		lvEntryImpl.resetOriginalValues();
 
 		return lvEntryImpl;
@@ -143,18 +140,19 @@ public class LVEntryCacheModel
 		uuid = objectInput.readUTF();
 
 		headId = objectInput.readLong();
+
+		head = objectInput.readBoolean();
 		defaultLanguageId = objectInput.readUTF();
 
 		lvEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 		uniqueGroupKey = objectInput.readUTF();
-
-		head = objectInput.readBoolean();
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -165,6 +163,8 @@ public class LVEntryCacheModel
 		}
 
 		objectOutput.writeLong(headId);
+
+		objectOutput.writeBoolean(head);
 
 		if (defaultLanguageId == null) {
 			objectOutput.writeUTF("");
@@ -183,17 +183,14 @@ public class LVEntryCacheModel
 		else {
 			objectOutput.writeUTF(uniqueGroupKey);
 		}
-
-		objectOutput.writeBoolean(head);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long headId;
+	public boolean head;
 	public String defaultLanguageId;
 	public long lvEntryId;
 	public long groupId;
 	public String uniqueGroupKey;
-	public boolean head;
-
 }

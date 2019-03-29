@@ -37,10 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SubscriptionModel
-	extends AttachedModel, BaseModel<Subscription>, GroupedModel, MVCCModel,
-			ShardedModel {
-
+public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -260,5 +258,4 @@ public interface SubscriptionModel
 	 * @param frequency the frequency of this subscription
 	 */
 	public void setFrequency(String frequency);
-
 }

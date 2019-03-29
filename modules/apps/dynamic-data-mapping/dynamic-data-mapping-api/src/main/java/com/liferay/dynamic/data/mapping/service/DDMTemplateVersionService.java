@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -41,20 +42,12 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=ddm",
-		"json.web.service.context.path=DDMTemplateVersion"
-	},
-	service = DDMTemplateVersionService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=ddm", "json.web.service.context.path=DDMTemplateVersion"}, service = DDMTemplateVersionService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface DDMTemplateVersionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,10 +58,10 @@ public interface DDMTemplateVersionService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -76,12 +69,12 @@ public interface DDMTemplateVersionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMTemplateVersion> getTemplateVersions(
-			long templateId, int start, int end,
-			OrderByComparator<DDMTemplateVersion> orderByComparator)
+	public List<DDMTemplateVersion> getTemplateVersions(long templateId,
+		int start, int end,
+		OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTemplateVersionsCount(long templateId) throws PortalException;
-
+	public int getTemplateVersionsCount(long templateId)
+		throws PortalException;
 }

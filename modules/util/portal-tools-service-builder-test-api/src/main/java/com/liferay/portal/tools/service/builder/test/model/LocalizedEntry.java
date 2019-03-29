@@ -27,20 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see LocalizedEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl")
 @ProviderType
 public interface LocalizedEntry extends LocalizedEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LocalizedEntry, Long>
-		LOCALIZED_ENTRY_ID_ACCESSOR = new Accessor<LocalizedEntry, Long>() {
-
+	public static final Accessor<LocalizedEntry, Long> LOCALIZED_ENTRY_ID_ACCESSOR =
+		new Accessor<LocalizedEntry, Long>() {
 			@Override
 			public Long get(LocalizedEntry localizedEntry) {
 				return localizedEntry.getLocalizedEntryId();
@@ -55,7 +51,5 @@ public interface LocalizedEntry extends LocalizedEntryModel, PersistedModel {
 			public Class<LocalizedEntry> getTypeClass() {
 				return LocalizedEntry.class;
 			}
-
 		};
-
 }

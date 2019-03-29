@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class LockSoap implements Serializable {
-
 	public static LockSoap toSoapModel(Lock model) {
 		LockSoap soapModel = new LockSoap();
 
@@ -210,5 +209,4 @@ public class LockSoap implements Serializable {
 	private String _owner;
 	private boolean _inheritable;
 	private Date _expirationDate;
-
 }

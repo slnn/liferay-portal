@@ -31,13 +31,11 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
  * @generated
  */
 @ProviderType
-public abstract class LVEntryVersionBaseImpl
-	extends LVEntryVersionModelImpl implements LVEntryVersion {
-
+public abstract class LVEntryVersionBaseImpl extends LVEntryVersionModelImpl
+	implements LVEntryVersion {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a lv entry version model instance should use the <code>LVEntryVersion</code> interface instead.
 	 */
-
 }

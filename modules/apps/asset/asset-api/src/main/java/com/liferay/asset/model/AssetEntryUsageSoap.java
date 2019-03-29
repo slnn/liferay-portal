@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class AssetEntryUsageSoap implements Serializable {
-
 	public static AssetEntryUsageSoap toSoapModel(AssetEntryUsage model) {
 		AssetEntryUsageSoap soapModel = new AssetEntryUsageSoap();
 
@@ -52,8 +51,7 @@ public class AssetEntryUsageSoap implements Serializable {
 	}
 
 	public static AssetEntryUsageSoap[] toSoapModels(AssetEntryUsage[] models) {
-		AssetEntryUsageSoap[] soapModels =
-			new AssetEntryUsageSoap[models.length];
+		AssetEntryUsageSoap[] soapModels = new AssetEntryUsageSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -64,12 +62,10 @@ public class AssetEntryUsageSoap implements Serializable {
 
 	public static AssetEntryUsageSoap[][] toSoapModels(
 		AssetEntryUsage[][] models) {
-
 		AssetEntryUsageSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new AssetEntryUsageSoap[models.length][models[0].length];
+			soapModels = new AssetEntryUsageSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new AssetEntryUsageSoap[0][0];
@@ -84,9 +80,7 @@ public class AssetEntryUsageSoap implements Serializable {
 
 	public static AssetEntryUsageSoap[] toSoapModels(
 		List<AssetEntryUsage> models) {
-
-		List<AssetEntryUsageSoap> soapModels =
-			new ArrayList<AssetEntryUsageSoap>(models.size());
+		List<AssetEntryUsageSoap> soapModels = new ArrayList<AssetEntryUsageSoap>(models.size());
 
 		for (AssetEntryUsage model : models) {
 			soapModels.add(toSoapModel(model));
@@ -223,5 +217,4 @@ public class AssetEntryUsageSoap implements Serializable {
 	private long _classPK;
 	private String _portletId;
 	private Date _lastPublishDate;
-
 }

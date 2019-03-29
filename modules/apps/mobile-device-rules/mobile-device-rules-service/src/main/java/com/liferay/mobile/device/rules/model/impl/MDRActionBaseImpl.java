@@ -32,9 +32,8 @@ import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class MDRActionBaseImpl
-	extends MDRActionModelImpl implements MDRAction {
-
+public abstract class MDRActionBaseImpl extends MDRActionModelImpl
+	implements MDRAction {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class MDRActionBaseImpl
 			MDRActionLocalServiceUtil.updateMDRAction(this);
 		}
 	}
-
 }

@@ -26,36 +26,29 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see LVEntryLocalizationModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationImpl")
 @ProviderType
 public interface LVEntryLocalization extends LVEntryLocalizationModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LVEntryLocalization, Long>
-		LV_ENTRY_LOCALIZATION_ID_ACCESSOR =
-			new Accessor<LVEntryLocalization, Long>() {
+	public static final Accessor<LVEntryLocalization, Long> LV_ENTRY_LOCALIZATION_ID_ACCESSOR =
+		new Accessor<LVEntryLocalization, Long>() {
+			@Override
+			public Long get(LVEntryLocalization lvEntryLocalization) {
+				return lvEntryLocalization.getLvEntryLocalizationId();
+			}
 
-				@Override
-				public Long get(LVEntryLocalization lvEntryLocalization) {
-					return lvEntryLocalization.getLvEntryLocalizationId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<LVEntryLocalization> getTypeClass() {
-					return LVEntryLocalization.class;
-				}
-
-			};
-
+			@Override
+			public Class<LVEntryLocalization> getTypeClass() {
+				return LVEntryLocalization.class;
+			}
+		};
 }

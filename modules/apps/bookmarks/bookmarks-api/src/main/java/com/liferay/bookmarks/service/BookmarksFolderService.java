@@ -17,6 +17,7 @@ package com.liferay.bookmarks.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -41,20 +42,16 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface BookmarksFolderService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksFolderServiceUtil} to access the bookmarks folder remote service. Add custom service methods to <code>com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public BookmarksFolder addFolder(
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+	public BookmarksFolder addFolder(long parentFolderId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFolder(long folderId) throws PortalException;
@@ -76,30 +73,29 @@ public interface BookmarksFolderService extends BaseService {
 	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksFolder> getFolders(
-		long groupId, long parentFolderId, int start, int end);
+	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BookmarksFolder> getFolders(
-		long groupId, long parentFolderId, int status, int start, int end);
+	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object> getFoldersAndEntries(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndEntries(
-		long groupId, long folderId, int status);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndEntries(
-		long groupId, long folderId, int status, int start, int end);
+	public List<Object> getFoldersAndEntries(long groupId, long folderId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndEntriesCount(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndEntriesCount(
-		long groupId, long folderId, int status);
+	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);
@@ -108,28 +104,28 @@ public interface BookmarksFolderService extends BaseService {
 	public int getFoldersCount(long groupId, long parentFolderId, int status);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSubfolderIds(List, long, long, boolean)}
-	 */
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getSubfolderIds(List, long, long, boolean)}
+	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId);
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
+		long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId, boolean recurse);
+	public void getSubfolderIds(List<Long> folderIds, long groupId,
+		long folderId, boolean recurse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getSubfolderIds(
-		long groupId, long folderId, boolean recurse);
+	public List<Long> getSubfolderIds(long groupId, long folderId,
+		boolean recurse);
 
 	public void mergeFolders(long folderId, long parentFolderId)
 		throws PortalException;
@@ -137,9 +133,8 @@ public interface BookmarksFolderService extends BaseService {
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException;
 
-	public BookmarksFolder moveFolderFromTrash(
-			long folderId, long parentFolderId)
-		throws PortalException;
+	public BookmarksFolder moveFolderFromTrash(long folderId,
+		long parentFolderId) throws PortalException;
 
 	public BookmarksFolder moveFolderToTrash(long folderId)
 		throws PortalException;
@@ -153,19 +148,16 @@ public interface BookmarksFolderService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFolder(long, long, String, String, ServiceContext)}
-	 and {@link #mergeFolders(long, long)}
-	 */
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateFolder(long, long, String, String, ServiceContext)}
+	and {@link #mergeFolders(long, long)}
+	*/
 	@Deprecated
-	public BookmarksFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
-		throws PortalException;
+	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
+		String name, String description, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
 
-	public BookmarksFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+	public BookmarksFolder updateFolder(long folderId, long parentFolderId,
+		String name, String description, ServiceContext serviceContext)
 		throws PortalException;
-
 }

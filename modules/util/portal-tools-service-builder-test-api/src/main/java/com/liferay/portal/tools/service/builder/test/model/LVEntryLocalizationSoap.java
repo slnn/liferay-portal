@@ -29,10 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class LVEntryLocalizationSoap implements Serializable {
-
-	public static LVEntryLocalizationSoap toSoapModel(
-		LVEntryLocalization model) {
-
+	public static LVEntryLocalizationSoap toSoapModel(LVEntryLocalization model) {
 		LVEntryLocalizationSoap soapModel = new LVEntryLocalizationSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
@@ -48,9 +45,7 @@ public class LVEntryLocalizationSoap implements Serializable {
 
 	public static LVEntryLocalizationSoap[] toSoapModels(
 		LVEntryLocalization[] models) {
-
-		LVEntryLocalizationSoap[] soapModels =
-			new LVEntryLocalizationSoap[models.length];
+		LVEntryLocalizationSoap[] soapModels = new LVEntryLocalizationSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -61,12 +56,10 @@ public class LVEntryLocalizationSoap implements Serializable {
 
 	public static LVEntryLocalizationSoap[][] toSoapModels(
 		LVEntryLocalization[][] models) {
-
 		LVEntryLocalizationSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new LVEntryLocalizationSoap[models.length][models[0].length];
+			soapModels = new LVEntryLocalizationSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LVEntryLocalizationSoap[0][0];
@@ -81,16 +74,13 @@ public class LVEntryLocalizationSoap implements Serializable {
 
 	public static LVEntryLocalizationSoap[] toSoapModels(
 		List<LVEntryLocalization> models) {
-
-		List<LVEntryLocalizationSoap> soapModels =
-			new ArrayList<LVEntryLocalizationSoap>(models.size());
+		List<LVEntryLocalizationSoap> soapModels = new ArrayList<LVEntryLocalizationSoap>(models.size());
 
 		for (LVEntryLocalization model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new LVEntryLocalizationSoap[soapModels.size()]);
+		return soapModels.toArray(new LVEntryLocalizationSoap[soapModels.size()]);
 	}
 
 	public LVEntryLocalizationSoap() {
@@ -167,5 +157,4 @@ public class LVEntryLocalizationSoap implements Serializable {
 	private String _languageId;
 	private String _title;
 	private String _content;
-
 }

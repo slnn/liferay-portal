@@ -15,11 +15,13 @@
 package com.liferay.changeset.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetEntryLocalServiceUtil;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
 import com.liferay.changeset.service.persistence.ChangesetEntryUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +58,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class ChangesetEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.changeset.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.changeset.service"));
 
 	@Before
 	public void setUp() {
@@ -106,8 +107,7 @@ public class ChangesetEntryPersistenceTest {
 
 		_persistence.remove(newChangesetEntry);
 
-		ChangesetEntry existingChangesetEntry = _persistence.fetchByPrimaryKey(
-			newChangesetEntry.getPrimaryKey());
+		ChangesetEntry existingChangesetEntry = _persistence.fetchByPrimaryKey(newChangesetEntry.getPrimaryKey());
 
 		Assert.assertNull(existingChangesetEntry);
 	}
@@ -143,37 +143,29 @@ public class ChangesetEntryPersistenceTest {
 
 		_changesetEntries.add(_persistence.update(newChangesetEntry));
 
-		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(
-			newChangesetEntry.getPrimaryKey());
+		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(newChangesetEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingChangesetEntry.getChangesetEntryId(),
+		Assert.assertEquals(existingChangesetEntry.getChangesetEntryId(),
 			newChangesetEntry.getChangesetEntryId());
-		Assert.assertEquals(
-			existingChangesetEntry.getGroupId(),
+		Assert.assertEquals(existingChangesetEntry.getGroupId(),
 			newChangesetEntry.getGroupId());
-		Assert.assertEquals(
-			existingChangesetEntry.getCompanyId(),
+		Assert.assertEquals(existingChangesetEntry.getCompanyId(),
 			newChangesetEntry.getCompanyId());
-		Assert.assertEquals(
-			existingChangesetEntry.getUserId(), newChangesetEntry.getUserId());
-		Assert.assertEquals(
-			existingChangesetEntry.getUserName(),
+		Assert.assertEquals(existingChangesetEntry.getUserId(),
+			newChangesetEntry.getUserId());
+		Assert.assertEquals(existingChangesetEntry.getUserName(),
 			newChangesetEntry.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingChangesetEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingChangesetEntry.getCreateDate()),
 			Time.getShortTimestamp(newChangesetEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingChangesetEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingChangesetEntry.getModifiedDate()),
 			Time.getShortTimestamp(newChangesetEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingChangesetEntry.getChangesetCollectionId(),
+		Assert.assertEquals(existingChangesetEntry.getChangesetCollectionId(),
 			newChangesetEntry.getChangesetCollectionId());
-		Assert.assertEquals(
-			existingChangesetEntry.getClassNameId(),
+		Assert.assertEquals(existingChangesetEntry.getClassNameId(),
 			newChangesetEntry.getClassNameId());
-		Assert.assertEquals(
-			existingChangesetEntry.getClassPK(),
+		Assert.assertEquals(existingChangesetEntry.getClassPK(),
 			newChangesetEntry.getClassPK());
 	}
 
@@ -200,25 +192,24 @@ public class ChangesetEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C_C() throws Exception {
-		_persistence.countByC_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C_C(0L, 0L, 0L);
 	}
@@ -227,8 +218,7 @@ public class ChangesetEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ChangesetEntry newChangesetEntry = addChangesetEntry();
 
-		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(
-			newChangesetEntry.getPrimaryKey());
+		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(newChangesetEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingChangesetEntry, newChangesetEntry);
 	}
@@ -242,24 +232,23 @@ public class ChangesetEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ChangesetEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"ChangesetEntry", "changesetEntryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "changesetCollectionId", true,
-			"classNameId", true, "classPK", true);
+		return OrderByComparatorFactoryUtil.create("ChangesetEntry",
+			"changesetEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "changesetCollectionId", true, "classNameId",
+			true, "classPK", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ChangesetEntry newChangesetEntry = addChangesetEntry();
 
-		ChangesetEntry existingChangesetEntry = _persistence.fetchByPrimaryKey(
-			newChangesetEntry.getPrimaryKey());
+		ChangesetEntry existingChangesetEntry = _persistence.fetchByPrimaryKey(newChangesetEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingChangesetEntry, newChangesetEntry);
 	}
@@ -268,8 +257,7 @@ public class ChangesetEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ChangesetEntry missingChangesetEntry = _persistence.fetchByPrimaryKey(
-			pk);
+		ChangesetEntry missingChangesetEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingChangesetEntry);
 	}
@@ -277,7 +265,6 @@ public class ChangesetEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		ChangesetEntry newChangesetEntry1 = addChangesetEntry();
 		ChangesetEntry newChangesetEntry2 = addChangesetEntry();
 
@@ -286,22 +273,18 @@ public class ChangesetEntryPersistenceTest {
 		primaryKeys.add(newChangesetEntry1.getPrimaryKey());
 		primaryKeys.add(newChangesetEntry2.getPrimaryKey());
 
-		Map<Serializable, ChangesetEntry> changesetEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ChangesetEntry> changesetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, changesetEntries.size());
-		Assert.assertEquals(
-			newChangesetEntry1,
+		Assert.assertEquals(newChangesetEntry1,
 			changesetEntries.get(newChangesetEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newChangesetEntry2,
+		Assert.assertEquals(newChangesetEntry2,
 			changesetEntries.get(newChangesetEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -311,8 +294,7 @@ public class ChangesetEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, ChangesetEntry> changesetEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ChangesetEntry> changesetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(changesetEntries.isEmpty());
 	}
@@ -320,7 +302,6 @@ public class ChangesetEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		ChangesetEntry newChangesetEntry = addChangesetEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -330,39 +311,36 @@ public class ChangesetEntryPersistenceTest {
 		primaryKeys.add(newChangesetEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, ChangesetEntry> changesetEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ChangesetEntry> changesetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, changesetEntries.size());
-		Assert.assertEquals(
-			newChangesetEntry,
+		Assert.assertEquals(newChangesetEntry,
 			changesetEntries.get(newChangesetEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ChangesetEntry> changesetEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ChangesetEntry> changesetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(changesetEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		ChangesetEntry newChangesetEntry = addChangesetEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newChangesetEntry.getPrimaryKey());
 
-		Map<Serializable, ChangesetEntry> changesetEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ChangesetEntry> changesetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, changesetEntries.size());
-		Assert.assertEquals(
-			newChangesetEntry,
+		Assert.assertEquals(newChangesetEntry,
 			changesetEntries.get(newChangesetEntry.getPrimaryKey()));
 	}
 
@@ -370,19 +348,15 @@ public class ChangesetEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			ChangesetEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = ChangesetEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>() {
 				@Override
 				public void performAction(ChangesetEntry changesetEntry) {
 					Assert.assertNotNull(changesetEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -391,18 +365,17 @@ public class ChangesetEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		ChangesetEntry newChangesetEntry = addChangesetEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ChangesetEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ChangesetEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"changesetEntryId", newChangesetEntry.getChangesetEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("changesetEntryId",
+				newChangesetEntry.getChangesetEntryId()));
 
-		List<ChangesetEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<ChangesetEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -413,34 +386,32 @@ public class ChangesetEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ChangesetEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ChangesetEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"changesetEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("changesetEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<ChangesetEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<ChangesetEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		ChangesetEntry newChangesetEntry = addChangesetEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ChangesetEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ChangesetEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("changesetEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"changesetEntryId"));
 
 		Object newChangesetEntryId = newChangesetEntry.getChangesetEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"changesetEntryId", new Object[] {newChangesetEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("changesetEntryId",
+				new Object[] { newChangesetEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -453,15 +424,14 @@ public class ChangesetEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ChangesetEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ChangesetEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("changesetEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"changesetEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"changesetEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("changesetEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -474,23 +444,19 @@ public class ChangesetEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(
-			newChangesetEntry.getPrimaryKey());
+		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(newChangesetEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingChangesetEntry.getChangesetCollectionId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingChangesetEntry, "getOriginalChangesetCollectionId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingChangesetEntry.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingChangesetEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingChangesetEntry.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingChangesetEntry, "getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingChangesetEntry.getChangesetCollectionId()),
+			ReflectionTestUtil.<Long>invoke(existingChangesetEntry,
+				"getOriginalChangesetCollectionId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingChangesetEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingChangesetEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingChangesetEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingChangesetEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected ChangesetEntry addChangesetEntry() throws Exception {
@@ -521,9 +487,7 @@ public class ChangesetEntryPersistenceTest {
 		return changesetEntry;
 	}
 
-	private List<ChangesetEntry> _changesetEntries =
-		new ArrayList<ChangesetEntry>();
+	private List<ChangesetEntry> _changesetEntries = new ArrayList<ChangesetEntry>();
 	private ChangesetEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

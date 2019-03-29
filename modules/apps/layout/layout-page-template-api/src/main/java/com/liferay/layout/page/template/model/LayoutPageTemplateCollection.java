@@ -27,40 +27,31 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see LayoutPageTemplateCollectionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl"
-)
+@ImplementationClassName("com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl")
 @ProviderType
 public interface LayoutPageTemplateCollection
 	extends LayoutPageTemplateCollectionModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutPageTemplateCollection, Long>
-		LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_ACCESSOR =
-			new Accessor<LayoutPageTemplateCollection, Long>() {
+	public static final Accessor<LayoutPageTemplateCollection, Long> LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_ACCESSOR =
+		new Accessor<LayoutPageTemplateCollection, Long>() {
+			@Override
+			public Long get(
+				LayoutPageTemplateCollection layoutPageTemplateCollection) {
+				return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+			}
 
-				@Override
-				public Long get(
-					LayoutPageTemplateCollection layoutPageTemplateCollection) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<LayoutPageTemplateCollection> getTypeClass() {
-					return LayoutPageTemplateCollection.class;
-				}
-
-			};
-
+			@Override
+			public Class<LayoutPageTemplateCollection> getTypeClass() {
+				return LayoutPageTemplateCollection.class;
+			}
+		};
 }

@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see LVEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.LVEntryImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.LVEntryImpl")
 @ProviderType
 public interface LVEntry extends LVEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LVEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LVEntry, Long> LV_ENTRY_ID_ACCESSOR =
-		new Accessor<LVEntry, Long>() {
-
+	public static final Accessor<LVEntry, Long> LV_ENTRY_ID_ACCESSOR = new Accessor<LVEntry, Long>() {
 			@Override
 			public Long get(LVEntry lvEntry) {
 				return lvEntry.getLvEntryId();
@@ -55,7 +50,5 @@ public interface LVEntry extends LVEntryModel, PersistedModel {
 			public Class<LVEntry> getTypeClass() {
 				return LVEntry.class;
 			}
-
 		};
-
 }

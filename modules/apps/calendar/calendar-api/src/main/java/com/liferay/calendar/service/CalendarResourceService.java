@@ -17,6 +17,7 @@ package com.liferay.calendar.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.calendar.model.CalendarResource;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -44,38 +45,28 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=calendar",
-		"json.web.service.context.path=CalendarResource"
-	},
-	service = CalendarResourceService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=calendar", "json.web.service.context.path=CalendarResource"}, service = CalendarResourceService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface CalendarResourceService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarResourceServiceUtil} to access the calendar resource remote service. Add custom service methods to <code>com.liferay.calendar.service.impl.CalendarResourceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CalendarResource addCalendarResource(
-			long groupId, long classNameId, long classPK, String classUuid,
-			String code, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active,
-			ServiceContext serviceContext)
+	public CalendarResource addCalendarResource(long groupId, long classNameId,
+		long classPK, String classUuid, String code,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CalendarResource deleteCalendarResource(long calendarResourceId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(
-			long classNameId, long classPK)
+	public CalendarResource fetchCalendarResource(long classNameId, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -83,39 +74,35 @@ public interface CalendarResourceService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarResource> search(
-		long companyId, long[] groupIds, long[] classNameIds, String keywords,
+	public List<CalendarResource> search(long companyId, long[] groupIds,
+		long[] classNameIds, String keywords, boolean active,
+		boolean andOperator, int start, int end,
+		OrderByComparator<CalendarResource> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarResource> search(long companyId, long[] groupIds,
+		long[] classNameIds, String code, String name, String description,
 		boolean active, boolean andOperator, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CalendarResource> search(
-		long companyId, long[] groupIds, long[] classNameIds, String code,
-		String name, String description, boolean active, boolean andOperator,
-		int start, int end,
-		OrderByComparator<CalendarResource> orderByComparator);
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, String keywords, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		long companyId, long[] groupIds, long[] classNameIds, String keywords,
-		boolean active);
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, String code, String name, String description,
+		boolean active, boolean andOperator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		long companyId, long[] groupIds, long[] classNameIds, String code,
-		String name, String description, boolean active, boolean andOperator);
-
-	public CalendarResource updateCalendarResource(
-			long calendarResourceId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active,
-			ServiceContext serviceContext)
+	public CalendarResource updateCalendarResource(long calendarResourceId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
-
 }

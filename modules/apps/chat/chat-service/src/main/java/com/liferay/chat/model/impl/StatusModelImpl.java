@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.chat.model.Status;
 import com.liferay.chat.model.StatusModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -55,25 +58,25 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class StatusModelImpl
-	extends BaseModelImpl<Status> implements StatusModel {
-
+public class StatusModelImpl extends BaseModelImpl<Status>
+	implements StatusModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a status model instance should use the <code>Status</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Chat_Status";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"statusId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"modifiedDate", Types.BIGINT}, {"online_", Types.BOOLEAN},
-		{"awake", Types.BOOLEAN}, {"activePanelIds", Types.VARCHAR},
-		{"message", Types.VARCHAR}, {"playSound", Types.BOOLEAN}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "statusId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "modifiedDate", Types.BIGINT },
+			{ "online_", Types.BOOLEAN },
+			{ "awake", Types.BOOLEAN },
+			{ "activePanelIds", Types.VARCHAR },
+			{ "message", Types.VARCHAR },
+			{ "playSound", Types.BOOLEAN }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
@@ -86,48 +89,28 @@ public class StatusModelImpl
 		TABLE_COLUMNS_MAP.put("playSound", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table Chat_Status (statusId LONG not null primary key,userId LONG,modifiedDate LONG,online_ BOOLEAN,awake BOOLEAN,activePanelIds STRING null,message STRING null,playSound BOOLEAN)";
-
+	public static final String TABLE_SQL_CREATE = "create table Chat_Status (statusId LONG not null primary key,userId LONG,modifiedDate LONG,online_ BOOLEAN,awake BOOLEAN,activePanelIds STRING null,message STRING null,playSound BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Chat_Status";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY status.statusId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY Chat_Status.statusId ASC";
-
+	public static final String ORDER_BY_SQL = " ORDER BY Chat_Status.statusId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.chat.model.Status"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.chat.model.Status"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.chat.model.Status"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.chat.model.Status"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.chat.model.Status"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.chat.model.Status"),
+			true);
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 1L;
-
 	public static final long ONLINE_COLUMN_BITMASK = 2L;
-
 	public static final long USERID_COLUMN_BITMASK = 4L;
-
 	public static final long STATUSID_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.chat.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.chat.model.Status"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.chat.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.chat.model.Status"));
 
 	public StatusModelImpl() {
 	}
@@ -166,17 +149,14 @@ public class StatusModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Status, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Status, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Status, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Status, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<Status, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((Status)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Status)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -187,18 +167,15 @@ public class StatusModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Status, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Status, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Status, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Status, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(Status)this, entry.getValue());
+				attributeSetterBiConsumer.accept((Status)this, entry.getValue());
 			}
 		}
 	}
@@ -207,54 +184,38 @@ public class StatusModelImpl
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Status, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<Status, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Status, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Status, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<Status, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Status, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Status, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Status, Object>>();
-		Map<String, BiConsumer<Status, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Status, ?>>();
+		Map<String, Function<Status, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Status, Object>>();
+		Map<String, BiConsumer<Status, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Status, ?>>();
+
 
 		attributeGetterFunctions.put("statusId", Status::getStatusId);
-		attributeSetterBiConsumers.put(
-			"statusId", (BiConsumer<Status, Long>)Status::setStatusId);
+		attributeSetterBiConsumers.put("statusId", (BiConsumer<Status, Long>)Status::setStatusId);
 		attributeGetterFunctions.put("userId", Status::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Status, Long>)Status::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Status, Long>)Status::setUserId);
 		attributeGetterFunctions.put("modifiedDate", Status::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate", (BiConsumer<Status, Long>)Status::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Status, Long>)Status::setModifiedDate);
 		attributeGetterFunctions.put("online", Status::getOnline);
-		attributeSetterBiConsumers.put(
-			"online", (BiConsumer<Status, Boolean>)Status::setOnline);
+		attributeSetterBiConsumers.put("online", (BiConsumer<Status, Boolean>)Status::setOnline);
 		attributeGetterFunctions.put("awake", Status::getAwake);
-		attributeSetterBiConsumers.put(
-			"awake", (BiConsumer<Status, Boolean>)Status::setAwake);
-		attributeGetterFunctions.put(
-			"activePanelIds", Status::getActivePanelIds);
-		attributeSetterBiConsumers.put(
-			"activePanelIds",
-			(BiConsumer<Status, String>)Status::setActivePanelIds);
+		attributeSetterBiConsumers.put("awake", (BiConsumer<Status, Boolean>)Status::setAwake);
+		attributeGetterFunctions.put("activePanelIds", Status::getActivePanelIds);
+		attributeSetterBiConsumers.put("activePanelIds", (BiConsumer<Status, String>)Status::setActivePanelIds);
 		attributeGetterFunctions.put("message", Status::getMessage);
-		attributeSetterBiConsumers.put(
-			"message", (BiConsumer<Status, String>)Status::setMessage);
+		attributeSetterBiConsumers.put("message", (BiConsumer<Status, String>)Status::setMessage);
 		attributeGetterFunctions.put("playSound", Status::getPlaySound);
-		attributeSetterBiConsumers.put(
-			"playSound", (BiConsumer<Status, Boolean>)Status::setPlaySound);
+		attributeSetterBiConsumers.put("playSound", (BiConsumer<Status, Boolean>)Status::setPlaySound);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -420,8 +381,8 @@ public class StatusModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, Status.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			Status.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -434,9 +395,8 @@ public class StatusModelImpl
 	@Override
 	public Status toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Status)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (Status)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -568,17 +528,14 @@ public class StatusModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<Status, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Status, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Status, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Status, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<Status, Object> attributeGetterFunction = entry.getValue();
 
@@ -599,19 +556,16 @@ public class StatusModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Status, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Status, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Status, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Status, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<Status, Object> attributeGetterFunction = entry.getValue();
 
@@ -627,12 +581,10 @@ public class StatusModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Status.class.getClassLoader();
+	private static final ClassLoader _classLoader = Status.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Status.class, ModelWrapper.class
-	};
-
+			Status.class, ModelWrapper.class
+		};
 	private long _statusId;
 	private long _userId;
 	private long _originalUserId;
@@ -649,5 +601,4 @@ public class StatusModelImpl
 	private boolean _playSound;
 	private long _columnBitmask;
 	private Status _escapedModel;
-
 }

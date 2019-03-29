@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class MDRRuleSoap implements Serializable {
-
 	public static MDRRuleSoap toSoapModel(MDRRule model) {
 		MDRRuleSoap soapModel = new MDRRuleSoap();
 
@@ -80,8 +79,7 @@ public class MDRRuleSoap implements Serializable {
 	}
 
 	public static MDRRuleSoap[] toSoapModels(List<MDRRule> models) {
-		List<MDRRuleSoap> soapModels = new ArrayList<MDRRuleSoap>(
-			models.size());
+		List<MDRRuleSoap> soapModels = new ArrayList<MDRRuleSoap>(models.size());
 
 		for (MDRRule model : models) {
 			soapModels.add(toSoapModel(model));
@@ -227,5 +225,4 @@ public class MDRRuleSoap implements Serializable {
 	private String _type;
 	private String _typeSettings;
 	private Date _lastPublishDate;
-
 }

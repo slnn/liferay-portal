@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.liferay.push.notifications.service.PushNotificationsDeviceServiceUtil;
 
 import java.rmi.RemoteException;
@@ -63,20 +64,14 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PushNotificationsDeviceServiceSoap {
-
-	public static
-		com.liferay.push.notifications.model.PushNotificationsDeviceSoap
-				addPushNotificationsDevice(String token, String platform)
-			throws RemoteException {
-
+	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap addPushNotificationsDevice(
+		String token, String platform) throws RemoteException {
 		try {
-			com.liferay.push.notifications.model.PushNotificationsDevice
-				returnValue =
-					PushNotificationsDeviceServiceUtil.
-						addPushNotificationsDevice(token, platform);
+			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
+				PushNotificationsDeviceServiceUtil.addPushNotificationsDevice(token,
+					platform);
 
-			return com.liferay.push.notifications.model.
-				PushNotificationsDeviceSoap.toSoapModel(returnValue);
+			return com.liferay.push.notifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -85,20 +80,13 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	public static
-		com.liferay.push.notifications.model.PushNotificationsDeviceSoap
-				deletePushNotificationsDevice(long pushNotificationsDeviceId)
-			throws RemoteException {
-
+	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDevice(
+		long pushNotificationsDeviceId) throws RemoteException {
 		try {
-			com.liferay.push.notifications.model.PushNotificationsDevice
-				returnValue =
-					PushNotificationsDeviceServiceUtil.
-						deletePushNotificationsDevice(
-							pushNotificationsDeviceId);
+			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
+				PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice(pushNotificationsDeviceId);
 
-			return com.liferay.push.notifications.model.
-				PushNotificationsDeviceSoap.toSoapModel(returnValue);
+			return com.liferay.push.notifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -107,19 +95,13 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	public static
-		com.liferay.push.notifications.model.PushNotificationsDeviceSoap
-				deletePushNotificationsDevice(String token)
-			throws RemoteException {
-
+	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDevice(
+		String token) throws RemoteException {
 		try {
-			com.liferay.push.notifications.model.PushNotificationsDevice
-				returnValue =
-					PushNotificationsDeviceServiceUtil.
-						deletePushNotificationsDevice(token);
+			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
+				PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice(token);
 
-			return com.liferay.push.notifications.model.
-				PushNotificationsDeviceSoap.toSoapModel(returnValue);
+			return com.liferay.push.notifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -130,10 +112,9 @@ public class PushNotificationsDeviceServiceSoap {
 
 	public static void sendPushNotification(long[] toUserIds, String payload)
 		throws RemoteException {
-
 		try {
-			PushNotificationsDeviceServiceUtil.sendPushNotification(
-				toUserIds, payload);
+			PushNotificationsDeviceServiceUtil.sendPushNotification(toUserIds,
+				payload);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -142,13 +123,12 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	public static void sendPushNotification(
-			String platform, java.util.List<String> tokens, String payload)
+	public static void sendPushNotification(String platform,
+		java.util.List<String> tokens, String payload)
 		throws RemoteException {
-
 		try {
-			PushNotificationsDeviceServiceUtil.sendPushNotification(
-				platform, tokens, payload);
+			PushNotificationsDeviceServiceUtil.sendPushNotification(platform,
+				tokens, payload);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -157,7 +137,5 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PushNotificationsDeviceServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(PushNotificationsDeviceServiceSoap.class);
 }

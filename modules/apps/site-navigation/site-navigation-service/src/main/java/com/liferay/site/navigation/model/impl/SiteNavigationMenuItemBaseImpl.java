@@ -34,7 +34,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUti
 @ProviderType
 public abstract class SiteNavigationMenuItemBaseImpl
 	extends SiteNavigationMenuItemModelImpl implements SiteNavigationMenuItem {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,13 +42,10 @@ public abstract class SiteNavigationMenuItemBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
-				this);
+			SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(this);
 		}
 		else {
-			SiteNavigationMenuItemLocalServiceUtil.updateSiteNavigationMenuItem(
-				this);
+			SiteNavigationMenuItemLocalServiceUtil.updateSiteNavigationMenuItem(this);
 		}
 	}
-
 }

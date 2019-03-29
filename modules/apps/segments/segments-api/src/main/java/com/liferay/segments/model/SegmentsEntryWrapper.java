@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SegmentsEntryWrapper
-	extends BaseModelWrapper<SegmentsEntry>
+public class SegmentsEntryWrapper extends BaseModelWrapper<SegmentsEntry>
 	implements SegmentsEntry, ModelWrapper<SegmentsEntry> {
-
 	public SegmentsEntryWrapper(SegmentsEntry segmentsEntry) {
 		super(segmentsEntry);
 	}
@@ -151,10 +149,10 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Returns the active of this segments entry.
-	 *
-	 * @return the active of this segments entry
-	 */
+	* Returns the active of this segments entry.
+	*
+	* @return the active of this segments entry
+	*/
 	@Override
 	public boolean getActive() {
 		return model.getActive();
@@ -166,30 +164,30 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Returns the company ID of this segments entry.
-	 *
-	 * @return the company ID of this segments entry
-	 */
+	* Returns the company ID of this segments entry.
+	*
+	* @return the company ID of this segments entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this segments entry.
-	 *
-	 * @return the create date of this segments entry
-	 */
+	* Returns the create date of this segments entry.
+	*
+	* @return the create date of this segments entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the criteria of this segments entry.
-	 *
-	 * @return the criteria of this segments entry
-	 */
+	* Returns the criteria of this segments entry.
+	*
+	* @return the criteria of this segments entry
+	*/
 	@Override
 	public String getCriteria() {
 		return model.getCriteria();
@@ -206,56 +204,56 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Returns the description of this segments entry.
-	 *
-	 * @return the description of this segments entry
-	 */
+	* Returns the description of this segments entry.
+	*
+	* @return the description of this segments entry
+	*/
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	 * Returns the localized description of this segments entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized description of this segments entry
-	 */
+	* Returns the localized description of this segments entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this segments entry
+	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
 		return model.getDescription(locale);
 	}
 
 	/**
-	 * Returns the localized description of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this segments entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
+	* Returns the localized description of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this segments entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return model.getDescription(locale, useDefault);
 	}
 
 	/**
-	 * Returns the localized description of this segments entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized description of this segments entry
-	 */
+	* Returns the localized description of this segments entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this segments entry
+	*/
 	@Override
 	public String getDescription(String languageId) {
 		return model.getDescription(languageId);
 	}
 
 	/**
-	 * Returns the localized description of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this segments entry
-	 */
+	* Returns the localized description of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this segments entry
+	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
 		return model.getDescription(languageId, useDefault);
@@ -272,96 +270,96 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Returns a map of the locales and localized descriptions of this segments entry.
-	 *
-	 * @return the locales and localized descriptions of this segments entry
-	 */
+	* Returns a map of the locales and localized descriptions of this segments entry.
+	*
+	* @return the locales and localized descriptions of this segments entry
+	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
 		return model.getDescriptionMap();
 	}
 
 	/**
-	 * Returns the group ID of this segments entry.
-	 *
-	 * @return the group ID of this segments entry
-	 */
+	* Returns the group ID of this segments entry.
+	*
+	* @return the group ID of this segments entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the key of this segments entry.
-	 *
-	 * @return the key of this segments entry
-	 */
+	* Returns the key of this segments entry.
+	*
+	* @return the key of this segments entry
+	*/
 	@Override
 	public String getKey() {
 		return model.getKey();
 	}
 
 	/**
-	 * Returns the modified date of this segments entry.
-	 *
-	 * @return the modified date of this segments entry
-	 */
+	* Returns the modified date of this segments entry.
+	*
+	* @return the modified date of this segments entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the name of this segments entry.
-	 *
-	 * @return the name of this segments entry
-	 */
+	* Returns the name of this segments entry.
+	*
+	* @return the name of this segments entry
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	 * Returns the localized name of this segments entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this segments entry
-	 */
+	* Returns the localized name of this segments entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this segments entry
+	*/
 	@Override
 	public String getName(java.util.Locale locale) {
 		return model.getName(locale);
 	}
 
 	/**
-	 * Returns the localized name of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this segments entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
+	* Returns the localized name of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this segments entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
 		return model.getName(locale, useDefault);
 	}
 
 	/**
-	 * Returns the localized name of this segments entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this segments entry
-	 */
+	* Returns the localized name of this segments entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this segments entry
+	*/
 	@Override
 	public String getName(String languageId) {
 		return model.getName(languageId);
 	}
 
 	/**
-	 * Returns the localized name of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this segments entry
-	 */
+	* Returns the localized name of this segments entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this segments entry
+	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
 		return model.getName(languageId, useDefault);
@@ -378,90 +376,90 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Returns a map of the locales and localized names of this segments entry.
-	 *
-	 * @return the locales and localized names of this segments entry
-	 */
+	* Returns a map of the locales and localized names of this segments entry.
+	*
+	* @return the locales and localized names of this segments entry
+	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
 		return model.getNameMap();
 	}
 
 	/**
-	 * Returns the primary key of this segments entry.
-	 *
-	 * @return the primary key of this segments entry
-	 */
+	* Returns the primary key of this segments entry.
+	*
+	* @return the primary key of this segments entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the segments entry ID of this segments entry.
-	 *
-	 * @return the segments entry ID of this segments entry
-	 */
+	* Returns the segments entry ID of this segments entry.
+	*
+	* @return the segments entry ID of this segments entry
+	*/
 	@Override
 	public long getSegmentsEntryId() {
 		return model.getSegmentsEntryId();
 	}
 
 	/**
-	 * Returns the source of this segments entry.
-	 *
-	 * @return the source of this segments entry
-	 */
+	* Returns the source of this segments entry.
+	*
+	* @return the source of this segments entry
+	*/
 	@Override
 	public String getSource() {
 		return model.getSource();
 	}
 
 	/**
-	 * Returns the type of this segments entry.
-	 *
-	 * @return the type of this segments entry
-	 */
+	* Returns the type of this segments entry.
+	*
+	* @return the type of this segments entry
+	*/
 	@Override
 	public String getType() {
 		return model.getType();
 	}
 
 	/**
-	 * Returns the user ID of this segments entry.
-	 *
-	 * @return the user ID of this segments entry
-	 */
+	* Returns the user ID of this segments entry.
+	*
+	* @return the user ID of this segments entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this segments entry.
-	 *
-	 * @return the user name of this segments entry
-	 */
+	* Returns the user name of this segments entry.
+	*
+	* @return the user name of this segments entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this segments entry.
-	 *
-	 * @return the user uuid of this segments entry
-	 */
+	* Returns the user uuid of this segments entry.
+	*
+	* @return the user uuid of this segments entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns <code>true</code> if this segments entry is active.
-	 *
-	 * @return <code>true</code> if this segments entry is active; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this segments entry is active.
+	*
+	* @return <code>true</code> if this segments entry is active; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isActive() {
 		return model.isActive();
@@ -480,91 +478,87 @@ public class SegmentsEntryWrapper
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-
 		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
-			java.util.Locale defaultImportLocale)
+		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
-	 * Sets whether this segments entry is active.
-	 *
-	 * @param active the active of this segments entry
-	 */
+	* Sets whether this segments entry is active.
+	*
+	* @param active the active of this segments entry
+	*/
 	@Override
 	public void setActive(boolean active) {
 		model.setActive(active);
 	}
 
 	/**
-	 * Sets the company ID of this segments entry.
-	 *
-	 * @param companyId the company ID of this segments entry
-	 */
+	* Sets the company ID of this segments entry.
+	*
+	* @param companyId the company ID of this segments entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this segments entry.
-	 *
-	 * @param createDate the create date of this segments entry
-	 */
+	* Sets the create date of this segments entry.
+	*
+	* @param createDate the create date of this segments entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the criteria of this segments entry.
-	 *
-	 * @param criteria the criteria of this segments entry
-	 */
+	* Sets the criteria of this segments entry.
+	*
+	* @param criteria the criteria of this segments entry
+	*/
 	@Override
 	public void setCriteria(String criteria) {
 		model.setCriteria(criteria);
 	}
 
 	/**
-	 * Sets the description of this segments entry.
-	 *
-	 * @param description the description of this segments entry
-	 */
+	* Sets the description of this segments entry.
+	*
+	* @param description the description of this segments entry
+	*/
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	 * Sets the localized description of this segments entry in the language.
-	 *
-	 * @param description the localized description of this segments entry
-	 * @param locale the locale of the language
-	 */
+	* Sets the localized description of this segments entry in the language.
+	*
+	* @param description the localized description of this segments entry
+	* @param locale the locale of the language
+	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
 		model.setDescription(description, locale);
 	}
 
 	/**
-	 * Sets the localized description of this segments entry in the language, and sets the default locale.
-	 *
-	 * @param description the localized description of this segments entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized description of this segments entry in the language, and sets the default locale.
+	*
+	* @param description the localized description of this segments entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setDescription(
-		String description, java.util.Locale locale,
+	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-
 		model.setDescription(description, locale, defaultLocale);
 	}
 
@@ -574,93 +568,89 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Sets the localized descriptions of this segments entry from the map of locales and localized descriptions.
-	 *
-	 * @param descriptionMap the locales and localized descriptions of this segments entry
-	 */
+	* Sets the localized descriptions of this segments entry from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this segments entry
+	*/
 	@Override
-	public void setDescriptionMap(
-		Map<java.util.Locale, String> descriptionMap) {
-
+	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
 		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
-	 * Sets the localized descriptions of this segments entry from the map of locales and localized descriptions, and sets the default locale.
-	 *
-	 * @param descriptionMap the locales and localized descriptions of this segments entry
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized descriptions of this segments entry from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this segments entry
+	* @param defaultLocale the default locale
+	*/
 	@Override
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-
 		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
-	 * Sets the group ID of this segments entry.
-	 *
-	 * @param groupId the group ID of this segments entry
-	 */
+	* Sets the group ID of this segments entry.
+	*
+	* @param groupId the group ID of this segments entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the key of this segments entry.
-	 *
-	 * @param key the key of this segments entry
-	 */
+	* Sets the key of this segments entry.
+	*
+	* @param key the key of this segments entry
+	*/
 	@Override
 	public void setKey(String key) {
 		model.setKey(key);
 	}
 
 	/**
-	 * Sets the modified date of this segments entry.
-	 *
-	 * @param modifiedDate the modified date of this segments entry
-	 */
+	* Sets the modified date of this segments entry.
+	*
+	* @param modifiedDate the modified date of this segments entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the name of this segments entry.
-	 *
-	 * @param name the name of this segments entry
-	 */
+	* Sets the name of this segments entry.
+	*
+	* @param name the name of this segments entry
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the localized name of this segments entry in the language.
-	 *
-	 * @param name the localized name of this segments entry
-	 * @param locale the locale of the language
-	 */
+	* Sets the localized name of this segments entry in the language.
+	*
+	* @param name the localized name of this segments entry
+	* @param locale the locale of the language
+	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
 		model.setName(name, locale);
 	}
 
 	/**
-	 * Sets the localized name of this segments entry in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this segments entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized name of this segments entry in the language, and sets the default locale.
+	*
+	* @param name the localized name of this segments entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setName(
-		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
-
+	public void setName(String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
 		model.setName(name, locale, defaultLocale);
 	}
 
@@ -670,93 +660,92 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
-	 * Sets the localized names of this segments entry from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this segments entry
-	 */
+	* Sets the localized names of this segments entry from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this segments entry
+	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
 		model.setNameMap(nameMap);
 	}
 
 	/**
-	 * Sets the localized names of this segments entry from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this segments entry
-	 * @param defaultLocale the default locale
-	 */
+	* Sets the localized names of this segments entry from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this segments entry
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public void setNameMap(
-		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
-
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
+		java.util.Locale defaultLocale) {
 		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
-	 * Sets the primary key of this segments entry.
-	 *
-	 * @param primaryKey the primary key of this segments entry
-	 */
+	* Sets the primary key of this segments entry.
+	*
+	* @param primaryKey the primary key of this segments entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the segments entry ID of this segments entry.
-	 *
-	 * @param segmentsEntryId the segments entry ID of this segments entry
-	 */
+	* Sets the segments entry ID of this segments entry.
+	*
+	* @param segmentsEntryId the segments entry ID of this segments entry
+	*/
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
 		model.setSegmentsEntryId(segmentsEntryId);
 	}
 
 	/**
-	 * Sets the source of this segments entry.
-	 *
-	 * @param source the source of this segments entry
-	 */
+	* Sets the source of this segments entry.
+	*
+	* @param source the source of this segments entry
+	*/
 	@Override
 	public void setSource(String source) {
 		model.setSource(source);
 	}
 
 	/**
-	 * Sets the type of this segments entry.
-	 *
-	 * @param type the type of this segments entry
-	 */
+	* Sets the type of this segments entry.
+	*
+	* @param type the type of this segments entry
+	*/
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	 * Sets the user ID of this segments entry.
-	 *
-	 * @param userId the user ID of this segments entry
-	 */
+	* Sets the user ID of this segments entry.
+	*
+	* @param userId the user ID of this segments entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this segments entry.
-	 *
-	 * @param userName the user name of this segments entry
-	 */
+	* Sets the user name of this segments entry.
+	*
+	* @param userName the user name of this segments entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this segments entry.
-	 *
-	 * @param userUuid the user uuid of this segments entry
-	 */
+	* Sets the user uuid of this segments entry.
+	*
+	* @param userUuid the user uuid of this segments entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -766,5 +755,4 @@ public class SegmentsEntryWrapper
 	protected SegmentsEntryWrapper wrap(SegmentsEntry segmentsEntry) {
 		return new SegmentsEntryWrapper(segmentsEntry);
 	}
-
 }

@@ -17,9 +17,11 @@ package com.liferay.change.tracking.uad.anonymizer;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.uad.constants.CTUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -36,13 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseCTEntryUADAnonymizer
-	extends DynamicQueryUADAnonymizer<CTEntry> {
-
+public abstract class BaseCTEntryUADAnonymizer extends DynamicQueryUADAnonymizer<CTEntry> {
 	@Override
 	public void autoAnonymize(CTEntry ctEntry, long userId, User anonymousUser)
 		throws PortalException {
-
 		if (ctEntry.getUserId() == userId) {
 			ctEntry.setUserId(anonymousUser.getUserId());
 			ctEntry.setUserName(anonymousUser.getFullName());
@@ -73,5 +72,4 @@ public abstract class BaseCTEntryUADAnonymizer
 
 	@Reference
 	protected CTEntryLocalService ctEntryLocalService;
-
 }

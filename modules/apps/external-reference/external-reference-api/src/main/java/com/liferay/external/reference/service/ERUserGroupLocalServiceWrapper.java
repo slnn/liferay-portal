@@ -26,33 +26,28 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class ERUserGroupLocalServiceWrapper
-	implements ERUserGroupLocalService,
-			   ServiceWrapper<ERUserGroupLocalService> {
-
+public class ERUserGroupLocalServiceWrapper implements ERUserGroupLocalService,
+	ServiceWrapper<ERUserGroupLocalService> {
 	public ERUserGroupLocalServiceWrapper(
 		ERUserGroupLocalService erUserGroupLocalService) {
-
 		_erUserGroupLocalService = erUserGroupLocalService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup addOrUpdateUserGroup(
-			String externalReferenceCode, long userId, long companyId,
-			String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		String externalReferenceCode, long userId, long companyId, String name,
+		String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _erUserGroupLocalService.addOrUpdateUserGroup(
-			externalReferenceCode, userId, companyId, name, description,
-			serviceContext);
+		return _erUserGroupLocalService.addOrUpdateUserGroup(externalReferenceCode,
+			userId, companyId, name, description, serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _erUserGroupLocalService.getOSGiServiceIdentifier();
@@ -66,10 +61,8 @@ public class ERUserGroupLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		ERUserGroupLocalService erUserGroupLocalService) {
-
 		_erUserGroupLocalService = erUserGroupLocalService;
 	}
 
 	private ERUserGroupLocalService _erUserGroupLocalService;
-
 }

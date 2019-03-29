@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
@@ -67,9 +68,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class SegmentsExperienceLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements SegmentsExperienceLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements SegmentsExperienceLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -86,7 +86,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Override
 	public SegmentsExperience addSegmentsExperience(
 		SegmentsExperience segmentsExperience) {
-
 		segmentsExperience.setNew(true);
 
 		return segmentsExperiencePersistence.update(segmentsExperience);
@@ -102,7 +101,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public SegmentsExperience createSegmentsExperience(
 		long segmentsExperienceId) {
-
 		return segmentsExperiencePersistence.create(segmentsExperienceId);
 	}
 
@@ -116,9 +114,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public SegmentsExperience deleteSegmentsExperience(
-			long segmentsExperienceId)
-		throws PortalException {
-
+		long segmentsExperienceId) throws PortalException {
 		return segmentsExperiencePersistence.remove(segmentsExperienceId);
 	}
 
@@ -132,9 +128,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public SegmentsExperience deleteSegmentsExperience(
-			SegmentsExperience segmentsExperience)
-		throws PortalException {
-
+		SegmentsExperience segmentsExperience) throws PortalException {
 		return segmentsExperiencePersistence.remove(segmentsExperience);
 	}
 
@@ -142,8 +136,8 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			SegmentsExperience.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(SegmentsExperience.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -170,11 +164,10 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return segmentsExperiencePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return segmentsExperiencePersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -191,12 +184,10 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return segmentsExperiencePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return segmentsExperiencePersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -207,8 +198,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return segmentsExperiencePersistence.countWithDynamicQuery(
-			dynamicQuery);
+		return segmentsExperiencePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -219,19 +209,15 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return segmentsExperiencePersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return segmentsExperiencePersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
-	public SegmentsExperience fetchSegmentsExperience(
-		long segmentsExperienceId) {
-
-		return segmentsExperiencePersistence.fetchByPrimaryKey(
-			segmentsExperienceId);
+	public SegmentsExperience fetchSegmentsExperience(long segmentsExperienceId) {
+		return segmentsExperiencePersistence.fetchByPrimaryKey(segmentsExperienceId);
 	}
 
 	/**
@@ -244,36 +230,27 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Override
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException {
-
-		return segmentsExperiencePersistence.findByPrimaryKey(
-			segmentsExperienceId);
+		return segmentsExperiencePersistence.findByPrimaryKey(segmentsExperienceId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			segmentsExperienceLocalService);
+		actionableDynamicQuery.setBaseLocalService(segmentsExperienceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SegmentsExperience.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"segmentsExperienceId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("segmentsExperienceId");
 
 		return actionableDynamicQuery;
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			segmentsExperienceLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(segmentsExperienceLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SegmentsExperience.class);
 
@@ -285,14 +262,11 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			segmentsExperienceLocalService);
+		actionableDynamicQuery.setBaseLocalService(segmentsExperienceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SegmentsExperience.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"segmentsExperienceId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("segmentsExperienceId");
 	}
 
 	/**
@@ -301,15 +275,12 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return segmentsExperienceLocalService.deleteSegmentsExperience(
-			(SegmentsExperience)persistedModel);
+		return segmentsExperienceLocalService.deleteSegmentsExperience((SegmentsExperience)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return segmentsExperiencePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -349,7 +320,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	@Override
 	public SegmentsExperience updateSegmentsExperience(
 		SegmentsExperience segmentsExperience) {
-
 		return segmentsExperiencePersistence.update(segmentsExperience);
 	}
 
@@ -358,9 +328,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the segments entry local service
 	 */
-	public com.liferay.segments.service.SegmentsEntryLocalService
-		getSegmentsEntryLocalService() {
-
+	public com.liferay.segments.service.SegmentsEntryLocalService getSegmentsEntryLocalService() {
 		return segmentsEntryLocalService;
 	}
 
@@ -370,9 +338,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @param segmentsEntryLocalService the segments entry local service
 	 */
 	public void setSegmentsEntryLocalService(
-		com.liferay.segments.service.SegmentsEntryLocalService
-			segmentsEntryLocalService) {
-
+		com.liferay.segments.service.SegmentsEntryLocalService segmentsEntryLocalService) {
 		this.segmentsEntryLocalService = segmentsEntryLocalService;
 	}
 
@@ -392,7 +358,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setSegmentsEntryPersistence(
 		SegmentsEntryPersistence segmentsEntryPersistence) {
-
 		this.segmentsEntryPersistence = segmentsEntryPersistence;
 	}
 
@@ -401,9 +366,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the segments entry rel local service
 	 */
-	public com.liferay.segments.service.SegmentsEntryRelLocalService
-		getSegmentsEntryRelLocalService() {
-
+	public com.liferay.segments.service.SegmentsEntryRelLocalService getSegmentsEntryRelLocalService() {
 		return segmentsEntryRelLocalService;
 	}
 
@@ -413,9 +376,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @param segmentsEntryRelLocalService the segments entry rel local service
 	 */
 	public void setSegmentsEntryRelLocalService(
-		com.liferay.segments.service.SegmentsEntryRelLocalService
-			segmentsEntryRelLocalService) {
-
+		com.liferay.segments.service.SegmentsEntryRelLocalService segmentsEntryRelLocalService) {
 		this.segmentsEntryRelLocalService = segmentsEntryRelLocalService;
 	}
 
@@ -435,7 +396,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setSegmentsEntryRelPersistence(
 		SegmentsEntryRelPersistence segmentsEntryRelPersistence) {
-
 		this.segmentsEntryRelPersistence = segmentsEntryRelPersistence;
 	}
 
@@ -455,7 +415,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setSegmentsExperienceLocalService(
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
-
 		this.segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
@@ -475,7 +434,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setSegmentsExperiencePersistence(
 		SegmentsExperiencePersistence segmentsExperiencePersistence) {
-
 		this.segmentsExperiencePersistence = segmentsExperiencePersistence;
 	}
 
@@ -484,9 +442,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -496,9 +452,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -507,9 +461,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -519,9 +471,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -541,7 +491,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -550,9 +499,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
 		return groupLocalService;
 	}
 
@@ -563,7 +510,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -590,9 +536,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -602,9 +546,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -613,9 +555,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -626,7 +566,6 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -649,8 +588,7 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.segments.model.SegmentsExperience",
+		persistedModelLocalServiceRegistry.register("com.liferay.segments.model.SegmentsExperience",
 			segmentsExperienceLocalService);
 	}
 
@@ -684,16 +622,15 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				segmentsExperiencePersistence.getDataSource();
+			DataSource dataSource = segmentsExperiencePersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -702,71 +639,34 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsEntryLocalService.class
-	)
-	protected com.liferay.segments.service.SegmentsEntryLocalService
-		segmentsEntryLocalService;
-
+	@BeanReference(type = com.liferay.segments.service.SegmentsEntryLocalService.class)
+	protected com.liferay.segments.service.SegmentsEntryLocalService segmentsEntryLocalService;
 	@BeanReference(type = SegmentsEntryPersistence.class)
 	protected SegmentsEntryPersistence segmentsEntryPersistence;
-
-	@BeanReference(
-		type = com.liferay.segments.service.SegmentsEntryRelLocalService.class
-	)
-	protected com.liferay.segments.service.SegmentsEntryRelLocalService
-		segmentsEntryRelLocalService;
-
+	@BeanReference(type = com.liferay.segments.service.SegmentsEntryRelLocalService.class)
+	protected com.liferay.segments.service.SegmentsEntryRelLocalService segmentsEntryRelLocalService;
 	@BeanReference(type = SegmentsEntryRelPersistence.class)
 	protected SegmentsEntryRelPersistence segmentsEntryRelPersistence;
-
 	@BeanReference(type = SegmentsExperienceLocalService.class)
 	protected SegmentsExperienceLocalService segmentsExperienceLocalService;
-
 	@BeanReference(type = SegmentsExperiencePersistence.class)
 	protected SegmentsExperiencePersistence segmentsExperiencePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

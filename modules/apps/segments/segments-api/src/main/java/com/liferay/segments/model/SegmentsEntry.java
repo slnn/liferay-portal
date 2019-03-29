@@ -30,15 +30,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.segments.model.impl.SegmentsEntryImpl")
 @ProviderType
 public interface SegmentsEntry extends SegmentsEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.segments.model.impl.SegmentsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SegmentsEntry, Long>
-		SEGMENTS_ENTRY_ID_ACCESSOR = new Accessor<SegmentsEntry, Long>() {
-
+	public static final Accessor<SegmentsEntry, Long> SEGMENTS_ENTRY_ID_ACCESSOR =
+		new Accessor<SegmentsEntry, Long>() {
 			@Override
 			public Long get(SegmentsEntry segmentsEntry) {
 				return segmentsEntry.getSegmentsEntryId();
@@ -53,11 +51,9 @@ public interface SegmentsEntry extends SegmentsEntryModel, PersistedModel {
 			public Class<SegmentsEntry> getTypeClass() {
 				return SegmentsEntry.class;
 			}
-
 		};
 
 	public com.liferay.segments.criteria.Criteria getCriteriaObj();
 
 	public boolean isDefaultSegment();
-
 }

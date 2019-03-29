@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface HtmlPreviewEntryModel
-	extends AttachedModel, BaseModel<HtmlPreviewEntry>, GroupedModel,
-			ShardedModel {
-
+public interface HtmlPreviewEntryModel extends AttachedModel,
+	BaseModel<HtmlPreviewEntry>, GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -242,5 +240,4 @@ public interface HtmlPreviewEntryModel
 	 * @param fileEntryId the file entry ID of this html preview entry
 	 */
 	public void setFileEntryId(long fileEntryId);
-
 }

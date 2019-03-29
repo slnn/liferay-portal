@@ -17,15 +17,17 @@ package com.liferay.bookmarks.uad.display;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the BookmarksFolder UAD display.
@@ -39,18 +41,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseBookmarksFolderUADDisplay
-	extends BaseModelUADDisplay<BookmarksFolder> {
-
+public abstract class BaseBookmarksFolderUADDisplay extends BaseModelUADDisplay<BookmarksFolder> {
 	@Override
-	public BookmarksFolder get(Serializable primaryKey) throws PortalException {
-		return bookmarksFolderLocalService.getBookmarksFolder(
-			Long.valueOf(primaryKey.toString()));
+	public BookmarksFolder get(Serializable primaryKey)
+		throws PortalException {
+		return bookmarksFolderLocalService.getBookmarksFolder(Long.valueOf(
+				primaryKey.toString()));
 	}
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"treePath", "name", "description"};
+		return new String[] { "treePath", "name", "description" };
 	}
 
 	@Override
@@ -69,11 +70,9 @@ public abstract class BaseBookmarksFolderUADDisplay
 	}
 
 	@Override
-	protected List<BookmarksFolder> doGetRange(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return bookmarksFolderLocalService.dynamicQuery(
-			dynamicQuery, start, end);
+	protected List<BookmarksFolder> doGetRange(DynamicQuery dynamicQuery,
+		int start, int end) {
+		return bookmarksFolderLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	@Override
@@ -83,5 +82,4 @@ public abstract class BaseBookmarksFolderUADDisplay
 
 	@Reference
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
-
 }

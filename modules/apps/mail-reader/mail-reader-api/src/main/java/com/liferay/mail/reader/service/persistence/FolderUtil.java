@@ -17,19 +17,21 @@ package com.liferay.mail.reader.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mail.reader.model.Folder;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the folder service. This utility wraps <code>com.liferay.mail.reader.service.persistence.impl.FolderPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -44,7 +46,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class FolderUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,7 +78,6 @@ public class FolderUtil {
 	 */
 	public static Map<Serializable, Folder> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -91,21 +91,19 @@ public class FolderUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
-	public static List<Folder> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
+	public static List<Folder> findWithDynamicQuery(DynamicQuery dynamicQuery,
+		int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
-	public static List<Folder> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Folder> orderByComparator) {
-
-		return getPersistence().findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public static List<Folder> findWithDynamicQuery(DynamicQuery dynamicQuery,
+		int start, int end, OrderByComparator<Folder> orderByComparator) {
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -123,276 +121,263 @@ public class FolderUtil {
 	}
 
 	/**
-	 * Returns all the folders where accountId = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @return the matching folders
-	 */
+	* Returns all the folders where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the matching folders
+	*/
 	public static List<Folder> findByAccountId(long accountId) {
 		return getPersistence().findByAccountId(accountId);
 	}
 
 	/**
-	 * Returns a range of all the folders where accountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param accountId the account ID
-	 * @param start the lower bound of the range of folders
-	 * @param end the upper bound of the range of folders (not inclusive)
-	 * @return the range of matching folders
-	 */
-	public static List<Folder> findByAccountId(
-		long accountId, int start, int end) {
-
+	* Returns a range of all the folders where accountId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param accountId the account ID
+	* @param start the lower bound of the range of folders
+	* @param end the upper bound of the range of folders (not inclusive)
+	* @return the range of matching folders
+	*/
+	public static List<Folder> findByAccountId(long accountId, int start,
+		int end) {
 		return getPersistence().findByAccountId(accountId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the folders where accountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param accountId the account ID
-	 * @param start the lower bound of the range of folders
-	 * @param end the upper bound of the range of folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching folders
-	 */
-	public static List<Folder> findByAccountId(
-		long accountId, int start, int end,
-		OrderByComparator<Folder> orderByComparator) {
-
-		return getPersistence().findByAccountId(
-			accountId, start, end, orderByComparator);
+	* Returns an ordered range of all the folders where accountId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param accountId the account ID
+	* @param start the lower bound of the range of folders
+	* @param end the upper bound of the range of folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching folders
+	*/
+	public static List<Folder> findByAccountId(long accountId, int start,
+		int end, OrderByComparator<Folder> orderByComparator) {
+		return getPersistence()
+				   .findByAccountId(accountId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the folders where accountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param accountId the account ID
-	 * @param start the lower bound of the range of folders
-	 * @param end the upper bound of the range of folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching folders
-	 */
-	public static List<Folder> findByAccountId(
-		long accountId, int start, int end,
-		OrderByComparator<Folder> orderByComparator,
+	* Returns an ordered range of all the folders where accountId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param accountId the account ID
+	* @param start the lower bound of the range of folders
+	* @param end the upper bound of the range of folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching folders
+	*/
+	public static List<Folder> findByAccountId(long accountId, int start,
+		int end, OrderByComparator<Folder> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findByAccountId(
-			accountId, start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findByAccountId(accountId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	 * Returns the first folder in the ordered set where accountId = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching folder
-	 * @throws NoSuchFolderException if a matching folder could not be found
-	 */
-	public static Folder findByAccountId_First(
-			long accountId, OrderByComparator<Folder> orderByComparator)
+	* Returns the first folder in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching folder
+	* @throws NoSuchFolderException if a matching folder could not be found
+	*/
+	public static Folder findByAccountId_First(long accountId,
+		OrderByComparator<Folder> orderByComparator)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
-		return getPersistence().findByAccountId_First(
-			accountId, orderByComparator);
+		return getPersistence()
+				   .findByAccountId_First(accountId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first folder in the ordered set where accountId = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching folder, or <code>null</code> if a matching folder could not be found
-	 */
-	public static Folder fetchByAccountId_First(
-		long accountId, OrderByComparator<Folder> orderByComparator) {
-
-		return getPersistence().fetchByAccountId_First(
-			accountId, orderByComparator);
+	* Returns the first folder in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching folder, or <code>null</code> if a matching folder could not be found
+	*/
+	public static Folder fetchByAccountId_First(long accountId,
+		OrderByComparator<Folder> orderByComparator) {
+		return getPersistence()
+				   .fetchByAccountId_First(accountId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last folder in the ordered set where accountId = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching folder
-	 * @throws NoSuchFolderException if a matching folder could not be found
-	 */
-	public static Folder findByAccountId_Last(
-			long accountId, OrderByComparator<Folder> orderByComparator)
+	* Returns the last folder in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching folder
+	* @throws NoSuchFolderException if a matching folder could not be found
+	*/
+	public static Folder findByAccountId_Last(long accountId,
+		OrderByComparator<Folder> orderByComparator)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
-		return getPersistence().findByAccountId_Last(
-			accountId, orderByComparator);
+		return getPersistence()
+				   .findByAccountId_Last(accountId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last folder in the ordered set where accountId = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching folder, or <code>null</code> if a matching folder could not be found
-	 */
-	public static Folder fetchByAccountId_Last(
-		long accountId, OrderByComparator<Folder> orderByComparator) {
-
-		return getPersistence().fetchByAccountId_Last(
-			accountId, orderByComparator);
+	* Returns the last folder in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching folder, or <code>null</code> if a matching folder could not be found
+	*/
+	public static Folder fetchByAccountId_Last(long accountId,
+		OrderByComparator<Folder> orderByComparator) {
+		return getPersistence()
+				   .fetchByAccountId_Last(accountId, orderByComparator);
 	}
 
 	/**
-	 * Returns the folders before and after the current folder in the ordered set where accountId = &#63;.
-	 *
-	 * @param folderId the primary key of the current folder
-	 * @param accountId the account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next folder
-	 * @throws NoSuchFolderException if a folder with the primary key could not be found
-	 */
-	public static Folder[] findByAccountId_PrevAndNext(
-			long folderId, long accountId,
-			OrderByComparator<Folder> orderByComparator)
+	* Returns the folders before and after the current folder in the ordered set where accountId = &#63;.
+	*
+	* @param folderId the primary key of the current folder
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next folder
+	* @throws NoSuchFolderException if a folder with the primary key could not be found
+	*/
+	public static Folder[] findByAccountId_PrevAndNext(long folderId,
+		long accountId, OrderByComparator<Folder> orderByComparator)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
-		return getPersistence().findByAccountId_PrevAndNext(
-			folderId, accountId, orderByComparator);
+		return getPersistence()
+				   .findByAccountId_PrevAndNext(folderId, accountId,
+			orderByComparator);
 	}
 
 	/**
-	 * Removes all the folders where accountId = &#63; from the database.
-	 *
-	 * @param accountId the account ID
-	 */
+	* Removes all the folders where accountId = &#63; from the database.
+	*
+	* @param accountId the account ID
+	*/
 	public static void removeByAccountId(long accountId) {
 		getPersistence().removeByAccountId(accountId);
 	}
 
 	/**
-	 * Returns the number of folders where accountId = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @return the number of matching folders
-	 */
+	* Returns the number of folders where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the number of matching folders
+	*/
 	public static int countByAccountId(long accountId) {
 		return getPersistence().countByAccountId(accountId);
 	}
 
 	/**
-	 * Returns the folder where accountId = &#63; and fullName = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
-	 *
-	 * @param accountId the account ID
-	 * @param fullName the full name
-	 * @return the matching folder
-	 * @throws NoSuchFolderException if a matching folder could not be found
-	 */
+	* Returns the folder where accountId = &#63; and fullName = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
+	*
+	* @param accountId the account ID
+	* @param fullName the full name
+	* @return the matching folder
+	* @throws NoSuchFolderException if a matching folder could not be found
+	*/
 	public static Folder findByA_F(long accountId, String fullName)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
 		return getPersistence().findByA_F(accountId, fullName);
 	}
 
 	/**
-	 * Returns the folder where accountId = &#63; and fullName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountId the account ID
-	 * @param fullName the full name
-	 * @return the matching folder, or <code>null</code> if a matching folder could not be found
-	 */
+	* Returns the folder where accountId = &#63; and fullName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param accountId the account ID
+	* @param fullName the full name
+	* @return the matching folder, or <code>null</code> if a matching folder could not be found
+	*/
 	public static Folder fetchByA_F(long accountId, String fullName) {
 		return getPersistence().fetchByA_F(accountId, fullName);
 	}
 
 	/**
-	 * Returns the folder where accountId = &#63; and fullName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param accountId the account ID
-	 * @param fullName the full name
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching folder, or <code>null</code> if a matching folder could not be found
-	 */
-	public static Folder fetchByA_F(
-		long accountId, String fullName, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByA_F(
-			accountId, fullName, retrieveFromCache);
+	* Returns the folder where accountId = &#63; and fullName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param accountId the account ID
+	* @param fullName the full name
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching folder, or <code>null</code> if a matching folder could not be found
+	*/
+	public static Folder fetchByA_F(long accountId, String fullName,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByA_F(accountId, fullName, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the folder where accountId = &#63; and fullName = &#63; from the database.
-	 *
-	 * @param accountId the account ID
-	 * @param fullName the full name
-	 * @return the folder that was removed
-	 */
+	* Removes the folder where accountId = &#63; and fullName = &#63; from the database.
+	*
+	* @param accountId the account ID
+	* @param fullName the full name
+	* @return the folder that was removed
+	*/
 	public static Folder removeByA_F(long accountId, String fullName)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
 		return getPersistence().removeByA_F(accountId, fullName);
 	}
 
 	/**
-	 * Returns the number of folders where accountId = &#63; and fullName = &#63;.
-	 *
-	 * @param accountId the account ID
-	 * @param fullName the full name
-	 * @return the number of matching folders
-	 */
+	* Returns the number of folders where accountId = &#63; and fullName = &#63;.
+	*
+	* @param accountId the account ID
+	* @param fullName the full name
+	* @return the number of matching folders
+	*/
 	public static int countByA_F(long accountId, String fullName) {
 		return getPersistence().countByA_F(accountId, fullName);
 	}
 
 	/**
-	 * Caches the folder in the entity cache if it is enabled.
-	 *
-	 * @param folder the folder
-	 */
+	* Caches the folder in the entity cache if it is enabled.
+	*
+	* @param folder the folder
+	*/
 	public static void cacheResult(Folder folder) {
 		getPersistence().cacheResult(folder);
 	}
 
 	/**
-	 * Caches the folders in the entity cache if it is enabled.
-	 *
-	 * @param folders the folders
-	 */
+	* Caches the folders in the entity cache if it is enabled.
+	*
+	* @param folders the folders
+	*/
 	public static void cacheResult(List<Folder> folders) {
 		getPersistence().cacheResult(folders);
 	}
 
 	/**
-	 * Creates a new folder with the primary key. Does not add the folder to the database.
-	 *
-	 * @param folderId the primary key for the new folder
-	 * @return the new folder
-	 */
+	* Creates a new folder with the primary key. Does not add the folder to the database.
+	*
+	* @param folderId the primary key for the new folder
+	* @return the new folder
+	*/
 	public static Folder create(long folderId) {
 		return getPersistence().create(folderId);
 	}
 
 	/**
-	 * Removes the folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param folderId the primary key of the folder
-	 * @return the folder that was removed
-	 * @throws NoSuchFolderException if a folder with the primary key could not be found
-	 */
+	* Removes the folder with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param folderId the primary key of the folder
+	* @return the folder that was removed
+	* @throws NoSuchFolderException if a folder with the primary key could not be found
+	*/
 	public static Folder remove(long folderId)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
 		return getPersistence().remove(folderId);
 	}
 
@@ -401,103 +386,99 @@ public class FolderUtil {
 	}
 
 	/**
-	 * Returns the folder with the primary key or throws a <code>NoSuchFolderException</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the folder
-	 * @return the folder
-	 * @throws NoSuchFolderException if a folder with the primary key could not be found
-	 */
+	* Returns the folder with the primary key or throws a <code>NoSuchFolderException</code> if it could not be found.
+	*
+	* @param folderId the primary key of the folder
+	* @return the folder
+	* @throws NoSuchFolderException if a folder with the primary key could not be found
+	*/
 	public static Folder findByPrimaryKey(long folderId)
 		throws com.liferay.mail.reader.exception.NoSuchFolderException {
-
 		return getPersistence().findByPrimaryKey(folderId);
 	}
 
 	/**
-	 * Returns the folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the folder
-	 * @return the folder, or <code>null</code> if a folder with the primary key could not be found
-	 */
+	* Returns the folder with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param folderId the primary key of the folder
+	* @return the folder, or <code>null</code> if a folder with the primary key could not be found
+	*/
 	public static Folder fetchByPrimaryKey(long folderId) {
 		return getPersistence().fetchByPrimaryKey(folderId);
 	}
 
 	/**
-	 * Returns all the folders.
-	 *
-	 * @return the folders
-	 */
+	* Returns all the folders.
+	*
+	* @return the folders
+	*/
 	public static List<Folder> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	 * Returns a range of all the folders.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of folders
-	 * @param end the upper bound of the range of folders (not inclusive)
-	 * @return the range of folders
-	 */
+	* Returns a range of all the folders.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of folders
+	* @param end the upper bound of the range of folders (not inclusive)
+	* @return the range of folders
+	*/
 	public static List<Folder> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the folders.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of folders
-	 * @param end the upper bound of the range of folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of folders
-	 */
-	public static List<Folder> findAll(
-		int start, int end, OrderByComparator<Folder> orderByComparator) {
-
+	* Returns an ordered range of all the folders.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of folders
+	* @param end the upper bound of the range of folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of folders
+	*/
+	public static List<Folder> findAll(int start, int end,
+		OrderByComparator<Folder> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the folders.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of folders
-	 * @param end the upper bound of the range of folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of folders
-	 */
-	public static List<Folder> findAll(
-		int start, int end, OrderByComparator<Folder> orderByComparator,
-		boolean retrieveFromCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+	* Returns an ordered range of all the folders.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of folders
+	* @param end the upper bound of the range of folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of folders
+	*/
+	public static List<Folder> findAll(int start, int end,
+		OrderByComparator<Folder> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	 * Removes all the folders from the database.
-	 */
+	* Removes all the folders from the database.
+	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	 * Returns the number of folders.
-	 *
-	 * @return the number of folders
-	 */
+	* Returns the number of folders.
+	*
+	* @return the number of folders
+	*/
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -506,19 +487,16 @@ public class FolderUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FolderPersistence, FolderPersistence>
-		_serviceTracker;
+	private static ServiceTracker<FolderPersistence, FolderPersistence> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(FolderPersistence.class);
 
-		ServiceTracker<FolderPersistence, FolderPersistence> serviceTracker =
-			new ServiceTracker<FolderPersistence, FolderPersistence>(
-				bundle.getBundleContext(), FolderPersistence.class, null);
+		ServiceTracker<FolderPersistence, FolderPersistence> serviceTracker = new ServiceTracker<FolderPersistence, FolderPersistence>(bundle.getBundleContext(),
+				FolderPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

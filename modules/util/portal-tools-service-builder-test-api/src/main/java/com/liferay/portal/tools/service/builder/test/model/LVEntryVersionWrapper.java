@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -36,9 +37,8 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LVEntryVersionWrapper
-	implements LVEntryVersion, ModelWrapper<LVEntryVersion> {
-
+public class LVEntryVersionWrapper implements LVEntryVersion,
+	ModelWrapper<LVEntryVersion> {
 	public LVEntryVersionWrapper(LVEntryVersion lvEntryVersion) {
 		_lvEntryVersion = lvEntryVersion;
 	}
@@ -115,8 +115,7 @@ public class LVEntryVersionWrapper
 
 	@Override
 	public Object clone() {
-		return new LVEntryVersionWrapper(
-			(LVEntryVersion)_lvEntryVersion.clone());
+		return new LVEntryVersionWrapper((LVEntryVersion)_lvEntryVersion.clone());
 	}
 
 	@Override
@@ -125,10 +124,10 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Returns the default language ID of this lv entry version.
-	 *
-	 * @return the default language ID of this lv entry version
-	 */
+	* Returns the default language ID of this lv entry version.
+	*
+	* @return the default language ID of this lv entry version
+	*/
 	@Override
 	public String getDefaultLanguageId() {
 		return _lvEntryVersion.getDefaultLanguageId();
@@ -140,40 +139,40 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Returns the group ID of this lv entry version.
-	 *
-	 * @return the group ID of this lv entry version
-	 */
+	* Returns the group ID of this lv entry version.
+	*
+	* @return the group ID of this lv entry version
+	*/
 	@Override
 	public long getGroupId() {
 		return _lvEntryVersion.getGroupId();
 	}
 
 	/**
-	 * Returns the lv entry ID of this lv entry version.
-	 *
-	 * @return the lv entry ID of this lv entry version
-	 */
+	* Returns the lv entry ID of this lv entry version.
+	*
+	* @return the lv entry ID of this lv entry version
+	*/
 	@Override
 	public long getLvEntryId() {
 		return _lvEntryVersion.getLvEntryId();
 	}
 
 	/**
-	 * Returns the lv entry version ID of this lv entry version.
-	 *
-	 * @return the lv entry version ID of this lv entry version
-	 */
+	* Returns the lv entry version ID of this lv entry version.
+	*
+	* @return the lv entry version ID of this lv entry version
+	*/
 	@Override
 	public long getLvEntryVersionId() {
 		return _lvEntryVersion.getLvEntryVersionId();
 	}
 
 	/**
-	 * Returns the primary key of this lv entry version.
-	 *
-	 * @return the primary key of this lv entry version
-	 */
+	* Returns the primary key of this lv entry version.
+	*
+	* @return the primary key of this lv entry version
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return _lvEntryVersion.getPrimaryKey();
@@ -185,30 +184,30 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Returns the unique group key of this lv entry version.
-	 *
-	 * @return the unique group key of this lv entry version
-	 */
+	* Returns the unique group key of this lv entry version.
+	*
+	* @return the unique group key of this lv entry version
+	*/
 	@Override
 	public String getUniqueGroupKey() {
 		return _lvEntryVersion.getUniqueGroupKey();
 	}
 
 	/**
-	 * Returns the uuid of this lv entry version.
-	 *
-	 * @return the uuid of this lv entry version
-	 */
+	* Returns the uuid of this lv entry version.
+	*
+	* @return the uuid of this lv entry version
+	*/
 	@Override
 	public String getUuid() {
 		return _lvEntryVersion.getUuid();
 	}
 
 	/**
-	 * Returns the version of this lv entry version.
-	 *
-	 * @return the version of this lv entry version
-	 */
+	* Returns the version of this lv entry version.
+	*
+	* @return the version of this lv entry version
+	*/
 	@Override
 	public int getVersion() {
 		return _lvEntryVersion.getVersion();
@@ -240,10 +239,10 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Sets the default language ID of this lv entry version.
-	 *
-	 * @param defaultLanguageId the default language ID of this lv entry version
-	 */
+	* Sets the default language ID of this lv entry version.
+	*
+	* @param defaultLanguageId the default language ID of this lv entry version
+	*/
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
 		_lvEntryVersion.setDefaultLanguageId(defaultLanguageId);
@@ -252,7 +251,6 @@ public class LVEntryVersionWrapper
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
 		_lvEntryVersion.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -267,30 +265,30 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Sets the group ID of this lv entry version.
-	 *
-	 * @param groupId the group ID of this lv entry version
-	 */
+	* Sets the group ID of this lv entry version.
+	*
+	* @param groupId the group ID of this lv entry version
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		_lvEntryVersion.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the lv entry ID of this lv entry version.
-	 *
-	 * @param lvEntryId the lv entry ID of this lv entry version
-	 */
+	* Sets the lv entry ID of this lv entry version.
+	*
+	* @param lvEntryId the lv entry ID of this lv entry version
+	*/
 	@Override
 	public void setLvEntryId(long lvEntryId) {
 		_lvEntryVersion.setLvEntryId(lvEntryId);
 	}
 
 	/**
-	 * Sets the lv entry version ID of this lv entry version.
-	 *
-	 * @param lvEntryVersionId the lv entry version ID of this lv entry version
-	 */
+	* Sets the lv entry version ID of this lv entry version.
+	*
+	* @param lvEntryVersionId the lv entry version ID of this lv entry version
+	*/
 	@Override
 	public void setLvEntryVersionId(long lvEntryVersionId) {
 		_lvEntryVersion.setLvEntryVersionId(lvEntryVersionId);
@@ -302,10 +300,10 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Sets the primary key of this lv entry version.
-	 *
-	 * @param primaryKey the primary key of this lv entry version
-	 */
+	* Sets the primary key of this lv entry version.
+	*
+	* @param primaryKey the primary key of this lv entry version
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_lvEntryVersion.setPrimaryKey(primaryKey);
@@ -317,39 +315,37 @@ public class LVEntryVersionWrapper
 	}
 
 	/**
-	 * Sets the unique group key of this lv entry version.
-	 *
-	 * @param uniqueGroupKey the unique group key of this lv entry version
-	 */
+	* Sets the unique group key of this lv entry version.
+	*
+	* @param uniqueGroupKey the unique group key of this lv entry version
+	*/
 	@Override
 	public void setUniqueGroupKey(String uniqueGroupKey) {
 		_lvEntryVersion.setUniqueGroupKey(uniqueGroupKey);
 	}
 
 	/**
-	 * Sets the uuid of this lv entry version.
-	 *
-	 * @param uuid the uuid of this lv entry version
-	 */
+	* Sets the uuid of this lv entry version.
+	*
+	* @param uuid the uuid of this lv entry version
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		_lvEntryVersion.setUuid(uuid);
 	}
 
 	/**
-	 * Sets the version of this lv entry version.
-	 *
-	 * @param version the version of this lv entry version
-	 */
+	* Sets the version of this lv entry version.
+	*
+	* @param version the version of this lv entry version
+	*/
 	@Override
 	public void setVersion(int version) {
 		_lvEntryVersion.setVersion(version);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LVEntryVersion>
-		toCacheModel() {
-
+	public com.liferay.portal.kernel.model.CacheModel<LVEntryVersion> toCacheModel() {
 		return _lvEntryVersion.toCacheModel();
 	}
 
@@ -383,12 +379,10 @@ public class LVEntryVersionWrapper
 			return false;
 		}
 
-		LVEntryVersionWrapper lvEntryVersionWrapper =
-			(LVEntryVersionWrapper)obj;
+		LVEntryVersionWrapper lvEntryVersionWrapper = (LVEntryVersionWrapper)obj;
 
-		if (Objects.equals(
-				_lvEntryVersion, lvEntryVersionWrapper._lvEntryVersion)) {
-
+		if (Objects.equals(_lvEntryVersion,
+					lvEntryVersionWrapper._lvEntryVersion)) {
 			return true;
 		}
 
@@ -436,5 +430,4 @@ public class LVEntryVersionWrapper
 	}
 
 	private final LVEntryVersion _lvEntryVersion;
-
 }

@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SAPEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.security.service.access.policy.model.impl.SAPEntryImpl"
-)
+@ImplementationClassName("com.liferay.portal.security.service.access.policy.model.impl.SAPEntryImpl")
 @ProviderType
 public interface SAPEntry extends SAPEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.security.service.access.policy.model.impl.SAPEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SAPEntry, Long> SAP_ENTRY_ID_ACCESSOR =
-		new Accessor<SAPEntry, Long>() {
-
+	public static final Accessor<SAPEntry, Long> SAP_ENTRY_ID_ACCESSOR = new Accessor<SAPEntry, Long>() {
 			@Override
 			public Long get(SAPEntry sapEntry) {
 				return sapEntry.getSapEntryId();
@@ -55,13 +50,10 @@ public interface SAPEntry extends SAPEntryModel, PersistedModel {
 			public Class<SAPEntry> getTypeClass() {
 				return SAPEntry.class;
 			}
-
 		};
 
 	public java.util.List<String> getAllowedServiceSignaturesList();
 
 	public boolean isSystem()
-		throws com.liferay.portal.kernel.module.configuration.
-			ConfigurationException;
-
+		throws com.liferay.portal.kernel.module.configuration.ConfigurationException;
 }

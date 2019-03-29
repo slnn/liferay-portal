@@ -17,8 +17,10 @@ package com.liferay.chat.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.chat.model.Status;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -34,7 +36,6 @@ import java.io.ObjectOutput;
  */
 @ProviderType
 public class StatusCacheModel implements CacheModel<Status>, Externalizable {
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -133,7 +134,8 @@ public class StatusCacheModel implements CacheModel<Status>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(statusId);
 
 		objectOutput.writeLong(userId);
@@ -169,5 +171,4 @@ public class StatusCacheModel implements CacheModel<Status>, Externalizable {
 	public String activePanelIds;
 	public String message;
 	public boolean playSound;
-
 }

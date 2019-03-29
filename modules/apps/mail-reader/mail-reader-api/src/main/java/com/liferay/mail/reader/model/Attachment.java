@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.mail.reader.model.impl.AttachmentImpl")
 @ProviderType
 public interface Attachment extends AttachmentModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mail.reader.model.impl.AttachmentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Attachment, Long> ATTACHMENT_ID_ACCESSOR =
-		new Accessor<Attachment, Long>() {
-
+	public static final Accessor<Attachment, Long> ATTACHMENT_ID_ACCESSOR = new Accessor<Attachment, Long>() {
 			@Override
 			public Long get(Attachment attachment) {
 				return attachment.getAttachmentId();
@@ -53,7 +50,5 @@ public interface Attachment extends AttachmentModel, PersistedModel {
 			public Class<Attachment> getTypeClass() {
 				return Attachment.class;
 			}
-
 		};
-
 }

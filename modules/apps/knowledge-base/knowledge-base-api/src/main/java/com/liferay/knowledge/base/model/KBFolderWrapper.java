@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class KBFolderWrapper
-	extends BaseModelWrapper<KBFolder>
+public class KBFolderWrapper extends BaseModelWrapper<KBFolder>
 	implements KBFolder, ModelWrapper<KBFolder> {
-
 	public KBFolderWrapper(KBFolder kbFolder) {
 		super(kbFolder);
 	}
@@ -147,7 +146,6 @@ public class KBFolderWrapper
 	@Override
 	public java.util.List<Long> getAncestorKBFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getAncestorKBFolderIds();
 	}
 
@@ -157,80 +155,80 @@ public class KBFolderWrapper
 	}
 
 	/**
-	 * Returns the company ID of this kb folder.
-	 *
-	 * @return the company ID of this kb folder
-	 */
+	* Returns the company ID of this kb folder.
+	*
+	* @return the company ID of this kb folder
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this kb folder.
-	 *
-	 * @return the create date of this kb folder
-	 */
+	* Returns the create date of this kb folder.
+	*
+	* @return the create date of this kb folder
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the description of this kb folder.
-	 *
-	 * @return the description of this kb folder
-	 */
+	* Returns the description of this kb folder.
+	*
+	* @return the description of this kb folder
+	*/
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	 * Returns the group ID of this kb folder.
-	 *
-	 * @return the group ID of this kb folder
-	 */
+	* Returns the group ID of this kb folder.
+	*
+	* @return the group ID of this kb folder
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the kb folder ID of this kb folder.
-	 *
-	 * @return the kb folder ID of this kb folder
-	 */
+	* Returns the kb folder ID of this kb folder.
+	*
+	* @return the kb folder ID of this kb folder
+	*/
 	@Override
 	public long getKbFolderId() {
 		return model.getKbFolderId();
 	}
 
 	/**
-	 * Returns the last publish date of this kb folder.
-	 *
-	 * @return the last publish date of this kb folder
-	 */
+	* Returns the last publish date of this kb folder.
+	*
+	* @return the last publish date of this kb folder
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this kb folder.
-	 *
-	 * @return the modified date of this kb folder
-	 */
+	* Returns the modified date of this kb folder.
+	*
+	* @return the modified date of this kb folder
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the name of this kb folder.
-	 *
-	 * @return the name of this kb folder
-	 */
+	* Returns the name of this kb folder.
+	*
+	* @return the name of this kb folder
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
@@ -239,15 +237,14 @@ public class KBFolderWrapper
 	@Override
 	public KBFolder getParentKBFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getParentKBFolder();
 	}
 
 	/**
-	 * Returns the parent kb folder ID of this kb folder.
-	 *
-	 * @return the parent kb folder ID of this kb folder
-	 */
+	* Returns the parent kb folder ID of this kb folder.
+	*
+	* @return the parent kb folder ID of this kb folder
+	*/
 	@Override
 	public long getParentKBFolderId() {
 		return model.getParentKBFolderId();
@@ -256,65 +253,64 @@ public class KBFolderWrapper
 	@Override
 	public String getParentTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getParentTitle(locale);
 	}
 
 	/**
-	 * Returns the primary key of this kb folder.
-	 *
-	 * @return the primary key of this kb folder
-	 */
+	* Returns the primary key of this kb folder.
+	*
+	* @return the primary key of this kb folder
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the url title of this kb folder.
-	 *
-	 * @return the url title of this kb folder
-	 */
+	* Returns the url title of this kb folder.
+	*
+	* @return the url title of this kb folder
+	*/
 	@Override
 	public String getUrlTitle() {
 		return model.getUrlTitle();
 	}
 
 	/**
-	 * Returns the user ID of this kb folder.
-	 *
-	 * @return the user ID of this kb folder
-	 */
+	* Returns the user ID of this kb folder.
+	*
+	* @return the user ID of this kb folder
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this kb folder.
-	 *
-	 * @return the user name of this kb folder
-	 */
+	* Returns the user name of this kb folder.
+	*
+	* @return the user name of this kb folder
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this kb folder.
-	 *
-	 * @return the user uuid of this kb folder
-	 */
+	* Returns the user uuid of this kb folder.
+	*
+	* @return the user uuid of this kb folder
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this kb folder.
-	 *
-	 * @return the uuid of this kb folder
-	 */
+	* Returns the uuid of this kb folder.
+	*
+	* @return the uuid of this kb folder
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -323,7 +319,6 @@ public class KBFolderWrapper
 	@Override
 	public boolean isEmpty()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.isEmpty();
 	}
 
@@ -338,150 +333,150 @@ public class KBFolderWrapper
 	}
 
 	/**
-	 * Sets the company ID of this kb folder.
-	 *
-	 * @param companyId the company ID of this kb folder
-	 */
+	* Sets the company ID of this kb folder.
+	*
+	* @param companyId the company ID of this kb folder
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this kb folder.
-	 *
-	 * @param createDate the create date of this kb folder
-	 */
+	* Sets the create date of this kb folder.
+	*
+	* @param createDate the create date of this kb folder
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the description of this kb folder.
-	 *
-	 * @param description the description of this kb folder
-	 */
+	* Sets the description of this kb folder.
+	*
+	* @param description the description of this kb folder
+	*/
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	 * Sets the group ID of this kb folder.
-	 *
-	 * @param groupId the group ID of this kb folder
-	 */
+	* Sets the group ID of this kb folder.
+	*
+	* @param groupId the group ID of this kb folder
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the kb folder ID of this kb folder.
-	 *
-	 * @param kbFolderId the kb folder ID of this kb folder
-	 */
+	* Sets the kb folder ID of this kb folder.
+	*
+	* @param kbFolderId the kb folder ID of this kb folder
+	*/
 	@Override
 	public void setKbFolderId(long kbFolderId) {
 		model.setKbFolderId(kbFolderId);
 	}
 
 	/**
-	 * Sets the last publish date of this kb folder.
-	 *
-	 * @param lastPublishDate the last publish date of this kb folder
-	 */
+	* Sets the last publish date of this kb folder.
+	*
+	* @param lastPublishDate the last publish date of this kb folder
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this kb folder.
-	 *
-	 * @param modifiedDate the modified date of this kb folder
-	 */
+	* Sets the modified date of this kb folder.
+	*
+	* @param modifiedDate the modified date of this kb folder
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the name of this kb folder.
-	 *
-	 * @param name the name of this kb folder
-	 */
+	* Sets the name of this kb folder.
+	*
+	* @param name the name of this kb folder
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the parent kb folder ID of this kb folder.
-	 *
-	 * @param parentKBFolderId the parent kb folder ID of this kb folder
-	 */
+	* Sets the parent kb folder ID of this kb folder.
+	*
+	* @param parentKBFolderId the parent kb folder ID of this kb folder
+	*/
 	@Override
 	public void setParentKBFolderId(long parentKBFolderId) {
 		model.setParentKBFolderId(parentKBFolderId);
 	}
 
 	/**
-	 * Sets the primary key of this kb folder.
-	 *
-	 * @param primaryKey the primary key of this kb folder
-	 */
+	* Sets the primary key of this kb folder.
+	*
+	* @param primaryKey the primary key of this kb folder
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the url title of this kb folder.
-	 *
-	 * @param urlTitle the url title of this kb folder
-	 */
+	* Sets the url title of this kb folder.
+	*
+	* @param urlTitle the url title of this kb folder
+	*/
 	@Override
 	public void setUrlTitle(String urlTitle) {
 		model.setUrlTitle(urlTitle);
 	}
 
 	/**
-	 * Sets the user ID of this kb folder.
-	 *
-	 * @param userId the user ID of this kb folder
-	 */
+	* Sets the user ID of this kb folder.
+	*
+	* @param userId the user ID of this kb folder
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this kb folder.
-	 *
-	 * @param userName the user name of this kb folder
-	 */
+	* Sets the user name of this kb folder.
+	*
+	* @param userName the user name of this kb folder
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this kb folder.
-	 *
-	 * @param userUuid the user uuid of this kb folder
-	 */
+	* Sets the user uuid of this kb folder.
+	*
+	* @param userUuid the user uuid of this kb folder
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this kb folder.
-	 *
-	 * @param uuid the uuid of this kb folder
-	 */
+	* Sets the uuid of this kb folder.
+	*
+	* @param uuid the uuid of this kb folder
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -496,5 +491,4 @@ public class KBFolderWrapper
 	protected KBFolderWrapper wrap(KBFolder kbFolder) {
 		return new KBFolderWrapper(kbFolder);
 	}
-
 }

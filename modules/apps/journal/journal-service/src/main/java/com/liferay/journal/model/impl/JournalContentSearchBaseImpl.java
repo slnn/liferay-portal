@@ -34,7 +34,6 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 @ProviderType
 public abstract class JournalContentSearchBaseImpl
 	extends JournalContentSearchModelImpl implements JournalContentSearch {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -46,9 +45,7 @@ public abstract class JournalContentSearchBaseImpl
 			JournalContentSearchLocalServiceUtil.addJournalContentSearch(this);
 		}
 		else {
-			JournalContentSearchLocalServiceUtil.updateJournalContentSearch(
-				this);
+			JournalContentSearchLocalServiceUtil.updateJournalContentSearch(this);
 		}
 	}
-
 }

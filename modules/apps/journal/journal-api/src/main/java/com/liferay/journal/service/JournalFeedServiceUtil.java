@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,97 +35,87 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class JournalFeedServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFeedServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.journal.model.JournalFeed addFeed(
-			long groupId, String feedId, boolean autoFeedId, String name,
-			String description, String ddmStructureKey, String ddmTemplateKey,
-			String ddmRendererTemplateKey, int delta, String orderByCol,
-			String orderByType, String targetLayoutFriendlyUrl,
-			String targetPortletId, String contentField, String feedType,
-			double feedVersion,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.journal.model.JournalFeed addFeed(long groupId,
+		String feedId, boolean autoFeedId, String name, String description,
+		String ddmStructureKey, String ddmTemplateKey,
+		String ddmRendererTemplateKey, int delta, String orderByCol,
+		String orderByType, String targetLayoutFriendlyUrl,
+		String targetPortletId, String contentField, String feedType,
+		double feedVersion,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addFeed(
-			groupId, feedId, autoFeedId, name, description, ddmStructureKey,
-			ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
-			orderByType, targetLayoutFriendlyUrl, targetPortletId, contentField,
-			feedType, feedVersion, serviceContext);
+		return getService()
+				   .addFeed(groupId, feedId, autoFeedId, name, description,
+			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
+			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
+			contentField, feedType, feedVersion, serviceContext);
 	}
 
 	public static void deleteFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		getService().deleteFeed(feedId);
 	}
 
 	public static void deleteFeed(long groupId, String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		getService().deleteFeed(groupId, feedId);
 	}
 
 	public static com.liferay.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getFeed(feedId);
 	}
 
-	public static com.liferay.journal.model.JournalFeed getFeed(
-			long groupId, String feedId)
+	public static com.liferay.journal.model.JournalFeed getFeed(long groupId,
+		String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getFeed(groupId, feedId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.journal.model.JournalFeed updateFeed(
-			long groupId, String feedId, String name, String description,
-			String ddmStructureKey, String ddmTemplateKey,
-			String ddmRendererTemplateKey, int delta, String orderByCol,
-			String orderByType, String targetLayoutFriendlyUrl,
-			String targetPortletId, String contentField, String feedType,
-			double feedVersion,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long groupId, String feedId, String name, String description,
+		String ddmStructureKey, String ddmTemplateKey,
+		String ddmRendererTemplateKey, int delta, String orderByCol,
+		String orderByType, String targetLayoutFriendlyUrl,
+		String targetPortletId, String contentField, String feedType,
+		double feedVersion,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateFeed(
-			groupId, feedId, name, description, ddmStructureKey, ddmTemplateKey,
-			ddmRendererTemplateKey, delta, orderByCol, orderByType,
-			targetLayoutFriendlyUrl, targetPortletId, contentField, feedType,
-			feedVersion, serviceContext);
+		return getService()
+				   .updateFeed(groupId, feedId, name, description,
+			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
+			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
+			contentField, feedType, feedVersion, serviceContext);
 	}
 
 	public static JournalFeedService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<JournalFeedService, JournalFeedService>
-		_serviceTracker;
+	private static ServiceTracker<JournalFeedService, JournalFeedService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(JournalFeedService.class);
 
-		ServiceTracker<JournalFeedService, JournalFeedService> serviceTracker =
-			new ServiceTracker<JournalFeedService, JournalFeedService>(
-				bundle.getBundleContext(), JournalFeedService.class, null);
+		ServiceTracker<JournalFeedService, JournalFeedService> serviceTracker = new ServiceTracker<JournalFeedService, JournalFeedService>(bundle.getBundleContext(),
+				JournalFeedService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

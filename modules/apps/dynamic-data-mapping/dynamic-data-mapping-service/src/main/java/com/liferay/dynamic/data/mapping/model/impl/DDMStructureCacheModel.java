@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class DDMStructureCacheModel
-	implements CacheModel<DDMStructure>, Externalizable {
-
+public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class DDMStructureCacheModel
 			return false;
 		}
 
-		DDMStructureCacheModel ddmStructureCacheModel =
-			(DDMStructureCacheModel)obj;
+		DDMStructureCacheModel ddmStructureCacheModel = (DDMStructureCacheModel)obj;
 
 		if (structureId == ddmStructureCacheModel.structureId) {
 			return true;
@@ -224,7 +224,6 @@ public class DDMStructureCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
-
 		uuid = objectInput.readUTF();
 
 		structureId = objectInput.readLong();
@@ -255,13 +254,12 @@ public class DDMStructureCacheModel
 		lastPublishDate = objectInput.readLong();
 
 		_className = (String)objectInput.readObject();
-		_ddmForm =
-			(com.liferay.dynamic.data.mapping.model.DDMForm)
-				objectInput.readObject();
+		_ddmForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -371,5 +369,4 @@ public class DDMStructureCacheModel
 	public long lastPublishDate;
 	public String _className;
 	public com.liferay.dynamic.data.mapping.model.DDMForm _ddmForm;
-
 }

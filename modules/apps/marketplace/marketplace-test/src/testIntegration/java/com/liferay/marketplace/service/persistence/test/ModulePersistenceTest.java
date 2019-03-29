@@ -15,11 +15,13 @@
 package com.liferay.marketplace.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.marketplace.exception.NoSuchModuleException;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
 import com.liferay.marketplace.service.persistence.ModuleUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +58,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class ModulePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.marketplace.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.marketplace.service"));
 
 	@Before
 	public void setUp() {
@@ -106,8 +107,7 @@ public class ModulePersistenceTest {
 
 		_persistence.remove(newModule);
 
-		Module existingModule = _persistence.fetchByPrimaryKey(
-			newModule.getPrimaryKey());
+		Module existingModule = _persistence.fetchByPrimaryKey(newModule.getPrimaryKey());
 
 		Assert.assertNull(existingModule);
 	}
@@ -137,22 +137,20 @@ public class ModulePersistenceTest {
 
 		_modules.add(_persistence.update(newModule));
 
-		Module existingModule = _persistence.findByPrimaryKey(
-			newModule.getPrimaryKey());
+		Module existingModule = _persistence.findByPrimaryKey(newModule.getPrimaryKey());
 
 		Assert.assertEquals(existingModule.getUuid(), newModule.getUuid());
-		Assert.assertEquals(
-			existingModule.getModuleId(), newModule.getModuleId());
-		Assert.assertEquals(
-			existingModule.getCompanyId(), newModule.getCompanyId());
+		Assert.assertEquals(existingModule.getModuleId(),
+			newModule.getModuleId());
+		Assert.assertEquals(existingModule.getCompanyId(),
+			newModule.getCompanyId());
 		Assert.assertEquals(existingModule.getAppId(), newModule.getAppId());
-		Assert.assertEquals(
-			existingModule.getBundleSymbolicName(),
+		Assert.assertEquals(existingModule.getBundleSymbolicName(),
 			newModule.getBundleSymbolicName());
-		Assert.assertEquals(
-			existingModule.getBundleVersion(), newModule.getBundleVersion());
-		Assert.assertEquals(
-			existingModule.getContextName(), newModule.getContextName());
+		Assert.assertEquals(existingModule.getBundleVersion(),
+			newModule.getBundleVersion());
+		Assert.assertEquals(existingModule.getContextName(),
+			newModule.getContextName());
 	}
 
 	@Test
@@ -220,8 +218,7 @@ public class ModulePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Module newModule = addModule();
 
-		Module existingModule = _persistence.findByPrimaryKey(
-			newModule.getPrimaryKey());
+		Module existingModule = _persistence.findByPrimaryKey(newModule.getPrimaryKey());
 
 		Assert.assertEquals(existingModule, newModule);
 	}
@@ -235,23 +232,22 @@ public class ModulePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Module> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"Marketplace_Module", "uuid", true, "moduleId", true, "companyId",
-			true, "appId", true, "bundleSymbolicName", true, "bundleVersion",
-			true, "contextName", true);
+		return OrderByComparatorFactoryUtil.create("Marketplace_Module",
+			"uuid", true, "moduleId", true, "companyId", true, "appId", true,
+			"bundleSymbolicName", true, "bundleVersion", true, "contextName",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Module newModule = addModule();
 
-		Module existingModule = _persistence.fetchByPrimaryKey(
-			newModule.getPrimaryKey());
+		Module existingModule = _persistence.fetchByPrimaryKey(newModule.getPrimaryKey());
 
 		Assert.assertEquals(existingModule, newModule);
 	}
@@ -268,7 +264,6 @@ public class ModulePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		Module newModule1 = addModule();
 		Module newModule2 = addModule();
 
@@ -277,20 +272,16 @@ public class ModulePersistenceTest {
 		primaryKeys.add(newModule1.getPrimaryKey());
 		primaryKeys.add(newModule2.getPrimaryKey());
 
-		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, modules.size());
-		Assert.assertEquals(
-			newModule1, modules.get(newModule1.getPrimaryKey()));
-		Assert.assertEquals(
-			newModule2, modules.get(newModule2.getPrimaryKey()));
+		Assert.assertEquals(newModule1, modules.get(newModule1.getPrimaryKey()));
+		Assert.assertEquals(newModule2, modules.get(newModule2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -300,8 +291,7 @@ public class ModulePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(modules.isEmpty());
 	}
@@ -309,7 +299,6 @@ public class ModulePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		Module newModule = addModule();
 
 		long pk = RandomTestUtil.nextLong();
@@ -319,33 +308,32 @@ public class ModulePersistenceTest {
 		primaryKeys.add(newModule.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, modules.size());
 		Assert.assertEquals(newModule, modules.get(newModule.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(modules.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		Module newModule = addModule();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newModule.getPrimaryKey());
 
-		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, Module> modules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, modules.size());
 		Assert.assertEquals(newModule, modules.get(newModule.getPrimaryKey()));
@@ -355,19 +343,15 @@ public class ModulePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			ModuleLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = ModuleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Module>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Module>() {
 				@Override
 				public void performAction(Module module) {
 					Assert.assertNotNull(module);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -376,14 +360,15 @@ public class ModulePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		Module newModule = addModule();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Module.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Module.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("moduleId", newModule.getModuleId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("moduleId",
+				newModule.getModuleId()));
 
 		List<Module> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -396,11 +381,11 @@ public class ModulePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Module.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Module.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("moduleId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("moduleId",
+				RandomTestUtil.nextLong()));
 
 		List<Module> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -408,18 +393,19 @@ public class ModulePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		Module newModule = addModule();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Module.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Module.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("moduleId"));
 
 		Object newModuleId = newModule.getModuleId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("moduleId", new Object[] {newModuleId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("moduleId",
+				new Object[] { newModuleId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -432,14 +418,13 @@ public class ModulePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Module.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Module.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("moduleId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"moduleId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("moduleId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -452,36 +437,25 @@ public class ModulePersistenceTest {
 
 		_persistence.clearCache();
 
-		Module existingModule = _persistence.findByPrimaryKey(
-			newModule.getPrimaryKey());
+		Module existingModule = _persistence.findByPrimaryKey(newModule.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingModule.getAppId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingModule, "getOriginalAppId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingModule.getContextName(),
-				ReflectionTestUtil.invoke(
-					existingModule, "getOriginalContextName",
-					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingModule.getAppId()),
+			ReflectionTestUtil.<Long>invoke(existingModule, "getOriginalAppId",
+				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingModule.getContextName(),
+				ReflectionTestUtil.invoke(existingModule,
+					"getOriginalContextName", new Class<?>[0])));
 
-		Assert.assertEquals(
-			Long.valueOf(existingModule.getAppId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingModule, "getOriginalAppId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(existingModule.getAppId()),
+			ReflectionTestUtil.<Long>invoke(existingModule, "getOriginalAppId",
+				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingModule.getBundleSymbolicName(),
-				ReflectionTestUtil.invoke(
-					existingModule, "getOriginalBundleSymbolicName",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingModule.getBundleVersion(),
-				ReflectionTestUtil.invoke(
-					existingModule, "getOriginalBundleVersion",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingModule,
+					"getOriginalBundleSymbolicName", new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(existingModule.getBundleVersion(),
+				ReflectionTestUtil.invoke(existingModule,
+					"getOriginalBundleVersion", new Class<?>[0])));
 	}
 
 	protected Module addModule() throws Exception {
@@ -509,5 +483,4 @@ public class ModulePersistenceTest {
 	private List<Module> _modules = new ArrayList<Module>();
 	private ModulePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

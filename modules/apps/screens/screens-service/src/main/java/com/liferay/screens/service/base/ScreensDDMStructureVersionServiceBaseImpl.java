@@ -15,6 +15,7 @@
 package com.liferay.screens.service.base;
 
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.screens.service.ScreensDDMStructureVersionService;
 
 import javax.sql.DataSource;
@@ -44,9 +46,8 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class ScreensDDMStructureVersionServiceBaseImpl
-	extends BaseServiceImpl
-	implements ScreensDDMStructureVersionService, IdentifiableOSGiService {
-
+	extends BaseServiceImpl implements ScreensDDMStructureVersionService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,9 +59,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the screens asset entry remote service
 	 */
-	public com.liferay.screens.service.ScreensAssetEntryService
-		getScreensAssetEntryService() {
-
+	public com.liferay.screens.service.ScreensAssetEntryService getScreensAssetEntryService() {
 		return screensAssetEntryService;
 	}
 
@@ -70,9 +69,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param screensAssetEntryService the screens asset entry remote service
 	 */
 	public void setScreensAssetEntryService(
-		com.liferay.screens.service.ScreensAssetEntryService
-			screensAssetEntryService) {
-
+		com.liferay.screens.service.ScreensAssetEntryService screensAssetEntryService) {
 		this.screensAssetEntryService = screensAssetEntryService;
 	}
 
@@ -81,9 +78,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the screens comment remote service
 	 */
-	public com.liferay.screens.service.ScreensCommentService
-		getScreensCommentService() {
-
+	public com.liferay.screens.service.ScreensCommentService getScreensCommentService() {
 		return screensCommentService;
 	}
 
@@ -93,9 +88,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param screensCommentService the screens comment remote service
 	 */
 	public void setScreensCommentService(
-		com.liferay.screens.service.ScreensCommentService
-			screensCommentService) {
-
+		com.liferay.screens.service.ScreensCommentService screensCommentService) {
 		this.screensCommentService = screensCommentService;
 	}
 
@@ -104,9 +97,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the screens ddl record remote service
 	 */
-	public com.liferay.screens.service.ScreensDDLRecordService
-		getScreensDDLRecordService() {
-
+	public com.liferay.screens.service.ScreensDDLRecordService getScreensDDLRecordService() {
 		return screensDDLRecordService;
 	}
 
@@ -116,9 +107,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param screensDDLRecordService the screens ddl record remote service
 	 */
 	public void setScreensDDLRecordService(
-		com.liferay.screens.service.ScreensDDLRecordService
-			screensDDLRecordService) {
-
+		com.liferay.screens.service.ScreensDDLRecordService screensDDLRecordService) {
 		this.screensDDLRecordService = screensDDLRecordService;
 	}
 
@@ -127,9 +116,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the screens ddm structure version remote service
 	 */
-	public ScreensDDMStructureVersionService
-		getScreensDDMStructureVersionService() {
-
+	public ScreensDDMStructureVersionService getScreensDDMStructureVersionService() {
 		return screensDDMStructureVersionService;
 	}
 
@@ -140,9 +127,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 */
 	public void setScreensDDMStructureVersionService(
 		ScreensDDMStructureVersionService screensDDMStructureVersionService) {
-
-		this.screensDDMStructureVersionService =
-			screensDDMStructureVersionService;
+		this.screensDDMStructureVersionService = screensDDMStructureVersionService;
 	}
 
 	/**
@@ -150,9 +135,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the screens journal article remote service
 	 */
-	public com.liferay.screens.service.ScreensJournalArticleService
-		getScreensJournalArticleService() {
-
+	public com.liferay.screens.service.ScreensJournalArticleService getScreensJournalArticleService() {
 		return screensJournalArticleService;
 	}
 
@@ -162,9 +145,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param screensJournalArticleService the screens journal article remote service
 	 */
 	public void setScreensJournalArticleService(
-		com.liferay.screens.service.ScreensJournalArticleService
-			screensJournalArticleService) {
-
+		com.liferay.screens.service.ScreensJournalArticleService screensJournalArticleService) {
 		this.screensJournalArticleService = screensJournalArticleService;
 	}
 
@@ -173,9 +154,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the screens ratings entry remote service
 	 */
-	public com.liferay.screens.service.ScreensRatingsEntryService
-		getScreensRatingsEntryService() {
-
+	public com.liferay.screens.service.ScreensRatingsEntryService getScreensRatingsEntryService() {
 		return screensRatingsEntryService;
 	}
 
@@ -185,9 +164,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param screensRatingsEntryService the screens ratings entry remote service
 	 */
 	public void setScreensRatingsEntryService(
-		com.liferay.screens.service.ScreensRatingsEntryService
-			screensRatingsEntryService) {
-
+		com.liferay.screens.service.ScreensRatingsEntryService screensRatingsEntryService) {
 		this.screensRatingsEntryService = screensRatingsEntryService;
 	}
 
@@ -196,9 +173,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -208,9 +183,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -219,10 +192,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the ddm structure version local service
 	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			getDDMStructureVersionLocalService() {
-
+	public com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService getDDMStructureVersionLocalService() {
 		return ddmStructureVersionLocalService;
 	}
 
@@ -232,9 +202,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param ddmStructureVersionLocalService the ddm structure version local service
 	 */
 	public void setDDMStructureVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService) {
-
+		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
@@ -243,9 +211,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the ddm structure version remote service
 	 */
-	public com.liferay.dynamic.data.mapping.service.DDMStructureVersionService
-		getDDMStructureVersionService() {
-
+	public com.liferay.dynamic.data.mapping.service.DDMStructureVersionService getDDMStructureVersionService() {
 		return ddmStructureVersionService;
 	}
 
@@ -255,9 +221,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param ddmStructureVersionService the ddm structure version remote service
 	 */
 	public void setDDMStructureVersionService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionService
-			ddmStructureVersionService) {
-
+		com.liferay.dynamic.data.mapping.service.DDMStructureVersionService ddmStructureVersionService) {
 		this.ddmStructureVersionService = ddmStructureVersionService;
 	}
 
@@ -277,7 +241,6 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 */
 	public void setDDMStructureVersionPersistence(
 		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
-
 		this.ddmStructureVersionPersistence = ddmStructureVersionPersistence;
 	}
 
@@ -286,9 +249,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -298,9 +259,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -309,9 +268,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -322,7 +279,6 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -342,7 +298,6 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -351,9 +306,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -363,9 +316,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -374,9 +325,7 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -387,7 +336,6 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -407,7 +355,6 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -459,8 +406,8 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -469,96 +416,38 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.screens.service.ScreensAssetEntryService.class
-	)
-	protected com.liferay.screens.service.ScreensAssetEntryService
-		screensAssetEntryService;
-
-	@BeanReference(
-		type = com.liferay.screens.service.ScreensCommentService.class
-	)
-	protected com.liferay.screens.service.ScreensCommentService
-		screensCommentService;
-
-	@BeanReference(
-		type = com.liferay.screens.service.ScreensDDLRecordService.class
-	)
-	protected com.liferay.screens.service.ScreensDDLRecordService
-		screensDDLRecordService;
-
+	@BeanReference(type = com.liferay.screens.service.ScreensAssetEntryService.class)
+	protected com.liferay.screens.service.ScreensAssetEntryService screensAssetEntryService;
+	@BeanReference(type = com.liferay.screens.service.ScreensCommentService.class)
+	protected com.liferay.screens.service.ScreensCommentService screensCommentService;
+	@BeanReference(type = com.liferay.screens.service.ScreensDDLRecordService.class)
+	protected com.liferay.screens.service.ScreensDDLRecordService screensDDLRecordService;
 	@BeanReference(type = ScreensDDMStructureVersionService.class)
-	protected ScreensDDMStructureVersionService
-		screensDDMStructureVersionService;
-
-	@BeanReference(
-		type = com.liferay.screens.service.ScreensJournalArticleService.class
-	)
-	protected com.liferay.screens.service.ScreensJournalArticleService
-		screensJournalArticleService;
-
-	@BeanReference(
-		type = com.liferay.screens.service.ScreensRatingsEntryService.class
-	)
-	protected com.liferay.screens.service.ScreensRatingsEntryService
-		screensRatingsEntryService;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService;
-
-	@ServiceReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionService
-			ddmStructureVersionService;
-
+	protected ScreensDDMStructureVersionService screensDDMStructureVersionService;
+	@BeanReference(type = com.liferay.screens.service.ScreensJournalArticleService.class)
+	protected com.liferay.screens.service.ScreensJournalArticleService screensJournalArticleService;
+	@BeanReference(type = com.liferay.screens.service.ScreensRatingsEntryService.class)
+	protected com.liferay.screens.service.ScreensRatingsEntryService screensRatingsEntryService;
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService;
+	@ServiceReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMStructureVersionService ddmStructureVersionService;
 	@ServiceReference(type = DDMStructureVersionPersistence.class)
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 }

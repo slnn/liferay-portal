@@ -15,11 +15,13 @@
 package com.liferay.calendar.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.calendar.exception.NoSuchBookingException;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.persistence.CalendarBookingPersistence;
 import com.liferay.calendar.service.persistence.CalendarBookingUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class CalendarBookingPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.calendar.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.calendar.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class CalendarBookingPersistenceTest {
 
 		_persistence.remove(newCalendarBooking);
 
-		CalendarBooking existingCalendarBooking =
-			_persistence.fetchByPrimaryKey(newCalendarBooking.getPrimaryKey());
+		CalendarBooking existingCalendarBooking = _persistence.fetchByPrimaryKey(newCalendarBooking.getPrimaryKey());
 
 		Assert.assertNull(existingCalendarBooking);
 	}
@@ -142,11 +142,9 @@ public class CalendarBookingPersistenceTest {
 
 		newCalendarBooking.setCalendarResourceId(RandomTestUtil.nextLong());
 
-		newCalendarBooking.setParentCalendarBookingId(
-			RandomTestUtil.nextLong());
+		newCalendarBooking.setParentCalendarBookingId(RandomTestUtil.nextLong());
 
-		newCalendarBooking.setRecurringCalendarBookingId(
-			RandomTestUtil.nextLong());
+		newCalendarBooking.setRecurringCalendarBookingId(RandomTestUtil.nextLong());
 
 		newCalendarBooking.setVEventUid(RandomTestUtil.randomString());
 
@@ -184,93 +182,69 @@ public class CalendarBookingPersistenceTest {
 
 		_calendarBookings.add(_persistence.update(newCalendarBooking));
 
-		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(
-			newCalendarBooking.getPrimaryKey());
+		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(newCalendarBooking.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCalendarBooking.getUuid(), newCalendarBooking.getUuid());
-		Assert.assertEquals(
-			existingCalendarBooking.getCalendarBookingId(),
+		Assert.assertEquals(existingCalendarBooking.getUuid(),
+			newCalendarBooking.getUuid());
+		Assert.assertEquals(existingCalendarBooking.getCalendarBookingId(),
 			newCalendarBooking.getCalendarBookingId());
-		Assert.assertEquals(
-			existingCalendarBooking.getGroupId(),
+		Assert.assertEquals(existingCalendarBooking.getGroupId(),
 			newCalendarBooking.getGroupId());
-		Assert.assertEquals(
-			existingCalendarBooking.getCompanyId(),
+		Assert.assertEquals(existingCalendarBooking.getCompanyId(),
 			newCalendarBooking.getCompanyId());
-		Assert.assertEquals(
-			existingCalendarBooking.getUserId(),
+		Assert.assertEquals(existingCalendarBooking.getUserId(),
 			newCalendarBooking.getUserId());
-		Assert.assertEquals(
-			existingCalendarBooking.getUserName(),
+		Assert.assertEquals(existingCalendarBooking.getUserName(),
 			newCalendarBooking.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCalendarBooking.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarBooking.getCreateDate()),
 			Time.getShortTimestamp(newCalendarBooking.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCalendarBooking.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarBooking.getModifiedDate()),
 			Time.getShortTimestamp(newCalendarBooking.getModifiedDate()));
-		Assert.assertEquals(
-			existingCalendarBooking.getCalendarId(),
+		Assert.assertEquals(existingCalendarBooking.getCalendarId(),
 			newCalendarBooking.getCalendarId());
-		Assert.assertEquals(
-			existingCalendarBooking.getCalendarResourceId(),
+		Assert.assertEquals(existingCalendarBooking.getCalendarResourceId(),
 			newCalendarBooking.getCalendarResourceId());
-		Assert.assertEquals(
-			existingCalendarBooking.getParentCalendarBookingId(),
+		Assert.assertEquals(existingCalendarBooking.getParentCalendarBookingId(),
 			newCalendarBooking.getParentCalendarBookingId());
-		Assert.assertEquals(
-			existingCalendarBooking.getRecurringCalendarBookingId(),
+		Assert.assertEquals(existingCalendarBooking.getRecurringCalendarBookingId(),
 			newCalendarBooking.getRecurringCalendarBookingId());
-		Assert.assertEquals(
-			existingCalendarBooking.getVEventUid(),
+		Assert.assertEquals(existingCalendarBooking.getVEventUid(),
 			newCalendarBooking.getVEventUid());
-		Assert.assertEquals(
-			existingCalendarBooking.getTitle(), newCalendarBooking.getTitle());
-		Assert.assertEquals(
-			existingCalendarBooking.getDescription(),
+		Assert.assertEquals(existingCalendarBooking.getTitle(),
+			newCalendarBooking.getTitle());
+		Assert.assertEquals(existingCalendarBooking.getDescription(),
 			newCalendarBooking.getDescription());
-		Assert.assertEquals(
-			existingCalendarBooking.getLocation(),
+		Assert.assertEquals(existingCalendarBooking.getLocation(),
 			newCalendarBooking.getLocation());
-		Assert.assertEquals(
-			existingCalendarBooking.getStartTime(),
+		Assert.assertEquals(existingCalendarBooking.getStartTime(),
 			newCalendarBooking.getStartTime());
-		Assert.assertEquals(
-			existingCalendarBooking.getEndTime(),
+		Assert.assertEquals(existingCalendarBooking.getEndTime(),
 			newCalendarBooking.getEndTime());
-		Assert.assertEquals(
-			existingCalendarBooking.isAllDay(), newCalendarBooking.isAllDay());
-		Assert.assertEquals(
-			existingCalendarBooking.getRecurrence(),
+		Assert.assertEquals(existingCalendarBooking.isAllDay(),
+			newCalendarBooking.isAllDay());
+		Assert.assertEquals(existingCalendarBooking.getRecurrence(),
 			newCalendarBooking.getRecurrence());
-		Assert.assertEquals(
-			existingCalendarBooking.getFirstReminder(),
+		Assert.assertEquals(existingCalendarBooking.getFirstReminder(),
 			newCalendarBooking.getFirstReminder());
-		Assert.assertEquals(
-			existingCalendarBooking.getFirstReminderType(),
+		Assert.assertEquals(existingCalendarBooking.getFirstReminderType(),
 			newCalendarBooking.getFirstReminderType());
-		Assert.assertEquals(
-			existingCalendarBooking.getSecondReminder(),
+		Assert.assertEquals(existingCalendarBooking.getSecondReminder(),
 			newCalendarBooking.getSecondReminder());
-		Assert.assertEquals(
-			existingCalendarBooking.getSecondReminderType(),
+		Assert.assertEquals(existingCalendarBooking.getSecondReminderType(),
 			newCalendarBooking.getSecondReminderType());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarBooking.getLastPublishDate()),
 			Time.getShortTimestamp(newCalendarBooking.getLastPublishDate()));
-		Assert.assertEquals(
-			existingCalendarBooking.getStatus(),
+		Assert.assertEquals(existingCalendarBooking.getStatus(),
 			newCalendarBooking.getStatus());
-		Assert.assertEquals(
-			existingCalendarBooking.getStatusByUserId(),
+		Assert.assertEquals(existingCalendarBooking.getStatusByUserId(),
 			newCalendarBooking.getStatusByUserId());
-		Assert.assertEquals(
-			existingCalendarBooking.getStatusByUserName(),
+		Assert.assertEquals(existingCalendarBooking.getStatusByUserName(),
 			newCalendarBooking.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCalendarBooking.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarBooking.getStatusDate()),
 			Time.getShortTimestamp(newCalendarBooking.getStatusDate()));
 	}
 
@@ -323,17 +297,17 @@ public class CalendarBookingPersistenceTest {
 	}
 
 	@Test
-	public void testCountByRecurringCalendarBookingId() throws Exception {
-		_persistence.countByRecurringCalendarBookingId(
-			RandomTestUtil.nextLong());
+	public void testCountByRecurringCalendarBookingId()
+		throws Exception {
+		_persistence.countByRecurringCalendarBookingId(RandomTestUtil.nextLong());
 
 		_persistence.countByRecurringCalendarBookingId(0L);
 	}
 
 	@Test
 	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_P(0L, 0L);
 	}
@@ -349,22 +323,22 @@ public class CalendarBookingPersistenceTest {
 
 	@Test
 	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_SArrayable() throws Exception {
-		_persistence.countByC_S(
-			RandomTestUtil.nextLong(), new int[] {RandomTestUtil.nextInt(), 0});
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			new int[] { RandomTestUtil.nextInt(), 0 });
 	}
 
 	@Test
 	public void testCountByP_S() throws Exception {
-		_persistence.countByP_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByP_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByP_S(0L, 0);
 	}
@@ -373,8 +347,7 @@ public class CalendarBookingPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CalendarBooking newCalendarBooking = addCalendarBooking();
 
-		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(
-			newCalendarBooking.getPrimaryKey());
+		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(newCalendarBooking.getPrimaryKey());
 
 		Assert.assertEquals(existingCalendarBooking, newCalendarBooking);
 	}
@@ -388,31 +361,30 @@ public class CalendarBookingPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<CalendarBooking> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"CalendarBooking", "uuid", true, "calendarBookingId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "calendarId", true,
-			"calendarResourceId", true, "parentCalendarBookingId", true,
+		return OrderByComparatorFactoryUtil.create("CalendarBooking", "uuid",
+			true, "calendarBookingId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "calendarId", true, "calendarResourceId",
+			true, "parentCalendarBookingId", true,
 			"recurringCalendarBookingId", true, "vEventUid", true, "title",
 			true, "location", true, "startTime", true, "endTime", true,
 			"allDay", true, "recurrence", true, "firstReminder", true,
 			"firstReminderType", true, "secondReminder", true,
-			"secondReminderType", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"secondReminderType", true, "lastPublishDate", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		CalendarBooking newCalendarBooking = addCalendarBooking();
 
-		CalendarBooking existingCalendarBooking =
-			_persistence.fetchByPrimaryKey(newCalendarBooking.getPrimaryKey());
+		CalendarBooking existingCalendarBooking = _persistence.fetchByPrimaryKey(newCalendarBooking.getPrimaryKey());
 
 		Assert.assertEquals(existingCalendarBooking, newCalendarBooking);
 	}
@@ -421,8 +393,7 @@ public class CalendarBookingPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CalendarBooking missingCalendarBooking = _persistence.fetchByPrimaryKey(
-			pk);
+		CalendarBooking missingCalendarBooking = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingCalendarBooking);
 	}
@@ -430,7 +401,6 @@ public class CalendarBookingPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		CalendarBooking newCalendarBooking1 = addCalendarBooking();
 		CalendarBooking newCalendarBooking2 = addCalendarBooking();
 
@@ -439,22 +409,18 @@ public class CalendarBookingPersistenceTest {
 		primaryKeys.add(newCalendarBooking1.getPrimaryKey());
 		primaryKeys.add(newCalendarBooking2.getPrimaryKey());
 
-		Map<Serializable, CalendarBooking> calendarBookings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarBooking> calendarBookings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, calendarBookings.size());
-		Assert.assertEquals(
-			newCalendarBooking1,
+		Assert.assertEquals(newCalendarBooking1,
 			calendarBookings.get(newCalendarBooking1.getPrimaryKey()));
-		Assert.assertEquals(
-			newCalendarBooking2,
+		Assert.assertEquals(newCalendarBooking2,
 			calendarBookings.get(newCalendarBooking2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -464,8 +430,7 @@ public class CalendarBookingPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CalendarBooking> calendarBookings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarBooking> calendarBookings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(calendarBookings.isEmpty());
 	}
@@ -473,7 +438,6 @@ public class CalendarBookingPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		CalendarBooking newCalendarBooking = addCalendarBooking();
 
 		long pk = RandomTestUtil.nextLong();
@@ -483,39 +447,36 @@ public class CalendarBookingPersistenceTest {
 		primaryKeys.add(newCalendarBooking.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CalendarBooking> calendarBookings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarBooking> calendarBookings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, calendarBookings.size());
-		Assert.assertEquals(
-			newCalendarBooking,
+		Assert.assertEquals(newCalendarBooking,
 			calendarBookings.get(newCalendarBooking.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalendarBooking> calendarBookings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarBooking> calendarBookings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(calendarBookings.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		CalendarBooking newCalendarBooking = addCalendarBooking();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCalendarBooking.getPrimaryKey());
 
-		Map<Serializable, CalendarBooking> calendarBookings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarBooking> calendarBookings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, calendarBookings.size());
-		Assert.assertEquals(
-			newCalendarBooking,
+		Assert.assertEquals(newCalendarBooking,
 			calendarBookings.get(newCalendarBooking.getPrimaryKey()));
 	}
 
@@ -523,19 +484,15 @@ public class CalendarBookingPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			CalendarBookingLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CalendarBookingLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
 				@Override
 				public void performAction(CalendarBooking calendarBooking) {
 					Assert.assertNotNull(calendarBooking);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -544,19 +501,17 @@ public class CalendarBookingPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		CalendarBooking newCalendarBooking = addCalendarBooking();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarBooking.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarBooking.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"calendarBookingId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("calendarBookingId",
 				newCalendarBooking.getCalendarBookingId()));
 
-		List<CalendarBooking> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CalendarBooking> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -567,34 +522,32 @@ public class CalendarBookingPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarBooking.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarBooking.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"calendarBookingId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("calendarBookingId",
+				RandomTestUtil.nextLong()));
 
-		List<CalendarBooking> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CalendarBooking> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		CalendarBooking newCalendarBooking = addCalendarBooking();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarBooking.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarBooking.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("calendarBookingId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"calendarBookingId"));
 
 		Object newCalendarBookingId = newCalendarBooking.getCalendarBookingId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"calendarBookingId", new Object[] {newCalendarBookingId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("calendarBookingId",
+				new Object[] { newCalendarBookingId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -607,15 +560,14 @@ public class CalendarBookingPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarBooking.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarBooking.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("calendarBookingId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"calendarBookingId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"calendarBookingId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("calendarBookingId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -628,43 +580,32 @@ public class CalendarBookingPersistenceTest {
 
 		_persistence.clearCache();
 
-		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(
-			newCalendarBooking.getPrimaryKey());
+		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(newCalendarBooking.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingCalendarBooking.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingCalendarBooking, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCalendarBooking.getUuid(),
+				ReflectionTestUtil.invoke(existingCalendarBooking,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingCalendarBooking.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getCalendarId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalCalendarId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getParentCalendarBookingId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalParentCalendarBookingId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarBooking.getCalendarId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
+				"getOriginalCalendarId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarBooking.getParentCalendarBookingId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
+				"getOriginalParentCalendarBookingId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarBooking.getCalendarId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarBooking, "getOriginalCalendarId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarBooking.getCalendarId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
+				"getOriginalCalendarId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingCalendarBooking.getVEventUid(),
-				ReflectionTestUtil.invoke(
-					existingCalendarBooking, "getOriginalVEventUid",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingCalendarBooking,
+					"getOriginalVEventUid", new Class<?>[0])));
 	}
 
 	protected CalendarBooking addCalendarBooking() throws Exception {
@@ -692,8 +633,7 @@ public class CalendarBookingPersistenceTest {
 
 		calendarBooking.setParentCalendarBookingId(RandomTestUtil.nextLong());
 
-		calendarBooking.setRecurringCalendarBookingId(
-			RandomTestUtil.nextLong());
+		calendarBooking.setRecurringCalendarBookingId(RandomTestUtil.nextLong());
 
 		calendarBooking.setVEventUid(RandomTestUtil.randomString());
 
@@ -734,9 +674,7 @@ public class CalendarBookingPersistenceTest {
 		return calendarBooking;
 	}
 
-	private List<CalendarBooking> _calendarBookings =
-		new ArrayList<CalendarBooking>();
+	private List<CalendarBooking> _calendarBookings = new ArrayList<CalendarBooking>();
 	private CalendarBookingPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

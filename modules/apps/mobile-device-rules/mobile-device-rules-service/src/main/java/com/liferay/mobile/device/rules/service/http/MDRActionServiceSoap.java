@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -67,28 +68,22 @@ import java.util.Map;
  */
 @ProviderType
 public class MDRActionServiceSoap {
-
 	public static com.liferay.mobile.device.rules.model.MDRActionSoap addAction(
-			long ruleGroupInstanceId, String[] nameMapLanguageIds,
-			String[] nameMapValues, String[] descriptionMapLanguageIds,
-			String[] descriptionMapValues, String type, String typeSettings,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long ruleGroupInstanceId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues, String type, String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				nameMapLanguageIds, nameMapValues);
-			Map<Locale, String> descriptionMap =
-				LocalizationUtil.getLocalizationMap(
-					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
 
-			com.liferay.mobile.device.rules.model.MDRAction returnValue =
-				MDRActionServiceUtil.addAction(
-					ruleGroupInstanceId, nameMap, descriptionMap, type,
-					typeSettings, serviceContext);
+			com.liferay.mobile.device.rules.model.MDRAction returnValue = MDRActionServiceUtil.addAction(ruleGroupInstanceId,
+					nameMap, descriptionMap, type, typeSettings, serviceContext);
 
-			return com.liferay.mobile.device.rules.model.MDRActionSoap.
-				toSoapModel(returnValue);
+			return com.liferay.mobile.device.rules.model.MDRActionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -108,16 +103,12 @@ public class MDRActionServiceSoap {
 		}
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRActionSoap
-			fetchAction(long actionId)
-		throws RemoteException {
-
+	public static com.liferay.mobile.device.rules.model.MDRActionSoap fetchAction(
+		long actionId) throws RemoteException {
 		try {
-			com.liferay.mobile.device.rules.model.MDRAction returnValue =
-				MDRActionServiceUtil.fetchAction(actionId);
+			com.liferay.mobile.device.rules.model.MDRAction returnValue = MDRActionServiceUtil.fetchAction(actionId);
 
-			return com.liferay.mobile.device.rules.model.MDRActionSoap.
-				toSoapModel(returnValue);
+			return com.liferay.mobile.device.rules.model.MDRActionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -127,15 +118,11 @@ public class MDRActionServiceSoap {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRActionSoap getAction(
-			long actionId)
-		throws RemoteException {
-
+		long actionId) throws RemoteException {
 		try {
-			com.liferay.mobile.device.rules.model.MDRAction returnValue =
-				MDRActionServiceUtil.getAction(actionId);
+			com.liferay.mobile.device.rules.model.MDRAction returnValue = MDRActionServiceUtil.getAction(actionId);
 
-			return com.liferay.mobile.device.rules.model.MDRActionSoap.
-				toSoapModel(returnValue);
+			return com.liferay.mobile.device.rules.model.MDRActionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -144,28 +131,22 @@ public class MDRActionServiceSoap {
 		}
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRActionSoap
-			updateAction(
-				long actionId, String[] nameMapLanguageIds,
-				String[] nameMapValues, String[] descriptionMapLanguageIds,
-				String[] descriptionMapValues, String type, String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.mobile.device.rules.model.MDRActionSoap updateAction(
+		long actionId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		String type, String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				nameMapLanguageIds, nameMapValues);
-			Map<Locale, String> descriptionMap =
-				LocalizationUtil.getLocalizationMap(
-					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
 
-			com.liferay.mobile.device.rules.model.MDRAction returnValue =
-				MDRActionServiceUtil.updateAction(
-					actionId, nameMap, descriptionMap, type, typeSettings,
-					serviceContext);
+			com.liferay.mobile.device.rules.model.MDRAction returnValue = MDRActionServiceUtil.updateAction(actionId,
+					nameMap, descriptionMap, type, typeSettings, serviceContext);
 
-			return com.liferay.mobile.device.rules.model.MDRActionSoap.
-				toSoapModel(returnValue);
+			return com.liferay.mobile.device.rules.model.MDRActionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -175,5 +156,4 @@ public class MDRActionServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MDRActionServiceSoap.class);
-
 }

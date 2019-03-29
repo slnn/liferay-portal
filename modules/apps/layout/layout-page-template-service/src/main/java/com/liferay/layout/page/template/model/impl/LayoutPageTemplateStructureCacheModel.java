@@ -17,8 +17,10 @@ package com.liferay.layout.page.template.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateStructureCacheModel
-	implements CacheModel<LayoutPageTemplateStructure>, Externalizable {
-
+public class LayoutPageTemplateStructureCacheModel implements CacheModel<LayoutPageTemplateStructure>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,14 +49,10 @@ public class LayoutPageTemplateStructureCacheModel
 			return false;
 		}
 
-		LayoutPageTemplateStructureCacheModel
-			layoutPageTemplateStructureCacheModel =
-				(LayoutPageTemplateStructureCacheModel)obj;
+		LayoutPageTemplateStructureCacheModel layoutPageTemplateStructureCacheModel =
+			(LayoutPageTemplateStructureCacheModel)obj;
 
-		if (layoutPageTemplateStructureId ==
-				layoutPageTemplateStructureCacheModel.
-					layoutPageTemplateStructureId) {
-
+		if (layoutPageTemplateStructureId == layoutPageTemplateStructureCacheModel.layoutPageTemplateStructureId) {
 			return true;
 		}
 
@@ -100,8 +97,7 @@ public class LayoutPageTemplateStructureCacheModel
 
 	@Override
 	public LayoutPageTemplateStructure toEntityModel() {
-		LayoutPageTemplateStructureImpl layoutPageTemplateStructureImpl =
-			new LayoutPageTemplateStructureImpl();
+		LayoutPageTemplateStructureImpl layoutPageTemplateStructureImpl = new LayoutPageTemplateStructureImpl();
 
 		if (uuid == null) {
 			layoutPageTemplateStructureImpl.setUuid("");
@@ -110,8 +106,7 @@ public class LayoutPageTemplateStructureCacheModel
 			layoutPageTemplateStructureImpl.setUuid(uuid);
 		}
 
-		layoutPageTemplateStructureImpl.setLayoutPageTemplateStructureId(
-			layoutPageTemplateStructureId);
+		layoutPageTemplateStructureImpl.setLayoutPageTemplateStructureId(layoutPageTemplateStructureId);
 		layoutPageTemplateStructureImpl.setGroupId(groupId);
 		layoutPageTemplateStructureImpl.setCompanyId(companyId);
 		layoutPageTemplateStructureImpl.setUserId(userId);
@@ -134,8 +129,8 @@ public class LayoutPageTemplateStructureCacheModel
 			layoutPageTemplateStructureImpl.setModifiedDate(null);
 		}
 		else {
-			layoutPageTemplateStructureImpl.setModifiedDate(
-				new Date(modifiedDate));
+			layoutPageTemplateStructureImpl.setModifiedDate(new Date(
+					modifiedDate));
 		}
 
 		layoutPageTemplateStructureImpl.setClassNameId(classNameId);
@@ -175,7 +170,8 @@ public class LayoutPageTemplateStructureCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -224,5 +220,4 @@ public class LayoutPageTemplateStructureCacheModel
 	public long classNameId;
 	public long classPK;
 	public String data;
-
 }

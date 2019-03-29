@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -57,86 +58,60 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class LVEntryModelImpl
-	extends BaseModelImpl<LVEntry> implements LVEntryModel {
-
+public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
+	implements LVEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a lv entry model instance should use the <code>LVEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "LVEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"headId", Types.BIGINT}, {"defaultLanguageId", Types.VARCHAR},
-		{"lvEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"uniqueGroupKey", Types.VARCHAR}, {"head", Types.BOOLEAN}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "mvccVersion", Types.BIGINT },
+			{ "uuid_", Types.VARCHAR },
+			{ "headId", Types.BIGINT },
+			{ "head", Types.BOOLEAN },
+			{ "defaultLanguageId", Types.VARCHAR },
+			{ "lvEntryId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "uniqueGroupKey", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uniqueGroupKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null,head BOOLEAN)";
-
+	public static final String TABLE_SQL_CREATE = "create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LVEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY lvEntry.lvEntryId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY lvEntry.lvEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LVEntry.lvEntryId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.tools.service.builder.test.model.LVEntry"),
-		true);
-
+			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-
 	public static final long HEAD_COLUMN_BITMASK = 2L;
-
 	public static final long HEADID_COLUMN_BITMASK = 4L;
-
 	public static final long UNIQUEGROUPKEY_COLUMN_BITMASK = 8L;
-
 	public static final long UUID_COLUMN_BITMASK = 16L;
-
 	public static final long LVENTRYID_COLUMN_BITMASK = 32L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.LVEntry"));
 
 	public LVEntryModelImpl() {
@@ -176,18 +151,14 @@ public class LVEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<LVEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<LVEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LVEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((LVEntry)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((LVEntry)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -198,44 +169,34 @@ public class LVEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<LVEntry, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<LVEntry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<LVEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<LVEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(LVEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((LVEntry)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<LVEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<LVEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<LVEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<LVEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LVEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LVEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<LVEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LVEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<LVEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<LVEntry, Object>>();
-		Map<String, BiConsumer<LVEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<LVEntry, ?>>();
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LVEntry, Object>>();
+		Map<String, BiConsumer<LVEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LVEntry, ?>>();
+
 
 		attributeGetterFunctions.put(
 			"mvccVersion",
@@ -378,22 +339,19 @@ public class LVEntryModelImpl
 
 			});
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		List<LVEntryLocalization> lvEntryLocalizations =
-			LVEntryLocalServiceUtil.getLVEntryLocalizations(getPrimaryKey());
+		List<LVEntryLocalization> lvEntryLocalizations = LVEntryLocalServiceUtil.getLVEntryLocalizations(getPrimaryKey());
 
 		String[] availableLanguageIds = new String[lvEntryLocalizations.size()];
 
 		for (int i = 0; i < availableLanguageIds.length; i++) {
-			LVEntryLocalization lvEntryLocalization = lvEntryLocalizations.get(
-				i);
+			LVEntryLocalization lvEntryLocalization = lvEntryLocalizations.get(i);
 
 			availableLanguageIds[i] = lvEntryLocalization.getLanguageId();
 		}
@@ -414,16 +372,12 @@ public class LVEntryModelImpl
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
 		if (useDefault) {
-			return LocalizationUtil.getLocalization(
-				new Function<String, String>() {
-
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
 					@Override
 					public String apply(String languageId) {
 						return _getTitle(languageId);
 					}
-
-				},
-				languageId, getDefaultLanguageId());
+				}, languageId, getDefaultLanguageId());
 		}
 
 		return _getTitle(languageId);
@@ -431,21 +385,18 @@ public class LVEntryModelImpl
 
 	@Override
 	public String getTitleMapAsXML() {
-		return LocalizationUtil.getXml(
-			getLanguageIdToTitleMap(), getDefaultLanguageId(), "Title");
+		return LocalizationUtil.getXml(getLanguageIdToTitleMap(),
+			getDefaultLanguageId(), "Title");
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToTitleMap() {
-		Map<String, String> languageIdToTitleMap =
-			new HashMap<String, String>();
+		Map<String, String> languageIdToTitleMap = new HashMap<String, String>();
 
-		List<LVEntryLocalization> lvEntryLocalizations =
-			LVEntryLocalServiceUtil.getLVEntryLocalizations(getPrimaryKey());
+		List<LVEntryLocalization> lvEntryLocalizations = LVEntryLocalServiceUtil.getLVEntryLocalizations(getPrimaryKey());
 
 		for (LVEntryLocalization lvEntryLocalization : lvEntryLocalizations) {
-			languageIdToTitleMap.put(
-				lvEntryLocalization.getLanguageId(),
+			languageIdToTitleMap.put(lvEntryLocalization.getLanguageId(),
 				lvEntryLocalization.getTitle());
 		}
 
@@ -453,9 +404,8 @@ public class LVEntryModelImpl
 	}
 
 	private String _getTitle(String languageId) {
-		LVEntryLocalization lvEntryLocalization =
-			LVEntryLocalServiceUtil.fetchLVEntryLocalization(
-				getPrimaryKey(), languageId);
+		LVEntryLocalization lvEntryLocalization = LVEntryLocalServiceUtil.fetchLVEntryLocalization(getPrimaryKey(),
+				languageId);
 
 		if (lvEntryLocalization == null) {
 			return "";
@@ -477,16 +427,12 @@ public class LVEntryModelImpl
 	@Override
 	public String getContent(String languageId, boolean useDefault) {
 		if (useDefault) {
-			return LocalizationUtil.getLocalization(
-				new Function<String, String>() {
-
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
 					@Override
 					public String apply(String languageId) {
 						return _getContent(languageId);
 					}
-
-				},
-				languageId, getDefaultLanguageId());
+				}, languageId, getDefaultLanguageId());
 		}
 
 		return _getContent(languageId);
@@ -494,21 +440,18 @@ public class LVEntryModelImpl
 
 	@Override
 	public String getContentMapAsXML() {
-		return LocalizationUtil.getXml(
-			getLanguageIdToContentMap(), getDefaultLanguageId(), "Content");
+		return LocalizationUtil.getXml(getLanguageIdToContentMap(),
+			getDefaultLanguageId(), "Content");
 	}
 
 	@Override
 	public Map<String, String> getLanguageIdToContentMap() {
-		Map<String, String> languageIdToContentMap =
-			new HashMap<String, String>();
+		Map<String, String> languageIdToContentMap = new HashMap<String, String>();
 
-		List<LVEntryLocalization> lvEntryLocalizations =
-			LVEntryLocalServiceUtil.getLVEntryLocalizations(getPrimaryKey());
+		List<LVEntryLocalization> lvEntryLocalizations = LVEntryLocalServiceUtil.getLVEntryLocalizations(getPrimaryKey());
 
 		for (LVEntryLocalization lvEntryLocalization : lvEntryLocalizations) {
-			languageIdToContentMap.put(
-				lvEntryLocalization.getLanguageId(),
+			languageIdToContentMap.put(lvEntryLocalization.getLanguageId(),
 				lvEntryLocalization.getContent());
 		}
 
@@ -516,9 +459,8 @@ public class LVEntryModelImpl
 	}
 
 	private String _getContent(String languageId) {
-		LVEntryLocalization lvEntryLocalization =
-			LVEntryLocalServiceUtil.fetchLVEntryLocalization(
-				getPrimaryKey(), languageId);
+		LVEntryLocalization lvEntryLocalization = LVEntryLocalServiceUtil.fetchLVEntryLocalization(getPrimaryKey(),
+				languageId);
 
 		if (lvEntryLocalization == null) {
 			return "";
@@ -702,8 +644,8 @@ public class LVEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, LVEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			LVEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -716,9 +658,8 @@ public class LVEntryModelImpl
 	@Override
 	public LVEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LVEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (LVEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -803,16 +744,15 @@ public class LVEntryModelImpl
 
 		lvEntryModelImpl._setOriginalHeadId = false;
 
+		lvEntryModelImpl._originalHead = lvEntryModelImpl._head;
+
+		lvEntryModelImpl._setOriginalHead = false;
+
 		lvEntryModelImpl._originalGroupId = lvEntryModelImpl._groupId;
 
 		lvEntryModelImpl._setOriginalGroupId = false;
 
-		lvEntryModelImpl._originalUniqueGroupKey =
-			lvEntryModelImpl._uniqueGroupKey;
-
-		lvEntryModelImpl._originalHead = lvEntryModelImpl._head;
-
-		lvEntryModelImpl._setOriginalHead = false;
+		lvEntryModelImpl._originalUniqueGroupKey = lvEntryModelImpl._uniqueGroupKey;
 
 		lvEntryModelImpl._columnBitmask = 0;
 	}
@@ -832,6 +772,8 @@ public class LVEntryModelImpl
 		}
 
 		lvEntryCacheModel.headId = getHeadId();
+
+		lvEntryCacheModel.head = isHead();
 
 		lvEntryCacheModel.defaultLanguageId = getDefaultLanguageId();
 
@@ -853,27 +795,21 @@ public class LVEntryModelImpl
 			lvEntryCacheModel.uniqueGroupKey = null;
 		}
 
-		lvEntryCacheModel.head = isHead();
-
 		return lvEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		Map<String, Function<LVEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<LVEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LVEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -892,22 +828,18 @@ public class LVEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<LVEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<LVEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LVEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -921,18 +853,19 @@ public class LVEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LVEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = LVEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LVEntry.class, ModelWrapper.class
-	};
-
+			LVEntry.class, ModelWrapper.class
+		};
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _headId;
 	private long _originalHeadId;
 	private boolean _setOriginalHeadId;
+	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
 	private long _groupId;
@@ -940,10 +873,6 @@ public class LVEntryModelImpl
 	private boolean _setOriginalGroupId;
 	private String _uniqueGroupKey;
 	private String _originalUniqueGroupKey;
-	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private long _columnBitmask;
 	private LVEntry _escapedModel;
-
 }

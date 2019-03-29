@@ -17,7 +17,9 @@ package com.liferay.asset.display.page.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -53,13 +55,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface AssetDisplayPageEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface AssetDisplayPageEntryLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,66 +66,63 @@ public interface AssetDisplayPageEntryLocalService
 	 */
 
 	/**
-	 * Adds the asset display page entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetDisplayPageEntry the asset display page entry
-	 * @return the asset display page entry that was added
-	 */
+	* Adds the asset display page entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetDisplayPageEntry the asset display page entry
+	* @return the asset display page entry that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetDisplayPageEntry addAssetDisplayPageEntry(
 		AssetDisplayPageEntry assetDisplayPageEntry);
 
-	public AssetDisplayPageEntry addAssetDisplayPageEntry(
-			long userId, long groupId, long classNameId, long classPK,
-			long layoutPageTemplateEntryId, int type,
-			ServiceContext serviceContext)
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(long userId,
+		long groupId, long classNameId, long classPK,
+		long layoutPageTemplateEntryId, int type, ServiceContext serviceContext)
 		throws PortalException;
 
-	public AssetDisplayPageEntry addAssetDisplayPageEntry(
-			long userId, long groupId, long classNameId, long classPK,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(long userId,
+		long groupId, long classNameId, long classPK,
+		long layoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
-	 *
-	 * @param assetDisplayPageEntryId the primary key for the new asset display page entry
-	 * @return the new asset display page entry
-	 */
+	* Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
+	*
+	* @param assetDisplayPageEntryId the primary key for the new asset display page entry
+	* @return the new asset display page entry
+	*/
 	@Transactional(enabled = false)
 	public AssetDisplayPageEntry createAssetDisplayPageEntry(
 		long assetDisplayPageEntryId);
 
 	/**
-	 * Deletes the asset display page entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetDisplayPageEntry the asset display page entry
-	 * @return the asset display page entry that was removed
-	 */
+	* Deletes the asset display page entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetDisplayPageEntry the asset display page entry
+	* @return the asset display page entry that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public AssetDisplayPageEntry deleteAssetDisplayPageEntry(
 		AssetDisplayPageEntry assetDisplayPageEntry);
 
 	/**
-	 * Deletes the asset display page entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the asset display page entry
-	 * @return the asset display page entry that was removed
-	 * @throws PortalException if a asset display page entry with the primary key could not be found
-	 */
+	* Deletes the asset display page entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetDisplayPageEntryId the primary key of the asset display page entry
+	* @return the asset display page entry that was removed
+	* @throws PortalException if a asset display page entry with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public AssetDisplayPageEntry deleteAssetDisplayPageEntry(
-			long assetDisplayPageEntryId)
-		throws PortalException;
+		long assetDisplayPageEntryId) throws PortalException;
 
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteAssetDisplayPageEntry(
-			long groupId, long classNameId, long classPK)
-		throws PortalException;
+	public void deleteAssetDisplayPageEntry(long groupId, long classNameId,
+		long classPK) throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -135,83 +131,82 @@ public interface AssetDisplayPageEntryLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
 		long assetDisplayPageEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
-		long groupId, long classNameId, long classPK);
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(long groupId,
+		long classNameId, long classPK);
 
 	/**
-	 * Returns the asset display page entry matching the UUID and group.
-	 *
-	 * @param uuid the asset display page entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
+	* Returns the asset display page entry matching the UUID and group.
+	*
+	* @param uuid the asset display page entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetDisplayPageEntry fetchAssetDisplayPageEntryByUuidAndGroupId(
 		String uuid, long groupId);
@@ -220,58 +215,55 @@ public interface AssetDisplayPageEntryLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns a range of all the asset display page entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset display page entries
-	 * @param end the upper bound of the range of asset display page entries (not inclusive)
-	 * @return the range of asset display page entries
-	 */
+	* Returns a range of all the asset display page entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of asset display page entries
+	* @param end the upper bound of the range of asset display page entries (not inclusive)
+	* @return the range of asset display page entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetDisplayPageEntry> getAssetDisplayPageEntries(
-		int start, int end);
+	public List<AssetDisplayPageEntry> getAssetDisplayPageEntries(int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetDisplayPageEntry>
-		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
-			long layoutPageTemplateEntryId);
-
-	/**
-	 * Returns all the asset display page entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset display page entries
-	 * @param companyId the primary key of the company
-	 * @return the matching asset display page entries, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetDisplayPageEntry>
-		getAssetDisplayPageEntriesByUuidAndCompanyId(
-			String uuid, long companyId);
+	public List<AssetDisplayPageEntry> getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+		long layoutPageTemplateEntryId);
 
 	/**
-	 * Returns a range of asset display page entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset display page entries
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of asset display page entries
-	 * @param end the upper bound of the range of asset display page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching asset display page entries, or an empty list if no matches were found
-	 */
+	* Returns all the asset display page entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset display page entries
+	* @param companyId the primary key of the company
+	* @return the matching asset display page entries, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetDisplayPageEntry>
-		getAssetDisplayPageEntriesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator);
+	public List<AssetDisplayPageEntry> getAssetDisplayPageEntriesByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	/**
-	 * Returns the number of asset display page entries.
-	 *
-	 * @return the number of asset display page entries
-	 */
+	* Returns a range of asset display page entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset display page entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset display page entries
+	* @param end the upper bound of the range of asset display page entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset display page entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetDisplayPageEntry> getAssetDisplayPageEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
+
+	/**
+	* Returns the number of asset display page entries.
+	*
+	* @return the number of asset display page entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetDisplayPageEntriesCount();
 
@@ -280,29 +272,27 @@ public interface AssetDisplayPageEntryLocalService
 		long layoutPageTemplateEntryId);
 
 	/**
-	 * Returns the asset display page entry with the primary key.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the asset display page entry
-	 * @return the asset display page entry
-	 * @throws PortalException if a asset display page entry with the primary key could not be found
-	 */
+	* Returns the asset display page entry with the primary key.
+	*
+	* @param assetDisplayPageEntryId the primary key of the asset display page entry
+	* @return the asset display page entry
+	* @throws PortalException if a asset display page entry with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetDisplayPageEntry getAssetDisplayPageEntry(
-			long assetDisplayPageEntryId)
-		throws PortalException;
+		long assetDisplayPageEntryId) throws PortalException;
 
 	/**
-	 * Returns the asset display page entry matching the UUID and group.
-	 *
-	 * @param uuid the asset display page entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching asset display page entry
-	 * @throws PortalException if a matching asset display page entry could not be found
-	 */
+	* Returns the asset display page entry matching the UUID and group.
+	*
+	* @param uuid the asset display page entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset display page entry
+	* @throws PortalException if a matching asset display page entry could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetDisplayPageEntry getAssetDisplayPageEntryByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException;
+		String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -312,10 +302,10 @@ public interface AssetDisplayPageEntryLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -324,18 +314,16 @@ public interface AssetDisplayPageEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the asset display page entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetDisplayPageEntry the asset display page entry
-	 * @return the asset display page entry that was updated
-	 */
+	* Updates the asset display page entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetDisplayPageEntry the asset display page entry
+	* @return the asset display page entry that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetDisplayPageEntry updateAssetDisplayPageEntry(
 		AssetDisplayPageEntry assetDisplayPageEntry);
 
 	public AssetDisplayPageEntry updateAssetDisplayPageEntry(
-			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
-			int type)
+		long assetDisplayPageEntryId, long layoutPageTemplateEntryId, int type)
 		throws PortalException;
-
 }

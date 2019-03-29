@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface JournalArticleResourceModel
-	extends BaseModel<JournalArticleResource>, ShardedModel {
-
+public interface JournalArticleResourceModel extends BaseModel<JournalArticleResource>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -128,5 +127,4 @@ public interface JournalArticleResourceModel
 	 * @param articleId the article ID of this journal article resource
 	 */
 	public void setArticleId(String articleId);
-
 }

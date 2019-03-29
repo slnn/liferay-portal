@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface TrashVersionModel
-	extends AttachedModel, BaseModel<TrashVersion>, ShardedModel {
-
+public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -170,5 +169,4 @@ public interface TrashVersionModel
 	 * @param status the status of this trash version
 	 */
 	public void setStatus(int status);
-
 }

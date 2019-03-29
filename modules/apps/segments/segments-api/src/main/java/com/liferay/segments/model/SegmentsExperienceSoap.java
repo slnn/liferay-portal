@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class SegmentsExperienceSoap implements Serializable {
-
 	public static SegmentsExperienceSoap toSoapModel(SegmentsExperience model) {
 		SegmentsExperienceSoap soapModel = new SegmentsExperienceSoap();
 
@@ -53,9 +52,7 @@ public class SegmentsExperienceSoap implements Serializable {
 
 	public static SegmentsExperienceSoap[] toSoapModels(
 		SegmentsExperience[] models) {
-
-		SegmentsExperienceSoap[] soapModels =
-			new SegmentsExperienceSoap[models.length];
+		SegmentsExperienceSoap[] soapModels = new SegmentsExperienceSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -66,12 +63,10 @@ public class SegmentsExperienceSoap implements Serializable {
 
 	public static SegmentsExperienceSoap[][] toSoapModels(
 		SegmentsExperience[][] models) {
-
 		SegmentsExperienceSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new SegmentsExperienceSoap[models.length][models[0].length];
+			soapModels = new SegmentsExperienceSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SegmentsExperienceSoap[0][0];
@@ -86,16 +81,13 @@ public class SegmentsExperienceSoap implements Serializable {
 
 	public static SegmentsExperienceSoap[] toSoapModels(
 		List<SegmentsExperience> models) {
-
-		List<SegmentsExperienceSoap> soapModels =
-			new ArrayList<SegmentsExperienceSoap>(models.size());
+		List<SegmentsExperienceSoap> soapModels = new ArrayList<SegmentsExperienceSoap>(models.size());
 
 		for (SegmentsExperience model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new SegmentsExperienceSoap[soapModels.size()]);
+		return soapModels.toArray(new SegmentsExperienceSoap[soapModels.size()]);
 	}
 
 	public SegmentsExperienceSoap() {
@@ -230,5 +222,4 @@ public class SegmentsExperienceSoap implements Serializable {
 	private String _name;
 	private int _priority;
 	private boolean _active;
-
 }

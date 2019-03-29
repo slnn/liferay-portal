@@ -33,9 +33,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
  */
 @ProviderType
 public abstract class LayoutPageTemplateEntryBaseImpl
-	extends LayoutPageTemplateEntryModelImpl
-	implements LayoutPageTemplateEntry {
-
+	extends LayoutPageTemplateEntryModelImpl implements LayoutPageTemplateEntry {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +42,10 @@ public abstract class LayoutPageTemplateEntryBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(
-				this);
+			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(this);
 		}
 		else {
-			LayoutPageTemplateEntryLocalServiceUtil.
-				updateLayoutPageTemplateEntry(this);
+			LayoutPageTemplateEntryLocalServiceUtil.updateLayoutPageTemplateEntry(this);
 		}
 	}
-
 }

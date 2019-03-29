@@ -17,7 +17,9 @@ package com.liferay.asset.list.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntry;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -53,58 +55,50 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface AssetListEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface AssetListEntryLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryLocalServiceUtil} to access the asset list entry local service. Add custom service methods to <code>com.liferay.asset.list.service.impl.AssetListEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addAssetEntrySelection(
-			long assetListEntryId, long assetEntryId,
-			ServiceContext serviceContext)
+	public void addAssetEntrySelection(long assetListEntryId,
+		long assetEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Adds the asset list entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetListEntry the asset list entry
-	 * @return the asset list entry that was added
-	 */
+	* Adds the asset list entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetListEntry the asset list entry
+	* @return the asset list entry that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetListEntry addAssetListEntry(AssetListEntry assetListEntry);
 
-	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			ServiceContext serviceContext)
+	public AssetListEntry addAssetListEntry(long userId, long groupId,
+		String title, int type, ServiceContext serviceContext)
 		throws PortalException;
 
-	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			String typeSettings, ServiceContext serviceContext)
+	public AssetListEntry addAssetListEntry(long userId, long groupId,
+		String title, int type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
+
+	public AssetListEntry addDynamicAssetListEntry(long userId, long groupId,
+		String title, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public AssetListEntry addDynamicAssetListEntry(
-			long userId, long groupId, String title, String typeSettings,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public AssetListEntry addManualAssetListEntry(
-			long userId, long groupId, String title, long[] assetEntryIds,
-			ServiceContext serviceContext)
+	public AssetListEntry addManualAssetListEntry(long userId, long groupId,
+		String title, long[] assetEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Creates a new asset list entry with the primary key. Does not add the asset list entry to the database.
-	 *
-	 * @param assetListEntryId the primary key for the new asset list entry
-	 * @return the new asset list entry
-	 */
+	* Creates a new asset list entry with the primary key. Does not add the asset list entry to the database.
+	*
+	* @param assetListEntryId the primary key for the new asset list entry
+	* @return the new asset list entry
+	*/
 	@Transactional(enabled = false)
 	public AssetListEntry createAssetListEntry(long assetListEntryId);
 
@@ -112,29 +106,29 @@ public interface AssetListEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Deletes the asset list entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetListEntry the asset list entry
-	 * @return the asset list entry that was removed
-	 */
+	* Deletes the asset list entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetListEntry the asset list entry
+	* @return the asset list entry that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry);
 
 	/**
-	 * Deletes the asset list entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetListEntryId the primary key of the asset list entry
-	 * @return the asset list entry that was removed
-	 * @throws PortalException if a asset list entry with the primary key could not be found
-	 */
+	* Deletes the asset list entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetListEntryId the primary key of the asset list entry
+	* @return the asset list entry that was removed
+	* @throws PortalException if a asset list entry with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
 		throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -143,96 +137,95 @@ public interface AssetListEntryLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.list.model.impl.AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.list.model.impl.AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.list.model.impl.AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.list.model.impl.AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId);
 
 	/**
-	 * Returns the asset list entry matching the UUID and group.
-	 *
-	 * @param uuid the asset list entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
-	 */
+	* Returns the asset list entry matching the UUID and group.
+	*
+	* @param uuid the asset list entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetListEntry fetchAssetListEntryByUuidAndGroupId(
-		String uuid, long groupId);
+	public AssetListEntry fetchAssetListEntryByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns a range of all the asset list entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.list.model.impl.AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset list entries
-	 * @param end the upper bound of the range of asset list entries (not inclusive)
-	 * @return the range of asset list entries
-	 */
+	* Returns a range of all the asset list entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.asset.list.model.impl.AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of asset list entries
+	* @param end the upper bound of the range of asset list entries (not inclusive)
+	* @return the range of asset list entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntry> getAssetListEntries(int start, int end);
 
@@ -240,62 +233,61 @@ public interface AssetListEntryLocalService
 	public List<AssetListEntry> getAssetListEntries(long groupId);
 
 	/**
-	 * Returns all the asset list entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset list entries
-	 * @param companyId the primary key of the company
-	 * @return the matching asset list entries, or an empty list if no matches were found
-	 */
+	* Returns all the asset list entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entries
+	* @param companyId the primary key of the company
+	* @return the matching asset list entries, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntry> getAssetListEntriesByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	/**
-	 * Returns a range of asset list entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the asset list entries
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of asset list entries
-	 * @param end the upper bound of the range of asset list entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching asset list entries, or an empty list if no matches were found
-	 */
+	* Returns a range of asset list entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset list entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset list entries
+	* @param end the upper bound of the range of asset list entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset list entries, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntry> getAssetListEntriesByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<AssetListEntry> orderByComparator);
 
 	/**
-	 * Returns the number of asset list entries.
-	 *
-	 * @return the number of asset list entries
-	 */
+	* Returns the number of asset list entries.
+	*
+	* @return the number of asset list entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetListEntriesCount();
 
 	/**
-	 * Returns the asset list entry with the primary key.
-	 *
-	 * @param assetListEntryId the primary key of the asset list entry
-	 * @return the asset list entry
-	 * @throws PortalException if a asset list entry with the primary key could not be found
-	 */
+	* Returns the asset list entry with the primary key.
+	*
+	* @param assetListEntryId the primary key of the asset list entry
+	* @return the asset list entry
+	* @throws PortalException if a asset list entry with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry getAssetListEntry(long assetListEntryId)
 		throws PortalException;
 
 	/**
-	 * Returns the asset list entry matching the UUID and group.
-	 *
-	 * @param uuid the asset list entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching asset list entry
-	 * @throws PortalException if a matching asset list entry could not be found
-	 */
+	* Returns the asset list entry matching the UUID and group.
+	*
+	* @param uuid the asset list entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset list entry
+	* @throws PortalException if a matching asset list entry could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetListEntry getAssetListEntryByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException;
+	public AssetListEntry getAssetListEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -305,10 +297,10 @@ public interface AssetListEntryLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -316,29 +308,25 @@ public interface AssetListEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void moveAssetEntrySelection(
-			long assetListEntryId, int position, int newPosition)
-		throws PortalException;
+	public void moveAssetEntrySelection(long assetListEntryId, int position,
+		int newPosition) throws PortalException;
 
 	/**
-	 * Updates the asset list entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetListEntry the asset list entry
-	 * @return the asset list entry that was updated
-	 */
+	* Updates the asset list entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetListEntry the asset list entry
+	* @return the asset list entry that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetListEntry updateAssetListEntry(AssetListEntry assetListEntry);
 
-	public AssetListEntry updateAssetListEntry(
-			long assetListEntryId, String title)
-		throws PortalException;
+	public AssetListEntry updateAssetListEntry(long assetListEntryId,
+		String title) throws PortalException;
 
 	public AssetListEntry updateAssetListEntryTypeSettings(
-			long assetListEntryId, String typeSettings)
-		throws PortalException;
+		long assetListEntryId, String typeSettings) throws PortalException;
 
 	public AssetListEntry updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, String typeSettingsProperties)
+		long assetListEntryId, String typeSettingsProperties)
 		throws PortalException;
-
 }

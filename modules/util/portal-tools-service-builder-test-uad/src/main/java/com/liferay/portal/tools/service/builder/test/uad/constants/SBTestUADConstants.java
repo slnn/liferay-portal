@@ -19,9 +19,7 @@ package com.liferay.portal.tools.service.builder.test.uad.constants;
  * @generated
  */
 public class SBTestUADConstants {
-
 	public static final String[] USER_ID_FIELD_NAMES_UAD_PARTIAL_ENTRY = {
-		"userId"
-	};
-
+			"userId"
+		};
 }

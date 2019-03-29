@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class KaleoTaskWrapper
-	extends BaseModelWrapper<KaleoTask>
+public class KaleoTaskWrapper extends BaseModelWrapper<KaleoTask>
 	implements KaleoTask, ModelWrapper<KaleoTask> {
-
 	public KaleoTaskWrapper(KaleoTask kaleoTask) {
 		super(kaleoTask);
 	}
@@ -53,8 +51,7 @@ public class KaleoTaskWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put(
-			"kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
+		attributes.put("kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
 		attributes.put("kaleoNodeId", getKaleoNodeId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -113,7 +110,7 @@ public class KaleoTaskWrapper
 		}
 
 		Long kaleoDefinitionVersionId = (Long)attributes.get(
-			"kaleoDefinitionVersionId");
+				"kaleoDefinitionVersionId");
 
 		if (kaleoDefinitionVersionId != null) {
 			setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
@@ -139,50 +136,50 @@ public class KaleoTaskWrapper
 	}
 
 	/**
-	 * Returns the company ID of this kaleo task.
-	 *
-	 * @return the company ID of this kaleo task
-	 */
+	* Returns the company ID of this kaleo task.
+	*
+	* @return the company ID of this kaleo task
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this kaleo task.
-	 *
-	 * @return the create date of this kaleo task
-	 */
+	* Returns the create date of this kaleo task.
+	*
+	* @return the create date of this kaleo task
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the description of this kaleo task.
-	 *
-	 * @return the description of this kaleo task
-	 */
+	* Returns the description of this kaleo task.
+	*
+	* @return the description of this kaleo task
+	*/
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	 * Returns the group ID of this kaleo task.
-	 *
-	 * @return the group ID of this kaleo task
-	 */
+	* Returns the group ID of this kaleo task.
+	*
+	* @return the group ID of this kaleo task
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the kaleo definition version ID of this kaleo task.
-	 *
-	 * @return the kaleo definition version ID of this kaleo task
-	 */
+	* Returns the kaleo definition version ID of this kaleo task.
+	*
+	* @return the kaleo definition version ID of this kaleo task
+	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
 		return model.getKaleoDefinitionVersionId();
@@ -191,15 +188,14 @@ public class KaleoTaskWrapper
 	@Override
 	public KaleoNode getKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getKaleoNode();
 	}
 
 	/**
-	 * Returns the kaleo node ID of this kaleo task.
-	 *
-	 * @return the kaleo node ID of this kaleo task
-	 */
+	* Returns the kaleo node ID of this kaleo task.
+	*
+	* @return the kaleo node ID of this kaleo task
+	*/
 	@Override
 	public long getKaleoNodeId() {
 		return model.getKaleoNodeId();
@@ -211,80 +207,80 @@ public class KaleoTaskWrapper
 	}
 
 	/**
-	 * Returns the kaleo task ID of this kaleo task.
-	 *
-	 * @return the kaleo task ID of this kaleo task
-	 */
+	* Returns the kaleo task ID of this kaleo task.
+	*
+	* @return the kaleo task ID of this kaleo task
+	*/
 	@Override
 	public long getKaleoTaskId() {
 		return model.getKaleoTaskId();
 	}
 
 	/**
-	 * Returns the modified date of this kaleo task.
-	 *
-	 * @return the modified date of this kaleo task
-	 */
+	* Returns the modified date of this kaleo task.
+	*
+	* @return the modified date of this kaleo task
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the mvcc version of this kaleo task.
-	 *
-	 * @return the mvcc version of this kaleo task
-	 */
+	* Returns the mvcc version of this kaleo task.
+	*
+	* @return the mvcc version of this kaleo task
+	*/
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	 * Returns the name of this kaleo task.
-	 *
-	 * @return the name of this kaleo task
-	 */
+	* Returns the name of this kaleo task.
+	*
+	* @return the name of this kaleo task
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	 * Returns the primary key of this kaleo task.
-	 *
-	 * @return the primary key of this kaleo task
-	 */
+	* Returns the primary key of this kaleo task.
+	*
+	* @return the primary key of this kaleo task
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the user ID of this kaleo task.
-	 *
-	 * @return the user ID of this kaleo task
-	 */
+	* Returns the user ID of this kaleo task.
+	*
+	* @return the user ID of this kaleo task
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this kaleo task.
-	 *
-	 * @return the user name of this kaleo task
-	 */
+	* Returns the user name of this kaleo task.
+	*
+	* @return the user name of this kaleo task
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this kaleo task.
-	 *
-	 * @return the user uuid of this kaleo task
-	 */
+	* Returns the user uuid of this kaleo task.
+	*
+	* @return the user uuid of this kaleo task
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -296,140 +292,140 @@ public class KaleoTaskWrapper
 	}
 
 	/**
-	 * Sets the company ID of this kaleo task.
-	 *
-	 * @param companyId the company ID of this kaleo task
-	 */
+	* Sets the company ID of this kaleo task.
+	*
+	* @param companyId the company ID of this kaleo task
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this kaleo task.
-	 *
-	 * @param createDate the create date of this kaleo task
-	 */
+	* Sets the create date of this kaleo task.
+	*
+	* @param createDate the create date of this kaleo task
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the description of this kaleo task.
-	 *
-	 * @param description the description of this kaleo task
-	 */
+	* Sets the description of this kaleo task.
+	*
+	* @param description the description of this kaleo task
+	*/
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	 * Sets the group ID of this kaleo task.
-	 *
-	 * @param groupId the group ID of this kaleo task
-	 */
+	* Sets the group ID of this kaleo task.
+	*
+	* @param groupId the group ID of this kaleo task
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the kaleo definition version ID of this kaleo task.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo task
-	 */
+	* Sets the kaleo definition version ID of this kaleo task.
+	*
+	* @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo task
+	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
 		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
-	 * Sets the kaleo node ID of this kaleo task.
-	 *
-	 * @param kaleoNodeId the kaleo node ID of this kaleo task
-	 */
+	* Sets the kaleo node ID of this kaleo task.
+	*
+	* @param kaleoNodeId the kaleo node ID of this kaleo task
+	*/
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
 		model.setKaleoNodeId(kaleoNodeId);
 	}
 
 	/**
-	 * Sets the kaleo task ID of this kaleo task.
-	 *
-	 * @param kaleoTaskId the kaleo task ID of this kaleo task
-	 */
+	* Sets the kaleo task ID of this kaleo task.
+	*
+	* @param kaleoTaskId the kaleo task ID of this kaleo task
+	*/
 	@Override
 	public void setKaleoTaskId(long kaleoTaskId) {
 		model.setKaleoTaskId(kaleoTaskId);
 	}
 
 	/**
-	 * Sets the modified date of this kaleo task.
-	 *
-	 * @param modifiedDate the modified date of this kaleo task
-	 */
+	* Sets the modified date of this kaleo task.
+	*
+	* @param modifiedDate the modified date of this kaleo task
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the mvcc version of this kaleo task.
-	 *
-	 * @param mvccVersion the mvcc version of this kaleo task
-	 */
+	* Sets the mvcc version of this kaleo task.
+	*
+	* @param mvccVersion the mvcc version of this kaleo task
+	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	 * Sets the name of this kaleo task.
-	 *
-	 * @param name the name of this kaleo task
-	 */
+	* Sets the name of this kaleo task.
+	*
+	* @param name the name of this kaleo task
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the primary key of this kaleo task.
-	 *
-	 * @param primaryKey the primary key of this kaleo task
-	 */
+	* Sets the primary key of this kaleo task.
+	*
+	* @param primaryKey the primary key of this kaleo task
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this kaleo task.
-	 *
-	 * @param userId the user ID of this kaleo task
-	 */
+	* Sets the user ID of this kaleo task.
+	*
+	* @param userId the user ID of this kaleo task
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this kaleo task.
-	 *
-	 * @param userName the user name of this kaleo task
-	 */
+	* Sets the user name of this kaleo task.
+	*
+	* @param userName the user name of this kaleo task
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this kaleo task.
-	 *
-	 * @param userUuid the user uuid of this kaleo task
-	 */
+	* Sets the user uuid of this kaleo task.
+	*
+	* @param userUuid the user uuid of this kaleo task
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -439,5 +435,4 @@ public class KaleoTaskWrapper
 	protected KaleoTaskWrapper wrap(KaleoTask kaleoTask) {
 		return new KaleoTaskWrapper(kaleoTask);
 	}
-
 }

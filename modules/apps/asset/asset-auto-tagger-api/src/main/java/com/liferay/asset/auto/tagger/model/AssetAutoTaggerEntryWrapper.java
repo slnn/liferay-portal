@@ -33,13 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AssetAutoTaggerEntryWrapper
-	extends BaseModelWrapper<AssetAutoTaggerEntry>
+public class AssetAutoTaggerEntryWrapper extends BaseModelWrapper<AssetAutoTaggerEntry>
 	implements AssetAutoTaggerEntry, ModelWrapper<AssetAutoTaggerEntry> {
-
 	public AssetAutoTaggerEntryWrapper(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
-
 		super(assetAutoTaggerEntry);
 	}
 
@@ -61,7 +58,7 @@ public class AssetAutoTaggerEntryWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long assetAutoTaggerEntryId = (Long)attributes.get(
-			"assetAutoTaggerEntryId");
+				"assetAutoTaggerEntryId");
 
 		if (assetAutoTaggerEntryId != null) {
 			setAssetAutoTaggerEntryId(assetAutoTaggerEntryId);
@@ -105,80 +102,80 @@ public class AssetAutoTaggerEntryWrapper
 	}
 
 	/**
-	 * Returns the asset auto tagger entry ID of this asset auto tagger entry.
-	 *
-	 * @return the asset auto tagger entry ID of this asset auto tagger entry
-	 */
+	* Returns the asset auto tagger entry ID of this asset auto tagger entry.
+	*
+	* @return the asset auto tagger entry ID of this asset auto tagger entry
+	*/
 	@Override
 	public long getAssetAutoTaggerEntryId() {
 		return model.getAssetAutoTaggerEntryId();
 	}
 
 	/**
-	 * Returns the asset entry ID of this asset auto tagger entry.
-	 *
-	 * @return the asset entry ID of this asset auto tagger entry
-	 */
+	* Returns the asset entry ID of this asset auto tagger entry.
+	*
+	* @return the asset entry ID of this asset auto tagger entry
+	*/
 	@Override
 	public long getAssetEntryId() {
 		return model.getAssetEntryId();
 	}
 
 	/**
-	 * Returns the asset tag ID of this asset auto tagger entry.
-	 *
-	 * @return the asset tag ID of this asset auto tagger entry
-	 */
+	* Returns the asset tag ID of this asset auto tagger entry.
+	*
+	* @return the asset tag ID of this asset auto tagger entry
+	*/
 	@Override
 	public long getAssetTagId() {
 		return model.getAssetTagId();
 	}
 
 	/**
-	 * Returns the company ID of this asset auto tagger entry.
-	 *
-	 * @return the company ID of this asset auto tagger entry
-	 */
+	* Returns the company ID of this asset auto tagger entry.
+	*
+	* @return the company ID of this asset auto tagger entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this asset auto tagger entry.
-	 *
-	 * @return the create date of this asset auto tagger entry
-	 */
+	* Returns the create date of this asset auto tagger entry.
+	*
+	* @return the create date of this asset auto tagger entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this asset auto tagger entry.
-	 *
-	 * @return the group ID of this asset auto tagger entry
-	 */
+	* Returns the group ID of this asset auto tagger entry.
+	*
+	* @return the group ID of this asset auto tagger entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the modified date of this asset auto tagger entry.
-	 *
-	 * @return the modified date of this asset auto tagger entry
-	 */
+	* Returns the modified date of this asset auto tagger entry.
+	*
+	* @return the modified date of this asset auto tagger entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this asset auto tagger entry.
-	 *
-	 * @return the primary key of this asset auto tagger entry
-	 */
+	* Returns the primary key of this asset auto tagger entry.
+	*
+	* @return the primary key of this asset auto tagger entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -190,80 +187,80 @@ public class AssetAutoTaggerEntryWrapper
 	}
 
 	/**
-	 * Sets the asset auto tagger entry ID of this asset auto tagger entry.
-	 *
-	 * @param assetAutoTaggerEntryId the asset auto tagger entry ID of this asset auto tagger entry
-	 */
+	* Sets the asset auto tagger entry ID of this asset auto tagger entry.
+	*
+	* @param assetAutoTaggerEntryId the asset auto tagger entry ID of this asset auto tagger entry
+	*/
 	@Override
 	public void setAssetAutoTaggerEntryId(long assetAutoTaggerEntryId) {
 		model.setAssetAutoTaggerEntryId(assetAutoTaggerEntryId);
 	}
 
 	/**
-	 * Sets the asset entry ID of this asset auto tagger entry.
-	 *
-	 * @param assetEntryId the asset entry ID of this asset auto tagger entry
-	 */
+	* Sets the asset entry ID of this asset auto tagger entry.
+	*
+	* @param assetEntryId the asset entry ID of this asset auto tagger entry
+	*/
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
 		model.setAssetEntryId(assetEntryId);
 	}
 
 	/**
-	 * Sets the asset tag ID of this asset auto tagger entry.
-	 *
-	 * @param assetTagId the asset tag ID of this asset auto tagger entry
-	 */
+	* Sets the asset tag ID of this asset auto tagger entry.
+	*
+	* @param assetTagId the asset tag ID of this asset auto tagger entry
+	*/
 	@Override
 	public void setAssetTagId(long assetTagId) {
 		model.setAssetTagId(assetTagId);
 	}
 
 	/**
-	 * Sets the company ID of this asset auto tagger entry.
-	 *
-	 * @param companyId the company ID of this asset auto tagger entry
-	 */
+	* Sets the company ID of this asset auto tagger entry.
+	*
+	* @param companyId the company ID of this asset auto tagger entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this asset auto tagger entry.
-	 *
-	 * @param createDate the create date of this asset auto tagger entry
-	 */
+	* Sets the create date of this asset auto tagger entry.
+	*
+	* @param createDate the create date of this asset auto tagger entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this asset auto tagger entry.
-	 *
-	 * @param groupId the group ID of this asset auto tagger entry
-	 */
+	* Sets the group ID of this asset auto tagger entry.
+	*
+	* @param groupId the group ID of this asset auto tagger entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the modified date of this asset auto tagger entry.
-	 *
-	 * @param modifiedDate the modified date of this asset auto tagger entry
-	 */
+	* Sets the modified date of this asset auto tagger entry.
+	*
+	* @param modifiedDate the modified date of this asset auto tagger entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this asset auto tagger entry.
-	 *
-	 * @param primaryKey the primary key of this asset auto tagger entry
-	 */
+	* Sets the primary key of this asset auto tagger entry.
+	*
+	* @param primaryKey the primary key of this asset auto tagger entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
@@ -272,8 +269,6 @@ public class AssetAutoTaggerEntryWrapper
 	@Override
 	protected AssetAutoTaggerEntryWrapper wrap(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
-
 		return new AssetAutoTaggerEntryWrapper(assetAutoTaggerEntry);
 	}
-
 }

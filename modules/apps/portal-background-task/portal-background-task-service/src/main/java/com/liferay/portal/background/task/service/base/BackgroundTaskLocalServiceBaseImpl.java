@@ -64,9 +64,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class BackgroundTaskLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements BackgroundTaskLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements BackgroundTaskLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -110,7 +109,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public BackgroundTask deleteBackgroundTask(long backgroundTaskId)
 		throws PortalException {
-
 		return backgroundTaskPersistence.remove(backgroundTaskId);
 	}
 
@@ -125,7 +123,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public BackgroundTask deleteBackgroundTask(BackgroundTask backgroundTask)
 		throws PortalException {
-
 		return backgroundTaskPersistence.remove(backgroundTask);
 	}
 
@@ -133,8 +130,8 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			BackgroundTask.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(BackgroundTask.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -161,11 +158,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return backgroundTaskPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -182,12 +178,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return backgroundTaskPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -209,11 +203,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return backgroundTaskPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return backgroundTaskPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -231,14 +224,12 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public BackgroundTask getBackgroundTask(long backgroundTaskId)
 		throws PortalException {
-
 		return backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(backgroundTaskLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -250,14 +241,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			backgroundTaskLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(backgroundTaskLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BackgroundTask.class);
 
@@ -269,7 +256,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(backgroundTaskLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BackgroundTask.class);
@@ -283,15 +269,12 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return backgroundTaskLocalService.deleteBackgroundTask(
-			(BackgroundTask)persistedModel);
+		return backgroundTaskLocalService.deleteBackgroundTask((BackgroundTask)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return backgroundTaskPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -349,7 +332,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 */
 	public void setBackgroundTaskLocalService(
 		BackgroundTaskLocalService backgroundTaskLocalService) {
-
 		this.backgroundTaskLocalService = backgroundTaskLocalService;
 	}
 
@@ -369,7 +351,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 */
 	public void setBackgroundTaskPersistence(
 		BackgroundTaskPersistence backgroundTaskPersistence) {
-
 		this.backgroundTaskPersistence = backgroundTaskPersistence;
 	}
 
@@ -389,7 +370,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 */
 	public void setBackgroundTaskFinder(
 		BackgroundTaskFinder backgroundTaskFinder) {
-
 		this.backgroundTaskFinder = backgroundTaskFinder;
 	}
 
@@ -398,9 +378,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -410,9 +388,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -421,9 +397,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -434,7 +408,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -457,8 +430,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.background.task.model.BackgroundTask",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.background.task.model.BackgroundTask",
 			backgroundTaskLocalService);
 	}
 
@@ -499,8 +471,8 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -511,30 +483,16 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 
 	@BeanReference(type = BackgroundTaskLocalService.class)
 	protected BackgroundTaskLocalService backgroundTaskLocalService;
-
 	@BeanReference(type = BackgroundTaskPersistence.class)
 	protected BackgroundTaskPersistence backgroundTaskPersistence;
-
 	@BeanReference(type = BackgroundTaskFinder.class)
 	protected BackgroundTaskFinder backgroundTaskFinder;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

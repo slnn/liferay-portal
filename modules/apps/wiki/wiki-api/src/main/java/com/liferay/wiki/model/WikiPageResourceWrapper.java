@@ -32,10 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class WikiPageResourceWrapper
-	extends BaseModelWrapper<WikiPageResource>
+public class WikiPageResourceWrapper extends BaseModelWrapper<WikiPageResource>
 	implements WikiPageResource, ModelWrapper<WikiPageResource> {
-
 	public WikiPageResourceWrapper(WikiPageResource wikiPageResource) {
 		super(wikiPageResource);
 	}
@@ -94,70 +92,70 @@ public class WikiPageResourceWrapper
 	}
 
 	/**
-	 * Returns the company ID of this wiki page resource.
-	 *
-	 * @return the company ID of this wiki page resource
-	 */
+	* Returns the company ID of this wiki page resource.
+	*
+	* @return the company ID of this wiki page resource
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the group ID of this wiki page resource.
-	 *
-	 * @return the group ID of this wiki page resource
-	 */
+	* Returns the group ID of this wiki page resource.
+	*
+	* @return the group ID of this wiki page resource
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the node ID of this wiki page resource.
-	 *
-	 * @return the node ID of this wiki page resource
-	 */
+	* Returns the node ID of this wiki page resource.
+	*
+	* @return the node ID of this wiki page resource
+	*/
 	@Override
 	public long getNodeId() {
 		return model.getNodeId();
 	}
 
 	/**
-	 * Returns the primary key of this wiki page resource.
-	 *
-	 * @return the primary key of this wiki page resource
-	 */
+	* Returns the primary key of this wiki page resource.
+	*
+	* @return the primary key of this wiki page resource
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the resource prim key of this wiki page resource.
-	 *
-	 * @return the resource prim key of this wiki page resource
-	 */
+	* Returns the resource prim key of this wiki page resource.
+	*
+	* @return the resource prim key of this wiki page resource
+	*/
 	@Override
 	public long getResourcePrimKey() {
 		return model.getResourcePrimKey();
 	}
 
 	/**
-	 * Returns the title of this wiki page resource.
-	 *
-	 * @return the title of this wiki page resource
-	 */
+	* Returns the title of this wiki page resource.
+	*
+	* @return the title of this wiki page resource
+	*/
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	 * Returns the uuid of this wiki page resource.
-	 *
-	 * @return the uuid of this wiki page resource
-	 */
+	* Returns the uuid of this wiki page resource.
+	*
+	* @return the uuid of this wiki page resource
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -169,70 +167,70 @@ public class WikiPageResourceWrapper
 	}
 
 	/**
-	 * Sets the company ID of this wiki page resource.
-	 *
-	 * @param companyId the company ID of this wiki page resource
-	 */
+	* Sets the company ID of this wiki page resource.
+	*
+	* @param companyId the company ID of this wiki page resource
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the group ID of this wiki page resource.
-	 *
-	 * @param groupId the group ID of this wiki page resource
-	 */
+	* Sets the group ID of this wiki page resource.
+	*
+	* @param groupId the group ID of this wiki page resource
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the node ID of this wiki page resource.
-	 *
-	 * @param nodeId the node ID of this wiki page resource
-	 */
+	* Sets the node ID of this wiki page resource.
+	*
+	* @param nodeId the node ID of this wiki page resource
+	*/
 	@Override
 	public void setNodeId(long nodeId) {
 		model.setNodeId(nodeId);
 	}
 
 	/**
-	 * Sets the primary key of this wiki page resource.
-	 *
-	 * @param primaryKey the primary key of this wiki page resource
-	 */
+	* Sets the primary key of this wiki page resource.
+	*
+	* @param primaryKey the primary key of this wiki page resource
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the resource prim key of this wiki page resource.
-	 *
-	 * @param resourcePrimKey the resource prim key of this wiki page resource
-	 */
+	* Sets the resource prim key of this wiki page resource.
+	*
+	* @param resourcePrimKey the resource prim key of this wiki page resource
+	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
 		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
-	 * Sets the title of this wiki page resource.
-	 *
-	 * @param title the title of this wiki page resource
-	 */
+	* Sets the title of this wiki page resource.
+	*
+	* @param title the title of this wiki page resource
+	*/
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
 	}
 
 	/**
-	 * Sets the uuid of this wiki page resource.
-	 *
-	 * @param uuid the uuid of this wiki page resource
-	 */
+	* Sets the uuid of this wiki page resource.
+	*
+	* @param uuid the uuid of this wiki page resource
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -242,5 +240,4 @@ public class WikiPageResourceWrapper
 	protected WikiPageResourceWrapper wrap(WikiPageResource wikiPageResource) {
 		return new WikiPageResourceWrapper(wikiPageResource);
 	}
-
 }

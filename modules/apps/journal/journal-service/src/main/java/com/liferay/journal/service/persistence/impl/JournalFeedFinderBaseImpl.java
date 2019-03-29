@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class JournalFeedFinderBaseImpl
-	extends BasePersistenceImpl<JournalFeed> {
-
+public class JournalFeedFinderBaseImpl extends BasePersistenceImpl<JournalFeed> {
 	public JournalFeedFinderBaseImpl() {
 		setModelClass(JournalFeed.class);
 	}
@@ -55,14 +54,10 @@ public class JournalFeedFinderBaseImpl
 	 */
 	public void setJournalFeedPersistence(
 		JournalFeedPersistence journalFeedPersistence) {
-
 		this.journalFeedPersistence = journalFeedPersistence;
 	}
 
 	@BeanReference(type = JournalFeedPersistence.class)
 	protected JournalFeedPersistence journalFeedPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalFeedFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(JournalFeedFinderBaseImpl.class);
 }

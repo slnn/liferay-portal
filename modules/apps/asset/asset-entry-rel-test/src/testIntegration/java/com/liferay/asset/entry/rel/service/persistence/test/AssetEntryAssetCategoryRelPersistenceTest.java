@@ -15,11 +15,13 @@
 package com.liferay.asset.entry.rel.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetCategoryRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class AssetEntryAssetCategoryRelPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.asset.entry.rel.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.asset.entry.rel.service"));
 
 	@Before
 	public void setUp() {
@@ -79,8 +80,7 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<AssetEntryAssetCategoryRel> iterator =
-			_assetEntryAssetCategoryRels.iterator();
+		Iterator<AssetEntryAssetCategoryRel> iterator = _assetEntryAssetCategoryRels.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -93,8 +93,7 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_persistence.create(pk);
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = _persistence.create(pk);
 
 		Assert.assertNotNull(assetEntryAssetCategoryRel);
 
@@ -103,14 +102,11 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
 		_persistence.remove(newAssetEntryAssetCategoryRel);
 
-		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
-			_persistence.fetchByPrimaryKey(
-				newAssetEntryAssetCategoryRel.getPrimaryKey());
+		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel = _persistence.fetchByPrimaryKey(newAssetEntryAssetCategoryRel.getPrimaryKey());
 
 		Assert.assertNull(existingAssetEntryAssetCategoryRel);
 	}
@@ -124,36 +120,26 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			_persistence.create(pk);
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = _persistence.create(pk);
 
-		newAssetEntryAssetCategoryRel.setAssetEntryId(
-			RandomTestUtil.nextLong());
+		newAssetEntryAssetCategoryRel.setAssetEntryId(RandomTestUtil.nextLong());
 
-		newAssetEntryAssetCategoryRel.setAssetCategoryId(
-			RandomTestUtil.nextLong());
+		newAssetEntryAssetCategoryRel.setAssetCategoryId(RandomTestUtil.nextLong());
 
 		newAssetEntryAssetCategoryRel.setPriority(RandomTestUtil.nextInt());
 
-		_assetEntryAssetCategoryRels.add(
-			_persistence.update(newAssetEntryAssetCategoryRel));
+		_assetEntryAssetCategoryRels.add(_persistence.update(
+				newAssetEntryAssetCategoryRel));
 
-		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
-			_persistence.findByPrimaryKey(
-				newAssetEntryAssetCategoryRel.getPrimaryKey());
+		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel = _persistence.findByPrimaryKey(newAssetEntryAssetCategoryRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel.
-				getAssetEntryAssetCategoryRelId(),
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId(),
 			newAssetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId());
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel.getAssetEntryId(),
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel.getAssetEntryId(),
 			newAssetEntryAssetCategoryRel.getAssetEntryId());
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel.getAssetCategoryId(),
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel.getAssetCategoryId(),
 			newAssetEntryAssetCategoryRel.getAssetCategoryId());
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel.getPriority(),
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel.getPriority(),
 			newAssetEntryAssetCategoryRel.getPriority());
 	}
 
@@ -173,23 +159,20 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 	@Test
 	public void testCountByA_A() throws Exception {
-		_persistence.countByA_A(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByA_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByA_A(0L, 0L);
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
-		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
-			_persistence.findByPrimaryKey(
-				newAssetEntryAssetCategoryRel.getPrimaryKey());
+		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel = _persistence.findByPrimaryKey(newAssetEntryAssetCategoryRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel, newAssetEntryAssetCategoryRel);
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel,
+			newAssetEntryAssetCategoryRel);
 	}
 
 	@Test(expected = NoSuchEntryAssetCategoryRelException.class)
@@ -201,37 +184,31 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
-	protected OrderByComparator<AssetEntryAssetCategoryRel>
-		getOrderByComparator() {
-
-		return OrderByComparatorFactoryUtil.create(
-			"AssetEntryAssetCategoryRel", "assetEntryAssetCategoryRelId", true,
-			"assetEntryId", true, "assetCategoryId", true, "priority", true);
+	protected OrderByComparator<AssetEntryAssetCategoryRel> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("AssetEntryAssetCategoryRel",
+			"assetEntryAssetCategoryRelId", true, "assetEntryId", true,
+			"assetCategoryId", true, "priority", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
-		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
-			_persistence.fetchByPrimaryKey(
-				newAssetEntryAssetCategoryRel.getPrimaryKey());
+		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel = _persistence.fetchByPrimaryKey(newAssetEntryAssetCategoryRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel, newAssetEntryAssetCategoryRel);
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel,
+			newAssetEntryAssetCategoryRel);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		AssetEntryAssetCategoryRel missingAssetEntryAssetCategoryRel =
-			_persistence.fetchByPrimaryKey(pk);
+		AssetEntryAssetCategoryRel missingAssetEntryAssetCategoryRel = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingAssetEntryAssetCategoryRel);
 	}
@@ -239,28 +216,22 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel1 =
-			addAssetEntryAssetCategoryRel();
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel2 =
-			addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel1 = addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel2 = addAssetEntryAssetCategoryRel();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newAssetEntryAssetCategoryRel1.getPrimaryKey());
 		primaryKeys.add(newAssetEntryAssetCategoryRel2.getPrimaryKey());
 
-		Map<Serializable, AssetEntryAssetCategoryRel>
-			assetEntryAssetCategoryRels = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, assetEntryAssetCategoryRels.size());
-		Assert.assertEquals(
-			newAssetEntryAssetCategoryRel1,
+		Assert.assertEquals(newAssetEntryAssetCategoryRel1,
 			assetEntryAssetCategoryRels.get(
 				newAssetEntryAssetCategoryRel1.getPrimaryKey()));
-		Assert.assertEquals(
-			newAssetEntryAssetCategoryRel2,
+		Assert.assertEquals(newAssetEntryAssetCategoryRel2,
 			assetEntryAssetCategoryRels.get(
 				newAssetEntryAssetCategoryRel2.getPrimaryKey()));
 	}
@@ -268,7 +239,6 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -278,9 +248,8 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, AssetEntryAssetCategoryRel>
-			assetEntryAssetCategoryRels = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(assetEntryAssetCategoryRels.isEmpty());
 	}
@@ -288,9 +257,7 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -299,44 +266,40 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 		primaryKeys.add(newAssetEntryAssetCategoryRel.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, AssetEntryAssetCategoryRel>
-			assetEntryAssetCategoryRels = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, assetEntryAssetCategoryRels.size());
-		Assert.assertEquals(
-			newAssetEntryAssetCategoryRel,
+		Assert.assertEquals(newAssetEntryAssetCategoryRel,
 			assetEntryAssetCategoryRels.get(
 				newAssetEntryAssetCategoryRel.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntryAssetCategoryRel>
-			assetEntryAssetCategoryRels = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(assetEntryAssetCategoryRels.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newAssetEntryAssetCategoryRel.getPrimaryKey());
 
-		Map<Serializable, AssetEntryAssetCategoryRel>
-			assetEntryAssetCategoryRels = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, assetEntryAssetCategoryRels.size());
-		Assert.assertEquals(
-			newAssetEntryAssetCategoryRel,
+		Assert.assertEquals(newAssetEntryAssetCategoryRel,
 			assetEntryAssetCategoryRels.get(
 				newAssetEntryAssetCategoryRel.getPrimaryKey()));
 	}
@@ -345,23 +308,16 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			AssetEntryAssetCategoryRelLocalServiceUtil.
-				getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = AssetEntryAssetCategoryRelLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<AssetEntryAssetCategoryRel>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetEntryAssetCategoryRel>() {
 				@Override
 				public void performAction(
 					AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-
 					Assert.assertNotNull(assetEntryAssetCategoryRel);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -370,64 +326,56 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryAssetCategoryRel.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryAssetCategoryRel.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"assetEntryAssetCategoryRelId",
-				newAssetEntryAssetCategoryRel.
-					getAssetEntryAssetCategoryRelId()));
+				newAssetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId()));
 
-		List<AssetEntryAssetCategoryRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetEntryAssetCategoryRel> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
-			result.get(0);
+		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel = result.get(0);
 
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRel, newAssetEntryAssetCategoryRel);
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel,
+			newAssetEntryAssetCategoryRel);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryAssetCategoryRel.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryAssetCategoryRel.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"assetEntryAssetCategoryRelId", RandomTestUtil.nextLong()));
 
-		List<AssetEntryAssetCategoryRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetEntryAssetCategoryRel> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryAssetCategoryRel.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryAssetCategoryRel.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("assetEntryAssetCategoryRelId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"assetEntryAssetCategoryRelId"));
 
-		Object newAssetEntryAssetCategoryRelId =
-			newAssetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId();
+		Object newAssetEntryAssetCategoryRelId = newAssetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"assetEntryAssetCategoryRelId",
-				new Object[] {newAssetEntryAssetCategoryRelId}));
+				new Object[] { newAssetEntryAssetCategoryRelId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -435,23 +383,21 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 		Object existingAssetEntryAssetCategoryRelId = result.get(0);
 
-		Assert.assertEquals(
-			existingAssetEntryAssetCategoryRelId,
+		Assert.assertEquals(existingAssetEntryAssetCategoryRelId,
 			newAssetEntryAssetCategoryRelId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AssetEntryAssetCategoryRel.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetEntryAssetCategoryRel.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("assetEntryAssetCategoryRelId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"assetEntryAssetCategoryRelId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"assetEntryAssetCategoryRelId",
-				new Object[] {RandomTestUtil.nextLong()}));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -460,22 +406,18 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel =
-			addAssetEntryAssetCategoryRel();
+		AssetEntryAssetCategoryRel newAssetEntryAssetCategoryRel = addAssetEntryAssetCategoryRel();
 
 		_persistence.clearCache();
 
-		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
-			_persistence.findByPrimaryKey(
-				newAssetEntryAssetCategoryRel.getPrimaryKey());
+		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel = _persistence.findByPrimaryKey(newAssetEntryAssetCategoryRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryAssetCategoryRel.getAssetEntryId()),
+		Assert.assertEquals(Long.valueOf(
+				existingAssetEntryAssetCategoryRel.getAssetEntryId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingAssetEntryAssetCategoryRel, "getOriginalAssetEntryId",
 				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(
+		Assert.assertEquals(Long.valueOf(
 				existingAssetEntryAssetCategoryRel.getAssetCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingAssetEntryAssetCategoryRel,
@@ -484,28 +426,23 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 	protected AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_persistence.create(pk);
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = _persistence.create(pk);
 
 		assetEntryAssetCategoryRel.setAssetEntryId(RandomTestUtil.nextLong());
 
-		assetEntryAssetCategoryRel.setAssetCategoryId(
-			RandomTestUtil.nextLong());
+		assetEntryAssetCategoryRel.setAssetCategoryId(RandomTestUtil.nextLong());
 
 		assetEntryAssetCategoryRel.setPriority(RandomTestUtil.nextInt());
 
-		_assetEntryAssetCategoryRels.add(
-			_persistence.update(assetEntryAssetCategoryRel));
+		_assetEntryAssetCategoryRels.add(_persistence.update(
+				assetEntryAssetCategoryRel));
 
 		return assetEntryAssetCategoryRel;
 	}
 
-	private List<AssetEntryAssetCategoryRel> _assetEntryAssetCategoryRels =
-		new ArrayList<AssetEntryAssetCategoryRel>();
+	private List<AssetEntryAssetCategoryRel> _assetEntryAssetCategoryRels = new ArrayList<AssetEntryAssetCategoryRel>();
 	private AssetEntryAssetCategoryRelPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

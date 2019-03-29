@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.persistence.SharingEntryFinder;
@@ -71,9 +73,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class SharingEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements SharingEntryLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements SharingEntryLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -117,7 +118,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	@Override
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException {
-
 		return sharingEntryPersistence.remove(sharingEntryId);
 	}
 
@@ -137,8 +137,8 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			SharingEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(SharingEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -165,11 +165,10 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return sharingEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return sharingEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -186,12 +185,10 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return sharingEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return sharingEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -213,11 +210,10 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return sharingEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return sharingEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -233,9 +229,8 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry fetchSharingEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-
+	public SharingEntry fetchSharingEntryByUuidAndGroupId(String uuid,
+		long groupId) {
 		return sharingEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -249,14 +244,12 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	@Override
 	public SharingEntry getSharingEntry(long sharingEntryId)
 		throws PortalException {
-
 		return sharingEntryPersistence.findByPrimaryKey(sharingEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(sharingEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -268,14 +261,10 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			sharingEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(sharingEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SharingEntry.class);
 
@@ -287,7 +276,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(sharingEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SharingEntry.class);
@@ -298,88 +286,65 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
 
-					StagedModelType stagedModelType =
-						exportActionableDynamicQuery.getStagedModelType();
+					StagedModelType stagedModelType = exportActionableDynamicQuery.getStagedModelType();
 
-					long referrerClassNameId =
-						stagedModelType.getReferrerClassNameId();
+					long referrerClassNameId = stagedModelType.getReferrerClassNameId();
 
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+							"classNameId");
 
-					if ((referrerClassNameId !=
-							StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
-						(referrerClassNameId !=
-							StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
-
-						dynamicQuery.add(
-							classNameIdProperty.eq(
+					if ((referrerClassNameId != StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
+							(referrerClassNameId != StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
+						dynamicQuery.add(classNameIdProperty.eq(
 								stagedModelType.getReferrerClassNameId()));
 					}
-					else if (referrerClassNameId ==
-								StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
-
+					else if (referrerClassNameId == StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
 						dynamicQuery.add(classNameIdProperty.isNotNull());
 					}
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<SharingEntry>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SharingEntry>() {
 				@Override
 				public void performAction(SharingEntry sharingEntry)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, sharingEntry);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						sharingEntry);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(SharingEntry.class.getName()),
 				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
 
@@ -392,15 +357,12 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return sharingEntryLocalService.deleteSharingEntry(
-			(SharingEntry)persistedModel);
+		return sharingEntryLocalService.deleteSharingEntry((SharingEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return sharingEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -412,9 +374,8 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @return the matching sharing entries, or an empty list if no matches were found
 	 */
 	@Override
-	public List<SharingEntry> getSharingEntriesByUuidAndCompanyId(
-		String uuid, long companyId) {
-
+	public List<SharingEntry> getSharingEntriesByUuidAndCompanyId(String uuid,
+		long companyId) {
 		return sharingEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -429,12 +390,11 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @return the range of matching sharing entries, or an empty list if no matches were found
 	 */
 	@Override
-	public List<SharingEntry> getSharingEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+	public List<SharingEntry> getSharingEntriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
-
-		return sharingEntryPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return sharingEntryPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -446,10 +406,8 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @throws PortalException if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry getSharingEntryByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException {
-
+	public SharingEntry getSharingEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException {
 		return sharingEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -507,7 +465,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 */
 	public void setSharingEntryLocalService(
 		SharingEntryLocalService sharingEntryLocalService) {
-
 		this.sharingEntryLocalService = sharingEntryLocalService;
 	}
 
@@ -527,7 +484,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 */
 	public void setSharingEntryPersistence(
 		SharingEntryPersistence sharingEntryPersistence) {
-
 		this.sharingEntryPersistence = sharingEntryPersistence;
 	}
 
@@ -554,9 +510,7 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -566,15 +520,13 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.sharing.model.SharingEntry", sharingEntryLocalService);
+		persistedModelLocalServiceRegistry.register("com.liferay.sharing.model.SharingEntry",
+			sharingEntryLocalService);
 	}
 
 	public void destroy() {
@@ -614,8 +566,8 @@ public abstract class SharingEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -626,21 +578,12 @@ public abstract class SharingEntryLocalServiceBaseImpl
 
 	@BeanReference(type = SharingEntryLocalService.class)
 	protected SharingEntryLocalService sharingEntryLocalService;
-
 	@BeanReference(type = SharingEntryPersistence.class)
 	protected SharingEntryPersistence sharingEntryPersistence;
-
 	@BeanReference(type = SharingEntryFinder.class)
 	protected SharingEntryFinder sharingEntryFinder;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

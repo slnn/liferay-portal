@@ -22,7 +22,9 @@ import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -70,24 +72,18 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class CTCollectionPersistenceImpl
-	extends BasePersistenceImpl<CTCollection>
+public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollection>
 	implements CTCollectionPersistence {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>CTCollectionUtil</code> to access the ct collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY =
-		CTCollectionImpl.class.getName();
-
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List1";
-
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List2";
-
+	public static final String FINDER_CLASS_NAME_ENTITY = CTCollectionImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -103,8 +99,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public List<CTCollection> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
@@ -120,9 +116,7 @@ public class CTCollectionPersistenceImpl
 	 * @return the range of matching ct collections
 	 */
 	@Override
-	public List<CTCollection> findByCompanyId(
-		long companyId, int start, int end) {
-
+	public List<CTCollection> findByCompanyId(long companyId, int start, int end) {
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -140,10 +134,8 @@ public class CTCollectionPersistenceImpl
 	 * @return the ordered range of matching ct collections
 	 */
 	@Override
-	public List<CTCollection> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CTCollection> orderByComparator) {
-
+	public List<CTCollection> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<CTCollection> orderByComparator) {
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
@@ -162,34 +154,29 @@ public class CTCollectionPersistenceImpl
 	 * @return the ordered range of matching ct collections
 	 */
 	@Override
-	public List<CTCollection> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CTCollection> orderByComparator,
+	public List<CTCollection> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<CTCollection> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+			finderArgs = new Object[] { companyId };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
 		List<CTCollection> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<CTCollection>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<CTCollection>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTCollection ctCollection : list) {
@@ -206,8 +193,8 @@ public class CTCollectionPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -218,10 +205,11 @@ public class CTCollectionPersistenceImpl
 			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(CTCollectionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -239,16 +227,16 @@ public class CTCollectionPersistenceImpl
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CTCollection>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<CTCollection>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CTCollection>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<CTCollection>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -277,12 +265,11 @@ public class CTCollectionPersistenceImpl
 	 * @throws NoSuchCollectionException if a matching ct collection could not be found
 	 */
 	@Override
-	public CTCollection findByCompanyId_First(
-			long companyId, OrderByComparator<CTCollection> orderByComparator)
+	public CTCollection findByCompanyId_First(long companyId,
+		OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByCompanyId_First(
-			companyId, orderByComparator);
+		CTCollection ctCollection = fetchByCompanyId_First(companyId,
+				orderByComparator);
 
 		if (ctCollection != null) {
 			return ctCollection;
@@ -308,11 +295,10 @@ public class CTCollectionPersistenceImpl
 	 * @return the first matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	@Override
-	public CTCollection fetchByCompanyId_First(
-		long companyId, OrderByComparator<CTCollection> orderByComparator) {
-
-		List<CTCollection> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
+	public CTCollection fetchByCompanyId_First(long companyId,
+		OrderByComparator<CTCollection> orderByComparator) {
+		List<CTCollection> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -330,12 +316,11 @@ public class CTCollectionPersistenceImpl
 	 * @throws NoSuchCollectionException if a matching ct collection could not be found
 	 */
 	@Override
-	public CTCollection findByCompanyId_Last(
-			long companyId, OrderByComparator<CTCollection> orderByComparator)
+	public CTCollection findByCompanyId_Last(long companyId,
+		OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByCompanyId_Last(
-			companyId, orderByComparator);
+		CTCollection ctCollection = fetchByCompanyId_Last(companyId,
+				orderByComparator);
 
 		if (ctCollection != null) {
 			return ctCollection;
@@ -361,17 +346,16 @@ public class CTCollectionPersistenceImpl
 	 * @return the last matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	@Override
-	public CTCollection fetchByCompanyId_Last(
-		long companyId, OrderByComparator<CTCollection> orderByComparator) {
-
+	public CTCollection fetchByCompanyId_Last(long companyId,
+		OrderByComparator<CTCollection> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTCollection> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
+		List<CTCollection> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -390,11 +374,9 @@ public class CTCollectionPersistenceImpl
 	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
 	 */
 	@Override
-	public CTCollection[] findByCompanyId_PrevAndNext(
-			long ctCollectionId, long companyId,
-			OrderByComparator<CTCollection> orderByComparator)
+	public CTCollection[] findByCompanyId_PrevAndNext(long ctCollectionId,
+		long companyId, OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException {
-
 		CTCollection ctCollection = findByPrimaryKey(ctCollectionId);
 
 		Session session = null;
@@ -404,13 +386,13 @@ public class CTCollectionPersistenceImpl
 
 			CTCollection[] array = new CTCollectionImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(
-				session, ctCollection, companyId, orderByComparator, true);
+			array[0] = getByCompanyId_PrevAndNext(session, ctCollection,
+					companyId, orderByComparator, true);
 
 			array[1] = ctCollection;
 
-			array[2] = getByCompanyId_PrevAndNext(
-				session, ctCollection, companyId, orderByComparator, false);
+			array[2] = getByCompanyId_PrevAndNext(session, ctCollection,
+					companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -422,15 +404,14 @@ public class CTCollectionPersistenceImpl
 		}
 	}
 
-	protected CTCollection getByCompanyId_PrevAndNext(
-		Session session, CTCollection ctCollection, long companyId,
+	protected CTCollection getByCompanyId_PrevAndNext(Session session,
+		CTCollection ctCollection, long companyId,
 		OrderByComparator<CTCollection> orderByComparator, boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -442,8 +423,7 @@ public class CTCollectionPersistenceImpl
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -513,9 +493,8 @@ public class CTCollectionPersistenceImpl
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(ctCollection)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					ctCollection)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -537,10 +516,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTCollection ctCollection :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
+		for (CTCollection ctCollection : findByCompanyId(companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ctCollection);
 		}
 	}
@@ -555,7 +532,7 @@ public class CTCollectionPersistenceImpl
 	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Object[] finderArgs = new Object[] {companyId};
+		Object[] finderArgs = new Object[] { companyId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -596,9 +573,7 @@ public class CTCollectionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"ctCollection.companyId = ?";
-
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "ctCollection.companyId = ?";
 	private FinderPath _finderPathFetchByC_N;
 	private FinderPath _finderPathCountByC_N;
 
@@ -613,7 +588,6 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public CTCollection findByC_N(long companyId, String name)
 		throws NoSuchCollectionException {
-
 		CTCollection ctCollection = fetchByC_N(companyId, name);
 
 		if (ctCollection == null) {
@@ -660,26 +634,24 @@ public class CTCollectionPersistenceImpl
 	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
 	 */
 	@Override
-	public CTCollection fetchByC_N(
-		long companyId, String name, boolean retrieveFromCache) {
-
+	public CTCollection fetchByC_N(long companyId, String name,
+		boolean retrieveFromCache) {
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name};
+		Object[] finderArgs = new Object[] { companyId, name };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_N, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs,
+					this);
 		}
 
 		if (result instanceof CTCollection) {
 			CTCollection ctCollection = (CTCollection)result;
 
 			if ((companyId != ctCollection.getCompanyId()) ||
-				!Objects.equals(name, ctCollection.getName())) {
-
+					!Objects.equals(name, ctCollection.getName())) {
 				result = null;
 			}
 		}
@@ -722,8 +694,8 @@ public class CTCollectionPersistenceImpl
 				List<CTCollection> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_N, finderArgs, list);
+					finderCache.putResult(_finderPathFetchByC_N, finderArgs,
+						list);
 				}
 				else {
 					CTCollection ctCollection = list.get(0);
@@ -761,7 +733,6 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public CTCollection removeByC_N(long companyId, String name)
 		throws NoSuchCollectionException {
-
 		CTCollection ctCollection = findByC_N(companyId, name);
 
 		return remove(ctCollection);
@@ -780,7 +751,7 @@ public class CTCollectionPersistenceImpl
 
 		FinderPath finderPath = _finderPathCountByC_N;
 
-		Object[] finderArgs = new Object[] {companyId, name};
+		Object[] finderArgs = new Object[] { companyId, name };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -836,14 +807,9 @@ public class CTCollectionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
-		"ctCollection.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_2 =
-		"ctCollection.name = ?";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_3 =
-		"(ctCollection.name IS NULL OR ctCollection.name = '')";
+	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "ctCollection.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_NAME_2 = "ctCollection.name = ?";
+	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(ctCollection.name IS NULL OR ctCollection.name = '')";
 
 	public CTCollectionPersistenceImpl() {
 		setModelClass(CTCollection.class);
@@ -860,13 +826,11 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(CTCollection ctCollection) {
-		entityCache.putResult(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED, CTCollectionImpl.class,
-			ctCollection.getPrimaryKey(), ctCollection);
+		entityCache.putResult(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+			CTCollectionImpl.class, ctCollection.getPrimaryKey(), ctCollection);
 
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {ctCollection.getCompanyId(), ctCollection.getName()},
+		finderCache.putResult(_finderPathFetchByC_N,
+			new Object[] { ctCollection.getCompanyId(), ctCollection.getName() },
 			ctCollection);
 
 		ctCollection.resetOriginalValues();
@@ -881,10 +845,8 @@ public class CTCollectionPersistenceImpl
 	public void cacheResult(List<CTCollection> ctCollections) {
 		for (CTCollection ctCollection : ctCollections) {
 			if (entityCache.getResult(
-					CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-					CTCollectionImpl.class, ctCollection.getPrimaryKey()) ==
-						null) {
-
+						CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+						CTCollectionImpl.class, ctCollection.getPrimaryKey()) == null) {
 				cacheResult(ctCollection);
 			}
 			else {
@@ -918,9 +880,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void clearCache(CTCollection ctCollection) {
-		entityCache.removeResult(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED, CTCollectionImpl.class,
-			ctCollection.getPrimaryKey());
+		entityCache.removeResult(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+			CTCollectionImpl.class, ctCollection.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -934,8 +895,7 @@ public class CTCollectionPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CTCollection ctCollection : ctCollections) {
-			entityCache.removeResult(
-				CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
 				CTCollectionImpl.class, ctCollection.getPrimaryKey());
 
 			clearUniqueFindersCache((CTCollectionModelImpl)ctCollection, true);
@@ -944,38 +904,35 @@ public class CTCollectionPersistenceImpl
 
 	protected void cacheUniqueFindersCache(
 		CTCollectionModelImpl ctCollectionModelImpl) {
-
 		Object[] args = new Object[] {
-			ctCollectionModelImpl.getCompanyId(),
-			ctCollectionModelImpl.getName()
-		};
+				ctCollectionModelImpl.getCompanyId(),
+				ctCollectionModelImpl.getName()
+			};
 
-		finderCache.putResult(
-			_finderPathCountByC_N, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByC_N, args, ctCollectionModelImpl, false);
+		finderCache.putResult(_finderPathCountByC_N, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByC_N, args,
+			ctCollectionModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		CTCollectionModelImpl ctCollectionModelImpl, boolean clearCurrent) {
-
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				ctCollectionModelImpl.getCompanyId(),
-				ctCollectionModelImpl.getName()
-			};
+					ctCollectionModelImpl.getCompanyId(),
+					ctCollectionModelImpl.getName()
+				};
 
 			finderCache.removeResult(_finderPathCountByC_N, args);
 			finderCache.removeResult(_finderPathFetchByC_N, args);
 		}
 
 		if ((ctCollectionModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_N.getColumnBitmask()) != 0) {
-
+				_finderPathFetchByC_N.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-				ctCollectionModelImpl.getOriginalCompanyId(),
-				ctCollectionModelImpl.getOriginalName()
-			};
+					ctCollectionModelImpl.getOriginalCompanyId(),
+					ctCollectionModelImpl.getOriginalName()
+				};
 
 			finderCache.removeResult(_finderPathCountByC_N, args);
 			finderCache.removeResult(_finderPathFetchByC_N, args);
@@ -1010,7 +967,6 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public CTCollection remove(long ctCollectionId)
 		throws NoSuchCollectionException {
-
 		return remove((Serializable)ctCollectionId);
 	}
 
@@ -1024,22 +980,21 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public CTCollection remove(Serializable primaryKey)
 		throws NoSuchCollectionException {
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CTCollection ctCollection = (CTCollection)session.get(
-				CTCollectionImpl.class, primaryKey);
+			CTCollection ctCollection = (CTCollection)session.get(CTCollectionImpl.class,
+					primaryKey);
 
 			if (ctCollection == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCollectionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				throw new NoSuchCollectionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					primaryKey);
 			}
 
 			return remove(ctCollection);
@@ -1057,8 +1012,7 @@ public class CTCollectionPersistenceImpl
 
 	@Override
 	protected CTCollection removeImpl(CTCollection ctCollection) {
-		ctCollectionToCTEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
-			ctCollection.getPrimaryKey());
+		ctCollectionToCTEntryTableMapper.deleteLeftPrimaryKeyTableMappings(ctCollection.getPrimaryKey());
 
 		Session session = null;
 
@@ -1066,8 +1020,8 @@ public class CTCollectionPersistenceImpl
 			session = openSession();
 
 			if (!session.contains(ctCollection)) {
-				ctCollection = (CTCollection)session.get(
-					CTCollectionImpl.class, ctCollection.getPrimaryKeyObj());
+				ctCollection = (CTCollection)session.get(CTCollectionImpl.class,
+						ctCollection.getPrimaryKeyObj());
 			}
 
 			if (ctCollection != null) {
@@ -1096,24 +1050,21 @@ public class CTCollectionPersistenceImpl
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(ctCollection.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(
-					ctCollection);
+				invocationHandler = ProxyUtil.getInvocationHandler(ctCollection);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in ctCollection proxy " +
-						invocationHandler.getClass());
+					invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CTCollection implementation " +
-					ctCollection.getClass());
+				ctCollection.getClass());
 		}
 
-		CTCollectionModelImpl ctCollectionModelImpl =
-			(CTCollectionModelImpl)ctCollection;
+		CTCollectionModelImpl ctCollectionModelImpl = (CTCollectionModelImpl)ctCollection;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -1131,8 +1082,7 @@ public class CTCollectionPersistenceImpl
 				ctCollection.setModifiedDate(now);
 			}
 			else {
-				ctCollection.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+				ctCollection.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 
@@ -1162,41 +1112,41 @@ public class CTCollectionPersistenceImpl
 		if (!CTCollectionModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else if (isNew) {
-			Object[] args = new Object[] {ctCollectionModelImpl.getCompanyId()};
+		else
+		 if (isNew) {
+			Object[] args = new Object[] { ctCollectionModelImpl.getCompanyId() };
 
 			finderCache.removeResult(_finderPathCountByCompanyId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCompanyId, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
+				args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
+				FINDER_ARGS_EMPTY);
 		}
+
 		else {
 			if ((ctCollectionModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCompanyId.
-					 getColumnBitmask()) != 0) {
-
+					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-					ctCollectionModelImpl.getOriginalCompanyId()
-				};
+						ctCollectionModelImpl.getOriginalCompanyId()
+					};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
+					args);
 
-				args = new Object[] {ctCollectionModelImpl.getCompanyId()};
+				args = new Object[] { ctCollectionModelImpl.getCompanyId() };
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
+					args);
 			}
 		}
 
-		entityCache.putResult(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED, CTCollectionImpl.class,
-			ctCollection.getPrimaryKey(), ctCollection, false);
+		entityCache.putResult(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+			CTCollectionImpl.class, ctCollection.getPrimaryKey(), ctCollection,
+			false);
 
 		clearUniqueFindersCache(ctCollectionModelImpl, false);
 		cacheUniqueFindersCache(ctCollectionModelImpl);
@@ -1216,7 +1166,6 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public CTCollection findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCollectionException {
-
 		CTCollection ctCollection = fetchByPrimaryKey(primaryKey);
 
 		if (ctCollection == null) {
@@ -1224,8 +1173,8 @@ public class CTCollectionPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCollectionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			throw new NoSuchCollectionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
 		}
 
 		return ctCollection;
@@ -1241,7 +1190,6 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public CTCollection findByPrimaryKey(long ctCollectionId)
 		throws NoSuchCollectionException {
-
 		return findByPrimaryKey((Serializable)ctCollectionId);
 	}
 
@@ -1295,9 +1243,8 @@ public class CTCollectionPersistenceImpl
 	 * @return the ordered range of ct collections
 	 */
 	@Override
-	public List<CTCollection> findAll(
-		int start, int end, OrderByComparator<CTCollection> orderByComparator) {
-
+	public List<CTCollection> findAll(int start, int end,
+		OrderByComparator<CTCollection> orderByComparator) {
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -1315,31 +1262,29 @@ public class CTCollectionPersistenceImpl
 	 * @return the ordered range of ct collections
 	 */
 	@Override
-	public List<CTCollection> findAll(
-		int start, int end, OrderByComparator<CTCollection> orderByComparator,
+	public List<CTCollection> findAll(int start, int end,
+		OrderByComparator<CTCollection> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
+			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
 		List<CTCollection> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<CTCollection>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<CTCollection>)finderCache.getResult(finderPath,
+					finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1347,13 +1292,13 @@ public class CTCollectionPersistenceImpl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(2 +
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CTCOLLECTION);
 
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1373,16 +1318,16 @@ public class CTCollectionPersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CTCollection>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<CTCollection>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CTCollection>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<CTCollection>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -1420,8 +1365,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1433,12 +1378,11 @@ public class CTCollectionPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -1470,9 +1414,7 @@ public class CTCollectionPersistenceImpl
 	 * @return the ct entries associated with the ct collection
 	 */
 	@Override
-	public List<com.liferay.change.tracking.model.CTEntry> getCTEntries(
-		long pk) {
-
+	public List<com.liferay.change.tracking.model.CTEntry> getCTEntries(long pk) {
 		return getCTEntries(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -1491,7 +1433,6 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public List<com.liferay.change.tracking.model.CTEntry> getCTEntries(
 		long pk, int start, int end) {
-
 		return getCTEntries(pk, start, end, null);
 	}
 
@@ -1511,11 +1452,9 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public List<com.liferay.change.tracking.model.CTEntry> getCTEntries(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.change.tracking.model.CTEntry>
-			orderByComparator) {
-
-		return ctCollectionToCTEntryTableMapper.getRightBaseModels(
-			pk, start, end, orderByComparator);
+		OrderByComparator<com.liferay.change.tracking.model.CTEntry> orderByComparator) {
+		return ctCollectionToCTEntryTableMapper.getRightBaseModels(pk, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -1540,8 +1479,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public boolean containsCTEntry(long pk, long ctEntryPK) {
-		return ctCollectionToCTEntryTableMapper.containsTableMapping(
-			pk, ctEntryPK);
+		return ctCollectionToCTEntryTableMapper.containsTableMapping(pk,
+			ctEntryPK);
 	}
 
 	/**
@@ -1571,12 +1510,12 @@ public class CTCollectionPersistenceImpl
 		CTCollection ctCollection = fetchByPrimaryKey(pk);
 
 		if (ctCollection == null) {
-			ctCollectionToCTEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, ctEntryPK);
+			ctCollectionToCTEntryTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, ctEntryPK);
 		}
 		else {
-			ctCollectionToCTEntryTableMapper.addTableMapping(
-				ctCollection.getCompanyId(), pk, ctEntryPK);
+			ctCollectionToCTEntryTableMapper.addTableMapping(ctCollection.getCompanyId(),
+				pk, ctEntryPK);
 		}
 	}
 
@@ -1587,18 +1526,17 @@ public class CTCollectionPersistenceImpl
 	 * @param ctEntry the ct entry
 	 */
 	@Override
-	public void addCTEntry(
-		long pk, com.liferay.change.tracking.model.CTEntry ctEntry) {
-
+	public void addCTEntry(long pk,
+		com.liferay.change.tracking.model.CTEntry ctEntry) {
 		CTCollection ctCollection = fetchByPrimaryKey(pk);
 
 		if (ctCollection == null) {
-			ctCollectionToCTEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, ctEntry.getPrimaryKey());
+			ctCollectionToCTEntryTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, ctEntry.getPrimaryKey());
 		}
 		else {
-			ctCollectionToCTEntryTableMapper.addTableMapping(
-				ctCollection.getCompanyId(), pk, ctEntry.getPrimaryKey());
+			ctCollectionToCTEntryTableMapper.addTableMapping(ctCollection.getCompanyId(),
+				pk, ctEntry.getPrimaryKey());
 		}
 	}
 
@@ -1621,8 +1559,8 @@ public class CTCollectionPersistenceImpl
 			companyId = ctCollection.getCompanyId();
 		}
 
-		ctCollectionToCTEntryTableMapper.addTableMappings(
-			companyId, pk, ctEntryPKs);
+		ctCollectionToCTEntryTableMapper.addTableMappings(companyId, pk,
+			ctEntryPKs);
 	}
 
 	/**
@@ -1632,15 +1570,11 @@ public class CTCollectionPersistenceImpl
 	 * @param ctEntries the ct entries
 	 */
 	@Override
-	public void addCTEntries(
-		long pk, List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
-
-		addCTEntries(
-			pk,
-			ListUtil.toLongArray(
-				ctEntries,
-				com.liferay.change.tracking.model.CTEntry.
-					CT_ENTRY_ID_ACCESSOR));
+	public void addCTEntries(long pk,
+		List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
+		addCTEntries(pk,
+			ListUtil.toLongArray(ctEntries,
+				com.liferay.change.tracking.model.CTEntry.CT_ENTRY_ID_ACCESSOR));
 	}
 
 	/**
@@ -1671,11 +1605,10 @@ public class CTCollectionPersistenceImpl
 	 * @param ctEntry the ct entry
 	 */
 	@Override
-	public void removeCTEntry(
-		long pk, com.liferay.change.tracking.model.CTEntry ctEntry) {
-
-		ctCollectionToCTEntryTableMapper.deleteTableMapping(
-			pk, ctEntry.getPrimaryKey());
+	public void removeCTEntry(long pk,
+		com.liferay.change.tracking.model.CTEntry ctEntry) {
+		ctCollectionToCTEntryTableMapper.deleteTableMapping(pk,
+			ctEntry.getPrimaryKey());
 	}
 
 	/**
@@ -1696,15 +1629,11 @@ public class CTCollectionPersistenceImpl
 	 * @param ctEntries the ct entries
 	 */
 	@Override
-	public void removeCTEntries(
-		long pk, List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
-
-		removeCTEntries(
-			pk,
-			ListUtil.toLongArray(
-				ctEntries,
-				com.liferay.change.tracking.model.CTEntry.
-					CT_ENTRY_ID_ACCESSOR));
+	public void removeCTEntries(long pk,
+		List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
+		removeCTEntries(pk,
+			ListUtil.toLongArray(ctEntries,
+				com.liferay.change.tracking.model.CTEntry.CT_ENTRY_ID_ACCESSOR));
 	}
 
 	/**
@@ -1716,15 +1645,15 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public void setCTEntries(long pk, long[] ctEntryPKs) {
 		Set<Long> newCTEntryPKsSet = SetUtil.fromArray(ctEntryPKs);
-		Set<Long> oldCTEntryPKsSet = SetUtil.fromArray(
-			ctCollectionToCTEntryTableMapper.getRightPrimaryKeys(pk));
+		Set<Long> oldCTEntryPKsSet = SetUtil.fromArray(ctCollectionToCTEntryTableMapper.getRightPrimaryKeys(
+					pk));
 
 		Set<Long> removeCTEntryPKsSet = new HashSet<Long>(oldCTEntryPKsSet);
 
 		removeCTEntryPKsSet.removeAll(newCTEntryPKsSet);
 
-		ctCollectionToCTEntryTableMapper.deleteTableMappings(
-			pk, ArrayUtil.toLongArray(removeCTEntryPKsSet));
+		ctCollectionToCTEntryTableMapper.deleteTableMappings(pk,
+			ArrayUtil.toLongArray(removeCTEntryPKsSet));
 
 		newCTEntryPKsSet.removeAll(oldCTEntryPKsSet);
 
@@ -1739,8 +1668,8 @@ public class CTCollectionPersistenceImpl
 			companyId = ctCollection.getCompanyId();
 		}
 
-		ctCollectionToCTEntryTableMapper.addTableMappings(
-			companyId, pk, ArrayUtil.toLongArray(newCTEntryPKsSet));
+		ctCollectionToCTEntryTableMapper.addTableMappings(companyId, pk,
+			ArrayUtil.toLongArray(newCTEntryPKsSet));
 	}
 
 	/**
@@ -1750,15 +1679,13 @@ public class CTCollectionPersistenceImpl
 	 * @param ctEntries the ct entries to be associated with the ct collection
 	 */
 	@Override
-	public void setCTEntries(
-		long pk, List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
-
+	public void setCTEntries(long pk,
+		List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
 		try {
 			long[] ctEntryPKs = new long[ctEntries.size()];
 
 			for (int i = 0; i < ctEntries.size(); i++) {
-				com.liferay.change.tracking.model.CTEntry ctEntry =
-					ctEntries.get(i);
+				com.liferay.change.tracking.model.CTEntry ctEntry = ctEntries.get(i);
 
 				ctEntryPKs[i] = ctEntry.getPrimaryKey();
 			}
@@ -1794,63 +1721,61 @@ public class CTCollectionPersistenceImpl
 	 * Initializes the ct collection persistence.
 	 */
 	public void afterPropertiesSet() {
-		ctCollectionToCTEntryTableMapper = TableMapperFactory.getTableMapper(
-			"CTCollections_CTEntries", "companyId", "ctCollectionId",
-			"ctEntryId", this, ctEntryPersistence);
+		ctCollectionToCTEntryTableMapper = TableMapperFactory.getTableMapper("CTCollections_CTEntries",
+				"companyId", "ctCollectionId", "ctEntryId", this,
+				ctEntryPersistence);
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, CTCollectionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED,
+				CTCollectionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, CTCollectionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED,
+				CTCollectionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
 
-		_finderPathCountAll = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathCountAll = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, CTCollectionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED,
+				CTCollectionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, CTCollectionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()},
-			CTCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CTCollectionModelImpl.CREATEDATE_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED,
+				CTCollectionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				CTCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
+				CTCollectionModelImpl.CREATEDATE_COLUMN_BITMASK);
 
-		_finderPathCountByCompanyId = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+		_finderPathCountByCompanyId = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
 
-		_finderPathFetchByC_N = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, CTCollectionImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			CTCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CTCollectionModelImpl.NAME_COLUMN_BITMASK);
+		_finderPathFetchByC_N = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED,
+				CTCollectionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+				new String[] { Long.class.getName(), String.class.getName() },
+				CTCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
+				CTCollectionModelImpl.NAME_COLUMN_BITMASK);
 
-		_finderPathCountByC_N = new FinderPath(
-			CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
-			CTCollectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
-			new String[] {Long.class.getName(), String.class.getName()});
+		_finderPathCountByC_N = new FinderPath(CTCollectionModelImpl.ENTITY_CACHE_ENABLED,
+				CTCollectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+				new String[] { Long.class.getName(), String.class.getName() });
 	}
 
 	public void destroy() {
@@ -1864,41 +1789,19 @@ public class CTCollectionPersistenceImpl
 
 	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
-
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-
 	@BeanReference(type = CTEntryPersistence.class)
 	protected CTEntryPersistence ctEntryPersistence;
-
-	protected TableMapper
-		<CTCollection, com.liferay.change.tracking.model.CTEntry>
-			ctCollectionToCTEntryTableMapper;
-
-	private static final String _SQL_SELECT_CTCOLLECTION =
-		"SELECT ctCollection FROM CTCollection ctCollection";
-
-	private static final String _SQL_SELECT_CTCOLLECTION_WHERE =
-		"SELECT ctCollection FROM CTCollection ctCollection WHERE ";
-
-	private static final String _SQL_COUNT_CTCOLLECTION =
-		"SELECT COUNT(ctCollection) FROM CTCollection ctCollection";
-
-	private static final String _SQL_COUNT_CTCOLLECTION_WHERE =
-		"SELECT COUNT(ctCollection) FROM CTCollection ctCollection WHERE ";
-
+	protected TableMapper<CTCollection, com.liferay.change.tracking.model.CTEntry> ctCollectionToCTEntryTableMapper;
+	private static final String _SQL_SELECT_CTCOLLECTION = "SELECT ctCollection FROM CTCollection ctCollection";
+	private static final String _SQL_SELECT_CTCOLLECTION_WHERE = "SELECT ctCollection FROM CTCollection ctCollection WHERE ";
+	private static final String _SQL_COUNT_CTCOLLECTION = "SELECT COUNT(ctCollection) FROM CTCollection ctCollection";
+	private static final String _SQL_COUNT_CTCOLLECTION_WHERE = "SELECT COUNT(ctCollection) FROM CTCollection ctCollection WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctCollection.";
-
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTCollection exists with the primary key ";
-
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTCollection exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTCollectionPersistenceImpl.class);
-
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CTCollection exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CTCollection exists with the key {";
+	private static final Log _log = LogFactoryUtil.getLog(CTCollectionPersistenceImpl.class);
 }

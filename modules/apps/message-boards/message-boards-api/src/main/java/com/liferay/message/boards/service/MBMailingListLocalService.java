@@ -17,7 +17,9 @@ package com.liferay.message.boards.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.message.boards.model.MBMailingList;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -51,43 +53,39 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface MBMailingListLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface MBMailingListLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMailingListLocalServiceUtil} to access the message boards mailing list local service. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MBMailingList addMailingList(
-			long userId, long groupId, long categoryId, String emailAddress,
-			String inProtocol, String inServerName, int inServerPort,
-			boolean inUseSSL, String inUserName, String inPassword,
-			int inReadInterval, String outEmailAddress, boolean outCustom,
-			String outServerName, int outServerPort, boolean outUseSSL,
-			String outUserName, String outPassword, boolean allowAnonymous,
-			boolean active, ServiceContext serviceContext)
-		throws PortalException;
+	public MBMailingList addMailingList(long userId, long groupId,
+		long categoryId, String emailAddress, String inProtocol,
+		String inServerName, int inServerPort, boolean inUseSSL,
+		String inUserName, String inPassword, int inReadInterval,
+		String outEmailAddress, boolean outCustom, String outServerName,
+		int outServerPort, boolean outUseSSL, String outUserName,
+		String outPassword, boolean allowAnonymous, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbMailingList the message boards mailing list
-	 * @return the message boards mailing list that was added
-	 */
+	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBMailingList addMBMailingList(MBMailingList mbMailingList);
 
 	/**
-	 * Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
-	 *
-	 * @param mailingListId the primary key for the new message boards mailing list
-	 * @return the new message boards mailing list
-	 */
+	* Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
+	*
+	* @param mailingListId the primary key for the new message boards mailing list
+	* @return the new message boards mailing list
+	*/
 	@Transactional(enabled = false)
 	public MBMailingList createMBMailingList(long mailingListId);
 
@@ -100,28 +98,28 @@ public interface MBMailingListLocalService
 		throws PortalException;
 
 	/**
-	 * Deletes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param mailingListId the primary key of the message boards mailing list
-	 * @return the message boards mailing list that was removed
-	 * @throws PortalException if a message boards mailing list with the primary key could not be found
-	 */
+	* Deletes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mailingListId the primary key of the message boards mailing list
+	* @return the message boards mailing list that was removed
+	* @throws PortalException if a message boards mailing list with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MBMailingList deleteMBMailingList(long mailingListId)
 		throws PortalException;
 
 	/**
-	 * Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbMailingList the message boards mailing list
-	 * @return the message boards mailing list that was removed
-	 */
+	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -130,85 +128,83 @@ public interface MBMailingListLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMailingList fetchCategoryMailingList(
-		long groupId, long categoryId);
+	public MBMailingList fetchCategoryMailingList(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMailingList fetchMBMailingList(long mailingListId);
 
 	/**
-	 * Returns the message boards mailing list matching the UUID and group.
-	 *
-	 * @param uuid the message boards mailing list's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 */
+	* Returns the message boards mailing list matching the UUID and group.
+	*
+	* @param uuid the message boards mailing list's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMailingList fetchMBMailingListByUuidAndGroupId(
-		String uuid, long groupId);
+	public MBMailingList fetchMBMailingListByUuidAndGroupId(String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,82 +221,81 @@ public interface MBMailingListLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the message boards mailing list with the primary key.
-	 *
-	 * @param mailingListId the primary key of the message boards mailing list
-	 * @return the message boards mailing list
-	 * @throws PortalException if a message boards mailing list with the primary key could not be found
-	 */
+	* Returns the message boards mailing list with the primary key.
+	*
+	* @param mailingListId the primary key of the message boards mailing list
+	* @return the message boards mailing list
+	* @throws PortalException if a message boards mailing list with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMailingList getMBMailingList(long mailingListId)
 		throws PortalException;
 
 	/**
-	 * Returns the message boards mailing list matching the UUID and group.
-	 *
-	 * @param uuid the message boards mailing list's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching message boards mailing list
-	 * @throws PortalException if a matching message boards mailing list could not be found
-	 */
+	* Returns the message boards mailing list matching the UUID and group.
+	*
+	* @param uuid the message boards mailing list's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards mailing list
+	* @throws PortalException if a matching message boards mailing list could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMailingList getMBMailingListByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException;
+	public MBMailingList getMBMailingListByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
-	 * Returns a range of all the message boards mailing lists.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of message boards mailing lists
-	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
-	 * @return the range of message boards mailing lists
-	 */
+	* Returns a range of all the message boards mailing lists.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of message boards mailing lists
+	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	* @return the range of message boards mailing lists
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMailingList> getMBMailingLists(int start, int end);
 
 	/**
-	 * Returns all the message boards mailing lists matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the message boards mailing lists
-	 * @param companyId the primary key of the company
-	 * @return the matching message boards mailing lists, or an empty list if no matches were found
-	 */
+	* Returns all the message boards mailing lists matching the UUID and company.
+	*
+	* @param uuid the UUID of the message boards mailing lists
+	* @param companyId the primary key of the company
+	* @return the matching message boards mailing lists, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	/**
-	 * Returns a range of message boards mailing lists matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the message boards mailing lists
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of message boards mailing lists
-	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching message boards mailing lists, or an empty list if no matches were found
-	 */
+	* Returns a range of message boards mailing lists matching the UUID and company.
+	*
+	* @param uuid the UUID of the message boards mailing lists
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message boards mailing lists
+	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching message boards mailing lists, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
-	 * Returns the number of message boards mailing lists.
-	 *
-	 * @return the number of message boards mailing lists
-	 */
+	* Returns the number of message boards mailing lists.
+	*
+	* @return the number of message boards mailing lists
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMBMailingListsCount();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -308,23 +303,21 @@ public interface MBMailingListLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public MBMailingList updateMailingList(
-			long mailingListId, String emailAddress, String inProtocol,
-			String inServerName, int inServerPort, boolean inUseSSL,
-			String inUserName, String inPassword, int inReadInterval,
-			String outEmailAddress, boolean outCustom, String outServerName,
-			int outServerPort, boolean outUseSSL, String outUserName,
-			String outPassword, boolean allowAnonymous, boolean active,
-			ServiceContext serviceContext)
+	public MBMailingList updateMailingList(long mailingListId,
+		String emailAddress, String inProtocol, String inServerName,
+		int inServerPort, boolean inUseSSL, String inUserName,
+		String inPassword, int inReadInterval, String outEmailAddress,
+		boolean outCustom, String outServerName, int outServerPort,
+		boolean outUseSSL, String outUserName, String outPassword,
+		boolean allowAnonymous, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbMailingList the message boards mailing list
-	 * @return the message boards mailing list that was updated
-	 */
+	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBMailingList updateMBMailingList(MBMailingList mbMailingList);
-
 }

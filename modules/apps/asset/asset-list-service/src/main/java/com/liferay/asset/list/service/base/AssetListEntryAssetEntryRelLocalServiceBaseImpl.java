@@ -19,11 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
+
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -70,9 +72,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AssetListEntryAssetEntryRelLocalService,
-			   IdentifiableOSGiService {
-
+	implements AssetListEntryAssetEntryRelLocalService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,11 +89,9 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Override
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
-
 		assetListEntryAssetEntryRel.setNew(true);
 
-		return assetListEntryAssetEntryRelPersistence.update(
-			assetListEntryAssetEntryRel);
+		return assetListEntryAssetEntryRelPersistence.update(assetListEntryAssetEntryRel);
 	}
 
 	/**
@@ -106,9 +104,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public AssetListEntryAssetEntryRel createAssetListEntryAssetEntryRel(
 		long assetListEntryAssetEntryRelId) {
-
-		return assetListEntryAssetEntryRelPersistence.create(
-			assetListEntryAssetEntryRelId);
+		return assetListEntryAssetEntryRelPersistence.create(assetListEntryAssetEntryRelId);
 	}
 
 	/**
@@ -121,11 +117,8 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
-			long assetListEntryAssetEntryRelId)
-		throws PortalException {
-
-		return assetListEntryAssetEntryRelPersistence.remove(
-			assetListEntryAssetEntryRelId);
+		long assetListEntryAssetEntryRelId) throws PortalException {
+		return assetListEntryAssetEntryRelPersistence.remove(assetListEntryAssetEntryRelId);
 	}
 
 	/**
@@ -138,17 +131,15 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Override
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
-
-		return assetListEntryAssetEntryRelPersistence.remove(
-			assetListEntryAssetEntryRel);
+		return assetListEntryAssetEntryRelPersistence.remove(assetListEntryAssetEntryRel);
 	}
 
 	@Override
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			AssetListEntryAssetEntryRel.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(AssetListEntryAssetEntryRel.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -159,8 +150,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return assetListEntryAssetEntryRelPersistence.findWithDynamicQuery(
-			dynamicQuery);
+		return assetListEntryAssetEntryRelPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -176,11 +166,10 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return assetListEntryAssetEntryRelPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return assetListEntryAssetEntryRelPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -197,12 +186,10 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return assetListEntryAssetEntryRelPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return assetListEntryAssetEntryRelPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -213,8 +200,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return assetListEntryAssetEntryRelPersistence.countWithDynamicQuery(
-			dynamicQuery);
+		return assetListEntryAssetEntryRelPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -225,19 +211,16 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return assetListEntryAssetEntryRelPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return assetListEntryAssetEntryRelPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public AssetListEntryAssetEntryRel fetchAssetListEntryAssetEntryRel(
 		long assetListEntryAssetEntryRelId) {
-
-		return assetListEntryAssetEntryRelPersistence.fetchByPrimaryKey(
-			assetListEntryAssetEntryRelId);
+		return assetListEntryAssetEntryRelPersistence.fetchByPrimaryKey(assetListEntryAssetEntryRelId);
 	}
 
 	/**
@@ -248,12 +231,10 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel
-		fetchAssetListEntryAssetEntryRelByUuidAndGroupId(
-			String uuid, long groupId) {
-
-		return assetListEntryAssetEntryRelPersistence.fetchByUUID_G(
-			uuid, groupId);
+	public AssetListEntryAssetEntryRel fetchAssetListEntryAssetEntryRelByUuidAndGroupId(
+		String uuid, long groupId) {
+		return assetListEntryAssetEntryRelPersistence.fetchByUUID_G(uuid,
+			groupId);
 	}
 
 	/**
@@ -265,20 +246,15 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 */
 	@Override
 	public AssetListEntryAssetEntryRel getAssetListEntryAssetEntryRel(
-			long assetListEntryAssetEntryRelId)
-		throws PortalException {
-
-		return assetListEntryAssetEntryRelPersistence.findByPrimaryKey(
-			assetListEntryAssetEntryRelId);
+		long assetListEntryAssetEntryRelId) throws PortalException {
+		return assetListEntryAssetEntryRelPersistence.findByPrimaryKey(assetListEntryAssetEntryRelId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			assetListEntryAssetEntryRelLocalService);
+		actionableDynamicQuery.setBaseLocalService(assetListEntryAssetEntryRelLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetListEntryAssetEntryRel.class);
 
@@ -289,17 +265,12 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			assetListEntryAssetEntryRelLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(assetListEntryAssetEntryRelLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(
-			AssetListEntryAssetEntryRel.class);
+		indexableActionableDynamicQuery.setModelClass(AssetListEntryAssetEntryRel.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"assetListEntryAssetEntryRelId");
@@ -309,9 +280,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			assetListEntryAssetEntryRelLocalService);
+		actionableDynamicQuery.setBaseLocalService(assetListEntryAssetEntryRelLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetListEntryAssetEntryRel.class);
 
@@ -322,69 +291,52 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<AssetListEntryAssetEntryRel>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetListEntryAssetEntryRel>() {
 				@Override
 				public void performAction(
-						AssetListEntryAssetEntryRel assetListEntryAssetEntryRel)
+					AssetListEntryAssetEntryRel assetListEntryAssetEntryRel)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, assetListEntryAssetEntryRel);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						assetListEntryAssetEntryRel);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(
 					AssetListEntryAssetEntryRel.class.getName())));
 
@@ -397,18 +349,13 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return assetListEntryAssetEntryRelLocalService.
-			deleteAssetListEntryAssetEntryRel(
-				(AssetListEntryAssetEntryRel)persistedModel);
+		return assetListEntryAssetEntryRelLocalService.deleteAssetListEntryAssetEntryRel((AssetListEntryAssetEntryRel)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
-		return assetListEntryAssetEntryRelPersistence.findByPrimaryKey(
-			primaryKeyObj);
+		return assetListEntryAssetEntryRelPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -419,12 +366,10 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @return the matching asset list entry asset entry rels, or an empty list if no matches were found
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel>
-		getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
-			String uuid, long companyId) {
-
-		return assetListEntryAssetEntryRelPersistence.findByUuid_C(
-			uuid, companyId);
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return assetListEntryAssetEntryRelPersistence.findByUuid_C(uuid,
+			companyId);
 	}
 
 	/**
@@ -438,13 +383,11 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @return the range of matching asset list entry asset entry rels, or an empty list if no matches were found
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel>
-		getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return assetListEntryAssetEntryRelPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+		return assetListEntryAssetEntryRelPersistence.findByUuid_C(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -456,13 +399,9 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @throws PortalException if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel
-			getAssetListEntryAssetEntryRelByUuidAndGroupId(
-				String uuid, long groupId)
-		throws PortalException {
-
-		return assetListEntryAssetEntryRelPersistence.findByUUID_G(
-			uuid, groupId);
+	public AssetListEntryAssetEntryRel getAssetListEntryAssetEntryRelByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException {
+		return assetListEntryAssetEntryRelPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -479,7 +418,6 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Override
 	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
 		int start, int end) {
-
 		return assetListEntryAssetEntryRelPersistence.findAll(start, end);
 	}
 
@@ -503,9 +441,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	@Override
 	public AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
-
-		return assetListEntryAssetEntryRelPersistence.update(
-			assetListEntryAssetEntryRel);
+		return assetListEntryAssetEntryRelPersistence.update(assetListEntryAssetEntryRel);
 	}
 
 	/**
@@ -513,9 +449,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 *
 	 * @return the asset list entry asset entry rel local service
 	 */
-	public AssetListEntryAssetEntryRelLocalService
-		getAssetListEntryAssetEntryRelLocalService() {
-
+	public AssetListEntryAssetEntryRelLocalService getAssetListEntryAssetEntryRelLocalService() {
 		return assetListEntryAssetEntryRelLocalService;
 	}
 
@@ -525,11 +459,8 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @param assetListEntryAssetEntryRelLocalService the asset list entry asset entry rel local service
 	 */
 	public void setAssetListEntryAssetEntryRelLocalService(
-		AssetListEntryAssetEntryRelLocalService
-			assetListEntryAssetEntryRelLocalService) {
-
-		this.assetListEntryAssetEntryRelLocalService =
-			assetListEntryAssetEntryRelLocalService;
+		AssetListEntryAssetEntryRelLocalService assetListEntryAssetEntryRelLocalService) {
+		this.assetListEntryAssetEntryRelLocalService = assetListEntryAssetEntryRelLocalService;
 	}
 
 	/**
@@ -537,9 +468,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 *
 	 * @return the asset list entry asset entry rel persistence
 	 */
-	public AssetListEntryAssetEntryRelPersistence
-		getAssetListEntryAssetEntryRelPersistence() {
-
+	public AssetListEntryAssetEntryRelPersistence getAssetListEntryAssetEntryRelPersistence() {
 		return assetListEntryAssetEntryRelPersistence;
 	}
 
@@ -549,11 +478,8 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @param assetListEntryAssetEntryRelPersistence the asset list entry asset entry rel persistence
 	 */
 	public void setAssetListEntryAssetEntryRelPersistence(
-		AssetListEntryAssetEntryRelPersistence
-			assetListEntryAssetEntryRelPersistence) {
-
-		this.assetListEntryAssetEntryRelPersistence =
-			assetListEntryAssetEntryRelPersistence;
+		AssetListEntryAssetEntryRelPersistence assetListEntryAssetEntryRelPersistence) {
+		this.assetListEntryAssetEntryRelPersistence = assetListEntryAssetEntryRelPersistence;
 	}
 
 	/**
@@ -561,9 +487,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -573,9 +497,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -584,9 +506,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -597,7 +517,6 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -620,8 +539,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.asset.list.model.AssetListEntryAssetEntryRel",
+		persistedModelLocalServiceRegistry.register("com.liferay.asset.list.model.AssetListEntryAssetEntryRel",
 			assetListEntryAssetEntryRelLocalService);
 	}
 
@@ -655,16 +573,15 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				assetListEntryAssetEntryRelPersistence.getDataSource();
+			DataSource dataSource = assetListEntryAssetEntryRelPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -674,30 +591,15 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = AssetListEntryAssetEntryRelLocalService.class)
-	protected AssetListEntryAssetEntryRelLocalService
-		assetListEntryAssetEntryRelLocalService;
-
+	protected AssetListEntryAssetEntryRelLocalService assetListEntryAssetEntryRelLocalService;
 	@BeanReference(type = AssetListEntryAssetEntryRelPersistence.class)
-	protected AssetListEntryAssetEntryRelPersistence
-		assetListEntryAssetEntryRelPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	protected AssetListEntryAssetEntryRelPersistence assetListEntryAssetEntryRelPersistence;
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

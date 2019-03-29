@@ -32,13 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class FriendlyURLEntryMappingWrapper
-	extends BaseModelWrapper<FriendlyURLEntryMapping>
+public class FriendlyURLEntryMappingWrapper extends BaseModelWrapper<FriendlyURLEntryMapping>
 	implements FriendlyURLEntryMapping, ModelWrapper<FriendlyURLEntryMapping> {
-
 	public FriendlyURLEntryMappingWrapper(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-
 		super(friendlyURLEntryMapping);
 	}
 
@@ -47,8 +44,8 @@ public class FriendlyURLEntryMappingWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put(
-			"friendlyURLEntryMappingId", getFriendlyURLEntryMappingId());
+		attributes.put("friendlyURLEntryMappingId",
+			getFriendlyURLEntryMappingId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
@@ -65,7 +62,7 @@ public class FriendlyURLEntryMappingWrapper
 		}
 
 		Long friendlyURLEntryMappingId = (Long)attributes.get(
-			"friendlyURLEntryMappingId");
+				"friendlyURLEntryMappingId");
 
 		if (friendlyURLEntryMappingId != null) {
 			setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
@@ -91,70 +88,70 @@ public class FriendlyURLEntryMappingWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this friendly url entry mapping.
-	 *
-	 * @return the fully qualified class name of this friendly url entry mapping
-	 */
+	* Returns the fully qualified class name of this friendly url entry mapping.
+	*
+	* @return the fully qualified class name of this friendly url entry mapping
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this friendly url entry mapping.
-	 *
-	 * @return the class name ID of this friendly url entry mapping
-	 */
+	* Returns the class name ID of this friendly url entry mapping.
+	*
+	* @return the class name ID of this friendly url entry mapping
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this friendly url entry mapping.
-	 *
-	 * @return the class pk of this friendly url entry mapping
-	 */
+	* Returns the class pk of this friendly url entry mapping.
+	*
+	* @return the class pk of this friendly url entry mapping
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the friendly url entry ID of this friendly url entry mapping.
-	 *
-	 * @return the friendly url entry ID of this friendly url entry mapping
-	 */
+	* Returns the friendly url entry ID of this friendly url entry mapping.
+	*
+	* @return the friendly url entry ID of this friendly url entry mapping
+	*/
 	@Override
 	public long getFriendlyURLEntryId() {
 		return model.getFriendlyURLEntryId();
 	}
 
 	/**
-	 * Returns the friendly url entry mapping ID of this friendly url entry mapping.
-	 *
-	 * @return the friendly url entry mapping ID of this friendly url entry mapping
-	 */
+	* Returns the friendly url entry mapping ID of this friendly url entry mapping.
+	*
+	* @return the friendly url entry mapping ID of this friendly url entry mapping
+	*/
 	@Override
 	public long getFriendlyURLEntryMappingId() {
 		return model.getFriendlyURLEntryMappingId();
 	}
 
 	/**
-	 * Returns the mvcc version of this friendly url entry mapping.
-	 *
-	 * @return the mvcc version of this friendly url entry mapping
-	 */
+	* Returns the mvcc version of this friendly url entry mapping.
+	*
+	* @return the mvcc version of this friendly url entry mapping
+	*/
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	 * Returns the primary key of this friendly url entry mapping.
-	 *
-	 * @return the primary key of this friendly url entry mapping
-	 */
+	* Returns the primary key of this friendly url entry mapping.
+	*
+	* @return the primary key of this friendly url entry mapping
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -166,60 +163,60 @@ public class FriendlyURLEntryMappingWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this friendly url entry mapping.
-	 *
-	 * @param classNameId the class name ID of this friendly url entry mapping
-	 */
+	* Sets the class name ID of this friendly url entry mapping.
+	*
+	* @param classNameId the class name ID of this friendly url entry mapping
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this friendly url entry mapping.
-	 *
-	 * @param classPK the class pk of this friendly url entry mapping
-	 */
+	* Sets the class pk of this friendly url entry mapping.
+	*
+	* @param classPK the class pk of this friendly url entry mapping
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the friendly url entry ID of this friendly url entry mapping.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID of this friendly url entry mapping
-	 */
+	* Sets the friendly url entry ID of this friendly url entry mapping.
+	*
+	* @param friendlyURLEntryId the friendly url entry ID of this friendly url entry mapping
+	*/
 	@Override
 	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
 		model.setFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**
-	 * Sets the friendly url entry mapping ID of this friendly url entry mapping.
-	 *
-	 * @param friendlyURLEntryMappingId the friendly url entry mapping ID of this friendly url entry mapping
-	 */
+	* Sets the friendly url entry mapping ID of this friendly url entry mapping.
+	*
+	* @param friendlyURLEntryMappingId the friendly url entry mapping ID of this friendly url entry mapping
+	*/
 	@Override
 	public void setFriendlyURLEntryMappingId(long friendlyURLEntryMappingId) {
 		model.setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
 	}
 
 	/**
-	 * Sets the mvcc version of this friendly url entry mapping.
-	 *
-	 * @param mvccVersion the mvcc version of this friendly url entry mapping
-	 */
+	* Sets the mvcc version of this friendly url entry mapping.
+	*
+	* @param mvccVersion the mvcc version of this friendly url entry mapping
+	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	 * Sets the primary key of this friendly url entry mapping.
-	 *
-	 * @param primaryKey the primary key of this friendly url entry mapping
-	 */
+	* Sets the primary key of this friendly url entry mapping.
+	*
+	* @param primaryKey the primary key of this friendly url entry mapping
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
@@ -228,8 +225,6 @@ public class FriendlyURLEntryMappingWrapper
 	@Override
 	protected FriendlyURLEntryMappingWrapper wrap(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-
 		return new FriendlyURLEntryMappingWrapper(friendlyURLEntryMapping);
 	}
-
 }

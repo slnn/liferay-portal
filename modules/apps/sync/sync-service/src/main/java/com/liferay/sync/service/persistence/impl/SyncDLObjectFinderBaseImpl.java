@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.persistence.SyncDLObjectPersistence;
 
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SyncDLObjectFinderBaseImpl
-	extends BasePersistenceImpl<SyncDLObject> {
-
+public class SyncDLObjectFinderBaseImpl extends BasePersistenceImpl<SyncDLObject> {
 	public SyncDLObjectFinderBaseImpl() {
 		setModelClass(SyncDLObject.class);
 	}
@@ -55,14 +54,10 @@ public class SyncDLObjectFinderBaseImpl
 	 */
 	public void setSyncDLObjectPersistence(
 		SyncDLObjectPersistence syncDLObjectPersistence) {
-
 		this.syncDLObjectPersistence = syncDLObjectPersistence;
 	}
 
 	@BeanReference(type = SyncDLObjectPersistence.class)
 	protected SyncDLObjectPersistence syncDLObjectPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SyncDLObjectFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(SyncDLObjectFinderBaseImpl.class);
 }

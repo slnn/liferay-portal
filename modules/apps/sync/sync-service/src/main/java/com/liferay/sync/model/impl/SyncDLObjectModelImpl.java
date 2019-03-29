@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDLObjectModel;
 import com.liferay.sync.model.SyncDLObjectSoap;
@@ -61,36 +64,45 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class SyncDLObjectModelImpl
-	extends BaseModelImpl<SyncDLObject> implements SyncDLObjectModel {
-
+public class SyncDLObjectModelImpl extends BaseModelImpl<SyncDLObject>
+	implements SyncDLObjectModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a sync dl object model instance should use the <code>SyncDLObject</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SyncDLObject";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"syncDLObjectId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
-		{"repositoryId", Types.BIGINT}, {"parentFolderId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"extension", Types.VARCHAR}, {"mimeType", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"changeLog", Types.VARCHAR},
-		{"extraSettings", Types.CLOB}, {"version", Types.VARCHAR},
-		{"versionId", Types.BIGINT}, {"size_", Types.BIGINT},
-		{"checksum", Types.VARCHAR}, {"event", Types.VARCHAR},
-		{"lanTokenKey", Types.VARCHAR},
-		{"lastPermissionChangeDate", Types.TIMESTAMP},
-		{"lockExpirationDate", Types.TIMESTAMP}, {"lockUserId", Types.BIGINT},
-		{"lockUserName", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"typePK", Types.BIGINT}, {"typeUuid", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "syncDLObjectId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createTime", Types.BIGINT },
+			{ "modifiedTime", Types.BIGINT },
+			{ "repositoryId", Types.BIGINT },
+			{ "parentFolderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
+			{ "extension", Types.VARCHAR },
+			{ "mimeType", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "changeLog", Types.VARCHAR },
+			{ "extraSettings", Types.CLOB },
+			{ "version", Types.VARCHAR },
+			{ "versionId", Types.BIGINT },
+			{ "size_", Types.BIGINT },
+			{ "checksum", Types.VARCHAR },
+			{ "event", Types.VARCHAR },
+			{ "lanTokenKey", Types.VARCHAR },
+			{ "lastPermissionChangeDate", Types.TIMESTAMP },
+			{ "lockExpirationDate", Types.TIMESTAMP },
+			{ "lockUserId", Types.BIGINT },
+			{ "lockUserName", Types.VARCHAR },
+			{ "type_", Types.VARCHAR },
+			{ "typePK", Types.BIGINT },
+			{ "typeUuid", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("syncDLObjectId", Types.BIGINT);
@@ -123,52 +135,29 @@ public class SyncDLObjectModelImpl
 		TABLE_COLUMNS_MAP.put("typeUuid", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table SyncDLObject (syncDLObjectId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,repositoryId LONG,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,version VARCHAR(75) null,versionId LONG,size_ LONG,checksum VARCHAR(75) null,event VARCHAR(75) null,lanTokenKey VARCHAR(75) null,lastPermissionChangeDate DATE null,lockExpirationDate DATE null,lockUserId LONG,lockUserName VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG,typeUuid VARCHAR(75) null)";
-
+	public static final String TABLE_SQL_CREATE = "create table SyncDLObject (syncDLObjectId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,repositoryId LONG,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,version VARCHAR(75) null,versionId LONG,size_ LONG,checksum VARCHAR(75) null,event VARCHAR(75) null,lanTokenKey VARCHAR(75) null,lastPermissionChangeDate DATE null,lockExpirationDate DATE null,lockUserId LONG,lockUserName VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG,typeUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SyncDLObject";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY syncDLObject.modifiedTime ASC, syncDLObject.repositoryId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY SyncDLObject.modifiedTime ASC, SyncDLObject.repositoryId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY syncDLObject.modifiedTime ASC, syncDLObject.repositoryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY SyncDLObject.modifiedTime ASC, SyncDLObject.repositoryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.sync.model.SyncDLObject"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.sync.model.SyncDLObject"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.sync.model.SyncDLObject"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.sync.model.SyncDLObject"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.sync.model.SyncDLObject"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.sync.model.SyncDLObject"),
+			true);
 	public static final long EVENT_COLUMN_BITMASK = 1L;
-
 	public static final long MODIFIEDTIME_COLUMN_BITMASK = 2L;
-
 	public static final long PARENTFOLDERID_COLUMN_BITMASK = 4L;
-
 	public static final long REPOSITORYID_COLUMN_BITMASK = 8L;
-
 	public static final long TREEPATH_COLUMN_BITMASK = 16L;
-
 	public static final long TYPE_COLUMN_BITMASK = 32L;
-
 	public static final long TYPEPK_COLUMN_BITMASK = 64L;
-
 	public static final long VERSION_COLUMN_BITMASK = 128L;
 
 	/**
@@ -205,8 +194,7 @@ public class SyncDLObjectModelImpl
 		model.setChecksum(soapModel.getChecksum());
 		model.setEvent(soapModel.getEvent());
 		model.setLanTokenKey(soapModel.getLanTokenKey());
-		model.setLastPermissionChangeDate(
-			soapModel.getLastPermissionChangeDate());
+		model.setLastPermissionChangeDate(soapModel.getLastPermissionChangeDate());
 		model.setLockExpirationDate(soapModel.getLockExpirationDate());
 		model.setLockUserId(soapModel.getLockUserId());
 		model.setLockUserName(soapModel.getLockUserName());
@@ -228,8 +216,7 @@ public class SyncDLObjectModelImpl
 			return null;
 		}
 
-		List<SyncDLObject> models = new ArrayList<SyncDLObject>(
-			soapModels.length);
+		List<SyncDLObject> models = new ArrayList<SyncDLObject>(soapModels.length);
 
 		for (SyncDLObjectSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -238,9 +225,8 @@ public class SyncDLObjectModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.sync.model.SyncDLObject"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.sync.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.sync.model.SyncDLObject"));
 
 	public SyncDLObjectModelImpl() {
 	}
@@ -279,18 +265,13 @@ public class SyncDLObjectModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SyncDLObject, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SyncDLObject, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SyncDLObject, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SyncDLObject, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((SyncDLObject)this));
 		}
 
@@ -302,169 +283,97 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SyncDLObject, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SyncDLObject, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SyncDLObject, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SyncDLObject, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(SyncDLObject)this, entry.getValue());
+				attributeSetterBiConsumer.accept((SyncDLObject)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SyncDLObject, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<SyncDLObject, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SyncDLObject, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<SyncDLObject, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SyncDLObject, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SyncDLObject, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<SyncDLObject, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SyncDLObject, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SyncDLObject, Object>>();
-		Map<String, BiConsumer<SyncDLObject, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SyncDLObject, ?>>();
+		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SyncDLObject, Object>>();
+		Map<String, BiConsumer<SyncDLObject, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SyncDLObject, ?>>();
 
-		attributeGetterFunctions.put(
-			"syncDLObjectId", SyncDLObject::getSyncDLObjectId);
-		attributeSetterBiConsumers.put(
-			"syncDLObjectId",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setSyncDLObjectId);
+
+		attributeGetterFunctions.put("syncDLObjectId", SyncDLObject::getSyncDLObjectId);
+		attributeSetterBiConsumers.put("syncDLObjectId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setSyncDLObjectId);
 		attributeGetterFunctions.put("companyId", SyncDLObject::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setCompanyId);
 		attributeGetterFunctions.put("userId", SyncDLObject::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setUserId);
 		attributeGetterFunctions.put("userName", SyncDLObject::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SyncDLObject, String>)SyncDLObject::setUserName);
 		attributeGetterFunctions.put("createTime", SyncDLObject::getCreateTime);
-		attributeSetterBiConsumers.put(
-			"createTime",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setCreateTime);
-		attributeGetterFunctions.put(
-			"modifiedTime", SyncDLObject::getModifiedTime);
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setModifiedTime);
-		attributeGetterFunctions.put(
-			"repositoryId", SyncDLObject::getRepositoryId);
-		attributeSetterBiConsumers.put(
-			"repositoryId",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setRepositoryId);
-		attributeGetterFunctions.put(
-			"parentFolderId", SyncDLObject::getParentFolderId);
-		attributeSetterBiConsumers.put(
-			"parentFolderId",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setParentFolderId);
+		attributeSetterBiConsumers.put("createTime", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setCreateTime);
+		attributeGetterFunctions.put("modifiedTime", SyncDLObject::getModifiedTime);
+		attributeSetterBiConsumers.put("modifiedTime", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setModifiedTime);
+		attributeGetterFunctions.put("repositoryId", SyncDLObject::getRepositoryId);
+		attributeSetterBiConsumers.put("repositoryId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setRepositoryId);
+		attributeGetterFunctions.put("parentFolderId", SyncDLObject::getParentFolderId);
+		attributeSetterBiConsumers.put("parentFolderId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setParentFolderId);
 		attributeGetterFunctions.put("treePath", SyncDLObject::getTreePath);
-		attributeSetterBiConsumers.put(
-			"treePath",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setTreePath);
+		attributeSetterBiConsumers.put("treePath", (BiConsumer<SyncDLObject, String>)SyncDLObject::setTreePath);
 		attributeGetterFunctions.put("name", SyncDLObject::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<SyncDLObject, String>)SyncDLObject::setName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SyncDLObject, String>)SyncDLObject::setName);
 		attributeGetterFunctions.put("extension", SyncDLObject::getExtension);
-		attributeSetterBiConsumers.put(
-			"extension",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setExtension);
+		attributeSetterBiConsumers.put("extension", (BiConsumer<SyncDLObject, String>)SyncDLObject::setExtension);
 		attributeGetterFunctions.put("mimeType", SyncDLObject::getMimeType);
-		attributeSetterBiConsumers.put(
-			"mimeType",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setMimeType);
-		attributeGetterFunctions.put(
-			"description", SyncDLObject::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setDescription);
+		attributeSetterBiConsumers.put("mimeType", (BiConsumer<SyncDLObject, String>)SyncDLObject::setMimeType);
+		attributeGetterFunctions.put("description", SyncDLObject::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<SyncDLObject, String>)SyncDLObject::setDescription);
 		attributeGetterFunctions.put("changeLog", SyncDLObject::getChangeLog);
-		attributeSetterBiConsumers.put(
-			"changeLog",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setChangeLog);
-		attributeGetterFunctions.put(
-			"extraSettings", SyncDLObject::getExtraSettings);
-		attributeSetterBiConsumers.put(
-			"extraSettings",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setExtraSettings);
+		attributeSetterBiConsumers.put("changeLog", (BiConsumer<SyncDLObject, String>)SyncDLObject::setChangeLog);
+		attributeGetterFunctions.put("extraSettings", SyncDLObject::getExtraSettings);
+		attributeSetterBiConsumers.put("extraSettings", (BiConsumer<SyncDLObject, String>)SyncDLObject::setExtraSettings);
 		attributeGetterFunctions.put("version", SyncDLObject::getVersion);
-		attributeSetterBiConsumers.put(
-			"version",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<SyncDLObject, String>)SyncDLObject::setVersion);
 		attributeGetterFunctions.put("versionId", SyncDLObject::getVersionId);
-		attributeSetterBiConsumers.put(
-			"versionId",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setVersionId);
+		attributeSetterBiConsumers.put("versionId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setVersionId);
 		attributeGetterFunctions.put("size", SyncDLObject::getSize);
-		attributeSetterBiConsumers.put(
-			"size", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setSize);
+		attributeSetterBiConsumers.put("size", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setSize);
 		attributeGetterFunctions.put("checksum", SyncDLObject::getChecksum);
-		attributeSetterBiConsumers.put(
-			"checksum",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setChecksum);
+		attributeSetterBiConsumers.put("checksum", (BiConsumer<SyncDLObject, String>)SyncDLObject::setChecksum);
 		attributeGetterFunctions.put("event", SyncDLObject::getEvent);
-		attributeSetterBiConsumers.put(
-			"event", (BiConsumer<SyncDLObject, String>)SyncDLObject::setEvent);
-		attributeGetterFunctions.put(
-			"lanTokenKey", SyncDLObject::getLanTokenKey);
-		attributeSetterBiConsumers.put(
-			"lanTokenKey",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setLanTokenKey);
-		attributeGetterFunctions.put(
-			"lastPermissionChangeDate",
-			SyncDLObject::getLastPermissionChangeDate);
-		attributeSetterBiConsumers.put(
-			"lastPermissionChangeDate",
-			(BiConsumer<SyncDLObject, Date>)
-				SyncDLObject::setLastPermissionChangeDate);
-		attributeGetterFunctions.put(
-			"lockExpirationDate", SyncDLObject::getLockExpirationDate);
-		attributeSetterBiConsumers.put(
-			"lockExpirationDate",
-			(BiConsumer<SyncDLObject, Date>)
-				SyncDLObject::setLockExpirationDate);
+		attributeSetterBiConsumers.put("event", (BiConsumer<SyncDLObject, String>)SyncDLObject::setEvent);
+		attributeGetterFunctions.put("lanTokenKey", SyncDLObject::getLanTokenKey);
+		attributeSetterBiConsumers.put("lanTokenKey", (BiConsumer<SyncDLObject, String>)SyncDLObject::setLanTokenKey);
+		attributeGetterFunctions.put("lastPermissionChangeDate", SyncDLObject::getLastPermissionChangeDate);
+		attributeSetterBiConsumers.put("lastPermissionChangeDate", (BiConsumer<SyncDLObject, Date>)SyncDLObject::setLastPermissionChangeDate);
+		attributeGetterFunctions.put("lockExpirationDate", SyncDLObject::getLockExpirationDate);
+		attributeSetterBiConsumers.put("lockExpirationDate", (BiConsumer<SyncDLObject, Date>)SyncDLObject::setLockExpirationDate);
 		attributeGetterFunctions.put("lockUserId", SyncDLObject::getLockUserId);
-		attributeSetterBiConsumers.put(
-			"lockUserId",
-			(BiConsumer<SyncDLObject, Long>)SyncDLObject::setLockUserId);
-		attributeGetterFunctions.put(
-			"lockUserName", SyncDLObject::getLockUserName);
-		attributeSetterBiConsumers.put(
-			"lockUserName",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setLockUserName);
+		attributeSetterBiConsumers.put("lockUserId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setLockUserId);
+		attributeGetterFunctions.put("lockUserName", SyncDLObject::getLockUserName);
+		attributeSetterBiConsumers.put("lockUserName", (BiConsumer<SyncDLObject, String>)SyncDLObject::setLockUserName);
 		attributeGetterFunctions.put("type", SyncDLObject::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<SyncDLObject, String>)SyncDLObject::setType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SyncDLObject, String>)SyncDLObject::setType);
 		attributeGetterFunctions.put("typePK", SyncDLObject::getTypePK);
-		attributeSetterBiConsumers.put(
-			"typePK", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setTypePK);
+		attributeSetterBiConsumers.put("typePK", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setTypePK);
 		attributeGetterFunctions.put("typeUuid", SyncDLObject::getTypeUuid);
-		attributeSetterBiConsumers.put(
-			"typeUuid",
-			(BiConsumer<SyncDLObject, String>)SyncDLObject::setTypeUuid);
+		attributeSetterBiConsumers.put("typeUuid", (BiConsumer<SyncDLObject, String>)SyncDLObject::setTypeUuid);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -976,8 +885,8 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), SyncDLObject.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SyncDLObject.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -990,9 +899,8 @@ public class SyncDLObjectModelImpl
 	@Override
 	public SyncDLObject toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDLObject)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (SyncDLObject)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1023,8 +931,7 @@ public class SyncDLObjectModelImpl
 		syncDLObjectImpl.setChecksum(getChecksum());
 		syncDLObjectImpl.setEvent(getEvent());
 		syncDLObjectImpl.setLanTokenKey(getLanTokenKey());
-		syncDLObjectImpl.setLastPermissionChangeDate(
-			getLastPermissionChangeDate());
+		syncDLObjectImpl.setLastPermissionChangeDate(getLastPermissionChangeDate());
 		syncDLObjectImpl.setLockExpirationDate(getLockExpirationDate());
 		syncDLObjectImpl.setLockUserId(getLockUserId());
 		syncDLObjectImpl.setLockUserName(getLockUserName());
@@ -1113,23 +1020,19 @@ public class SyncDLObjectModelImpl
 	public void resetOriginalValues() {
 		SyncDLObjectModelImpl syncDLObjectModelImpl = this;
 
-		syncDLObjectModelImpl._originalModifiedTime =
-			syncDLObjectModelImpl._modifiedTime;
+		syncDLObjectModelImpl._originalModifiedTime = syncDLObjectModelImpl._modifiedTime;
 
 		syncDLObjectModelImpl._setOriginalModifiedTime = false;
 
-		syncDLObjectModelImpl._originalRepositoryId =
-			syncDLObjectModelImpl._repositoryId;
+		syncDLObjectModelImpl._originalRepositoryId = syncDLObjectModelImpl._repositoryId;
 
 		syncDLObjectModelImpl._setOriginalRepositoryId = false;
 
-		syncDLObjectModelImpl._originalParentFolderId =
-			syncDLObjectModelImpl._parentFolderId;
+		syncDLObjectModelImpl._originalParentFolderId = syncDLObjectModelImpl._parentFolderId;
 
 		syncDLObjectModelImpl._setOriginalParentFolderId = false;
 
-		syncDLObjectModelImpl._originalTreePath =
-			syncDLObjectModelImpl._treePath;
+		syncDLObjectModelImpl._originalTreePath = syncDLObjectModelImpl._treePath;
 
 		syncDLObjectModelImpl._originalVersion = syncDLObjectModelImpl._version;
 
@@ -1146,8 +1049,7 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public CacheModel<SyncDLObject> toCacheModel() {
-		SyncDLObjectCacheModel syncDLObjectCacheModel =
-			new SyncDLObjectCacheModel();
+		SyncDLObjectCacheModel syncDLObjectCacheModel = new SyncDLObjectCacheModel();
 
 		syncDLObjectCacheModel.syncDLObjectId = getSyncDLObjectId();
 
@@ -1266,8 +1168,7 @@ public class SyncDLObjectModelImpl
 		Date lastPermissionChangeDate = getLastPermissionChangeDate();
 
 		if (lastPermissionChangeDate != null) {
-			syncDLObjectCacheModel.lastPermissionChangeDate =
-				lastPermissionChangeDate.getTime();
+			syncDLObjectCacheModel.lastPermissionChangeDate = lastPermissionChangeDate.getTime();
 		}
 		else {
 			syncDLObjectCacheModel.lastPermissionChangeDate = Long.MIN_VALUE;
@@ -1276,8 +1177,7 @@ public class SyncDLObjectModelImpl
 		Date lockExpirationDate = getLockExpirationDate();
 
 		if (lockExpirationDate != null) {
-			syncDLObjectCacheModel.lockExpirationDate =
-				lockExpirationDate.getTime();
+			syncDLObjectCacheModel.lockExpirationDate = lockExpirationDate.getTime();
 		}
 		else {
 			syncDLObjectCacheModel.lockExpirationDate = Long.MIN_VALUE;
@@ -1316,20 +1216,16 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SyncDLObject, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SyncDLObject, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SyncDLObject, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SyncDLObject, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1348,22 +1244,18 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SyncDLObject, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SyncDLObject, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SyncDLObject, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SyncDLObject, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1377,12 +1269,10 @@ public class SyncDLObjectModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDLObject.class.getClassLoader();
+	private static final ClassLoader _classLoader = SyncDLObject.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDLObject.class, ModelWrapper.class
-	};
-
+			SyncDLObject.class, ModelWrapper.class
+		};
 	private long _syncDLObjectId;
 	private long _companyId;
 	private long _userId;
@@ -1425,5 +1315,4 @@ public class SyncDLObjectModelImpl
 	private String _typeUuid;
 	private long _columnBitmask;
 	private SyncDLObject _escapedModel;
-
 }

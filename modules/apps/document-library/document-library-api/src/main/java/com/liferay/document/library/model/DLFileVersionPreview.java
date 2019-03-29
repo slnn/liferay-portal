@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLFileVersionPreviewModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.document.library.model.impl.DLFileVersionPreviewImpl"
-)
+@ImplementationClassName("com.liferay.document.library.model.impl.DLFileVersionPreviewImpl")
 @ProviderType
-public interface DLFileVersionPreview
-	extends DLFileVersionPreviewModel, PersistedModel {
-
+public interface DLFileVersionPreview extends DLFileVersionPreviewModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.model.impl.DLFileVersionPreviewImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DLFileVersionPreview, Long>
-		DL_FILE_VERSION_PREVIEW_ID_ACCESSOR =
-			new Accessor<DLFileVersionPreview, Long>() {
+	public static final Accessor<DLFileVersionPreview, Long> DL_FILE_VERSION_PREVIEW_ID_ACCESSOR =
+		new Accessor<DLFileVersionPreview, Long>() {
+			@Override
+			public Long get(DLFileVersionPreview dlFileVersionPreview) {
+				return dlFileVersionPreview.getDlFileVersionPreviewId();
+			}
 
-				@Override
-				public Long get(DLFileVersionPreview dlFileVersionPreview) {
-					return dlFileVersionPreview.getDlFileVersionPreviewId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<DLFileVersionPreview> getTypeClass() {
-					return DLFileVersionPreview.class;
-				}
-
-			};
-
+			@Override
+			public Class<DLFileVersionPreview> getTypeClass() {
+				return DLFileVersionPreview.class;
+			}
+		};
 }

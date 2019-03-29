@@ -32,10 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DLSyncEventWrapper
-	extends BaseModelWrapper<DLSyncEvent>
+public class DLSyncEventWrapper extends BaseModelWrapper<DLSyncEvent>
 	implements DLSyncEvent, ModelWrapper<DLSyncEvent> {
-
 	public DLSyncEventWrapper(DLSyncEvent dlSyncEvent) {
 		super(dlSyncEvent);
 	}
@@ -94,70 +92,70 @@ public class DLSyncEventWrapper
 	}
 
 	/**
-	 * Returns the company ID of this dl sync event.
-	 *
-	 * @return the company ID of this dl sync event
-	 */
+	* Returns the company ID of this dl sync event.
+	*
+	* @return the company ID of this dl sync event
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the event of this dl sync event.
-	 *
-	 * @return the event of this dl sync event
-	 */
+	* Returns the event of this dl sync event.
+	*
+	* @return the event of this dl sync event
+	*/
 	@Override
 	public String getEvent() {
 		return model.getEvent();
 	}
 
 	/**
-	 * Returns the modified time of this dl sync event.
-	 *
-	 * @return the modified time of this dl sync event
-	 */
+	* Returns the modified time of this dl sync event.
+	*
+	* @return the modified time of this dl sync event
+	*/
 	@Override
 	public long getModifiedTime() {
 		return model.getModifiedTime();
 	}
 
 	/**
-	 * Returns the primary key of this dl sync event.
-	 *
-	 * @return the primary key of this dl sync event
-	 */
+	* Returns the primary key of this dl sync event.
+	*
+	* @return the primary key of this dl sync event
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the sync event ID of this dl sync event.
-	 *
-	 * @return the sync event ID of this dl sync event
-	 */
+	* Returns the sync event ID of this dl sync event.
+	*
+	* @return the sync event ID of this dl sync event
+	*/
 	@Override
 	public long getSyncEventId() {
 		return model.getSyncEventId();
 	}
 
 	/**
-	 * Returns the type of this dl sync event.
-	 *
-	 * @return the type of this dl sync event
-	 */
+	* Returns the type of this dl sync event.
+	*
+	* @return the type of this dl sync event
+	*/
 	@Override
 	public String getType() {
 		return model.getType();
 	}
 
 	/**
-	 * Returns the type pk of this dl sync event.
-	 *
-	 * @return the type pk of this dl sync event
-	 */
+	* Returns the type pk of this dl sync event.
+	*
+	* @return the type pk of this dl sync event
+	*/
 	@Override
 	public long getTypePK() {
 		return model.getTypePK();
@@ -169,70 +167,70 @@ public class DLSyncEventWrapper
 	}
 
 	/**
-	 * Sets the company ID of this dl sync event.
-	 *
-	 * @param companyId the company ID of this dl sync event
-	 */
+	* Sets the company ID of this dl sync event.
+	*
+	* @param companyId the company ID of this dl sync event
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the event of this dl sync event.
-	 *
-	 * @param event the event of this dl sync event
-	 */
+	* Sets the event of this dl sync event.
+	*
+	* @param event the event of this dl sync event
+	*/
 	@Override
 	public void setEvent(String event) {
 		model.setEvent(event);
 	}
 
 	/**
-	 * Sets the modified time of this dl sync event.
-	 *
-	 * @param modifiedTime the modified time of this dl sync event
-	 */
+	* Sets the modified time of this dl sync event.
+	*
+	* @param modifiedTime the modified time of this dl sync event
+	*/
 	@Override
 	public void setModifiedTime(long modifiedTime) {
 		model.setModifiedTime(modifiedTime);
 	}
 
 	/**
-	 * Sets the primary key of this dl sync event.
-	 *
-	 * @param primaryKey the primary key of this dl sync event
-	 */
+	* Sets the primary key of this dl sync event.
+	*
+	* @param primaryKey the primary key of this dl sync event
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the sync event ID of this dl sync event.
-	 *
-	 * @param syncEventId the sync event ID of this dl sync event
-	 */
+	* Sets the sync event ID of this dl sync event.
+	*
+	* @param syncEventId the sync event ID of this dl sync event
+	*/
 	@Override
 	public void setSyncEventId(long syncEventId) {
 		model.setSyncEventId(syncEventId);
 	}
 
 	/**
-	 * Sets the type of this dl sync event.
-	 *
-	 * @param type the type of this dl sync event
-	 */
+	* Sets the type of this dl sync event.
+	*
+	* @param type the type of this dl sync event
+	*/
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	 * Sets the type pk of this dl sync event.
-	 *
-	 * @param typePK the type pk of this dl sync event
-	 */
+	* Sets the type pk of this dl sync event.
+	*
+	* @param typePK the type pk of this dl sync event
+	*/
 	@Override
 	public void setTypePK(long typePK) {
 		model.setTypePK(typePK);
@@ -242,5 +240,4 @@ public class DLSyncEventWrapper
 	protected DLSyncEventWrapper wrap(DLSyncEvent dlSyncEvent) {
 		return new DLSyncEventWrapper(dlSyncEvent);
 	}
-
 }

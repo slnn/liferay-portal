@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface CTEntryAggregateModel
-	extends AuditedModel, BaseModel<CTEntryAggregate>, ShardedModel {
-
+public interface CTEntryAggregateModel extends AuditedModel,
+	BaseModel<CTEntryAggregate>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -196,5 +195,4 @@ public interface CTEntryAggregateModel
 	 * @param ownerCTEntryId the owner ct entry ID of this ct entry aggregate
 	 */
 	public void setOwnerCTEntryId(long ownerCTEntryId);
-
 }

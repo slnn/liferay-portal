@@ -27,46 +27,39 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoInstanceTokenModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenImpl")
 @ProviderType
-public interface KaleoInstanceToken
-	extends KaleoInstanceTokenModel, PersistedModel {
-
+public interface KaleoInstanceToken extends KaleoInstanceTokenModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoInstanceToken, Long>
-		KALEO_INSTANCE_TOKEN_ID_ACCESSOR =
-			new Accessor<KaleoInstanceToken, Long>() {
+	public static final Accessor<KaleoInstanceToken, Long> KALEO_INSTANCE_TOKEN_ID_ACCESSOR =
+		new Accessor<KaleoInstanceToken, Long>() {
+			@Override
+			public Long get(KaleoInstanceToken kaleoInstanceToken) {
+				return kaleoInstanceToken.getKaleoInstanceTokenId();
+			}
 
-				@Override
-				public Long get(KaleoInstanceToken kaleoInstanceToken) {
-					return kaleoInstanceToken.getKaleoInstanceTokenId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<KaleoInstanceToken> getTypeClass() {
-					return KaleoInstanceToken.class;
-				}
-
-			};
+			@Override
+			public Class<KaleoInstanceToken> getTypeClass() {
+				return KaleoInstanceToken.class;
+			}
+		};
 
 	public java.util.List<KaleoInstanceToken> getChildrenKaleoInstanceTokens();
 
 	public KaleoNode getCurrentKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<KaleoInstanceToken>
-		getIncompleteChildrenKaleoInstanceTokens();
+	public java.util.List<KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens();
 
 	public KaleoInstance getKaleoInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -78,5 +71,4 @@ public interface KaleoInstanceToken
 
 	public void setCurrentKaleoNode(KaleoNode kaleoNode)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

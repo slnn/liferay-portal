@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface JournalFeedModel
-	extends BaseModel<JournalFeed>, ShardedModel, StagedGroupedModel {
-
+public interface JournalFeedModel extends BaseModel<JournalFeed>, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -424,5 +423,4 @@ public interface JournalFeedModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

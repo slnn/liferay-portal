@@ -32,9 +32,8 @@ import com.liferay.polls.service.PollsVoteLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PollsVoteBaseImpl
-	extends PollsVoteModelImpl implements PollsVote {
-
+public abstract class PollsVoteBaseImpl extends PollsVoteModelImpl
+	implements PollsVote {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class PollsVoteBaseImpl
 			PollsVoteLocalServiceUtil.updatePollsVote(this);
 		}
 	}
-
 }

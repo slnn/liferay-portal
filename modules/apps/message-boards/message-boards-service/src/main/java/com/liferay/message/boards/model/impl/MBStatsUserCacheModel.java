@@ -17,8 +17,10 @@ package com.liferay.message.boards.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBStatsUser;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class MBStatsUserCacheModel
-	implements CacheModel<MBStatsUser>, Externalizable {
-
+public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class MBStatsUserCacheModel
 			return false;
 		}
 
-		MBStatsUserCacheModel mbStatsUserCacheModel =
-			(MBStatsUserCacheModel)obj;
+		MBStatsUserCacheModel mbStatsUserCacheModel = (MBStatsUserCacheModel)obj;
 
 		if (statsUserId == mbStatsUserCacheModel.statsUserId) {
 			return true;
@@ -121,7 +121,8 @@ public class MBStatsUserCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(statsUserId);
 
 		objectOutput.writeLong(groupId);
@@ -140,5 +141,4 @@ public class MBStatsUserCacheModel
 	public long userId;
 	public int messageCount;
 	public long lastPostDate;
-
 }

@@ -32,9 +32,8 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CalendarResourceBaseImpl
-	extends CalendarResourceModelImpl implements CalendarResource {
-
+public abstract class CalendarResourceBaseImpl extends CalendarResourceModelImpl
+	implements CalendarResource {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class CalendarResourceBaseImpl
 			CalendarResourceLocalServiceUtil.updateCalendarResource(this);
 		}
 	}
-
 }

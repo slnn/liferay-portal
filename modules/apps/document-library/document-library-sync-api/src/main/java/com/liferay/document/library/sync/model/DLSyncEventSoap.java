@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class DLSyncEventSoap implements Serializable {
-
 	public static DLSyncEventSoap toSoapModel(DLSyncEvent model) {
 		DLSyncEventSoap soapModel = new DLSyncEventSoap();
 
@@ -71,8 +70,7 @@ public class DLSyncEventSoap implements Serializable {
 	}
 
 	public static DLSyncEventSoap[] toSoapModels(List<DLSyncEvent> models) {
-		List<DLSyncEventSoap> soapModels = new ArrayList<DLSyncEventSoap>(
-			models.size());
+		List<DLSyncEventSoap> soapModels = new ArrayList<DLSyncEventSoap>(models.size());
 
 		for (DLSyncEvent model : models) {
 			soapModels.add(toSoapModel(model));
@@ -146,5 +144,4 @@ public class DLSyncEventSoap implements Serializable {
 	private String _event;
 	private String _type;
 	private long _typePK;
-
 }

@@ -17,15 +17,17 @@ package com.liferay.message.boards.uad.display;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the MBMessage UAD display.
@@ -39,18 +41,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseMBMessageUADDisplay
-	extends BaseModelUADDisplay<MBMessage> {
-
+public abstract class BaseMBMessageUADDisplay extends BaseModelUADDisplay<MBMessage> {
 	@Override
 	public MBMessage get(Serializable primaryKey) throws PortalException {
-		return mbMessageLocalService.getMBMessage(
-			Long.valueOf(primaryKey.toString()));
+		return mbMessageLocalService.getMBMessage(Long.valueOf(
+				primaryKey.toString()));
 	}
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"subject", "body"};
+		return new String[] { "subject", "body" };
 	}
 
 	@Override
@@ -69,9 +69,8 @@ public abstract class BaseMBMessageUADDisplay
 	}
 
 	@Override
-	protected List<MBMessage> doGetRange(
-		DynamicQuery dynamicQuery, int start, int end) {
-
+	protected List<MBMessage> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return mbMessageLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -82,5 +81,4 @@ public abstract class BaseMBMessageUADDisplay
 
 	@Reference
 	protected MBMessageLocalService mbMessageLocalService;
-
 }

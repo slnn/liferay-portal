@@ -22,10 +22,7 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface BackgroundTaskFinder {
-
-	public java.util.List
-		<com.liferay.portal.background.task.model.BackgroundTask> findByG_T_C(
-			long[] groupIds, String[] taskExecutorClassNames, Boolean completed,
-			int start, int end, boolean orderByType);
-
+	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> findByG_T_C(
+		long[] groupIds, String[] taskExecutorClassNames, Boolean completed,
+		int start, int end, boolean orderByType);
 }

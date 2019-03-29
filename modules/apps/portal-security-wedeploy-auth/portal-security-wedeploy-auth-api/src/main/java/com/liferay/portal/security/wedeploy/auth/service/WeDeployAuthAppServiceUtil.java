@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,37 +35,29 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class WeDeployAuthAppServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp
-				addWeDeployAuthApp(
-					String name, String redirectURI,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addWeDeployAuthApp(
-			name, redirectURI, serviceContext);
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
+		String name, String redirectURI,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addWeDeployAuthApp(name, redirectURI, serviceContext);
 	}
 
-	public static
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp
-				deleteWeDeployAuthApp(long weDeployAuthAppId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp deleteWeDeployAuthApp(
+		long weDeployAuthAppId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWeDeployAuthApp(weDeployAuthAppId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -73,22 +66,17 @@ public class WeDeployAuthAppServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<WeDeployAuthAppService, WeDeployAuthAppService> _serviceTracker;
+	private static ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WeDeployAuthAppService.class);
 
-		ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService>
-			serviceTracker =
-				new ServiceTracker
-					<WeDeployAuthAppService, WeDeployAuthAppService>(
-						bundle.getBundleContext(), WeDeployAuthAppService.class,
-						null);
+		ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService> serviceTracker =
+			new ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService>(bundle.getBundleContext(),
+				WeDeployAuthAppService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

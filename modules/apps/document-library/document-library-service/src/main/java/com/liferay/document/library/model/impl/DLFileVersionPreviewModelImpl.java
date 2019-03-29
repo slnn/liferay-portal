@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.model.DLFileVersionPreviewModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -52,25 +55,22 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class DLFileVersionPreviewModelImpl
-	extends BaseModelImpl<DLFileVersionPreview>
+public class DLFileVersionPreviewModelImpl extends BaseModelImpl<DLFileVersionPreview>
 	implements DLFileVersionPreviewModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a dl file version preview model instance should use the <code>DLFileVersionPreview</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFileVersionPreview";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"dlFileVersionPreviewId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"fileEntryId", Types.BIGINT}, {"fileVersionId", Types.BIGINT},
-		{"previewStatus", Types.INTEGER}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "dlFileVersionPreviewId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "fileEntryId", Types.BIGINT },
+			{ "fileVersionId", Types.BIGINT },
+			{ "previewStatus", Types.INTEGER }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("dlFileVersionPreviewId", Types.BIGINT);
@@ -80,50 +80,28 @@ public class DLFileVersionPreviewModelImpl
 		TABLE_COLUMNS_MAP.put("previewStatus", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table DLFileVersionPreview (dlFileVersionPreviewId LONG not null primary key,groupId LONG,fileEntryId LONG,fileVersionId LONG,previewStatus INTEGER)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table DLFileVersionPreview";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY dlFileVersionPreview.dlFileVersionPreviewId DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY DLFileVersionPreview.dlFileVersionPreviewId DESC";
-
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersionPreview (dlFileVersionPreviewId LONG not null primary key,groupId LONG,fileEntryId LONG,fileVersionId LONG,previewStatus INTEGER)";
+	public static final String TABLE_SQL_DROP = "drop table DLFileVersionPreview";
+	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersionPreview.dlFileVersionPreviewId DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersionPreview.dlFileVersionPreviewId DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.document.library.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.document.library.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.document.library.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
+			true);
 	public static final long FILEENTRYID_COLUMN_BITMASK = 1L;
-
 	public static final long FILEVERSIONID_COLUMN_BITMASK = 2L;
-
 	public static final long PREVIEWSTATUS_COLUMN_BITMASK = 4L;
-
 	public static final long DLFILEVERSIONPREVIEWID_COLUMN_BITMASK = 8L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.document.library.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.document.library.model.DLFileVersionPreview"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.document.library.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.document.library.model.DLFileVersionPreview"));
 
 	public DLFileVersionPreviewModelImpl() {
 	}
@@ -162,18 +140,14 @@ public class DLFileVersionPreviewModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DLFileVersionPreview, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLFileVersionPreview, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DLFileVersionPreview, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DLFileVersionPreview, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DLFileVersionPreview, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DLFileVersionPreview, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((DLFileVersionPreview)this));
 		}
 
@@ -185,85 +159,53 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DLFileVersionPreview, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DLFileVersionPreview, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DLFileVersionPreview, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<DLFileVersionPreview, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(DLFileVersionPreview)this, entry.getValue());
+				attributeSetterBiConsumer.accept((DLFileVersionPreview)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DLFileVersionPreview, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<DLFileVersionPreview, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DLFileVersionPreview, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<DLFileVersionPreview, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DLFileVersionPreview, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DLFileVersionPreview, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<DLFileVersionPreview, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DLFileVersionPreview, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DLFileVersionPreview, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<DLFileVersionPreview, Object>>();
-		Map<String, BiConsumer<DLFileVersionPreview, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<DLFileVersionPreview, ?>>();
+		Map<String, Function<DLFileVersionPreview, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DLFileVersionPreview, Object>>();
+		Map<String, BiConsumer<DLFileVersionPreview, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DLFileVersionPreview, ?>>();
 
-		attributeGetterFunctions.put(
-			"dlFileVersionPreviewId",
-			DLFileVersionPreview::getDlFileVersionPreviewId);
-		attributeSetterBiConsumers.put(
-			"dlFileVersionPreviewId",
-			(BiConsumer<DLFileVersionPreview, Long>)
-				DLFileVersionPreview::setDlFileVersionPreviewId);
-		attributeGetterFunctions.put(
-			"groupId", DLFileVersionPreview::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<DLFileVersionPreview, Long>)
-				DLFileVersionPreview::setGroupId);
-		attributeGetterFunctions.put(
-			"fileEntryId", DLFileVersionPreview::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<DLFileVersionPreview, Long>)
-				DLFileVersionPreview::setFileEntryId);
-		attributeGetterFunctions.put(
-			"fileVersionId", DLFileVersionPreview::getFileVersionId);
-		attributeSetterBiConsumers.put(
-			"fileVersionId",
-			(BiConsumer<DLFileVersionPreview, Long>)
-				DLFileVersionPreview::setFileVersionId);
-		attributeGetterFunctions.put(
-			"previewStatus", DLFileVersionPreview::getPreviewStatus);
-		attributeSetterBiConsumers.put(
-			"previewStatus",
-			(BiConsumer<DLFileVersionPreview, Integer>)
-				DLFileVersionPreview::setPreviewStatus);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+		attributeGetterFunctions.put("dlFileVersionPreviewId", DLFileVersionPreview::getDlFileVersionPreviewId);
+		attributeSetterBiConsumers.put("dlFileVersionPreviewId", (BiConsumer<DLFileVersionPreview, Long>)DLFileVersionPreview::setDlFileVersionPreviewId);
+		attributeGetterFunctions.put("groupId", DLFileVersionPreview::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DLFileVersionPreview, Long>)DLFileVersionPreview::setGroupId);
+		attributeGetterFunctions.put("fileEntryId", DLFileVersionPreview::getFileEntryId);
+		attributeSetterBiConsumers.put("fileEntryId", (BiConsumer<DLFileVersionPreview, Long>)DLFileVersionPreview::setFileEntryId);
+		attributeGetterFunctions.put("fileVersionId", DLFileVersionPreview::getFileVersionId);
+		attributeSetterBiConsumers.put("fileVersionId", (BiConsumer<DLFileVersionPreview, Long>)DLFileVersionPreview::setFileVersionId);
+		attributeGetterFunctions.put("previewStatus", DLFileVersionPreview::getPreviewStatus);
+		attributeSetterBiConsumers.put("previewStatus", (BiConsumer<DLFileVersionPreview, Integer>)DLFileVersionPreview::setPreviewStatus);
+
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -360,8 +302,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, DLFileVersionPreview.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			DLFileVersionPreview.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -374,9 +316,8 @@ public class DLFileVersionPreviewModelImpl
 	@Override
 	public DLFileVersionPreview toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileVersionPreview)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (DLFileVersionPreview)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -384,11 +325,9 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public Object clone() {
-		DLFileVersionPreviewImpl dlFileVersionPreviewImpl =
-			new DLFileVersionPreviewImpl();
+		DLFileVersionPreviewImpl dlFileVersionPreviewImpl = new DLFileVersionPreviewImpl();
 
-		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
-			getDlFileVersionPreviewId());
+		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(getDlFileVersionPreviewId());
 		dlFileVersionPreviewImpl.setGroupId(getGroupId());
 		dlFileVersionPreviewImpl.setFileEntryId(getFileEntryId());
 		dlFileVersionPreviewImpl.setFileVersionId(getFileVersionId());
@@ -403,14 +342,10 @@ public class DLFileVersionPreviewModelImpl
 	public int compareTo(DLFileVersionPreview dlFileVersionPreview) {
 		int value = 0;
 
-		if (getDlFileVersionPreviewId() <
-				dlFileVersionPreview.getDlFileVersionPreviewId()) {
-
+		if (getDlFileVersionPreviewId() < dlFileVersionPreview.getDlFileVersionPreviewId()) {
 			value = -1;
 		}
-		else if (getDlFileVersionPreviewId() >
-					dlFileVersionPreview.getDlFileVersionPreviewId()) {
-
+		else if (getDlFileVersionPreviewId() > dlFileVersionPreview.getDlFileVersionPreviewId()) {
 			value = 1;
 		}
 		else {
@@ -467,18 +402,15 @@ public class DLFileVersionPreviewModelImpl
 	public void resetOriginalValues() {
 		DLFileVersionPreviewModelImpl dlFileVersionPreviewModelImpl = this;
 
-		dlFileVersionPreviewModelImpl._originalFileEntryId =
-			dlFileVersionPreviewModelImpl._fileEntryId;
+		dlFileVersionPreviewModelImpl._originalFileEntryId = dlFileVersionPreviewModelImpl._fileEntryId;
 
 		dlFileVersionPreviewModelImpl._setOriginalFileEntryId = false;
 
-		dlFileVersionPreviewModelImpl._originalFileVersionId =
-			dlFileVersionPreviewModelImpl._fileVersionId;
+		dlFileVersionPreviewModelImpl._originalFileVersionId = dlFileVersionPreviewModelImpl._fileVersionId;
 
 		dlFileVersionPreviewModelImpl._setOriginalFileVersionId = false;
 
-		dlFileVersionPreviewModelImpl._originalPreviewStatus =
-			dlFileVersionPreviewModelImpl._previewStatus;
+		dlFileVersionPreviewModelImpl._originalPreviewStatus = dlFileVersionPreviewModelImpl._previewStatus;
 
 		dlFileVersionPreviewModelImpl._setOriginalPreviewStatus = false;
 
@@ -487,11 +419,9 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public CacheModel<DLFileVersionPreview> toCacheModel() {
-		DLFileVersionPreviewCacheModel dlFileVersionPreviewCacheModel =
-			new DLFileVersionPreviewCacheModel();
+		DLFileVersionPreviewCacheModel dlFileVersionPreviewCacheModel = new DLFileVersionPreviewCacheModel();
 
-		dlFileVersionPreviewCacheModel.dlFileVersionPreviewId =
-			getDlFileVersionPreviewId();
+		dlFileVersionPreviewCacheModel.dlFileVersionPreviewId = getDlFileVersionPreviewId();
 
 		dlFileVersionPreviewCacheModel.groupId = getGroupId();
 
@@ -506,25 +436,21 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<DLFileVersionPreview, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLFileVersionPreview, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DLFileVersionPreview, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DLFileVersionPreview, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DLFileVersionPreview, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DLFileVersionPreview, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply((DLFileVersionPreview)this));
+			sb.append(attributeGetterFunction.apply((DLFileVersionPreview)this));
 			sb.append(", ");
 		}
 
@@ -539,28 +465,24 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DLFileVersionPreview, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLFileVersionPreview, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DLFileVersionPreview, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DLFileVersionPreview, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DLFileVersionPreview, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DLFileVersionPreview, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply((DLFileVersionPreview)this));
+			sb.append(attributeGetterFunction.apply((DLFileVersionPreview)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -569,12 +491,10 @@ public class DLFileVersionPreviewModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileVersionPreview.class.getClassLoader();
+	private static final ClassLoader _classLoader = DLFileVersionPreview.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileVersionPreview.class, ModelWrapper.class
-	};
-
+			DLFileVersionPreview.class, ModelWrapper.class
+		};
 	private long _dlFileVersionPreviewId;
 	private long _groupId;
 	private long _fileEntryId;
@@ -588,5 +508,4 @@ public class DLFileVersionPreviewModelImpl
 	private boolean _setOriginalPreviewStatus;
 	private long _columnBitmask;
 	private DLFileVersionPreview _escapedModel;
-
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,25 +35,23 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class PollsVoteServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.polls.service.impl.PollsVoteServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.polls.model.PollsVote addVote(
-			long questionId, long choiceId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.polls.model.PollsVote addVote(long questionId,
+		long choiceId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().addVote(questionId, choiceId, serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -61,19 +60,16 @@ public class PollsVoteServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PollsVoteService, PollsVoteService>
-		_serviceTracker;
+	private static ServiceTracker<PollsVoteService, PollsVoteService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(PollsVoteService.class);
 
-		ServiceTracker<PollsVoteService, PollsVoteService> serviceTracker =
-			new ServiceTracker<PollsVoteService, PollsVoteService>(
-				bundle.getBundleContext(), PollsVoteService.class, null);
+		ServiceTracker<PollsVoteService, PollsVoteService> serviceTracker = new ServiceTracker<PollsVoteService, PollsVoteService>(bundle.getBundleContext(),
+				PollsVoteService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

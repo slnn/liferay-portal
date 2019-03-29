@@ -22,11 +22,8 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface DLFileRankFinder {
-
 	public java.util.List<Object[]> findByStaleRanks(int count);
 
-	public java.util.List
-		<com.liferay.document.library.file.rank.model.DLFileRank>
-			findByFolderId(long folderId);
-
+	public java.util.List<com.liferay.document.library.file.rank.model.DLFileRank> findByFolderId(
+		long folderId);
 }

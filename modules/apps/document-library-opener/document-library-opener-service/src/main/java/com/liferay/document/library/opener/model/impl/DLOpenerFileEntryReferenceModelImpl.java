@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReferenceModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,28 +59,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class DLOpenerFileEntryReferenceModelImpl
-	extends BaseModelImpl<DLOpenerFileEntryReference>
+public class DLOpenerFileEntryReferenceModelImpl extends BaseModelImpl<DLOpenerFileEntryReference>
 	implements DLOpenerFileEntryReferenceModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a dl opener file entry reference model instance should use the <code>DLOpenerFileEntryReference</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DLOpenerFileEntryReference";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"dlOpenerFileEntryReferenceId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"referenceKey", Types.VARCHAR}, {"fileEntryId", Types.BIGINT},
-		{"type_", Types.INTEGER}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "dlOpenerFileEntryReferenceId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "referenceKey", Types.VARCHAR },
+			{ "fileEntryId", Types.BIGINT },
+			{ "type_", Types.INTEGER }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("dlOpenerFileEntryReferenceId", Types.BIGINT);
@@ -92,46 +94,26 @@ public class DLOpenerFileEntryReferenceModelImpl
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table DLOpenerFileEntryReference (dlOpenerFileEntryReferenceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,referenceKey VARCHAR(75) null,fileEntryId LONG,type_ INTEGER)";
-
-	public static final String TABLE_SQL_DROP =
-		"drop table DLOpenerFileEntryReference";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY dlOpenerFileEntryReference.dlOpenerFileEntryReferenceId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY DLOpenerFileEntryReference.dlOpenerFileEntryReferenceId ASC";
-
+	public static final String TABLE_SQL_CREATE = "create table DLOpenerFileEntryReference (dlOpenerFileEntryReferenceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,referenceKey VARCHAR(75) null,fileEntryId LONG,type_ INTEGER)";
+	public static final String TABLE_SQL_DROP = "drop table DLOpenerFileEntryReference";
+	public static final String ORDER_BY_JPQL = " ORDER BY dlOpenerFileEntryReference.dlOpenerFileEntryReferenceId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DLOpenerFileEntryReference.dlOpenerFileEntryReferenceId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.opener.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.opener.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.opener.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.document.library.opener.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.document.library.opener.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.document.library.opener.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"),
+			true);
 	public static final long FILEENTRYID_COLUMN_BITMASK = 1L;
-
 	public static final long DLOPENERFILEENTRYREFERENCEID_COLUMN_BITMASK = 2L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.document.library.opener.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.document.library.opener.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.document.library.opener.model.DLOpenerFileEntryReference"));
 
 	public DLOpenerFileEntryReferenceModelImpl() {
 	}
@@ -170,20 +152,16 @@ public class DLOpenerFileEntryReferenceModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DLOpenerFileEntryReference, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLOpenerFileEntryReference, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DLOpenerFileEntryReference, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DLOpenerFileEntryReference, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DLOpenerFileEntryReference, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<DLOpenerFileEntryReference, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(
-				attributeName,
-				attributeGetterFunction.apply(
-					(DLOpenerFileEntryReference)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((DLOpenerFileEntryReference)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -194,118 +172,64 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DLOpenerFileEntryReference, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DLOpenerFileEntryReference, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DLOpenerFileEntryReference, Object>
-				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
-					attributeName);
+			BiConsumer<DLOpenerFileEntryReference, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(DLOpenerFileEntryReference)this, entry.getValue());
+				attributeSetterBiConsumer.accept((DLOpenerFileEntryReference)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DLOpenerFileEntryReference, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<DLOpenerFileEntryReference, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DLOpenerFileEntryReference, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<DLOpenerFileEntryReference, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<DLOpenerFileEntryReference, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<DLOpenerFileEntryReference, Object>>
-			_attributeSetterBiConsumers;
+	private static final Map<String, Function<DLOpenerFileEntryReference, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DLOpenerFileEntryReference, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DLOpenerFileEntryReference, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<DLOpenerFileEntryReference, Object>>();
-		Map<String, BiConsumer<DLOpenerFileEntryReference, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<DLOpenerFileEntryReference, ?>>();
+		Map<String, Function<DLOpenerFileEntryReference, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DLOpenerFileEntryReference, Object>>();
+		Map<String, BiConsumer<DLOpenerFileEntryReference, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DLOpenerFileEntryReference, ?>>();
 
-		attributeGetterFunctions.put(
-			"dlOpenerFileEntryReferenceId",
-			DLOpenerFileEntryReference::getDlOpenerFileEntryReferenceId);
-		attributeSetterBiConsumers.put(
-			"dlOpenerFileEntryReferenceId",
-			(BiConsumer<DLOpenerFileEntryReference, Long>)
-				DLOpenerFileEntryReference::setDlOpenerFileEntryReferenceId);
-		attributeGetterFunctions.put(
-			"groupId", DLOpenerFileEntryReference::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<DLOpenerFileEntryReference, Long>)
-				DLOpenerFileEntryReference::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", DLOpenerFileEntryReference::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DLOpenerFileEntryReference, Long>)
-				DLOpenerFileEntryReference::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", DLOpenerFileEntryReference::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DLOpenerFileEntryReference, Long>)
-				DLOpenerFileEntryReference::setUserId);
-		attributeGetterFunctions.put(
-			"userName", DLOpenerFileEntryReference::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DLOpenerFileEntryReference, String>)
-				DLOpenerFileEntryReference::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DLOpenerFileEntryReference::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DLOpenerFileEntryReference, Date>)
-				DLOpenerFileEntryReference::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DLOpenerFileEntryReference::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DLOpenerFileEntryReference, Date>)
-				DLOpenerFileEntryReference::setModifiedDate);
-		attributeGetterFunctions.put(
-			"referenceKey", DLOpenerFileEntryReference::getReferenceKey);
-		attributeSetterBiConsumers.put(
-			"referenceKey",
-			(BiConsumer<DLOpenerFileEntryReference, String>)
-				DLOpenerFileEntryReference::setReferenceKey);
-		attributeGetterFunctions.put(
-			"fileEntryId", DLOpenerFileEntryReference::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<DLOpenerFileEntryReference, Long>)
-				DLOpenerFileEntryReference::setFileEntryId);
-		attributeGetterFunctions.put(
-			"type", DLOpenerFileEntryReference::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<DLOpenerFileEntryReference, Integer>)
-				DLOpenerFileEntryReference::setType);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+		attributeGetterFunctions.put("dlOpenerFileEntryReferenceId", DLOpenerFileEntryReference::getDlOpenerFileEntryReferenceId);
+		attributeSetterBiConsumers.put("dlOpenerFileEntryReferenceId", (BiConsumer<DLOpenerFileEntryReference, Long>)DLOpenerFileEntryReference::setDlOpenerFileEntryReferenceId);
+		attributeGetterFunctions.put("groupId", DLOpenerFileEntryReference::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DLOpenerFileEntryReference, Long>)DLOpenerFileEntryReference::setGroupId);
+		attributeGetterFunctions.put("companyId", DLOpenerFileEntryReference::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DLOpenerFileEntryReference, Long>)DLOpenerFileEntryReference::setCompanyId);
+		attributeGetterFunctions.put("userId", DLOpenerFileEntryReference::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DLOpenerFileEntryReference, Long>)DLOpenerFileEntryReference::setUserId);
+		attributeGetterFunctions.put("userName", DLOpenerFileEntryReference::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DLOpenerFileEntryReference, String>)DLOpenerFileEntryReference::setUserName);
+		attributeGetterFunctions.put("createDate", DLOpenerFileEntryReference::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DLOpenerFileEntryReference, Date>)DLOpenerFileEntryReference::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", DLOpenerFileEntryReference::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DLOpenerFileEntryReference, Date>)DLOpenerFileEntryReference::setModifiedDate);
+		attributeGetterFunctions.put("referenceKey", DLOpenerFileEntryReference::getReferenceKey);
+		attributeSetterBiConsumers.put("referenceKey", (BiConsumer<DLOpenerFileEntryReference, String>)DLOpenerFileEntryReference::setReferenceKey);
+		attributeGetterFunctions.put("fileEntryId", DLOpenerFileEntryReference::getFileEntryId);
+		attributeSetterBiConsumers.put("fileEntryId", (BiConsumer<DLOpenerFileEntryReference, Long>)DLOpenerFileEntryReference::setFileEntryId);
+		attributeGetterFunctions.put("type", DLOpenerFileEntryReference::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<DLOpenerFileEntryReference, Integer>)DLOpenerFileEntryReference::setType);
+
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -316,7 +240,6 @@ public class DLOpenerFileEntryReferenceModelImpl
 	@Override
 	public void setDlOpenerFileEntryReferenceId(
 		long dlOpenerFileEntryReferenceId) {
-
 		_dlOpenerFileEntryReferenceId = dlOpenerFileEntryReferenceId;
 	}
 
@@ -460,9 +383,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), DLOpenerFileEntryReference.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DLOpenerFileEntryReference.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -475,10 +397,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 	@Override
 	public DLOpenerFileEntryReference toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(DLOpenerFileEntryReference)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = (DLOpenerFileEntryReference)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -486,11 +406,9 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public Object clone() {
-		DLOpenerFileEntryReferenceImpl dlOpenerFileEntryReferenceImpl =
-			new DLOpenerFileEntryReferenceImpl();
+		DLOpenerFileEntryReferenceImpl dlOpenerFileEntryReferenceImpl = new DLOpenerFileEntryReferenceImpl();
 
-		dlOpenerFileEntryReferenceImpl.setDlOpenerFileEntryReferenceId(
-			getDlOpenerFileEntryReferenceId());
+		dlOpenerFileEntryReferenceImpl.setDlOpenerFileEntryReferenceId(getDlOpenerFileEntryReferenceId());
 		dlOpenerFileEntryReferenceImpl.setGroupId(getGroupId());
 		dlOpenerFileEntryReferenceImpl.setCompanyId(getCompanyId());
 		dlOpenerFileEntryReferenceImpl.setUserId(getUserId());
@@ -507,9 +425,7 @@ public class DLOpenerFileEntryReferenceModelImpl
 	}
 
 	@Override
-	public int compareTo(
-		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
+	public int compareTo(DLOpenerFileEntryReference dlOpenerFileEntryReference) {
 		long primaryKey = dlOpenerFileEntryReference.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
@@ -533,8 +449,7 @@ public class DLOpenerFileEntryReferenceModelImpl
 			return false;
 		}
 
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			(DLOpenerFileEntryReference)obj;
+		DLOpenerFileEntryReference dlOpenerFileEntryReference = (DLOpenerFileEntryReference)obj;
 
 		long primaryKey = dlOpenerFileEntryReference.getPrimaryKey();
 
@@ -563,13 +478,11 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		DLOpenerFileEntryReferenceModelImpl
-			dlOpenerFileEntryReferenceModelImpl = this;
+		DLOpenerFileEntryReferenceModelImpl dlOpenerFileEntryReferenceModelImpl = this;
 
 		dlOpenerFileEntryReferenceModelImpl._setModifiedDate = false;
 
-		dlOpenerFileEntryReferenceModelImpl._originalFileEntryId =
-			dlOpenerFileEntryReferenceModelImpl._fileEntryId;
+		dlOpenerFileEntryReferenceModelImpl._originalFileEntryId = dlOpenerFileEntryReferenceModelImpl._fileEntryId;
 
 		dlOpenerFileEntryReferenceModelImpl._setOriginalFileEntryId = false;
 
@@ -578,12 +491,10 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public CacheModel<DLOpenerFileEntryReference> toCacheModel() {
-		DLOpenerFileEntryReferenceCacheModel
-			dlOpenerFileEntryReferenceCacheModel =
-				new DLOpenerFileEntryReferenceCacheModel();
+		DLOpenerFileEntryReferenceCacheModel dlOpenerFileEntryReferenceCacheModel =
+			new DLOpenerFileEntryReferenceCacheModel();
 
-		dlOpenerFileEntryReferenceCacheModel.dlOpenerFileEntryReferenceId =
-			getDlOpenerFileEntryReferenceId();
+		dlOpenerFileEntryReferenceCacheModel.dlOpenerFileEntryReferenceId = getDlOpenerFileEntryReferenceId();
 
 		dlOpenerFileEntryReferenceCacheModel.groupId = getGroupId();
 
@@ -602,8 +513,7 @@ public class DLOpenerFileEntryReferenceModelImpl
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
-			dlOpenerFileEntryReferenceCacheModel.createDate =
-				createDate.getTime();
+			dlOpenerFileEntryReferenceCacheModel.createDate = createDate.getTime();
 		}
 		else {
 			dlOpenerFileEntryReferenceCacheModel.createDate = Long.MIN_VALUE;
@@ -612,8 +522,7 @@ public class DLOpenerFileEntryReferenceModelImpl
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
-			dlOpenerFileEntryReferenceCacheModel.modifiedDate =
-				modifiedDate.getTime();
+			dlOpenerFileEntryReferenceCacheModel.modifiedDate = modifiedDate.getTime();
 		}
 		else {
 			dlOpenerFileEntryReferenceCacheModel.modifiedDate = Long.MIN_VALUE;
@@ -636,25 +545,22 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<DLOpenerFileEntryReference, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLOpenerFileEntryReference, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DLOpenerFileEntryReference, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DLOpenerFileEntryReference, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DLOpenerFileEntryReference, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<DLOpenerFileEntryReference, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply(
+			sb.append(attributeGetterFunction.apply(
 					(DLOpenerFileEntryReference)this));
 			sb.append(", ");
 		}
@@ -670,28 +576,25 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DLOpenerFileEntryReference, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLOpenerFileEntryReference, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DLOpenerFileEntryReference, Object>>
-				entry : attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DLOpenerFileEntryReference, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DLOpenerFileEntryReference, Object>
-				attributeGetterFunction = entry.getValue();
+			Function<DLOpenerFileEntryReference, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply(
+			sb.append(attributeGetterFunction.apply(
 					(DLOpenerFileEntryReference)this));
 			sb.append("]]></column-value></column>");
 		}
@@ -701,12 +604,10 @@ public class DLOpenerFileEntryReferenceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLOpenerFileEntryReference.class.getClassLoader();
+	private static final ClassLoader _classLoader = DLOpenerFileEntryReference.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLOpenerFileEntryReference.class, ModelWrapper.class
-	};
-
+			DLOpenerFileEntryReference.class, ModelWrapper.class
+		};
 	private long _dlOpenerFileEntryReferenceId;
 	private long _groupId;
 	private long _companyId;
@@ -722,5 +623,4 @@ public class DLOpenerFileEntryReferenceModelImpl
 	private int _type;
 	private long _columnBitmask;
 	private DLOpenerFileEntryReference _escapedModel;
-
 }

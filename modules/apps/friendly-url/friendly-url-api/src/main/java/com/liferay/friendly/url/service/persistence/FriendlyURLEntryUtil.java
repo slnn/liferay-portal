@@ -17,19 +17,21 @@ package com.liferay.friendly.url.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the friendly url entry service. This utility wraps <code>com.liferay.friendly.url.service.persistence.impl.FriendlyURLEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -44,7 +46,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class FriendlyURLEntryUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,7 +78,6 @@ public class FriendlyURLEntryUtil {
 	 */
 	public static Map<Serializable, FriendlyURLEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -86,7 +86,6 @@ public class FriendlyURLEntryUtil {
 	 */
 	public static List<FriendlyURLEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
-
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -95,7 +94,6 @@ public class FriendlyURLEntryUtil {
 	 */
 	public static List<FriendlyURLEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
-
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -105,9 +103,9 @@ public class FriendlyURLEntryUtil {
 	public static List<FriendlyURLEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -120,789 +118,738 @@ public class FriendlyURLEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
-	public static FriendlyURLEntry update(
-		FriendlyURLEntry friendlyURLEntry, ServiceContext serviceContext) {
-
+	public static FriendlyURLEntry update(FriendlyURLEntry friendlyURLEntry,
+		ServiceContext serviceContext) {
 		return getPersistence().update(friendlyURLEntry, serviceContext);
 	}
 
 	/**
-	 * Returns all the friendly url entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching friendly url entries
-	 */
+	* Returns all the friendly url entries where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching friendly url entries
+	*/
 	public static List<FriendlyURLEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
 	/**
-	 * Returns a range of all the friendly url entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid(
-		String uuid, int start, int end) {
-
+	* Returns a range of all the friendly url entries where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @return the range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
+	* Returns an ordered range of all the friendly url entries where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<FriendlyURLEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
+	* Returns an ordered range of all the friendly url entries where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid(String uuid, int start,
+		int end, OrderByComparator<FriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	 * Returns the first friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByUuid_First(
-			String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
+	* Returns the first friendly url entry in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry findByUuid_First(String uuid,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
 	/**
-	 * Returns the first friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUuid_First(
-		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
+	* Returns the first friendly url entry in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByUuid_First(String uuid,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByUuid_Last(
-			String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
+	* Returns the last friendly url entry in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry findByUuid_Last(String uuid,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
+	* Returns the last friendly url entry in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByUuid_Last(String uuid,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
 	/**
-	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param friendlyURLEntryId the primary key of the current friendly url entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
+	* Returns the friendly url entries before and after the current friendly url entry in the ordered set where uuid = &#63;.
+	*
+	* @param friendlyURLEntryId the primary key of the current friendly url entry
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	*/
 	public static FriendlyURLEntry[] findByUuid_PrevAndNext(
-			long friendlyURLEntryId, String uuid,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			friendlyURLEntryId, uuid, orderByComparator);
+		long friendlyURLEntryId, String uuid,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByUuid_PrevAndNext(friendlyURLEntryId, uuid,
+			orderByComparator);
 	}
 
 	/**
-	 * Removes all the friendly url entries where uuid = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 */
+	* Removes all the friendly url entries where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
 	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
 	/**
-	 * Returns the number of friendly url entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the number of matching friendly url entries
-	 */
+	* Returns the number of friendly url entries where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching friendly url entries
+	*/
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
 	/**
-	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFriendlyURLEntryException</code> if it could not be found.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
+	* Returns the friendly url entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFriendlyURLEntryException</code> if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
 	public static FriendlyURLEntry findByUUID_G(String uuid, long groupId)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
 	/**
-	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
+	* Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
 	public static FriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
-	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUUID_G(
-		String uuid, long groupId, boolean retrieveFromCache) {
-
+	* Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the friendly url entry where uuid = &#63; and groupId = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the friendly url entry that was removed
-	 */
+	* Removes the friendly url entry where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the friendly url entry that was removed
+	*/
 	public static FriendlyURLEntry removeByUUID_G(String uuid, long groupId)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
-	 * Returns the number of friendly url entries where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the number of matching friendly url entries
-	 */
+	* Returns the number of friendly url entries where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching friendly url entries
+	*/
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**
-	 * Returns all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId) {
-
+	* Returns all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
 	/**
-	 * Returns a range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
+	* Returns a range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @return the range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
+	* Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
+	* Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<FriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	 * Returns the first friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByUuid_C_First(
-			String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByUuid_C_First(
-			uuid, companyId, orderByComparator);
+	* Returns the first friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry findByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
+	* Returns the first friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByUuid_C_Last(
-			String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByUuid_C_Last(
-			uuid, companyId, orderByComparator);
+	* Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry findByUuid_C_Last(String uuid,
+		long companyId, OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUuid_C_Last(
-		String uuid, long companyId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByUuid_C_Last(
-			uuid, companyId, orderByComparator);
+	* Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByUuid_C_Last(String uuid,
+		long companyId, OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param friendlyURLEntryId the primary key of the current friendly url entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
+	* Returns the friendly url entries before and after the current friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param friendlyURLEntryId the primary key of the current friendly url entry
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	*/
 	public static FriendlyURLEntry[] findByUuid_C_PrevAndNext(
-			long friendlyURLEntryId, String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			friendlyURLEntryId, uuid, companyId, orderByComparator);
+		long friendlyURLEntryId, String uuid, long companyId,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByUuid_C_PrevAndNext(friendlyURLEntryId, uuid,
+			companyId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the friendly url entries where uuid = &#63; and companyId = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 */
+	* Removes all the friendly url entries where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
 	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
 	/**
-	 * Returns the number of friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the number of matching friendly url entries
-	 */
+	* Returns the number of friendly url entries where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching friendly url entries
+	*/
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
 	/**
-	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
+	* Returns all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK) {
 		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	 * Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end);
+	* Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @return the range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end) {
+		return getPersistence()
+				   .findByG_C_C(groupId, classNameId, classPK, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end,
+	* Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean retrieveFromCache) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	 * Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByG_C_C_First(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByG_C_C_First(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry findByG_C_C_Last(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByG_C_C_Last(
-		long groupId, long classNameId, long classPK,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().fetchByG_C_C_Last(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param friendlyURLEntryId the primary key of the current friendly url entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
-	public static FriendlyURLEntry[] findByG_C_C_PrevAndNext(
-			long friendlyURLEntryId, long groupId, long classNameId,
-			long classPK, OrderByComparator<FriendlyURLEntry> orderByComparator)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
-		return getPersistence().findByG_C_C_PrevAndNext(
-			friendlyURLEntryId, groupId, classNameId, classPK,
+		return getPersistence()
+				   .findByG_C_C(groupId, classNameId, classPK, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * Removes all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 */
-	public static void removeByG_C_C(
-		long groupId, long classNameId, long classPK) {
+	* Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<FriendlyURLEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator, retrieveFromCache);
+	}
 
+	/**
+	* Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry findByG_C_C_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByG_C_C_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_C_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry findByG_C_C_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	*/
+	public static FriendlyURLEntry fetchByG_C_C_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_C_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the friendly url entries before and after the current friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param friendlyURLEntryId the primary key of the current friendly url entry
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	*/
+	public static FriendlyURLEntry[] findByG_C_C_PrevAndNext(
+		long friendlyURLEntryId, long groupId, long classNameId, long classPK,
+		OrderByComparator<FriendlyURLEntry> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_PrevAndNext(friendlyURLEntryId, groupId,
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Removes all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	*/
+	public static void removeByG_C_C(long groupId, long classNameId,
+		long classPK) {
 		getPersistence().removeByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	 * Returns the number of friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the number of matching friendly url entries
-	 */
-	public static int countByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
+	* Returns the number of friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching friendly url entries
+	*/
+	public static int countByG_C_C(long groupId, long classNameId, long classPK) {
 		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	 * Caches the friendly url entry in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntry the friendly url entry
-	 */
+	* Caches the friendly url entry in the entity cache if it is enabled.
+	*
+	* @param friendlyURLEntry the friendly url entry
+	*/
 	public static void cacheResult(FriendlyURLEntry friendlyURLEntry) {
 		getPersistence().cacheResult(friendlyURLEntry);
 	}
 
 	/**
-	 * Caches the friendly url entries in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntries the friendly url entries
-	 */
+	* Caches the friendly url entries in the entity cache if it is enabled.
+	*
+	* @param friendlyURLEntries the friendly url entries
+	*/
 	public static void cacheResult(List<FriendlyURLEntry> friendlyURLEntries) {
 		getPersistence().cacheResult(friendlyURLEntries);
 	}
 
 	/**
-	 * Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
-	 *
-	 * @param friendlyURLEntryId the primary key for the new friendly url entry
-	 * @return the new friendly url entry
-	 */
+	* Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
+	*
+	* @param friendlyURLEntryId the primary key for the new friendly url entry
+	* @return the new friendly url entry
+	*/
 	public static FriendlyURLEntry create(long friendlyURLEntryId) {
 		return getPersistence().create(friendlyURLEntryId);
 	}
 
 	/**
-	 * Removes the friendly url entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param friendlyURLEntryId the primary key of the friendly url entry
-	 * @return the friendly url entry that was removed
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
+	* Removes the friendly url entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param friendlyURLEntryId the primary key of the friendly url entry
+	* @return the friendly url entry that was removed
+	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	*/
 	public static FriendlyURLEntry remove(long friendlyURLEntryId)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
 		return getPersistence().remove(friendlyURLEntryId);
 	}
 
-	public static FriendlyURLEntry updateImpl(
-		FriendlyURLEntry friendlyURLEntry) {
-
+	public static FriendlyURLEntry updateImpl(FriendlyURLEntry friendlyURLEntry) {
 		return getPersistence().updateImpl(friendlyURLEntry);
 	}
 
 	/**
-	 * Returns the friendly url entry with the primary key or throws a <code>NoSuchFriendlyURLEntryException</code> if it could not be found.
-	 *
-	 * @param friendlyURLEntryId the primary key of the friendly url entry
-	 * @return the friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
+	* Returns the friendly url entry with the primary key or throws a <code>NoSuchFriendlyURLEntryException</code> if it could not be found.
+	*
+	* @param friendlyURLEntryId the primary key of the friendly url entry
+	* @return the friendly url entry
+	* @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	*/
 	public static FriendlyURLEntry findByPrimaryKey(long friendlyURLEntryId)
-		throws com.liferay.friendly.url.exception.
-			NoSuchFriendlyURLEntryException {
-
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException {
 		return getPersistence().findByPrimaryKey(friendlyURLEntryId);
 	}
 
 	/**
-	 * Returns the friendly url entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param friendlyURLEntryId the primary key of the friendly url entry
-	 * @return the friendly url entry, or <code>null</code> if a friendly url entry with the primary key could not be found
-	 */
+	* Returns the friendly url entry with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param friendlyURLEntryId the primary key of the friendly url entry
+	* @return the friendly url entry, or <code>null</code> if a friendly url entry with the primary key could not be found
+	*/
 	public static FriendlyURLEntry fetchByPrimaryKey(long friendlyURLEntryId) {
 		return getPersistence().fetchByPrimaryKey(friendlyURLEntryId);
 	}
 
 	/**
-	 * Returns all the friendly url entries.
-	 *
-	 * @return the friendly url entries
-	 */
+	* Returns all the friendly url entries.
+	*
+	* @return the friendly url entries
+	*/
 	public static List<FriendlyURLEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	 * Returns a range of all the friendly url entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of friendly url entries
-	 */
+	* Returns a range of all the friendly url entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @return the range of friendly url entries
+	*/
 	public static List<FriendlyURLEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findAll(
-		int start, int end,
+	* Returns an ordered range of all the friendly url entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findAll(int start, int end,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the friendly url entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findAll(
-		int start, int end,
+	* Returns an ordered range of all the friendly url entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of friendly url entries
+	* @param end the upper bound of the range of friendly url entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of friendly url entries
+	*/
+	public static List<FriendlyURLEntry> findAll(int start, int end,
 		OrderByComparator<FriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	 * Removes all the friendly url entries from the database.
-	 */
+	* Removes all the friendly url entries from the database.
+	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	 * Returns the number of friendly url entries.
-	 *
-	 * @return the number of friendly url entries
-	 */
+	* Returns the number of friendly url entries.
+	*
+	* @return the number of friendly url entries
+	*/
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -911,24 +858,17 @@ public class FriendlyURLEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<FriendlyURLEntryPersistence, FriendlyURLEntryPersistence>
-			_serviceTracker;
+	private static ServiceTracker<FriendlyURLEntryPersistence, FriendlyURLEntryPersistence> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FriendlyURLEntryPersistence.class);
+		Bundle bundle = FrameworkUtil.getBundle(FriendlyURLEntryPersistence.class);
 
-		ServiceTracker<FriendlyURLEntryPersistence, FriendlyURLEntryPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<FriendlyURLEntryPersistence, FriendlyURLEntryPersistence>(
-						bundle.getBundleContext(),
-						FriendlyURLEntryPersistence.class, null);
+		ServiceTracker<FriendlyURLEntryPersistence, FriendlyURLEntryPersistence> serviceTracker =
+			new ServiceTracker<FriendlyURLEntryPersistence, FriendlyURLEntryPersistence>(bundle.getBundleContext(),
+				FriendlyURLEntryPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

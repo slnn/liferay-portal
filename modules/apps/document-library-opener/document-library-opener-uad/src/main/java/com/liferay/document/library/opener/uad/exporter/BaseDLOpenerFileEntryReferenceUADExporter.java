@@ -17,8 +17,11 @@ package com.liferay.document.library.opener.uad.exporter;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.uad.constants.DLOpenerUADConstants;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDLOpenerFileEntryReferenceUADExporter
 	extends DynamicQueryUADExporter<DLOpenerFileEntryReference> {
-
 	@Override
 	public Class<DLOpenerFileEntryReference> getTypeClass() {
 		return DLOpenerFileEntryReference.class;
@@ -45,20 +47,17 @@ public abstract class BaseDLOpenerFileEntryReferenceUADExporter
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return dlOpenerFileEntryReferenceLocalService.
-			getActionableDynamicQuery();
+		return dlOpenerFileEntryReferenceLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return DLOpenerUADConstants.
-			USER_ID_FIELD_NAMES_DL_OPENER_FILE_ENTRY_REFERENCE;
+		return DLOpenerUADConstants.USER_ID_FIELD_NAMES_DL_OPENER_FILE_ENTRY_REFERENCE;
 	}
 
 	@Override
 	protected String toXmlString(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
 		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
@@ -85,7 +84,5 @@ public abstract class BaseDLOpenerFileEntryReferenceUADExporter
 	}
 
 	@Reference
-	protected DLOpenerFileEntryReferenceLocalService
-		dlOpenerFileEntryReferenceLocalService;
-
+	protected DLOpenerFileEntryReferenceLocalService dlOpenerFileEntryReferenceLocalService;
 }

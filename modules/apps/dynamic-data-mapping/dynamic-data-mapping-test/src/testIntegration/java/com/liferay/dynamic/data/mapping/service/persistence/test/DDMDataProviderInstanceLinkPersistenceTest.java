@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.mapping.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDMDataProviderInstanceLinkPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
@@ -80,8 +80,7 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<DDMDataProviderInstanceLink> iterator =
-			_ddmDataProviderInstanceLinks.iterator();
+		Iterator<DDMDataProviderInstanceLink> iterator = _ddmDataProviderInstanceLinks.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -94,8 +93,7 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			_persistence.create(pk);
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink = _persistence.create(pk);
 
 		Assert.assertNotNull(ddmDataProviderInstanceLink);
 
@@ -104,14 +102,11 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
 		_persistence.remove(newDDMDataProviderInstanceLink);
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
-			_persistence.fetchByPrimaryKey(
-				newDDMDataProviderInstanceLink.getPrimaryKey());
+		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink = _persistence.fetchByPrimaryKey(newDDMDataProviderInstanceLink.getPrimaryKey());
 
 		Assert.assertNull(existingDDMDataProviderInstanceLink);
 	}
@@ -125,35 +120,26 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			_persistence.create(pk);
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = _persistence.create(pk);
 
 		newDDMDataProviderInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 
-		newDDMDataProviderInstanceLink.setDataProviderInstanceId(
-			RandomTestUtil.nextLong());
+		newDDMDataProviderInstanceLink.setDataProviderInstanceId(RandomTestUtil.nextLong());
 
-		newDDMDataProviderInstanceLink.setStructureId(
-			RandomTestUtil.nextLong());
+		newDDMDataProviderInstanceLink.setStructureId(RandomTestUtil.nextLong());
 
-		_ddmDataProviderInstanceLinks.add(
-			_persistence.update(newDDMDataProviderInstanceLink));
+		_ddmDataProviderInstanceLinks.add(_persistence.update(
+				newDDMDataProviderInstanceLink));
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
-			_persistence.findByPrimaryKey(
-				newDDMDataProviderInstanceLink.getPrimaryKey());
+		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink = _persistence.findByPrimaryKey(newDDMDataProviderInstanceLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink.getDataProviderInstanceLinkId(),
+		Assert.assertEquals(existingDDMDataProviderInstanceLink.getDataProviderInstanceLinkId(),
 			newDDMDataProviderInstanceLink.getDataProviderInstanceLinkId());
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink.getCompanyId(),
+		Assert.assertEquals(existingDDMDataProviderInstanceLink.getCompanyId(),
 			newDDMDataProviderInstanceLink.getCompanyId());
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink.getDataProviderInstanceId(),
+		Assert.assertEquals(existingDDMDataProviderInstanceLink.getDataProviderInstanceId(),
 			newDDMDataProviderInstanceLink.getDataProviderInstanceId());
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink.getStructureId(),
+		Assert.assertEquals(existingDDMDataProviderInstanceLink.getStructureId(),
 			newDDMDataProviderInstanceLink.getStructureId());
 	}
 
@@ -173,23 +159,19 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 	@Test
 	public void testCountByD_S() throws Exception {
-		_persistence.countByD_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByD_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByD_S(0L, 0L);
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
-			_persistence.findByPrimaryKey(
-				newDDMDataProviderInstanceLink.getPrimaryKey());
+		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink = _persistence.findByPrimaryKey(newDDMDataProviderInstanceLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink,
+		Assert.assertEquals(existingDDMDataProviderInstanceLink,
 			newDDMDataProviderInstanceLink);
 	}
 
@@ -202,30 +184,23 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
-	protected OrderByComparator<DDMDataProviderInstanceLink>
-		getOrderByComparator() {
-
-		return OrderByComparatorFactoryUtil.create(
-			"DDMDataProviderInstanceLink", "dataProviderInstanceLinkId", true,
-			"companyId", true, "dataProviderInstanceId", true, "structureId",
-			true);
+	protected OrderByComparator<DDMDataProviderInstanceLink> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("DDMDataProviderInstanceLink",
+			"dataProviderInstanceLinkId", true, "companyId", true,
+			"dataProviderInstanceId", true, "structureId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
-			_persistence.fetchByPrimaryKey(
-				newDDMDataProviderInstanceLink.getPrimaryKey());
+		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink = _persistence.fetchByPrimaryKey(newDDMDataProviderInstanceLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink,
+		Assert.assertEquals(existingDDMDataProviderInstanceLink,
 			newDDMDataProviderInstanceLink);
 	}
 
@@ -233,8 +208,7 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMDataProviderInstanceLink missingDDMDataProviderInstanceLink =
-			_persistence.fetchByPrimaryKey(pk);
+		DDMDataProviderInstanceLink missingDDMDataProviderInstanceLink = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDMDataProviderInstanceLink);
 	}
@@ -242,28 +216,22 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink1 =
-			addDDMDataProviderInstanceLink();
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink2 =
-			addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink1 = addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink2 = addDDMDataProviderInstanceLink();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMDataProviderInstanceLink1.getPrimaryKey());
 		primaryKeys.add(newDDMDataProviderInstanceLink2.getPrimaryKey());
 
-		Map<Serializable, DDMDataProviderInstanceLink>
-			ddmDataProviderInstanceLinks = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddmDataProviderInstanceLinks.size());
-		Assert.assertEquals(
-			newDDMDataProviderInstanceLink1,
+		Assert.assertEquals(newDDMDataProviderInstanceLink1,
 			ddmDataProviderInstanceLinks.get(
 				newDDMDataProviderInstanceLink1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDMDataProviderInstanceLink2,
+		Assert.assertEquals(newDDMDataProviderInstanceLink2,
 			ddmDataProviderInstanceLinks.get(
 				newDDMDataProviderInstanceLink2.getPrimaryKey()));
 	}
@@ -271,7 +239,6 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -281,9 +248,8 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDMDataProviderInstanceLink>
-			ddmDataProviderInstanceLinks = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmDataProviderInstanceLinks.isEmpty());
 	}
@@ -291,9 +257,7 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -302,44 +266,40 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 		primaryKeys.add(newDDMDataProviderInstanceLink.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDMDataProviderInstanceLink>
-			ddmDataProviderInstanceLinks = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmDataProviderInstanceLinks.size());
-		Assert.assertEquals(
-			newDDMDataProviderInstanceLink,
+		Assert.assertEquals(newDDMDataProviderInstanceLink,
 			ddmDataProviderInstanceLinks.get(
 				newDDMDataProviderInstanceLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMDataProviderInstanceLink>
-			ddmDataProviderInstanceLinks = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmDataProviderInstanceLinks.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMDataProviderInstanceLink.getPrimaryKey());
 
-		Map<Serializable, DDMDataProviderInstanceLink>
-			ddmDataProviderInstanceLinks = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmDataProviderInstanceLinks.size());
-		Assert.assertEquals(
-			newDDMDataProviderInstanceLink,
+		Assert.assertEquals(newDDMDataProviderInstanceLink,
 			ddmDataProviderInstanceLinks.get(
 				newDDMDataProviderInstanceLink.getPrimaryKey()));
 	}
@@ -348,23 +308,16 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDMDataProviderInstanceLinkLocalServiceUtil.
-				getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDMDataProviderInstanceLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<DDMDataProviderInstanceLink>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMDataProviderInstanceLink>() {
 				@Override
 				public void performAction(
 					DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-
 					Assert.assertNotNull(ddmDataProviderInstanceLink);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -373,65 +326,56 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMDataProviderInstanceLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMDataProviderInstanceLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"dataProviderInstanceLinkId",
-				newDDMDataProviderInstanceLink.
-					getDataProviderInstanceLinkId()));
+				newDDMDataProviderInstanceLink.getDataProviderInstanceLinkId()));
 
-		List<DDMDataProviderInstanceLink> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMDataProviderInstanceLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
-			result.get(0);
+		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink = result.get(0);
 
-		Assert.assertEquals(
-			existingDDMDataProviderInstanceLink,
+		Assert.assertEquals(existingDDMDataProviderInstanceLink,
 			newDDMDataProviderInstanceLink);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMDataProviderInstanceLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMDataProviderInstanceLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"dataProviderInstanceLinkId", RandomTestUtil.nextLong()));
 
-		List<DDMDataProviderInstanceLink> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMDataProviderInstanceLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMDataProviderInstanceLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMDataProviderInstanceLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("dataProviderInstanceLinkId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"dataProviderInstanceLinkId"));
 
-		Object newDataProviderInstanceLinkId =
-			newDDMDataProviderInstanceLink.getDataProviderInstanceLinkId();
+		Object newDataProviderInstanceLinkId = newDDMDataProviderInstanceLink.getDataProviderInstanceLinkId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"dataProviderInstanceLinkId",
-				new Object[] {newDataProviderInstanceLinkId}));
+				new Object[] { newDataProviderInstanceLinkId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -439,22 +383,21 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 		Object existingDataProviderInstanceLinkId = result.get(0);
 
-		Assert.assertEquals(
-			existingDataProviderInstanceLinkId, newDataProviderInstanceLinkId);
+		Assert.assertEquals(existingDataProviderInstanceLinkId,
+			newDataProviderInstanceLinkId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMDataProviderInstanceLink.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMDataProviderInstanceLink.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("dataProviderInstanceLinkId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"dataProviderInstanceLinkId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"dataProviderInstanceLinkId",
-				new Object[] {RandomTestUtil.nextLong()}));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -463,24 +406,19 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink =
-			addDDMDataProviderInstanceLink();
+		DDMDataProviderInstanceLink newDDMDataProviderInstanceLink = addDDMDataProviderInstanceLink();
 
 		_persistence.clearCache();
 
-		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
-			_persistence.findByPrimaryKey(
-				newDDMDataProviderInstanceLink.getPrimaryKey());
+		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink = _persistence.findByPrimaryKey(newDDMDataProviderInstanceLink.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(
-				existingDDMDataProviderInstanceLink.
-					getDataProviderInstanceId()),
+		Assert.assertEquals(Long.valueOf(
+				existingDDMDataProviderInstanceLink.getDataProviderInstanceId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingDDMDataProviderInstanceLink,
 				"getOriginalDataProviderInstanceId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDDMDataProviderInstanceLink.getStructureId()),
+		Assert.assertEquals(Long.valueOf(
+				existingDDMDataProviderInstanceLink.getStructureId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingDDMDataProviderInstanceLink, "getOriginalStructureId",
 				new Class<?>[0]));
@@ -488,28 +426,23 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 	protected DDMDataProviderInstanceLink addDDMDataProviderInstanceLink()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			_persistence.create(pk);
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink = _persistence.create(pk);
 
 		ddmDataProviderInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 
-		ddmDataProviderInstanceLink.setDataProviderInstanceId(
-			RandomTestUtil.nextLong());
+		ddmDataProviderInstanceLink.setDataProviderInstanceId(RandomTestUtil.nextLong());
 
 		ddmDataProviderInstanceLink.setStructureId(RandomTestUtil.nextLong());
 
-		_ddmDataProviderInstanceLinks.add(
-			_persistence.update(ddmDataProviderInstanceLink));
+		_ddmDataProviderInstanceLinks.add(_persistence.update(
+				ddmDataProviderInstanceLink));
 
 		return ddmDataProviderInstanceLink;
 	}
 
-	private List<DDMDataProviderInstanceLink> _ddmDataProviderInstanceLinks =
-		new ArrayList<DDMDataProviderInstanceLink>();
+	private List<DDMDataProviderInstanceLink> _ddmDataProviderInstanceLinks = new ArrayList<DDMDataProviderInstanceLink>();
 	private DDMDataProviderInstanceLinkPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

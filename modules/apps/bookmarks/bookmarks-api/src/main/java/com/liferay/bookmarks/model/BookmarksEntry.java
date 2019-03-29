@@ -30,17 +30,14 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.bookmarks.model.impl.BookmarksEntryImpl")
 @ProviderType
-public interface BookmarksEntry
-	extends BookmarksEntryModel, PersistedModel, TreeModel {
-
+public interface BookmarksEntry extends BookmarksEntryModel, PersistedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.bookmarks.model.impl.BookmarksEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<BookmarksEntry, Long> ENTRY_ID_ACCESSOR =
-		new Accessor<BookmarksEntry, Long>() {
-
+	public static final Accessor<BookmarksEntry, Long> ENTRY_ID_ACCESSOR = new Accessor<BookmarksEntry, Long>() {
 			@Override
 			public Long get(BookmarksEntry bookmarksEntry) {
 				return bookmarksEntry.getEntryId();
@@ -55,7 +52,6 @@ public interface BookmarksEntry
 			public Class<BookmarksEntry> getTypeClass() {
 				return BookmarksEntry.class;
 			}
-
 		};
 
 	@Override
@@ -64,5 +60,4 @@ public interface BookmarksEntry
 
 	public BookmarksFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

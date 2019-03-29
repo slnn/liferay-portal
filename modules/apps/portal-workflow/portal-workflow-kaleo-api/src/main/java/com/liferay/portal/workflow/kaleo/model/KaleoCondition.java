@@ -27,20 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoConditionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl")
 @ProviderType
 public interface KaleoCondition extends KaleoConditionModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoCondition, Long>
-		KALEO_CONDITION_ID_ACCESSOR = new Accessor<KaleoCondition, Long>() {
-
+	public static final Accessor<KaleoCondition, Long> KALEO_CONDITION_ID_ACCESSOR =
+		new Accessor<KaleoCondition, Long>() {
 			@Override
 			public Long get(KaleoCondition kaleoCondition) {
 				return kaleoCondition.getKaleoConditionId();
@@ -55,7 +51,5 @@ public interface KaleoCondition extends KaleoConditionModel, PersistedModel {
 			public Class<KaleoCondition> getTypeClass() {
 				return KaleoCondition.class;
 			}
-
 		};
-
 }

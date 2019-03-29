@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.mapping.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDMStructureVersionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
@@ -82,8 +82,7 @@ public class DDMStructureVersionPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<DDMStructureVersion> iterator =
-			_ddmStructureVersions.iterator();
+		Iterator<DDMStructureVersion> iterator = _ddmStructureVersions.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -109,9 +108,7 @@ public class DDMStructureVersionPersistenceTest {
 
 		_persistence.remove(newDDMStructureVersion);
 
-		DDMStructureVersion existingDDMStructureVersion =
-			_persistence.fetchByPrimaryKey(
-				newDDMStructureVersion.getPrimaryKey());
+		DDMStructureVersion existingDDMStructureVersion = _persistence.fetchByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
 		Assert.assertNull(existingDDMStructureVersion);
 	}
@@ -157,70 +154,51 @@ public class DDMStructureVersionPersistenceTest {
 
 		newDDMStructureVersion.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newDDMStructureVersion.setStatusByUserName(
-			RandomTestUtil.randomString());
+		newDDMStructureVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		newDDMStructureVersion.setStatusDate(RandomTestUtil.nextDate());
 
 		_ddmStructureVersions.add(_persistence.update(newDDMStructureVersion));
 
-		DDMStructureVersion existingDDMStructureVersion =
-			_persistence.findByPrimaryKey(
-				newDDMStructureVersion.getPrimaryKey());
+		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMStructureVersion.getStructureVersionId(),
+		Assert.assertEquals(existingDDMStructureVersion.getStructureVersionId(),
 			newDDMStructureVersion.getStructureVersionId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getGroupId(),
+		Assert.assertEquals(existingDDMStructureVersion.getGroupId(),
 			newDDMStructureVersion.getGroupId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getCompanyId(),
+		Assert.assertEquals(existingDDMStructureVersion.getCompanyId(),
 			newDDMStructureVersion.getCompanyId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getUserId(),
+		Assert.assertEquals(existingDDMStructureVersion.getUserId(),
 			newDDMStructureVersion.getUserId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getUserName(),
+		Assert.assertEquals(existingDDMStructureVersion.getUserName(),
 			newDDMStructureVersion.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDDMStructureVersion.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDMStructureVersion.getCreateDate()),
 			Time.getShortTimestamp(newDDMStructureVersion.getCreateDate()));
-		Assert.assertEquals(
-			existingDDMStructureVersion.getStructureId(),
+		Assert.assertEquals(existingDDMStructureVersion.getStructureId(),
 			newDDMStructureVersion.getStructureId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getVersion(),
+		Assert.assertEquals(existingDDMStructureVersion.getVersion(),
 			newDDMStructureVersion.getVersion());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getParentStructureId(),
+		Assert.assertEquals(existingDDMStructureVersion.getParentStructureId(),
 			newDDMStructureVersion.getParentStructureId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getName(),
+		Assert.assertEquals(existingDDMStructureVersion.getName(),
 			newDDMStructureVersion.getName());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getDescription(),
+		Assert.assertEquals(existingDDMStructureVersion.getDescription(),
 			newDDMStructureVersion.getDescription());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getDefinition(),
+		Assert.assertEquals(existingDDMStructureVersion.getDefinition(),
 			newDDMStructureVersion.getDefinition());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getStorageType(),
+		Assert.assertEquals(existingDDMStructureVersion.getStorageType(),
 			newDDMStructureVersion.getStorageType());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getType(),
+		Assert.assertEquals(existingDDMStructureVersion.getType(),
 			newDDMStructureVersion.getType());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getStatus(),
+		Assert.assertEquals(existingDDMStructureVersion.getStatus(),
 			newDDMStructureVersion.getStatus());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getStatusByUserId(),
+		Assert.assertEquals(existingDDMStructureVersion.getStatusByUserId(),
 			newDDMStructureVersion.getStatusByUserId());
-		Assert.assertEquals(
-			existingDDMStructureVersion.getStatusByUserName(),
+		Assert.assertEquals(existingDDMStructureVersion.getStatusByUserName(),
 			newDDMStructureVersion.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDDMStructureVersion.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDMStructureVersion.getStatusDate()),
 			Time.getShortTimestamp(newDDMStructureVersion.getStatusDate()));
 	}
 
@@ -242,8 +220,8 @@ public class DDMStructureVersionPersistenceTest {
 
 	@Test
 	public void testCountByS_S() throws Exception {
-		_persistence.countByS_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByS_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByS_S(0L, 0);
 	}
@@ -252,12 +230,9 @@ public class DDMStructureVersionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
-		DDMStructureVersion existingDDMStructureVersion =
-			_persistence.findByPrimaryKey(
-				newDDMStructureVersion.getPrimaryKey());
+		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMStructureVersion, newDDMStructureVersion);
+		Assert.assertEquals(existingDDMStructureVersion, newDDMStructureVersion);
 	}
 
 	@Test(expected = NoSuchStructureVersionException.class)
@@ -269,38 +244,33 @@ public class DDMStructureVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMStructureVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DDMStructureVersion", "structureVersionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "structureId", true, "version", true, "parentStructureId",
-			true, "name", true, "storageType", true, "type", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+		return OrderByComparatorFactoryUtil.create("DDMStructureVersion",
+			"structureVersionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"structureId", true, "version", true, "parentStructureId", true,
+			"name", true, "storageType", true, "type", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
-		DDMStructureVersion existingDDMStructureVersion =
-			_persistence.fetchByPrimaryKey(
-				newDDMStructureVersion.getPrimaryKey());
+		DDMStructureVersion existingDDMStructureVersion = _persistence.fetchByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMStructureVersion, newDDMStructureVersion);
+		Assert.assertEquals(existingDDMStructureVersion, newDDMStructureVersion);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMStructureVersion missingDDMStructureVersion =
-			_persistence.fetchByPrimaryKey(pk);
+		DDMStructureVersion missingDDMStructureVersion = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDMStructureVersion);
 	}
@@ -308,7 +278,6 @@ public class DDMStructureVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		DDMStructureVersion newDDMStructureVersion1 = addDDMStructureVersion();
 		DDMStructureVersion newDDMStructureVersion2 = addDDMStructureVersion();
 
@@ -317,22 +286,18 @@ public class DDMStructureVersionPersistenceTest {
 		primaryKeys.add(newDDMStructureVersion1.getPrimaryKey());
 		primaryKeys.add(newDDMStructureVersion2.getPrimaryKey());
 
-		Map<Serializable, DDMStructureVersion> ddmStructureVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureVersion> ddmStructureVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddmStructureVersions.size());
-		Assert.assertEquals(
-			newDDMStructureVersion1,
+		Assert.assertEquals(newDDMStructureVersion1,
 			ddmStructureVersions.get(newDDMStructureVersion1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDMStructureVersion2,
+		Assert.assertEquals(newDDMStructureVersion2,
 			ddmStructureVersions.get(newDDMStructureVersion2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -342,8 +307,7 @@ public class DDMStructureVersionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDMStructureVersion> ddmStructureVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureVersion> ddmStructureVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmStructureVersions.isEmpty());
 	}
@@ -351,7 +315,6 @@ public class DDMStructureVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
 		long pk = RandomTestUtil.nextLong();
@@ -361,39 +324,36 @@ public class DDMStructureVersionPersistenceTest {
 		primaryKeys.add(newDDMStructureVersion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDMStructureVersion> ddmStructureVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureVersion> ddmStructureVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmStructureVersions.size());
-		Assert.assertEquals(
-			newDDMStructureVersion,
+		Assert.assertEquals(newDDMStructureVersion,
 			ddmStructureVersions.get(newDDMStructureVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStructureVersion> ddmStructureVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureVersion> ddmStructureVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmStructureVersions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMStructureVersion.getPrimaryKey());
 
-		Map<Serializable, DDMStructureVersion> ddmStructureVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMStructureVersion> ddmStructureVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmStructureVersions.size());
-		Assert.assertEquals(
-			newDDMStructureVersion,
+		Assert.assertEquals(newDDMStructureVersion,
 			ddmStructureVersions.get(newDDMStructureVersion.getPrimaryKey()));
 	}
 
@@ -401,22 +361,16 @@ public class DDMStructureVersionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDMStructureVersionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDMStructureVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<DDMStructureVersion>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStructureVersion>() {
 				@Override
 				public void performAction(
 					DDMStructureVersion ddmStructureVersion) {
-
 					Assert.assertNotNull(ddmStructureVersion);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -425,59 +379,53 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"structureVersionId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureVersionId",
 				newDDMStructureVersion.getStructureVersionId()));
 
-		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		DDMStructureVersion existingDDMStructureVersion = result.get(0);
 
-		Assert.assertEquals(
-			existingDDMStructureVersion, newDDMStructureVersion);
+		Assert.assertEquals(existingDDMStructureVersion, newDDMStructureVersion);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"structureVersionId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureVersionId",
+				RandomTestUtil.nextLong()));
 
-		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMStructureVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("structureVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"structureVersionId"));
 
-		Object newStructureVersionId =
-			newDDMStructureVersion.getStructureVersionId();
+		Object newStructureVersionId = newDDMStructureVersion.getStructureVersionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"structureVersionId", new Object[] {newStructureVersionId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("structureVersionId",
+				new Object[] { newStructureVersionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -490,16 +438,14 @@ public class DDMStructureVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMStructureVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("structureVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"structureVersionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"structureVersionId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("structureVersionId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -512,24 +458,20 @@ public class DDMStructureVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMStructureVersion existingDDMStructureVersion =
-			_persistence.findByPrimaryKey(
-				newDDMStructureVersion.getPrimaryKey());
+		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingDDMStructureVersion.getStructureId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMStructureVersion, "getOriginalStructureId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureVersion.getStructureId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureVersion,
+				"getOriginalStructureId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingDDMStructureVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingDDMStructureVersion, "getOriginalVersion",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingDDMStructureVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
-	protected DDMStructureVersion addDDMStructureVersion() throws Exception {
+	protected DDMStructureVersion addDDMStructureVersion()
+		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMStructureVersion ddmStructureVersion = _persistence.create(pk);
@@ -573,9 +515,7 @@ public class DDMStructureVersionPersistenceTest {
 		return ddmStructureVersion;
 	}
 
-	private List<DDMStructureVersion> _ddmStructureVersions =
-		new ArrayList<DDMStructureVersion>();
+	private List<DDMStructureVersion> _ddmStructureVersions = new ArrayList<DDMStructureVersion>();
 	private DDMStructureVersionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

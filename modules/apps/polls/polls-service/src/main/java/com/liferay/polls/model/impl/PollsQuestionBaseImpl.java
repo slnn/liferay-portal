@@ -32,9 +32,8 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PollsQuestionBaseImpl
-	extends PollsQuestionModelImpl implements PollsQuestion {
-
+public abstract class PollsQuestionBaseImpl extends PollsQuestionModelImpl
+	implements PollsQuestion {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class PollsQuestionBaseImpl
 			PollsQuestionLocalServiceUtil.updatePollsQuestion(this);
 		}
 	}
-
 }

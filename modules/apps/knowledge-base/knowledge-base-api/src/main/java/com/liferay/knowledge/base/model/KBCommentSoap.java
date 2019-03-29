@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class KBCommentSoap implements Serializable {
-
 	public static KBCommentSoap toSoapModel(KBComment model) {
 		KBCommentSoap soapModel = new KBCommentSoap();
 
@@ -80,8 +79,7 @@ public class KBCommentSoap implements Serializable {
 	}
 
 	public static KBCommentSoap[] toSoapModels(List<KBComment> models) {
-		List<KBCommentSoap> soapModels = new ArrayList<KBCommentSoap>(
-			models.size());
+		List<KBCommentSoap> soapModels = new ArrayList<KBCommentSoap>(models.size());
 
 		for (KBComment model : models) {
 			soapModels.add(toSoapModel(model));
@@ -227,5 +225,4 @@ public class KBCommentSoap implements Serializable {
 	private int _userRating;
 	private Date _lastPublishDate;
 	private int _status;
-
 }

@@ -27,38 +27,32 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoDefinitionVersionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionVersionImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionVersionImpl")
 @ProviderType
-public interface KaleoDefinitionVersion
-	extends KaleoDefinitionVersionModel, PersistedModel {
-
+public interface KaleoDefinitionVersion extends KaleoDefinitionVersionModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoDefinitionVersion, Long>
-		KALEO_DEFINITION_VERSION_ID_ACCESSOR =
-			new Accessor<KaleoDefinitionVersion, Long>() {
+	public static final Accessor<KaleoDefinitionVersion, Long> KALEO_DEFINITION_VERSION_ID_ACCESSOR =
+		new Accessor<KaleoDefinitionVersion, Long>() {
+			@Override
+			public Long get(KaleoDefinitionVersion kaleoDefinitionVersion) {
+				return kaleoDefinitionVersion.getKaleoDefinitionVersionId();
+			}
 
-				@Override
-				public Long get(KaleoDefinitionVersion kaleoDefinitionVersion) {
-					return kaleoDefinitionVersion.getKaleoDefinitionVersionId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<KaleoDefinitionVersion> getTypeClass() {
-					return KaleoDefinitionVersion.class;
-				}
-
-			};
+			@Override
+			public Class<KaleoDefinitionVersion> getTypeClass() {
+				return KaleoDefinitionVersion.class;
+			}
+		};
 
 	public KaleoDefinition fetchKaleoDefinition();
 
@@ -69,5 +63,4 @@ public interface KaleoDefinitionVersion
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasIncompleteKaleoInstances();
-
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.storage.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +38,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +56,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class AuditEventPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.security.audit.storage.service"));
 
 	@Before
@@ -106,8 +105,7 @@ public class AuditEventPersistenceTest {
 
 		_persistence.remove(newAuditEvent);
 
-		AuditEvent existingAuditEvent = _persistence.fetchByPrimaryKey(
-			newAuditEvent.getPrimaryKey());
+		AuditEvent existingAuditEvent = _persistence.fetchByPrimaryKey(newAuditEvent.getPrimaryKey());
 
 		Assert.assertNull(existingAuditEvent);
 	}
@@ -153,41 +151,38 @@ public class AuditEventPersistenceTest {
 
 		_auditEvents.add(_persistence.update(newAuditEvent));
 
-		AuditEvent existingAuditEvent = _persistence.findByPrimaryKey(
-			newAuditEvent.getPrimaryKey());
+		AuditEvent existingAuditEvent = _persistence.findByPrimaryKey(newAuditEvent.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAuditEvent.getAuditEventId(),
+		Assert.assertEquals(existingAuditEvent.getAuditEventId(),
 			newAuditEvent.getAuditEventId());
-		Assert.assertEquals(
-			existingAuditEvent.getCompanyId(), newAuditEvent.getCompanyId());
-		Assert.assertEquals(
-			existingAuditEvent.getUserId(), newAuditEvent.getUserId());
-		Assert.assertEquals(
-			existingAuditEvent.getUserName(), newAuditEvent.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingAuditEvent.getCreateDate()),
+		Assert.assertEquals(existingAuditEvent.getCompanyId(),
+			newAuditEvent.getCompanyId());
+		Assert.assertEquals(existingAuditEvent.getUserId(),
+			newAuditEvent.getUserId());
+		Assert.assertEquals(existingAuditEvent.getUserName(),
+			newAuditEvent.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAuditEvent.getCreateDate()),
 			Time.getShortTimestamp(newAuditEvent.getCreateDate()));
-		Assert.assertEquals(
-			existingAuditEvent.getEventType(), newAuditEvent.getEventType());
-		Assert.assertEquals(
-			existingAuditEvent.getClassName(), newAuditEvent.getClassName());
-		Assert.assertEquals(
-			existingAuditEvent.getClassPK(), newAuditEvent.getClassPK());
-		Assert.assertEquals(
-			existingAuditEvent.getMessage(), newAuditEvent.getMessage());
-		Assert.assertEquals(
-			existingAuditEvent.getClientHost(), newAuditEvent.getClientHost());
-		Assert.assertEquals(
-			existingAuditEvent.getClientIP(), newAuditEvent.getClientIP());
-		Assert.assertEquals(
-			existingAuditEvent.getServerName(), newAuditEvent.getServerName());
-		Assert.assertEquals(
-			existingAuditEvent.getServerPort(), newAuditEvent.getServerPort());
-		Assert.assertEquals(
-			existingAuditEvent.getSessionID(), newAuditEvent.getSessionID());
-		Assert.assertEquals(
-			existingAuditEvent.getAdditionalInfo(),
+		Assert.assertEquals(existingAuditEvent.getEventType(),
+			newAuditEvent.getEventType());
+		Assert.assertEquals(existingAuditEvent.getClassName(),
+			newAuditEvent.getClassName());
+		Assert.assertEquals(existingAuditEvent.getClassPK(),
+			newAuditEvent.getClassPK());
+		Assert.assertEquals(existingAuditEvent.getMessage(),
+			newAuditEvent.getMessage());
+		Assert.assertEquals(existingAuditEvent.getClientHost(),
+			newAuditEvent.getClientHost());
+		Assert.assertEquals(existingAuditEvent.getClientIP(),
+			newAuditEvent.getClientIP());
+		Assert.assertEquals(existingAuditEvent.getServerName(),
+			newAuditEvent.getServerName());
+		Assert.assertEquals(existingAuditEvent.getServerPort(),
+			newAuditEvent.getServerPort());
+		Assert.assertEquals(existingAuditEvent.getSessionID(),
+			newAuditEvent.getSessionID());
+		Assert.assertEquals(existingAuditEvent.getAdditionalInfo(),
 			newAuditEvent.getAdditionalInfo());
 	}
 
@@ -202,8 +197,7 @@ public class AuditEventPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AuditEvent newAuditEvent = addAuditEvent();
 
-		AuditEvent existingAuditEvent = _persistence.findByPrimaryKey(
-			newAuditEvent.getPrimaryKey());
+		AuditEvent existingAuditEvent = _persistence.findByPrimaryKey(newAuditEvent.getPrimaryKey());
 
 		Assert.assertEquals(existingAuditEvent, newAuditEvent);
 	}
@@ -217,25 +211,24 @@ public class AuditEventPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<AuditEvent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"Audit_AuditEvent", "auditEventId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true, "eventType",
-			true, "className", true, "classPK", true, "message", true,
-			"clientHost", true, "clientIP", true, "serverName", true,
-			"serverPort", true, "sessionID", true);
+		return OrderByComparatorFactoryUtil.create("Audit_AuditEvent",
+			"auditEventId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "eventType", true,
+			"className", true, "classPK", true, "message", true, "clientHost",
+			true, "clientIP", true, "serverName", true, "serverPort", true,
+			"sessionID", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AuditEvent newAuditEvent = addAuditEvent();
 
-		AuditEvent existingAuditEvent = _persistence.fetchByPrimaryKey(
-			newAuditEvent.getPrimaryKey());
+		AuditEvent existingAuditEvent = _persistence.fetchByPrimaryKey(newAuditEvent.getPrimaryKey());
 
 		Assert.assertEquals(existingAuditEvent, newAuditEvent);
 	}
@@ -252,7 +245,6 @@ public class AuditEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		AuditEvent newAuditEvent1 = addAuditEvent();
 		AuditEvent newAuditEvent2 = addAuditEvent();
 
@@ -261,20 +253,18 @@ public class AuditEventPersistenceTest {
 		primaryKeys.add(newAuditEvent1.getPrimaryKey());
 		primaryKeys.add(newAuditEvent2.getPrimaryKey());
 
-		Map<Serializable, AuditEvent> auditEvents =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AuditEvent> auditEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, auditEvents.size());
-		Assert.assertEquals(
-			newAuditEvent1, auditEvents.get(newAuditEvent1.getPrimaryKey()));
-		Assert.assertEquals(
-			newAuditEvent2, auditEvents.get(newAuditEvent2.getPrimaryKey()));
+		Assert.assertEquals(newAuditEvent1,
+			auditEvents.get(newAuditEvent1.getPrimaryKey()));
+		Assert.assertEquals(newAuditEvent2,
+			auditEvents.get(newAuditEvent2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -284,8 +274,7 @@ public class AuditEventPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, AuditEvent> auditEvents =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AuditEvent> auditEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(auditEvents.isEmpty());
 	}
@@ -293,7 +282,6 @@ public class AuditEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		AuditEvent newAuditEvent = addAuditEvent();
 
 		long pk = RandomTestUtil.nextLong();
@@ -303,57 +291,52 @@ public class AuditEventPersistenceTest {
 		primaryKeys.add(newAuditEvent.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, AuditEvent> auditEvents =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AuditEvent> auditEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, auditEvents.size());
-		Assert.assertEquals(
-			newAuditEvent, auditEvents.get(newAuditEvent.getPrimaryKey()));
+		Assert.assertEquals(newAuditEvent,
+			auditEvents.get(newAuditEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AuditEvent> auditEvents =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AuditEvent> auditEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(auditEvents.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		AuditEvent newAuditEvent = addAuditEvent();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newAuditEvent.getPrimaryKey());
 
-		Map<Serializable, AuditEvent> auditEvents =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, AuditEvent> auditEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, auditEvents.size());
-		Assert.assertEquals(
-			newAuditEvent, auditEvents.get(newAuditEvent.getPrimaryKey()));
+		Assert.assertEquals(newAuditEvent,
+			auditEvents.get(newAuditEvent.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			AuditEventLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = AuditEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AuditEvent>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AuditEvent>() {
 				@Override
 				public void performAction(AuditEvent auditEvent) {
 					Assert.assertNotNull(auditEvent);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -362,18 +345,17 @@ public class AuditEventPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		AuditEvent newAuditEvent = addAuditEvent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AuditEvent.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AuditEvent.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"auditEventId", newAuditEvent.getAuditEventId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("auditEventId",
+				newAuditEvent.getAuditEventId()));
 
-		List<AuditEvent> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<AuditEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -384,34 +366,32 @@ public class AuditEventPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AuditEvent.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AuditEvent.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"auditEventId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("auditEventId",
+				RandomTestUtil.nextLong()));
 
-		List<AuditEvent> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<AuditEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		AuditEvent newAuditEvent = addAuditEvent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AuditEvent.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AuditEvent.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("auditEventId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"auditEventId"));
 
 		Object newAuditEventId = newAuditEvent.getAuditEventId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"auditEventId", new Object[] {newAuditEventId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("auditEventId",
+				new Object[] { newAuditEventId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -424,15 +404,14 @@ public class AuditEventPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AuditEvent.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AuditEvent.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("auditEventId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"auditEventId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"auditEventId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("auditEventId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -480,5 +459,4 @@ public class AuditEventPersistenceTest {
 	private List<AuditEvent> _auditEvents = new ArrayList<AuditEvent>();
 	private AuditEventPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

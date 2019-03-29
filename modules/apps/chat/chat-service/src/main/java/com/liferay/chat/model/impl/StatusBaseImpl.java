@@ -33,7 +33,6 @@ import com.liferay.chat.service.StatusLocalServiceUtil;
  */
 @ProviderType
 public abstract class StatusBaseImpl extends StatusModelImpl implements Status {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,5 +47,4 @@ public abstract class StatusBaseImpl extends StatusModelImpl implements Status {
 			StatusLocalServiceUtil.updateStatus(this);
 		}
 	}
-
 }

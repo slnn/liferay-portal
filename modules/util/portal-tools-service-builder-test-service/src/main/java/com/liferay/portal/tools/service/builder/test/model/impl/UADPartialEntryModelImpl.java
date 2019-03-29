@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -60,23 +61,21 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class UADPartialEntryModelImpl
-	extends BaseModelImpl<UADPartialEntry> implements UADPartialEntryModel {
-
+public class UADPartialEntryModelImpl extends BaseModelImpl<UADPartialEntry>
+	implements UADPartialEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a uad partial entry model instance should use the <code>UADPartialEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "UADPartialEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uadPartialEntryId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"message", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uadPartialEntryId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "message", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uadPartialEntryId", Types.BIGINT);
@@ -85,35 +84,19 @@ public class UADPartialEntryModelImpl
 		TABLE_COLUMNS_MAP.put("message", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table UADPartialEntry (uadPartialEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,message VARCHAR(75) null)";
-
+	public static final String TABLE_SQL_CREATE = "create table UADPartialEntry (uadPartialEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,message VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table UADPartialEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY uadPartialEntry.uadPartialEntryId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY UADPartialEntry.uadPartialEntryId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY uadPartialEntry.uadPartialEntryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY UADPartialEntry.uadPartialEntryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.portal.tools.service.builder.test.model.UADPartialEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.tools.service.builder.test.model.UADPartialEntry"),
-		true);
-
+			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = false;
 
 	/**
@@ -145,13 +128,11 @@ public class UADPartialEntryModelImpl
 	 */
 	public static List<UADPartialEntry> toModels(
 		UADPartialEntrySoap[] soapModels) {
-
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<UADPartialEntry> models = new ArrayList<UADPartialEntry>(
-			soapModels.length);
+		List<UADPartialEntry> models = new ArrayList<UADPartialEntry>(soapModels.length);
 
 		for (UADPartialEntrySoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -160,9 +141,7 @@ public class UADPartialEntryModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
-			get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.tools.service.builder.test.model.UADPartialEntry"));
 
 	public UADPartialEntryModelImpl() {
@@ -202,18 +181,13 @@ public class UADPartialEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<UADPartialEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<UADPartialEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<UADPartialEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<UADPartialEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<UADPartialEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<UADPartialEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((UADPartialEntry)this));
 		}
 
@@ -225,45 +199,36 @@ public class UADPartialEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<UADPartialEntry, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<UADPartialEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<UADPartialEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<UADPartialEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(UADPartialEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((UADPartialEntry)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<UADPartialEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<UADPartialEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<UADPartialEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<UADPartialEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<UADPartialEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<UADPartialEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<UADPartialEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UADPartialEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<UADPartialEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<UADPartialEntry, Object>>();
-		Map<String, BiConsumer<UADPartialEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<UADPartialEntry, ?>>();
+		Map<String, Function<UADPartialEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<UADPartialEntry, Object>>();
+		Map<String, BiConsumer<UADPartialEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<UADPartialEntry, ?>>();
+
 
 		attributeGetterFunctions.put(
 			"uadPartialEntryId",
@@ -280,11 +245,8 @@ public class UADPartialEntryModelImpl
 			new BiConsumer<UADPartialEntry, Object>() {
 
 				@Override
-				public void accept(
-					UADPartialEntry uadPartialEntry, Object uadPartialEntryId) {
-
-					uadPartialEntry.setUadPartialEntryId(
-						(Long)uadPartialEntryId);
+				public void accept(UADPartialEntry uadPartialEntry, Object uadPartialEntryId) {
+					uadPartialEntry.setUadPartialEntryId((Long)uadPartialEntryId);
 				}
 
 			});
@@ -303,9 +265,7 @@ public class UADPartialEntryModelImpl
 			new BiConsumer<UADPartialEntry, Object>() {
 
 				@Override
-				public void accept(
-					UADPartialEntry uadPartialEntry, Object userId) {
-
+				public void accept(UADPartialEntry uadPartialEntry, Object userId) {
 					uadPartialEntry.setUserId((Long)userId);
 				}
 
@@ -325,9 +285,7 @@ public class UADPartialEntryModelImpl
 			new BiConsumer<UADPartialEntry, Object>() {
 
 				@Override
-				public void accept(
-					UADPartialEntry uadPartialEntry, Object userName) {
-
+				public void accept(UADPartialEntry uadPartialEntry, Object userName) {
 					uadPartialEntry.setUserName((String)userName);
 				}
 
@@ -347,18 +305,15 @@ public class UADPartialEntryModelImpl
 			new BiConsumer<UADPartialEntry, Object>() {
 
 				@Override
-				public void accept(
-					UADPartialEntry uadPartialEntry, Object message) {
-
+				public void accept(UADPartialEntry uadPartialEntry, Object message) {
 					uadPartialEntry.setMessage((String)message);
 				}
 
 			});
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -433,8 +388,8 @@ public class UADPartialEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, UADPartialEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			UADPartialEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -447,9 +402,8 @@ public class UADPartialEntryModelImpl
 	@Override
 	public UADPartialEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UADPartialEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (UADPartialEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -527,8 +481,7 @@ public class UADPartialEntryModelImpl
 
 	@Override
 	public CacheModel<UADPartialEntry> toCacheModel() {
-		UADPartialEntryCacheModel uadPartialEntryCacheModel =
-			new UADPartialEntryCacheModel();
+		UADPartialEntryCacheModel uadPartialEntryCacheModel = new UADPartialEntryCacheModel();
 
 		uadPartialEntryCacheModel.uadPartialEntryId = getUadPartialEntryId();
 
@@ -555,20 +508,16 @@ public class UADPartialEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<UADPartialEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<UADPartialEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<UADPartialEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<UADPartialEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<UADPartialEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<UADPartialEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -587,22 +536,18 @@ public class UADPartialEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<UADPartialEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<UADPartialEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<UADPartialEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<UADPartialEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<UADPartialEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<UADPartialEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -616,16 +561,13 @@ public class UADPartialEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UADPartialEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = UADPartialEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UADPartialEntry.class, ModelWrapper.class
-	};
-
+			UADPartialEntry.class, ModelWrapper.class
+		};
 	private long _uadPartialEntryId;
 	private long _userId;
 	private String _userName;
 	private String _message;
 	private UADPartialEntry _escapedModel;
-
 }

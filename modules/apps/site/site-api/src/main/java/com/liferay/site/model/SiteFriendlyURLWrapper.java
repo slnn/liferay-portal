@@ -17,6 +17,7 @@ package com.liferay.site.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SiteFriendlyURLWrapper
-	extends BaseModelWrapper<SiteFriendlyURL>
+public class SiteFriendlyURLWrapper extends BaseModelWrapper<SiteFriendlyURL>
 	implements SiteFriendlyURL, ModelWrapper<SiteFriendlyURL> {
-
 	public SiteFriendlyURLWrapper(SiteFriendlyURL siteFriendlyURL) {
 		super(siteFriendlyURL);
 	}
@@ -131,130 +130,130 @@ public class SiteFriendlyURLWrapper
 	}
 
 	/**
-	 * Returns the company ID of this site friendly url.
-	 *
-	 * @return the company ID of this site friendly url
-	 */
+	* Returns the company ID of this site friendly url.
+	*
+	* @return the company ID of this site friendly url
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this site friendly url.
-	 *
-	 * @return the create date of this site friendly url
-	 */
+	* Returns the create date of this site friendly url.
+	*
+	* @return the create date of this site friendly url
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the friendly url of this site friendly url.
-	 *
-	 * @return the friendly url of this site friendly url
-	 */
+	* Returns the friendly url of this site friendly url.
+	*
+	* @return the friendly url of this site friendly url
+	*/
 	@Override
 	public String getFriendlyURL() {
 		return model.getFriendlyURL();
 	}
 
 	/**
-	 * Returns the group ID of this site friendly url.
-	 *
-	 * @return the group ID of this site friendly url
-	 */
+	* Returns the group ID of this site friendly url.
+	*
+	* @return the group ID of this site friendly url
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the language ID of this site friendly url.
-	 *
-	 * @return the language ID of this site friendly url
-	 */
+	* Returns the language ID of this site friendly url.
+	*
+	* @return the language ID of this site friendly url
+	*/
 	@Override
 	public String getLanguageId() {
 		return model.getLanguageId();
 	}
 
 	/**
-	 * Returns the last publish date of this site friendly url.
-	 *
-	 * @return the last publish date of this site friendly url
-	 */
+	* Returns the last publish date of this site friendly url.
+	*
+	* @return the last publish date of this site friendly url
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this site friendly url.
-	 *
-	 * @return the modified date of this site friendly url
-	 */
+	* Returns the modified date of this site friendly url.
+	*
+	* @return the modified date of this site friendly url
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this site friendly url.
-	 *
-	 * @return the primary key of this site friendly url
-	 */
+	* Returns the primary key of this site friendly url.
+	*
+	* @return the primary key of this site friendly url
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the site friendly url ID of this site friendly url.
-	 *
-	 * @return the site friendly url ID of this site friendly url
-	 */
+	* Returns the site friendly url ID of this site friendly url.
+	*
+	* @return the site friendly url ID of this site friendly url
+	*/
 	@Override
 	public long getSiteFriendlyURLId() {
 		return model.getSiteFriendlyURLId();
 	}
 
 	/**
-	 * Returns the user ID of this site friendly url.
-	 *
-	 * @return the user ID of this site friendly url
-	 */
+	* Returns the user ID of this site friendly url.
+	*
+	* @return the user ID of this site friendly url
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this site friendly url.
-	 *
-	 * @return the user name of this site friendly url
-	 */
+	* Returns the user name of this site friendly url.
+	*
+	* @return the user name of this site friendly url
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this site friendly url.
-	 *
-	 * @return the user uuid of this site friendly url
-	 */
+	* Returns the user uuid of this site friendly url.
+	*
+	* @return the user uuid of this site friendly url
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this site friendly url.
-	 *
-	 * @return the uuid of this site friendly url
-	 */
+	* Returns the uuid of this site friendly url.
+	*
+	* @return the uuid of this site friendly url
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -266,130 +265,130 @@ public class SiteFriendlyURLWrapper
 	}
 
 	/**
-	 * Sets the company ID of this site friendly url.
-	 *
-	 * @param companyId the company ID of this site friendly url
-	 */
+	* Sets the company ID of this site friendly url.
+	*
+	* @param companyId the company ID of this site friendly url
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this site friendly url.
-	 *
-	 * @param createDate the create date of this site friendly url
-	 */
+	* Sets the create date of this site friendly url.
+	*
+	* @param createDate the create date of this site friendly url
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the friendly url of this site friendly url.
-	 *
-	 * @param friendlyURL the friendly url of this site friendly url
-	 */
+	* Sets the friendly url of this site friendly url.
+	*
+	* @param friendlyURL the friendly url of this site friendly url
+	*/
 	@Override
 	public void setFriendlyURL(String friendlyURL) {
 		model.setFriendlyURL(friendlyURL);
 	}
 
 	/**
-	 * Sets the group ID of this site friendly url.
-	 *
-	 * @param groupId the group ID of this site friendly url
-	 */
+	* Sets the group ID of this site friendly url.
+	*
+	* @param groupId the group ID of this site friendly url
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the language ID of this site friendly url.
-	 *
-	 * @param languageId the language ID of this site friendly url
-	 */
+	* Sets the language ID of this site friendly url.
+	*
+	* @param languageId the language ID of this site friendly url
+	*/
 	@Override
 	public void setLanguageId(String languageId) {
 		model.setLanguageId(languageId);
 	}
 
 	/**
-	 * Sets the last publish date of this site friendly url.
-	 *
-	 * @param lastPublishDate the last publish date of this site friendly url
-	 */
+	* Sets the last publish date of this site friendly url.
+	*
+	* @param lastPublishDate the last publish date of this site friendly url
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this site friendly url.
-	 *
-	 * @param modifiedDate the modified date of this site friendly url
-	 */
+	* Sets the modified date of this site friendly url.
+	*
+	* @param modifiedDate the modified date of this site friendly url
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this site friendly url.
-	 *
-	 * @param primaryKey the primary key of this site friendly url
-	 */
+	* Sets the primary key of this site friendly url.
+	*
+	* @param primaryKey the primary key of this site friendly url
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the site friendly url ID of this site friendly url.
-	 *
-	 * @param siteFriendlyURLId the site friendly url ID of this site friendly url
-	 */
+	* Sets the site friendly url ID of this site friendly url.
+	*
+	* @param siteFriendlyURLId the site friendly url ID of this site friendly url
+	*/
 	@Override
 	public void setSiteFriendlyURLId(long siteFriendlyURLId) {
 		model.setSiteFriendlyURLId(siteFriendlyURLId);
 	}
 
 	/**
-	 * Sets the user ID of this site friendly url.
-	 *
-	 * @param userId the user ID of this site friendly url
-	 */
+	* Sets the user ID of this site friendly url.
+	*
+	* @param userId the user ID of this site friendly url
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this site friendly url.
-	 *
-	 * @param userName the user name of this site friendly url
-	 */
+	* Sets the user name of this site friendly url.
+	*
+	* @param userName the user name of this site friendly url
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this site friendly url.
-	 *
-	 * @param userUuid the user uuid of this site friendly url
-	 */
+	* Sets the user uuid of this site friendly url.
+	*
+	* @param userUuid the user uuid of this site friendly url
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this site friendly url.
-	 *
-	 * @param uuid the uuid of this site friendly url
-	 */
+	* Sets the uuid of this site friendly url.
+	*
+	* @param uuid the uuid of this site friendly url
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -404,5 +403,4 @@ public class SiteFriendlyURLWrapper
 	protected SiteFriendlyURLWrapper wrap(SiteFriendlyURL siteFriendlyURL) {
 		return new SiteFriendlyURLWrapper(siteFriendlyURL);
 	}
-
 }

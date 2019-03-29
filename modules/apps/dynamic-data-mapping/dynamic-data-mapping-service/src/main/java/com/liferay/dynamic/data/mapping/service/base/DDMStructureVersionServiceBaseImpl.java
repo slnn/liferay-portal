@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -41,10 +42,8 @@ import javax.sql.DataSource;
  * @see com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionServiceImpl
  * @generated
  */
-public abstract class DDMStructureVersionServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class DDMStructureVersionServiceBaseImpl extends BaseServiceImpl
 	implements DDMStructureVersionService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -56,10 +55,7 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the ddm structure version local service
 	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			getDDMStructureVersionLocalService() {
-
+	public com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService getDDMStructureVersionLocalService() {
 		return ddmStructureVersionLocalService;
 	}
 
@@ -69,9 +65,7 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 * @param ddmStructureVersionLocalService the ddm structure version local service
 	 */
 	public void setDDMStructureVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService) {
-
+		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
@@ -91,7 +85,6 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 */
 	public void setDDMStructureVersionService(
 		DDMStructureVersionService ddmStructureVersionService) {
-
 		this.ddmStructureVersionService = ddmStructureVersionService;
 	}
 
@@ -111,7 +104,6 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 */
 	public void setDDMStructureVersionPersistence(
 		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
-
 		this.ddmStructureVersionPersistence = ddmStructureVersionPersistence;
 	}
 
@@ -120,9 +112,7 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -132,9 +122,7 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -169,16 +157,15 @@ public abstract class DDMStructureVersionServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				ddmStructureVersionPersistence.getDataSource();
+			DataSource dataSource = ddmStructureVersionPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -187,23 +174,12 @@ public abstract class DDMStructureVersionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService;
-
+	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService;
 	@BeanReference(type = DDMStructureVersionService.class)
 	protected DDMStructureVersionService ddmStructureVersionService;
-
 	@BeanReference(type = DDMStructureVersionPersistence.class)
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 }

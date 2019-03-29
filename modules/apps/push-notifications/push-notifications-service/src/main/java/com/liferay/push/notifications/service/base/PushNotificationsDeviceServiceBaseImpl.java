@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.service.PushNotificationsDeviceService;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
@@ -44,9 +45,8 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class PushNotificationsDeviceServiceBaseImpl
-	extends BaseServiceImpl
-	implements PushNotificationsDeviceService, IdentifiableOSGiService {
-
+	extends BaseServiceImpl implements PushNotificationsDeviceService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,11 +58,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the push notifications device local service
 	 */
-	public
-		com.liferay.push.notifications.service.
-			PushNotificationsDeviceLocalService
-				getPushNotificationsDeviceLocalService() {
-
+	public com.liferay.push.notifications.service.PushNotificationsDeviceLocalService getPushNotificationsDeviceLocalService() {
 		return pushNotificationsDeviceLocalService;
 	}
 
@@ -72,12 +68,8 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 * @param pushNotificationsDeviceLocalService the push notifications device local service
 	 */
 	public void setPushNotificationsDeviceLocalService(
-		com.liferay.push.notifications.service.
-			PushNotificationsDeviceLocalService
-				pushNotificationsDeviceLocalService) {
-
-		this.pushNotificationsDeviceLocalService =
-			pushNotificationsDeviceLocalService;
+		com.liferay.push.notifications.service.PushNotificationsDeviceLocalService pushNotificationsDeviceLocalService) {
+		this.pushNotificationsDeviceLocalService = pushNotificationsDeviceLocalService;
 	}
 
 	/**
@@ -96,7 +88,6 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	public void setPushNotificationsDeviceService(
 		PushNotificationsDeviceService pushNotificationsDeviceService) {
-
 		this.pushNotificationsDeviceService = pushNotificationsDeviceService;
 	}
 
@@ -105,9 +96,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the push notifications device persistence
 	 */
-	public PushNotificationsDevicePersistence
-		getPushNotificationsDevicePersistence() {
-
+	public PushNotificationsDevicePersistence getPushNotificationsDevicePersistence() {
 		return pushNotificationsDevicePersistence;
 	}
 
@@ -118,9 +107,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	public void setPushNotificationsDevicePersistence(
 		PushNotificationsDevicePersistence pushNotificationsDevicePersistence) {
-
-		this.pushNotificationsDevicePersistence =
-			pushNotificationsDevicePersistence;
+		this.pushNotificationsDevicePersistence = pushNotificationsDevicePersistence;
 	}
 
 	/**
@@ -128,9 +115,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -140,9 +125,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -151,9 +134,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -163,9 +144,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -174,9 +153,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -187,7 +164,6 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -207,7 +183,6 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -216,9 +191,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -228,9 +201,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -239,9 +210,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -252,7 +221,6 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -272,7 +240,6 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -325,16 +292,15 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				pushNotificationsDevicePersistence.getDataSource();
+			DataSource dataSource = pushNotificationsDevicePersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -343,60 +309,26 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.push.notifications.service.PushNotificationsDeviceLocalService.class
-	)
-	protected
-		com.liferay.push.notifications.service.
-			PushNotificationsDeviceLocalService
-				pushNotificationsDeviceLocalService;
-
+	@BeanReference(type = com.liferay.push.notifications.service.PushNotificationsDeviceLocalService.class)
+	protected com.liferay.push.notifications.service.PushNotificationsDeviceLocalService pushNotificationsDeviceLocalService;
 	@BeanReference(type = PushNotificationsDeviceService.class)
 	protected PushNotificationsDeviceService pushNotificationsDeviceService;
-
 	@BeanReference(type = PushNotificationsDevicePersistence.class)
-	protected PushNotificationsDevicePersistence
-		pushNotificationsDevicePersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	protected PushNotificationsDevicePersistence pushNotificationsDevicePersistence;
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 }

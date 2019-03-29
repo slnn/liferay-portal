@@ -34,7 +34,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalServiceUti
 @ProviderType
 public abstract class DDLRecordSetVersionBaseImpl
 	extends DDLRecordSetVersionModelImpl implements DDLRecordSetVersion {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class DDLRecordSetVersionBaseImpl
 			DDLRecordSetVersionLocalServiceUtil.updateDDLRecordSetVersion(this);
 		}
 	}
-
 }

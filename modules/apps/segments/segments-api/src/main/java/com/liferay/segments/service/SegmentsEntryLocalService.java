@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
 import com.liferay.segments.model.SegmentsEntry;
 
 import java.io.Serializable;
@@ -56,46 +57,42 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface SegmentsEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface SegmentsEntryLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryLocalServiceUtil} to access the segments entry local service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public SegmentsEntry addSegmentsEntry(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String source,
-			String type, ServiceContext serviceContext)
+	public SegmentsEntry addSegmentsEntry(Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, boolean active, String criteria,
+		String key, String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Adds the segments entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsEntry the segments entry
-	 * @return the segments entry that was added
-	 */
+	* Adds the segments entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsEntry the segments entry
+	* @return the segments entry that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsEntry addSegmentsEntry(SegmentsEntry segmentsEntry);
 
 	/**
-	 * Creates a new segments entry with the primary key. Does not add the segments entry to the database.
-	 *
-	 * @param segmentsEntryId the primary key for the new segments entry
-	 * @return the new segments entry
-	 */
+	* Creates a new segments entry with the primary key. Does not add the segments entry to the database.
+	*
+	* @param segmentsEntryId the primary key for the new segments entry
+	* @return the new segments entry
+	*/
 	@Transactional(enabled = false)
 	public SegmentsEntry createSegmentsEntry(long segmentsEntryId);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -105,23 +102,23 @@ public interface SegmentsEntryLocalService
 	public void deleteSegmentsEntries(String source) throws PortalException;
 
 	/**
-	 * Deletes the segments entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsEntryId the primary key of the segments entry
-	 * @return the segments entry that was removed
-	 * @throws PortalException if a segments entry with the primary key could not be found
-	 */
+	* Deletes the segments entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsEntryId the primary key of the segments entry
+	* @return the segments entry that was removed
+	* @throws PortalException if a segments entry with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public SegmentsEntry deleteSegmentsEntry(long segmentsEntryId)
 		throws PortalException;
 
 	/**
-	 * Deletes the segments entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsEntry the segments entry
-	 * @return the segments entry that was removed
-	 * @throws PortalException
-	 */
+	* Deletes the segments entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsEntry the segments entry
+	* @return the segments entry that was removed
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsEntry deleteSegmentsEntry(SegmentsEntry segmentsEntry)
@@ -131,74 +128,73 @@ public interface SegmentsEntryLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsEntry fetchSegmentsEntry(long segmentsEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsEntry fetchSegmentsEntry(
-		long groupId, String key, boolean includeAncestorSegmentsEntries);
+	public SegmentsEntry fetchSegmentsEntry(long groupId, String key,
+		boolean includeAncestorSegmentsEntries);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -207,10 +203,10 @@ public interface SegmentsEntryLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -219,83 +215,77 @@ public interface SegmentsEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(
-		boolean active, String type, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator);
+	public List<SegmentsEntry> getSegmentsEntries(boolean active, String type,
+		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator);
 
 	/**
-	 * Returns a range of all the segments entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of segments entries
-	 * @param end the upper bound of the range of segments entries (not inclusive)
-	 * @return the range of segments entries
-	 */
+	* Returns a range of all the segments entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of segments entries
+	* @param end the upper bound of the range of segments entries (not inclusive)
+	* @return the range of segments entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean includeAncestorSegmentsEntries, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntriesBySource(
-		String source, int start, int end,
+	public List<SegmentsEntry> getSegmentsEntries(long groupId,
+		boolean includeAncestorSegmentsEntries, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesBySource(String source,
+		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator);
+
 	/**
-	 * Returns the number of segments entries.
-	 *
-	 * @return the number of segments entries
-	 */
+	* Returns the number of segments entries.
+	*
+	* @return the number of segments entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsEntriesCount(
-		long groupId, boolean includeAncestorSegmentsEntries);
+	public int getSegmentsEntriesCount(long groupId,
+		boolean includeAncestorSegmentsEntries);
 
 	/**
-	 * Returns the segments entry with the primary key.
-	 *
-	 * @param segmentsEntryId the primary key of the segments entry
-	 * @return the segments entry
-	 * @throws PortalException if a segments entry with the primary key could not be found
-	 */
+	* Returns the segments entry with the primary key.
+	*
+	* @param segmentsEntryId the primary key of the segments entry
+	* @return the segments entry
+	* @throws PortalException if a segments entry with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords,
-			boolean includeAncestorSegmentsEntries, int start, int end,
-			Sort sort)
+		long companyId, long groupId, String keywords,
+		boolean includeAncestorSegmentsEntries, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			SearchContext searchContext)
-		throws PortalException;
+		SearchContext searchContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public SegmentsEntry updateSegmentsEntry(
-			long segmentsEntryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String key, ServiceContext serviceContext)
-		throws PortalException;
+	public SegmentsEntry updateSegmentsEntry(long segmentsEntryId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		boolean active, String criteria, String key,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Updates the segments entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param segmentsEntry the segments entry
-	 * @return the segments entry that was updated
-	 */
+	* Updates the segments entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param segmentsEntry the segments entry
+	* @return the segments entry that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsEntry updateSegmentsEntry(SegmentsEntry segmentsEntry);
-
 }

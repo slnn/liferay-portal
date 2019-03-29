@@ -50,13 +50,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface AuditEventLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface AuditEventLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,48 +61,48 @@ public interface AuditEventLocalService
 	 */
 
 	/**
-	 * Adds the audit event to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param auditEvent the audit event
-	 * @return the audit event that was added
-	 */
+	* Adds the audit event to the database. Also notifies the appropriate model listeners.
+	*
+	* @param auditEvent the audit event
+	* @return the audit event that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AuditEvent addAuditEvent(AuditEvent auditEvent);
 
 	public AuditEvent addAuditEvent(AuditMessage auditMessage);
 
 	/**
-	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
-	 *
-	 * @param auditEventId the primary key for the new audit event
-	 * @return the new audit event
-	 */
+	* Creates a new audit event with the primary key. Does not add the audit event to the database.
+	*
+	* @param auditEventId the primary key for the new audit event
+	* @return the new audit event
+	*/
 	@Transactional(enabled = false)
 	public AuditEvent createAuditEvent(long auditEventId);
 
 	/**
-	 * Deletes the audit event from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param auditEvent the audit event
-	 * @return the audit event that was removed
-	 */
+	* Deletes the audit event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param auditEvent the audit event
+	* @return the audit event that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public AuditEvent deleteAuditEvent(AuditEvent auditEvent);
 
 	/**
-	 * Deletes the audit event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param auditEventId the primary key of the audit event
-	 * @return the audit event that was removed
-	 * @throws PortalException if a audit event with the primary key could not be found
-	 */
+	* Deletes the audit event with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param auditEventId the primary key of the audit event
+	* @return the audit event that was removed
+	* @throws PortalException if a audit event with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public AuditEvent deleteAuditEvent(long auditEventId)
 		throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -114,67 +111,66 @@ public interface AuditEventLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AuditEvent fetchAuditEvent(long auditEventId);
@@ -183,26 +179,27 @@ public interface AuditEventLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns the audit event with the primary key.
-	 *
-	 * @param auditEventId the primary key of the audit event
-	 * @return the audit event
-	 * @throws PortalException if a audit event with the primary key could not be found
-	 */
+	* Returns the audit event with the primary key.
+	*
+	* @param auditEventId the primary key of the audit event
+	* @return the audit event
+	* @throws PortalException if a audit event with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AuditEvent getAuditEvent(long auditEventId) throws PortalException;
+	public AuditEvent getAuditEvent(long auditEventId)
+		throws PortalException;
 
 	/**
-	 * Returns a range of all the audit events.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of audit events
-	 * @param end the upper bound of the range of audit events (not inclusive)
-	 * @return the range of audit events
-	 */
+	* Returns a range of all the audit events.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of audit events
+	* @param end the upper bound of the range of audit events (not inclusive)
+	* @return the range of audit events
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AuditEvent> getAuditEvents(int start, int end);
 
@@ -210,30 +207,29 @@ public interface AuditEventLocalService
 	public List<AuditEvent> getAuditEvents(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AuditEvent> getAuditEvents(
-		long companyId, int start, int end,
+	public List<AuditEvent> getAuditEvents(long companyId, int start, int end,
 		OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AuditEvent> getAuditEvents(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch, int start, int end);
+	public List<AuditEvent> getAuditEvents(long companyId, long userId,
+		String userName, Date createDateGT, Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AuditEvent> getAuditEvents(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch, int start, int end,
+	public List<AuditEvent> getAuditEvents(long companyId, long userId,
+		String userName, Date createDateGT, Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end,
 		OrderByComparator orderByComparator);
 
 	/**
-	 * Returns the number of audit events.
-	 *
-	 * @return the number of audit events
-	 */
+	* Returns the number of audit events.
+	*
+	* @return the number of audit events
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuditEventsCount();
 
@@ -241,20 +237,20 @@ public interface AuditEventLocalService
 	public int getAuditEventsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAuditEventsCount(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch);
+	public int getAuditEventsCount(long companyId, long userId,
+		String userName, Date createDateGT, Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -263,12 +259,11 @@ public interface AuditEventLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the audit event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param auditEvent the audit event
-	 * @return the audit event that was updated
-	 */
+	* Updates the audit event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param auditEvent the audit event
+	* @return the audit event that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public AuditEvent updateAuditEvent(AuditEvent auditEvent);
-
 }

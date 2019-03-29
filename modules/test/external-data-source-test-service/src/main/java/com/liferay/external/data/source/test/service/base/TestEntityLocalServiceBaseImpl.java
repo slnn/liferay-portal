@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.service.TestEntityLocalService;
 import com.liferay.external.data.source.test.service.persistence.TestEntityPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -62,9 +63,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class TestEntityLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements TestEntityLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements TestEntityLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -126,8 +126,8 @@ public abstract class TestEntityLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			TestEntity.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(TestEntity.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -154,11 +154,10 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return testEntityPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return testEntityPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -175,12 +174,10 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return testEntityPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return testEntityPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -202,11 +199,10 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return testEntityPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return testEntityPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -228,8 +224,7 @@ public abstract class TestEntityLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(testEntityLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -241,14 +236,10 @@ public abstract class TestEntityLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			testEntityLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(testEntityLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(TestEntity.class);
 
@@ -259,7 +250,6 @@ public abstract class TestEntityLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(testEntityLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TestEntity.class);
@@ -273,15 +263,12 @@ public abstract class TestEntityLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return testEntityLocalService.deleteTestEntity(
-			(TestEntity)persistedModel);
+		return testEntityLocalService.deleteTestEntity((TestEntity)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return testEntityPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -339,7 +326,6 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 */
 	public void setTestEntityLocalService(
 		TestEntityLocalService testEntityLocalService) {
-
 		this.testEntityLocalService = testEntityLocalService;
 	}
 
@@ -359,7 +345,6 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 */
 	public void setTestEntityPersistence(
 		TestEntityPersistence testEntityPersistence) {
-
 		this.testEntityPersistence = testEntityPersistence;
 	}
 
@@ -368,9 +353,7 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -380,15 +363,12 @@ public abstract class TestEntityLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.external.data.source.test.model.TestEntity",
+		persistedModelLocalServiceRegistry.register("com.liferay.external.data.source.test.model.TestEntity",
 			testEntityLocalService);
 	}
 
@@ -429,8 +409,8 @@ public abstract class TestEntityLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -441,18 +421,10 @@ public abstract class TestEntityLocalServiceBaseImpl
 
 	@BeanReference(type = TestEntityLocalService.class)
 	protected TestEntityLocalService testEntityLocalService;
-
 	@BeanReference(type = TestEntityPersistence.class)
 	protected TestEntityPersistence testEntityPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

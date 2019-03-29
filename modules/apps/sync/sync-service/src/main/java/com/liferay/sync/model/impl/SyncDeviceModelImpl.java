@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.model.SyncDeviceModel;
 import com.liferay.sync.model.SyncDeviceSoap;
@@ -63,27 +67,29 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class SyncDeviceModelImpl
-	extends BaseModelImpl<SyncDevice> implements SyncDeviceModel {
-
+public class SyncDeviceModelImpl extends BaseModelImpl<SyncDevice>
+	implements SyncDeviceModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a sync device model instance should use the <code>SyncDevice</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SyncDevice";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"syncDeviceId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"type_", Types.VARCHAR},
-		{"buildNumber", Types.BIGINT}, {"featureSet", Types.INTEGER},
-		{"hostname", Types.VARCHAR}, {"status", Types.INTEGER}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "syncDeviceId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "type_", Types.VARCHAR },
+			{ "buildNumber", Types.BIGINT },
+			{ "featureSet", Types.INTEGER },
+			{ "hostname", Types.VARCHAR },
+			{ "status", Types.INTEGER }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -100,46 +106,26 @@ public class SyncDeviceModelImpl
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table SyncDevice (uuid_ VARCHAR(75) null,syncDeviceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,type_ VARCHAR(75) null,buildNumber LONG,featureSet INTEGER,hostname VARCHAR(75) null,status INTEGER)";
-
+	public static final String TABLE_SQL_CREATE = "create table SyncDevice (uuid_ VARCHAR(75) null,syncDeviceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,type_ VARCHAR(75) null,buildNumber LONG,featureSet INTEGER,hostname VARCHAR(75) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SyncDevice";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY syncDevice.syncDeviceId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY SyncDevice.syncDeviceId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY syncDevice.syncDeviceId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY SyncDevice.syncDeviceId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.sync.model.SyncDevice"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.sync.model.SyncDevice"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.sync.model.SyncDevice"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.sync.model.SyncDevice"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.sync.model.SyncDevice"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.sync.model.SyncDevice"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long USERID_COLUMN_BITMASK = 2L;
-
 	public static final long USERNAME_COLUMN_BITMASK = 4L;
-
 	public static final long UUID_COLUMN_BITMASK = 8L;
-
 	public static final long SYNCDEVICEID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -191,9 +177,8 @@ public class SyncDeviceModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.sync.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.sync.model.SyncDevice"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.sync.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.sync.model.SyncDevice"));
 
 	public SyncDeviceModelImpl() {
 	}
@@ -232,18 +217,14 @@ public class SyncDeviceModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SyncDevice, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SyncDevice, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SyncDevice, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SyncDevice, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((SyncDevice)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((SyncDevice)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -254,96 +235,64 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SyncDevice, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SyncDevice, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SyncDevice, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SyncDevice, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(SyncDevice)this, entry.getValue());
+				attributeSetterBiConsumer.accept((SyncDevice)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SyncDevice, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<SyncDevice, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SyncDevice, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<SyncDevice, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SyncDevice, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SyncDevice, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<SyncDevice, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SyncDevice, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SyncDevice, Object>>();
-		Map<String, BiConsumer<SyncDevice, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SyncDevice, ?>>();
+		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SyncDevice, Object>>();
+		Map<String, BiConsumer<SyncDevice, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SyncDevice, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", SyncDevice::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<SyncDevice, String>)SyncDevice::setUuid);
-		attributeGetterFunctions.put(
-			"syncDeviceId", SyncDevice::getSyncDeviceId);
-		attributeSetterBiConsumers.put(
-			"syncDeviceId",
-			(BiConsumer<SyncDevice, Long>)SyncDevice::setSyncDeviceId);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<SyncDevice, String>)SyncDevice::setUuid);
+		attributeGetterFunctions.put("syncDeviceId", SyncDevice::getSyncDeviceId);
+		attributeSetterBiConsumers.put("syncDeviceId", (BiConsumer<SyncDevice, Long>)SyncDevice::setSyncDeviceId);
 		attributeGetterFunctions.put("companyId", SyncDevice::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SyncDevice, Long>)SyncDevice::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SyncDevice, Long>)SyncDevice::setCompanyId);
 		attributeGetterFunctions.put("userId", SyncDevice::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<SyncDevice, Long>)SyncDevice::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SyncDevice, Long>)SyncDevice::setUserId);
 		attributeGetterFunctions.put("userName", SyncDevice::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SyncDevice, String>)SyncDevice::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SyncDevice, String>)SyncDevice::setUserName);
 		attributeGetterFunctions.put("createDate", SyncDevice::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SyncDevice, Date>)SyncDevice::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", SyncDevice::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SyncDevice, Date>)SyncDevice::setModifiedDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SyncDevice, Date>)SyncDevice::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SyncDevice::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SyncDevice, Date>)SyncDevice::setModifiedDate);
 		attributeGetterFunctions.put("type", SyncDevice::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<SyncDevice, String>)SyncDevice::setType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SyncDevice, String>)SyncDevice::setType);
 		attributeGetterFunctions.put("buildNumber", SyncDevice::getBuildNumber);
-		attributeSetterBiConsumers.put(
-			"buildNumber",
-			(BiConsumer<SyncDevice, Long>)SyncDevice::setBuildNumber);
+		attributeSetterBiConsumers.put("buildNumber", (BiConsumer<SyncDevice, Long>)SyncDevice::setBuildNumber);
 		attributeGetterFunctions.put("featureSet", SyncDevice::getFeatureSet);
-		attributeSetterBiConsumers.put(
-			"featureSet",
-			(BiConsumer<SyncDevice, Integer>)SyncDevice::setFeatureSet);
+		attributeSetterBiConsumers.put("featureSet", (BiConsumer<SyncDevice, Integer>)SyncDevice::setFeatureSet);
 		attributeGetterFunctions.put("hostname", SyncDevice::getHostname);
-		attributeSetterBiConsumers.put(
-			"hostname",
-			(BiConsumer<SyncDevice, String>)SyncDevice::setHostname);
+		attributeSetterBiConsumers.put("hostname", (BiConsumer<SyncDevice, String>)SyncDevice::setHostname);
 		attributeGetterFunctions.put("status", SyncDevice::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<SyncDevice, Integer>)SyncDevice::setStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<SyncDevice, Integer>)SyncDevice::setStatus);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -566,8 +515,8 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(SyncDevice.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				SyncDevice.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -576,8 +525,8 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), SyncDevice.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SyncDevice.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -590,9 +539,8 @@ public class SyncDeviceModelImpl
 	@Override
 	public SyncDevice toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDevice)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (SyncDevice)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -764,20 +712,16 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SyncDevice, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SyncDevice, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SyncDevice, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SyncDevice, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -796,22 +740,18 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SyncDevice, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SyncDevice, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SyncDevice, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SyncDevice, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SyncDevice, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -825,12 +765,10 @@ public class SyncDeviceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDevice.class.getClassLoader();
+	private static final ClassLoader _classLoader = SyncDevice.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDevice.class, ModelWrapper.class
-	};
-
+			SyncDevice.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _syncDeviceId;
@@ -852,5 +790,4 @@ public class SyncDeviceModelImpl
 	private int _status;
 	private long _columnBitmask;
 	private SyncDevice _escapedModel;
-
 }

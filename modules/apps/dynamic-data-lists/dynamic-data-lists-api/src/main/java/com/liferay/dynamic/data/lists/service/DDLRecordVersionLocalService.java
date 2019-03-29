@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -48,13 +49,10 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface DDLRecordVersionLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface DDLRecordVersionLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,48 +60,48 @@ public interface DDLRecordVersionLocalService
 	 */
 
 	/**
-	 * Adds the ddl record version to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddlRecordVersion the ddl record version
-	 * @return the ddl record version that was added
-	 */
+	* Adds the ddl record version to the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordVersion addDDLRecordVersion(
 		DDLRecordVersion ddlRecordVersion);
 
 	/**
-	 * Creates a new ddl record version with the primary key. Does not add the ddl record version to the database.
-	 *
-	 * @param recordVersionId the primary key for the new ddl record version
-	 * @return the new ddl record version
-	 */
+	* Creates a new ddl record version with the primary key. Does not add the ddl record version to the database.
+	*
+	* @param recordVersionId the primary key for the new ddl record version
+	* @return the new ddl record version
+	*/
 	@Transactional(enabled = false)
 	public DDLRecordVersion createDDLRecordVersion(long recordVersionId);
 
 	/**
-	 * Deletes the ddl record version from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddlRecordVersion the ddl record version
-	 * @return the ddl record version that was removed
-	 */
+	* Deletes the ddl record version from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDLRecordVersion deleteDDLRecordVersion(
 		DDLRecordVersion ddlRecordVersion);
 
 	/**
-	 * Deletes the ddl record version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param recordVersionId the primary key of the ddl record version
-	 * @return the ddl record version that was removed
-	 * @throws PortalException if a ddl record version with the primary key could not be found
-	 */
+	* Deletes the ddl record version with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param recordVersionId the primary key of the ddl record version
+	* @return the ddl record version that was removed
+	* @throws PortalException if a ddl record version with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDLRecordVersion deleteDDLRecordVersion(long recordVersionId)
 		throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -112,118 +110,117 @@ public interface DDLRecordVersionLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion fetchDDLRecordVersion(long recordVersionId);
 
 	/**
-	 * Returns the latest record version matching the user, the record set, the
-	 * record set version and workflow status.
-	 *
-	 * @param userId the primary key of the user
-	 * @param recordSetId the primary key of the record set
-	 * @param recordSetVersion the version of the record set
-	 * @param status the workflow status
-	 * @return the latest matching record version or <code>null</code>
-	 */
+	* Returns the latest record version matching the user, the record set, the
+	* record set version and workflow status.
+	*
+	* @param userId the primary key of the user
+	* @param recordSetId the primary key of the record set
+	* @param recordSetVersion the version of the record set
+	* @param status the workflow status
+	* @return the latest matching record version or <code>null</code>
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion fetchLatestRecordVersion(
-		long userId, long recordSetId, String recordSetVersion, int status);
+	public DDLRecordVersion fetchLatestRecordVersion(long userId,
+		long recordSetId, String recordSetVersion, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	 * Returns the ddl record version with the primary key.
-	 *
-	 * @param recordVersionId the primary key of the ddl record version
-	 * @return the ddl record version
-	 * @throws PortalException if a ddl record version with the primary key could not be found
-	 */
+	* Returns the ddl record version with the primary key.
+	*
+	* @param recordVersionId the primary key of the ddl record version
+	* @return the ddl record version
+	* @throws PortalException if a ddl record version with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getDDLRecordVersion(long recordVersionId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the ddl record versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddl record versions
-	 * @param end the upper bound of the range of ddl record versions (not inclusive)
-	 * @return the range of ddl record versions
-	 */
+	* Returns a range of all the ddl record versions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @return the range of ddl record versions
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordVersion> getDDLRecordVersions(int start, int end);
 
 	/**
-	 * Returns the number of ddl record versions.
-	 *
-	 * @return the number of ddl record versions
-	 */
+	* Returns the number of ddl record versions.
+	*
+	* @return the number of ddl record versions
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDLRecordVersionsCount();
 
@@ -231,21 +228,21 @@ public interface DDLRecordVersionLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the record's latest record version.
-	 *
-	 * @param recordId the primary key of the record
-	 * @return the latest record version for the given record
-	 * @throws PortalException if a portal exception occurred
-	 */
+	* Returns the record's latest record version.
+	*
+	* @param recordId the primary key of the record
+	* @return the latest record version for the given record
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -254,70 +251,68 @@ public interface DDLRecordVersionLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the record version by its ID.
-	 *
-	 * @param recordVersionId the primary key of the record version
-	 * @return the record version with the ID
-	 * @throws PortalException if a matching record set could not be found
-	 */
+	* Returns the record version by its ID.
+	*
+	* @param recordVersionId the primary key of the record version
+	* @return the record version with the ID
+	* @throws PortalException if a matching record set could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
 		throws PortalException;
 
 	/**
-	 * Returns the record version matching the record and version.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param version the record version
-	 * @return the record version matching the record primary key and version
-	 * @throws PortalException if a matching record set could not be found
-	 */
+	* Returns the record version matching the record and version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the record version
+	* @return the record version matching the record primary key and version
+	* @throws PortalException if a matching record set could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getRecordVersion(long recordId, String version)
 		throws PortalException;
 
 	/**
-	 * Returns an ordered range of record versions matching the record's ID.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	 * full result set.
-	 * </p>
-	 *
-	 * @param recordId the primary key of the record
-	 * @param start the lower bound of the range of record versions to return
-	 * @param end the upper bound of the range of record versions to return
-	 (not inclusive)
-	 * @param orderByComparator the comparator used to order the record
-	 versions
-	 * @return the range of matching record versions ordered by the comparator
-	 */
+	* Returns an ordered range of record versions matching the record's ID.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordId the primary key of the record
+	* @param start the lower bound of the range of record versions to return
+	* @param end the upper bound of the range of record versions to return
+	(not inclusive)
+	* @param orderByComparator the comparator used to order the record
+	versions
+	* @return the range of matching record versions ordered by the comparator
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordVersion> getRecordVersions(
-		long recordId, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+	public List<DDLRecordVersion> getRecordVersions(long recordId, int start,
+		int end, OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
-	 * Returns the number of record versions matching the record ID.
-	 *
-	 * @param recordId the primary key of the record
-	 * @return the number of matching record versions
-	 */
+	* Returns the number of record versions matching the record ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
 
 	/**
-	 * Updates the ddl record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddlRecordVersion the ddl record version
-	 * @return the ddl record version that was updated
-	 */
+	* Updates the ddl record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordVersion updateDDLRecordVersion(
 		DDLRecordVersion ddlRecordVersion);
-
 }

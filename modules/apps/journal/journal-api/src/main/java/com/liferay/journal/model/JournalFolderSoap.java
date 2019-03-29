@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class JournalFolderSoap implements Serializable {
-
 	public static JournalFolderSoap toSoapModel(JournalFolder model) {
 		JournalFolderSoap soapModel = new JournalFolderSoap();
 
@@ -84,8 +83,7 @@ public class JournalFolderSoap implements Serializable {
 	}
 
 	public static JournalFolderSoap[] toSoapModels(List<JournalFolder> models) {
-		List<JournalFolderSoap> soapModels = new ArrayList<JournalFolderSoap>(
-			models.size());
+		List<JournalFolderSoap> soapModels = new ArrayList<JournalFolderSoap>(models.size());
 
 		for (JournalFolder model : models) {
 			soapModels.add(toSoapModel(model));
@@ -267,5 +265,4 @@ public class JournalFolderSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

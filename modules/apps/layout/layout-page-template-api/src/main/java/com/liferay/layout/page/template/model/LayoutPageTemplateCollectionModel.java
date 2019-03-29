@@ -35,10 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutPageTemplateCollectionModel
-	extends BaseModel<LayoutPageTemplateCollection>, ShardedModel,
-			StagedGroupedModel {
-
+public interface LayoutPageTemplateCollectionModel extends BaseModel<LayoutPageTemplateCollection>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -249,5 +247,4 @@ public interface LayoutPageTemplateCollectionModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

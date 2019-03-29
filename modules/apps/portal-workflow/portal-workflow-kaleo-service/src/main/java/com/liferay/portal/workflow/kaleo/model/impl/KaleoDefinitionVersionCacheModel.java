@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoDefinitionVersionCacheModel
-	implements CacheModel<KaleoDefinitionVersion>, Externalizable, MVCCModel {
-
+public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinitionVersion>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +49,10 @@ public class KaleoDefinitionVersionCacheModel
 			return false;
 		}
 
-		KaleoDefinitionVersionCacheModel kaleoDefinitionVersionCacheModel =
-			(KaleoDefinitionVersionCacheModel)obj;
+		KaleoDefinitionVersionCacheModel kaleoDefinitionVersionCacheModel = (KaleoDefinitionVersionCacheModel)obj;
 
-		if ((kaleoDefinitionVersionId ==
-				kaleoDefinitionVersionCacheModel.kaleoDefinitionVersionId) &&
-			(mvccVersion == kaleoDefinitionVersionCacheModel.mvccVersion)) {
-
+		if ((kaleoDefinitionVersionId == kaleoDefinitionVersionCacheModel.kaleoDefinitionVersionId) &&
+				(mvccVersion == kaleoDefinitionVersionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -126,12 +123,10 @@ public class KaleoDefinitionVersionCacheModel
 
 	@Override
 	public KaleoDefinitionVersion toEntityModel() {
-		KaleoDefinitionVersionImpl kaleoDefinitionVersionImpl =
-			new KaleoDefinitionVersionImpl();
+		KaleoDefinitionVersionImpl kaleoDefinitionVersionImpl = new KaleoDefinitionVersionImpl();
 
 		kaleoDefinitionVersionImpl.setMvccVersion(mvccVersion);
-		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
+		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoDefinitionVersionImpl.setGroupId(groupId);
 		kaleoDefinitionVersionImpl.setCompanyId(companyId);
 		kaleoDefinitionVersionImpl.setUserId(userId);
@@ -246,7 +241,8 @@ public class KaleoDefinitionVersionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoDefinitionVersionId);
@@ -335,5 +331,4 @@ public class KaleoDefinitionVersionCacheModel
 	public String version;
 	public long startKaleoNodeId;
 	public int status;
-
 }

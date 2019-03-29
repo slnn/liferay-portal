@@ -20,6 +20,7 @@ import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstancePersistence;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence;
 import com.liferay.mobile.device.rules.service.persistence.MDRRulePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -46,10 +47,8 @@ import javax.sql.DataSource;
  * @see com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl
  * @generated
  */
-public abstract class MDRRuleGroupServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class MDRRuleGroupServiceBaseImpl extends BaseServiceImpl
 	implements MDRRuleGroupService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,9 +60,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the mdr rule group local service
 	 */
-	public com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService
-		getMDRRuleGroupLocalService() {
-
+	public com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService getMDRRuleGroupLocalService() {
 		return mdrRuleGroupLocalService;
 	}
 
@@ -73,9 +70,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 * @param mdrRuleGroupLocalService the mdr rule group local service
 	 */
 	public void setMDRRuleGroupLocalService(
-		com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService
-			mdrRuleGroupLocalService) {
-
+		com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService mdrRuleGroupLocalService) {
 		this.mdrRuleGroupLocalService = mdrRuleGroupLocalService;
 	}
 
@@ -93,9 +88,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @param mdrRuleGroupService the mdr rule group remote service
 	 */
-	public void setMDRRuleGroupService(
-		MDRRuleGroupService mdrRuleGroupService) {
-
+	public void setMDRRuleGroupService(MDRRuleGroupService mdrRuleGroupService) {
 		this.mdrRuleGroupService = mdrRuleGroupService;
 	}
 
@@ -115,7 +108,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setMDRRuleGroupPersistence(
 		MDRRuleGroupPersistence mdrRuleGroupPersistence) {
-
 		this.mdrRuleGroupPersistence = mdrRuleGroupPersistence;
 	}
 
@@ -142,9 +134,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -154,9 +144,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -165,9 +153,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the mdr rule local service
 	 */
-	public com.liferay.mobile.device.rules.service.MDRRuleLocalService
-		getMDRRuleLocalService() {
-
+	public com.liferay.mobile.device.rules.service.MDRRuleLocalService getMDRRuleLocalService() {
 		return mdrRuleLocalService;
 	}
 
@@ -177,9 +163,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 * @param mdrRuleLocalService the mdr rule local service
 	 */
 	public void setMDRRuleLocalService(
-		com.liferay.mobile.device.rules.service.MDRRuleLocalService
-			mdrRuleLocalService) {
-
+		com.liferay.mobile.device.rules.service.MDRRuleLocalService mdrRuleLocalService) {
 		this.mdrRuleLocalService = mdrRuleLocalService;
 	}
 
@@ -188,9 +172,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the mdr rule remote service
 	 */
-	public com.liferay.mobile.device.rules.service.MDRRuleService
-		getMDRRuleService() {
-
+	public com.liferay.mobile.device.rules.service.MDRRuleService getMDRRuleService() {
 		return mdrRuleService;
 	}
 
@@ -201,7 +183,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setMDRRuleService(
 		com.liferay.mobile.device.rules.service.MDRRuleService mdrRuleService) {
-
 		this.mdrRuleService = mdrRuleService;
 	}
 
@@ -228,9 +209,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
 		return groupLocalService;
 	}
 
@@ -241,7 +220,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -261,7 +239,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setGroupService(
 		com.liferay.portal.kernel.service.GroupService groupService) {
-
 		this.groupService = groupService;
 	}
 
@@ -288,9 +265,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -300,9 +275,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -311,9 +284,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -324,7 +295,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -344,7 +314,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -371,10 +340,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the mdr rule group instance local service
 	 */
-	public
-		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService
-			getMDRRuleGroupInstanceLocalService() {
-
+	public com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService getMDRRuleGroupInstanceLocalService() {
 		return mdrRuleGroupInstanceLocalService;
 	}
 
@@ -384,11 +350,8 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 * @param mdrRuleGroupInstanceLocalService the mdr rule group instance local service
 	 */
 	public void setMDRRuleGroupInstanceLocalService(
-		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService
-			mdrRuleGroupInstanceLocalService) {
-
-		this.mdrRuleGroupInstanceLocalService =
-			mdrRuleGroupInstanceLocalService;
+		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+		this.mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
 	/**
@@ -396,9 +359,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the mdr rule group instance remote service
 	 */
-	public com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService
-		getMDRRuleGroupInstanceService() {
-
+	public com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService getMDRRuleGroupInstanceService() {
 		return mdrRuleGroupInstanceService;
 	}
 
@@ -408,9 +369,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 * @param mdrRuleGroupInstanceService the mdr rule group instance remote service
 	 */
 	public void setMDRRuleGroupInstanceService(
-		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService
-			mdrRuleGroupInstanceService) {
-
+		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
 		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
@@ -419,9 +378,7 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 *
 	 * @return the mdr rule group instance persistence
 	 */
-	public MDRRuleGroupInstancePersistence
-		getMDRRuleGroupInstancePersistence() {
-
+	public MDRRuleGroupInstancePersistence getMDRRuleGroupInstancePersistence() {
 		return mdrRuleGroupInstancePersistence;
 	}
 
@@ -432,7 +389,6 @@ public abstract class MDRRuleGroupServiceBaseImpl
 	 */
 	public void setMDRRuleGroupInstancePersistence(
 		MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence) {
-
 		this.mdrRuleGroupInstancePersistence = mdrRuleGroupInstancePersistence;
 	}
 
@@ -474,8 +430,8 @@ public abstract class MDRRuleGroupServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -484,91 +440,40 @@ public abstract class MDRRuleGroupServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService.class
-	)
-	protected com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService
-		mdrRuleGroupLocalService;
-
+	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService.class)
+	protected com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService mdrRuleGroupLocalService;
 	@BeanReference(type = MDRRuleGroupService.class)
 	protected MDRRuleGroupService mdrRuleGroupService;
-
 	@BeanReference(type = MDRRuleGroupPersistence.class)
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
-
 	@BeanReference(type = MDRRuleGroupFinder.class)
 	protected MDRRuleGroupFinder mdrRuleGroupFinder;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.mobile.device.rules.service.MDRRuleLocalService.class
-	)
-	protected com.liferay.mobile.device.rules.service.MDRRuleLocalService
-		mdrRuleLocalService;
-
-	@BeanReference(
-		type = com.liferay.mobile.device.rules.service.MDRRuleService.class
-	)
-	protected com.liferay.mobile.device.rules.service.MDRRuleService
-		mdrRuleService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleLocalService.class)
+	protected com.liferay.mobile.device.rules.service.MDRRuleLocalService mdrRuleLocalService;
+	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleService.class)
+	protected com.liferay.mobile.device.rules.service.MDRRuleService mdrRuleService;
 	@BeanReference(type = MDRRulePersistence.class)
 	protected MDRRulePersistence mdrRulePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupService.class)
 	protected com.liferay.portal.kernel.service.GroupService groupService;
-
 	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
-	@BeanReference(
-		type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService.class
-	)
-	protected
-		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService
-			mdrRuleGroupInstanceLocalService;
-
-	@BeanReference(
-		type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService.class
-	)
-	protected
-		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService
-			mdrRuleGroupInstanceService;
-
+	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService.class)
+	protected com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
+	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService.class)
+	protected com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
 	@BeanReference(type = MDRRuleGroupInstancePersistence.class)
 	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
-
 }

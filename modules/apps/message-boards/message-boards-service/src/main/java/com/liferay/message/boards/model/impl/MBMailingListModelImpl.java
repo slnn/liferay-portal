@@ -18,10 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.model.MBMailingListModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -58,34 +62,43 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class MBMailingListModelImpl
-	extends BaseModelImpl<MBMailingList> implements MBMailingListModel {
-
+public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
+	implements MBMailingListModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards mailing list model instance should use the <code>MBMailingList</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MBMailingList";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"mailingListId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"categoryId", Types.BIGINT}, {"emailAddress", Types.VARCHAR},
-		{"inProtocol", Types.VARCHAR}, {"inServerName", Types.VARCHAR},
-		{"inServerPort", Types.INTEGER}, {"inUseSSL", Types.BOOLEAN},
-		{"inUserName", Types.VARCHAR}, {"inPassword", Types.VARCHAR},
-		{"inReadInterval", Types.INTEGER}, {"outEmailAddress", Types.VARCHAR},
-		{"outCustom", Types.BOOLEAN}, {"outServerName", Types.VARCHAR},
-		{"outServerPort", Types.INTEGER}, {"outUseSSL", Types.BOOLEAN},
-		{"outUserName", Types.VARCHAR}, {"outPassword", Types.VARCHAR},
-		{"allowAnonymous", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "mailingListId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "categoryId", Types.BIGINT },
+			{ "emailAddress", Types.VARCHAR },
+			{ "inProtocol", Types.VARCHAR },
+			{ "inServerName", Types.VARCHAR },
+			{ "inServerPort", Types.INTEGER },
+			{ "inUseSSL", Types.BOOLEAN },
+			{ "inUserName", Types.VARCHAR },
+			{ "inPassword", Types.VARCHAR },
+			{ "inReadInterval", Types.INTEGER },
+			{ "outEmailAddress", Types.VARCHAR },
+			{ "outCustom", Types.BOOLEAN },
+			{ "outServerName", Types.VARCHAR },
+			{ "outServerPort", Types.INTEGER },
+			{ "outUseSSL", Types.BOOLEAN },
+			{ "outUserName", Types.VARCHAR },
+			{ "outPassword", Types.VARCHAR },
+			{ "allowAnonymous", Types.BOOLEAN },
+			{ "active_", Types.BOOLEAN }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -116,53 +129,30 @@ public class MBMailingListModelImpl
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MBMailingList (uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(254) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(254) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN)";
-
+	public static final String TABLE_SQL_CREATE = "create table MBMailingList (uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(254) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(254) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table MBMailingList";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY mbMailingList.mailingListId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MBMailingList.mailingListId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY mbMailingList.mailingListId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBMailingList.mailingListId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBMailingList"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBMailingList"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBMailingList"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBMailingList"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBMailingList"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBMailingList"),
+			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-
 	public static final long CATEGORYID_COLUMN_BITMASK = 2L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-
 	public static final long UUID_COLUMN_BITMASK = 16L;
-
 	public static final long MAILINGLISTID_COLUMN_BITMASK = 32L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.message.boards.model.MBMailingList"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBMailingList"));
 
 	public MBMailingListModelImpl() {
 	}
@@ -201,18 +191,13 @@ public class MBMailingListModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MBMailingList, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBMailingList, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBMailingList, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBMailingList, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((MBMailingList)this));
 		}
 
@@ -224,174 +209,93 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MBMailingList, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MBMailingList, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MBMailingList, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MBMailingList, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MBMailingList)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MBMailingList)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MBMailingList, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MBMailingList, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MBMailingList, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MBMailingList, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBMailingList, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBMailingList, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MBMailingList, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBMailingList, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MBMailingList, Object>>();
-		Map<String, BiConsumer<MBMailingList, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MBMailingList, ?>>();
+		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBMailingList, Object>>();
+		Map<String, BiConsumer<MBMailingList, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBMailingList, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", MBMailingList::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<MBMailingList, String>)MBMailingList::setUuid);
-		attributeGetterFunctions.put(
-			"mailingListId", MBMailingList::getMailingListId);
-		attributeSetterBiConsumers.put(
-			"mailingListId",
-			(BiConsumer<MBMailingList, Long>)MBMailingList::setMailingListId);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBMailingList, String>)MBMailingList::setUuid);
+		attributeGetterFunctions.put("mailingListId", MBMailingList::getMailingListId);
+		attributeSetterBiConsumers.put("mailingListId", (BiConsumer<MBMailingList, Long>)MBMailingList::setMailingListId);
 		attributeGetterFunctions.put("groupId", MBMailingList::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<MBMailingList, Long>)MBMailingList::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBMailingList, Long>)MBMailingList::setGroupId);
 		attributeGetterFunctions.put("companyId", MBMailingList::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MBMailingList, Long>)MBMailingList::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBMailingList, Long>)MBMailingList::setCompanyId);
 		attributeGetterFunctions.put("userId", MBMailingList::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<MBMailingList, Long>)MBMailingList::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBMailingList, Long>)MBMailingList::setUserId);
 		attributeGetterFunctions.put("userName", MBMailingList::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", MBMailingList::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MBMailingList, Date>)MBMailingList::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MBMailingList::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MBMailingList, Date>)MBMailingList::setModifiedDate);
-		attributeGetterFunctions.put(
-			"categoryId", MBMailingList::getCategoryId);
-		attributeSetterBiConsumers.put(
-			"categoryId",
-			(BiConsumer<MBMailingList, Long>)MBMailingList::setCategoryId);
-		attributeGetterFunctions.put(
-			"emailAddress", MBMailingList::getEmailAddress);
-		attributeSetterBiConsumers.put(
-			"emailAddress",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setEmailAddress);
-		attributeGetterFunctions.put(
-			"inProtocol", MBMailingList::getInProtocol);
-		attributeSetterBiConsumers.put(
-			"inProtocol",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setInProtocol);
-		attributeGetterFunctions.put(
-			"inServerName", MBMailingList::getInServerName);
-		attributeSetterBiConsumers.put(
-			"inServerName",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setInServerName);
-		attributeGetterFunctions.put(
-			"inServerPort", MBMailingList::getInServerPort);
-		attributeSetterBiConsumers.put(
-			"inServerPort",
-			(BiConsumer<MBMailingList, Integer>)MBMailingList::setInServerPort);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBMailingList, String>)MBMailingList::setUserName);
+		attributeGetterFunctions.put("createDate", MBMailingList::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBMailingList, Date>)MBMailingList::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBMailingList::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBMailingList, Date>)MBMailingList::setModifiedDate);
+		attributeGetterFunctions.put("categoryId", MBMailingList::getCategoryId);
+		attributeSetterBiConsumers.put("categoryId", (BiConsumer<MBMailingList, Long>)MBMailingList::setCategoryId);
+		attributeGetterFunctions.put("emailAddress", MBMailingList::getEmailAddress);
+		attributeSetterBiConsumers.put("emailAddress", (BiConsumer<MBMailingList, String>)MBMailingList::setEmailAddress);
+		attributeGetterFunctions.put("inProtocol", MBMailingList::getInProtocol);
+		attributeSetterBiConsumers.put("inProtocol", (BiConsumer<MBMailingList, String>)MBMailingList::setInProtocol);
+		attributeGetterFunctions.put("inServerName", MBMailingList::getInServerName);
+		attributeSetterBiConsumers.put("inServerName", (BiConsumer<MBMailingList, String>)MBMailingList::setInServerName);
+		attributeGetterFunctions.put("inServerPort", MBMailingList::getInServerPort);
+		attributeSetterBiConsumers.put("inServerPort", (BiConsumer<MBMailingList, Integer>)MBMailingList::setInServerPort);
 		attributeGetterFunctions.put("inUseSSL", MBMailingList::getInUseSSL);
-		attributeSetterBiConsumers.put(
-			"inUseSSL",
-			(BiConsumer<MBMailingList, Boolean>)MBMailingList::setInUseSSL);
-		attributeGetterFunctions.put(
-			"inUserName", MBMailingList::getInUserName);
-		attributeSetterBiConsumers.put(
-			"inUserName",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setInUserName);
-		attributeGetterFunctions.put(
-			"inPassword", MBMailingList::getInPassword);
-		attributeSetterBiConsumers.put(
-			"inPassword",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setInPassword);
-		attributeGetterFunctions.put(
-			"inReadInterval", MBMailingList::getInReadInterval);
-		attributeSetterBiConsumers.put(
-			"inReadInterval",
-			(BiConsumer<MBMailingList, Integer>)
-				MBMailingList::setInReadInterval);
-		attributeGetterFunctions.put(
-			"outEmailAddress", MBMailingList::getOutEmailAddress);
-		attributeSetterBiConsumers.put(
-			"outEmailAddress",
-			(BiConsumer<MBMailingList, String>)
-				MBMailingList::setOutEmailAddress);
+		attributeSetterBiConsumers.put("inUseSSL", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setInUseSSL);
+		attributeGetterFunctions.put("inUserName", MBMailingList::getInUserName);
+		attributeSetterBiConsumers.put("inUserName", (BiConsumer<MBMailingList, String>)MBMailingList::setInUserName);
+		attributeGetterFunctions.put("inPassword", MBMailingList::getInPassword);
+		attributeSetterBiConsumers.put("inPassword", (BiConsumer<MBMailingList, String>)MBMailingList::setInPassword);
+		attributeGetterFunctions.put("inReadInterval", MBMailingList::getInReadInterval);
+		attributeSetterBiConsumers.put("inReadInterval", (BiConsumer<MBMailingList, Integer>)MBMailingList::setInReadInterval);
+		attributeGetterFunctions.put("outEmailAddress", MBMailingList::getOutEmailAddress);
+		attributeSetterBiConsumers.put("outEmailAddress", (BiConsumer<MBMailingList, String>)MBMailingList::setOutEmailAddress);
 		attributeGetterFunctions.put("outCustom", MBMailingList::getOutCustom);
-		attributeSetterBiConsumers.put(
-			"outCustom",
-			(BiConsumer<MBMailingList, Boolean>)MBMailingList::setOutCustom);
-		attributeGetterFunctions.put(
-			"outServerName", MBMailingList::getOutServerName);
-		attributeSetterBiConsumers.put(
-			"outServerName",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setOutServerName);
-		attributeGetterFunctions.put(
-			"outServerPort", MBMailingList::getOutServerPort);
-		attributeSetterBiConsumers.put(
-			"outServerPort",
-			(BiConsumer<MBMailingList, Integer>)
-				MBMailingList::setOutServerPort);
+		attributeSetterBiConsumers.put("outCustom", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setOutCustom);
+		attributeGetterFunctions.put("outServerName", MBMailingList::getOutServerName);
+		attributeSetterBiConsumers.put("outServerName", (BiConsumer<MBMailingList, String>)MBMailingList::setOutServerName);
+		attributeGetterFunctions.put("outServerPort", MBMailingList::getOutServerPort);
+		attributeSetterBiConsumers.put("outServerPort", (BiConsumer<MBMailingList, Integer>)MBMailingList::setOutServerPort);
 		attributeGetterFunctions.put("outUseSSL", MBMailingList::getOutUseSSL);
-		attributeSetterBiConsumers.put(
-			"outUseSSL",
-			(BiConsumer<MBMailingList, Boolean>)MBMailingList::setOutUseSSL);
-		attributeGetterFunctions.put(
-			"outUserName", MBMailingList::getOutUserName);
-		attributeSetterBiConsumers.put(
-			"outUserName",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setOutUserName);
-		attributeGetterFunctions.put(
-			"outPassword", MBMailingList::getOutPassword);
-		attributeSetterBiConsumers.put(
-			"outPassword",
-			(BiConsumer<MBMailingList, String>)MBMailingList::setOutPassword);
-		attributeGetterFunctions.put(
-			"allowAnonymous", MBMailingList::getAllowAnonymous);
-		attributeSetterBiConsumers.put(
-			"allowAnonymous",
-			(BiConsumer<MBMailingList, Boolean>)
-				MBMailingList::setAllowAnonymous);
+		attributeSetterBiConsumers.put("outUseSSL", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setOutUseSSL);
+		attributeGetterFunctions.put("outUserName", MBMailingList::getOutUserName);
+		attributeSetterBiConsumers.put("outUserName", (BiConsumer<MBMailingList, String>)MBMailingList::setOutUserName);
+		attributeGetterFunctions.put("outPassword", MBMailingList::getOutPassword);
+		attributeSetterBiConsumers.put("outPassword", (BiConsumer<MBMailingList, String>)MBMailingList::setOutPassword);
+		attributeGetterFunctions.put("allowAnonymous", MBMailingList::getAllowAnonymous);
+		attributeSetterBiConsumers.put("allowAnonymous", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setAllowAnonymous);
 		attributeGetterFunctions.put("active", MBMailingList::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<MBMailingList, Boolean>)MBMailingList::setActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setActive);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -816,8 +720,8 @@ public class MBMailingListModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(MBMailingList.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MBMailingList.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -826,8 +730,8 @@ public class MBMailingListModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MBMailingList.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBMailingList.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -840,9 +744,8 @@ public class MBMailingListModelImpl
 	@Override
 	public MBMailingList toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBMailingList)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MBMailingList)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -942,20 +845,17 @@ public class MBMailingListModelImpl
 
 		mbMailingListModelImpl._originalUuid = mbMailingListModelImpl._uuid;
 
-		mbMailingListModelImpl._originalGroupId =
-			mbMailingListModelImpl._groupId;
+		mbMailingListModelImpl._originalGroupId = mbMailingListModelImpl._groupId;
 
 		mbMailingListModelImpl._setOriginalGroupId = false;
 
-		mbMailingListModelImpl._originalCompanyId =
-			mbMailingListModelImpl._companyId;
+		mbMailingListModelImpl._originalCompanyId = mbMailingListModelImpl._companyId;
 
 		mbMailingListModelImpl._setOriginalCompanyId = false;
 
 		mbMailingListModelImpl._setModifiedDate = false;
 
-		mbMailingListModelImpl._originalCategoryId =
-			mbMailingListModelImpl._categoryId;
+		mbMailingListModelImpl._originalCategoryId = mbMailingListModelImpl._categoryId;
 
 		mbMailingListModelImpl._setOriginalCategoryId = false;
 
@@ -968,8 +868,7 @@ public class MBMailingListModelImpl
 
 	@Override
 	public CacheModel<MBMailingList> toCacheModel() {
-		MBMailingListCacheModel mbMailingListCacheModel =
-			new MBMailingListCacheModel();
+		MBMailingListCacheModel mbMailingListCacheModel = new MBMailingListCacheModel();
 
 		mbMailingListCacheModel.uuid = getUuid();
 
@@ -1108,20 +1007,16 @@ public class MBMailingListModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MBMailingList, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBMailingList, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBMailingList, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBMailingList, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1140,22 +1035,18 @@ public class MBMailingListModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MBMailingList, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBMailingList, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MBMailingList, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MBMailingList, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1169,12 +1060,10 @@ public class MBMailingListModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBMailingList.class.getClassLoader();
+	private static final ClassLoader _classLoader = MBMailingList.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBMailingList.class, ModelWrapper.class
-	};
-
+			MBMailingList.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _mailingListId;
@@ -1213,5 +1102,4 @@ public class MBMailingListModelImpl
 	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private MBMailingList _escapedModel;
-
 }

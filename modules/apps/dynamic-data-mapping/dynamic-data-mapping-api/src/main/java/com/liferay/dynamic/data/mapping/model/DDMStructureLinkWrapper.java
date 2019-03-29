@@ -32,10 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class DDMStructureLinkWrapper
-	extends BaseModelWrapper<DDMStructureLink>
+public class DDMStructureLinkWrapper extends BaseModelWrapper<DDMStructureLink>
 	implements DDMStructureLink, ModelWrapper<DDMStructureLink> {
-
 	public DDMStructureLinkWrapper(DDMStructureLink ddmStructureLink) {
 		super(ddmStructureLink);
 	}
@@ -87,50 +85,50 @@ public class DDMStructureLinkWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this ddm structure link.
-	 *
-	 * @return the fully qualified class name of this ddm structure link
-	 */
+	* Returns the fully qualified class name of this ddm structure link.
+	*
+	* @return the fully qualified class name of this ddm structure link
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this ddm structure link.
-	 *
-	 * @return the class name ID of this ddm structure link
-	 */
+	* Returns the class name ID of this ddm structure link.
+	*
+	* @return the class name ID of this ddm structure link
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this ddm structure link.
-	 *
-	 * @return the class pk of this ddm structure link
-	 */
+	* Returns the class pk of this ddm structure link.
+	*
+	* @return the class pk of this ddm structure link
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this ddm structure link.
-	 *
-	 * @return the company ID of this ddm structure link
-	 */
+	* Returns the company ID of this ddm structure link.
+	*
+	* @return the company ID of this ddm structure link
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the primary key of this ddm structure link.
-	 *
-	 * @return the primary key of this ddm structure link
-	 */
+	* Returns the primary key of this ddm structure link.
+	*
+	* @return the primary key of this ddm structure link
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -139,25 +137,24 @@ public class DDMStructureLinkWrapper
 	@Override
 	public DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getStructure();
 	}
 
 	/**
-	 * Returns the structure ID of this ddm structure link.
-	 *
-	 * @return the structure ID of this ddm structure link
-	 */
+	* Returns the structure ID of this ddm structure link.
+	*
+	* @return the structure ID of this ddm structure link
+	*/
 	@Override
 	public long getStructureId() {
 		return model.getStructureId();
 	}
 
 	/**
-	 * Returns the structure link ID of this ddm structure link.
-	 *
-	 * @return the structure link ID of this ddm structure link
-	 */
+	* Returns the structure link ID of this ddm structure link.
+	*
+	* @return the structure link ID of this ddm structure link
+	*/
 	@Override
 	public long getStructureLinkId() {
 		return model.getStructureLinkId();
@@ -174,60 +171,60 @@ public class DDMStructureLinkWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this ddm structure link.
-	 *
-	 * @param classNameId the class name ID of this ddm structure link
-	 */
+	* Sets the class name ID of this ddm structure link.
+	*
+	* @param classNameId the class name ID of this ddm structure link
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this ddm structure link.
-	 *
-	 * @param classPK the class pk of this ddm structure link
-	 */
+	* Sets the class pk of this ddm structure link.
+	*
+	* @param classPK the class pk of this ddm structure link
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this ddm structure link.
-	 *
-	 * @param companyId the company ID of this ddm structure link
-	 */
+	* Sets the company ID of this ddm structure link.
+	*
+	* @param companyId the company ID of this ddm structure link
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the primary key of this ddm structure link.
-	 *
-	 * @param primaryKey the primary key of this ddm structure link
-	 */
+	* Sets the primary key of this ddm structure link.
+	*
+	* @param primaryKey the primary key of this ddm structure link
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the structure ID of this ddm structure link.
-	 *
-	 * @param structureId the structure ID of this ddm structure link
-	 */
+	* Sets the structure ID of this ddm structure link.
+	*
+	* @param structureId the structure ID of this ddm structure link
+	*/
 	@Override
 	public void setStructureId(long structureId) {
 		model.setStructureId(structureId);
 	}
 
 	/**
-	 * Sets the structure link ID of this ddm structure link.
-	 *
-	 * @param structureLinkId the structure link ID of this ddm structure link
-	 */
+	* Sets the structure link ID of this ddm structure link.
+	*
+	* @param structureLinkId the structure link ID of this ddm structure link
+	*/
 	@Override
 	public void setStructureLinkId(long structureLinkId) {
 		model.setStructureLinkId(structureLinkId);
@@ -237,5 +234,4 @@ public class DDMStructureLinkWrapper
 	protected DDMStructureLinkWrapper wrap(DDMStructureLink ddmStructureLink) {
 		return new DDMStructureLinkWrapper(ddmStructureLink);
 	}
-
 }

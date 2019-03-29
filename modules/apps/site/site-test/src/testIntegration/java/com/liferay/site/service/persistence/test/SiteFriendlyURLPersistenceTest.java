@@ -15,6 +15,7 @@
 package com.liferay.site.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -32,11 +33,21 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+
 import com.liferay.site.exception.NoSuchFriendlyURLException;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalServiceUtil;
 import com.liferay.site.service.persistence.SiteFriendlyURLPersistence;
 import com.liferay.site.service.persistence.SiteFriendlyURLUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class SiteFriendlyURLPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.site.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.site.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class SiteFriendlyURLPersistenceTest {
 
 		_persistence.remove(newSiteFriendlyURL);
 
-		SiteFriendlyURL existingSiteFriendlyURL =
-			_persistence.fetchByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
+		SiteFriendlyURL existingSiteFriendlyURL = _persistence.fetchByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
 
 		Assert.assertNull(existingSiteFriendlyURL);
 	}
@@ -146,40 +146,31 @@ public class SiteFriendlyURLPersistenceTest {
 
 		_siteFriendlyURLs.add(_persistence.update(newSiteFriendlyURL));
 
-		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(
-			newSiteFriendlyURL.getPrimaryKey());
+		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getUuid(), newSiteFriendlyURL.getUuid());
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getSiteFriendlyURLId(),
+		Assert.assertEquals(existingSiteFriendlyURL.getUuid(),
+			newSiteFriendlyURL.getUuid());
+		Assert.assertEquals(existingSiteFriendlyURL.getSiteFriendlyURLId(),
 			newSiteFriendlyURL.getSiteFriendlyURLId());
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getCompanyId(),
+		Assert.assertEquals(existingSiteFriendlyURL.getCompanyId(),
 			newSiteFriendlyURL.getCompanyId());
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getUserId(),
+		Assert.assertEquals(existingSiteFriendlyURL.getUserId(),
 			newSiteFriendlyURL.getUserId());
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getUserName(),
+		Assert.assertEquals(existingSiteFriendlyURL.getUserName(),
 			newSiteFriendlyURL.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSiteFriendlyURL.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSiteFriendlyURL.getCreateDate()),
 			Time.getShortTimestamp(newSiteFriendlyURL.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSiteFriendlyURL.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSiteFriendlyURL.getModifiedDate()),
 			Time.getShortTimestamp(newSiteFriendlyURL.getModifiedDate()));
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getGroupId(),
+		Assert.assertEquals(existingSiteFriendlyURL.getGroupId(),
 			newSiteFriendlyURL.getGroupId());
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getFriendlyURL(),
+		Assert.assertEquals(existingSiteFriendlyURL.getFriendlyURL(),
 			newSiteFriendlyURL.getFriendlyURL());
-		Assert.assertEquals(
-			existingSiteFriendlyURL.getLanguageId(),
+		Assert.assertEquals(existingSiteFriendlyURL.getLanguageId(),
 			newSiteFriendlyURL.getLanguageId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSiteFriendlyURL.getLastPublishDate()),
 			Time.getShortTimestamp(newSiteFriendlyURL.getLastPublishDate()));
 	}
@@ -213,8 +204,8 @@ public class SiteFriendlyURLPersistenceTest {
 
 	@Test
 	public void testCountByC_G() throws Exception {
-		_persistence.countByC_G(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_G(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_G(0L, 0L);
 	}
@@ -230,8 +221,8 @@ public class SiteFriendlyURLPersistenceTest {
 
 	@Test
 	public void testCountByC_G_L() throws Exception {
-		_persistence.countByC_G_L(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+		_persistence.countByC_G_L(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
 		_persistence.countByC_G_L(0L, 0L, "null");
 
@@ -251,8 +242,7 @@ public class SiteFriendlyURLPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
-		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(
-			newSiteFriendlyURL.getPrimaryKey());
+		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
 
 		Assert.assertEquals(existingSiteFriendlyURL, newSiteFriendlyURL);
 	}
@@ -266,24 +256,23 @@ public class SiteFriendlyURLPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SiteFriendlyURL> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"SiteFriendlyURL", "uuid", true, "siteFriendlyURLId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "groupId", true, "friendlyURL", true,
-			"languageId", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("SiteFriendlyURL", "uuid",
+			true, "siteFriendlyURLId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"groupId", true, "friendlyURL", true, "languageId", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
-		SiteFriendlyURL existingSiteFriendlyURL =
-			_persistence.fetchByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
+		SiteFriendlyURL existingSiteFriendlyURL = _persistence.fetchByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
 
 		Assert.assertEquals(existingSiteFriendlyURL, newSiteFriendlyURL);
 	}
@@ -292,8 +281,7 @@ public class SiteFriendlyURLPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		SiteFriendlyURL missingSiteFriendlyURL = _persistence.fetchByPrimaryKey(
-			pk);
+		SiteFriendlyURL missingSiteFriendlyURL = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingSiteFriendlyURL);
 	}
@@ -301,7 +289,6 @@ public class SiteFriendlyURLPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		SiteFriendlyURL newSiteFriendlyURL1 = addSiteFriendlyURL();
 		SiteFriendlyURL newSiteFriendlyURL2 = addSiteFriendlyURL();
 
@@ -310,22 +297,18 @@ public class SiteFriendlyURLPersistenceTest {
 		primaryKeys.add(newSiteFriendlyURL1.getPrimaryKey());
 		primaryKeys.add(newSiteFriendlyURL2.getPrimaryKey());
 
-		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, siteFriendlyURLs.size());
-		Assert.assertEquals(
-			newSiteFriendlyURL1,
+		Assert.assertEquals(newSiteFriendlyURL1,
 			siteFriendlyURLs.get(newSiteFriendlyURL1.getPrimaryKey()));
-		Assert.assertEquals(
-			newSiteFriendlyURL2,
+		Assert.assertEquals(newSiteFriendlyURL2,
 			siteFriendlyURLs.get(newSiteFriendlyURL2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -335,8 +318,7 @@ public class SiteFriendlyURLPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(siteFriendlyURLs.isEmpty());
 	}
@@ -344,7 +326,6 @@ public class SiteFriendlyURLPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
 		long pk = RandomTestUtil.nextLong();
@@ -354,39 +335,36 @@ public class SiteFriendlyURLPersistenceTest {
 		primaryKeys.add(newSiteFriendlyURL.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, siteFriendlyURLs.size());
-		Assert.assertEquals(
-			newSiteFriendlyURL,
+		Assert.assertEquals(newSiteFriendlyURL,
 			siteFriendlyURLs.get(newSiteFriendlyURL.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(siteFriendlyURLs.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSiteFriendlyURL.getPrimaryKey());
 
-		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SiteFriendlyURL> siteFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, siteFriendlyURLs.size());
-		Assert.assertEquals(
-			newSiteFriendlyURL,
+		Assert.assertEquals(newSiteFriendlyURL,
 			siteFriendlyURLs.get(newSiteFriendlyURL.getPrimaryKey()));
 	}
 
@@ -394,19 +372,15 @@ public class SiteFriendlyURLPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			SiteFriendlyURLLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = SiteFriendlyURLLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<SiteFriendlyURL>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SiteFriendlyURL>() {
 				@Override
 				public void performAction(SiteFriendlyURL siteFriendlyURL) {
 					Assert.assertNotNull(siteFriendlyURL);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -415,19 +389,17 @@ public class SiteFriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SiteFriendlyURL.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SiteFriendlyURL.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"siteFriendlyURLId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("siteFriendlyURLId",
 				newSiteFriendlyURL.getSiteFriendlyURLId()));
 
-		List<SiteFriendlyURL> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SiteFriendlyURL> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -438,34 +410,32 @@ public class SiteFriendlyURLPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SiteFriendlyURL.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SiteFriendlyURL.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"siteFriendlyURLId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("siteFriendlyURLId",
+				RandomTestUtil.nextLong()));
 
-		List<SiteFriendlyURL> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SiteFriendlyURL> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SiteFriendlyURL.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SiteFriendlyURL.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("siteFriendlyURLId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"siteFriendlyURLId"));
 
 		Object newSiteFriendlyURLId = newSiteFriendlyURL.getSiteFriendlyURLId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"siteFriendlyURLId", new Object[] {newSiteFriendlyURLId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("siteFriendlyURLId",
+				new Object[] { newSiteFriendlyURLId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -478,15 +448,14 @@ public class SiteFriendlyURLPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SiteFriendlyURL.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SiteFriendlyURL.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("siteFriendlyURLId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"siteFriendlyURLId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"siteFriendlyURLId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("siteFriendlyURLId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -499,67 +468,45 @@ public class SiteFriendlyURLPersistenceTest {
 
 		_persistence.clearCache();
 
-		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(
-			newSiteFriendlyURL.getPrimaryKey());
+		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(newSiteFriendlyURL.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSiteFriendlyURL.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingSiteFriendlyURL.getUuid(),
+				ReflectionTestUtil.invoke(existingSiteFriendlyURL,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingSiteFriendlyURL.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteFriendlyURL,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteFriendlyURL,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingSiteFriendlyURL.getFriendlyURL(),
-				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalFriendlyURL",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingSiteFriendlyURL,
+					"getOriginalFriendlyURL", new Class<?>[0])));
 
-		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteFriendlyURL,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSiteFriendlyURL.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteFriendlyURL,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingSiteFriendlyURL.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalLanguageId",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingSiteFriendlyURL,
+					"getOriginalLanguageId", new Class<?>[0])));
 
-		Assert.assertEquals(
-			Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSiteFriendlyURL, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(existingSiteFriendlyURL.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteFriendlyURL,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingSiteFriendlyURL.getFriendlyURL(),
-				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalFriendlyURL",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
+				ReflectionTestUtil.invoke(existingSiteFriendlyURL,
+					"getOriginalFriendlyURL", new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(
 				existingSiteFriendlyURL.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					existingSiteFriendlyURL, "getOriginalLanguageId",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingSiteFriendlyURL,
+					"getOriginalLanguageId", new Class<?>[0])));
 	}
 
 	protected SiteFriendlyURL addSiteFriendlyURL() throws Exception {
@@ -592,9 +539,7 @@ public class SiteFriendlyURLPersistenceTest {
 		return siteFriendlyURL;
 	}
 
-	private List<SiteFriendlyURL> _siteFriendlyURLs =
-		new ArrayList<SiteFriendlyURL>();
+	private List<SiteFriendlyURL> _siteFriendlyURLs = new ArrayList<SiteFriendlyURL>();
 	private SiteFriendlyURLPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

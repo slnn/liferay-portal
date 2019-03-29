@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class LocalizedEntrySoap implements Serializable {
-
 	public static LocalizedEntrySoap toSoapModel(LocalizedEntry model) {
 		LocalizedEntrySoap soapModel = new LocalizedEntrySoap();
 
@@ -49,14 +48,11 @@ public class LocalizedEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LocalizedEntrySoap[][] toSoapModels(
-		LocalizedEntry[][] models) {
-
+	public static LocalizedEntrySoap[][] toSoapModels(LocalizedEntry[][] models) {
 		LocalizedEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new LocalizedEntrySoap[models.length][models[0].length];
+			soapModels = new LocalizedEntrySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LocalizedEntrySoap[0][0];
@@ -69,11 +65,8 @@ public class LocalizedEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LocalizedEntrySoap[] toSoapModels(
-		List<LocalizedEntry> models) {
-
-		List<LocalizedEntrySoap> soapModels = new ArrayList<LocalizedEntrySoap>(
-			models.size());
+	public static LocalizedEntrySoap[] toSoapModels(List<LocalizedEntry> models) {
+		List<LocalizedEntrySoap> soapModels = new ArrayList<LocalizedEntrySoap>(models.size());
 
 		for (LocalizedEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -111,5 +104,4 @@ public class LocalizedEntrySoap implements Serializable {
 
 	private String _defaultLanguageId;
 	private long _localizedEntryId;
-
 }

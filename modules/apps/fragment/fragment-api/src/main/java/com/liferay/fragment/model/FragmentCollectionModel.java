@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface FragmentCollectionModel
-	extends BaseModel<FragmentCollection>, ShardedModel, StagedGroupedModel {
-
+public interface FragmentCollectionModel extends BaseModel<FragmentCollection>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -262,5 +261,4 @@ public interface FragmentCollectionModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

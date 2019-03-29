@@ -17,6 +17,7 @@ package com.liferay.message.boards.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class MBThreadWrapper
-	extends BaseModelWrapper<MBThread>
+public class MBThreadWrapper extends BaseModelWrapper<MBThread>
 	implements MBThread, ModelWrapper<MBThread> {
-
 	public MBThreadWrapper(MBThread mbThread) {
 		super(mbThread);
 	}
@@ -215,10 +214,8 @@ public class MBThreadWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.repository.model.Folder
-			addAttachmentsFolder()
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.addAttachmentsFolder();
 	}
 
@@ -230,105 +227,104 @@ public class MBThreadWrapper
 	@Override
 	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getCategory();
 	}
 
 	/**
-	 * Returns the category ID of this message boards thread.
-	 *
-	 * @return the category ID of this message boards thread
-	 */
+	* Returns the category ID of this message boards thread.
+	*
+	* @return the category ID of this message boards thread
+	*/
 	@Override
 	public long getCategoryId() {
 		return model.getCategoryId();
 	}
 
 	/**
-	 * Returns the company ID of this message boards thread.
-	 *
-	 * @return the company ID of this message boards thread
-	 */
+	* Returns the company ID of this message boards thread.
+	*
+	* @return the company ID of this message boards thread
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the container model ID of this message boards thread.
-	 *
-	 * @return the container model ID of this message boards thread
-	 */
+	* Returns the container model ID of this message boards thread.
+	*
+	* @return the container model ID of this message boards thread
+	*/
 	@Override
 	public long getContainerModelId() {
 		return model.getContainerModelId();
 	}
 
 	/**
-	 * Returns the container name of this message boards thread.
-	 *
-	 * @return the container name of this message boards thread
-	 */
+	* Returns the container name of this message boards thread.
+	*
+	* @return the container name of this message boards thread
+	*/
 	@Override
 	public String getContainerModelName() {
 		return model.getContainerModelName();
 	}
 
 	/**
-	 * Returns the create date of this message boards thread.
-	 *
-	 * @return the create date of this message boards thread
-	 */
+	* Returns the create date of this message boards thread.
+	*
+	* @return the create date of this message boards thread
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this message boards thread.
-	 *
-	 * @return the group ID of this message boards thread
-	 */
+	* Returns the group ID of this message boards thread.
+	*
+	* @return the group ID of this message boards thread
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last post by user ID of this message boards thread.
-	 *
-	 * @return the last post by user ID of this message boards thread
-	 */
+	* Returns the last post by user ID of this message boards thread.
+	*
+	* @return the last post by user ID of this message boards thread
+	*/
 	@Override
 	public long getLastPostByUserId() {
 		return model.getLastPostByUserId();
 	}
 
 	/**
-	 * Returns the last post by user uuid of this message boards thread.
-	 *
-	 * @return the last post by user uuid of this message boards thread
-	 */
+	* Returns the last post by user uuid of this message boards thread.
+	*
+	* @return the last post by user uuid of this message boards thread
+	*/
 	@Override
 	public String getLastPostByUserUuid() {
 		return model.getLastPostByUserUuid();
 	}
 
 	/**
-	 * Returns the last post date of this message boards thread.
-	 *
-	 * @return the last post date of this message boards thread
-	 */
+	* Returns the last post date of this message boards thread.
+	*
+	* @return the last post date of this message boards thread
+	*/
 	@Override
 	public Date getLastPostDate() {
 		return model.getLastPostDate();
 	}
 
 	/**
-	 * Returns the last publish date of this message boards thread.
-	 *
-	 * @return the last publish date of this message boards thread
-	 */
+	* Returns the last publish date of this message boards thread.
+	*
+	* @return the last publish date of this message boards thread
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
@@ -340,30 +336,30 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Returns the message count of this message boards thread.
-	 *
-	 * @return the message count of this message boards thread
-	 */
+	* Returns the message count of this message boards thread.
+	*
+	* @return the message count of this message boards thread
+	*/
 	@Override
 	public int getMessageCount() {
 		return model.getMessageCount();
 	}
 
 	/**
-	 * Returns the modified date of this message boards thread.
-	 *
-	 * @return the modified date of this message boards thread
-	 */
+	* Returns the modified date of this message boards thread.
+	*
+	* @return the modified date of this message boards thread
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the parent container model ID of this message boards thread.
-	 *
-	 * @return the parent container model ID of this message boards thread
-	 */
+	* Returns the parent container model ID of this message boards thread.
+	*
+	* @return the parent container model ID of this message boards thread
+	*/
 	@Override
 	public long getParentContainerModelId() {
 		return model.getParentContainerModelId();
@@ -375,163 +371,162 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Returns the primary key of this message boards thread.
-	 *
-	 * @return the primary key of this message boards thread
-	 */
+	* Returns the primary key of this message boards thread.
+	*
+	* @return the primary key of this message boards thread
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the priority of this message boards thread.
-	 *
-	 * @return the priority of this message boards thread
-	 */
+	* Returns the priority of this message boards thread.
+	*
+	* @return the priority of this message boards thread
+	*/
 	@Override
 	public double getPriority() {
 		return model.getPriority();
 	}
 
 	/**
-	 * Returns the question of this message boards thread.
-	 *
-	 * @return the question of this message boards thread
-	 */
+	* Returns the question of this message boards thread.
+	*
+	* @return the question of this message boards thread
+	*/
 	@Override
 	public boolean getQuestion() {
 		return model.getQuestion();
 	}
 
 	/**
-	 * Returns the root message ID of this message boards thread.
-	 *
-	 * @return the root message ID of this message boards thread
-	 */
+	* Returns the root message ID of this message boards thread.
+	*
+	* @return the root message ID of this message boards thread
+	*/
 	@Override
 	public long getRootMessageId() {
 		return model.getRootMessageId();
 	}
 
 	/**
-	 * Returns the root message user ID of this message boards thread.
-	 *
-	 * @return the root message user ID of this message boards thread
-	 */
+	* Returns the root message user ID of this message boards thread.
+	*
+	* @return the root message user ID of this message boards thread
+	*/
 	@Override
 	public long getRootMessageUserId() {
 		return model.getRootMessageUserId();
 	}
 
 	/**
-	 * Returns the root message user uuid of this message boards thread.
-	 *
-	 * @return the root message user uuid of this message boards thread
-	 */
+	* Returns the root message user uuid of this message boards thread.
+	*
+	* @return the root message user uuid of this message boards thread
+	*/
 	@Override
 	public String getRootMessageUserUuid() {
 		return model.getRootMessageUserUuid();
 	}
 
 	/**
-	 * Returns the status of this message boards thread.
-	 *
-	 * @return the status of this message boards thread
-	 */
+	* Returns the status of this message boards thread.
+	*
+	* @return the status of this message boards thread
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the status by user ID of this message boards thread.
-	 *
-	 * @return the status by user ID of this message boards thread
-	 */
+	* Returns the status by user ID of this message boards thread.
+	*
+	* @return the status by user ID of this message boards thread
+	*/
 	@Override
 	public long getStatusByUserId() {
 		return model.getStatusByUserId();
 	}
 
 	/**
-	 * Returns the status by user name of this message boards thread.
-	 *
-	 * @return the status by user name of this message boards thread
-	 */
+	* Returns the status by user name of this message boards thread.
+	*
+	* @return the status by user name of this message boards thread
+	*/
 	@Override
 	public String getStatusByUserName() {
 		return model.getStatusByUserName();
 	}
 
 	/**
-	 * Returns the status by user uuid of this message boards thread.
-	 *
-	 * @return the status by user uuid of this message boards thread
-	 */
+	* Returns the status by user uuid of this message boards thread.
+	*
+	* @return the status by user uuid of this message boards thread
+	*/
 	@Override
 	public String getStatusByUserUuid() {
 		return model.getStatusByUserUuid();
 	}
 
 	/**
-	 * Returns the status date of this message boards thread.
-	 *
-	 * @return the status date of this message boards thread
-	 */
+	* Returns the status date of this message boards thread.
+	*
+	* @return the status date of this message boards thread
+	*/
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
 	}
 
 	/**
-	 * Returns the thread ID of this message boards thread.
-	 *
-	 * @return the thread ID of this message boards thread
-	 */
+	* Returns the thread ID of this message boards thread.
+	*
+	* @return the thread ID of this message boards thread
+	*/
 	@Override
 	public long getThreadId() {
 		return model.getThreadId();
 	}
 
 	/**
-	 * Returns the title of this message boards thread.
-	 *
-	 * @return the title of this message boards thread
-	 */
+	* Returns the title of this message boards thread.
+	*
+	* @return the title of this message boards thread
+	*/
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	 * Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
-	 *
-	 * @return the trash entry created when this message boards thread was moved to the Recycle Bin
-	 */
+	* Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
+	*
+	* @return the trash entry created when this message boards thread was moved to the Recycle Bin
+	*/
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getTrashEntry();
 	}
 
 	/**
-	 * Returns the class primary key of the trash entry for this message boards thread.
-	 *
-	 * @return the class primary key of the trash entry for this message boards thread
-	 */
+	* Returns the class primary key of the trash entry for this message boards thread.
+	*
+	* @return the class primary key of the trash entry for this message boards thread
+	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return model.getTrashEntryClassPK();
 	}
 
 	/**
-	 * Returns the trash handler for this message boards thread.
-	 *
-	 * @return the trash handler for this message boards thread
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* Returns the trash handler for this message boards thread.
+	*
+	* @return the trash handler for this message boards thread
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
@@ -539,50 +534,50 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Returns the user ID of this message boards thread.
-	 *
-	 * @return the user ID of this message boards thread
-	 */
+	* Returns the user ID of this message boards thread.
+	*
+	* @return the user ID of this message boards thread
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this message boards thread.
-	 *
-	 * @return the user name of this message boards thread
-	 */
+	* Returns the user name of this message boards thread.
+	*
+	* @return the user name of this message boards thread
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this message boards thread.
-	 *
-	 * @return the user uuid of this message boards thread
-	 */
+	* Returns the user uuid of this message boards thread.
+	*
+	* @return the user uuid of this message boards thread
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this message boards thread.
-	 *
-	 * @return the uuid of this message boards thread
-	 */
+	* Returns the uuid of this message boards thread.
+	*
+	* @return the uuid of this message boards thread
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	 * Returns the view count of this message boards thread.
-	 *
-	 * @return the view count of this message boards thread
-	 */
+	* Returns the view count of this message boards thread.
+	*
+	* @return the view count of this message boards thread
+	*/
 	@Override
 	public int getViewCount() {
 		return model.getViewCount();
@@ -594,80 +589,80 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is approved.
-	 *
-	 * @return <code>true</code> if this message boards thread is approved; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is approved.
+	*
+	* @return <code>true</code> if this message boards thread is approved; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isApproved() {
 		return model.isApproved();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is denied.
-	 *
-	 * @return <code>true</code> if this message boards thread is denied; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is denied.
+	*
+	* @return <code>true</code> if this message boards thread is denied; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDenied() {
 		return model.isDenied();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is a draft.
-	 *
-	 * @return <code>true</code> if this message boards thread is a draft; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is a draft.
+	*
+	* @return <code>true</code> if this message boards thread is a draft; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDraft() {
 		return model.isDraft();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is expired.
-	 *
-	 * @return <code>true</code> if this message boards thread is expired; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is expired.
+	*
+	* @return <code>true</code> if this message boards thread is expired; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isExpired() {
 		return model.isExpired();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is inactive.
-	 *
-	 * @return <code>true</code> if this message boards thread is inactive; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is inactive.
+	*
+	* @return <code>true</code> if this message boards thread is inactive; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isInactive() {
 		return model.isInactive();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is incomplete.
-	 *
-	 * @return <code>true</code> if this message boards thread is incomplete; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is incomplete.
+	*
+	* @return <code>true</code> if this message boards thread is incomplete; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isIncomplete() {
 		return model.isIncomplete();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isInTrash() {
 		return model.isInTrash();
 	}
 
 	/**
-	 * Returns <code>true</code> if the parent of this message boards thread is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if the parent of this message boards thread is in the Recycle Bin; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if the parent of this message boards thread is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this message boards thread is in the Recycle Bin; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isInTrashContainer() {
 		return model.isInTrashContainer();
@@ -689,30 +684,30 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is pending.
-	 *
-	 * @return <code>true</code> if this message boards thread is pending; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is pending.
+	*
+	* @return <code>true</code> if this message boards thread is pending; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isPending() {
 		return model.isPending();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is question.
-	 *
-	 * @return <code>true</code> if this message boards thread is question; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is question.
+	*
+	* @return <code>true</code> if this message boards thread is question; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isQuestion() {
 		return model.isQuestion();
 	}
 
 	/**
-	 * Returns <code>true</code> if this message boards thread is scheduled.
-	 *
-	 * @return <code>true</code> if this message boards thread is scheduled; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this message boards thread is scheduled.
+	*
+	* @return <code>true</code> if this message boards thread is scheduled; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isScheduled() {
 		return model.isScheduled();
@@ -724,300 +719,300 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Sets the category ID of this message boards thread.
-	 *
-	 * @param categoryId the category ID of this message boards thread
-	 */
+	* Sets the category ID of this message boards thread.
+	*
+	* @param categoryId the category ID of this message boards thread
+	*/
 	@Override
 	public void setCategoryId(long categoryId) {
 		model.setCategoryId(categoryId);
 	}
 
 	/**
-	 * Sets the company ID of this message boards thread.
-	 *
-	 * @param companyId the company ID of this message boards thread
-	 */
+	* Sets the company ID of this message boards thread.
+	*
+	* @param companyId the company ID of this message boards thread
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the container model ID of this message boards thread.
-	 *
-	 * @param containerModelId the container model ID of this message boards thread
-	 */
+	* Sets the container model ID of this message boards thread.
+	*
+	* @param containerModelId the container model ID of this message boards thread
+	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
 		model.setContainerModelId(containerModelId);
 	}
 
 	/**
-	 * Sets the create date of this message boards thread.
-	 *
-	 * @param createDate the create date of this message boards thread
-	 */
+	* Sets the create date of this message boards thread.
+	*
+	* @param createDate the create date of this message boards thread
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this message boards thread.
-	 *
-	 * @param groupId the group ID of this message boards thread
-	 */
+	* Sets the group ID of this message boards thread.
+	*
+	* @param groupId the group ID of this message boards thread
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last post by user ID of this message boards thread.
-	 *
-	 * @param lastPostByUserId the last post by user ID of this message boards thread
-	 */
+	* Sets the last post by user ID of this message boards thread.
+	*
+	* @param lastPostByUserId the last post by user ID of this message boards thread
+	*/
 	@Override
 	public void setLastPostByUserId(long lastPostByUserId) {
 		model.setLastPostByUserId(lastPostByUserId);
 	}
 
 	/**
-	 * Sets the last post by user uuid of this message boards thread.
-	 *
-	 * @param lastPostByUserUuid the last post by user uuid of this message boards thread
-	 */
+	* Sets the last post by user uuid of this message boards thread.
+	*
+	* @param lastPostByUserUuid the last post by user uuid of this message boards thread
+	*/
 	@Override
 	public void setLastPostByUserUuid(String lastPostByUserUuid) {
 		model.setLastPostByUserUuid(lastPostByUserUuid);
 	}
 
 	/**
-	 * Sets the last post date of this message boards thread.
-	 *
-	 * @param lastPostDate the last post date of this message boards thread
-	 */
+	* Sets the last post date of this message boards thread.
+	*
+	* @param lastPostDate the last post date of this message boards thread
+	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
-	 * Sets the last publish date of this message boards thread.
-	 *
-	 * @param lastPublishDate the last publish date of this message boards thread
-	 */
+	* Sets the last publish date of this message boards thread.
+	*
+	* @param lastPublishDate the last publish date of this message boards thread
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the message count of this message boards thread.
-	 *
-	 * @param messageCount the message count of this message boards thread
-	 */
+	* Sets the message count of this message boards thread.
+	*
+	* @param messageCount the message count of this message boards thread
+	*/
 	@Override
 	public void setMessageCount(int messageCount) {
 		model.setMessageCount(messageCount);
 	}
 
 	/**
-	 * Sets the modified date of this message boards thread.
-	 *
-	 * @param modifiedDate the modified date of this message boards thread
-	 */
+	* Sets the modified date of this message boards thread.
+	*
+	* @param modifiedDate the modified date of this message boards thread
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the parent container model ID of this message boards thread.
-	 *
-	 * @param parentContainerModelId the parent container model ID of this message boards thread
-	 */
+	* Sets the parent container model ID of this message boards thread.
+	*
+	* @param parentContainerModelId the parent container model ID of this message boards thread
+	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
 		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
-	 * Sets the primary key of this message boards thread.
-	 *
-	 * @param primaryKey the primary key of this message boards thread
-	 */
+	* Sets the primary key of this message boards thread.
+	*
+	* @param primaryKey the primary key of this message boards thread
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the priority of this message boards thread.
-	 *
-	 * @param priority the priority of this message boards thread
-	 */
+	* Sets the priority of this message boards thread.
+	*
+	* @param priority the priority of this message boards thread
+	*/
 	@Override
 	public void setPriority(double priority) {
 		model.setPriority(priority);
 	}
 
 	/**
-	 * Sets whether this message boards thread is question.
-	 *
-	 * @param question the question of this message boards thread
-	 */
+	* Sets whether this message boards thread is question.
+	*
+	* @param question the question of this message boards thread
+	*/
 	@Override
 	public void setQuestion(boolean question) {
 		model.setQuestion(question);
 	}
 
 	/**
-	 * Sets the root message ID of this message boards thread.
-	 *
-	 * @param rootMessageId the root message ID of this message boards thread
-	 */
+	* Sets the root message ID of this message boards thread.
+	*
+	* @param rootMessageId the root message ID of this message boards thread
+	*/
 	@Override
 	public void setRootMessageId(long rootMessageId) {
 		model.setRootMessageId(rootMessageId);
 	}
 
 	/**
-	 * Sets the root message user ID of this message boards thread.
-	 *
-	 * @param rootMessageUserId the root message user ID of this message boards thread
-	 */
+	* Sets the root message user ID of this message boards thread.
+	*
+	* @param rootMessageUserId the root message user ID of this message boards thread
+	*/
 	@Override
 	public void setRootMessageUserId(long rootMessageUserId) {
 		model.setRootMessageUserId(rootMessageUserId);
 	}
 
 	/**
-	 * Sets the root message user uuid of this message boards thread.
-	 *
-	 * @param rootMessageUserUuid the root message user uuid of this message boards thread
-	 */
+	* Sets the root message user uuid of this message boards thread.
+	*
+	* @param rootMessageUserUuid the root message user uuid of this message boards thread
+	*/
 	@Override
 	public void setRootMessageUserUuid(String rootMessageUserUuid) {
 		model.setRootMessageUserUuid(rootMessageUserUuid);
 	}
 
 	/**
-	 * Sets the status of this message boards thread.
-	 *
-	 * @param status the status of this message boards thread
-	 */
+	* Sets the status of this message boards thread.
+	*
+	* @param status the status of this message boards thread
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the status by user ID of this message boards thread.
-	 *
-	 * @param statusByUserId the status by user ID of this message boards thread
-	 */
+	* Sets the status by user ID of this message boards thread.
+	*
+	* @param statusByUserId the status by user ID of this message boards thread
+	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
 		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
-	 * Sets the status by user name of this message boards thread.
-	 *
-	 * @param statusByUserName the status by user name of this message boards thread
-	 */
+	* Sets the status by user name of this message boards thread.
+	*
+	* @param statusByUserName the status by user name of this message boards thread
+	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
 		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
-	 * Sets the status by user uuid of this message boards thread.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this message boards thread
-	 */
+	* Sets the status by user uuid of this message boards thread.
+	*
+	* @param statusByUserUuid the status by user uuid of this message boards thread
+	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
 		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
-	 * Sets the status date of this message boards thread.
-	 *
-	 * @param statusDate the status date of this message boards thread
-	 */
+	* Sets the status date of this message boards thread.
+	*
+	* @param statusDate the status date of this message boards thread
+	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
 	}
 
 	/**
-	 * Sets the thread ID of this message boards thread.
-	 *
-	 * @param threadId the thread ID of this message boards thread
-	 */
+	* Sets the thread ID of this message boards thread.
+	*
+	* @param threadId the thread ID of this message boards thread
+	*/
 	@Override
 	public void setThreadId(long threadId) {
 		model.setThreadId(threadId);
 	}
 
 	/**
-	 * Sets the title of this message boards thread.
-	 *
-	 * @param title the title of this message boards thread
-	 */
+	* Sets the title of this message boards thread.
+	*
+	* @param title the title of this message boards thread
+	*/
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
 	}
 
 	/**
-	 * Sets the user ID of this message boards thread.
-	 *
-	 * @param userId the user ID of this message boards thread
-	 */
+	* Sets the user ID of this message boards thread.
+	*
+	* @param userId the user ID of this message boards thread
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this message boards thread.
-	 *
-	 * @param userName the user name of this message boards thread
-	 */
+	* Sets the user name of this message boards thread.
+	*
+	* @param userName the user name of this message boards thread
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this message boards thread.
-	 *
-	 * @param userUuid the user uuid of this message boards thread
-	 */
+	* Sets the user uuid of this message boards thread.
+	*
+	* @param userUuid the user uuid of this message boards thread
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this message boards thread.
-	 *
-	 * @param uuid the uuid of this message boards thread
-	 */
+	* Sets the uuid of this message boards thread.
+	*
+	* @param uuid the uuid of this message boards thread
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
 	}
 
 	/**
-	 * Sets the view count of this message boards thread.
-	 *
-	 * @param viewCount the view count of this message boards thread
-	 */
+	* Sets the view count of this message boards thread.
+	*
+	* @param viewCount the view count of this message boards thread
+	*/
 	@Override
 	public void setViewCount(int viewCount) {
 		model.setViewCount(viewCount);
@@ -1032,5 +1027,4 @@ public class MBThreadWrapper
 	protected MBThreadWrapper wrap(MBThread mbThread) {
 		return new MBThreadWrapper(mbThread);
 	}
-
 }

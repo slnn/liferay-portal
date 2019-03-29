@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.model.BaseModel;
  * @generated
  */
 @ProviderType
-public interface AssetEntryAssetCategoryRelModel
-	extends BaseModel<AssetEntryAssetCategoryRel> {
-
+public interface AssetEntryAssetCategoryRelModel extends BaseModel<AssetEntryAssetCategoryRel> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,5 +107,4 @@ public interface AssetEntryAssetCategoryRelModel
 	 * @param priority the priority of this asset entry asset category rel
 	 */
 	public void setPriority(int priority);
-
 }

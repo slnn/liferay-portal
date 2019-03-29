@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DDLRecordVersionModel
-	extends BaseModel<DDLRecordVersion>, MVCCModel, ShardedModel,
-			WorkflowedModel {
-
+public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
+	MVCCModel, ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -407,5 +405,4 @@ public interface DDLRecordVersionModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

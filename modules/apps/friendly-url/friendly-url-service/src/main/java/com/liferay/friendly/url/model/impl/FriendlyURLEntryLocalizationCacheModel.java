@@ -17,8 +17,10 @@ package com.liferay.friendly.url.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 
@@ -34,10 +36,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class FriendlyURLEntryLocalizationCacheModel
-	implements CacheModel<FriendlyURLEntryLocalization>, Externalizable,
-			   MVCCModel {
-
+public class FriendlyURLEntryLocalizationCacheModel implements CacheModel<FriendlyURLEntryLocalization>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,16 +48,11 @@ public class FriendlyURLEntryLocalizationCacheModel
 			return false;
 		}
 
-		FriendlyURLEntryLocalizationCacheModel
-			friendlyURLEntryLocalizationCacheModel =
-				(FriendlyURLEntryLocalizationCacheModel)obj;
+		FriendlyURLEntryLocalizationCacheModel friendlyURLEntryLocalizationCacheModel =
+			(FriendlyURLEntryLocalizationCacheModel)obj;
 
-		if ((friendlyURLEntryLocalizationId ==
-				friendlyURLEntryLocalizationCacheModel.
-					friendlyURLEntryLocalizationId) &&
-			(mvccVersion ==
-				friendlyURLEntryLocalizationCacheModel.mvccVersion)) {
-
+		if ((friendlyURLEntryLocalizationId == friendlyURLEntryLocalizationCacheModel.friendlyURLEntryLocalizationId) &&
+				(mvccVersion == friendlyURLEntryLocalizationCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -110,15 +105,12 @@ public class FriendlyURLEntryLocalizationCacheModel
 
 	@Override
 	public FriendlyURLEntryLocalization toEntityModel() {
-		FriendlyURLEntryLocalizationImpl friendlyURLEntryLocalizationImpl =
-			new FriendlyURLEntryLocalizationImpl();
+		FriendlyURLEntryLocalizationImpl friendlyURLEntryLocalizationImpl = new FriendlyURLEntryLocalizationImpl();
 
 		friendlyURLEntryLocalizationImpl.setMvccVersion(mvccVersion);
-		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(
-			friendlyURLEntryLocalizationId);
+		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(friendlyURLEntryLocalizationId);
 		friendlyURLEntryLocalizationImpl.setCompanyId(companyId);
-		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(
-			friendlyURLEntryId);
+		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(friendlyURLEntryId);
 
 		if (languageId == null) {
 			friendlyURLEntryLocalizationImpl.setLanguageId("");
@@ -163,7 +155,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(friendlyURLEntryLocalizationId);
@@ -202,5 +195,4 @@ public class FriendlyURLEntryLocalizationCacheModel
 	public long groupId;
 	public long classNameId;
 	public long classPK;
-
 }

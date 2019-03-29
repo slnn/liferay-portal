@@ -16,16 +16,18 @@ package com.liferay.wiki.uad.display;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
+
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the WikiPage UAD display.
@@ -39,18 +41,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseWikiPageUADDisplay
-	extends BaseModelUADDisplay<WikiPage> {
-
+public abstract class BaseWikiPageUADDisplay extends BaseModelUADDisplay<WikiPage> {
 	@Override
 	public WikiPage get(Serializable primaryKey) throws PortalException {
-		return wikiPageLocalService.getWikiPage(
-			Long.valueOf(primaryKey.toString()));
+		return wikiPageLocalService.getWikiPage(Long.valueOf(
+				primaryKey.toString()));
 	}
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"title", "content", "summary"};
+		return new String[] { "title", "content", "summary" };
 	}
 
 	@Override
@@ -69,9 +69,8 @@ public abstract class BaseWikiPageUADDisplay
 	}
 
 	@Override
-	protected List<WikiPage> doGetRange(
-		DynamicQuery dynamicQuery, int start, int end) {
-
+	protected List<WikiPage> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return wikiPageLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -82,5 +81,4 @@ public abstract class BaseWikiPageUADDisplay
 
 	@Reference
 	protected WikiPageLocalService wikiPageLocalService;
-
 }

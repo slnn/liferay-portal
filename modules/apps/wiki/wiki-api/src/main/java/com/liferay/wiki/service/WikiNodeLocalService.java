@@ -17,6 +17,7 @@ package com.liferay.wiki.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
 import com.liferay.wiki.model.WikiNode;
 
 import java.io.InputStream;
@@ -56,13 +58,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface WikiNodeLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface WikiNodeLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,94 +70,82 @@ public interface WikiNodeLocalService
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public WikiNode addNode(
-			long userId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public WikiNode addNode(long userId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void addNodeResources(
-			long nodeId, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException;
+	public void addNodeResources(long nodeId, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addNodeResources(WikiNode, ModelPermissions)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
+	*/
 	@Deprecated
-	public void addNodeResources(
-			long nodeId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException;
+	public void addNodeResources(long nodeId, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
 
-	public void addNodeResources(
-			WikiNode node, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException;
+	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
 
-	public void addNodeResources(
-			WikiNode node, ModelPermissions modelPermissions)
-		throws PortalException;
+	public void addNodeResources(WikiNode node,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #addNodeResources(WikiNode, ModelPermissions)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
+	*/
 	@Deprecated
-	public void addNodeResources(
-			WikiNode node, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException;
+	public void addNodeResources(WikiNode node, String[] groupPermissions,
+		String[] guestPermissions) throws PortalException;
 
 	/**
-	 * Adds the wiki node to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param wikiNode the wiki node
-	 * @return the wiki node that was added
-	 */
+	* Adds the wiki node to the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode addWikiNode(WikiNode wikiNode);
 
 	/**
-	 * Creates a new wiki node with the primary key. Does not add the wiki node to the database.
-	 *
-	 * @param nodeId the primary key for the new wiki node
-	 * @return the new wiki node
-	 */
+	* Creates a new wiki node with the primary key. Does not add the wiki node to the database.
+	*
+	* @param nodeId the primary key for the new wiki node
+	* @return the new wiki node
+	*/
 	@Transactional(enabled = false)
 	public WikiNode createWikiNode(long nodeId);
 
 	public void deleteNode(long nodeId) throws PortalException;
 
-	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE
-	)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteNode(WikiNode node) throws PortalException;
 
 	public void deleteNodes(long groupId) throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	 * Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param nodeId the primary key of the wiki node
-	 * @return the wiki node that was removed
-	 * @throws PortalException if a wiki node with the primary key could not be found
-	 */
+	* Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param nodeId the primary key of the wiki node
+	* @return the wiki node that was removed
+	* @throws PortalException if a wiki node with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public WikiNode deleteWikiNode(long nodeId) throws PortalException;
 
 	/**
-	 * Deletes the wiki node from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param wikiNode the wiki node
-	 * @return the wiki node that was removed
-	 */
+	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public WikiNode deleteWikiNode(WikiNode wikiNode);
 
@@ -166,67 +153,66 @@ public interface WikiNodeLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode fetchNode(long groupId, String name);
@@ -238,12 +224,12 @@ public interface WikiNodeLocalService
 	public WikiNode fetchWikiNode(long nodeId);
 
 	/**
-	 * Returns the wiki node matching the UUID and group.
-	 *
-	 * @param uuid the wiki node's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
+	* Returns the wiki node matching the UUID and group.
+	*
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode fetchWikiNodeByUuidAndGroupId(String uuid, long groupId);
 
@@ -254,8 +240,8 @@ public interface WikiNodeLocalService
 	public List<WikiNode> getCompanyNodes(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getCompanyNodes(
-		long companyId, int status, int start, int end);
+	public List<WikiNode> getCompanyNodes(long companyId, int status,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyNodesCount(long companyId);
@@ -299,10 +285,10 @@ public interface WikiNodeLocalService
 	public int getNodesCount(long groupId, int status);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -311,78 +297,77 @@ public interface WikiNodeLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the wiki node with the primary key.
-	 *
-	 * @param nodeId the primary key of the wiki node
-	 * @return the wiki node
-	 * @throws PortalException if a wiki node with the primary key could not be found
-	 */
+	* Returns the wiki node with the primary key.
+	*
+	* @param nodeId the primary key of the wiki node
+	* @return the wiki node
+	* @throws PortalException if a wiki node with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getWikiNode(long nodeId) throws PortalException;
 
 	/**
-	 * Returns the wiki node matching the UUID and group.
-	 *
-	 * @param uuid the wiki node's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching wiki node
-	 * @throws PortalException if a matching wiki node could not be found
-	 */
+	* Returns the wiki node matching the UUID and group.
+	*
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node
+	* @throws PortalException if a matching wiki node could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getWikiNodeByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the wiki nodes.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of wiki nodes
-	 */
+	* Returns a range of all the wiki nodes.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @return the range of wiki nodes
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiNode> getWikiNodes(int start, int end);
 
 	/**
-	 * Returns all the wiki nodes matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the wiki nodes
-	 * @param companyId the primary key of the company
-	 * @return the matching wiki nodes, or an empty list if no matches were found
-	 */
+	* Returns all the wiki nodes matching the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @return the matching wiki nodes, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getWikiNodesByUuidAndCompanyId(
-		String uuid, long companyId);
+	public List<WikiNode> getWikiNodesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
-	 * Returns a range of wiki nodes matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the wiki nodes
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching wiki nodes, or an empty list if no matches were found
-	 */
+	* Returns a range of wiki nodes matching the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching wiki nodes, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiNode> getWikiNodesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+	public List<WikiNode> getWikiNodesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
-	 * Returns the number of wiki nodes.
-	 *
-	 * @return the number of wiki nodes
-	 */
+	* Returns the number of wiki nodes.
+	*
+	* @return the number of wiki nodes
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWikiNodesCount();
 
-	public void importPages(
-			long userId, long nodeId, String importer,
-			InputStream[] inputStreams, Map<String, String[]> options)
+	public void importPages(long userId, long nodeId, String importer,
+		InputStream[] inputStreams, Map<String, String[]> options)
 		throws PortalException;
 
 	public WikiNode moveNodeToTrash(long userId, long nodeId)
@@ -394,28 +379,24 @@ public interface WikiNodeLocalService
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException;
 
-	public void subscribeNode(long userId, long nodeId) throws PortalException;
+	public void subscribeNode(long userId, long nodeId)
+		throws PortalException;
 
 	public void unsubscribeNode(long userId, long nodeId)
 		throws PortalException;
 
-	public WikiNode updateNode(
-			long nodeId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public WikiNode updateNode(long nodeId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
-	public WikiNode updateStatus(
-			long userId, WikiNode node, int status,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public WikiNode updateStatus(long userId, WikiNode node, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param wikiNode the wiki node
-	 * @return the wiki node that was updated
-	 */
+	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode updateWikiNode(WikiNode wikiNode);
-
 }

@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class SAPEntrySoap implements Serializable {
-
 	public static SAPEntrySoap toSoapModel(SAPEntry model) {
 		SAPEntrySoap soapModel = new SAPEntrySoap();
 
@@ -41,8 +40,7 @@ public class SAPEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setAllowedServiceSignatures(
-			model.getAllowedServiceSignatures());
+		soapModel.setAllowedServiceSignatures(model.getAllowedServiceSignatures());
 		soapModel.setDefaultSAPEntry(model.isDefaultSAPEntry());
 		soapModel.setEnabled(model.isEnabled());
 		soapModel.setName(model.getName());
@@ -79,8 +77,7 @@ public class SAPEntrySoap implements Serializable {
 	}
 
 	public static SAPEntrySoap[] toSoapModels(List<SAPEntry> models) {
-		List<SAPEntrySoap> soapModels = new ArrayList<SAPEntrySoap>(
-			models.size());
+		List<SAPEntrySoap> soapModels = new ArrayList<SAPEntrySoap>(models.size());
 
 		for (SAPEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -216,5 +213,4 @@ public class SAPEntrySoap implements Serializable {
 	private boolean _enabled;
 	private String _name;
 	private String _title;
-
 }

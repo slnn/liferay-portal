@@ -29,14 +29,12 @@ import java.util.List;
  */
 @ProviderType
 public class OAuth2ScopeGrantSoap implements Serializable {
-
 	public static OAuth2ScopeGrantSoap toSoapModel(OAuth2ScopeGrant model) {
 		OAuth2ScopeGrantSoap soapModel = new OAuth2ScopeGrantSoap();
 
 		soapModel.setOAuth2ScopeGrantId(model.getOAuth2ScopeGrantId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setOAuth2ApplicationScopeAliasesId(
-			model.getOAuth2ApplicationScopeAliasesId());
+		soapModel.setOAuth2ApplicationScopeAliasesId(model.getOAuth2ApplicationScopeAliasesId());
 		soapModel.setApplicationName(model.getApplicationName());
 		soapModel.setBundleSymbolicName(model.getBundleSymbolicName());
 		soapModel.setScope(model.getScope());
@@ -44,11 +42,8 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static OAuth2ScopeGrantSoap[] toSoapModels(
-		OAuth2ScopeGrant[] models) {
-
-		OAuth2ScopeGrantSoap[] soapModels =
-			new OAuth2ScopeGrantSoap[models.length];
+	public static OAuth2ScopeGrantSoap[] toSoapModels(OAuth2ScopeGrant[] models) {
+		OAuth2ScopeGrantSoap[] soapModels = new OAuth2ScopeGrantSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,12 +54,10 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 
 	public static OAuth2ScopeGrantSoap[][] toSoapModels(
 		OAuth2ScopeGrant[][] models) {
-
 		OAuth2ScopeGrantSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new OAuth2ScopeGrantSoap[models.length][models[0].length];
+			soapModels = new OAuth2ScopeGrantSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new OAuth2ScopeGrantSoap[0][0];
@@ -79,9 +72,7 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 
 	public static OAuth2ScopeGrantSoap[] toSoapModels(
 		List<OAuth2ScopeGrant> models) {
-
-		List<OAuth2ScopeGrantSoap> soapModels =
-			new ArrayList<OAuth2ScopeGrantSoap>(models.size());
+		List<OAuth2ScopeGrantSoap> soapModels = new ArrayList<OAuth2ScopeGrantSoap>(models.size());
 
 		for (OAuth2ScopeGrant model : models) {
 			soapModels.add(toSoapModel(model));
@@ -123,7 +114,6 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
-
 		_oAuth2ApplicationScopeAliasesId = oAuth2ApplicationScopeAliasesId;
 	}
 
@@ -157,5 +147,4 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 	private String _applicationName;
 	private String _bundleSymbolicName;
 	private String _scope;
-
 }

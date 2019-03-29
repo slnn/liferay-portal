@@ -17,6 +17,7 @@ package com.liferay.polls.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.polls.service.PollsVoteServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -63,19 +64,15 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PollsVoteServiceSoap {
-
 	public static com.liferay.polls.model.PollsVoteSoap addVote(
-			long questionId, long choiceId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long questionId, long choiceId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.polls.model.PollsVote returnValue =
-				PollsVoteServiceUtil.addVote(
-					questionId, choiceId, serviceContext);
+			com.liferay.polls.model.PollsVote returnValue = PollsVoteServiceUtil.addVote(questionId,
+					choiceId, serviceContext);
 
-			return com.liferay.polls.model.PollsVoteSoap.toSoapModel(
-				returnValue);
+			return com.liferay.polls.model.PollsVoteSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -85,5 +82,4 @@ public class PollsVoteServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PollsVoteServiceSoap.class);
-
 }

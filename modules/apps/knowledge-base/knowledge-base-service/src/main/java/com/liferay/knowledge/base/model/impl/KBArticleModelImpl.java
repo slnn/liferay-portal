@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBArticleModel;
 import com.liferay.knowledge.base.model.KBArticleSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -65,37 +69,46 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class KBArticleModelImpl
-	extends BaseModelImpl<KBArticle> implements KBArticleModel {
-
+public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
+	implements KBArticleModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kb article model instance should use the <code>KBArticle</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "KBArticle";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"kbArticleId", Types.BIGINT},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
-		{"rootResourcePrimKey", Types.BIGINT},
-		{"parentResourceClassNameId", Types.BIGINT},
-		{"parentResourcePrimKey", Types.BIGINT}, {"kbFolderId", Types.BIGINT},
-		{"version", Types.INTEGER}, {"title", Types.VARCHAR},
-		{"urlTitle", Types.VARCHAR}, {"content", Types.CLOB},
-		{"description", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"sections", Types.VARCHAR}, {"viewCount", Types.INTEGER},
-		{"latest", Types.BOOLEAN}, {"main", Types.BOOLEAN},
-		{"sourceURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "kbArticleId", Types.BIGINT },
+			{ "resourcePrimKey", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "rootResourcePrimKey", Types.BIGINT },
+			{ "parentResourceClassNameId", Types.BIGINT },
+			{ "parentResourcePrimKey", Types.BIGINT },
+			{ "kbFolderId", Types.BIGINT },
+			{ "version", Types.INTEGER },
+			{ "title", Types.VARCHAR },
+			{ "urlTitle", Types.VARCHAR },
+			{ "content", Types.CLOB },
+			{ "description", Types.VARCHAR },
+			{ "priority", Types.DOUBLE },
+			{ "sections", Types.VARCHAR },
+			{ "viewCount", Types.INTEGER },
+			{ "latest", Types.BOOLEAN },
+			{ "main", Types.BOOLEAN },
+			{ "sourceURL", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -129,62 +142,34 @@ public class KBArticleModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table KBArticle (uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY kbArticle.modifiedDate DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY KBArticle.modifiedDate DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY kbArticle.modifiedDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY KBArticle.modifiedDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.knowledge.base.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.knowledge.base.model.KBArticle"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.knowledge.base.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.knowledge.base.model.KBArticle"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.knowledge.base.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.knowledge.base.model.KBArticle"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.knowledge.base.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.knowledge.base.model.KBArticle"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.knowledge.base.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.knowledge.base.model.KBArticle"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.knowledge.base.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.knowledge.base.model.KBArticle"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-
 	public static final long KBFOLDERID_COLUMN_BITMASK = 4L;
-
 	public static final long LATEST_COLUMN_BITMASK = 8L;
-
 	public static final long MAIN_COLUMN_BITMASK = 16L;
-
 	public static final long PARENTRESOURCEPRIMKEY_COLUMN_BITMASK = 32L;
-
 	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 64L;
-
 	public static final long SECTIONS_COLUMN_BITMASK = 128L;
-
 	public static final long STATUS_COLUMN_BITMASK = 256L;
-
 	public static final long URLTITLE_COLUMN_BITMASK = 512L;
-
 	public static final long UUID_COLUMN_BITMASK = 1024L;
-
 	public static final long VERSION_COLUMN_BITMASK = 2048L;
-
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4096L;
 
 	/**
@@ -210,8 +195,7 @@ public class KBArticleModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setRootResourcePrimKey(soapModel.getRootResourcePrimKey());
-		model.setParentResourceClassNameId(
-			soapModel.getParentResourceClassNameId());
+		model.setParentResourceClassNameId(soapModel.getParentResourceClassNameId());
 		model.setParentResourcePrimKey(soapModel.getParentResourcePrimKey());
 		model.setKbFolderId(soapModel.getKbFolderId());
 		model.setVersion(soapModel.getVersion());
@@ -254,9 +238,8 @@ public class KBArticleModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.knowledge.base.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.knowledge.base.model.KBArticle"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.knowledge.base.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.knowledge.base.model.KBArticle"));
 
 	public KBArticleModelImpl() {
 	}
@@ -295,18 +278,14 @@ public class KBArticleModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<KBArticle, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<KBArticle, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KBArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KBArticle, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KBArticle, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((KBArticle)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((KBArticle)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -317,162 +296,98 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<KBArticle, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<KBArticle, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<KBArticle, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<KBArticle, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(KBArticle)this, entry.getValue());
+				attributeSetterBiConsumer.accept((KBArticle)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<KBArticle, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<KBArticle, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<KBArticle, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<KBArticle, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<KBArticle, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<KBArticle, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<KBArticle, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KBArticle, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<KBArticle, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<KBArticle, Object>>();
-		Map<String, BiConsumer<KBArticle, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<KBArticle, ?>>();
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<KBArticle, Object>>();
+		Map<String, BiConsumer<KBArticle, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KBArticle, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", KBArticle::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<KBArticle, String>)KBArticle::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<KBArticle, String>)KBArticle::setUuid);
 		attributeGetterFunctions.put("kbArticleId", KBArticle::getKbArticleId);
-		attributeSetterBiConsumers.put(
-			"kbArticleId",
-			(BiConsumer<KBArticle, Long>)KBArticle::setKbArticleId);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", KBArticle::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<KBArticle, Long>)KBArticle::setResourcePrimKey);
+		attributeSetterBiConsumers.put("kbArticleId", (BiConsumer<KBArticle, Long>)KBArticle::setKbArticleId);
+		attributeGetterFunctions.put("resourcePrimKey", KBArticle::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<KBArticle, Long>)KBArticle::setResourcePrimKey);
 		attributeGetterFunctions.put("groupId", KBArticle::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<KBArticle, Long>)KBArticle::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KBArticle, Long>)KBArticle::setGroupId);
 		attributeGetterFunctions.put("companyId", KBArticle::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<KBArticle, Long>)KBArticle::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KBArticle, Long>)KBArticle::setCompanyId);
 		attributeGetterFunctions.put("userId", KBArticle::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<KBArticle, Long>)KBArticle::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KBArticle, Long>)KBArticle::setUserId);
 		attributeGetterFunctions.put("userName", KBArticle::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<KBArticle, String>)KBArticle::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KBArticle, String>)KBArticle::setUserName);
 		attributeGetterFunctions.put("createDate", KBArticle::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<KBArticle, Date>)KBArticle::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", KBArticle::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<KBArticle, Date>)KBArticle::setModifiedDate);
-		attributeGetterFunctions.put(
-			"rootResourcePrimKey", KBArticle::getRootResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"rootResourcePrimKey",
-			(BiConsumer<KBArticle, Long>)KBArticle::setRootResourcePrimKey);
-		attributeGetterFunctions.put(
-			"parentResourceClassNameId",
-			KBArticle::getParentResourceClassNameId);
-		attributeSetterBiConsumers.put(
-			"parentResourceClassNameId",
-			(BiConsumer<KBArticle, Long>)
-				KBArticle::setParentResourceClassNameId);
-		attributeGetterFunctions.put(
-			"parentResourcePrimKey", KBArticle::getParentResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"parentResourcePrimKey",
-			(BiConsumer<KBArticle, Long>)KBArticle::setParentResourcePrimKey);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KBArticle, Date>)KBArticle::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KBArticle::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KBArticle, Date>)KBArticle::setModifiedDate);
+		attributeGetterFunctions.put("rootResourcePrimKey", KBArticle::getRootResourcePrimKey);
+		attributeSetterBiConsumers.put("rootResourcePrimKey", (BiConsumer<KBArticle, Long>)KBArticle::setRootResourcePrimKey);
+		attributeGetterFunctions.put("parentResourceClassNameId", KBArticle::getParentResourceClassNameId);
+		attributeSetterBiConsumers.put("parentResourceClassNameId", (BiConsumer<KBArticle, Long>)KBArticle::setParentResourceClassNameId);
+		attributeGetterFunctions.put("parentResourcePrimKey", KBArticle::getParentResourcePrimKey);
+		attributeSetterBiConsumers.put("parentResourcePrimKey", (BiConsumer<KBArticle, Long>)KBArticle::setParentResourcePrimKey);
 		attributeGetterFunctions.put("kbFolderId", KBArticle::getKbFolderId);
-		attributeSetterBiConsumers.put(
-			"kbFolderId",
-			(BiConsumer<KBArticle, Long>)KBArticle::setKbFolderId);
+		attributeSetterBiConsumers.put("kbFolderId", (BiConsumer<KBArticle, Long>)KBArticle::setKbFolderId);
 		attributeGetterFunctions.put("version", KBArticle::getVersion);
-		attributeSetterBiConsumers.put(
-			"version", (BiConsumer<KBArticle, Integer>)KBArticle::setVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<KBArticle, Integer>)KBArticle::setVersion);
 		attributeGetterFunctions.put("title", KBArticle::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<KBArticle, String>)KBArticle::setTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<KBArticle, String>)KBArticle::setTitle);
 		attributeGetterFunctions.put("urlTitle", KBArticle::getUrlTitle);
-		attributeSetterBiConsumers.put(
-			"urlTitle", (BiConsumer<KBArticle, String>)KBArticle::setUrlTitle);
+		attributeSetterBiConsumers.put("urlTitle", (BiConsumer<KBArticle, String>)KBArticle::setUrlTitle);
 		attributeGetterFunctions.put("content", KBArticle::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<KBArticle, String>)KBArticle::setContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<KBArticle, String>)KBArticle::setContent);
 		attributeGetterFunctions.put("description", KBArticle::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<KBArticle, String>)KBArticle::setDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<KBArticle, String>)KBArticle::setDescription);
 		attributeGetterFunctions.put("priority", KBArticle::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority", (BiConsumer<KBArticle, Double>)KBArticle::setPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<KBArticle, Double>)KBArticle::setPriority);
 		attributeGetterFunctions.put("sections", KBArticle::getSections);
-		attributeSetterBiConsumers.put(
-			"sections", (BiConsumer<KBArticle, String>)KBArticle::setSections);
+		attributeSetterBiConsumers.put("sections", (BiConsumer<KBArticle, String>)KBArticle::setSections);
 		attributeGetterFunctions.put("viewCount", KBArticle::getViewCount);
-		attributeSetterBiConsumers.put(
-			"viewCount",
-			(BiConsumer<KBArticle, Integer>)KBArticle::setViewCount);
+		attributeSetterBiConsumers.put("viewCount", (BiConsumer<KBArticle, Integer>)KBArticle::setViewCount);
 		attributeGetterFunctions.put("latest", KBArticle::getLatest);
-		attributeSetterBiConsumers.put(
-			"latest", (BiConsumer<KBArticle, Boolean>)KBArticle::setLatest);
+		attributeSetterBiConsumers.put("latest", (BiConsumer<KBArticle, Boolean>)KBArticle::setLatest);
 		attributeGetterFunctions.put("main", KBArticle::getMain);
-		attributeSetterBiConsumers.put(
-			"main", (BiConsumer<KBArticle, Boolean>)KBArticle::setMain);
+		attributeSetterBiConsumers.put("main", (BiConsumer<KBArticle, Boolean>)KBArticle::setMain);
 		attributeGetterFunctions.put("sourceURL", KBArticle::getSourceURL);
-		attributeSetterBiConsumers.put(
-			"sourceURL",
-			(BiConsumer<KBArticle, String>)KBArticle::setSourceURL);
-		attributeGetterFunctions.put(
-			"lastPublishDate", KBArticle::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<KBArticle, Date>)KBArticle::setLastPublishDate);
+		attributeSetterBiConsumers.put("sourceURL", (BiConsumer<KBArticle, String>)KBArticle::setSourceURL);
+		attributeGetterFunctions.put("lastPublishDate", KBArticle::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<KBArticle, Date>)KBArticle::setLastPublishDate);
 		attributeGetterFunctions.put("status", KBArticle::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<KBArticle, Integer>)KBArticle::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", KBArticle::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<KBArticle, Long>)KBArticle::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", KBArticle::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<KBArticle, String>)KBArticle::setStatusByUserName);
+		attributeSetterBiConsumers.put("status", (BiConsumer<KBArticle, Integer>)KBArticle::setStatus);
+		attributeGetterFunctions.put("statusByUserId", KBArticle::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<KBArticle, Long>)KBArticle::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", KBArticle::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<KBArticle, String>)KBArticle::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", KBArticle::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<KBArticle, Date>)KBArticle::setStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<KBArticle, Date>)KBArticle::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1036,8 +951,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(KBArticle.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				KBArticle.class.getName()));
 	}
 
 	@Override
@@ -1126,8 +1041,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), KBArticle.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			KBArticle.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1140,9 +1055,8 @@ public class KBArticleModelImpl
 	@Override
 	public KBArticle toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KBArticle)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (KBArticle)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1162,8 +1076,7 @@ public class KBArticleModelImpl
 		kbArticleImpl.setCreateDate(getCreateDate());
 		kbArticleImpl.setModifiedDate(getModifiedDate());
 		kbArticleImpl.setRootResourcePrimKey(getRootResourcePrimKey());
-		kbArticleImpl.setParentResourceClassNameId(
-			getParentResourceClassNameId());
+		kbArticleImpl.setParentResourceClassNameId(getParentResourceClassNameId());
 		kbArticleImpl.setParentResourcePrimKey(getParentResourcePrimKey());
 		kbArticleImpl.setKbFolderId(getKbFolderId());
 		kbArticleImpl.setVersion(getVersion());
@@ -1192,8 +1105,8 @@ public class KBArticleModelImpl
 	public int compareTo(KBArticle kbArticle) {
 		int value = 0;
 
-		value = DateUtil.compareTo(
-			getModifiedDate(), kbArticle.getModifiedDate());
+		value = DateUtil.compareTo(getModifiedDate(),
+				kbArticle.getModifiedDate());
 
 		value = value * -1;
 
@@ -1247,8 +1160,7 @@ public class KBArticleModelImpl
 
 		kbArticleModelImpl._originalUuid = kbArticleModelImpl._uuid;
 
-		kbArticleModelImpl._originalResourcePrimKey =
-			kbArticleModelImpl._resourcePrimKey;
+		kbArticleModelImpl._originalResourcePrimKey = kbArticleModelImpl._resourcePrimKey;
 
 		kbArticleModelImpl._setOriginalResourcePrimKey = false;
 
@@ -1262,8 +1174,7 @@ public class KBArticleModelImpl
 
 		kbArticleModelImpl._setModifiedDate = false;
 
-		kbArticleModelImpl._originalParentResourcePrimKey =
-			kbArticleModelImpl._parentResourcePrimKey;
+		kbArticleModelImpl._originalParentResourcePrimKey = kbArticleModelImpl._parentResourcePrimKey;
 
 		kbArticleModelImpl._setOriginalParentResourcePrimKey = false;
 
@@ -1344,8 +1255,7 @@ public class KBArticleModelImpl
 
 		kbArticleCacheModel.rootResourcePrimKey = getRootResourcePrimKey();
 
-		kbArticleCacheModel.parentResourceClassNameId =
-			getParentResourceClassNameId();
+		kbArticleCacheModel.parentResourceClassNameId = getParentResourceClassNameId();
 
 		kbArticleCacheModel.parentResourcePrimKey = getParentResourcePrimKey();
 
@@ -1444,20 +1354,16 @@ public class KBArticleModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<KBArticle, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<KBArticle, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KBArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KBArticle, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KBArticle, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1476,22 +1382,18 @@ public class KBArticleModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<KBArticle, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<KBArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<KBArticle, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<KBArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<KBArticle, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<KBArticle, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1505,12 +1407,10 @@ public class KBArticleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KBArticle.class.getClassLoader();
+	private static final ClassLoader _classLoader = KBArticle.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KBArticle.class, ModelWrapper.class
-	};
-
+			KBArticle.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _kbArticleId;
@@ -1564,5 +1464,4 @@ public class KBArticleModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private KBArticle _escapedModel;
-
 }

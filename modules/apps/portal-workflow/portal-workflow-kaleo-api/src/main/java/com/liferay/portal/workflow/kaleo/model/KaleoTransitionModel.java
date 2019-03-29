@@ -36,9 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTransitionModel
-	extends BaseModel<KaleoTransition>, GroupedModel, MVCCModel, ShardedModel {
-
+public interface KaleoTransitionModel extends BaseModel<KaleoTransition>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -338,5 +337,4 @@ public interface KaleoTransitionModel
 	 * @param defaultTransition the default transition of this kaleo transition
 	 */
 	public void setDefaultTransition(boolean defaultTransition);
-
 }

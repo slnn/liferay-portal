@@ -36,9 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTaskModel
-	extends BaseModel<KaleoTask>, GroupedModel, MVCCModel, ShardedModel {
-
+public interface KaleoTaskModel extends BaseModel<KaleoTask>, GroupedModel,
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -259,5 +258,4 @@ public interface KaleoTaskModel
 	 * @param description the description of this kaleo task
 	 */
 	public void setDescription(String description);
-
 }

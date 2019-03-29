@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ChangesetCollectionModel
-	extends BaseModel<ChangesetCollection>, GroupedModel, ShardedModel {
-
+public interface ChangesetCollectionModel extends BaseModel<ChangesetCollection>,
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -214,5 +213,4 @@ public interface ChangesetCollectionModel
 	 * @param description the description of this changeset collection
 	 */
 	public void setDescription(String description);
-
 }

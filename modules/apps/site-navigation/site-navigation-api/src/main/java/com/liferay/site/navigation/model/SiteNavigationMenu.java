@@ -27,41 +27,34 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SiteNavigationMenuModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.site.navigation.model.impl.SiteNavigationMenuImpl"
-)
+@ImplementationClassName("com.liferay.site.navigation.model.impl.SiteNavigationMenuImpl")
 @ProviderType
-public interface SiteNavigationMenu
-	extends SiteNavigationMenuModel, PersistedModel {
-
+public interface SiteNavigationMenu extends SiteNavigationMenuModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SiteNavigationMenu, Long>
-		SITE_NAVIGATION_MENU_ID_ACCESSOR =
-			new Accessor<SiteNavigationMenu, Long>() {
+	public static final Accessor<SiteNavigationMenu, Long> SITE_NAVIGATION_MENU_ID_ACCESSOR =
+		new Accessor<SiteNavigationMenu, Long>() {
+			@Override
+			public Long get(SiteNavigationMenu siteNavigationMenu) {
+				return siteNavigationMenu.getSiteNavigationMenuId();
+			}
 
-				@Override
-				public Long get(SiteNavigationMenu siteNavigationMenu) {
-					return siteNavigationMenu.getSiteNavigationMenuId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
+			@Override
+			public Class<SiteNavigationMenu> getTypeClass() {
+				return SiteNavigationMenu.class;
+			}
+		};
 
-				@Override
-				public Class<SiteNavigationMenu> getTypeClass() {
-					return SiteNavigationMenu.class;
-				}
-
-			};
-	public static final Accessor<SiteNavigationMenu, String> NAME_ACCESSOR =
-		new Accessor<SiteNavigationMenu, String>() {
-
+	public static final Accessor<SiteNavigationMenu, String> NAME_ACCESSOR = new Accessor<SiteNavigationMenu, String>() {
 			@Override
 			public String get(SiteNavigationMenu siteNavigationMenu) {
 				return siteNavigationMenu.getName();
@@ -76,11 +69,9 @@ public interface SiteNavigationMenu
 			public Class<SiteNavigationMenu> getTypeClass() {
 				return SiteNavigationMenu.class;
 			}
-
 		};
 
 	public String getTypeKey();
 
 	public boolean isPrimary();
-
 }

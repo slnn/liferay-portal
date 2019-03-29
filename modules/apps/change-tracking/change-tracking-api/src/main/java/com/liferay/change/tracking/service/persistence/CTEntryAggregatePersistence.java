@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.exception.NoSuchEntryAggregateException;
 import com.liferay.change.tracking.model.CTEntryAggregate;
+
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
@@ -32,9 +33,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @generated
  */
 @ProviderType
-public interface CTEntryAggregatePersistence
-	extends BasePersistence<CTEntryAggregate> {
-
+public interface CTEntryAggregatePersistence extends BasePersistence<CTEntryAggregate> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,449 +41,432 @@ public interface CTEntryAggregatePersistence
 	 */
 
 	/**
-	 * Returns all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @return the matching ct entry aggregates
-	 */
-	public java.util.List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId);
+	* Returns all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @return the matching ct entry aggregates
+	*/
+	public java.util.List<CTEntryAggregate> findByC_O(long ctCollectionId,
+		long ownerCTEntryId);
 
 	/**
-	 * Returns a range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @return the range of matching ct entry aggregates
-	 */
-	public java.util.List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId, int start, int end);
+	* Returns a range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @return the range of matching ct entry aggregates
+	*/
+	public java.util.List<CTEntryAggregate> findByC_O(long ctCollectionId,
+		long ownerCTEntryId, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct entry aggregates
-	 */
-	public java.util.List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-			orderByComparator);
+	* Returns an ordered range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ct entry aggregates
+	*/
+	public java.util.List<CTEntryAggregate> findByC_O(long ctCollectionId,
+		long ownerCTEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching ct entry aggregates
-	 */
-	public java.util.List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-			orderByComparator,
+	* Returns an ordered range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ct entry aggregates
+	*/
+	public java.util.List<CTEntryAggregate> findByC_O(long ctCollectionId,
+		long ownerCTEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	 * Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ct entry aggregate
-	 * @throws NoSuchEntryAggregateException if a matching ct entry aggregate could not be found
-	 */
-	public CTEntryAggregate findByC_O_First(
-			long ctCollectionId, long ownerCTEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-				orderByComparator)
+	* Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ct entry aggregate
+	* @throws NoSuchEntryAggregateException if a matching ct entry aggregate could not be found
+	*/
+	public CTEntryAggregate findByC_O_First(long ctCollectionId,
+		long ownerCTEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator)
 		throws NoSuchEntryAggregateException;
 
 	/**
-	 * Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ct entry aggregate, or <code>null</code> if a matching ct entry aggregate could not be found
-	 */
-	public CTEntryAggregate fetchByC_O_First(
+	* Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ct entry aggregate, or <code>null</code> if a matching ct entry aggregate could not be found
+	*/
+	public CTEntryAggregate fetchByC_O_First(long ctCollectionId,
+		long ownerCTEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator);
+
+	/**
+	* Returns the last ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ct entry aggregate
+	* @throws NoSuchEntryAggregateException if a matching ct entry aggregate could not be found
+	*/
+	public CTEntryAggregate findByC_O_Last(long ctCollectionId,
+		long ownerCTEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator)
+		throws NoSuchEntryAggregateException;
+
+	/**
+	* Returns the last ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ct entry aggregate, or <code>null</code> if a matching ct entry aggregate could not be found
+	*/
+	public CTEntryAggregate fetchByC_O_Last(long ctCollectionId,
+		long ownerCTEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator);
+
+	/**
+	* Returns the ct entry aggregates before and after the current ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctEntryAggregateId the primary key of the current ct entry aggregate
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ct entry aggregate
+	* @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
+	*/
+	public CTEntryAggregate[] findByC_O_PrevAndNext(long ctEntryAggregateId,
 		long ctCollectionId, long ownerCTEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-			orderByComparator);
-
-	/**
-	 * Returns the last ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry aggregate
-	 * @throws NoSuchEntryAggregateException if a matching ct entry aggregate could not be found
-	 */
-	public CTEntryAggregate findByC_O_Last(
-			long ctCollectionId, long ownerCTEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-				orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator)
 		throws NoSuchEntryAggregateException;
 
 	/**
-	 * Returns the last ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ct entry aggregate, or <code>null</code> if a matching ct entry aggregate could not be found
-	 */
-	public CTEntryAggregate fetchByC_O_Last(
-		long ctCollectionId, long ownerCTEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-			orderByComparator);
-
-	/**
-	 * Returns the ct entry aggregates before and after the current ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctEntryAggregateId the primary key of the current ct entry aggregate
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry aggregate
-	 * @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
-	 */
-	public CTEntryAggregate[] findByC_O_PrevAndNext(
-			long ctEntryAggregateId, long ctCollectionId, long ownerCTEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-				orderByComparator)
-		throws NoSuchEntryAggregateException;
-
-	/**
-	 * Removes all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63; from the database.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 */
+	* Removes all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63; from the database.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	*/
 	public void removeByC_O(long ctCollectionId, long ownerCTEntryId);
 
 	/**
-	 * Returns the number of ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param ownerCTEntryId the owner ct entry ID
-	 * @return the number of matching ct entry aggregates
-	 */
+	* Returns the number of ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	*
+	* @param ctCollectionId the ct collection ID
+	* @param ownerCTEntryId the owner ct entry ID
+	* @return the number of matching ct entry aggregates
+	*/
 	public int countByC_O(long ctCollectionId, long ownerCTEntryId);
 
 	/**
-	 * Caches the ct entry aggregate in the entity cache if it is enabled.
-	 *
-	 * @param ctEntryAggregate the ct entry aggregate
-	 */
+	* Caches the ct entry aggregate in the entity cache if it is enabled.
+	*
+	* @param ctEntryAggregate the ct entry aggregate
+	*/
 	public void cacheResult(CTEntryAggregate ctEntryAggregate);
 
 	/**
-	 * Caches the ct entry aggregates in the entity cache if it is enabled.
-	 *
-	 * @param ctEntryAggregates the ct entry aggregates
-	 */
+	* Caches the ct entry aggregates in the entity cache if it is enabled.
+	*
+	* @param ctEntryAggregates the ct entry aggregates
+	*/
 	public void cacheResult(java.util.List<CTEntryAggregate> ctEntryAggregates);
 
 	/**
-	 * Creates a new ct entry aggregate with the primary key. Does not add the ct entry aggregate to the database.
-	 *
-	 * @param ctEntryAggregateId the primary key for the new ct entry aggregate
-	 * @return the new ct entry aggregate
-	 */
+	* Creates a new ct entry aggregate with the primary key. Does not add the ct entry aggregate to the database.
+	*
+	* @param ctEntryAggregateId the primary key for the new ct entry aggregate
+	* @return the new ct entry aggregate
+	*/
 	public CTEntryAggregate create(long ctEntryAggregateId);
 
 	/**
-	 * Removes the ct entry aggregate with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ctEntryAggregateId the primary key of the ct entry aggregate
-	 * @return the ct entry aggregate that was removed
-	 * @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
-	 */
+	* Removes the ct entry aggregate with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ctEntryAggregateId the primary key of the ct entry aggregate
+	* @return the ct entry aggregate that was removed
+	* @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
+	*/
 	public CTEntryAggregate remove(long ctEntryAggregateId)
 		throws NoSuchEntryAggregateException;
 
 	public CTEntryAggregate updateImpl(CTEntryAggregate ctEntryAggregate);
 
 	/**
-	 * Returns the ct entry aggregate with the primary key or throws a <code>NoSuchEntryAggregateException</code> if it could not be found.
-	 *
-	 * @param ctEntryAggregateId the primary key of the ct entry aggregate
-	 * @return the ct entry aggregate
-	 * @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
-	 */
+	* Returns the ct entry aggregate with the primary key or throws a <code>NoSuchEntryAggregateException</code> if it could not be found.
+	*
+	* @param ctEntryAggregateId the primary key of the ct entry aggregate
+	* @return the ct entry aggregate
+	* @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
+	*/
 	public CTEntryAggregate findByPrimaryKey(long ctEntryAggregateId)
 		throws NoSuchEntryAggregateException;
 
 	/**
-	 * Returns the ct entry aggregate with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ctEntryAggregateId the primary key of the ct entry aggregate
-	 * @return the ct entry aggregate, or <code>null</code> if a ct entry aggregate with the primary key could not be found
-	 */
+	* Returns the ct entry aggregate with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param ctEntryAggregateId the primary key of the ct entry aggregate
+	* @return the ct entry aggregate, or <code>null</code> if a ct entry aggregate with the primary key could not be found
+	*/
 	public CTEntryAggregate fetchByPrimaryKey(long ctEntryAggregateId);
 
 	/**
-	 * Returns all the ct entry aggregates.
-	 *
-	 * @return the ct entry aggregates
-	 */
+	* Returns all the ct entry aggregates.
+	*
+	* @return the ct entry aggregates
+	*/
 	public java.util.List<CTEntryAggregate> findAll();
 
 	/**
-	 * Returns a range of all the ct entry aggregates.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @return the range of ct entry aggregates
-	 */
+	* Returns a range of all the ct entry aggregates.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @return the range of ct entry aggregates
+	*/
 	public java.util.List<CTEntryAggregate> findAll(int start, int end);
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ct entry aggregates
-	 */
-	public java.util.List<CTEntryAggregate> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-			orderByComparator);
+	* Returns an ordered range of all the ct entry aggregates.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of ct entry aggregates
+	*/
+	public java.util.List<CTEntryAggregate> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of ct entry aggregates
-	 */
-	public java.util.List<CTEntryAggregate> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate>
-			orderByComparator,
+	* Returns an ordered range of all the ct entry aggregates.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of ct entry aggregates
+	*/
+	public java.util.List<CTEntryAggregate> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTEntryAggregate> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	 * Removes all the ct entry aggregates from the database.
-	 */
+	* Removes all the ct entry aggregates from the database.
+	*/
 	public void removeAll();
 
 	/**
-	 * Returns the number of ct entry aggregates.
-	 *
-	 * @return the number of ct entry aggregates
-	 */
+	* Returns the number of ct entry aggregates.
+	*
+	* @return the number of ct entry aggregates
+	*/
 	public int countAll();
 
 	/**
-	 * Returns the primaryKeys of ct entries associated with the ct entry aggregate.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @return long[] of the primaryKeys of ct entries associated with the ct entry aggregate
-	 */
+	* Returns the primaryKeys of ct entries associated with the ct entry aggregate.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @return long[] of the primaryKeys of ct entries associated with the ct entry aggregate
+	*/
 	public long[] getCTEntryPrimaryKeys(long pk);
 
 	/**
-	 * Returns all the ct entries associated with the ct entry aggregate.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @return the ct entries associated with the ct entry aggregate
-	 */
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getCTEntries(long pk);
+	* Returns all the ct entries associated with the ct entry aggregate.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @return the ct entries associated with the ct entry aggregate
+	*/
+	public java.util.List<com.liferay.change.tracking.model.CTEntry> getCTEntries(
+		long pk);
 
 	/**
-	 * Returns a range of all the ct entries associated with the ct entry aggregate.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @return the range of ct entries associated with the ct entry aggregate
-	 */
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getCTEntries(long pk, int start, int end);
+	* Returns a range of all the ct entries associated with the ct entry aggregate.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @return the range of ct entries associated with the ct entry aggregate
+	*/
+	public java.util.List<com.liferay.change.tracking.model.CTEntry> getCTEntries(
+		long pk, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the ct entries associated with the ct entry aggregate.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param start the lower bound of the range of ct entry aggregates
-	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ct entries associated with the ct entry aggregate
-	 */
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getCTEntries(
-			long pk, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.change.tracking.model.CTEntry> orderByComparator);
+	* Returns an ordered range of all the ct entries associated with the ct entry aggregate.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param start the lower bound of the range of ct entry aggregates
+	* @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of ct entries associated with the ct entry aggregate
+	*/
+	public java.util.List<com.liferay.change.tracking.model.CTEntry> getCTEntries(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.change.tracking.model.CTEntry> orderByComparator);
 
 	/**
-	 * Returns the number of ct entries associated with the ct entry aggregate.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @return the number of ct entries associated with the ct entry aggregate
-	 */
+	* Returns the number of ct entries associated with the ct entry aggregate.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @return the number of ct entries associated with the ct entry aggregate
+	*/
 	public int getCTEntriesSize(long pk);
 
 	/**
-	 * Returns <code>true</code> if the ct entry is associated with the ct entry aggregate.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntryPK the primary key of the ct entry
-	 * @return <code>true</code> if the ct entry is associated with the ct entry aggregate; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if the ct entry is associated with the ct entry aggregate.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntryPK the primary key of the ct entry
+	* @return <code>true</code> if the ct entry is associated with the ct entry aggregate; <code>false</code> otherwise
+	*/
 	public boolean containsCTEntry(long pk, long ctEntryPK);
 
 	/**
-	 * Returns <code>true</code> if the ct entry aggregate has any ct entries associated with it.
-	 *
-	 * @param pk the primary key of the ct entry aggregate to check for associations with ct entries
-	 * @return <code>true</code> if the ct entry aggregate has any ct entries associated with it; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if the ct entry aggregate has any ct entries associated with it.
+	*
+	* @param pk the primary key of the ct entry aggregate to check for associations with ct entries
+	* @return <code>true</code> if the ct entry aggregate has any ct entries associated with it; <code>false</code> otherwise
+	*/
 	public boolean containsCTEntries(long pk);
 
 	/**
-	 * Adds an association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntryPK the primary key of the ct entry
-	 */
+	* Adds an association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntryPK the primary key of the ct entry
+	*/
 	public void addCTEntry(long pk, long ctEntryPK);
 
 	/**
-	 * Adds an association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntry the ct entry
-	 */
-	public void addCTEntry(
-		long pk, com.liferay.change.tracking.model.CTEntry ctEntry);
+	* Adds an association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntry the ct entry
+	*/
+	public void addCTEntry(long pk,
+		com.liferay.change.tracking.model.CTEntry ctEntry);
 
 	/**
-	 * Adds an association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntryPKs the primary keys of the ct entries
-	 */
+	* Adds an association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntryPKs the primary keys of the ct entries
+	*/
 	public void addCTEntries(long pk, long[] ctEntryPKs);
 
 	/**
-	 * Adds an association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntries the ct entries
-	 */
-	public void addCTEntries(
-		long pk,
+	* Adds an association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntries the ct entries
+	*/
+	public void addCTEntries(long pk,
 		java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries);
 
 	/**
-	 * Clears all associations between the ct entry aggregate and its ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate to clear the associated ct entries from
-	 */
+	* Clears all associations between the ct entry aggregate and its ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate to clear the associated ct entries from
+	*/
 	public void clearCTEntries(long pk);
 
 	/**
-	 * Removes the association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntryPK the primary key of the ct entry
-	 */
+	* Removes the association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntryPK the primary key of the ct entry
+	*/
 	public void removeCTEntry(long pk, long ctEntryPK);
 
 	/**
-	 * Removes the association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntry the ct entry
-	 */
-	public void removeCTEntry(
-		long pk, com.liferay.change.tracking.model.CTEntry ctEntry);
+	* Removes the association between the ct entry aggregate and the ct entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntry the ct entry
+	*/
+	public void removeCTEntry(long pk,
+		com.liferay.change.tracking.model.CTEntry ctEntry);
 
 	/**
-	 * Removes the association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntryPKs the primary keys of the ct entries
-	 */
+	* Removes the association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntryPKs the primary keys of the ct entries
+	*/
 	public void removeCTEntries(long pk, long[] ctEntryPKs);
 
 	/**
-	 * Removes the association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntries the ct entries
-	 */
-	public void removeCTEntries(
-		long pk,
+	* Removes the association between the ct entry aggregate and the ct entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntries the ct entries
+	*/
+	public void removeCTEntries(long pk,
 		java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries);
 
 	/**
-	 * Sets the ct entries associated with the ct entry aggregate, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntryPKs the primary keys of the ct entries to be associated with the ct entry aggregate
-	 */
+	* Sets the ct entries associated with the ct entry aggregate, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntryPKs the primary keys of the ct entries to be associated with the ct entry aggregate
+	*/
 	public void setCTEntries(long pk, long[] ctEntryPKs);
 
 	/**
-	 * Sets the ct entries associated with the ct entry aggregate, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the ct entry aggregate
-	 * @param ctEntries the ct entries to be associated with the ct entry aggregate
-	 */
-	public void setCTEntries(
-		long pk,
+	* Sets the ct entries associated with the ct entry aggregate, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the ct entry aggregate
+	* @param ctEntries the ct entries to be associated with the ct entry aggregate
+	*/
+	public void setCTEntries(long pk,
 		java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries);
-
 }

@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.sharing.model.impl.SharingEntryImpl")
 @ProviderType
 public interface SharingEntry extends SharingEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sharing.model.impl.SharingEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SharingEntry, Long> SHARING_ENTRY_ID_ACCESSOR =
-		new Accessor<SharingEntry, Long>() {
-
+	public static final Accessor<SharingEntry, Long> SHARING_ENTRY_ID_ACCESSOR = new Accessor<SharingEntry, Long>() {
 			@Override
 			public Long get(SharingEntry sharingEntry) {
 				return sharingEntry.getSharingEntryId();
@@ -53,19 +50,16 @@ public interface SharingEntry extends SharingEntryModel, PersistedModel {
 			public Class<SharingEntry> getTypeClass() {
 				return SharingEntry.class;
 			}
-
 		};
 
 	/**
-	 * Returns {@code true} if the sharing entry has the sharing entry action.
-	 *
-	 * @param sharingEntryAction the sharing entry action
-	 * @return {@code true} if the sharing entry has the sharing entry action;
-	 {@code false} otherwise
-	 * @review
-	 */
+	* Returns {@code true} if the sharing entry has the sharing entry action.
+	*
+	* @param sharingEntryAction the sharing entry action
+	* @return {@code true} if the sharing entry has the sharing entry action;
+	{@code false} otherwise
+	* @review
+	*/
 	public boolean hasSharingPermission(
-		com.liferay.sharing.security.permission.SharingEntryAction
-			sharingEntryAction);
-
+		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction);
 }

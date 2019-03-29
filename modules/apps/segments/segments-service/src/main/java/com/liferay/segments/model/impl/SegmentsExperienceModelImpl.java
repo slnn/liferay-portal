@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
+
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.model.SegmentsExperienceSoap;
@@ -69,29 +72,30 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class SegmentsExperienceModelImpl
-	extends BaseModelImpl<SegmentsExperience>
+public class SegmentsExperienceModelImpl extends BaseModelImpl<SegmentsExperience>
 	implements SegmentsExperienceModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a segments experience model instance should use the <code>SegmentsExperience</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SegmentsExperience";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"segmentsExperienceId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"priority", Types.INTEGER},
-		{"active_", Types.BOOLEAN}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "segmentsExperienceId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "segmentsEntryId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "name", Types.VARCHAR },
+			{ "priority", Types.INTEGER },
+			{ "active_", Types.BOOLEAN }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("segmentsExperienceId", Types.BIGINT);
@@ -109,48 +113,27 @@ public class SegmentsExperienceModelImpl
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperience (segmentsExperienceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN)";
-
+	public static final String TABLE_SQL_CREATE = "create table SegmentsExperience (segmentsExperienceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperience";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY segmentsExperience.priority DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY SegmentsExperience.priority DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY segmentsExperience.priority DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY SegmentsExperience.priority DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.segments.model.SegmentsExperience"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.segments.model.SegmentsExperience"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.segments.model.SegmentsExperience"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.segments.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.segments.model.SegmentsExperience"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.segments.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.segments.model.SegmentsExperience"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.segments.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.segments.model.SegmentsExperience"),
+			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-
 	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 16L;
-
 	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
@@ -191,13 +174,11 @@ public class SegmentsExperienceModelImpl
 	 */
 	public static List<SegmentsExperience> toModels(
 		SegmentsExperienceSoap[] soapModels) {
-
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<SegmentsExperience> models = new ArrayList<SegmentsExperience>(
-			soapModels.length);
+		List<SegmentsExperience> models = new ArrayList<SegmentsExperience>(soapModels.length);
 
 		for (SegmentsExperienceSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -206,9 +187,8 @@ public class SegmentsExperienceModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.segments.model.SegmentsExperience"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.segments.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.segments.model.SegmentsExperience"));
 
 	public SegmentsExperienceModelImpl() {
 	}
@@ -247,18 +227,14 @@ public class SegmentsExperienceModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SegmentsExperience, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SegmentsExperience, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SegmentsExperience, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SegmentsExperience, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SegmentsExperience, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SegmentsExperience, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((SegmentsExperience)this));
 		}
 
@@ -270,127 +246,69 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SegmentsExperience, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SegmentsExperience, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SegmentsExperience, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SegmentsExperience, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(SegmentsExperience)this, entry.getValue());
+				attributeSetterBiConsumer.accept((SegmentsExperience)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SegmentsExperience, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<SegmentsExperience, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SegmentsExperience, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<SegmentsExperience, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SegmentsExperience, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SegmentsExperience, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<SegmentsExperience, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SegmentsExperience, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SegmentsExperience, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<SegmentsExperience, Object>>();
-		Map<String, BiConsumer<SegmentsExperience, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<SegmentsExperience, ?>>();
+		Map<String, Function<SegmentsExperience, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SegmentsExperience, Object>>();
+		Map<String, BiConsumer<SegmentsExperience, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SegmentsExperience, ?>>();
 
-		attributeGetterFunctions.put(
-			"segmentsExperienceId",
-			SegmentsExperience::getSegmentsExperienceId);
-		attributeSetterBiConsumers.put(
-			"segmentsExperienceId",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setSegmentsExperienceId);
+
+		attributeGetterFunctions.put("segmentsExperienceId", SegmentsExperience::getSegmentsExperienceId);
+		attributeSetterBiConsumers.put("segmentsExperienceId", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setSegmentsExperienceId);
 		attributeGetterFunctions.put("groupId", SegmentsExperience::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", SegmentsExperience::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setCompanyId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setGroupId);
+		attributeGetterFunctions.put("companyId", SegmentsExperience::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setCompanyId);
 		attributeGetterFunctions.put("userId", SegmentsExperience::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setUserId);
-		attributeGetterFunctions.put(
-			"userName", SegmentsExperience::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SegmentsExperience, String>)
-				SegmentsExperience::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", SegmentsExperience::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SegmentsExperience, Date>)
-				SegmentsExperience::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", SegmentsExperience::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SegmentsExperience, Date>)
-				SegmentsExperience::setModifiedDate);
-		attributeGetterFunctions.put(
-			"segmentsEntryId", SegmentsExperience::getSegmentsEntryId);
-		attributeSetterBiConsumers.put(
-			"segmentsEntryId",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setSegmentsEntryId);
-		attributeGetterFunctions.put(
-			"classNameId", SegmentsExperience::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setClassNameId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setUserId);
+		attributeGetterFunctions.put("userName", SegmentsExperience::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SegmentsExperience, String>)SegmentsExperience::setUserName);
+		attributeGetterFunctions.put("createDate", SegmentsExperience::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SegmentsExperience, Date>)SegmentsExperience::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SegmentsExperience::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SegmentsExperience, Date>)SegmentsExperience::setModifiedDate);
+		attributeGetterFunctions.put("segmentsEntryId", SegmentsExperience::getSegmentsEntryId);
+		attributeSetterBiConsumers.put("segmentsEntryId", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setSegmentsEntryId);
+		attributeGetterFunctions.put("classNameId", SegmentsExperience::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setClassNameId);
 		attributeGetterFunctions.put("classPK", SegmentsExperience::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<SegmentsExperience, Long>)
-				SegmentsExperience::setClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<SegmentsExperience, Long>)SegmentsExperience::setClassPK);
 		attributeGetterFunctions.put("name", SegmentsExperience::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<SegmentsExperience, String>)
-				SegmentsExperience::setName);
-		attributeGetterFunctions.put(
-			"priority", SegmentsExperience::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<SegmentsExperience, Integer>)
-				SegmentsExperience::setPriority);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SegmentsExperience, String>)SegmentsExperience::setName);
+		attributeGetterFunctions.put("priority", SegmentsExperience::getPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<SegmentsExperience, Integer>)SegmentsExperience::setPriority);
 		attributeGetterFunctions.put("active", SegmentsExperience::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<SegmentsExperience, Boolean>)
-				SegmentsExperience::setActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<SegmentsExperience, Boolean>)SegmentsExperience::setActive);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -630,8 +548,8 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -668,14 +586,12 @@ public class SegmentsExperienceModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
 		}
 	}
 
@@ -695,9 +611,7 @@ public class SegmentsExperienceModelImpl
 			return;
 		}
 
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -749,9 +663,8 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), SegmentsExperience.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SegmentsExperience.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -776,8 +689,7 @@ public class SegmentsExperienceModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -795,15 +707,12 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			SegmentsExperience.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(SegmentsExperience.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -812,7 +721,6 @@ public class SegmentsExperienceModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -830,9 +738,8 @@ public class SegmentsExperienceModelImpl
 	@Override
 	public SegmentsExperience toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SegmentsExperience)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (SegmentsExperience)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -840,11 +747,9 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public Object clone() {
-		SegmentsExperienceImpl segmentsExperienceImpl =
-			new SegmentsExperienceImpl();
+		SegmentsExperienceImpl segmentsExperienceImpl = new SegmentsExperienceImpl();
 
-		segmentsExperienceImpl.setSegmentsExperienceId(
-			getSegmentsExperienceId());
+		segmentsExperienceImpl.setSegmentsExperienceId(getSegmentsExperienceId());
 		segmentsExperienceImpl.setGroupId(getGroupId());
 		segmentsExperienceImpl.setCompanyId(getCompanyId());
 		segmentsExperienceImpl.setUserId(getUserId());
@@ -927,30 +832,25 @@ public class SegmentsExperienceModelImpl
 	public void resetOriginalValues() {
 		SegmentsExperienceModelImpl segmentsExperienceModelImpl = this;
 
-		segmentsExperienceModelImpl._originalGroupId =
-			segmentsExperienceModelImpl._groupId;
+		segmentsExperienceModelImpl._originalGroupId = segmentsExperienceModelImpl._groupId;
 
 		segmentsExperienceModelImpl._setOriginalGroupId = false;
 
 		segmentsExperienceModelImpl._setModifiedDate = false;
 
-		segmentsExperienceModelImpl._originalSegmentsEntryId =
-			segmentsExperienceModelImpl._segmentsEntryId;
+		segmentsExperienceModelImpl._originalSegmentsEntryId = segmentsExperienceModelImpl._segmentsEntryId;
 
 		segmentsExperienceModelImpl._setOriginalSegmentsEntryId = false;
 
-		segmentsExperienceModelImpl._originalClassNameId =
-			segmentsExperienceModelImpl._classNameId;
+		segmentsExperienceModelImpl._originalClassNameId = segmentsExperienceModelImpl._classNameId;
 
 		segmentsExperienceModelImpl._setOriginalClassNameId = false;
 
-		segmentsExperienceModelImpl._originalClassPK =
-			segmentsExperienceModelImpl._classPK;
+		segmentsExperienceModelImpl._originalClassPK = segmentsExperienceModelImpl._classPK;
 
 		segmentsExperienceModelImpl._setOriginalClassPK = false;
 
-		segmentsExperienceModelImpl._originalActive =
-			segmentsExperienceModelImpl._active;
+		segmentsExperienceModelImpl._originalActive = segmentsExperienceModelImpl._active;
 
 		segmentsExperienceModelImpl._setOriginalActive = false;
 
@@ -959,11 +859,9 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public CacheModel<SegmentsExperience> toCacheModel() {
-		SegmentsExperienceCacheModel segmentsExperienceCacheModel =
-			new SegmentsExperienceCacheModel();
+		SegmentsExperienceCacheModel segmentsExperienceCacheModel = new SegmentsExperienceCacheModel();
 
-		segmentsExperienceCacheModel.segmentsExperienceId =
-			getSegmentsExperienceId();
+		segmentsExperienceCacheModel.segmentsExperienceId = getSegmentsExperienceId();
 
 		segmentsExperienceCacheModel.groupId = getGroupId();
 
@@ -1020,20 +918,17 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<SegmentsExperience, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SegmentsExperience, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SegmentsExperience, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SegmentsExperience, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SegmentsExperience, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SegmentsExperience, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1052,22 +947,19 @@ public class SegmentsExperienceModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SegmentsExperience, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SegmentsExperience, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SegmentsExperience, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SegmentsExperience, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SegmentsExperience, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SegmentsExperience, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1081,12 +973,10 @@ public class SegmentsExperienceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SegmentsExperience.class.getClassLoader();
+	private static final ClassLoader _classLoader = SegmentsExperience.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SegmentsExperience.class, ModelWrapper.class
-	};
-
+			SegmentsExperience.class, ModelWrapper.class
+		};
 	private long _segmentsExperienceId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -1114,5 +1004,4 @@ public class SegmentsExperienceModelImpl
 	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private SegmentsExperience _escapedModel;
-
 }

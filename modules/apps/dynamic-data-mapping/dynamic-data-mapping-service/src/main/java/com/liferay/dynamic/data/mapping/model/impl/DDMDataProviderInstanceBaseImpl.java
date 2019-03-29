@@ -33,9 +33,7 @@ import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServ
  */
 @ProviderType
 public abstract class DDMDataProviderInstanceBaseImpl
-	extends DDMDataProviderInstanceModelImpl
-	implements DDMDataProviderInstance {
-
+	extends DDMDataProviderInstanceModelImpl implements DDMDataProviderInstance {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,13 +42,10 @@ public abstract class DDMDataProviderInstanceBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			DDMDataProviderInstanceLocalServiceUtil.addDDMDataProviderInstance(
-				this);
+			DDMDataProviderInstanceLocalServiceUtil.addDDMDataProviderInstance(this);
 		}
 		else {
-			DDMDataProviderInstanceLocalServiceUtil.
-				updateDDMDataProviderInstance(this);
+			DDMDataProviderInstanceLocalServiceUtil.updateDDMDataProviderInstance(this);
 		}
 	}
-
 }

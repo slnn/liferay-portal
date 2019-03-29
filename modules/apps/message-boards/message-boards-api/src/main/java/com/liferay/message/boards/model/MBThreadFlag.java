@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MBThreadFlagModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.message.boards.model.impl.MBThreadFlagImpl"
-)
+@ImplementationClassName("com.liferay.message.boards.model.impl.MBThreadFlagImpl")
 @ProviderType
 public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBThreadFlagImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MBThreadFlag, Long> THREAD_FLAG_ID_ACCESSOR =
-		new Accessor<MBThreadFlag, Long>() {
-
+	public static final Accessor<MBThreadFlag, Long> THREAD_FLAG_ID_ACCESSOR = new Accessor<MBThreadFlag, Long>() {
 			@Override
 			public Long get(MBThreadFlag mbThreadFlag) {
 				return mbThreadFlag.getThreadFlagId();
@@ -55,7 +50,5 @@ public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 			public Class<MBThreadFlag> getTypeClass() {
 				return MBThreadFlag.class;
 			}
-
 		};
-
 }

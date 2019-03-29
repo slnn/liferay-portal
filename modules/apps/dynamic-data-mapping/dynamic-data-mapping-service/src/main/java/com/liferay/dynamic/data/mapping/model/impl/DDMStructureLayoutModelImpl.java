@@ -18,10 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,28 +70,29 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class DDMStructureLayoutModelImpl
-	extends BaseModelImpl<DDMStructureLayout>
+public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayout>
 	implements DDMStructureLayoutModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ddm structure layout model instance should use the <code>DDMStructureLayout</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructureLayout";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"structureLayoutId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"structureVersionId", Types.BIGINT}, {"name", Types.CLOB},
-		{"description", Types.CLOB}, {"definition", Types.CLOB}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "structureLayoutId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "structureVersionId", Types.BIGINT },
+			{ "name", Types.CLOB },
+			{ "description", Types.CLOB },
+			{ "definition", Types.CLOB }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -104,51 +109,29 @@ public class DDMStructureLayoutModelImpl
 		TABLE_COLUMNS_MAP.put("definition", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLayout (uuid_ VARCHAR(75) null,structureLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null)";
-
+	public static final String TABLE_SQL_CREATE = "create table DDMStructureLayout (uuid_ VARCHAR(75) null,structureLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLayout";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY ddmStructureLayout.structureLayoutId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY DDMStructureLayout.structureLayoutId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureLayout.structureLayoutId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMStructureLayout.structureLayoutId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-
 	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 4L;
-
 	public static final long UUID_COLUMN_BITMASK = 8L;
-
 	public static final long STRUCTURELAYOUTID_COLUMN_BITMASK = 16L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"));
 
 	public DDMStructureLayoutModelImpl() {
 	}
@@ -187,18 +170,14 @@ public class DDMStructureLayoutModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DDMStructureLayout, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureLayout, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DDMStructureLayout, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureLayout, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureLayout, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureLayout, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((DDMStructureLayout)this));
 		}
 
@@ -210,121 +189,67 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DDMStructureLayout, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DDMStructureLayout, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DDMStructureLayout, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<DDMStructureLayout, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(DDMStructureLayout)this, entry.getValue());
+				attributeSetterBiConsumer.accept((DDMStructureLayout)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DDMStructureLayout, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<DDMStructureLayout, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DDMStructureLayout, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<DDMStructureLayout, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMStructureLayout, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMStructureLayout, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<DDMStructureLayout, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMStructureLayout, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DDMStructureLayout, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<DDMStructureLayout, Object>>();
-		Map<String, BiConsumer<DDMStructureLayout, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<DDMStructureLayout, ?>>();
+		Map<String, Function<DDMStructureLayout, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMStructureLayout, Object>>();
+		Map<String, BiConsumer<DDMStructureLayout, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DDMStructureLayout, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", DDMStructureLayout::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<DDMStructureLayout, String>)
-				DDMStructureLayout::setUuid);
-		attributeGetterFunctions.put(
-			"structureLayoutId", DDMStructureLayout::getStructureLayoutId);
-		attributeSetterBiConsumers.put(
-			"structureLayoutId",
-			(BiConsumer<DDMStructureLayout, Long>)
-				DDMStructureLayout::setStructureLayoutId);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<DDMStructureLayout, String>)DDMStructureLayout::setUuid);
+		attributeGetterFunctions.put("structureLayoutId", DDMStructureLayout::getStructureLayoutId);
+		attributeSetterBiConsumers.put("structureLayoutId", (BiConsumer<DDMStructureLayout, Long>)DDMStructureLayout::setStructureLayoutId);
 		attributeGetterFunctions.put("groupId", DDMStructureLayout::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<DDMStructureLayout, Long>)
-				DDMStructureLayout::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", DDMStructureLayout::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDMStructureLayout, Long>)
-				DDMStructureLayout::setCompanyId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDMStructureLayout, Long>)DDMStructureLayout::setGroupId);
+		attributeGetterFunctions.put("companyId", DDMStructureLayout::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMStructureLayout, Long>)DDMStructureLayout::setCompanyId);
 		attributeGetterFunctions.put("userId", DDMStructureLayout::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DDMStructureLayout, Long>)
-				DDMStructureLayout::setUserId);
-		attributeGetterFunctions.put(
-			"userName", DDMStructureLayout::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DDMStructureLayout, String>)
-				DDMStructureLayout::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DDMStructureLayout::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DDMStructureLayout, Date>)
-				DDMStructureLayout::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DDMStructureLayout::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DDMStructureLayout, Date>)
-				DDMStructureLayout::setModifiedDate);
-		attributeGetterFunctions.put(
-			"structureVersionId", DDMStructureLayout::getStructureVersionId);
-		attributeSetterBiConsumers.put(
-			"structureVersionId",
-			(BiConsumer<DDMStructureLayout, Long>)
-				DDMStructureLayout::setStructureVersionId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDMStructureLayout, Long>)DDMStructureLayout::setUserId);
+		attributeGetterFunctions.put("userName", DDMStructureLayout::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDMStructureLayout, String>)DDMStructureLayout::setUserName);
+		attributeGetterFunctions.put("createDate", DDMStructureLayout::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDMStructureLayout, Date>)DDMStructureLayout::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", DDMStructureLayout::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DDMStructureLayout, Date>)DDMStructureLayout::setModifiedDate);
+		attributeGetterFunctions.put("structureVersionId", DDMStructureLayout::getStructureVersionId);
+		attributeSetterBiConsumers.put("structureVersionId", (BiConsumer<DDMStructureLayout, Long>)DDMStructureLayout::setStructureVersionId);
 		attributeGetterFunctions.put("name", DDMStructureLayout::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<DDMStructureLayout, String>)
-				DDMStructureLayout::setName);
-		attributeGetterFunctions.put(
-			"description", DDMStructureLayout::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<DDMStructureLayout, String>)
-				DDMStructureLayout::setDescription);
-		attributeGetterFunctions.put(
-			"definition", DDMStructureLayout::getDefinition);
-		attributeSetterBiConsumers.put(
-			"definition",
-			(BiConsumer<DDMStructureLayout, String>)
-				DDMStructureLayout::setDefinition);
+		attributeSetterBiConsumers.put("name", (BiConsumer<DDMStructureLayout, String>)DDMStructureLayout::setName);
+		attributeGetterFunctions.put("description", DDMStructureLayout::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<DDMStructureLayout, String>)DDMStructureLayout::setDescription);
+		attributeGetterFunctions.put("definition", DDMStructureLayout::getDefinition);
+		attributeSetterBiConsumers.put("definition", (BiConsumer<DDMStructureLayout, String>)DDMStructureLayout::setDefinition);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -526,8 +451,8 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -564,14 +489,12 @@ public class DDMStructureLayoutModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
 		}
 	}
 
@@ -591,9 +514,7 @@ public class DDMStructureLayoutModelImpl
 			return;
 		}
 
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -628,8 +549,8 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -661,21 +582,18 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
-
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
+			setDescription(LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
+			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -691,16 +609,14 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -719,9 +635,7 @@ public class DDMStructureLayoutModelImpl
 		_definition = definition;
 	}
 
-	public com.liferay.dynamic.data.mapping.model.DDMFormLayout
-		getDDMFormLayout() {
-
+	public com.liferay.dynamic.data.mapping.model.DDMFormLayout getDDMFormLayout() {
 		return null;
 	}
 
@@ -731,8 +645,8 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(DDMStructureLayout.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DDMStructureLayout.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -741,9 +655,8 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), DDMStructureLayout.class.getName(),
-			getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			DDMStructureLayout.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -779,8 +692,7 @@ public class DDMStructureLayoutModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -798,15 +710,12 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			DDMStructureLayout.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(DDMStructureLayout.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -815,7 +724,6 @@ public class DDMStructureLayoutModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -832,21 +740,19 @@ public class DDMStructureLayoutModelImpl
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(
-				getDescription(defaultLocale), defaultLocale, defaultLocale);
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 	}
 
 	@Override
 	public DDMStructureLayout toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMStructureLayout)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (DDMStructureLayout)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -854,8 +760,7 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public Object clone() {
-		DDMStructureLayoutImpl ddmStructureLayoutImpl =
-			new DDMStructureLayoutImpl();
+		DDMStructureLayoutImpl ddmStructureLayoutImpl = new DDMStructureLayoutImpl();
 
 		ddmStructureLayoutImpl.setUuid(getUuid());
 		ddmStructureLayoutImpl.setStructureLayoutId(getStructureLayoutId());
@@ -931,23 +836,19 @@ public class DDMStructureLayoutModelImpl
 	public void resetOriginalValues() {
 		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl = this;
 
-		ddmStructureLayoutModelImpl._originalUuid =
-			ddmStructureLayoutModelImpl._uuid;
+		ddmStructureLayoutModelImpl._originalUuid = ddmStructureLayoutModelImpl._uuid;
 
-		ddmStructureLayoutModelImpl._originalGroupId =
-			ddmStructureLayoutModelImpl._groupId;
+		ddmStructureLayoutModelImpl._originalGroupId = ddmStructureLayoutModelImpl._groupId;
 
 		ddmStructureLayoutModelImpl._setOriginalGroupId = false;
 
-		ddmStructureLayoutModelImpl._originalCompanyId =
-			ddmStructureLayoutModelImpl._companyId;
+		ddmStructureLayoutModelImpl._originalCompanyId = ddmStructureLayoutModelImpl._companyId;
 
 		ddmStructureLayoutModelImpl._setOriginalCompanyId = false;
 
 		ddmStructureLayoutModelImpl._setModifiedDate = false;
 
-		ddmStructureLayoutModelImpl._originalStructureVersionId =
-			ddmStructureLayoutModelImpl._structureVersionId;
+		ddmStructureLayoutModelImpl._originalStructureVersionId = ddmStructureLayoutModelImpl._structureVersionId;
 
 		ddmStructureLayoutModelImpl._setOriginalStructureVersionId = false;
 
@@ -958,8 +859,7 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public CacheModel<DDMStructureLayout> toCacheModel() {
-		DDMStructureLayoutCacheModel ddmStructureLayoutCacheModel =
-			new DDMStructureLayoutCacheModel();
+		DDMStructureLayoutCacheModel ddmStructureLayoutCacheModel = new DDMStructureLayoutCacheModel();
 
 		ddmStructureLayoutCacheModel.uuid = getUuid();
 
@@ -1003,8 +903,7 @@ public class DDMStructureLayoutModelImpl
 			ddmStructureLayoutCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		ddmStructureLayoutCacheModel.structureVersionId =
-			getStructureVersionId();
+		ddmStructureLayoutCacheModel.structureVersionId = getStructureVersionId();
 
 		ddmStructureLayoutCacheModel.name = getName();
 
@@ -1037,20 +936,17 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<DDMStructureLayout, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureLayout, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DDMStructureLayout, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureLayout, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureLayout, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureLayout, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1069,22 +965,19 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DDMStructureLayout, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DDMStructureLayout, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DDMStructureLayout, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<DDMStructureLayout, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<DDMStructureLayout, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<DDMStructureLayout, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1098,12 +991,10 @@ public class DDMStructureLayoutModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMStructureLayout.class.getClassLoader();
+	private static final ClassLoader _classLoader = DDMStructureLayout.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMStructureLayout.class, ModelWrapper.class
-	};
-
+			DDMStructureLayout.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _structureLayoutId;
@@ -1128,5 +1019,4 @@ public class DDMStructureLayoutModelImpl
 	private String _definition;
 	private long _columnBitmask;
 	private DDMStructureLayout _escapedModel;
-
 }

@@ -34,7 +34,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalServiceU
 @ProviderType
 public abstract class KaleoInstanceTokenBaseImpl
 	extends KaleoInstanceTokenModelImpl implements KaleoInstanceToken {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class KaleoInstanceTokenBaseImpl
 			KaleoInstanceTokenLocalServiceUtil.updateKaleoInstanceToken(this);
 		}
 	}
-
 }

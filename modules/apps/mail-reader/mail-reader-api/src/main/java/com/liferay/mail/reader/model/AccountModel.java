@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AccountModel
-	extends AuditedModel, BaseModel<Account>, ShardedModel {
-
+public interface AccountModel extends AuditedModel, BaseModel<Account>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -492,5 +491,4 @@ public interface AccountModel
 	 * @param defaultSender the default sender of this account
 	 */
 	public void setDefaultSender(boolean defaultSender);
-
 }

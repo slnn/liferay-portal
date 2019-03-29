@@ -27,40 +27,31 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMDataProviderInstanceLinkModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl")
 @ProviderType
 public interface DDMDataProviderInstanceLink
 	extends DDMDataProviderInstanceLinkModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMDataProviderInstanceLink, Long>
-		DATA_PROVIDER_INSTANCE_LINK_ID_ACCESSOR =
-			new Accessor<DDMDataProviderInstanceLink, Long>() {
+	public static final Accessor<DDMDataProviderInstanceLink, Long> DATA_PROVIDER_INSTANCE_LINK_ID_ACCESSOR =
+		new Accessor<DDMDataProviderInstanceLink, Long>() {
+			@Override
+			public Long get(
+				DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+				return ddmDataProviderInstanceLink.getDataProviderInstanceLinkId();
+			}
 
-				@Override
-				public Long get(
-					DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return ddmDataProviderInstanceLink.
-						getDataProviderInstanceLinkId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<DDMDataProviderInstanceLink> getTypeClass() {
-					return DDMDataProviderInstanceLink.class;
-				}
-
-			};
-
+			@Override
+			public Class<DDMDataProviderInstanceLink> getTypeClass() {
+				return DDMDataProviderInstanceLink.class;
+			}
+		};
 }

@@ -15,11 +15,13 @@
 package com.liferay.mobile.device.rules.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.mobile.device.rules.exception.NoSuchRuleException;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
 import com.liferay.mobile.device.rules.service.persistence.MDRRulePersistence;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class MDRRulePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.mobile.device.rules.service"));
 
 	@Before
@@ -108,8 +108,7 @@ public class MDRRulePersistenceTest {
 
 		_persistence.remove(newMDRRule);
 
-		MDRRule existingMDRRule = _persistence.fetchByPrimaryKey(
-			newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule = _persistence.fetchByPrimaryKey(newMDRRule.getPrimaryKey());
 
 		Assert.assertNull(existingMDRRule);
 	}
@@ -153,36 +152,33 @@ public class MDRRulePersistenceTest {
 
 		_mdrRules.add(_persistence.update(newMDRRule));
 
-		MDRRule existingMDRRule = _persistence.findByPrimaryKey(
-			newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
 		Assert.assertEquals(existingMDRRule.getUuid(), newMDRRule.getUuid());
-		Assert.assertEquals(
-			existingMDRRule.getRuleId(), newMDRRule.getRuleId());
-		Assert.assertEquals(
-			existingMDRRule.getGroupId(), newMDRRule.getGroupId());
-		Assert.assertEquals(
-			existingMDRRule.getCompanyId(), newMDRRule.getCompanyId());
-		Assert.assertEquals(
-			existingMDRRule.getUserId(), newMDRRule.getUserId());
-		Assert.assertEquals(
-			existingMDRRule.getUserName(), newMDRRule.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMDRRule.getCreateDate()),
+		Assert.assertEquals(existingMDRRule.getRuleId(), newMDRRule.getRuleId());
+		Assert.assertEquals(existingMDRRule.getGroupId(),
+			newMDRRule.getGroupId());
+		Assert.assertEquals(existingMDRRule.getCompanyId(),
+			newMDRRule.getCompanyId());
+		Assert.assertEquals(existingMDRRule.getUserId(), newMDRRule.getUserId());
+		Assert.assertEquals(existingMDRRule.getUserName(),
+			newMDRRule.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRule.getCreateDate()),
 			Time.getShortTimestamp(newMDRRule.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMDRRule.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRule.getModifiedDate()),
 			Time.getShortTimestamp(newMDRRule.getModifiedDate()));
-		Assert.assertEquals(
-			existingMDRRule.getRuleGroupId(), newMDRRule.getRuleGroupId());
+		Assert.assertEquals(existingMDRRule.getRuleGroupId(),
+			newMDRRule.getRuleGroupId());
 		Assert.assertEquals(existingMDRRule.getName(), newMDRRule.getName());
-		Assert.assertEquals(
-			existingMDRRule.getDescription(), newMDRRule.getDescription());
+		Assert.assertEquals(existingMDRRule.getDescription(),
+			newMDRRule.getDescription());
 		Assert.assertEquals(existingMDRRule.getType(), newMDRRule.getType());
-		Assert.assertEquals(
-			existingMDRRule.getTypeSettings(), newMDRRule.getTypeSettings());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMDRRule.getLastPublishDate()),
+		Assert.assertEquals(existingMDRRule.getTypeSettings(),
+			newMDRRule.getTypeSettings());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRule.getLastPublishDate()),
 			Time.getShortTimestamp(newMDRRule.getLastPublishDate()));
 	}
 
@@ -224,8 +220,7 @@ public class MDRRulePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
-		MDRRule existingMDRRule = _persistence.findByPrimaryKey(
-			newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
 		Assert.assertEquals(existingMDRRule, newMDRRule);
 	}
@@ -239,24 +234,23 @@ public class MDRRulePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<MDRRule> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MDRRule", "uuid", true, "ruleId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "ruleGroupId", true, "name", true,
-			"description", true, "type", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("MDRRule", "uuid", true,
+			"ruleId", true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"ruleGroupId", true, "name", true, "description", true, "type",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
-		MDRRule existingMDRRule = _persistence.fetchByPrimaryKey(
-			newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule = _persistence.fetchByPrimaryKey(newMDRRule.getPrimaryKey());
 
 		Assert.assertEquals(existingMDRRule, newMDRRule);
 	}
@@ -273,7 +267,6 @@ public class MDRRulePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MDRRule newMDRRule1 = addMDRRule();
 		MDRRule newMDRRule2 = addMDRRule();
 
@@ -282,20 +275,18 @@ public class MDRRulePersistenceTest {
 		primaryKeys.add(newMDRRule1.getPrimaryKey());
 		primaryKeys.add(newMDRRule2.getPrimaryKey());
 
-		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, mdrRules.size());
-		Assert.assertEquals(
-			newMDRRule1, mdrRules.get(newMDRRule1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMDRRule2, mdrRules.get(newMDRRule2.getPrimaryKey()));
+		Assert.assertEquals(newMDRRule1,
+			mdrRules.get(newMDRRule1.getPrimaryKey()));
+		Assert.assertEquals(newMDRRule2,
+			mdrRules.get(newMDRRule2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -305,8 +296,7 @@ public class MDRRulePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mdrRules.isEmpty());
 	}
@@ -314,7 +304,6 @@ public class MDRRulePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MDRRule newMDRRule = addMDRRule();
 
 		long pk = RandomTestUtil.nextLong();
@@ -324,57 +313,50 @@ public class MDRRulePersistenceTest {
 		primaryKeys.add(newMDRRule.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mdrRules.size());
-		Assert.assertEquals(
-			newMDRRule, mdrRules.get(newMDRRule.getPrimaryKey()));
+		Assert.assertEquals(newMDRRule, mdrRules.get(newMDRRule.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mdrRules.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMDRRule.getPrimaryKey());
 
-		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MDRRule> mdrRules = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mdrRules.size());
-		Assert.assertEquals(
-			newMDRRule, mdrRules.get(newMDRRule.getPrimaryKey()));
+		Assert.assertEquals(newMDRRule, mdrRules.get(newMDRRule.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MDRRuleLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MDRRuleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MDRRule>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRule>() {
 				@Override
 				public void performAction(MDRRule mdrRule) {
 					Assert.assertNotNull(mdrRule);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -383,14 +365,15 @@ public class MDRRulePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MDRRule.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("ruleId", newMDRRule.getRuleId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleId",
+				newMDRRule.getRuleId()));
 
 		List<MDRRule> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -403,11 +386,11 @@ public class MDRRulePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MDRRule.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("ruleId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleId",
+				RandomTestUtil.nextLong()));
 
 		List<MDRRule> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -415,18 +398,19 @@ public class MDRRulePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MDRRule.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleId"));
 
 		Object newRuleId = newMDRRule.getRuleId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("ruleId", new Object[] {newRuleId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ruleId",
+				new Object[] { newRuleId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -439,14 +423,13 @@ public class MDRRulePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MDRRule.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"ruleId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("ruleId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -459,18 +442,14 @@ public class MDRRulePersistenceTest {
 
 		_persistence.clearCache();
 
-		MDRRule existingMDRRule = _persistence.findByPrimaryKey(
-			newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingMDRRule.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingMDRRule, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingMDRRule.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMDRRule, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingMDRRule.getUuid(),
+				ReflectionTestUtil.invoke(existingMDRRule, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingMDRRule.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRule,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected MDRRule addMDRRule() throws Exception {
@@ -512,5 +491,4 @@ public class MDRRulePersistenceTest {
 	private List<MDRRule> _mdrRules = new ArrayList<MDRRule>();
 	private MDRRulePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

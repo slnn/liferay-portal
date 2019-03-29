@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SegmentsEntryRelModel
-	extends AttachedModel, BaseModel<SegmentsEntryRel>, GroupedModel,
-			ShardedModel {
-
+public interface SegmentsEntryRelModel extends AttachedModel,
+	BaseModel<SegmentsEntryRel>, GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -242,5 +240,4 @@ public interface SegmentsEntryRelModel
 	 */
 	@Override
 	public void setClassPK(long classPK);
-
 }

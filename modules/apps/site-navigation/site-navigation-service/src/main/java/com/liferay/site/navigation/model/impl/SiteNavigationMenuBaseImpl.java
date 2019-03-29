@@ -34,7 +34,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 @ProviderType
 public abstract class SiteNavigationMenuBaseImpl
 	extends SiteNavigationMenuModelImpl implements SiteNavigationMenu {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class SiteNavigationMenuBaseImpl
 			SiteNavigationMenuLocalServiceUtil.updateSiteNavigationMenu(this);
 		}
 	}
-
 }

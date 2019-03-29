@@ -33,9 +33,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class LVEntryVersionCacheModel
-	implements CacheModel<LVEntryVersion>, Externalizable {
-
+public class LVEntryVersionCacheModel implements CacheModel<LVEntryVersion>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -46,8 +45,7 @@ public class LVEntryVersionCacheModel
 			return false;
 		}
 
-		LVEntryVersionCacheModel lvEntryVersionCacheModel =
-			(LVEntryVersionCacheModel)obj;
+		LVEntryVersionCacheModel lvEntryVersionCacheModel = (LVEntryVersionCacheModel)obj;
 
 		if (lvEntryVersionId == lvEntryVersionCacheModel.lvEntryVersionId) {
 			return true;
@@ -135,7 +133,8 @@ public class LVEntryVersionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(lvEntryVersionId);
 
 		objectOutput.writeInt(version);
@@ -173,5 +172,4 @@ public class LVEntryVersionCacheModel
 	public long lvEntryId;
 	public long groupId;
 	public String uniqueGroupKey;
-
 }

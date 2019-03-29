@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,38 +72,50 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class JournalArticleModelImpl
-	extends BaseModelImpl<JournalArticle> implements JournalArticleModel {
-
+public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
+	implements JournalArticleModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a journal article model instance should use the <code>JournalArticle</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "JournalArticle";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"id_", Types.BIGINT},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"folderId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"articleId", Types.VARCHAR},
-		{"version", Types.DOUBLE}, {"urlTitle", Types.VARCHAR},
-		{"content", Types.CLOB}, {"DDMStructureKey", Types.VARCHAR},
-		{"DDMTemplateKey", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
-		{"layoutUuid", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
-		{"indexable", Types.BOOLEAN}, {"smallImage", Types.BOOLEAN},
-		{"smallImageId", Types.BIGINT}, {"smallImageURL", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "id_", Types.BIGINT },
+			{ "resourcePrimKey", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "folderId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
+			{ "articleId", Types.VARCHAR },
+			{ "version", Types.DOUBLE },
+			{ "urlTitle", Types.VARCHAR },
+			{ "content", Types.CLOB },
+			{ "DDMStructureKey", Types.VARCHAR },
+			{ "DDMTemplateKey", Types.VARCHAR },
+			{ "defaultLanguageId", Types.VARCHAR },
+			{ "layoutUuid", Types.VARCHAR },
+			{ "displayDate", Types.TIMESTAMP },
+			{ "expirationDate", Types.TIMESTAMP },
+			{ "reviewDate", Types.TIMESTAMP },
+			{ "indexable", Types.BOOLEAN },
+			{ "smallImage", Types.BOOLEAN },
+			{ "smallImageId", Types.BIGINT },
+			{ "smallImageURL", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -137,74 +153,40 @@ public class JournalArticleModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticle"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticle"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticle"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticle"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticle"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticle"),
+			true);
 	public static final long DDMSTRUCTUREKEY_COLUMN_BITMASK = 1L;
-
 	public static final long DDMTEMPLATEKEY_COLUMN_BITMASK = 2L;
-
 	public static final long ARTICLEID_COLUMN_BITMASK = 4L;
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 8L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 16L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 32L;
-
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 64L;
-
 	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 128L;
-
 	public static final long FOLDERID_COLUMN_BITMASK = 256L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 512L;
-
 	public static final long INDEXABLE_COLUMN_BITMASK = 1024L;
-
 	public static final long LAYOUTUUID_COLUMN_BITMASK = 2048L;
-
 	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 4096L;
-
 	public static final long SMALLIMAGEID_COLUMN_BITMASK = 8192L;
-
 	public static final long STATUS_COLUMN_BITMASK = 16384L;
-
 	public static final long URLTITLE_COLUMN_BITMASK = 32768L;
-
 	public static final long USERID_COLUMN_BITMASK = 65536L;
-
 	public static final long UUID_COLUMN_BITMASK = 131072L;
-
 	public static final long VERSION_COLUMN_BITMASK = 262144L;
 
 	/**
@@ -263,15 +245,12 @@ public class JournalArticleModelImpl
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
 	 */
-	public static List<JournalArticle> toModels(
-		JournalArticleSoap[] soapModels) {
-
+	public static List<JournalArticle> toModels(JournalArticleSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<JournalArticle> models = new ArrayList<JournalArticle>(
-			soapModels.length);
+		List<JournalArticle> models = new ArrayList<JournalArticle>(soapModels.length);
 
 		for (JournalArticleSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -280,9 +259,8 @@ public class JournalArticleModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.journal.model.JournalArticle"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.journal.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.journal.model.JournalArticle"));
 
 	public JournalArticleModelImpl() {
 	}
@@ -321,18 +299,13 @@ public class JournalArticleModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<JournalArticle, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalArticle, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalArticle, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((JournalArticle)this));
 		}
 
@@ -344,208 +317,107 @@ public class JournalArticleModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<JournalArticle, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<JournalArticle, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<JournalArticle, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<JournalArticle, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(JournalArticle)this, entry.getValue());
+				attributeSetterBiConsumer.accept((JournalArticle)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<JournalArticle, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<JournalArticle, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<JournalArticle, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<JournalArticle, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<JournalArticle, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<JournalArticle, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<JournalArticle, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<JournalArticle, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<JournalArticle, Object>>();
-		Map<String, BiConsumer<JournalArticle, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<JournalArticle, ?>>();
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<JournalArticle, Object>>();
+		Map<String, BiConsumer<JournalArticle, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<JournalArticle, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", JournalArticle::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<JournalArticle, String>)JournalArticle::setUuid);
 		attributeGetterFunctions.put("id", JournalArticle::getId);
-		attributeSetterBiConsumers.put(
-			"id", (BiConsumer<JournalArticle, Long>)JournalArticle::setId);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", JournalArticle::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<JournalArticle, Long>)
-				JournalArticle::setResourcePrimKey);
+		attributeSetterBiConsumers.put("id", (BiConsumer<JournalArticle, Long>)JournalArticle::setId);
+		attributeGetterFunctions.put("resourcePrimKey", JournalArticle::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<JournalArticle, Long>)JournalArticle::setResourcePrimKey);
 		attributeGetterFunctions.put("groupId", JournalArticle::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<JournalArticle, Long>)JournalArticle::setGroupId);
 		attributeGetterFunctions.put("companyId", JournalArticle::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<JournalArticle, Long>)JournalArticle::setCompanyId);
 		attributeGetterFunctions.put("userId", JournalArticle::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<JournalArticle, Long>)JournalArticle::setUserId);
 		attributeGetterFunctions.put("userName", JournalArticle::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", JournalArticle::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<JournalArticle, Date>)JournalArticle::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", JournalArticle::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<JournalArticle, Date>)JournalArticle::setModifiedDate);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<JournalArticle, String>)JournalArticle::setUserName);
+		attributeGetterFunctions.put("createDate", JournalArticle::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", JournalArticle::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setModifiedDate);
 		attributeGetterFunctions.put("folderId", JournalArticle::getFolderId);
-		attributeSetterBiConsumers.put(
-			"folderId",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setFolderId);
-		attributeGetterFunctions.put(
-			"classNameId", JournalArticle::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setClassNameId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<JournalArticle, Long>)JournalArticle::setFolderId);
+		attributeGetterFunctions.put("classNameId", JournalArticle::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<JournalArticle, Long>)JournalArticle::setClassNameId);
 		attributeGetterFunctions.put("classPK", JournalArticle::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<JournalArticle, Long>)JournalArticle::setClassPK);
 		attributeGetterFunctions.put("treePath", JournalArticle::getTreePath);
-		attributeSetterBiConsumers.put(
-			"treePath",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setTreePath);
+		attributeSetterBiConsumers.put("treePath", (BiConsumer<JournalArticle, String>)JournalArticle::setTreePath);
 		attributeGetterFunctions.put("articleId", JournalArticle::getArticleId);
-		attributeSetterBiConsumers.put(
-			"articleId",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setArticleId);
+		attributeSetterBiConsumers.put("articleId", (BiConsumer<JournalArticle, String>)JournalArticle::setArticleId);
 		attributeGetterFunctions.put("version", JournalArticle::getVersion);
-		attributeSetterBiConsumers.put(
-			"version",
-			(BiConsumer<JournalArticle, Double>)JournalArticle::setVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<JournalArticle, Double>)JournalArticle::setVersion);
 		attributeGetterFunctions.put("urlTitle", JournalArticle::getUrlTitle);
-		attributeSetterBiConsumers.put(
-			"urlTitle",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setUrlTitle);
+		attributeSetterBiConsumers.put("urlTitle", (BiConsumer<JournalArticle, String>)JournalArticle::setUrlTitle);
 		attributeGetterFunctions.put("content", JournalArticle::getContent);
-		attributeSetterBiConsumers.put(
-			"content",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setContent);
-		attributeGetterFunctions.put(
-			"DDMStructureKey", JournalArticle::getDDMStructureKey);
-		attributeSetterBiConsumers.put(
-			"DDMStructureKey",
-			(BiConsumer<JournalArticle, String>)
-				JournalArticle::setDDMStructureKey);
-		attributeGetterFunctions.put(
-			"DDMTemplateKey", JournalArticle::getDDMTemplateKey);
-		attributeSetterBiConsumers.put(
-			"DDMTemplateKey",
-			(BiConsumer<JournalArticle, String>)
-				JournalArticle::setDDMTemplateKey);
-		attributeGetterFunctions.put(
-			"defaultLanguageId", JournalArticle::getDefaultLanguageId);
-		attributeSetterBiConsumers.put(
-			"defaultLanguageId",
-			(BiConsumer<JournalArticle, String>)
-				JournalArticle::setDefaultLanguageId);
-		attributeGetterFunctions.put(
-			"layoutUuid", JournalArticle::getLayoutUuid);
-		attributeSetterBiConsumers.put(
-			"layoutUuid",
-			(BiConsumer<JournalArticle, String>)JournalArticle::setLayoutUuid);
-		attributeGetterFunctions.put(
-			"displayDate", JournalArticle::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<JournalArticle, Date>)JournalArticle::setDisplayDate);
-		attributeGetterFunctions.put(
-			"expirationDate", JournalArticle::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<JournalArticle, Date>)
-				JournalArticle::setExpirationDate);
-		attributeGetterFunctions.put(
-			"reviewDate", JournalArticle::getReviewDate);
-		attributeSetterBiConsumers.put(
-			"reviewDate",
-			(BiConsumer<JournalArticle, Date>)JournalArticle::setReviewDate);
+		attributeSetterBiConsumers.put("content", (BiConsumer<JournalArticle, String>)JournalArticle::setContent);
+		attributeGetterFunctions.put("DDMStructureKey", JournalArticle::getDDMStructureKey);
+		attributeSetterBiConsumers.put("DDMStructureKey", (BiConsumer<JournalArticle, String>)JournalArticle::setDDMStructureKey);
+		attributeGetterFunctions.put("DDMTemplateKey", JournalArticle::getDDMTemplateKey);
+		attributeSetterBiConsumers.put("DDMTemplateKey", (BiConsumer<JournalArticle, String>)JournalArticle::setDDMTemplateKey);
+		attributeGetterFunctions.put("defaultLanguageId", JournalArticle::getDefaultLanguageId);
+		attributeSetterBiConsumers.put("defaultLanguageId", (BiConsumer<JournalArticle, String>)JournalArticle::setDefaultLanguageId);
+		attributeGetterFunctions.put("layoutUuid", JournalArticle::getLayoutUuid);
+		attributeSetterBiConsumers.put("layoutUuid", (BiConsumer<JournalArticle, String>)JournalArticle::setLayoutUuid);
+		attributeGetterFunctions.put("displayDate", JournalArticle::getDisplayDate);
+		attributeSetterBiConsumers.put("displayDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setDisplayDate);
+		attributeGetterFunctions.put("expirationDate", JournalArticle::getExpirationDate);
+		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setExpirationDate);
+		attributeGetterFunctions.put("reviewDate", JournalArticle::getReviewDate);
+		attributeSetterBiConsumers.put("reviewDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setReviewDate);
 		attributeGetterFunctions.put("indexable", JournalArticle::getIndexable);
-		attributeSetterBiConsumers.put(
-			"indexable",
-			(BiConsumer<JournalArticle, Boolean>)JournalArticle::setIndexable);
-		attributeGetterFunctions.put(
-			"smallImage", JournalArticle::getSmallImage);
-		attributeSetterBiConsumers.put(
-			"smallImage",
-			(BiConsumer<JournalArticle, Boolean>)JournalArticle::setSmallImage);
-		attributeGetterFunctions.put(
-			"smallImageId", JournalArticle::getSmallImageId);
-		attributeSetterBiConsumers.put(
-			"smallImageId",
-			(BiConsumer<JournalArticle, Long>)JournalArticle::setSmallImageId);
-		attributeGetterFunctions.put(
-			"smallImageURL", JournalArticle::getSmallImageURL);
-		attributeSetterBiConsumers.put(
-			"smallImageURL",
-			(BiConsumer<JournalArticle, String>)
-				JournalArticle::setSmallImageURL);
-		attributeGetterFunctions.put(
-			"lastPublishDate", JournalArticle::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<JournalArticle, Date>)
-				JournalArticle::setLastPublishDate);
+		attributeSetterBiConsumers.put("indexable", (BiConsumer<JournalArticle, Boolean>)JournalArticle::setIndexable);
+		attributeGetterFunctions.put("smallImage", JournalArticle::getSmallImage);
+		attributeSetterBiConsumers.put("smallImage", (BiConsumer<JournalArticle, Boolean>)JournalArticle::setSmallImage);
+		attributeGetterFunctions.put("smallImageId", JournalArticle::getSmallImageId);
+		attributeSetterBiConsumers.put("smallImageId", (BiConsumer<JournalArticle, Long>)JournalArticle::setSmallImageId);
+		attributeGetterFunctions.put("smallImageURL", JournalArticle::getSmallImageURL);
+		attributeSetterBiConsumers.put("smallImageURL", (BiConsumer<JournalArticle, String>)JournalArticle::setSmallImageURL);
+		attributeGetterFunctions.put("lastPublishDate", JournalArticle::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setLastPublishDate);
 		attributeGetterFunctions.put("status", JournalArticle::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<JournalArticle, Integer>)JournalArticle::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", JournalArticle::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<JournalArticle, Long>)
-				JournalArticle::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", JournalArticle::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<JournalArticle, String>)
-				JournalArticle::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", JournalArticle::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<JournalArticle, Date>)JournalArticle::setStatusDate);
+		attributeSetterBiConsumers.put("status", (BiConsumer<JournalArticle, Integer>)JournalArticle::setStatus);
+		attributeGetterFunctions.put("statusByUserId", JournalArticle::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<JournalArticle, Long>)JournalArticle::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", JournalArticle::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<JournalArticle, String>)JournalArticle::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", JournalArticle::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<JournalArticle, Date>)JournalArticle::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1267,33 +1139,28 @@ public class JournalArticleModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			getClassNameId());
+		return new StagedModelType(PortalUtil.getClassNameId(
+				JournalArticle.class.getName()), getClassNameId());
 	}
 
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
-
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -1310,18 +1177,14 @@ public class JournalArticleModelImpl
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
+				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -1334,13 +1197,12 @@ public class JournalArticleModelImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -1355,19 +1217,16 @@ public class JournalArticleModelImpl
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -1389,9 +1248,8 @@ public class JournalArticleModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -1406,9 +1264,8 @@ public class JournalArticleModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -1503,8 +1360,8 @@ public class JournalArticleModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), JournalArticle.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			JournalArticle.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1517,9 +1374,8 @@ public class JournalArticleModelImpl
 	@Override
 	public JournalArticle toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (JournalArticle)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (JournalArticle)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1640,81 +1496,63 @@ public class JournalArticleModelImpl
 
 		journalArticleModelImpl._originalUuid = journalArticleModelImpl._uuid;
 
-		journalArticleModelImpl._originalResourcePrimKey =
-			journalArticleModelImpl._resourcePrimKey;
+		journalArticleModelImpl._originalResourcePrimKey = journalArticleModelImpl._resourcePrimKey;
 
 		journalArticleModelImpl._setOriginalResourcePrimKey = false;
 
-		journalArticleModelImpl._originalGroupId =
-			journalArticleModelImpl._groupId;
+		journalArticleModelImpl._originalGroupId = journalArticleModelImpl._groupId;
 
 		journalArticleModelImpl._setOriginalGroupId = false;
 
-		journalArticleModelImpl._originalCompanyId =
-			journalArticleModelImpl._companyId;
+		journalArticleModelImpl._originalCompanyId = journalArticleModelImpl._companyId;
 
 		journalArticleModelImpl._setOriginalCompanyId = false;
 
-		journalArticleModelImpl._originalUserId =
-			journalArticleModelImpl._userId;
+		journalArticleModelImpl._originalUserId = journalArticleModelImpl._userId;
 
 		journalArticleModelImpl._setOriginalUserId = false;
 
 		journalArticleModelImpl._setModifiedDate = false;
 
-		journalArticleModelImpl._originalFolderId =
-			journalArticleModelImpl._folderId;
+		journalArticleModelImpl._originalFolderId = journalArticleModelImpl._folderId;
 
 		journalArticleModelImpl._setOriginalFolderId = false;
 
-		journalArticleModelImpl._originalClassNameId =
-			journalArticleModelImpl._classNameId;
+		journalArticleModelImpl._originalClassNameId = journalArticleModelImpl._classNameId;
 
 		journalArticleModelImpl._setOriginalClassNameId = false;
 
-		journalArticleModelImpl._originalClassPK =
-			journalArticleModelImpl._classPK;
+		journalArticleModelImpl._originalClassPK = journalArticleModelImpl._classPK;
 
 		journalArticleModelImpl._setOriginalClassPK = false;
 
-		journalArticleModelImpl._originalArticleId =
-			journalArticleModelImpl._articleId;
+		journalArticleModelImpl._originalArticleId = journalArticleModelImpl._articleId;
 
-		journalArticleModelImpl._originalVersion =
-			journalArticleModelImpl._version;
+		journalArticleModelImpl._originalVersion = journalArticleModelImpl._version;
 
 		journalArticleModelImpl._setOriginalVersion = false;
 
-		journalArticleModelImpl._originalUrlTitle =
-			journalArticleModelImpl._urlTitle;
+		journalArticleModelImpl._originalUrlTitle = journalArticleModelImpl._urlTitle;
 
-		journalArticleModelImpl._originalDDMStructureKey =
-			journalArticleModelImpl._DDMStructureKey;
+		journalArticleModelImpl._originalDDMStructureKey = journalArticleModelImpl._DDMStructureKey;
 
-		journalArticleModelImpl._originalDDMTemplateKey =
-			journalArticleModelImpl._DDMTemplateKey;
+		journalArticleModelImpl._originalDDMTemplateKey = journalArticleModelImpl._DDMTemplateKey;
 
-		journalArticleModelImpl._originalLayoutUuid =
-			journalArticleModelImpl._layoutUuid;
+		journalArticleModelImpl._originalLayoutUuid = journalArticleModelImpl._layoutUuid;
 
-		journalArticleModelImpl._originalDisplayDate =
-			journalArticleModelImpl._displayDate;
+		journalArticleModelImpl._originalDisplayDate = journalArticleModelImpl._displayDate;
 
-		journalArticleModelImpl._originalExpirationDate =
-			journalArticleModelImpl._expirationDate;
+		journalArticleModelImpl._originalExpirationDate = journalArticleModelImpl._expirationDate;
 
-		journalArticleModelImpl._originalIndexable =
-			journalArticleModelImpl._indexable;
+		journalArticleModelImpl._originalIndexable = journalArticleModelImpl._indexable;
 
 		journalArticleModelImpl._setOriginalIndexable = false;
 
-		journalArticleModelImpl._originalSmallImageId =
-			journalArticleModelImpl._smallImageId;
+		journalArticleModelImpl._originalSmallImageId = journalArticleModelImpl._smallImageId;
 
 		journalArticleModelImpl._setOriginalSmallImageId = false;
 
-		journalArticleModelImpl._originalStatus =
-			journalArticleModelImpl._status;
+		journalArticleModelImpl._originalStatus = journalArticleModelImpl._status;
 
 		journalArticleModelImpl._setOriginalStatus = false;
 
@@ -1725,8 +1563,7 @@ public class JournalArticleModelImpl
 
 	@Override
 	public CacheModel<JournalArticle> toCacheModel() {
-		JournalArticleCacheModel journalArticleCacheModel =
-			new JournalArticleCacheModel();
+		JournalArticleCacheModel journalArticleCacheModel = new JournalArticleCacheModel();
 
 		journalArticleCacheModel.uuid = getUuid();
 
@@ -1888,8 +1725,7 @@ public class JournalArticleModelImpl
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
-			journalArticleCacheModel.lastPublishDate =
-				lastPublishDate.getTime();
+			journalArticleCacheModel.lastPublishDate = lastPublishDate.getTime();
 		}
 		else {
 			journalArticleCacheModel.lastPublishDate = Long.MIN_VALUE;
@@ -1923,20 +1759,16 @@ public class JournalArticleModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<JournalArticle, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalArticle, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalArticle, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1955,22 +1787,18 @@ public class JournalArticleModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<JournalArticle, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<JournalArticle, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<JournalArticle, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<JournalArticle, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<JournalArticle, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1984,12 +1812,10 @@ public class JournalArticleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		JournalArticle.class.getClassLoader();
+	private static final ClassLoader _classLoader = JournalArticle.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		JournalArticle.class, ModelWrapper.class
-	};
-
+			JournalArticle.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;
@@ -2056,5 +1882,4 @@ public class JournalArticleModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private JournalArticle _escapedModel;
-
 }

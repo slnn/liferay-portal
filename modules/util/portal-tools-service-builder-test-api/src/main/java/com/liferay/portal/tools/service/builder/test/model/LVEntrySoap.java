@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class LVEntrySoap implements Serializable {
-
 	public static LVEntrySoap toSoapModel(LVEntry model) {
 		LVEntrySoap soapModel = new LVEntrySoap();
 
@@ -72,8 +71,7 @@ public class LVEntrySoap implements Serializable {
 	}
 
 	public static LVEntrySoap[] toSoapModels(List<LVEntry> models) {
-		List<LVEntrySoap> soapModels = new ArrayList<LVEntrySoap>(
-			models.size());
+		List<LVEntrySoap> soapModels = new ArrayList<LVEntrySoap>(models.size());
 
 		for (LVEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -156,5 +154,4 @@ public class LVEntrySoap implements Serializable {
 	private long _lvEntryId;
 	private long _groupId;
 	private String _uniqueGroupKey;
-
 }

@@ -17,7 +17,9 @@ package com.liferay.external.reference.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
+
 import com.liferay.external.reference.service.ERAssetVocabularyLocalService;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -46,9 +48,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class ERAssetVocabularyLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements ERAssetVocabularyLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements ERAssetVocabularyLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,7 +72,6 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 */
 	public void setERAssetVocabularyLocalService(
 		ERAssetVocabularyLocalService erAssetVocabularyLocalService) {
-
 		this.erAssetVocabularyLocalService = erAssetVocabularyLocalService;
 	}
 
@@ -80,9 +80,7 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -92,9 +90,7 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -103,9 +99,7 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -116,7 +110,6 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -143,9 +136,7 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 *
 	 * @return the asset vocabulary local service
 	 */
-	public com.liferay.asset.kernel.service.AssetVocabularyLocalService
-		getAssetVocabularyLocalService() {
-
+	public com.liferay.asset.kernel.service.AssetVocabularyLocalService getAssetVocabularyLocalService() {
 		return assetVocabularyLocalService;
 	}
 
@@ -155,9 +146,7 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 * @param assetVocabularyLocalService the asset vocabulary local service
 	 */
 	public void setAssetVocabularyLocalService(
-		com.liferay.asset.kernel.service.AssetVocabularyLocalService
-			assetVocabularyLocalService) {
-
+		com.liferay.asset.kernel.service.AssetVocabularyLocalService assetVocabularyLocalService) {
 		this.assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
@@ -177,7 +166,6 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 */
 	public void setAssetVocabularyPersistence(
 		AssetVocabularyPersistence assetVocabularyPersistence) {
-
 		this.assetVocabularyPersistence = assetVocabularyPersistence;
 	}
 
@@ -211,8 +199,8 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -223,29 +211,14 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 
 	@BeanReference(type = ERAssetVocabularyLocalService.class)
 	protected ERAssetVocabularyLocalService erAssetVocabularyLocalService;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
-	@ServiceReference(
-		type = com.liferay.asset.kernel.service.AssetVocabularyLocalService.class
-	)
-	protected com.liferay.asset.kernel.service.AssetVocabularyLocalService
-		assetVocabularyLocalService;
-
+	@ServiceReference(type = com.liferay.asset.kernel.service.AssetVocabularyLocalService.class)
+	protected com.liferay.asset.kernel.service.AssetVocabularyLocalService assetVocabularyLocalService;
 	@ServiceReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-
 }

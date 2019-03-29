@@ -17,8 +17,10 @@ package com.liferay.change.tracking.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.model.CTEntryAggregate;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class CTEntryAggregateCacheModel
-	implements CacheModel<CTEntryAggregate>, Externalizable {
-
+public class CTEntryAggregateCacheModel implements CacheModel<CTEntryAggregate>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class CTEntryAggregateCacheModel
 			return false;
 		}
 
-		CTEntryAggregateCacheModel ctEntryAggregateCacheModel =
-			(CTEntryAggregateCacheModel)obj;
+		CTEntryAggregateCacheModel ctEntryAggregateCacheModel = (CTEntryAggregateCacheModel)obj;
 
-		if (ctEntryAggregateId ==
-				ctEntryAggregateCacheModel.ctEntryAggregateId) {
-
+		if (ctEntryAggregateId == ctEntryAggregateCacheModel.ctEntryAggregateId) {
 			return true;
 		}
 
@@ -144,7 +142,8 @@ public class CTEntryAggregateCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(ctEntryAggregateId);
 
 		objectOutput.writeLong(companyId);
@@ -174,5 +173,4 @@ public class CTEntryAggregateCacheModel
 	public long modifiedDate;
 	public long ctCollectionId;
 	public long ownerCTEntryId;
-
 }

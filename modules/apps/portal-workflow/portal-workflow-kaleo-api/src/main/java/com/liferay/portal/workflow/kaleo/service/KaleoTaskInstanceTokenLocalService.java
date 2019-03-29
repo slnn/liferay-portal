@@ -53,13 +53,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface KaleoTaskInstanceTokenLocalService
-	extends BaseLocalService, PersistedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,41 +64,39 @@ public interface KaleoTaskInstanceTokenLocalService
 	 */
 
 	/**
-	 * Adds the kaleo task instance token to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoTaskInstanceToken the kaleo task instance token
-	 * @return the kaleo task instance token that was added
-	 */
+	* Adds the kaleo task instance token to the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskInstanceToken the kaleo task instance token
+	* @return the kaleo task instance token that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken addKaleoTaskInstanceToken(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken addKaleoTaskInstanceToken(
-			long kaleoInstanceTokenId, long kaleoTaskId, String kaleoTaskName,
-			Collection<KaleoTaskAssignment> kaleoTaskAssignments, Date dueDate,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+		long kaleoInstanceTokenId, long kaleoTaskId, String kaleoTaskName,
+		Collection<KaleoTaskAssignment> kaleoTaskAssignments, Date dueDate,
+		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
-			long kaleoTaskInstanceTokenId, String assigneeClassName,
-			long assigneeClassPK, Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
-		throws PortalException;
+		long kaleoTaskInstanceTokenId, String assigneeClassName,
+		long assigneeClassPK, Map<String, Serializable> workflowContext,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken completeKaleoTaskInstanceToken(
-			long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
+		long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Creates a new kaleo task instance token with the primary key. Does not add the kaleo task instance token to the database.
-	 *
-	 * @param kaleoTaskInstanceTokenId the primary key for the new kaleo task instance token
-	 * @return the new kaleo task instance token
-	 */
+	* Creates a new kaleo task instance token with the primary key. Does not add the kaleo task instance token to the database.
+	*
+	* @param kaleoTaskInstanceTokenId the primary key for the new kaleo task instance token
+	* @return the new kaleo task instance token
+	*/
 	@Transactional(enabled = false)
 	public KaleoTaskInstanceToken createKaleoTaskInstanceToken(
 		long kaleoTaskInstanceTokenId);
@@ -111,34 +106,32 @@ public interface KaleoTaskInstanceTokenLocalService
 	public void deleteKaleoDefinitionVersionKaleoTaskInstanceTokens(
 		long kaleoDefinitionVersionId);
 
-	public void deleteKaleoInstanceKaleoTaskInstanceTokens(
-		long kaleoInstanceId);
+	public void deleteKaleoInstanceKaleoTaskInstanceTokens(long kaleoInstanceId);
 
 	/**
-	 * Deletes the kaleo task instance token from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoTaskInstanceToken the kaleo task instance token
-	 * @return the kaleo task instance token that was removed
-	 */
+	* Deletes the kaleo task instance token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskInstanceToken the kaleo task instance token
+	* @return the kaleo task instance token that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public KaleoTaskInstanceToken deleteKaleoTaskInstanceToken(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken);
 
 	/**
-	 * Deletes the kaleo task instance token with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoTaskInstanceTokenId the primary key of the kaleo task instance token
-	 * @return the kaleo task instance token that was removed
-	 * @throws PortalException if a kaleo task instance token with the primary key could not be found
-	 */
+	* Deletes the kaleo task instance token with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskInstanceTokenId the primary key of the kaleo task instance token
+	* @return the kaleo task instance token that was removed
+	* @throws PortalException if a kaleo task instance token with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public KaleoTaskInstanceToken deleteKaleoTaskInstanceToken(
-			long kaleoTaskInstanceTokenId)
-		throws PortalException;
+		long kaleoTaskInstanceTokenId) throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -147,67 +140,66 @@ public interface KaleoTaskInstanceTokenLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoTaskInstanceToken fetchKaleoTaskInstanceToken(
@@ -227,16 +219,15 @@ public interface KaleoTaskInstanceTokenLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the kaleo task instance token with the primary key.
-	 *
-	 * @param kaleoTaskInstanceTokenId the primary key of the kaleo task instance token
-	 * @return the kaleo task instance token
-	 * @throws PortalException if a kaleo task instance token with the primary key could not be found
-	 */
+	* Returns the kaleo task instance token with the primary key.
+	*
+	* @param kaleoTaskInstanceTokenId the primary key of the kaleo task instance token
+	* @return the kaleo task instance token
+	* @throws PortalException if a kaleo task instance token with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoTaskInstanceToken getKaleoTaskInstanceToken(
-			long kaleoTaskInstanceTokenId)
-		throws PortalException;
+		long kaleoTaskInstanceTokenId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
@@ -245,19 +236,19 @@ public interface KaleoTaskInstanceTokenLocalService
 		ServiceContext serviceContext);
 
 	/**
-	 * Returns a range of all the kaleo task instance tokens.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo task instance tokens
-	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
-	 * @return the range of kaleo task instance tokens
-	 */
+	* Returns a range of all the kaleo task instance tokens.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo task instance tokens
+	* @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	* @return the range of kaleo task instance tokens
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
-		int start, int end);
+	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
@@ -273,8 +264,7 @@ public interface KaleoTaskInstanceTokenLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoTaskInstanceToken getKaleoTaskInstanceTokens(
-			long kaleoInstanceId, long kaleoTaskId)
-		throws PortalException;
+		long kaleoInstanceId, long kaleoTaskId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
@@ -284,35 +274,34 @@ public interface KaleoTaskInstanceTokenLocalService
 		ServiceContext serviceContext);
 
 	/**
-	 * Returns the number of kaleo task instance tokens.
-	 *
-	 * @return the number of kaleo task instance tokens
-	 */
+	* Returns the number of kaleo task instance tokens.
+	*
+	* @return the number of kaleo task instance tokens
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoTaskInstanceTokensCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(
+	public int getKaleoTaskInstanceTokensCount(Boolean completed,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTaskInstanceTokensCount(List<Long> roleIds,
 		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(
-		List<Long> roleIds, Boolean completed, ServiceContext serviceContext);
+	public int getKaleoTaskInstanceTokensCount(long kaleoInstanceId,
+		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(
-		long kaleoInstanceId, Boolean completed, ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskInstanceTokensCount(
-		String assigneeClassName, long assigneeClassPK, Boolean completed,
-		ServiceContext serviceContext);
+	public int getKaleoTaskInstanceTokensCount(String assigneeClassName,
+		long assigneeClassPK, Boolean completed, ServiceContext serviceContext);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -321,93 +310,84 @@ public interface KaleoTaskInstanceTokenLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken>
-		getSubmittingUserKaleoTaskInstanceTokens(
-			long userId, Boolean completed, int start, int end,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
-			ServiceContext serviceContext);
+	public List<KaleoTaskInstanceToken> getSubmittingUserKaleoTaskInstanceTokens(
+		long userId, Boolean completed, int start, int end,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSubmittingUserKaleoTaskInstanceTokensCount(
-		long userId, Boolean completed, ServiceContext serviceContext);
+	public int getSubmittingUserKaleoTaskInstanceTokensCount(long userId,
+		Boolean completed, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(
-		String keywords, Boolean completed, Boolean searchByUserRoles,
-		int start, int end,
+	public List<KaleoTaskInstanceToken> search(String keywords,
+		Boolean completed, Boolean searchByUserRoles, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(
-		String taskName, String assetType, Long[] assetPrimaryKeys,
+	public List<KaleoTaskInstanceToken> search(String taskName,
+		String assetType, Long[] assetPrimaryKeys, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+		boolean andOperator, int start, int end,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTaskInstanceToken> search(String assetTitle,
+		String taskName, String[] assetTypes, Long[] assetPrimaryKeys,
 		Date dueDateGT, Date dueDateLT, Boolean completed,
 		Boolean searchByUserRoles, boolean andOperator, int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(
-		String assetTitle, String taskName, String[] assetTypes,
-		Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
-		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
+	public List<KaleoTaskInstanceToken> search(String keywords,
+		String[] assetTypes, Boolean completed, Boolean searchByUserRoles,
 		int start, int end,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskInstanceToken> search(
-		String keywords, String[] assetTypes, Boolean completed,
-		Boolean searchByUserRoles, int start, int end,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
-		ServiceContext serviceContext);
+	public int searchCount(long kaleoInstanceId, Boolean completed,
+		Boolean searchByUserRoles, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		long kaleoInstanceId, Boolean completed, Boolean searchByUserRoles,
-		ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		Long kaleoInstanceId, String assetTitle, String taskName,
-		String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
-		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-		boolean andOperator, ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		String keywords, Boolean completed, Boolean searchByUserRoles,
-		ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		String taskName, String assetType, Long[] assetPrimaryKeys,
+	public int searchCount(Long kaleoInstanceId, String assetTitle,
+		String taskName, String[] assetTypes, Long[] assetPrimaryKeys,
 		Date dueDateGT, Date dueDateLT, Boolean completed,
 		Boolean searchByUserRoles, boolean andOperator,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		String keywords, String[] assetTypes, Boolean completed,
+	public int searchCount(String keywords, Boolean completed,
 		Boolean searchByUserRoles, ServiceContext serviceContext);
 
-	public KaleoTaskInstanceToken updateDueDate(
-			long kaleoTaskInstanceTokenId, Date dueDate,
-			ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(String taskName, String assetType,
+		Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
+		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(String keywords, String[] assetTypes,
+		Boolean completed, Boolean searchByUserRoles,
+		ServiceContext serviceContext);
+
+	public KaleoTaskInstanceToken updateDueDate(long kaleoTaskInstanceTokenId,
+		Date dueDate, ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Updates the kaleo task instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoTaskInstanceToken the kaleo task instance token
-	 * @return the kaleo task instance token that was updated
-	 */
+	* Updates the kaleo task instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskInstanceToken the kaleo task instance token
+	* @return the kaleo task instance token that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken updateKaleoTaskInstanceToken(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken);
-
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
 import com.liferay.segments.model.SegmentsEntryRel;
 
 import java.util.List;
@@ -42,42 +43,32 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=segments",
-		"json.web.service.context.path=SegmentsEntryRel"
-	},
-	service = SegmentsEntryRelService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=segments", "json.web.service.context.path=SegmentsEntryRel"}, service = SegmentsEntryRelService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface SegmentsEntryRelService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRelServiceUtil} to access the segments entry rel remote service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SegmentsEntryRel addSegmentsEntryRel(
-			long segmentsEntryId, long classNameId, long classPK,
-			ServiceContext serviceContext)
+	public SegmentsEntryRel addSegmentsEntryRel(long segmentsEntryId,
+		long classNameId, long classPK, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws PortalException;
 
-	public void deleteSegmentsEntryRel(
-			long segmentsEntryId, long classNameId, long classPK)
-		throws PortalException;
+	public void deleteSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -85,27 +76,24 @@ public interface SegmentsEntryRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntryRel> getSegmentsEntryRels(
-			long segmentsEntryId, int start, int end,
-			OrderByComparator<SegmentsEntryRel> orderByComparator)
+	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId,
+		int start, int end,
+		OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntryRel> getSegmentsEntryRels(
-			long groupId, long classNameId, long classPK)
-		throws PortalException;
+	public List<SegmentsEntryRel> getSegmentsEntryRels(long groupId,
+		long classNameId, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntryRelsCount(long segmentsEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsEntryRelsCount(
-			long groupId, long classNameId, long classPK)
-		throws PortalException;
+	public int getSegmentsEntryRelsCount(long groupId, long classNameId,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSegmentsEntryRel(
-		long segmentsEntryId, long classNameId, long classPK);
-
+	public boolean hasSegmentsEntryRel(long segmentsEntryId, long classNameId,
+		long classPK);
 }

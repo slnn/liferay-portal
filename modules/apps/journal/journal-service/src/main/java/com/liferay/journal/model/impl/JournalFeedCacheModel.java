@@ -17,8 +17,10 @@ package com.liferay.journal.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.journal.model.JournalFeed;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class JournalFeedCacheModel
-	implements CacheModel<JournalFeed>, Externalizable {
-
+public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class JournalFeedCacheModel
 			return false;
 		}
 
-		JournalFeedCacheModel journalFeedCacheModel =
-			(JournalFeedCacheModel)obj;
+		JournalFeedCacheModel journalFeedCacheModel = (JournalFeedCacheModel)obj;
 
 		if (id == journalFeedCacheModel.id) {
 			return true;
@@ -289,7 +289,8 @@ public class JournalFeedCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -428,5 +429,4 @@ public class JournalFeedCacheModel
 	public String feedFormat;
 	public double feedVersion;
 	public long lastPublishDate;
-
 }

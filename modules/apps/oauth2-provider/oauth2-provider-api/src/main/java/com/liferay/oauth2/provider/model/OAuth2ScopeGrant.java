@@ -27,37 +27,29 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see OAuth2ScopeGrantModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl"
-)
+@ImplementationClassName("com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl")
 @ProviderType
-public interface OAuth2ScopeGrant
-	extends OAuth2ScopeGrantModel, PersistedModel {
-
+public interface OAuth2ScopeGrant extends OAuth2ScopeGrantModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuth2ScopeGrant, Long>
-		O_AUTH2_SCOPE_GRANT_ID_ACCESSOR =
-			new Accessor<OAuth2ScopeGrant, Long>() {
+	public static final Accessor<OAuth2ScopeGrant, Long> O_AUTH2_SCOPE_GRANT_ID_ACCESSOR =
+		new Accessor<OAuth2ScopeGrant, Long>() {
+			@Override
+			public Long get(OAuth2ScopeGrant oAuth2ScopeGrant) {
+				return oAuth2ScopeGrant.getOAuth2ScopeGrantId();
+			}
 
-				@Override
-				public Long get(OAuth2ScopeGrant oAuth2ScopeGrant) {
-					return oAuth2ScopeGrant.getOAuth2ScopeGrantId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<OAuth2ScopeGrant> getTypeClass() {
-					return OAuth2ScopeGrant.class;
-				}
-
-			};
-
+			@Override
+			public Class<OAuth2ScopeGrant> getTypeClass() {
+				return OAuth2ScopeGrant.class;
+			}
+		};
 }

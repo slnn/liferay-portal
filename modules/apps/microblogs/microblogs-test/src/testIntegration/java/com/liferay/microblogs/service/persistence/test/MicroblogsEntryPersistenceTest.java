@@ -15,11 +15,13 @@
 package com.liferay.microblogs.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.microblogs.exception.NoSuchEntryException;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +39,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,27 +57,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class MicroblogsEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.microblogs.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.microblogs.service"));
 
 	@Before
 	public void setUp() {
@@ -105,8 +106,7 @@ public class MicroblogsEntryPersistenceTest {
 
 		_persistence.remove(newMicroblogsEntry);
 
-		MicroblogsEntry existingMicroblogsEntry =
-			_persistence.fetchByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
+		MicroblogsEntry existingMicroblogsEntry = _persistence.fetchByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
 
 		Assert.assertNull(existingMicroblogsEntry);
 	}
@@ -140,50 +140,39 @@ public class MicroblogsEntryPersistenceTest {
 
 		newMicroblogsEntry.setType(RandomTestUtil.nextInt());
 
-		newMicroblogsEntry.setParentMicroblogsEntryId(
-			RandomTestUtil.nextLong());
+		newMicroblogsEntry.setParentMicroblogsEntryId(RandomTestUtil.nextLong());
 
 		newMicroblogsEntry.setSocialRelationType(RandomTestUtil.nextInt());
 
 		_microblogsEntries.add(_persistence.update(newMicroblogsEntry));
 
-		MicroblogsEntry existingMicroblogsEntry = _persistence.findByPrimaryKey(
-			newMicroblogsEntry.getPrimaryKey());
+		MicroblogsEntry existingMicroblogsEntry = _persistence.findByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingMicroblogsEntry.getMicroblogsEntryId(),
+		Assert.assertEquals(existingMicroblogsEntry.getMicroblogsEntryId(),
 			newMicroblogsEntry.getMicroblogsEntryId());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getCompanyId(),
+		Assert.assertEquals(existingMicroblogsEntry.getCompanyId(),
 			newMicroblogsEntry.getCompanyId());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getUserId(),
+		Assert.assertEquals(existingMicroblogsEntry.getUserId(),
 			newMicroblogsEntry.getUserId());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getUserName(),
+		Assert.assertEquals(existingMicroblogsEntry.getUserName(),
 			newMicroblogsEntry.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMicroblogsEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMicroblogsEntry.getCreateDate()),
 			Time.getShortTimestamp(newMicroblogsEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMicroblogsEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMicroblogsEntry.getModifiedDate()),
 			Time.getShortTimestamp(newMicroblogsEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingMicroblogsEntry.getCreatorClassNameId(),
+		Assert.assertEquals(existingMicroblogsEntry.getCreatorClassNameId(),
 			newMicroblogsEntry.getCreatorClassNameId());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getCreatorClassPK(),
+		Assert.assertEquals(existingMicroblogsEntry.getCreatorClassPK(),
 			newMicroblogsEntry.getCreatorClassPK());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getContent(),
+		Assert.assertEquals(existingMicroblogsEntry.getContent(),
 			newMicroblogsEntry.getContent());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getType(), newMicroblogsEntry.getType());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getParentMicroblogsEntryId(),
+		Assert.assertEquals(existingMicroblogsEntry.getType(),
+			newMicroblogsEntry.getType());
+		Assert.assertEquals(existingMicroblogsEntry.getParentMicroblogsEntryId(),
 			newMicroblogsEntry.getParentMicroblogsEntryId());
-		Assert.assertEquals(
-			existingMicroblogsEntry.getSocialRelationType(),
+		Assert.assertEquals(existingMicroblogsEntry.getSocialRelationType(),
 			newMicroblogsEntry.getSocialRelationType());
 	}
 
@@ -203,107 +192,102 @@ public class MicroblogsEntryPersistenceTest {
 
 	@Test
 	public void testCountByU_T() throws Exception {
-		_persistence.countByU_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByU_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByU_T(0L, 0);
 	}
 
 	@Test
 	public void testCountByCCNI_CCPK() throws Exception {
-		_persistence.countByCCNI_CCPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByCCNI_CCPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByCCNI_CCPK(0L, 0L);
 	}
 
 	@Test
 	public void testCountByCCNI_CCPKArrayable() throws Exception {
-		_persistence.countByCCNI_CCPK(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByCCNI_CCPK(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByCCNI_T() throws Exception {
-		_persistence.countByCCNI_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByCCNI_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByCCNI_T(0L, 0);
 	}
 
 	@Test
 	public void testCountByT_P() throws Exception {
-		_persistence.countByT_P(
-			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+		_persistence.countByT_P(RandomTestUtil.nextInt(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByT_P(0, 0L);
 	}
 
 	@Test
 	public void testCountByC_CCNI_CCPK() throws Exception {
-		_persistence.countByC_CCNI_CCPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_CCNI_CCPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_CCNI_CCPK(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_CCNI_CCPKArrayable() throws Exception {
-		_persistence.countByC_CCNI_CCPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByC_CCNI_CCPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByC_CCNI_T() throws Exception {
-		_persistence.countByC_CCNI_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByC_CCNI_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByC_CCNI_T(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByCCNI_CCPK_T() throws Exception {
-		_persistence.countByCCNI_CCPK_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByCCNI_CCPK_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByCCNI_CCPK_T(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByCCNI_CCPK_TArrayable() throws Exception {
-		_persistence.countByCCNI_CCPK_T(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByCCNI_CCPK_T(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByC_CCNI_CCPK_T() throws Exception {
-		_persistence.countByC_CCNI_CCPK_T(
+		_persistence.countByC_CCNI_CCPK_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_CCNI_CCPK_T(0L, 0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByC_CCNI_CCPK_TArrayable() throws Exception {
-		_persistence.countByC_CCNI_CCPK_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByC_CCNI_CCPK_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByU_C_T_S() throws Exception {
-		_persistence.countByU_C_T_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextDate(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+		_persistence.countByU_C_T_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByU_C_T_S(0L, RandomTestUtil.nextDate(), 0, 0);
 	}
@@ -312,8 +296,7 @@ public class MicroblogsEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MicroblogsEntry newMicroblogsEntry = addMicroblogsEntry();
 
-		MicroblogsEntry existingMicroblogsEntry = _persistence.findByPrimaryKey(
-			newMicroblogsEntry.getPrimaryKey());
+		MicroblogsEntry existingMicroblogsEntry = _persistence.findByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingMicroblogsEntry, newMicroblogsEntry);
 	}
@@ -327,25 +310,24 @@ public class MicroblogsEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<MicroblogsEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MicroblogsEntry", "microblogsEntryId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "creatorClassNameId", true, "creatorClassPK",
-			true, "content", true, "type", true, "parentMicroblogsEntryId",
-			true, "socialRelationType", true);
+		return OrderByComparatorFactoryUtil.create("MicroblogsEntry",
+			"microblogsEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"creatorClassNameId", true, "creatorClassPK", true, "content",
+			true, "type", true, "parentMicroblogsEntryId", true,
+			"socialRelationType", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MicroblogsEntry newMicroblogsEntry = addMicroblogsEntry();
 
-		MicroblogsEntry existingMicroblogsEntry =
-			_persistence.fetchByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
+		MicroblogsEntry existingMicroblogsEntry = _persistence.fetchByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingMicroblogsEntry, newMicroblogsEntry);
 	}
@@ -354,8 +336,7 @@ public class MicroblogsEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		MicroblogsEntry missingMicroblogsEntry = _persistence.fetchByPrimaryKey(
-			pk);
+		MicroblogsEntry missingMicroblogsEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingMicroblogsEntry);
 	}
@@ -363,7 +344,6 @@ public class MicroblogsEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MicroblogsEntry newMicroblogsEntry1 = addMicroblogsEntry();
 		MicroblogsEntry newMicroblogsEntry2 = addMicroblogsEntry();
 
@@ -372,22 +352,18 @@ public class MicroblogsEntryPersistenceTest {
 		primaryKeys.add(newMicroblogsEntry1.getPrimaryKey());
 		primaryKeys.add(newMicroblogsEntry2.getPrimaryKey());
 
-		Map<Serializable, MicroblogsEntry> microblogsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MicroblogsEntry> microblogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, microblogsEntries.size());
-		Assert.assertEquals(
-			newMicroblogsEntry1,
+		Assert.assertEquals(newMicroblogsEntry1,
 			microblogsEntries.get(newMicroblogsEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMicroblogsEntry2,
+		Assert.assertEquals(newMicroblogsEntry2,
 			microblogsEntries.get(newMicroblogsEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -397,8 +373,7 @@ public class MicroblogsEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MicroblogsEntry> microblogsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MicroblogsEntry> microblogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(microblogsEntries.isEmpty());
 	}
@@ -406,7 +381,6 @@ public class MicroblogsEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MicroblogsEntry newMicroblogsEntry = addMicroblogsEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -416,39 +390,36 @@ public class MicroblogsEntryPersistenceTest {
 		primaryKeys.add(newMicroblogsEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MicroblogsEntry> microblogsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MicroblogsEntry> microblogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, microblogsEntries.size());
-		Assert.assertEquals(
-			newMicroblogsEntry,
+		Assert.assertEquals(newMicroblogsEntry,
 			microblogsEntries.get(newMicroblogsEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MicroblogsEntry> microblogsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MicroblogsEntry> microblogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(microblogsEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MicroblogsEntry newMicroblogsEntry = addMicroblogsEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMicroblogsEntry.getPrimaryKey());
 
-		Map<Serializable, MicroblogsEntry> microblogsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MicroblogsEntry> microblogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, microblogsEntries.size());
-		Assert.assertEquals(
-			newMicroblogsEntry,
+		Assert.assertEquals(newMicroblogsEntry,
 			microblogsEntries.get(newMicroblogsEntry.getPrimaryKey()));
 	}
 
@@ -456,19 +427,15 @@ public class MicroblogsEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MicroblogsEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MicroblogsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MicroblogsEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MicroblogsEntry>() {
 				@Override
 				public void performAction(MicroblogsEntry microblogsEntry) {
 					Assert.assertNotNull(microblogsEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -477,19 +444,17 @@ public class MicroblogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MicroblogsEntry newMicroblogsEntry = addMicroblogsEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MicroblogsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MicroblogsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"microblogsEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("microblogsEntryId",
 				newMicroblogsEntry.getMicroblogsEntryId()));
 
-		List<MicroblogsEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MicroblogsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -500,34 +465,32 @@ public class MicroblogsEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MicroblogsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MicroblogsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"microblogsEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("microblogsEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<MicroblogsEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MicroblogsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MicroblogsEntry newMicroblogsEntry = addMicroblogsEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MicroblogsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MicroblogsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("microblogsEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"microblogsEntryId"));
 
 		Object newMicroblogsEntryId = newMicroblogsEntry.getMicroblogsEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"microblogsEntryId", new Object[] {newMicroblogsEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("microblogsEntryId",
+				new Object[] { newMicroblogsEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -540,15 +503,14 @@ public class MicroblogsEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MicroblogsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MicroblogsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("microblogsEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"microblogsEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"microblogsEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("microblogsEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -587,9 +549,7 @@ public class MicroblogsEntryPersistenceTest {
 		return microblogsEntry;
 	}
 
-	private List<MicroblogsEntry> _microblogsEntries =
-		new ArrayList<MicroblogsEntry>();
+	private List<MicroblogsEntry> _microblogsEntries = new ArrayList<MicroblogsEntry>();
 	private MicroblogsEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

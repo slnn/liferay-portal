@@ -15,6 +15,7 @@
 package com.liferay.segments.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -32,11 +33,21 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class SegmentsEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.segments.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.segments.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class SegmentsEntryPersistenceTest {
 
 		_persistence.remove(newSegmentsEntry);
 
-		SegmentsEntry existingSegmentsEntry = _persistence.fetchByPrimaryKey(
-			newSegmentsEntry.getPrimaryKey());
+		SegmentsEntry existingSegmentsEntry = _persistence.fetchByPrimaryKey(newSegmentsEntry.getPrimaryKey());
 
 		Assert.assertNull(existingSegmentsEntry);
 	}
@@ -152,44 +152,38 @@ public class SegmentsEntryPersistenceTest {
 
 		_segmentsEntries.add(_persistence.update(newSegmentsEntry));
 
-		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(
-			newSegmentsEntry.getPrimaryKey());
+		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(newSegmentsEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingSegmentsEntry.getSegmentsEntryId(),
+		Assert.assertEquals(existingSegmentsEntry.getSegmentsEntryId(),
 			newSegmentsEntry.getSegmentsEntryId());
-		Assert.assertEquals(
-			existingSegmentsEntry.getGroupId(), newSegmentsEntry.getGroupId());
-		Assert.assertEquals(
-			existingSegmentsEntry.getCompanyId(),
+		Assert.assertEquals(existingSegmentsEntry.getGroupId(),
+			newSegmentsEntry.getGroupId());
+		Assert.assertEquals(existingSegmentsEntry.getCompanyId(),
 			newSegmentsEntry.getCompanyId());
-		Assert.assertEquals(
-			existingSegmentsEntry.getUserId(), newSegmentsEntry.getUserId());
-		Assert.assertEquals(
-			existingSegmentsEntry.getUserName(),
+		Assert.assertEquals(existingSegmentsEntry.getUserId(),
+			newSegmentsEntry.getUserId());
+		Assert.assertEquals(existingSegmentsEntry.getUserName(),
 			newSegmentsEntry.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSegmentsEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSegmentsEntry.getCreateDate()),
 			Time.getShortTimestamp(newSegmentsEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingSegmentsEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSegmentsEntry.getModifiedDate()),
 			Time.getShortTimestamp(newSegmentsEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingSegmentsEntry.getName(), newSegmentsEntry.getName());
-		Assert.assertEquals(
-			existingSegmentsEntry.getDescription(),
+		Assert.assertEquals(existingSegmentsEntry.getName(),
+			newSegmentsEntry.getName());
+		Assert.assertEquals(existingSegmentsEntry.getDescription(),
 			newSegmentsEntry.getDescription());
-		Assert.assertEquals(
-			existingSegmentsEntry.isActive(), newSegmentsEntry.isActive());
-		Assert.assertEquals(
-			existingSegmentsEntry.getCriteria(),
+		Assert.assertEquals(existingSegmentsEntry.isActive(),
+			newSegmentsEntry.isActive());
+		Assert.assertEquals(existingSegmentsEntry.getCriteria(),
 			newSegmentsEntry.getCriteria());
-		Assert.assertEquals(
-			existingSegmentsEntry.getKey(), newSegmentsEntry.getKey());
-		Assert.assertEquals(
-			existingSegmentsEntry.getSource(), newSegmentsEntry.getSource());
-		Assert.assertEquals(
-			existingSegmentsEntry.getType(), newSegmentsEntry.getType());
+		Assert.assertEquals(existingSegmentsEntry.getKey(),
+			newSegmentsEntry.getKey());
+		Assert.assertEquals(existingSegmentsEntry.getSource(),
+			newSegmentsEntry.getSource());
+		Assert.assertEquals(existingSegmentsEntry.getType(),
+			newSegmentsEntry.getType());
 	}
 
 	@Test
@@ -201,7 +195,7 @@ public class SegmentsEntryPersistenceTest {
 
 	@Test
 	public void testCountByGroupIdArrayable() throws Exception {
-		_persistence.countByGroupId(new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
@@ -224,16 +218,15 @@ public class SegmentsEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_A() throws Exception {
-		_persistence.countByG_A(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+		_persistence.countByG_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_AArrayable() throws Exception {
-		_persistence.countByG_A(
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_A(new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.randomBoolean());
 	}
 
@@ -257,19 +250,18 @@ public class SegmentsEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_A_T() throws Exception {
-		_persistence.countByG_A_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+		_persistence.countByG_A_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "");
 
 		_persistence.countByG_A_T(0L, RandomTestUtil.randomBoolean(), "null");
 
-		_persistence.countByG_A_T(
-			0L, RandomTestUtil.randomBoolean(), (String)null);
+		_persistence.countByG_A_T(0L, RandomTestUtil.randomBoolean(),
+			(String)null);
 	}
 
 	@Test
 	public void testCountByG_A_TArrayable() throws Exception {
-		_persistence.countByG_A_T(
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_A_T(new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString());
 	}
 
@@ -277,8 +269,7 @@ public class SegmentsEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 
-		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(
-			newSegmentsEntry.getPrimaryKey());
+		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(newSegmentsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingSegmentsEntry, newSegmentsEntry);
 	}
@@ -292,30 +283,29 @@ public class SegmentsEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SegmentsEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"SegmentsEntry", "segmentsEntryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"active", true, "key", true, "source", true, "type", true);
+		return OrderByComparatorFactoryUtil.create("SegmentsEntry",
+			"segmentsEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true, "active",
+			true, "key", true, "source", true, "type", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 
-		SegmentsEntry existingSegmentsEntry = _persistence.fetchByPrimaryKey(
-			newSegmentsEntry.getPrimaryKey());
+		SegmentsEntry existingSegmentsEntry = _persistence.fetchByPrimaryKey(newSegmentsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingSegmentsEntry, newSegmentsEntry);
 	}
@@ -332,7 +322,6 @@ public class SegmentsEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		SegmentsEntry newSegmentsEntry1 = addSegmentsEntry();
 		SegmentsEntry newSegmentsEntry2 = addSegmentsEntry();
 
@@ -341,22 +330,18 @@ public class SegmentsEntryPersistenceTest {
 		primaryKeys.add(newSegmentsEntry1.getPrimaryKey());
 		primaryKeys.add(newSegmentsEntry2.getPrimaryKey());
 
-		Map<Serializable, SegmentsEntry> segmentsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SegmentsEntry> segmentsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, segmentsEntries.size());
-		Assert.assertEquals(
-			newSegmentsEntry1,
+		Assert.assertEquals(newSegmentsEntry1,
 			segmentsEntries.get(newSegmentsEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newSegmentsEntry2,
+		Assert.assertEquals(newSegmentsEntry2,
 			segmentsEntries.get(newSegmentsEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -366,8 +351,7 @@ public class SegmentsEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SegmentsEntry> segmentsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SegmentsEntry> segmentsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(segmentsEntries.isEmpty());
 	}
@@ -375,7 +359,6 @@ public class SegmentsEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -385,39 +368,36 @@ public class SegmentsEntryPersistenceTest {
 		primaryKeys.add(newSegmentsEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SegmentsEntry> segmentsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SegmentsEntry> segmentsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, segmentsEntries.size());
-		Assert.assertEquals(
-			newSegmentsEntry,
+		Assert.assertEquals(newSegmentsEntry,
 			segmentsEntries.get(newSegmentsEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SegmentsEntry> segmentsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SegmentsEntry> segmentsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(segmentsEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSegmentsEntry.getPrimaryKey());
 
-		Map<Serializable, SegmentsEntry> segmentsEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SegmentsEntry> segmentsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, segmentsEntries.size());
-		Assert.assertEquals(
-			newSegmentsEntry,
+		Assert.assertEquals(newSegmentsEntry,
 			segmentsEntries.get(newSegmentsEntry.getPrimaryKey()));
 	}
 
@@ -425,19 +405,15 @@ public class SegmentsEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			SegmentsEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = SegmentsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<SegmentsEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SegmentsEntry>() {
 				@Override
 				public void performAction(SegmentsEntry segmentsEntry) {
 					Assert.assertNotNull(segmentsEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -446,18 +422,17 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SegmentsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SegmentsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"segmentsEntryId", newSegmentsEntry.getSegmentsEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("segmentsEntryId",
+				newSegmentsEntry.getSegmentsEntryId()));
 
-		List<SegmentsEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SegmentsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -468,34 +443,32 @@ public class SegmentsEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SegmentsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SegmentsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"segmentsEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("segmentsEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<SegmentsEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SegmentsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SegmentsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SegmentsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("segmentsEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"segmentsEntryId"));
 
 		Object newSegmentsEntryId = newSegmentsEntry.getSegmentsEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"segmentsEntryId", new Object[] {newSegmentsEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("segmentsEntryId",
+				new Object[] { newSegmentsEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -508,15 +481,14 @@ public class SegmentsEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SegmentsEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SegmentsEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("segmentsEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"segmentsEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"segmentsEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("segmentsEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -529,18 +501,14 @@ public class SegmentsEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(
-			newSegmentsEntry.getPrimaryKey());
+		SegmentsEntry existingSegmentsEntry = _persistence.findByPrimaryKey(newSegmentsEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingSegmentsEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingSegmentsEntry.getKey(),
-				ReflectionTestUtil.invoke(
-					existingSegmentsEntry, "getOriginalKey", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingSegmentsEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSegmentsEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingSegmentsEntry.getKey(),
+				ReflectionTestUtil.invoke(existingSegmentsEntry,
+					"getOriginalKey", new Class<?>[0])));
 	}
 
 	protected SegmentsEntry addSegmentsEntry() throws Exception {
@@ -579,9 +547,7 @@ public class SegmentsEntryPersistenceTest {
 		return segmentsEntry;
 	}
 
-	private List<SegmentsEntry> _segmentsEntries =
-		new ArrayList<SegmentsEntry>();
+	private List<SegmentsEntry> _segmentsEntries = new ArrayList<SegmentsEntry>();
 	private SegmentsEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

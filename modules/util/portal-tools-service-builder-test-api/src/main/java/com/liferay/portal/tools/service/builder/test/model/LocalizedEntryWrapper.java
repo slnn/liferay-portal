@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -36,9 +37,8 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LocalizedEntryWrapper
-	implements LocalizedEntry, ModelWrapper<LocalizedEntry> {
-
+public class LocalizedEntryWrapper implements LocalizedEntry,
+	ModelWrapper<LocalizedEntry> {
 	public LocalizedEntryWrapper(LocalizedEntry localizedEntry) {
 		_localizedEntry = localizedEntry;
 	}
@@ -80,8 +80,7 @@ public class LocalizedEntryWrapper
 
 	@Override
 	public Object clone() {
-		return new LocalizedEntryWrapper(
-			(LocalizedEntry)_localizedEntry.clone());
+		return new LocalizedEntryWrapper((LocalizedEntry)_localizedEntry.clone());
 	}
 
 	@Override
@@ -115,10 +114,10 @@ public class LocalizedEntryWrapper
 	}
 
 	/**
-	 * Returns the default language ID of this localized entry.
-	 *
-	 * @return the default language ID of this localized entry
-	 */
+	* Returns the default language ID of this localized entry.
+	*
+	* @return the default language ID of this localized entry
+	*/
 	@Override
 	public String getDefaultLanguageId() {
 		return _localizedEntry.getDefaultLanguageId();
@@ -140,20 +139,20 @@ public class LocalizedEntryWrapper
 	}
 
 	/**
-	 * Returns the localized entry ID of this localized entry.
-	 *
-	 * @return the localized entry ID of this localized entry
-	 */
+	* Returns the localized entry ID of this localized entry.
+	*
+	* @return the localized entry ID of this localized entry
+	*/
 	@Override
 	public long getLocalizedEntryId() {
 		return _localizedEntry.getLocalizedEntryId();
 	}
 
 	/**
-	 * Returns the primary key of this localized entry.
-	 *
-	 * @return the primary key of this localized entry
-	 */
+	* Returns the primary key of this localized entry.
+	*
+	* @return the primary key of this localized entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return _localizedEntry.getPrimaryKey();
@@ -215,10 +214,10 @@ public class LocalizedEntryWrapper
 	}
 
 	/**
-	 * Sets the default language ID of this localized entry.
-	 *
-	 * @param defaultLanguageId the default language ID of this localized entry
-	 */
+	* Sets the default language ID of this localized entry.
+	*
+	* @param defaultLanguageId the default language ID of this localized entry
+	*/
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
 		_localizedEntry.setDefaultLanguageId(defaultLanguageId);
@@ -227,7 +226,6 @@ public class LocalizedEntryWrapper
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
 		_localizedEntry.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -242,10 +240,10 @@ public class LocalizedEntryWrapper
 	}
 
 	/**
-	 * Sets the localized entry ID of this localized entry.
-	 *
-	 * @param localizedEntryId the localized entry ID of this localized entry
-	 */
+	* Sets the localized entry ID of this localized entry.
+	*
+	* @param localizedEntryId the localized entry ID of this localized entry
+	*/
 	@Override
 	public void setLocalizedEntryId(long localizedEntryId) {
 		_localizedEntry.setLocalizedEntryId(localizedEntryId);
@@ -257,10 +255,10 @@ public class LocalizedEntryWrapper
 	}
 
 	/**
-	 * Sets the primary key of this localized entry.
-	 *
-	 * @param primaryKey the primary key of this localized entry
-	 */
+	* Sets the primary key of this localized entry.
+	*
+	* @param primaryKey the primary key of this localized entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_localizedEntry.setPrimaryKey(primaryKey);
@@ -272,9 +270,7 @@ public class LocalizedEntryWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LocalizedEntry>
-		toCacheModel() {
-
+	public com.liferay.portal.kernel.model.CacheModel<LocalizedEntry> toCacheModel() {
 		return _localizedEntry.toCacheModel();
 	}
 
@@ -308,12 +304,10 @@ public class LocalizedEntryWrapper
 			return false;
 		}
 
-		LocalizedEntryWrapper localizedEntryWrapper =
-			(LocalizedEntryWrapper)obj;
+		LocalizedEntryWrapper localizedEntryWrapper = (LocalizedEntryWrapper)obj;
 
-		if (Objects.equals(
-				_localizedEntry, localizedEntryWrapper._localizedEntry)) {
-
+		if (Objects.equals(_localizedEntry,
+					localizedEntryWrapper._localizedEntry)) {
 			return true;
 		}
 
@@ -341,5 +335,4 @@ public class LocalizedEntryWrapper
 	}
 
 	private final LocalizedEntry _localizedEntry;
-
 }

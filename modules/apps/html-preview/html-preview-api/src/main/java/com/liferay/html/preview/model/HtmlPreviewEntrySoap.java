@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class HtmlPreviewEntrySoap implements Serializable {
-
 	public static HtmlPreviewEntrySoap toSoapModel(HtmlPreviewEntry model) {
 		HtmlPreviewEntrySoap soapModel = new HtmlPreviewEntrySoap();
 
@@ -48,11 +47,8 @@ public class HtmlPreviewEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static HtmlPreviewEntrySoap[] toSoapModels(
-		HtmlPreviewEntry[] models) {
-
-		HtmlPreviewEntrySoap[] soapModels =
-			new HtmlPreviewEntrySoap[models.length];
+	public static HtmlPreviewEntrySoap[] toSoapModels(HtmlPreviewEntry[] models) {
+		HtmlPreviewEntrySoap[] soapModels = new HtmlPreviewEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,12 +59,10 @@ public class HtmlPreviewEntrySoap implements Serializable {
 
 	public static HtmlPreviewEntrySoap[][] toSoapModels(
 		HtmlPreviewEntry[][] models) {
-
 		HtmlPreviewEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new HtmlPreviewEntrySoap[models.length][models[0].length];
+			soapModels = new HtmlPreviewEntrySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new HtmlPreviewEntrySoap[0][0];
@@ -83,9 +77,7 @@ public class HtmlPreviewEntrySoap implements Serializable {
 
 	public static HtmlPreviewEntrySoap[] toSoapModels(
 		List<HtmlPreviewEntry> models) {
-
-		List<HtmlPreviewEntrySoap> soapModels =
-			new ArrayList<HtmlPreviewEntrySoap>(models.size());
+		List<HtmlPreviewEntrySoap> soapModels = new ArrayList<HtmlPreviewEntrySoap>(models.size());
 
 		for (HtmlPreviewEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -195,5 +187,4 @@ public class HtmlPreviewEntrySoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _fileEntryId;
-
 }

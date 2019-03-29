@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 
@@ -42,20 +43,12 @@ import java.util.Date;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=sharing",
-		"json.web.service.context.path=SharingEntry"
-	},
-	service = SharingEntryService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=sharing", "json.web.service.context.path=SharingEntry"}, service = SharingEntryService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface SharingEntryService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,89 +56,83 @@ public interface SharingEntryService extends BaseService {
 	 */
 
 	/**
-	 * Adds a new sharing entry in the database or updates an existing one.
-	 *
-	 * @param toUserId the ID of the user the resource is shared with
-	 * @param classNameId the resource's class name ID
-	 * @param classPK the primary key of the resource
-	 * @param groupId the primary key of the resource's group
-	 * @param shareable whether the user specified by {@code toUserId} can
-	 share the resource
-	 * @param sharingEntryActions the sharing entry actions
-	 * @param expirationDate the date when the sharing entry expires
-	 * @param serviceContext the service context
-	 * @return the sharing entry
-	 * @throws PortalException if the user does not have permission to share the
-	 resource, if the sharing entry actions are invalid (e.g., empty
-	 don't contain {@code SharingEntryAction#VIEW}, or contain a
-	 {@code null} value), if the to/from user IDs are the same, or if
-	 the expiration date is a past value
-	 */
-	public SharingEntry addOrUpdateSharingEntry(
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
-			Collection<SharingEntryAction> sharingEntryActions,
-			Date expirationDate, ServiceContext serviceContext)
+	* Adds a new sharing entry in the database or updates an existing one.
+	*
+	* @param toUserId the ID of the user the resource is shared with
+	* @param classNameId the resource's class name ID
+	* @param classPK the primary key of the resource
+	* @param groupId the primary key of the resource's group
+	* @param shareable whether the user specified by {@code toUserId} can
+	share the resource
+	* @param sharingEntryActions the sharing entry actions
+	* @param expirationDate the date when the sharing entry expires
+	* @param serviceContext the service context
+	* @return the sharing entry
+	* @throws PortalException if the user does not have permission to share the
+	resource, if the sharing entry actions are invalid (e.g., empty
+	don't contain {@code SharingEntryAction#VIEW}, or contain a
+	{@code null} value), if the to/from user IDs are the same, or if
+	the expiration date is a past value
+	*/
+	public SharingEntry addOrUpdateSharingEntry(long toUserId,
+		long classNameId, long classPK, long groupId, boolean shareable,
+		Collection<SharingEntryAction> sharingEntryActions,
+		Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Adds a new sharing entry in the database.
-	 *
-	 * @param toUserId the ID of the user the resource is shared with
-	 * @param classNameId the resource's class name ID
-	 * @param classPK the primary key of the resource
-	 * @param groupId the primary key of the resource's group
-	 * @param shareable whether the user specified by {@code toUserId} can
-	 share the resource
-	 * @param sharingEntryActions the sharing entry actions
-	 * @param expirationDate the date when the sharing entry expires
-	 * @param serviceContext the service context
-	 * @return the sharing entry
-	 * @throws PortalException if the user does not have permission to share the
-	 resource, if a sharing entry already exists for the to/from user
-	 IDs, if the sharing entry actions are invalid (e.g., empty, do
-	 not contain {@code SharingEntryAction#VIEW}, or contain a {@code
-	 null} value), if the to/from user IDs are the same, or if the
-	 expiration date is a past value
-	 */
-	public SharingEntry addSharingEntry(
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
-			Collection<SharingEntryAction> sharingEntryActions,
-			Date expirationDate, ServiceContext serviceContext)
+	* Adds a new sharing entry in the database.
+	*
+	* @param toUserId the ID of the user the resource is shared with
+	* @param classNameId the resource's class name ID
+	* @param classPK the primary key of the resource
+	* @param groupId the primary key of the resource's group
+	* @param shareable whether the user specified by {@code toUserId} can
+	share the resource
+	* @param sharingEntryActions the sharing entry actions
+	* @param expirationDate the date when the sharing entry expires
+	* @param serviceContext the service context
+	* @return the sharing entry
+	* @throws PortalException if the user does not have permission to share the
+	resource, if a sharing entry already exists for the to/from user
+	IDs, if the sharing entry actions are invalid (e.g., empty, do
+	not contain {@code SharingEntryAction#VIEW}, or contain a {@code
+	null} value), if the to/from user IDs are the same, or if the
+	expiration date is a past value
+	*/
+	public SharingEntry addSharingEntry(long toUserId, long classNameId,
+		long classPK, long groupId, boolean shareable,
+		Collection<SharingEntryAction> sharingEntryActions,
+		Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
 
-	public SharingEntry deleteSharingEntry(
-			long sharingEntryId, ServiceContext serviceContext)
-		throws PortalException;
+	public SharingEntry deleteSharingEntry(long sharingEntryId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	/**
-	 * Updates the sharing entry in the database.
-	 *
-	 * @param sharingEntryId the primary key of the sharing entry
-	 * @param sharingEntryActions the sharing entry actions
-	 * @param shareable whether the user the resource is shared with can also
-	 share it
-	 * @param expirationDate the date when the sharing entry expires
-	 * @param serviceContext the service context
-	 * @return the sharing entry
-	 * @throws PortalException if the sharing entry does not exist, if the
-	 sharing entry actions are invalid (e.g., empty, don't contain
-	 {@code SharingEntryAction#VIEW}, or contain a {@code null}
-	 value), or if the expiration date is a past value
-	 */
-	public SharingEntry updateSharingEntry(
-			long sharingEntryId,
-			Collection<SharingEntryAction> sharingEntryActions,
-			boolean shareable, Date expirationDate,
-			ServiceContext serviceContext)
+	* Updates the sharing entry in the database.
+	*
+	* @param sharingEntryId the primary key of the sharing entry
+	* @param sharingEntryActions the sharing entry actions
+	* @param shareable whether the user the resource is shared with can also
+	share it
+	* @param expirationDate the date when the sharing entry expires
+	* @param serviceContext the service context
+	* @return the sharing entry
+	* @throws PortalException if the sharing entry does not exist, if the
+	sharing entry actions are invalid (e.g., empty, don't contain
+	{@code SharingEntryAction#VIEW}, or contain a {@code null}
+	value), or if the expiration date is a past value
+	*/
+	public SharingEntry updateSharingEntry(long sharingEntryId,
+		Collection<SharingEntryAction> sharingEntryActions, boolean shareable,
+		Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
-
 }

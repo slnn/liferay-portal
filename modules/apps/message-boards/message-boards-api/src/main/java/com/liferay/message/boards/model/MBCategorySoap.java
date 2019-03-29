@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class MBCategorySoap implements Serializable {
-
 	public static MBCategorySoap toSoapModel(MBCategory model) {
 		MBCategorySoap soapModel = new MBCategorySoap();
 
@@ -86,8 +85,7 @@ public class MBCategorySoap implements Serializable {
 	}
 
 	public static MBCategorySoap[] toSoapModels(List<MBCategory> models) {
-		List<MBCategorySoap> soapModels = new ArrayList<MBCategorySoap>(
-			models.size());
+		List<MBCategorySoap> soapModels = new ArrayList<MBCategorySoap>(models.size());
 
 		for (MBCategory model : models) {
 			soapModels.add(toSoapModel(model));
@@ -287,5 +285,4 @@ public class MBCategorySoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

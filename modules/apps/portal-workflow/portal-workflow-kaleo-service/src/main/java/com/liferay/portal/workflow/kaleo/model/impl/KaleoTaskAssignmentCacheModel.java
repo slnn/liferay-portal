@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoTaskAssignmentCacheModel
-	implements CacheModel<KaleoTaskAssignment>, Externalizable, MVCCModel {
-
+public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssignment>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +49,10 @@ public class KaleoTaskAssignmentCacheModel
 			return false;
 		}
 
-		KaleoTaskAssignmentCacheModel kaleoTaskAssignmentCacheModel =
-			(KaleoTaskAssignmentCacheModel)obj;
+		KaleoTaskAssignmentCacheModel kaleoTaskAssignmentCacheModel = (KaleoTaskAssignmentCacheModel)obj;
 
-		if ((kaleoTaskAssignmentId ==
-				kaleoTaskAssignmentCacheModel.kaleoTaskAssignmentId) &&
-			(mvccVersion == kaleoTaskAssignmentCacheModel.mvccVersion)) {
-
+		if ((kaleoTaskAssignmentId == kaleoTaskAssignmentCacheModel.kaleoTaskAssignmentId) &&
+				(mvccVersion == kaleoTaskAssignmentCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -126,8 +123,7 @@ public class KaleoTaskAssignmentCacheModel
 
 	@Override
 	public KaleoTaskAssignment toEntityModel() {
-		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl =
-			new KaleoTaskAssignmentImpl();
+		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl = new KaleoTaskAssignmentImpl();
 
 		kaleoTaskAssignmentImpl.setMvccVersion(mvccVersion);
 		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(kaleoTaskAssignmentId);
@@ -164,8 +160,7 @@ public class KaleoTaskAssignmentCacheModel
 		}
 
 		kaleoTaskAssignmentImpl.setKaleoClassPK(kaleoClassPK);
-		kaleoTaskAssignmentImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
+		kaleoTaskAssignmentImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoTaskAssignmentImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (assigneeClassName == null) {
@@ -195,16 +190,14 @@ public class KaleoTaskAssignmentCacheModel
 			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage("");
 		}
 		else {
-			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(
-				assigneeScriptLanguage);
+			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(assigneeScriptLanguage);
 		}
 
 		if (assigneeScriptRequiredContexts == null) {
 			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts("");
 		}
 		else {
-			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(
-				assigneeScriptRequiredContexts);
+			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(assigneeScriptRequiredContexts);
 		}
 
 		kaleoTaskAssignmentImpl.resetOriginalValues();
@@ -243,7 +236,8 @@ public class KaleoTaskAssignmentCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoTaskAssignmentId);
@@ -333,5 +327,4 @@ public class KaleoTaskAssignmentCacheModel
 	public String assigneeScript;
 	public String assigneeScriptLanguage;
 	public String assigneeScriptRequiredContexts;
-
 }

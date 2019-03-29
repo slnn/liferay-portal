@@ -17,8 +17,10 @@ package com.liferay.asset.category.property.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AssetCategoryPropertyCacheModel
-	implements CacheModel<AssetCategoryProperty>, Externalizable {
-
+public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategoryProperty>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class AssetCategoryPropertyCacheModel
 			return false;
 		}
 
-		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel =
-			(AssetCategoryPropertyCacheModel)obj;
+		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel = (AssetCategoryPropertyCacheModel)obj;
 
-		if (categoryPropertyId ==
-				assetCategoryPropertyCacheModel.categoryPropertyId) {
-
+		if (categoryPropertyId == assetCategoryPropertyCacheModel.categoryPropertyId) {
 			return true;
 		}
 
@@ -94,8 +92,7 @@ public class AssetCategoryPropertyCacheModel
 
 	@Override
 	public AssetCategoryProperty toEntityModel() {
-		AssetCategoryPropertyImpl assetCategoryPropertyImpl =
-			new AssetCategoryPropertyImpl();
+		AssetCategoryPropertyImpl assetCategoryPropertyImpl = new AssetCategoryPropertyImpl();
 
 		assetCategoryPropertyImpl.setCategoryPropertyId(categoryPropertyId);
 		assetCategoryPropertyImpl.setCompanyId(companyId);
@@ -160,7 +157,8 @@ public class AssetCategoryPropertyCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(categoryPropertyId);
 
 		objectOutput.writeLong(companyId);
@@ -203,5 +201,4 @@ public class AssetCategoryPropertyCacheModel
 	public long categoryId;
 	public String key;
 	public String value;
-
 }

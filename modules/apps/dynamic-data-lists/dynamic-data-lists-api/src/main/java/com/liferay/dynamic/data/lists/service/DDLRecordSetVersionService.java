@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -41,20 +42,12 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=ddl",
-		"json.web.service.context.path=DDLRecordSetVersion"
-	},
-	service = DDLRecordSetVersionService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=ddl", "json.web.service.context.path=DDLRecordSetVersion"}, service = DDLRecordSetVersionService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface DDLRecordSetVersionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,10 +58,10 @@ public interface DDLRecordSetVersionService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -76,13 +69,12 @@ public interface DDLRecordSetVersionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecordSetVersion> getRecordSetVersions(
-			long recordSetId, int start, int end,
-			OrderByComparator<DDLRecordSetVersion> orderByComparator)
+	public List<DDLRecordSetVersion> getRecordSetVersions(long recordSetId,
+		int start, int end,
+		OrderByComparator<DDLRecordSetVersion> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordSetVersionsCount(long recordSetId)
 		throws PortalException;
-
 }

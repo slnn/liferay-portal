@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTaskInstanceTokenModel
-	extends BaseModel<KaleoTaskInstanceToken>, GroupedModel, MVCCModel,
-			ShardedModel {
-
+public interface KaleoTaskInstanceTokenModel extends BaseModel<KaleoTaskInstanceToken>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -394,5 +392,4 @@ public interface KaleoTaskInstanceTokenModel
 	 * @param workflowContext the workflow context of this kaleo task instance token
 	 */
 	public void setWorkflowContext(String workflowContext);
-
 }

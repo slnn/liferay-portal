@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.mail.reader.model.impl.MessageImpl")
 @ProviderType
 public interface Message extends MessageModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mail.reader.model.impl.MessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Message, Long> MESSAGE_ID_ACCESSOR =
-		new Accessor<Message, Long>() {
-
+	public static final Accessor<Message, Long> MESSAGE_ID_ACCESSOR = new Accessor<Message, Long>() {
 			@Override
 			public Long get(Message message) {
 				return message.getMessageId();
@@ -53,7 +50,6 @@ public interface Message extends MessageModel, PersistedModel {
 			public Class<Message> getTypeClass() {
 				return Message.class;
 			}
-
 		};
 
 	public long getGroupId()
@@ -62,5 +58,4 @@ public interface Message extends MessageModel, PersistedModel {
 	public boolean hasAttachments();
 
 	public boolean hasFlag(int flag);
-
 }

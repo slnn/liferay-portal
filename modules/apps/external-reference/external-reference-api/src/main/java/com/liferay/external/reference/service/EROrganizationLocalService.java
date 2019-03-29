@@ -35,29 +35,24 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface EROrganizationLocalService extends BaseLocalService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EROrganizationLocalServiceUtil} to access the er organization local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.EROrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Organization addOrUpdateOrganization(
-			String externalReferenceCode, long userId,
-			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusId, String comments, boolean site,
-			boolean logo, byte[] logoBytes, ServiceContext serviceContext)
-		throws PortalException;
+	public Organization addOrUpdateOrganization(String externalReferenceCode,
+		long userId, long parentOrganizationId, String name, String type,
+		long regionId, long countryId, long statusId, String comments,
+		boolean site, boolean logo, byte[] logoBytes,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

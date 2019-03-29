@@ -15,11 +15,13 @@
 package com.liferay.message.boards.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBMessageUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,6 +41,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -49,27 +60,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class MBMessagePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.message.boards.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.message.boards.service"));
 
 	@Before
 	public void setUp() {
@@ -108,8 +109,7 @@ public class MBMessagePersistenceTest {
 
 		_persistence.remove(newMBMessage);
 
-		MBMessage existingMBMessage = _persistence.fetchByPrimaryKey(
-			newMBMessage.getPrimaryKey());
+		MBMessage existingMBMessage = _persistence.fetchByPrimaryKey(newMBMessage.getPrimaryKey());
 
 		Assert.assertNull(existingMBMessage);
 	}
@@ -177,69 +177,61 @@ public class MBMessagePersistenceTest {
 
 		_mbMessages.add(_persistence.update(newMBMessage));
 
-		MBMessage existingMBMessage = _persistence.findByPrimaryKey(
-			newMBMessage.getPrimaryKey());
+		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingMBMessage.getUuid(), newMBMessage.getUuid());
-		Assert.assertEquals(
-			existingMBMessage.getMessageId(), newMBMessage.getMessageId());
-		Assert.assertEquals(
-			existingMBMessage.getGroupId(), newMBMessage.getGroupId());
-		Assert.assertEquals(
-			existingMBMessage.getCompanyId(), newMBMessage.getCompanyId());
-		Assert.assertEquals(
-			existingMBMessage.getUserId(), newMBMessage.getUserId());
-		Assert.assertEquals(
-			existingMBMessage.getUserName(), newMBMessage.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBMessage.getCreateDate()),
+		Assert.assertEquals(existingMBMessage.getUuid(), newMBMessage.getUuid());
+		Assert.assertEquals(existingMBMessage.getMessageId(),
+			newMBMessage.getMessageId());
+		Assert.assertEquals(existingMBMessage.getGroupId(),
+			newMBMessage.getGroupId());
+		Assert.assertEquals(existingMBMessage.getCompanyId(),
+			newMBMessage.getCompanyId());
+		Assert.assertEquals(existingMBMessage.getUserId(),
+			newMBMessage.getUserId());
+		Assert.assertEquals(existingMBMessage.getUserName(),
+			newMBMessage.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getCreateDate()),
 			Time.getShortTimestamp(newMBMessage.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBMessage.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getModifiedDate()),
 			Time.getShortTimestamp(newMBMessage.getModifiedDate()));
-		Assert.assertEquals(
-			existingMBMessage.getClassNameId(), newMBMessage.getClassNameId());
-		Assert.assertEquals(
-			existingMBMessage.getClassPK(), newMBMessage.getClassPK());
-		Assert.assertEquals(
-			existingMBMessage.getCategoryId(), newMBMessage.getCategoryId());
-		Assert.assertEquals(
-			existingMBMessage.getThreadId(), newMBMessage.getThreadId());
-		Assert.assertEquals(
-			existingMBMessage.getRootMessageId(),
+		Assert.assertEquals(existingMBMessage.getClassNameId(),
+			newMBMessage.getClassNameId());
+		Assert.assertEquals(existingMBMessage.getClassPK(),
+			newMBMessage.getClassPK());
+		Assert.assertEquals(existingMBMessage.getCategoryId(),
+			newMBMessage.getCategoryId());
+		Assert.assertEquals(existingMBMessage.getThreadId(),
+			newMBMessage.getThreadId());
+		Assert.assertEquals(existingMBMessage.getRootMessageId(),
 			newMBMessage.getRootMessageId());
-		Assert.assertEquals(
-			existingMBMessage.getParentMessageId(),
+		Assert.assertEquals(existingMBMessage.getParentMessageId(),
 			newMBMessage.getParentMessageId());
-		Assert.assertEquals(
-			existingMBMessage.getSubject(), newMBMessage.getSubject());
-		Assert.assertEquals(
-			existingMBMessage.getBody(), newMBMessage.getBody());
-		Assert.assertEquals(
-			existingMBMessage.getFormat(), newMBMessage.getFormat());
-		Assert.assertEquals(
-			existingMBMessage.isAnonymous(), newMBMessage.isAnonymous());
-		AssertUtils.assertEquals(
-			existingMBMessage.getPriority(), newMBMessage.getPriority());
-		Assert.assertEquals(
-			existingMBMessage.isAllowPingbacks(),
+		Assert.assertEquals(existingMBMessage.getSubject(),
+			newMBMessage.getSubject());
+		Assert.assertEquals(existingMBMessage.getBody(), newMBMessage.getBody());
+		Assert.assertEquals(existingMBMessage.getFormat(),
+			newMBMessage.getFormat());
+		Assert.assertEquals(existingMBMessage.isAnonymous(),
+			newMBMessage.isAnonymous());
+		AssertUtils.assertEquals(existingMBMessage.getPriority(),
+			newMBMessage.getPriority());
+		Assert.assertEquals(existingMBMessage.isAllowPingbacks(),
 			newMBMessage.isAllowPingbacks());
-		Assert.assertEquals(
-			existingMBMessage.isAnswer(), newMBMessage.isAnswer());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBMessage.getLastPublishDate()),
+		Assert.assertEquals(existingMBMessage.isAnswer(),
+			newMBMessage.isAnswer());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getLastPublishDate()),
 			Time.getShortTimestamp(newMBMessage.getLastPublishDate()));
-		Assert.assertEquals(
-			existingMBMessage.getStatus(), newMBMessage.getStatus());
-		Assert.assertEquals(
-			existingMBMessage.getStatusByUserId(),
+		Assert.assertEquals(existingMBMessage.getStatus(),
+			newMBMessage.getStatus());
+		Assert.assertEquals(existingMBMessage.getStatusByUserId(),
 			newMBMessage.getStatusByUserId());
-		Assert.assertEquals(
-			existingMBMessage.getStatusByUserName(),
+		Assert.assertEquals(existingMBMessage.getStatusByUserName(),
 			newMBMessage.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBMessage.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getStatusDate()),
 			Time.getShortTimestamp(newMBMessage.getStatusDate()));
 	}
 
@@ -307,192 +299,184 @@ public class MBMessagePersistenceTest {
 
 	@Test
 	public void testCountByG_U() throws Exception {
-		_persistence.countByG_U(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_U(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByU_C() throws Exception {
-		_persistence.countByU_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByU_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByU_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByU_CArrayable() throws Exception {
-		_persistence.countByU_C(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByU_C(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByT_P() throws Exception {
-		_persistence.countByT_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByT_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByT_P(0L, 0L);
 	}
 
 	@Test
 	public void testCountByT_A() throws Exception {
-		_persistence.countByT_A(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+		_persistence.countByT_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByT_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByT_S() throws Exception {
-		_persistence.countByT_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByT_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByT_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByT_notS() throws Exception {
-		_persistence.countByT_notS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByT_notS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByT_notS(0L, 0);
 	}
 
 	@Test
 	public void testCountByTR_S() throws Exception {
-		_persistence.countByTR_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByTR_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByTR_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByP_S() throws Exception {
-		_persistence.countByP_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByP_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByP_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_U_S() throws Exception {
-		_persistence.countByG_U_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_U_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_U_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_C_T() throws Exception {
-		_persistence.countByG_C_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_C_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_T(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_C_S() throws Exception {
-		_persistence.countByG_C_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_C_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByU_C_C() throws Exception {
-		_persistence.countByU_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByU_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByU_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByU_C_S() throws Exception {
-		_persistence.countByU_C_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByU_C_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByU_C_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByU_C_SArrayable() throws Exception {
-		_persistence.countByU_C_S(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByU_C_S(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByC_C_S() throws Exception {
-		_persistence.countByC_C_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByC_C_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByC_C_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_C_T_A() throws Exception {
-		_persistence.countByG_C_T_A(
+		_persistence.countByG_C_T_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_C_T_A(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_C_T_S() throws Exception {
-		_persistence.countByG_C_T_S(
+		_persistence.countByG_C_T_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_T_S(0L, 0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByU_C_C_S() throws Exception {
-		_persistence.countByU_C_C_S(
+		_persistence.countByU_C_C_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextInt());
 
 		_persistence.countByU_C_C_S(0L, 0L, 0L, 0);
 	}
@@ -501,8 +485,7 @@ public class MBMessagePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
-		MBMessage existingMBMessage = _persistence.findByPrimaryKey(
-			newMBMessage.getPrimaryKey());
+		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
 		Assert.assertEquals(existingMBMessage, newMBMessage);
 	}
@@ -516,35 +499,33 @@ public class MBMessagePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<MBMessage> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MBMessage", "uuid", true, "messageId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"categoryId", true, "threadId", true, "rootMessageId", true,
-			"parentMessageId", true, "subject", true, "format", true,
-			"anonymous", true, "priority", true, "allowPingbacks", true,
-			"answer", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+		return OrderByComparatorFactoryUtil.create("MBMessage", "uuid", true,
+			"messageId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "categoryId", true,
+			"threadId", true, "rootMessageId", true, "parentMessageId", true,
+			"subject", true, "format", true, "anonymous", true, "priority",
+			true, "allowPingbacks", true, "answer", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
-		MBMessage existingMBMessage = _persistence.fetchByPrimaryKey(
-			newMBMessage.getPrimaryKey());
+		MBMessage existingMBMessage = _persistence.fetchByPrimaryKey(newMBMessage.getPrimaryKey());
 
 		Assert.assertEquals(existingMBMessage, newMBMessage);
 	}
@@ -561,7 +542,6 @@ public class MBMessagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MBMessage newMBMessage1 = addMBMessage();
 		MBMessage newMBMessage2 = addMBMessage();
 
@@ -570,20 +550,18 @@ public class MBMessagePersistenceTest {
 		primaryKeys.add(newMBMessage1.getPrimaryKey());
 		primaryKeys.add(newMBMessage2.getPrimaryKey());
 
-		Map<Serializable, MBMessage> mbMessages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, mbMessages.size());
-		Assert.assertEquals(
-			newMBMessage1, mbMessages.get(newMBMessage1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMBMessage2, mbMessages.get(newMBMessage2.getPrimaryKey()));
+		Assert.assertEquals(newMBMessage1,
+			mbMessages.get(newMBMessage1.getPrimaryKey()));
+		Assert.assertEquals(newMBMessage2,
+			mbMessages.get(newMBMessage2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -593,8 +571,7 @@ public class MBMessagePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MBMessage> mbMessages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbMessages.isEmpty());
 	}
@@ -602,7 +579,6 @@ public class MBMessagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MBMessage newMBMessage = addMBMessage();
 
 		long pk = RandomTestUtil.nextLong();
@@ -612,57 +588,52 @@ public class MBMessagePersistenceTest {
 		primaryKeys.add(newMBMessage.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MBMessage> mbMessages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbMessages.size());
-		Assert.assertEquals(
-			newMBMessage, mbMessages.get(newMBMessage.getPrimaryKey()));
+		Assert.assertEquals(newMBMessage,
+			mbMessages.get(newMBMessage.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBMessage> mbMessages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbMessages.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMBMessage.getPrimaryKey());
 
-		Map<Serializable, MBMessage> mbMessages =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbMessages.size());
-		Assert.assertEquals(
-			newMBMessage, mbMessages.get(newMBMessage.getPrimaryKey()));
+		Assert.assertEquals(newMBMessage,
+			mbMessages.get(newMBMessage.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MBMessageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
 				@Override
 				public void performAction(MBMessage mbMessage) {
 					Assert.assertNotNull(mbMessage);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -671,18 +642,17 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBMessage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"messageId", newMBMessage.getMessageId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
+				newMBMessage.getMessageId()));
 
-		List<MBMessage> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MBMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -693,32 +663,31 @@ public class MBMessagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBMessage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("messageId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
+				RandomTestUtil.nextLong()));
 
-		List<MBMessage> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MBMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBMessage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("messageId"));
 
 		Object newMessageId = newMBMessage.getMessageId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"messageId", new Object[] {newMessageId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("messageId",
+				new Object[] { newMessageId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -731,14 +700,13 @@ public class MBMessagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBMessage.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("messageId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"messageId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("messageId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -751,18 +719,14 @@ public class MBMessagePersistenceTest {
 
 		_persistence.clearCache();
 
-		MBMessage existingMBMessage = _persistence.findByPrimaryKey(
-			newMBMessage.getPrimaryKey());
+		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingMBMessage.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingMBMessage, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingMBMessage.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingMBMessage.getUuid(),
+				ReflectionTestUtil.invoke(existingMBMessage, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingMBMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBMessage,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {
@@ -828,5 +792,4 @@ public class MBMessagePersistenceTest {
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	private MBMessagePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

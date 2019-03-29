@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TrashEntryModel
-	extends AttachedModel, BaseModel<TrashEntry>, ShardedModel {
-
+public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -243,5 +242,4 @@ public interface TrashEntryModel
 	 * @param status the status of this trash entry
 	 */
 	public void setStatus(int status);
-
 }

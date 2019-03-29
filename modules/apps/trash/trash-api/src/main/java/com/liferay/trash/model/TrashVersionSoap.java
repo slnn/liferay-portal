@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class TrashVersionSoap implements Serializable {
-
 	public static TrashVersionSoap toSoapModel(TrashVersion model) {
 		TrashVersionSoap soapModel = new TrashVersionSoap();
 
@@ -72,8 +71,7 @@ public class TrashVersionSoap implements Serializable {
 	}
 
 	public static TrashVersionSoap[] toSoapModels(List<TrashVersion> models) {
-		List<TrashVersionSoap> soapModels = new ArrayList<TrashVersionSoap>(
-			models.size());
+		List<TrashVersionSoap> soapModels = new ArrayList<TrashVersionSoap>(models.size());
 
 		for (TrashVersion model : models) {
 			soapModels.add(toSoapModel(model));
@@ -156,5 +154,4 @@ public class TrashVersionSoap implements Serializable {
 	private long _classPK;
 	private String _typeSettings;
 	private int _status;
-
 }

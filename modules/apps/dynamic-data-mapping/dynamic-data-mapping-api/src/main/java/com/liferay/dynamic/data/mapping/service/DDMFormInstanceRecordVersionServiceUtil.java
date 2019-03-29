@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,78 +35,62 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class DDMFormInstanceRecordVersionServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
-				fetchLatestFormInstanceRecordVersion(
-					long userId, long formInstanceId,
-					String formInstanceVersion, int status)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().fetchLatestFormInstanceRecordVersion(
-			userId, formInstanceId, formInstanceVersion, status);
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion fetchLatestFormInstanceRecordVersion(
+		long userId, long formInstanceId, String formInstanceVersion, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchLatestFormInstanceRecordVersion(userId,
+			formInstanceId, formInstanceVersion, status);
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
-				getFormInstanceRecordVersion(
-					long ddmFormInstanceRecordVersionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFormInstanceRecordVersion(
-			ddmFormInstanceRecordVersionId);
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
+		long ddmFormInstanceRecordVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFormInstanceRecordVersion(ddmFormInstanceRecordVersionId);
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
-				getFormInstanceRecordVersion(
-					long ddmFormInstanceRecordId, String version)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFormInstanceRecordVersion(
-			ddmFormInstanceRecordId, version);
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
+		long ddmFormInstanceRecordId, String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFormInstanceRecordVersion(ddmFormInstanceRecordId,
+			version);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
-				getFormInstanceRecordVersions(long ddmFormInstanceRecordId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFormInstanceRecordVersions(
-			ddmFormInstanceRecordId);
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
+		long ddmFormInstanceRecordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFormInstanceRecordVersions(ddmFormInstanceRecordId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
-				getFormInstanceRecordVersions(
-					long ddmFormInstanceRecordId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMFormInstanceRecordVersion> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFormInstanceRecordVersions(
-			ddmFormInstanceRecordId, start, end, orderByComparator);
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
+		long ddmFormInstanceRecordId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFormInstanceRecordVersions(ddmFormInstanceRecordId,
+			start, end, orderByComparator);
 	}
 
 	public static int getFormInstanceRecordVersionsCount(
-			long ddmFormInstanceRecordId)
+		long ddmFormInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFormInstanceRecordVersionsCount(
-			ddmFormInstanceRecordId);
+		return getService()
+				   .getFormInstanceRecordVersionsCount(ddmFormInstanceRecordId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -114,26 +99,17 @@ public class DDMFormInstanceRecordVersionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<DDMFormInstanceRecordVersionService,
-		 DDMFormInstanceRecordVersionService> _serviceTracker;
+	private static ServiceTracker<DDMFormInstanceRecordVersionService, DDMFormInstanceRecordVersionService> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMFormInstanceRecordVersionService.class);
+		Bundle bundle = FrameworkUtil.getBundle(DDMFormInstanceRecordVersionService.class);
 
-		ServiceTracker
-			<DDMFormInstanceRecordVersionService,
-			 DDMFormInstanceRecordVersionService> serviceTracker =
-				new ServiceTracker
-					<DDMFormInstanceRecordVersionService,
-					 DDMFormInstanceRecordVersionService>(
-						 bundle.getBundleContext(),
-						 DDMFormInstanceRecordVersionService.class, null);
+		ServiceTracker<DDMFormInstanceRecordVersionService, DDMFormInstanceRecordVersionService> serviceTracker =
+			new ServiceTracker<DDMFormInstanceRecordVersionService, DDMFormInstanceRecordVersionService>(bundle.getBundleContext(),
+				DDMFormInstanceRecordVersionService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

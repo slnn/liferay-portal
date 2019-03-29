@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence.impl;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class FragmentEntryLinkFinderBaseImpl
-	extends BasePersistenceImpl<FragmentEntryLink> {
-
+public class FragmentEntryLinkFinderBaseImpl extends BasePersistenceImpl<FragmentEntryLink> {
 	public FragmentEntryLinkFinderBaseImpl() {
 		setModelClass(FragmentEntryLink.class);
 	}
@@ -55,14 +54,10 @@ public class FragmentEntryLinkFinderBaseImpl
 	 */
 	public void setFragmentEntryLinkPersistence(
 		FragmentEntryLinkPersistence fragmentEntryLinkPersistence) {
-
 		this.fragmentEntryLinkPersistence = fragmentEntryLinkPersistence;
 	}
 
 	@BeanReference(type = FragmentEntryLinkPersistence.class)
 	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryLinkFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(FragmentEntryLinkFinderBaseImpl.class);
 }

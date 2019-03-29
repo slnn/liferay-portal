@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class KaleoDefinitionSoap implements Serializable {
-
 	public static KaleoDefinitionSoap toSoapModel(KaleoDefinition model) {
 		KaleoDefinitionSoap soapModel = new KaleoDefinitionSoap();
 
@@ -53,8 +52,7 @@ public class KaleoDefinitionSoap implements Serializable {
 	}
 
 	public static KaleoDefinitionSoap[] toSoapModels(KaleoDefinition[] models) {
-		KaleoDefinitionSoap[] soapModels =
-			new KaleoDefinitionSoap[models.length];
+		KaleoDefinitionSoap[] soapModels = new KaleoDefinitionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -65,12 +63,10 @@ public class KaleoDefinitionSoap implements Serializable {
 
 	public static KaleoDefinitionSoap[][] toSoapModels(
 		KaleoDefinition[][] models) {
-
 		KaleoDefinitionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new KaleoDefinitionSoap[models.length][models[0].length];
+			soapModels = new KaleoDefinitionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new KaleoDefinitionSoap[0][0];
@@ -85,9 +81,7 @@ public class KaleoDefinitionSoap implements Serializable {
 
 	public static KaleoDefinitionSoap[] toSoapModels(
 		List<KaleoDefinition> models) {
-
-		List<KaleoDefinitionSoap> soapModels =
-			new ArrayList<KaleoDefinitionSoap>(models.size());
+		List<KaleoDefinitionSoap> soapModels = new ArrayList<KaleoDefinitionSoap>(models.size());
 
 		for (KaleoDefinition model : models) {
 			soapModels.add(toSoapModel(model));
@@ -237,5 +231,4 @@ public class KaleoDefinitionSoap implements Serializable {
 	private String _content;
 	private int _version;
 	private boolean _active;
-
 }

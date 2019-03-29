@@ -32,10 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AttachmentWrapper
-	extends BaseModelWrapper<Attachment>
+public class AttachmentWrapper extends BaseModelWrapper<Attachment>
 	implements Attachment, ModelWrapper<Attachment> {
-
 	public AttachmentWrapper(Attachment attachment) {
 		super(attachment);
 	}
@@ -115,110 +113,110 @@ public class AttachmentWrapper
 	}
 
 	/**
-	 * Returns the account ID of this attachment.
-	 *
-	 * @return the account ID of this attachment
-	 */
+	* Returns the account ID of this attachment.
+	*
+	* @return the account ID of this attachment
+	*/
 	@Override
 	public long getAccountId() {
 		return model.getAccountId();
 	}
 
 	/**
-	 * Returns the attachment ID of this attachment.
-	 *
-	 * @return the attachment ID of this attachment
-	 */
+	* Returns the attachment ID of this attachment.
+	*
+	* @return the attachment ID of this attachment
+	*/
 	@Override
 	public long getAttachmentId() {
 		return model.getAttachmentId();
 	}
 
 	/**
-	 * Returns the company ID of this attachment.
-	 *
-	 * @return the company ID of this attachment
-	 */
+	* Returns the company ID of this attachment.
+	*
+	* @return the company ID of this attachment
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the content path of this attachment.
-	 *
-	 * @return the content path of this attachment
-	 */
+	* Returns the content path of this attachment.
+	*
+	* @return the content path of this attachment
+	*/
 	@Override
 	public String getContentPath() {
 		return model.getContentPath();
 	}
 
 	/**
-	 * Returns the file name of this attachment.
-	 *
-	 * @return the file name of this attachment
-	 */
+	* Returns the file name of this attachment.
+	*
+	* @return the file name of this attachment
+	*/
 	@Override
 	public String getFileName() {
 		return model.getFileName();
 	}
 
 	/**
-	 * Returns the folder ID of this attachment.
-	 *
-	 * @return the folder ID of this attachment
-	 */
+	* Returns the folder ID of this attachment.
+	*
+	* @return the folder ID of this attachment
+	*/
 	@Override
 	public long getFolderId() {
 		return model.getFolderId();
 	}
 
 	/**
-	 * Returns the message ID of this attachment.
-	 *
-	 * @return the message ID of this attachment
-	 */
+	* Returns the message ID of this attachment.
+	*
+	* @return the message ID of this attachment
+	*/
 	@Override
 	public long getMessageId() {
 		return model.getMessageId();
 	}
 
 	/**
-	 * Returns the primary key of this attachment.
-	 *
-	 * @return the primary key of this attachment
-	 */
+	* Returns the primary key of this attachment.
+	*
+	* @return the primary key of this attachment
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the size of this attachment.
-	 *
-	 * @return the size of this attachment
-	 */
+	* Returns the size of this attachment.
+	*
+	* @return the size of this attachment
+	*/
 	@Override
 	public long getSize() {
 		return model.getSize();
 	}
 
 	/**
-	 * Returns the user ID of this attachment.
-	 *
-	 * @return the user ID of this attachment
-	 */
+	* Returns the user ID of this attachment.
+	*
+	* @return the user ID of this attachment
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user uuid of this attachment.
-	 *
-	 * @return the user uuid of this attachment
-	 */
+	* Returns the user uuid of this attachment.
+	*
+	* @return the user uuid of this attachment
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -230,110 +228,110 @@ public class AttachmentWrapper
 	}
 
 	/**
-	 * Sets the account ID of this attachment.
-	 *
-	 * @param accountId the account ID of this attachment
-	 */
+	* Sets the account ID of this attachment.
+	*
+	* @param accountId the account ID of this attachment
+	*/
 	@Override
 	public void setAccountId(long accountId) {
 		model.setAccountId(accountId);
 	}
 
 	/**
-	 * Sets the attachment ID of this attachment.
-	 *
-	 * @param attachmentId the attachment ID of this attachment
-	 */
+	* Sets the attachment ID of this attachment.
+	*
+	* @param attachmentId the attachment ID of this attachment
+	*/
 	@Override
 	public void setAttachmentId(long attachmentId) {
 		model.setAttachmentId(attachmentId);
 	}
 
 	/**
-	 * Sets the company ID of this attachment.
-	 *
-	 * @param companyId the company ID of this attachment
-	 */
+	* Sets the company ID of this attachment.
+	*
+	* @param companyId the company ID of this attachment
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the content path of this attachment.
-	 *
-	 * @param contentPath the content path of this attachment
-	 */
+	* Sets the content path of this attachment.
+	*
+	* @param contentPath the content path of this attachment
+	*/
 	@Override
 	public void setContentPath(String contentPath) {
 		model.setContentPath(contentPath);
 	}
 
 	/**
-	 * Sets the file name of this attachment.
-	 *
-	 * @param fileName the file name of this attachment
-	 */
+	* Sets the file name of this attachment.
+	*
+	* @param fileName the file name of this attachment
+	*/
 	@Override
 	public void setFileName(String fileName) {
 		model.setFileName(fileName);
 	}
 
 	/**
-	 * Sets the folder ID of this attachment.
-	 *
-	 * @param folderId the folder ID of this attachment
-	 */
+	* Sets the folder ID of this attachment.
+	*
+	* @param folderId the folder ID of this attachment
+	*/
 	@Override
 	public void setFolderId(long folderId) {
 		model.setFolderId(folderId);
 	}
 
 	/**
-	 * Sets the message ID of this attachment.
-	 *
-	 * @param messageId the message ID of this attachment
-	 */
+	* Sets the message ID of this attachment.
+	*
+	* @param messageId the message ID of this attachment
+	*/
 	@Override
 	public void setMessageId(long messageId) {
 		model.setMessageId(messageId);
 	}
 
 	/**
-	 * Sets the primary key of this attachment.
-	 *
-	 * @param primaryKey the primary key of this attachment
-	 */
+	* Sets the primary key of this attachment.
+	*
+	* @param primaryKey the primary key of this attachment
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the size of this attachment.
-	 *
-	 * @param size the size of this attachment
-	 */
+	* Sets the size of this attachment.
+	*
+	* @param size the size of this attachment
+	*/
 	@Override
 	public void setSize(long size) {
 		model.setSize(size);
 	}
 
 	/**
-	 * Sets the user ID of this attachment.
-	 *
-	 * @param userId the user ID of this attachment
-	 */
+	* Sets the user ID of this attachment.
+	*
+	* @param userId the user ID of this attachment
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user uuid of this attachment.
-	 *
-	 * @param userUuid the user uuid of this attachment
-	 */
+	* Sets the user uuid of this attachment.
+	*
+	* @param userUuid the user uuid of this attachment
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -343,5 +341,4 @@ public class AttachmentWrapper
 	protected AttachmentWrapper wrap(Attachment attachment) {
 		return new AttachmentWrapper(attachment);
 	}
-
 }

@@ -17,6 +17,7 @@ package com.liferay.fragment.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentCollection;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -42,38 +43,27 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=fragment",
-		"json.web.service.context.path=FragmentCollection"
-	},
-	service = FragmentCollectionService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=fragment", "json.web.service.context.path=FragmentCollection"}, service = FragmentCollectionService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface FragmentCollectionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentCollectionServiceUtil} to access the fragment collection remote service. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCollectionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public FragmentCollection addFragmentCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
+	public FragmentCollection addFragmentCollection(long groupId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	public FragmentCollection addFragmentCollection(
-			long groupId, String fragmentCollectionKey, String name,
-			String description, ServiceContext serviceContext)
-		throws PortalException;
+	public FragmentCollection addFragmentCollection(long groupId,
+		String fragmentCollectionKey, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentCollection deleteFragmentCollection(
-			long fragmentCollectionId)
-		throws PortalException;
+		long fragmentCollectionId) throws PortalException;
 
 	public void deleteFragmentCollections(long[] fragmentCollectionIds)
 		throws PortalException;
@@ -86,17 +76,17 @@ public interface FragmentCollectionService extends BaseService {
 	public List<FragmentCollection> getFragmentCollections(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentCollection> getFragmentCollections(
-		long groupId, int start, int end);
+	public List<FragmentCollection> getFragmentCollections(long groupId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentCollection> getFragmentCollections(
-		long groupId, int start, int end,
+	public List<FragmentCollection> getFragmentCollections(long groupId,
+		int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentCollection> getFragmentCollections(
-		long groupId, String name, int start, int end,
+	public List<FragmentCollection> getFragmentCollections(long groupId,
+		String name, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -106,10 +96,10 @@ public interface FragmentCollectionService extends BaseService {
 	public int getFragmentCollectionsCount(long groupId, String name);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -117,7 +107,6 @@ public interface FragmentCollectionService extends BaseService {
 		throws PortalException;
 
 	public FragmentCollection updateFragmentCollection(
-			long fragmentCollectionId, String name, String description)
+		long fragmentCollectionId, String name, String description)
 		throws PortalException;
-
 }

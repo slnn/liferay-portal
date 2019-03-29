@@ -15,11 +15,13 @@
 package com.liferay.document.library.file.rank.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.document.library.file.rank.exception.NoSuchFileRankException;
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.service.DLFileRankLocalServiceUtil;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +58,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DLFileRankPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.document.library.file.rank.service"));
 
 	@Before
@@ -107,8 +107,7 @@ public class DLFileRankPersistenceTest {
 
 		_persistence.remove(newDLFileRank);
 
-		DLFileRank existingDLFileRank = _persistence.fetchByPrimaryKey(
-			newDLFileRank.getPrimaryKey());
+		DLFileRank existingDLFileRank = _persistence.fetchByPrimaryKey(newDLFileRank.getPrimaryKey());
 
 		Assert.assertNull(existingDLFileRank);
 	}
@@ -138,25 +137,23 @@ public class DLFileRankPersistenceTest {
 
 		_dlFileRanks.add(_persistence.update(newDLFileRank));
 
-		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(
-			newDLFileRank.getPrimaryKey());
+		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDLFileRank.getFileRankId(), newDLFileRank.getFileRankId());
-		Assert.assertEquals(
-			existingDLFileRank.getGroupId(), newDLFileRank.getGroupId());
-		Assert.assertEquals(
-			existingDLFileRank.getCompanyId(), newDLFileRank.getCompanyId());
-		Assert.assertEquals(
-			existingDLFileRank.getUserId(), newDLFileRank.getUserId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDLFileRank.getCreateDate()),
+		Assert.assertEquals(existingDLFileRank.getFileRankId(),
+			newDLFileRank.getFileRankId());
+		Assert.assertEquals(existingDLFileRank.getGroupId(),
+			newDLFileRank.getGroupId());
+		Assert.assertEquals(existingDLFileRank.getCompanyId(),
+			newDLFileRank.getCompanyId());
+		Assert.assertEquals(existingDLFileRank.getUserId(),
+			newDLFileRank.getUserId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFileRank.getCreateDate()),
 			Time.getShortTimestamp(newDLFileRank.getCreateDate()));
-		Assert.assertEquals(
-			existingDLFileRank.getFileEntryId(),
+		Assert.assertEquals(existingDLFileRank.getFileEntryId(),
 			newDLFileRank.getFileEntryId());
-		Assert.assertEquals(
-			existingDLFileRank.isActive(), newDLFileRank.isActive());
+		Assert.assertEquals(existingDLFileRank.isActive(),
+			newDLFileRank.isActive());
 	}
 
 	@Test
@@ -175,26 +172,24 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testCountByG_U() throws Exception {
-		_persistence.countByG_U(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_U(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_U_A() throws Exception {
-		_persistence.countByG_U_A(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_U_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_U_A(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByC_U_F() throws Exception {
-		_persistence.countByC_U_F(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_U_F(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_U_F(0L, 0L, 0L);
 	}
@@ -203,8 +198,7 @@ public class DLFileRankPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 
-		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(
-			newDLFileRank.getPrimaryKey());
+		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
 
 		Assert.assertEquals(existingDLFileRank, newDLFileRank);
 	}
@@ -218,23 +212,21 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DLFileRank> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DLFileRank", "fileRankId", true, "groupId", true, "companyId",
-			true, "userId", true, "createDate", true, "fileEntryId", true,
-			"active", true);
+		return OrderByComparatorFactoryUtil.create("DLFileRank", "fileRankId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"createDate", true, "fileEntryId", true, "active", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 
-		DLFileRank existingDLFileRank = _persistence.fetchByPrimaryKey(
-			newDLFileRank.getPrimaryKey());
+		DLFileRank existingDLFileRank = _persistence.fetchByPrimaryKey(newDLFileRank.getPrimaryKey());
 
 		Assert.assertEquals(existingDLFileRank, newDLFileRank);
 	}
@@ -251,7 +243,6 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		DLFileRank newDLFileRank1 = addDLFileRank();
 		DLFileRank newDLFileRank2 = addDLFileRank();
 
@@ -260,20 +251,18 @@ public class DLFileRankPersistenceTest {
 		primaryKeys.add(newDLFileRank1.getPrimaryKey());
 		primaryKeys.add(newDLFileRank2.getPrimaryKey());
 
-		Map<Serializable, DLFileRank> dlFileRanks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, dlFileRanks.size());
-		Assert.assertEquals(
-			newDLFileRank1, dlFileRanks.get(newDLFileRank1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDLFileRank2, dlFileRanks.get(newDLFileRank2.getPrimaryKey()));
+		Assert.assertEquals(newDLFileRank1,
+			dlFileRanks.get(newDLFileRank1.getPrimaryKey()));
+		Assert.assertEquals(newDLFileRank2,
+			dlFileRanks.get(newDLFileRank2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -283,8 +272,7 @@ public class DLFileRankPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DLFileRank> dlFileRanks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(dlFileRanks.isEmpty());
 	}
@@ -292,7 +280,6 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		DLFileRank newDLFileRank = addDLFileRank();
 
 		long pk = RandomTestUtil.nextLong();
@@ -302,57 +289,52 @@ public class DLFileRankPersistenceTest {
 		primaryKeys.add(newDLFileRank.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DLFileRank> dlFileRanks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, dlFileRanks.size());
-		Assert.assertEquals(
-			newDLFileRank, dlFileRanks.get(newDLFileRank.getPrimaryKey()));
+		Assert.assertEquals(newDLFileRank,
+			dlFileRanks.get(newDLFileRank.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileRank> dlFileRanks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(dlFileRanks.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDLFileRank.getPrimaryKey());
 
-		Map<Serializable, DLFileRank> dlFileRanks =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, dlFileRanks.size());
-		Assert.assertEquals(
-			newDLFileRank, dlFileRanks.get(newDLFileRank.getPrimaryKey()));
+		Assert.assertEquals(newDLFileRank,
+			dlFileRanks.get(newDLFileRank.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DLFileRankLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DLFileRankLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DLFileRank>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileRank>() {
 				@Override
 				public void performAction(DLFileRank dlFileRank) {
 					Assert.assertNotNull(dlFileRank);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -361,18 +343,17 @@ public class DLFileRankPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DLFileRank.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileRank.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"fileRankId", newDLFileRank.getFileRankId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileRankId",
+				newDLFileRank.getFileRankId()));
 
-		List<DLFileRank> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DLFileRank> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -383,34 +364,31 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DLFileRank.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileRank.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"fileRankId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileRankId",
+				RandomTestUtil.nextLong()));
 
-		List<DLFileRank> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DLFileRank> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DLFileRank.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileRank.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("fileRankId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fileRankId"));
 
 		Object newFileRankId = newDLFileRank.getFileRankId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"fileRankId", new Object[] {newFileRankId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("fileRankId",
+				new Object[] { newFileRankId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -423,15 +401,13 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DLFileRank.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileRank.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("fileRankId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fileRankId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"fileRankId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("fileRankId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -444,21 +420,17 @@ public class DLFileRankPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(
-			newDLFileRank.getPrimaryKey());
+		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingDLFileRank.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDLFileRank, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDLFileRank.getUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDLFileRank, "getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingDLFileRank.getFileEntryId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDLFileRank, "getOriginalFileEntryId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDLFileRank.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileRank,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDLFileRank.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileRank,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDLFileRank.getFileEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileRank,
+				"getOriginalFileEntryId", new Class<?>[0]));
 	}
 
 	protected DLFileRank addDLFileRank() throws Exception {
@@ -486,5 +458,4 @@ public class DLFileRankPersistenceTest {
 	private List<DLFileRank> _dlFileRanks = new ArrayList<DLFileRank>();
 	private DLFileRankPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.lists.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDLRecordVersionPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.lists.service"));
 
 	@Before
@@ -108,8 +108,7 @@ public class DDLRecordVersionPersistenceTest {
 
 		_persistence.remove(newDDLRecordVersion);
 
-		DDLRecordVersion existingDDLRecordVersion =
-			_persistence.fetchByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
+		DDLRecordVersion existingDDLRecordVersion = _persistence.fetchByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
 		Assert.assertNull(existingDDLRecordVersion);
 	}
@@ -159,59 +158,43 @@ public class DDLRecordVersionPersistenceTest {
 
 		_ddlRecordVersions.add(_persistence.update(newDDLRecordVersion));
 
-		DDLRecordVersion existingDDLRecordVersion =
-			_persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
+		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDLRecordVersion.getMvccVersion(),
+		Assert.assertEquals(existingDDLRecordVersion.getMvccVersion(),
 			newDDLRecordVersion.getMvccVersion());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getRecordVersionId(),
+		Assert.assertEquals(existingDDLRecordVersion.getRecordVersionId(),
 			newDDLRecordVersion.getRecordVersionId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getGroupId(),
+		Assert.assertEquals(existingDDLRecordVersion.getGroupId(),
 			newDDLRecordVersion.getGroupId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getCompanyId(),
+		Assert.assertEquals(existingDDLRecordVersion.getCompanyId(),
 			newDDLRecordVersion.getCompanyId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getUserId(),
+		Assert.assertEquals(existingDDLRecordVersion.getUserId(),
 			newDDLRecordVersion.getUserId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getUserName(),
+		Assert.assertEquals(existingDDLRecordVersion.getUserName(),
 			newDDLRecordVersion.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDDLRecordVersion.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDLRecordVersion.getCreateDate()),
 			Time.getShortTimestamp(newDDLRecordVersion.getCreateDate()));
-		Assert.assertEquals(
-			existingDDLRecordVersion.getDDMStorageId(),
+		Assert.assertEquals(existingDDLRecordVersion.getDDMStorageId(),
 			newDDLRecordVersion.getDDMStorageId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getRecordSetId(),
+		Assert.assertEquals(existingDDLRecordVersion.getRecordSetId(),
 			newDDLRecordVersion.getRecordSetId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getRecordSetVersion(),
+		Assert.assertEquals(existingDDLRecordVersion.getRecordSetVersion(),
 			newDDLRecordVersion.getRecordSetVersion());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getRecordId(),
+		Assert.assertEquals(existingDDLRecordVersion.getRecordId(),
 			newDDLRecordVersion.getRecordId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getVersion(),
+		Assert.assertEquals(existingDDLRecordVersion.getVersion(),
 			newDDLRecordVersion.getVersion());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getDisplayIndex(),
+		Assert.assertEquals(existingDDLRecordVersion.getDisplayIndex(),
 			newDDLRecordVersion.getDisplayIndex());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getStatus(),
+		Assert.assertEquals(existingDDLRecordVersion.getStatus(),
 			newDDLRecordVersion.getStatus());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getStatusByUserId(),
+		Assert.assertEquals(existingDDLRecordVersion.getStatusByUserId(),
 			newDDLRecordVersion.getStatusByUserId());
-		Assert.assertEquals(
-			existingDDLRecordVersion.getStatusByUserName(),
+		Assert.assertEquals(existingDDLRecordVersion.getStatusByUserName(),
 			newDDLRecordVersion.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingDDLRecordVersion.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDLRecordVersion.getStatusDate()),
 			Time.getShortTimestamp(newDDLRecordVersion.getStatusDate()));
 	}
 
@@ -242,17 +225,16 @@ public class DDLRecordVersionPersistenceTest {
 
 	@Test
 	public void testCountByR_S() throws Exception {
-		_persistence.countByR_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByR_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByR_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByU_R_R_S() throws Exception {
-		_persistence.countByU_R_R_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextInt());
+		_persistence.countByU_R_R_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
 		_persistence.countByU_R_R_S(0L, 0L, "null", 0);
 
@@ -263,8 +245,7 @@ public class DDLRecordVersionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
-		DDLRecordVersion existingDDLRecordVersion =
-			_persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
+		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingDDLRecordVersion, newDDLRecordVersion);
 	}
@@ -278,15 +259,15 @@ public class DDLRecordVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDLRecordVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DDLRecordVersion", "mvccVersion", true, "recordVersionId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "DDMStorageId", true, "recordSetId", true,
+		return OrderByComparatorFactoryUtil.create("DDLRecordVersion",
+			"mvccVersion", true, "recordVersionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "DDMStorageId", true, "recordSetId", true,
 			"recordSetVersion", true, "recordId", true, "version", true,
 			"displayIndex", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
@@ -296,8 +277,7 @@ public class DDLRecordVersionPersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
-		DDLRecordVersion existingDDLRecordVersion =
-			_persistence.fetchByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
+		DDLRecordVersion existingDDLRecordVersion = _persistence.fetchByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingDDLRecordVersion, newDDLRecordVersion);
 	}
@@ -306,8 +286,7 @@ public class DDLRecordVersionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDLRecordVersion missingDDLRecordVersion =
-			_persistence.fetchByPrimaryKey(pk);
+		DDLRecordVersion missingDDLRecordVersion = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDLRecordVersion);
 	}
@@ -315,7 +294,6 @@ public class DDLRecordVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		DDLRecordVersion newDDLRecordVersion1 = addDDLRecordVersion();
 		DDLRecordVersion newDDLRecordVersion2 = addDDLRecordVersion();
 
@@ -324,22 +302,18 @@ public class DDLRecordVersionPersistenceTest {
 		primaryKeys.add(newDDLRecordVersion1.getPrimaryKey());
 		primaryKeys.add(newDDLRecordVersion2.getPrimaryKey());
 
-		Map<Serializable, DDLRecordVersion> ddlRecordVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDLRecordVersion> ddlRecordVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddlRecordVersions.size());
-		Assert.assertEquals(
-			newDDLRecordVersion1,
+		Assert.assertEquals(newDDLRecordVersion1,
 			ddlRecordVersions.get(newDDLRecordVersion1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDLRecordVersion2,
+		Assert.assertEquals(newDDLRecordVersion2,
 			ddlRecordVersions.get(newDDLRecordVersion2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -349,8 +323,7 @@ public class DDLRecordVersionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDLRecordVersion> ddlRecordVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDLRecordVersion> ddlRecordVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddlRecordVersions.isEmpty());
 	}
@@ -358,7 +331,6 @@ public class DDLRecordVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
 		long pk = RandomTestUtil.nextLong();
@@ -368,39 +340,36 @@ public class DDLRecordVersionPersistenceTest {
 		primaryKeys.add(newDDLRecordVersion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDLRecordVersion> ddlRecordVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDLRecordVersion> ddlRecordVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddlRecordVersions.size());
-		Assert.assertEquals(
-			newDDLRecordVersion,
+		Assert.assertEquals(newDDLRecordVersion,
 			ddlRecordVersions.get(newDDLRecordVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDLRecordVersion> ddlRecordVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDLRecordVersion> ddlRecordVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddlRecordVersions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDLRecordVersion.getPrimaryKey());
 
-		Map<Serializable, DDLRecordVersion> ddlRecordVersions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDLRecordVersion> ddlRecordVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddlRecordVersions.size());
-		Assert.assertEquals(
-			newDDLRecordVersion,
+		Assert.assertEquals(newDDLRecordVersion,
 			ddlRecordVersions.get(newDDLRecordVersion.getPrimaryKey()));
 	}
 
@@ -408,19 +377,15 @@ public class DDLRecordVersionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDLRecordVersionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDLRecordVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDLRecordVersion>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDLRecordVersion>() {
 				@Override
 				public void performAction(DDLRecordVersion ddlRecordVersion) {
 					Assert.assertNotNull(ddlRecordVersion);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -429,18 +394,17 @@ public class DDLRecordVersionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDLRecordVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"recordVersionId", newDDLRecordVersion.getRecordVersionId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordVersionId",
+				newDDLRecordVersion.getRecordVersionId()));
 
-		List<DDLRecordVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDLRecordVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -451,34 +415,32 @@ public class DDLRecordVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDLRecordVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"recordVersionId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordVersionId",
+				RandomTestUtil.nextLong()));
 
-		List<DDLRecordVersion> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDLRecordVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDLRecordVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("recordVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"recordVersionId"));
 
 		Object newRecordVersionId = newDDLRecordVersion.getRecordVersionId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"recordVersionId", new Object[] {newRecordVersionId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("recordVersionId",
+				new Object[] { newRecordVersionId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -491,15 +453,14 @@ public class DDLRecordVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDLRecordVersion.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("recordVersionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"recordVersionId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"recordVersionId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("recordVersionId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -512,20 +473,15 @@ public class DDLRecordVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDLRecordVersion existingDDLRecordVersion =
-			_persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
+		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingDDLRecordVersion.getRecordId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDLRecordVersion, "getOriginalRecordId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(existingDDLRecordVersion.getRecordId()),
+			ReflectionTestUtil.<Long>invoke(existingDDLRecordVersion,
+				"getOriginalRecordId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
 				existingDDLRecordVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingDDLRecordVersion, "getOriginalVersion",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingDDLRecordVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DDLRecordVersion addDDLRecordVersion() throws Exception {
@@ -570,9 +526,7 @@ public class DDLRecordVersionPersistenceTest {
 		return ddlRecordVersion;
 	}
 
-	private List<DDLRecordVersion> _ddlRecordVersions =
-		new ArrayList<DDLRecordVersion>();
+	private List<DDLRecordVersion> _ddlRecordVersions = new ArrayList<DDLRecordVersion>();
 	private DDLRecordVersionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

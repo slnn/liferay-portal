@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.mapping.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DDMFormInstanceRecordPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
@@ -82,8 +82,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<DDMFormInstanceRecord> iterator =
-			_ddmFormInstanceRecords.iterator();
+		Iterator<DDMFormInstanceRecord> iterator = _ddmFormInstanceRecords.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -105,14 +104,11 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
 		_persistence.remove(newDDMFormInstanceRecord);
 
-		DDMFormInstanceRecord existingDDMFormInstanceRecord =
-			_persistence.fetchByPrimaryKey(
-				newDDMFormInstanceRecord.getPrimaryKey());
+		DDMFormInstanceRecord existingDDMFormInstanceRecord = _persistence.fetchByPrimaryKey(newDDMFormInstanceRecord.getPrimaryKey());
 
 		Assert.assertNull(existingDDMFormInstanceRecord);
 	}
@@ -126,8 +122,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMFormInstanceRecord newDDMFormInstanceRecord = _persistence.create(
-			pk);
+		DDMFormInstanceRecord newDDMFormInstanceRecord = _persistence.create(pk);
 
 		newDDMFormInstanceRecord.setUuid(RandomTestUtil.randomString());
 
@@ -141,8 +136,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		newDDMFormInstanceRecord.setVersionUserId(RandomTestUtil.nextLong());
 
-		newDDMFormInstanceRecord.setVersionUserName(
-			RandomTestUtil.randomString());
+		newDDMFormInstanceRecord.setVersionUserName(RandomTestUtil.randomString());
 
 		newDDMFormInstanceRecord.setCreateDate(RandomTestUtil.nextDate());
 
@@ -150,8 +144,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		newDDMFormInstanceRecord.setFormInstanceId(RandomTestUtil.nextLong());
 
-		newDDMFormInstanceRecord.setFormInstanceVersion(
-			RandomTestUtil.randomString());
+		newDDMFormInstanceRecord.setFormInstanceVersion(RandomTestUtil.randomString());
 
 		newDDMFormInstanceRecord.setStorageId(RandomTestUtil.nextLong());
 
@@ -159,59 +152,42 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		newDDMFormInstanceRecord.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_ddmFormInstanceRecords.add(
-			_persistence.update(newDDMFormInstanceRecord));
+		_ddmFormInstanceRecords.add(_persistence.update(
+				newDDMFormInstanceRecord));
 
-		DDMFormInstanceRecord existingDDMFormInstanceRecord =
-			_persistence.findByPrimaryKey(
-				newDDMFormInstanceRecord.getPrimaryKey());
+		DDMFormInstanceRecord existingDDMFormInstanceRecord = _persistence.findByPrimaryKey(newDDMFormInstanceRecord.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getUuid(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getUuid(),
 			newDDMFormInstanceRecord.getUuid());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getFormInstanceRecordId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getFormInstanceRecordId(),
 			newDDMFormInstanceRecord.getFormInstanceRecordId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getGroupId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getGroupId(),
 			newDDMFormInstanceRecord.getGroupId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getCompanyId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getCompanyId(),
 			newDDMFormInstanceRecord.getCompanyId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getUserId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getUserId(),
 			newDDMFormInstanceRecord.getUserId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getUserName(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getUserName(),
 			newDDMFormInstanceRecord.getUserName());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getVersionUserId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getVersionUserId(),
 			newDDMFormInstanceRecord.getVersionUserId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getVersionUserName(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getVersionUserName(),
 			newDDMFormInstanceRecord.getVersionUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMFormInstanceRecord.getCreateDate()),
 			Time.getShortTimestamp(newDDMFormInstanceRecord.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMFormInstanceRecord.getModifiedDate()),
 			Time.getShortTimestamp(newDDMFormInstanceRecord.getModifiedDate()));
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getFormInstanceId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getFormInstanceId(),
 			newDDMFormInstanceRecord.getFormInstanceId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getFormInstanceVersion(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getFormInstanceVersion(),
 			newDDMFormInstanceRecord.getFormInstanceVersion());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getStorageId(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getStorageId(),
 			newDDMFormInstanceRecord.getStorageId());
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord.getVersion(),
+		Assert.assertEquals(existingDDMFormInstanceRecord.getVersion(),
 			newDDMFormInstanceRecord.getVersion());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMFormInstanceRecord.getLastPublishDate()),
 			Time.getShortTimestamp(
 				newDDMFormInstanceRecord.getLastPublishDate()));
@@ -260,8 +236,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	@Test
 	public void testCountByU_F() throws Exception {
-		_persistence.countByU_F(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByU_F(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByU_F(0L, 0L);
 	}
@@ -277,15 +253,12 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
-		DDMFormInstanceRecord existingDDMFormInstanceRecord =
-			_persistence.findByPrimaryKey(
-				newDDMFormInstanceRecord.getPrimaryKey());
+		DDMFormInstanceRecord existingDDMFormInstanceRecord = _persistence.findByPrimaryKey(newDDMFormInstanceRecord.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord, newDDMFormInstanceRecord);
+		Assert.assertEquals(existingDDMFormInstanceRecord,
+			newDDMFormInstanceRecord);
 	}
 
 	@Test(expected = NoSuchFormInstanceRecordException.class)
@@ -297,39 +270,35 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMFormInstanceRecord> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstanceRecord", "uuid", true, "formInstanceRecordId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "versionUserId", true, "versionUserName", true, "createDate",
-			true, "modifiedDate", true, "formInstanceId", true,
+		return OrderByComparatorFactoryUtil.create("DDMFormInstanceRecord",
+			"uuid", true, "formInstanceRecordId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true,
+			"versionUserId", true, "versionUserName", true, "createDate", true,
+			"modifiedDate", true, "formInstanceId", true,
 			"formInstanceVersion", true, "storageId", true, "version", true,
 			"lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
-		DDMFormInstanceRecord existingDDMFormInstanceRecord =
-			_persistence.fetchByPrimaryKey(
-				newDDMFormInstanceRecord.getPrimaryKey());
+		DDMFormInstanceRecord existingDDMFormInstanceRecord = _persistence.fetchByPrimaryKey(newDDMFormInstanceRecord.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord, newDDMFormInstanceRecord);
+		Assert.assertEquals(existingDDMFormInstanceRecord,
+			newDDMFormInstanceRecord);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DDMFormInstanceRecord missingDDMFormInstanceRecord =
-			_persistence.fetchByPrimaryKey(pk);
+		DDMFormInstanceRecord missingDDMFormInstanceRecord = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDDMFormInstanceRecord);
 	}
@@ -337,27 +306,21 @@ public class DDMFormInstanceRecordPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		DDMFormInstanceRecord newDDMFormInstanceRecord1 =
-			addDDMFormInstanceRecord();
-		DDMFormInstanceRecord newDDMFormInstanceRecord2 =
-			addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord1 = addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord2 = addDDMFormInstanceRecord();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMFormInstanceRecord1.getPrimaryKey());
 		primaryKeys.add(newDDMFormInstanceRecord2.getPrimaryKey());
 
-		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ddmFormInstanceRecords.size());
-		Assert.assertEquals(
-			newDDMFormInstanceRecord1,
+		Assert.assertEquals(newDDMFormInstanceRecord1,
 			ddmFormInstanceRecords.get(
 				newDDMFormInstanceRecord1.getPrimaryKey()));
-		Assert.assertEquals(
-			newDDMFormInstanceRecord2,
+		Assert.assertEquals(newDDMFormInstanceRecord2,
 			ddmFormInstanceRecords.get(
 				newDDMFormInstanceRecord2.getPrimaryKey()));
 	}
@@ -365,7 +328,6 @@ public class DDMFormInstanceRecordPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -375,8 +337,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmFormInstanceRecords.isEmpty());
 	}
@@ -384,9 +345,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -395,65 +354,53 @@ public class DDMFormInstanceRecordPersistenceTest {
 		primaryKeys.add(newDDMFormInstanceRecord.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmFormInstanceRecords.size());
-		Assert.assertEquals(
-			newDDMFormInstanceRecord,
-			ddmFormInstanceRecords.get(
-				newDDMFormInstanceRecord.getPrimaryKey()));
+		Assert.assertEquals(newDDMFormInstanceRecord,
+			ddmFormInstanceRecords.get(newDDMFormInstanceRecord.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ddmFormInstanceRecords.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDDMFormInstanceRecord.getPrimaryKey());
 
-		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DDMFormInstanceRecord> ddmFormInstanceRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ddmFormInstanceRecords.size());
-		Assert.assertEquals(
-			newDDMFormInstanceRecord,
-			ddmFormInstanceRecords.get(
-				newDDMFormInstanceRecord.getPrimaryKey()));
+		Assert.assertEquals(newDDMFormInstanceRecord,
+			ddmFormInstanceRecords.get(newDDMFormInstanceRecord.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			DDMFormInstanceRecordLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = DDMFormInstanceRecordLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<DDMFormInstanceRecord>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMFormInstanceRecord>() {
 				@Override
 				public void performAction(
 					DDMFormInstanceRecord ddmFormInstanceRecord) {
-
 					Assert.assertNotNull(ddmFormInstanceRecord);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -462,62 +409,54 @@ public class DDMFormInstanceRecordPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMFormInstanceRecord.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMFormInstanceRecord.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"formInstanceRecordId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("formInstanceRecordId",
 				newDDMFormInstanceRecord.getFormInstanceRecordId()));
 
-		List<DDMFormInstanceRecord> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMFormInstanceRecord> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		DDMFormInstanceRecord existingDDMFormInstanceRecord = result.get(0);
 
-		Assert.assertEquals(
-			existingDDMFormInstanceRecord, newDDMFormInstanceRecord);
+		Assert.assertEquals(existingDDMFormInstanceRecord,
+			newDDMFormInstanceRecord);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMFormInstanceRecord.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMFormInstanceRecord.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"formInstanceRecordId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("formInstanceRecordId",
+				RandomTestUtil.nextLong()));
 
-		List<DDMFormInstanceRecord> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<DDMFormInstanceRecord> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMFormInstanceRecord.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMFormInstanceRecord.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("formInstanceRecordId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"formInstanceRecordId"));
 
-		Object newFormInstanceRecordId =
-			newDDMFormInstanceRecord.getFormInstanceRecordId();
+		Object newFormInstanceRecordId = newDDMFormInstanceRecord.getFormInstanceRecordId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"formInstanceRecordId",
-				new Object[] {newFormInstanceRecordId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("formInstanceRecordId",
+				new Object[] { newFormInstanceRecordId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -525,22 +464,20 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		Object existingFormInstanceRecordId = result.get(0);
 
-		Assert.assertEquals(
-			existingFormInstanceRecordId, newFormInstanceRecordId);
+		Assert.assertEquals(existingFormInstanceRecordId,
+			newFormInstanceRecordId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDMFormInstanceRecord.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMFormInstanceRecord.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("formInstanceRecordId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"formInstanceRecordId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"formInstanceRecordId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("formInstanceRecordId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -549,31 +486,24 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		DDMFormInstanceRecord newDDMFormInstanceRecord =
-			addDDMFormInstanceRecord();
+		DDMFormInstanceRecord newDDMFormInstanceRecord = addDDMFormInstanceRecord();
 
 		_persistence.clearCache();
 
-		DDMFormInstanceRecord existingDDMFormInstanceRecord =
-			_persistence.findByPrimaryKey(
-				newDDMFormInstanceRecord.getPrimaryKey());
+		DDMFormInstanceRecord existingDDMFormInstanceRecord = _persistence.findByPrimaryKey(newDDMFormInstanceRecord.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingDDMFormInstanceRecord.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingDDMFormInstanceRecord, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingDDMFormInstanceRecord.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingDDMFormInstanceRecord, "getOriginalGroupId",
-				new Class<?>[0]));
+				ReflectionTestUtil.invoke(existingDDMFormInstanceRecord,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingDDMFormInstanceRecord.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMFormInstanceRecord,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DDMFormInstanceRecord addDDMFormInstanceRecord()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
 		DDMFormInstanceRecord ddmFormInstanceRecord = _persistence.create(pk);
@@ -598,8 +528,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		ddmFormInstanceRecord.setFormInstanceId(RandomTestUtil.nextLong());
 
-		ddmFormInstanceRecord.setFormInstanceVersion(
-			RandomTestUtil.randomString());
+		ddmFormInstanceRecord.setFormInstanceVersion(RandomTestUtil.randomString());
 
 		ddmFormInstanceRecord.setStorageId(RandomTestUtil.nextLong());
 
@@ -612,9 +541,7 @@ public class DDMFormInstanceRecordPersistenceTest {
 		return ddmFormInstanceRecord;
 	}
 
-	private List<DDMFormInstanceRecord> _ddmFormInstanceRecords =
-		new ArrayList<DDMFormInstanceRecord>();
+	private List<DDMFormInstanceRecord> _ddmFormInstanceRecords = new ArrayList<DDMFormInstanceRecord>();
 	private DDMFormInstanceRecordPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

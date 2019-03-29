@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.liferay.screens.service.ScreensDDMStructureVersionServiceUtil;
 
 import java.rmi.RemoteException;
@@ -52,14 +53,10 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensDDMStructureVersionServiceSoap {
-
 	public static String getDDMStructureVersion(long structureId)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				ScreensDDMStructureVersionServiceUtil.getDDMStructureVersion(
-					structureId);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensDDMStructureVersionServiceUtil.getDDMStructureVersion(structureId);
 
 			return returnValue.toString();
 		}
@@ -70,7 +67,5 @@ public class ScreensDDMStructureVersionServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ScreensDDMStructureVersionServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(ScreensDDMStructureVersionServiceSoap.class);
 }

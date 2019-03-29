@@ -42,20 +42,12 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=audit",
-		"json.web.service.context.path=AuditEvent"
-	},
-	service = AuditEventService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=audit", "json.web.service.context.path=AuditEvent"}, service = AuditEventService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface AuditEventService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -66,47 +58,38 @@ public interface AuditEventService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AuditEvent> getAuditEvents(
-			long companyId, int start, int end,
-			OrderByComparator orderByComparator)
-		throws PortalException;
+	public List<AuditEvent> getAuditEvents(long companyId, int start, int end,
+		OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AuditEvent> getAuditEvents(
-			long companyId, long userId, String userName, Date createDateGT,
-			Date createDateLT, String eventType, String className,
-			String classPK, String clientHost, String clientIP,
-			String serverName, int serverPort, String sessionID,
-			boolean andSearch, int start, int end)
-		throws PortalException;
+	public List<AuditEvent> getAuditEvents(long companyId, long userId,
+		String userName, Date createDateGT, Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AuditEvent> getAuditEvents(
-			long companyId, long userId, String userName, Date createDateGT,
-			Date createDateLT, String eventType, String className,
-			String classPK, String clientHost, String clientIP,
-			String serverName, int serverPort, String sessionID,
-			boolean andSearch, int start, int end,
-			OrderByComparator orderByComparator)
-		throws PortalException;
+	public List<AuditEvent> getAuditEvents(long companyId, long userId,
+		String userName, Date createDateGT, Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end,
+		OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuditEventsCount(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAuditEventsCount(
-			long companyId, long userId, String userName, Date createDateGT,
-			Date createDateLT, String eventType, String className,
-			String classPK, String clientHost, String clientIP,
-			String serverName, int serverPort, String sessionID,
-			boolean andSearch)
-		throws PortalException;
+	public int getAuditEventsCount(long companyId, long userId,
+		String userName, Date createDateGT, Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

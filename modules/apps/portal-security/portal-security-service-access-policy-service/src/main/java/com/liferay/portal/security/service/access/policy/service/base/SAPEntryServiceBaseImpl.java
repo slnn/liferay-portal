@@ -45,10 +45,8 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.security.service.access.policy.service.impl.SAPEntryServiceImpl
  * @generated
  */
-public abstract class SAPEntryServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class SAPEntryServiceBaseImpl extends BaseServiceImpl
 	implements SAPEntryService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,9 +58,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the sap entry local service
 	 */
-	public com.liferay.portal.security.service.access.policy.service.
-		SAPEntryLocalService getSAPEntryLocalService() {
-
+	public com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService getSAPEntryLocalService() {
 		return sapEntryLocalService;
 	}
 
@@ -72,9 +68,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 * @param sapEntryLocalService the sap entry local service
 	 */
 	public void setSAPEntryLocalService(
-		com.liferay.portal.security.service.access.policy.service.
-			SAPEntryLocalService sapEntryLocalService) {
-
+		com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService sapEntryLocalService) {
 		this.sapEntryLocalService = sapEntryLocalService;
 	}
 
@@ -110,9 +104,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @param sapEntryPersistence the sap entry persistence
 	 */
-	public void setSAPEntryPersistence(
-		SAPEntryPersistence sapEntryPersistence) {
-
+	public void setSAPEntryPersistence(SAPEntryPersistence sapEntryPersistence) {
 		this.sapEntryPersistence = sapEntryPersistence;
 	}
 
@@ -121,9 +113,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -133,9 +123,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -144,9 +132,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -156,9 +142,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -167,9 +151,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -180,7 +162,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -200,7 +181,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -209,9 +189,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -221,9 +199,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -232,9 +208,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the resource permission local service
 	 */
-	public com.liferay.portal.kernel.service.ResourcePermissionLocalService
-		getResourcePermissionLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourcePermissionLocalService getResourcePermissionLocalService() {
 		return resourcePermissionLocalService;
 	}
 
@@ -244,9 +218,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 * @param resourcePermissionLocalService the resource permission local service
 	 */
 	public void setResourcePermissionLocalService(
-		com.liferay.portal.kernel.service.ResourcePermissionLocalService
-			resourcePermissionLocalService) {
-
+		com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService) {
 		this.resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
@@ -255,9 +227,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the resource permission remote service
 	 */
-	public com.liferay.portal.kernel.service.ResourcePermissionService
-		getResourcePermissionService() {
-
+	public com.liferay.portal.kernel.service.ResourcePermissionService getResourcePermissionService() {
 		return resourcePermissionService;
 	}
 
@@ -267,9 +237,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 * @param resourcePermissionService the resource permission remote service
 	 */
 	public void setResourcePermissionService(
-		com.liferay.portal.kernel.service.ResourcePermissionService
-			resourcePermissionService) {
-
+		com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService) {
 		this.resourcePermissionService = resourcePermissionService;
 	}
 
@@ -289,7 +257,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setResourcePermissionPersistence(
 		ResourcePermissionPersistence resourcePermissionPersistence) {
-
 		this.resourcePermissionPersistence = resourcePermissionPersistence;
 	}
 
@@ -298,9 +265,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the role local service
 	 */
-	public com.liferay.portal.kernel.service.RoleLocalService
-		getRoleLocalService() {
-
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -311,7 +276,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setRoleLocalService(
 		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
-
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -331,7 +295,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setRoleService(
 		com.liferay.portal.kernel.service.RoleService roleService) {
-
 		this.roleService = roleService;
 	}
 
@@ -358,9 +321,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -371,7 +332,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -391,7 +351,6 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -451,8 +410,8 @@ public abstract class SAPEntryServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -461,86 +420,38 @@ public abstract class SAPEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService.class
-	)
-	protected com.liferay.portal.security.service.access.policy.service.
-		SAPEntryLocalService sapEntryLocalService;
-
+	@BeanReference(type = com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService.class)
+	protected com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService sapEntryLocalService;
 	@BeanReference(type = SAPEntryService.class)
 	protected SAPEntryService sapEntryService;
-
 	@BeanReference(type = SAPEntryPersistence.class)
 	protected SAPEntryPersistence sapEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService
-		resourcePermissionLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourcePermissionService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourcePermissionService
-		resourcePermissionService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourcePermissionService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService;
 	@ServiceReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.RoleLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.RoleLocalService
-		roleLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.RoleService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.RoleService.class)
 	protected com.liferay.portal.kernel.service.RoleService roleService;
-
 	@ServiceReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 }

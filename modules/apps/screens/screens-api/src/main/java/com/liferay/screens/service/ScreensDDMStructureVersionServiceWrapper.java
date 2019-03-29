@@ -28,28 +28,24 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class ScreensDDMStructureVersionServiceWrapper
 	implements ScreensDDMStructureVersionService,
-			   ServiceWrapper<ScreensDDMStructureVersionService> {
-
+		ServiceWrapper<ScreensDDMStructureVersionService> {
 	public ScreensDDMStructureVersionServiceWrapper(
 		ScreensDDMStructureVersionService screensDDMStructureVersionService) {
-
 		_screensDDMStructureVersionService = screensDDMStructureVersionService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getDDMStructureVersion(
-			long structureId)
+		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _screensDDMStructureVersionService.getDDMStructureVersion(
-			structureId);
+		return _screensDDMStructureVersionService.getDDMStructureVersion(structureId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _screensDDMStructureVersionService.getOSGiServiceIdentifier();
@@ -63,11 +59,8 @@ public class ScreensDDMStructureVersionServiceWrapper
 	@Override
 	public void setWrappedService(
 		ScreensDDMStructureVersionService screensDDMStructureVersionService) {
-
 		_screensDDMStructureVersionService = screensDDMStructureVersionService;
 	}
 
-	private ScreensDDMStructureVersionService
-		_screensDDMStructureVersionService;
-
+	private ScreensDDMStructureVersionService _screensDDMStructureVersionService;
 }

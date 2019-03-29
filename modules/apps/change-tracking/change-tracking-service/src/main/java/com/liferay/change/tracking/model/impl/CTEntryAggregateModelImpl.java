@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.model.CTEntryAggregateModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,25 +59,25 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class CTEntryAggregateModelImpl
-	extends BaseModelImpl<CTEntryAggregate> implements CTEntryAggregateModel {
-
+public class CTEntryAggregateModelImpl extends BaseModelImpl<CTEntryAggregate>
+	implements CTEntryAggregateModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ct entry aggregate model instance should use the <code>CTEntryAggregate</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "CTEntryAggregate";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"ctEntryAggregateId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"ctCollectionId", Types.BIGINT}, {"ownerCTEntryId", Types.BIGINT}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "ctEntryAggregateId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "ctCollectionId", Types.BIGINT },
+			{ "ownerCTEntryId", Types.BIGINT }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("ctEntryAggregateId", Types.BIGINT);
@@ -87,67 +90,40 @@ public class CTEntryAggregateModelImpl
 		TABLE_COLUMNS_MAP.put("ownerCTEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table CTEntryAggregate (ctEntryAggregateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,ownerCTEntryId LONG)";
-
+	public static final String TABLE_SQL_CREATE = "create table CTEntryAggregate (ctEntryAggregateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,ownerCTEntryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table CTEntryAggregate";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY ctEntryAggregate.ctEntryAggregateId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY CTEntryAggregate.ctEntryAggregateId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY ctEntryAggregate.ctEntryAggregateId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CTEntryAggregate.ctEntryAggregateId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.change.tracking.model.CTEntryAggregate"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.change.tracking.model.CTEntryAggregate"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.CTEntryAggregate"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.change.tracking.model.CTEntryAggregate"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.change.tracking.model.CTEntryAggregate"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.CTEntryAggregate"),
+			true);
 	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
-
 	public static final long OWNERCTENTRYID_COLUMN_BITMASK = 2L;
-
 	public static final long CTENTRYAGGREGATEID_COLUMN_BITMASK = 4L;
-
-	public static final String MAPPING_TABLE_CTENTRYAGGREGATES_CTENTRIES_NAME =
-		"CTEntryAggregates_CTEntries";
-
-	public static final Object[][]
-		MAPPING_TABLE_CTENTRYAGGREGATES_CTENTRIES_COLUMNS = {
-			{"companyId", Types.BIGINT}, {"ctEntryId", Types.BIGINT},
-			{"ctEntryAggregateId", Types.BIGINT}
+	public static final String MAPPING_TABLE_CTENTRYAGGREGATES_CTENTRIES_NAME = "CTEntryAggregates_CTEntries";
+	public static final Object[][] MAPPING_TABLE_CTENTRYAGGREGATES_CTENTRIES_COLUMNS =
+		{
+			{ "companyId", Types.BIGINT },
+			{ "ctEntryId", Types.BIGINT },
+			{ "ctEntryAggregateId", Types.BIGINT }
 		};
-
-	public static final String
-		MAPPING_TABLE_CTENTRYAGGREGATES_CTENTRIES_SQL_CREATE =
-			"create table CTEntryAggregates_CTEntries (companyId LONG not null,ctEntryId LONG not null,ctEntryAggregateId LONG not null,primary key (ctEntryId, ctEntryAggregateId))";
-
-	public static final boolean
-		FINDER_CACHE_ENABLED_CTENTRYAGGREGATES_CTENTRIES =
-			GetterUtil.getBoolean(
-				com.liferay.change.tracking.service.util.ServiceProps.get(
-					"value.object.finder.cache.enabled.CTEntryAggregates_CTEntries"),
-				true);
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.change.tracking.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.change.tracking.model.CTEntryAggregate"));
+	public static final String MAPPING_TABLE_CTENTRYAGGREGATES_CTENTRIES_SQL_CREATE =
+		"create table CTEntryAggregates_CTEntries (companyId LONG not null,ctEntryId LONG not null,ctEntryAggregateId LONG not null,primary key (ctEntryId, ctEntryAggregateId))";
+	public static final boolean FINDER_CACHE_ENABLED_CTENTRYAGGREGATES_CTENTRIES =
+		GetterUtil.getBoolean(com.liferay.change.tracking.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.CTEntryAggregates_CTEntries"),
+			true);
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.change.tracking.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.change.tracking.model.CTEntryAggregate"));
 
 	public CTEntryAggregateModelImpl() {
 	}
@@ -186,18 +162,14 @@ public class CTEntryAggregateModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<CTEntryAggregate, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<CTEntryAggregate, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<CTEntryAggregate, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<CTEntryAggregate, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<CTEntryAggregate, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<CTEntryAggregate, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((CTEntryAggregate)this));
 		}
 
@@ -209,96 +181,58 @@ public class CTEntryAggregateModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<CTEntryAggregate, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<CTEntryAggregate, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<CTEntryAggregate, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<CTEntryAggregate, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(CTEntryAggregate)this, entry.getValue());
+				attributeSetterBiConsumer.accept((CTEntryAggregate)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<CTEntryAggregate, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<CTEntryAggregate, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<CTEntryAggregate, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<CTEntryAggregate, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTEntryAggregate, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTEntryAggregate, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<CTEntryAggregate, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<CTEntryAggregate, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<CTEntryAggregate, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<CTEntryAggregate, Object>>();
-		Map<String, BiConsumer<CTEntryAggregate, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CTEntryAggregate, ?>>();
+		Map<String, Function<CTEntryAggregate, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<CTEntryAggregate, Object>>();
+		Map<String, BiConsumer<CTEntryAggregate, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<CTEntryAggregate, ?>>();
 
-		attributeGetterFunctions.put(
-			"ctEntryAggregateId", CTEntryAggregate::getCtEntryAggregateId);
-		attributeSetterBiConsumers.put(
-			"ctEntryAggregateId",
-			(BiConsumer<CTEntryAggregate, Long>)
-				CTEntryAggregate::setCtEntryAggregateId);
-		attributeGetterFunctions.put(
-			"companyId", CTEntryAggregate::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setCompanyId);
+
+		attributeGetterFunctions.put("ctEntryAggregateId", CTEntryAggregate::getCtEntryAggregateId);
+		attributeSetterBiConsumers.put("ctEntryAggregateId", (BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setCtEntryAggregateId);
+		attributeGetterFunctions.put("companyId", CTEntryAggregate::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setCompanyId);
 		attributeGetterFunctions.put("userId", CTEntryAggregate::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setUserId);
 		attributeGetterFunctions.put("userName", CTEntryAggregate::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CTEntryAggregate, String>)
-				CTEntryAggregate::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CTEntryAggregate::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CTEntryAggregate, Date>)
-				CTEntryAggregate::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CTEntryAggregate::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CTEntryAggregate, Date>)
-				CTEntryAggregate::setModifiedDate);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CTEntryAggregate::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CTEntryAggregate, Long>)
-				CTEntryAggregate::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"ownerCTEntryId", CTEntryAggregate::getOwnerCTEntryId);
-		attributeSetterBiConsumers.put(
-			"ownerCTEntryId",
-			(BiConsumer<CTEntryAggregate, Long>)
-				CTEntryAggregate::setOwnerCTEntryId);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<CTEntryAggregate, String>)CTEntryAggregate::setUserName);
+		attributeGetterFunctions.put("createDate", CTEntryAggregate::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<CTEntryAggregate, Date>)CTEntryAggregate::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", CTEntryAggregate::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<CTEntryAggregate, Date>)CTEntryAggregate::setModifiedDate);
+		attributeGetterFunctions.put("ctCollectionId", CTEntryAggregate::getCtCollectionId);
+		attributeSetterBiConsumers.put("ctCollectionId", (BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setCtCollectionId);
+		attributeGetterFunctions.put("ownerCTEntryId", CTEntryAggregate::getOwnerCTEntryId);
+		attributeSetterBiConsumers.put("ownerCTEntryId", (BiConsumer<CTEntryAggregate, Long>)CTEntryAggregate::setOwnerCTEntryId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -438,8 +372,8 @@ public class CTEntryAggregateModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), CTEntryAggregate.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			CTEntryAggregate.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -452,9 +386,8 @@ public class CTEntryAggregateModelImpl
 	@Override
 	public CTEntryAggregate toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (CTEntryAggregate)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (CTEntryAggregate)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -536,13 +469,11 @@ public class CTEntryAggregateModelImpl
 
 		ctEntryAggregateModelImpl._setModifiedDate = false;
 
-		ctEntryAggregateModelImpl._originalCtCollectionId =
-			ctEntryAggregateModelImpl._ctCollectionId;
+		ctEntryAggregateModelImpl._originalCtCollectionId = ctEntryAggregateModelImpl._ctCollectionId;
 
 		ctEntryAggregateModelImpl._setOriginalCtCollectionId = false;
 
-		ctEntryAggregateModelImpl._originalOwnerCTEntryId =
-			ctEntryAggregateModelImpl._ownerCTEntryId;
+		ctEntryAggregateModelImpl._originalOwnerCTEntryId = ctEntryAggregateModelImpl._ownerCTEntryId;
 
 		ctEntryAggregateModelImpl._setOriginalOwnerCTEntryId = false;
 
@@ -551,8 +482,7 @@ public class CTEntryAggregateModelImpl
 
 	@Override
 	public CacheModel<CTEntryAggregate> toCacheModel() {
-		CTEntryAggregateCacheModel ctEntryAggregateCacheModel =
-			new CTEntryAggregateCacheModel();
+		CTEntryAggregateCacheModel ctEntryAggregateCacheModel = new CTEntryAggregateCacheModel();
 
 		ctEntryAggregateCacheModel.ctEntryAggregateId = getCtEntryAggregateId();
 
@@ -595,20 +525,17 @@ public class CTEntryAggregateModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<CTEntryAggregate, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<CTEntryAggregate, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<CTEntryAggregate, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<CTEntryAggregate, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<CTEntryAggregate, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<CTEntryAggregate, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -627,22 +554,19 @@ public class CTEntryAggregateModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<CTEntryAggregate, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<CTEntryAggregate, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<CTEntryAggregate, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<CTEntryAggregate, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<CTEntryAggregate, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<CTEntryAggregate, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -656,12 +580,10 @@ public class CTEntryAggregateModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		CTEntryAggregate.class.getClassLoader();
+	private static final ClassLoader _classLoader = CTEntryAggregate.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		CTEntryAggregate.class, ModelWrapper.class
-	};
-
+			CTEntryAggregate.class, ModelWrapper.class
+		};
 	private long _ctEntryAggregateId;
 	private long _companyId;
 	private long _userId;
@@ -677,5 +599,4 @@ public class CTEntryAggregateModelImpl
 	private boolean _setOriginalOwnerCTEntryId;
 	private long _columnBitmask;
 	private CTEntryAggregate _escapedModel;
-
 }

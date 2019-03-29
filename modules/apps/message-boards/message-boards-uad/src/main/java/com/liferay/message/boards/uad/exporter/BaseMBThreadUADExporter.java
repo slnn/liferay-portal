@@ -17,8 +17,11 @@ package com.liferay.message.boards.uad.exporter;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -35,9 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseMBThreadUADExporter
-	extends DynamicQueryUADExporter<MBThread> {
-
+public abstract class BaseMBThreadUADExporter extends DynamicQueryUADExporter<MBThread> {
 	@Override
 	public Class<MBThread> getTypeClass() {
 		return MBThread.class;
@@ -101,5 +102,4 @@ public abstract class BaseMBThreadUADExporter
 
 	@Reference
 	protected MBThreadLocalService mbThreadLocalService;
-
 }

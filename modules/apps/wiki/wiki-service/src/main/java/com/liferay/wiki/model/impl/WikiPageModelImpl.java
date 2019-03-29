@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
 import com.liferay.wiki.model.WikiPageSoap;
@@ -68,33 +72,41 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class WikiPageModelImpl
-	extends BaseModelImpl<WikiPage> implements WikiPageModel {
-
+public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
+	implements WikiPageModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a wiki page model instance should use the <code>WikiPage</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "WikiPage";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"pageId", Types.BIGINT},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"nodeId", Types.BIGINT},
-		{"title", Types.VARCHAR}, {"version", Types.DOUBLE},
-		{"minorEdit", Types.BOOLEAN}, {"content", Types.CLOB},
-		{"summary", Types.VARCHAR}, {"format", Types.VARCHAR},
-		{"head", Types.BOOLEAN}, {"parentTitle", Types.VARCHAR},
-		{"redirectTitle", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "pageId", Types.BIGINT },
+			{ "resourcePrimKey", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "nodeId", Types.BIGINT },
+			{ "title", Types.VARCHAR },
+			{ "version", Types.DOUBLE },
+			{ "minorEdit", Types.BOOLEAN },
+			{ "content", Types.CLOB },
+			{ "summary", Types.VARCHAR },
+			{ "format", Types.VARCHAR },
+			{ "head", Types.BOOLEAN },
+			{ "parentTitle", Types.VARCHAR },
+			{ "redirectTitle", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -123,62 +135,34 @@ public class WikiPageModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table WikiPage (uuid_ VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table WikiPage (uuid_ VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table WikiPage";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY wikiPage.nodeId ASC, wikiPage.title ASC, wikiPage.version DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY WikiPage.nodeId ASC, WikiPage.title ASC, WikiPage.version DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY wikiPage.nodeId ASC, wikiPage.title ASC, wikiPage.version DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY WikiPage.nodeId ASC, WikiPage.title ASC, WikiPage.version DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.wiki.model.WikiPage"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.wiki.model.WikiPage"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiPage"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.wiki.model.WikiPage"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.wiki.model.WikiPage"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiPage"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long FORMAT_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long HEAD_COLUMN_BITMASK = 8L;
-
 	public static final long NODEID_COLUMN_BITMASK = 16L;
-
 	public static final long PARENTTITLE_COLUMN_BITMASK = 32L;
-
 	public static final long REDIRECTTITLE_COLUMN_BITMASK = 64L;
-
 	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
-
 	public static final long STATUS_COLUMN_BITMASK = 256L;
-
 	public static final long TITLE_COLUMN_BITMASK = 512L;
-
 	public static final long USERID_COLUMN_BITMASK = 1024L;
-
 	public static final long UUID_COLUMN_BITMASK = 2048L;
-
 	public static final long VERSION_COLUMN_BITMASK = 4096L;
 
 	/**
@@ -242,9 +226,8 @@ public class WikiPageModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.wiki.model.WikiPage"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.wiki.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.wiki.model.WikiPage"));
 
 	public WikiPageModelImpl() {
 	}
@@ -283,18 +266,14 @@ public class WikiPageModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<WikiPage, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WikiPage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<WikiPage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<WikiPage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<WikiPage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WikiPage, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((WikiPage)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((WikiPage)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -305,134 +284,88 @@ public class WikiPageModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<WikiPage, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<WikiPage, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<WikiPage, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<WikiPage, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(WikiPage)this, entry.getValue());
+				attributeSetterBiConsumer.accept((WikiPage)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<WikiPage, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<WikiPage, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<WikiPage, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<WikiPage, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WikiPage, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WikiPage, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<WikiPage, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<WikiPage, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<WikiPage, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<WikiPage, Object>>();
-		Map<String, BiConsumer<WikiPage, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<WikiPage, ?>>();
+		Map<String, Function<WikiPage, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<WikiPage, Object>>();
+		Map<String, BiConsumer<WikiPage, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<WikiPage, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", WikiPage::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
 		attributeGetterFunctions.put("pageId", WikiPage::getPageId);
-		attributeSetterBiConsumers.put(
-			"pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", WikiPage::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<WikiPage, Long>)WikiPage::setResourcePrimKey);
+		attributeSetterBiConsumers.put("pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
+		attributeGetterFunctions.put("resourcePrimKey", WikiPage::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<WikiPage, Long>)WikiPage::setResourcePrimKey);
 		attributeGetterFunctions.put("groupId", WikiPage::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<WikiPage, Long>)WikiPage::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<WikiPage, Long>)WikiPage::setGroupId);
 		attributeGetterFunctions.put("companyId", WikiPage::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<WikiPage, Long>)WikiPage::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<WikiPage, Long>)WikiPage::setCompanyId);
 		attributeGetterFunctions.put("userId", WikiPage::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<WikiPage, Long>)WikiPage::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<WikiPage, Long>)WikiPage::setUserId);
 		attributeGetterFunctions.put("userName", WikiPage::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<WikiPage, String>)WikiPage::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<WikiPage, String>)WikiPage::setUserName);
 		attributeGetterFunctions.put("createDate", WikiPage::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<WikiPage, Date>)WikiPage::setCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<WikiPage, Date>)WikiPage::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", WikiPage::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<WikiPage, Date>)WikiPage::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<WikiPage, Date>)WikiPage::setModifiedDate);
 		attributeGetterFunctions.put("nodeId", WikiPage::getNodeId);
-		attributeSetterBiConsumers.put(
-			"nodeId", (BiConsumer<WikiPage, Long>)WikiPage::setNodeId);
+		attributeSetterBiConsumers.put("nodeId", (BiConsumer<WikiPage, Long>)WikiPage::setNodeId);
 		attributeGetterFunctions.put("title", WikiPage::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<WikiPage, String>)WikiPage::setTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<WikiPage, String>)WikiPage::setTitle);
 		attributeGetterFunctions.put("version", WikiPage::getVersion);
-		attributeSetterBiConsumers.put(
-			"version", (BiConsumer<WikiPage, Double>)WikiPage::setVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<WikiPage, Double>)WikiPage::setVersion);
 		attributeGetterFunctions.put("minorEdit", WikiPage::getMinorEdit);
-		attributeSetterBiConsumers.put(
-			"minorEdit", (BiConsumer<WikiPage, Boolean>)WikiPage::setMinorEdit);
+		attributeSetterBiConsumers.put("minorEdit", (BiConsumer<WikiPage, Boolean>)WikiPage::setMinorEdit);
 		attributeGetterFunctions.put("content", WikiPage::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<WikiPage, String>)WikiPage::setContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<WikiPage, String>)WikiPage::setContent);
 		attributeGetterFunctions.put("summary", WikiPage::getSummary);
-		attributeSetterBiConsumers.put(
-			"summary", (BiConsumer<WikiPage, String>)WikiPage::setSummary);
+		attributeSetterBiConsumers.put("summary", (BiConsumer<WikiPage, String>)WikiPage::setSummary);
 		attributeGetterFunctions.put("format", WikiPage::getFormat);
-		attributeSetterBiConsumers.put(
-			"format", (BiConsumer<WikiPage, String>)WikiPage::setFormat);
+		attributeSetterBiConsumers.put("format", (BiConsumer<WikiPage, String>)WikiPage::setFormat);
 		attributeGetterFunctions.put("head", WikiPage::getHead);
-		attributeSetterBiConsumers.put(
-			"head", (BiConsumer<WikiPage, Boolean>)WikiPage::setHead);
+		attributeSetterBiConsumers.put("head", (BiConsumer<WikiPage, Boolean>)WikiPage::setHead);
 		attributeGetterFunctions.put("parentTitle", WikiPage::getParentTitle);
-		attributeSetterBiConsumers.put(
-			"parentTitle",
-			(BiConsumer<WikiPage, String>)WikiPage::setParentTitle);
-		attributeGetterFunctions.put(
-			"redirectTitle", WikiPage::getRedirectTitle);
-		attributeSetterBiConsumers.put(
-			"redirectTitle",
-			(BiConsumer<WikiPage, String>)WikiPage::setRedirectTitle);
-		attributeGetterFunctions.put(
-			"lastPublishDate", WikiPage::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<WikiPage, Date>)WikiPage::setLastPublishDate);
+		attributeSetterBiConsumers.put("parentTitle", (BiConsumer<WikiPage, String>)WikiPage::setParentTitle);
+		attributeGetterFunctions.put("redirectTitle", WikiPage::getRedirectTitle);
+		attributeSetterBiConsumers.put("redirectTitle", (BiConsumer<WikiPage, String>)WikiPage::setRedirectTitle);
+		attributeGetterFunctions.put("lastPublishDate", WikiPage::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<WikiPage, Date>)WikiPage::setLastPublishDate);
 		attributeGetterFunctions.put("status", WikiPage::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<WikiPage, Integer>)WikiPage::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", WikiPage::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<WikiPage, Long>)WikiPage::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", WikiPage::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<WikiPage, String>)WikiPage::setStatusByUserName);
+		attributeSetterBiConsumers.put("status", (BiConsumer<WikiPage, Integer>)WikiPage::setStatus);
+		attributeGetterFunctions.put("statusByUserId", WikiPage::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<WikiPage, Long>)WikiPage::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", WikiPage::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<WikiPage, String>)WikiPage::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", WikiPage::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate", (BiConsumer<WikiPage, Date>)WikiPage::setStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<WikiPage, Date>)WikiPage::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -971,32 +904,28 @@ public class WikiPageModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(WikiPage.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				WikiPage.class.getName()));
 	}
 
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
-
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -1013,18 +942,14 @@ public class WikiPageModelImpl
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
+				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -1037,13 +962,12 @@ public class WikiPageModelImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -1058,19 +982,16 @@ public class WikiPageModelImpl
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -1092,9 +1013,8 @@ public class WikiPageModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -1109,9 +1029,8 @@ public class WikiPageModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -1206,8 +1125,8 @@ public class WikiPageModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), WikiPage.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			WikiPage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1220,9 +1139,8 @@ public class WikiPageModelImpl
 	@Override
 	public WikiPage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WikiPage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (WikiPage)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1348,8 +1266,7 @@ public class WikiPageModelImpl
 
 		wikiPageModelImpl._originalUuid = wikiPageModelImpl._uuid;
 
-		wikiPageModelImpl._originalResourcePrimKey =
-			wikiPageModelImpl._resourcePrimKey;
+		wikiPageModelImpl._originalResourcePrimKey = wikiPageModelImpl._resourcePrimKey;
 
 		wikiPageModelImpl._setOriginalResourcePrimKey = false;
 
@@ -1385,8 +1302,7 @@ public class WikiPageModelImpl
 
 		wikiPageModelImpl._originalParentTitle = wikiPageModelImpl._parentTitle;
 
-		wikiPageModelImpl._originalRedirectTitle =
-			wikiPageModelImpl._redirectTitle;
+		wikiPageModelImpl._originalRedirectTitle = wikiPageModelImpl._redirectTitle;
 
 		wikiPageModelImpl._originalStatus = wikiPageModelImpl._status;
 
@@ -1534,20 +1450,16 @@ public class WikiPageModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<WikiPage, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WikiPage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<WikiPage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<WikiPage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<WikiPage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WikiPage, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1566,22 +1478,18 @@ public class WikiPageModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<WikiPage, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WikiPage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<WikiPage, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<WikiPage, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<WikiPage, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WikiPage, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1595,12 +1503,10 @@ public class WikiPageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WikiPage.class.getClassLoader();
+	private static final ClassLoader _classLoader = WikiPage.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WikiPage.class, ModelWrapper.class
-	};
-
+			WikiPage.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _pageId;
@@ -1649,5 +1555,4 @@ public class WikiPageModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private WikiPage _escapedModel;
-
 }

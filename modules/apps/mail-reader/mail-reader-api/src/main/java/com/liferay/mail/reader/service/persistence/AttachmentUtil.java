@@ -17,19 +17,21 @@ package com.liferay.mail.reader.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mail.reader.model.Attachment;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the attachment service. This utility wraps <code>com.liferay.mail.reader.service.persistence.impl.AttachmentPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -44,7 +46,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class AttachmentUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,7 +78,6 @@ public class AttachmentUtil {
 	 */
 	public static Map<Serializable, Attachment> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -86,7 +86,6 @@ public class AttachmentUtil {
 	 */
 	public static List<Attachment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
-
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -95,7 +94,6 @@ public class AttachmentUtil {
 	 */
 	public static List<Attachment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
-
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -105,9 +103,9 @@ public class AttachmentUtil {
 	public static List<Attachment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<Attachment> orderByComparator) {
-
-		return getPersistence().findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -120,219 +118,208 @@ public class AttachmentUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
-	public static Attachment update(
-		Attachment attachment, ServiceContext serviceContext) {
-
+	public static Attachment update(Attachment attachment,
+		ServiceContext serviceContext) {
 		return getPersistence().update(attachment, serviceContext);
 	}
 
 	/**
-	 * Returns all the attachments where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @return the matching attachments
-	 */
+	* Returns all the attachments where messageId = &#63;.
+	*
+	* @param messageId the message ID
+	* @return the matching attachments
+	*/
 	public static List<Attachment> findByMessageId(long messageId) {
 		return getPersistence().findByMessageId(messageId);
 	}
 
 	/**
-	 * Returns a range of all the attachments where messageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param messageId the message ID
-	 * @param start the lower bound of the range of attachments
-	 * @param end the upper bound of the range of attachments (not inclusive)
-	 * @return the range of matching attachments
-	 */
-	public static List<Attachment> findByMessageId(
-		long messageId, int start, int end) {
-
+	* Returns a range of all the attachments where messageId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param messageId the message ID
+	* @param start the lower bound of the range of attachments
+	* @param end the upper bound of the range of attachments (not inclusive)
+	* @return the range of matching attachments
+	*/
+	public static List<Attachment> findByMessageId(long messageId, int start,
+		int end) {
 		return getPersistence().findByMessageId(messageId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the attachments where messageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param messageId the message ID
-	 * @param start the lower bound of the range of attachments
-	 * @param end the upper bound of the range of attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching attachments
-	 */
-	public static List<Attachment> findByMessageId(
-		long messageId, int start, int end,
-		OrderByComparator<Attachment> orderByComparator) {
-
-		return getPersistence().findByMessageId(
-			messageId, start, end, orderByComparator);
+	* Returns an ordered range of all the attachments where messageId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param messageId the message ID
+	* @param start the lower bound of the range of attachments
+	* @param end the upper bound of the range of attachments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching attachments
+	*/
+	public static List<Attachment> findByMessageId(long messageId, int start,
+		int end, OrderByComparator<Attachment> orderByComparator) {
+		return getPersistence()
+				   .findByMessageId(messageId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the attachments where messageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param messageId the message ID
-	 * @param start the lower bound of the range of attachments
-	 * @param end the upper bound of the range of attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching attachments
-	 */
-	public static List<Attachment> findByMessageId(
-		long messageId, int start, int end,
-		OrderByComparator<Attachment> orderByComparator,
+	* Returns an ordered range of all the attachments where messageId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param messageId the message ID
+	* @param start the lower bound of the range of attachments
+	* @param end the upper bound of the range of attachments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching attachments
+	*/
+	public static List<Attachment> findByMessageId(long messageId, int start,
+		int end, OrderByComparator<Attachment> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findByMessageId(
-			messageId, start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findByMessageId(messageId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	 * Returns the first attachment in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching attachment
-	 * @throws NoSuchAttachmentException if a matching attachment could not be found
-	 */
-	public static Attachment findByMessageId_First(
-			long messageId, OrderByComparator<Attachment> orderByComparator)
+	* Returns the first attachment in the ordered set where messageId = &#63;.
+	*
+	* @param messageId the message ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching attachment
+	* @throws NoSuchAttachmentException if a matching attachment could not be found
+	*/
+	public static Attachment findByMessageId_First(long messageId,
+		OrderByComparator<Attachment> orderByComparator)
 		throws com.liferay.mail.reader.exception.NoSuchAttachmentException {
-
-		return getPersistence().findByMessageId_First(
-			messageId, orderByComparator);
+		return getPersistence()
+				   .findByMessageId_First(messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first attachment in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching attachment, or <code>null</code> if a matching attachment could not be found
-	 */
-	public static Attachment fetchByMessageId_First(
-		long messageId, OrderByComparator<Attachment> orderByComparator) {
-
-		return getPersistence().fetchByMessageId_First(
-			messageId, orderByComparator);
+	* Returns the first attachment in the ordered set where messageId = &#63;.
+	*
+	* @param messageId the message ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching attachment, or <code>null</code> if a matching attachment could not be found
+	*/
+	public static Attachment fetchByMessageId_First(long messageId,
+		OrderByComparator<Attachment> orderByComparator) {
+		return getPersistence()
+				   .fetchByMessageId_First(messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last attachment in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching attachment
-	 * @throws NoSuchAttachmentException if a matching attachment could not be found
-	 */
-	public static Attachment findByMessageId_Last(
-			long messageId, OrderByComparator<Attachment> orderByComparator)
+	* Returns the last attachment in the ordered set where messageId = &#63;.
+	*
+	* @param messageId the message ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching attachment
+	* @throws NoSuchAttachmentException if a matching attachment could not be found
+	*/
+	public static Attachment findByMessageId_Last(long messageId,
+		OrderByComparator<Attachment> orderByComparator)
 		throws com.liferay.mail.reader.exception.NoSuchAttachmentException {
-
-		return getPersistence().findByMessageId_Last(
-			messageId, orderByComparator);
+		return getPersistence()
+				   .findByMessageId_Last(messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last attachment in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching attachment, or <code>null</code> if a matching attachment could not be found
-	 */
-	public static Attachment fetchByMessageId_Last(
-		long messageId, OrderByComparator<Attachment> orderByComparator) {
-
-		return getPersistence().fetchByMessageId_Last(
-			messageId, orderByComparator);
+	* Returns the last attachment in the ordered set where messageId = &#63;.
+	*
+	* @param messageId the message ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching attachment, or <code>null</code> if a matching attachment could not be found
+	*/
+	public static Attachment fetchByMessageId_Last(long messageId,
+		OrderByComparator<Attachment> orderByComparator) {
+		return getPersistence()
+				   .fetchByMessageId_Last(messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the attachments before and after the current attachment in the ordered set where messageId = &#63;.
-	 *
-	 * @param attachmentId the primary key of the current attachment
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next attachment
-	 * @throws NoSuchAttachmentException if a attachment with the primary key could not be found
-	 */
-	public static Attachment[] findByMessageId_PrevAndNext(
-			long attachmentId, long messageId,
-			OrderByComparator<Attachment> orderByComparator)
+	* Returns the attachments before and after the current attachment in the ordered set where messageId = &#63;.
+	*
+	* @param attachmentId the primary key of the current attachment
+	* @param messageId the message ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next attachment
+	* @throws NoSuchAttachmentException if a attachment with the primary key could not be found
+	*/
+	public static Attachment[] findByMessageId_PrevAndNext(long attachmentId,
+		long messageId, OrderByComparator<Attachment> orderByComparator)
 		throws com.liferay.mail.reader.exception.NoSuchAttachmentException {
-
-		return getPersistence().findByMessageId_PrevAndNext(
-			attachmentId, messageId, orderByComparator);
+		return getPersistence()
+				   .findByMessageId_PrevAndNext(attachmentId, messageId,
+			orderByComparator);
 	}
 
 	/**
-	 * Removes all the attachments where messageId = &#63; from the database.
-	 *
-	 * @param messageId the message ID
-	 */
+	* Removes all the attachments where messageId = &#63; from the database.
+	*
+	* @param messageId the message ID
+	*/
 	public static void removeByMessageId(long messageId) {
 		getPersistence().removeByMessageId(messageId);
 	}
 
 	/**
-	 * Returns the number of attachments where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @return the number of matching attachments
-	 */
+	* Returns the number of attachments where messageId = &#63;.
+	*
+	* @param messageId the message ID
+	* @return the number of matching attachments
+	*/
 	public static int countByMessageId(long messageId) {
 		return getPersistence().countByMessageId(messageId);
 	}
 
 	/**
-	 * Caches the attachment in the entity cache if it is enabled.
-	 *
-	 * @param attachment the attachment
-	 */
+	* Caches the attachment in the entity cache if it is enabled.
+	*
+	* @param attachment the attachment
+	*/
 	public static void cacheResult(Attachment attachment) {
 		getPersistence().cacheResult(attachment);
 	}
 
 	/**
-	 * Caches the attachments in the entity cache if it is enabled.
-	 *
-	 * @param attachments the attachments
-	 */
+	* Caches the attachments in the entity cache if it is enabled.
+	*
+	* @param attachments the attachments
+	*/
 	public static void cacheResult(List<Attachment> attachments) {
 		getPersistence().cacheResult(attachments);
 	}
 
 	/**
-	 * Creates a new attachment with the primary key. Does not add the attachment to the database.
-	 *
-	 * @param attachmentId the primary key for the new attachment
-	 * @return the new attachment
-	 */
+	* Creates a new attachment with the primary key. Does not add the attachment to the database.
+	*
+	* @param attachmentId the primary key for the new attachment
+	* @return the new attachment
+	*/
 	public static Attachment create(long attachmentId) {
 		return getPersistence().create(attachmentId);
 	}
 
 	/**
-	 * Removes the attachment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param attachmentId the primary key of the attachment
-	 * @return the attachment that was removed
-	 * @throws NoSuchAttachmentException if a attachment with the primary key could not be found
-	 */
+	* Removes the attachment with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param attachmentId the primary key of the attachment
+	* @return the attachment that was removed
+	* @throws NoSuchAttachmentException if a attachment with the primary key could not be found
+	*/
 	public static Attachment remove(long attachmentId)
 		throws com.liferay.mail.reader.exception.NoSuchAttachmentException {
-
 		return getPersistence().remove(attachmentId);
 	}
 
@@ -341,103 +328,100 @@ public class AttachmentUtil {
 	}
 
 	/**
-	 * Returns the attachment with the primary key or throws a <code>NoSuchAttachmentException</code> if it could not be found.
-	 *
-	 * @param attachmentId the primary key of the attachment
-	 * @return the attachment
-	 * @throws NoSuchAttachmentException if a attachment with the primary key could not be found
-	 */
+	* Returns the attachment with the primary key or throws a <code>NoSuchAttachmentException</code> if it could not be found.
+	*
+	* @param attachmentId the primary key of the attachment
+	* @return the attachment
+	* @throws NoSuchAttachmentException if a attachment with the primary key could not be found
+	*/
 	public static Attachment findByPrimaryKey(long attachmentId)
 		throws com.liferay.mail.reader.exception.NoSuchAttachmentException {
-
 		return getPersistence().findByPrimaryKey(attachmentId);
 	}
 
 	/**
-	 * Returns the attachment with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param attachmentId the primary key of the attachment
-	 * @return the attachment, or <code>null</code> if a attachment with the primary key could not be found
-	 */
+	* Returns the attachment with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param attachmentId the primary key of the attachment
+	* @return the attachment, or <code>null</code> if a attachment with the primary key could not be found
+	*/
 	public static Attachment fetchByPrimaryKey(long attachmentId) {
 		return getPersistence().fetchByPrimaryKey(attachmentId);
 	}
 
 	/**
-	 * Returns all the attachments.
-	 *
-	 * @return the attachments
-	 */
+	* Returns all the attachments.
+	*
+	* @return the attachments
+	*/
 	public static List<Attachment> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	 * Returns a range of all the attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of attachments
-	 * @param end the upper bound of the range of attachments (not inclusive)
-	 * @return the range of attachments
-	 */
+	* Returns a range of all the attachments.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of attachments
+	* @param end the upper bound of the range of attachments (not inclusive)
+	* @return the range of attachments
+	*/
 	public static List<Attachment> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of attachments
-	 * @param end the upper bound of the range of attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of attachments
-	 */
-	public static List<Attachment> findAll(
-		int start, int end, OrderByComparator<Attachment> orderByComparator) {
-
+	* Returns an ordered range of all the attachments.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of attachments
+	* @param end the upper bound of the range of attachments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of attachments
+	*/
+	public static List<Attachment> findAll(int start, int end,
+		OrderByComparator<Attachment> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of attachments
-	 * @param end the upper bound of the range of attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of attachments
-	 */
-	public static List<Attachment> findAll(
-		int start, int end, OrderByComparator<Attachment> orderByComparator,
+	* Returns an ordered range of all the attachments.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of attachments
+	* @param end the upper bound of the range of attachments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of attachments
+	*/
+	public static List<Attachment> findAll(int start, int end,
+		OrderByComparator<Attachment> orderByComparator,
 		boolean retrieveFromCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	 * Removes all the attachments from the database.
-	 */
+	* Removes all the attachments from the database.
+	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	 * Returns the number of attachments.
-	 *
-	 * @return the number of attachments
-	 */
+	* Returns the number of attachments.
+	*
+	* @return the number of attachments
+	*/
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -446,22 +430,17 @@ public class AttachmentUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AttachmentPersistence, AttachmentPersistence>
-		_serviceTracker;
+	private static ServiceTracker<AttachmentPersistence, AttachmentPersistence> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(AttachmentPersistence.class);
 
-		ServiceTracker<AttachmentPersistence, AttachmentPersistence>
-			serviceTracker =
-				new ServiceTracker
-					<AttachmentPersistence, AttachmentPersistence>(
-						bundle.getBundleContext(), AttachmentPersistence.class,
-						null);
+		ServiceTracker<AttachmentPersistence, AttachmentPersistence> serviceTracker =
+			new ServiceTracker<AttachmentPersistence, AttachmentPersistence>(bundle.getBundleContext(),
+				AttachmentPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

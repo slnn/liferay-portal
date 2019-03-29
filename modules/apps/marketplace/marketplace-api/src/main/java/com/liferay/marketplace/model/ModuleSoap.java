@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class ModuleSoap implements Serializable {
-
 	public static ModuleSoap toSoapModel(Module model) {
 		ModuleSoap soapModel = new ModuleSoap();
 
@@ -155,5 +154,4 @@ public class ModuleSoap implements Serializable {
 	private String _bundleSymbolicName;
 	private String _bundleVersion;
 	private String _contextName;
-
 }

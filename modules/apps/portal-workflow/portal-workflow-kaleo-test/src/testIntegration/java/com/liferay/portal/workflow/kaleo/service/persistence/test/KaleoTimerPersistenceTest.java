@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +39,15 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +57,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoTimerPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.service"));
 
 	@Before
@@ -107,8 +106,7 @@ public class KaleoTimerPersistenceTest {
 
 		_persistence.remove(newKaleoTimer);
 
-		KaleoTimer existingKaleoTimer = _persistence.fetchByPrimaryKey(
-			newKaleoTimer.getPrimaryKey());
+		KaleoTimer existingKaleoTimer = _persistence.fetchByPrimaryKey(newKaleoTimer.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoTimer);
 	}
@@ -160,54 +158,45 @@ public class KaleoTimerPersistenceTest {
 
 		_kaleoTimers.add(_persistence.update(newKaleoTimer));
 
-		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(
-			newKaleoTimer.getPrimaryKey());
+		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(newKaleoTimer.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingKaleoTimer.getMvccVersion(),
+		Assert.assertEquals(existingKaleoTimer.getMvccVersion(),
 			newKaleoTimer.getMvccVersion());
-		Assert.assertEquals(
-			existingKaleoTimer.getKaleoTimerId(),
+		Assert.assertEquals(existingKaleoTimer.getKaleoTimerId(),
 			newKaleoTimer.getKaleoTimerId());
-		Assert.assertEquals(
-			existingKaleoTimer.getGroupId(), newKaleoTimer.getGroupId());
-		Assert.assertEquals(
-			existingKaleoTimer.getCompanyId(), newKaleoTimer.getCompanyId());
-		Assert.assertEquals(
-			existingKaleoTimer.getUserId(), newKaleoTimer.getUserId());
-		Assert.assertEquals(
-			existingKaleoTimer.getUserName(), newKaleoTimer.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKaleoTimer.getCreateDate()),
+		Assert.assertEquals(existingKaleoTimer.getGroupId(),
+			newKaleoTimer.getGroupId());
+		Assert.assertEquals(existingKaleoTimer.getCompanyId(),
+			newKaleoTimer.getCompanyId());
+		Assert.assertEquals(existingKaleoTimer.getUserId(),
+			newKaleoTimer.getUserId());
+		Assert.assertEquals(existingKaleoTimer.getUserName(),
+			newKaleoTimer.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKaleoTimer.getCreateDate()),
 			Time.getShortTimestamp(newKaleoTimer.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKaleoTimer.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKaleoTimer.getModifiedDate()),
 			Time.getShortTimestamp(newKaleoTimer.getModifiedDate()));
-		Assert.assertEquals(
-			existingKaleoTimer.getKaleoClassName(),
+		Assert.assertEquals(existingKaleoTimer.getKaleoClassName(),
 			newKaleoTimer.getKaleoClassName());
-		Assert.assertEquals(
-			existingKaleoTimer.getKaleoClassPK(),
+		Assert.assertEquals(existingKaleoTimer.getKaleoClassPK(),
 			newKaleoTimer.getKaleoClassPK());
-		Assert.assertEquals(
-			existingKaleoTimer.getKaleoDefinitionVersionId(),
+		Assert.assertEquals(existingKaleoTimer.getKaleoDefinitionVersionId(),
 			newKaleoTimer.getKaleoDefinitionVersionId());
-		Assert.assertEquals(
-			existingKaleoTimer.getName(), newKaleoTimer.getName());
-		Assert.assertEquals(
-			existingKaleoTimer.isBlocking(), newKaleoTimer.isBlocking());
-		Assert.assertEquals(
-			existingKaleoTimer.getDescription(),
+		Assert.assertEquals(existingKaleoTimer.getName(),
+			newKaleoTimer.getName());
+		Assert.assertEquals(existingKaleoTimer.isBlocking(),
+			newKaleoTimer.isBlocking());
+		Assert.assertEquals(existingKaleoTimer.getDescription(),
 			newKaleoTimer.getDescription());
-		AssertUtils.assertEquals(
-			existingKaleoTimer.getDuration(), newKaleoTimer.getDuration());
-		Assert.assertEquals(
-			existingKaleoTimer.getScale(), newKaleoTimer.getScale());
-		AssertUtils.assertEquals(
-			existingKaleoTimer.getRecurrenceDuration(),
+		AssertUtils.assertEquals(existingKaleoTimer.getDuration(),
+			newKaleoTimer.getDuration());
+		Assert.assertEquals(existingKaleoTimer.getScale(),
+			newKaleoTimer.getScale());
+		AssertUtils.assertEquals(existingKaleoTimer.getRecurrenceDuration(),
 			newKaleoTimer.getRecurrenceDuration());
-		Assert.assertEquals(
-			existingKaleoTimer.getRecurrenceScale(),
+		Assert.assertEquals(existingKaleoTimer.getRecurrenceScale(),
 			newKaleoTimer.getRecurrenceScale());
 	}
 
@@ -222,22 +211,21 @@ public class KaleoTimerPersistenceTest {
 
 	@Test
 	public void testCountByKCN_KCPK_Blocking() throws Exception {
-		_persistence.countByKCN_KCPK_Blocking(
-			"", RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+		_persistence.countByKCN_KCPK_Blocking("", RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByKCN_KCPK_Blocking(
-			"null", 0L, RandomTestUtil.randomBoolean());
+		_persistence.countByKCN_KCPK_Blocking("null", 0L,
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByKCN_KCPK_Blocking(
-			(String)null, 0L, RandomTestUtil.randomBoolean());
+		_persistence.countByKCN_KCPK_Blocking((String)null, 0L,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoTimer newKaleoTimer = addKaleoTimer();
 
-		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(
-			newKaleoTimer.getPrimaryKey());
+		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(newKaleoTimer.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoTimer, newKaleoTimer);
 	}
@@ -251,26 +239,25 @@ public class KaleoTimerPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<KaleoTimer> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"KaleoTimer", "mvccVersion", true, "kaleoTimerId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "kaleoClassName", true,
-			"kaleoClassPK", true, "kaleoDefinitionVersionId", true, "name",
-			true, "blocking", true, "description", true, "duration", true,
-			"scale", true, "recurrenceDuration", true, "recurrenceScale", true);
+		return OrderByComparatorFactoryUtil.create("KaleoTimer", "mvccVersion",
+			true, "kaleoTimerId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
+			"kaleoDefinitionVersionId", true, "name", true, "blocking", true,
+			"description", true, "duration", true, "scale", true,
+			"recurrenceDuration", true, "recurrenceScale", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		KaleoTimer newKaleoTimer = addKaleoTimer();
 
-		KaleoTimer existingKaleoTimer = _persistence.fetchByPrimaryKey(
-			newKaleoTimer.getPrimaryKey());
+		KaleoTimer existingKaleoTimer = _persistence.fetchByPrimaryKey(newKaleoTimer.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoTimer, newKaleoTimer);
 	}
@@ -287,7 +274,6 @@ public class KaleoTimerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		KaleoTimer newKaleoTimer1 = addKaleoTimer();
 		KaleoTimer newKaleoTimer2 = addKaleoTimer();
 
@@ -296,20 +282,18 @@ public class KaleoTimerPersistenceTest {
 		primaryKeys.add(newKaleoTimer1.getPrimaryKey());
 		primaryKeys.add(newKaleoTimer2.getPrimaryKey());
 
-		Map<Serializable, KaleoTimer> kaleoTimers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTimer> kaleoTimers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoTimers.size());
-		Assert.assertEquals(
-			newKaleoTimer1, kaleoTimers.get(newKaleoTimer1.getPrimaryKey()));
-		Assert.assertEquals(
-			newKaleoTimer2, kaleoTimers.get(newKaleoTimer2.getPrimaryKey()));
+		Assert.assertEquals(newKaleoTimer1,
+			kaleoTimers.get(newKaleoTimer1.getPrimaryKey()));
+		Assert.assertEquals(newKaleoTimer2,
+			kaleoTimers.get(newKaleoTimer2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -319,8 +303,7 @@ public class KaleoTimerPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoTimer> kaleoTimers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTimer> kaleoTimers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoTimers.isEmpty());
 	}
@@ -328,7 +311,6 @@ public class KaleoTimerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		KaleoTimer newKaleoTimer = addKaleoTimer();
 
 		long pk = RandomTestUtil.nextLong();
@@ -338,57 +320,52 @@ public class KaleoTimerPersistenceTest {
 		primaryKeys.add(newKaleoTimer.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoTimer> kaleoTimers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTimer> kaleoTimers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoTimers.size());
-		Assert.assertEquals(
-			newKaleoTimer, kaleoTimers.get(newKaleoTimer.getPrimaryKey()));
+		Assert.assertEquals(newKaleoTimer,
+			kaleoTimers.get(newKaleoTimer.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoTimer> kaleoTimers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTimer> kaleoTimers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoTimers.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		KaleoTimer newKaleoTimer = addKaleoTimer();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoTimer.getPrimaryKey());
 
-		Map<Serializable, KaleoTimer> kaleoTimers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoTimer> kaleoTimers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoTimers.size());
-		Assert.assertEquals(
-			newKaleoTimer, kaleoTimers.get(newKaleoTimer.getPrimaryKey()));
+		Assert.assertEquals(newKaleoTimer,
+			kaleoTimers.get(newKaleoTimer.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			KaleoTimerLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = KaleoTimerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<KaleoTimer>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTimer>() {
 				@Override
 				public void performAction(KaleoTimer kaleoTimer) {
 					Assert.assertNotNull(kaleoTimer);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -397,18 +374,17 @@ public class KaleoTimerPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		KaleoTimer newKaleoTimer = addKaleoTimer();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTimer.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTimer.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kaleoTimerId", newKaleoTimer.getKaleoTimerId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoTimerId",
+				newKaleoTimer.getKaleoTimerId()));
 
-		List<KaleoTimer> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoTimer> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -419,34 +395,32 @@ public class KaleoTimerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTimer.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTimer.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kaleoTimerId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoTimerId",
+				RandomTestUtil.nextLong()));
 
-		List<KaleoTimer> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<KaleoTimer> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		KaleoTimer newKaleoTimer = addKaleoTimer();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTimer.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTimer.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoTimerId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoTimerId"));
 
 		Object newKaleoTimerId = newKaleoTimer.getKaleoTimerId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kaleoTimerId", new Object[] {newKaleoTimerId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoTimerId",
+				new Object[] { newKaleoTimerId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -459,15 +433,14 @@ public class KaleoTimerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTimer.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoTimer.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kaleoTimerId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"kaleoTimerId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kaleoTimerId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoTimerId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -521,5 +494,4 @@ public class KaleoTimerPersistenceTest {
 	private List<KaleoTimer> _kaleoTimers = new ArrayList<KaleoTimer>();
 	private KaleoTimerPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

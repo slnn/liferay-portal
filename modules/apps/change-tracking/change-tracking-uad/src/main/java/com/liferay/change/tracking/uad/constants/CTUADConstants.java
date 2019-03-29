@@ -19,15 +19,11 @@ package com.liferay.change.tracking.uad.constants;
  * @generated
  */
 public class CTUADConstants {
-
 	public static final String[] USER_ID_FIELD_NAMES_CT_COLLECTION = {
-		"userId", "statusByUserId"
-	};
-
-	public static final String[] USER_ID_FIELD_NAMES_CT_ENTRY = {"userId"};
-
+			"userId", "statusByUserId"
+		};
+	public static final String[] USER_ID_FIELD_NAMES_CT_ENTRY = { "userId" };
 	public static final String[] USER_ID_FIELD_NAMES_CT_ENTRY_AGGREGATE = {
-		"userId"
-	};
-
+			"userId"
+		};
 }

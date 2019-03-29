@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,6 +38,15 @@ import com.liferay.portal.tools.service.builder.test.service.LVEntryLocalService
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryUtil;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +57,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class LVEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
 				"com.liferay.portal.tools.service.builder.test.service"));
 
 	@Before
@@ -107,8 +106,7 @@ public class LVEntryPersistenceTest {
 
 		_persistence.remove(newLVEntry);
 
-		LVEntry existingLVEntry = _persistence.fetchByPrimaryKey(
-			newLVEntry.getPrimaryKey());
+		LVEntry existingLVEntry = _persistence.fetchByPrimaryKey(newLVEntry.getPrimaryKey());
 
 		Assert.assertNull(existingLVEntry);
 	}
@@ -138,23 +136,19 @@ public class LVEntryPersistenceTest {
 
 		_lvEntries.add(_persistence.update(newLVEntry));
 
-		LVEntry existingLVEntry = _persistence.findByPrimaryKey(
-			newLVEntry.getPrimaryKey());
+		LVEntry existingLVEntry = _persistence.findByPrimaryKey(newLVEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingLVEntry.getMvccVersion(), newLVEntry.getMvccVersion());
+		Assert.assertEquals(existingLVEntry.getMvccVersion(),
+			newLVEntry.getMvccVersion());
 		Assert.assertEquals(existingLVEntry.getUuid(), newLVEntry.getUuid());
-		Assert.assertEquals(
-			existingLVEntry.getHeadId(), newLVEntry.getHeadId());
-		Assert.assertEquals(
-			existingLVEntry.getDefaultLanguageId(),
+		Assert.assertEquals(existingLVEntry.getHeadId(), newLVEntry.getHeadId());
+		Assert.assertEquals(existingLVEntry.getDefaultLanguageId(),
 			newLVEntry.getDefaultLanguageId());
-		Assert.assertEquals(
-			existingLVEntry.getLvEntryId(), newLVEntry.getLvEntryId());
-		Assert.assertEquals(
-			existingLVEntry.getGroupId(), newLVEntry.getGroupId());
-		Assert.assertEquals(
-			existingLVEntry.getUniqueGroupKey(),
+		Assert.assertEquals(existingLVEntry.getLvEntryId(),
+			newLVEntry.getLvEntryId());
+		Assert.assertEquals(existingLVEntry.getGroupId(),
+			newLVEntry.getGroupId());
+		Assert.assertEquals(existingLVEntry.getUniqueGroupKey(),
 			newLVEntry.getUniqueGroupKey());
 	}
 
@@ -169,13 +163,13 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(
-			"", RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByUUID_G("null", 0L, RandomTestUtil.randomBoolean());
 
-		_persistence.countByUUID_G(
-			(String)null, 0L, RandomTestUtil.randomBoolean());
+		_persistence.countByUUID_G((String)null, 0L,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -187,18 +181,18 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testCountByGroupIdArrayable() throws Exception {
-		_persistence.countByGroupId(new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByG_UGK() throws Exception {
-		_persistence.countByG_UGK(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+		_persistence.countByG_UGK(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_UGK(0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_UGK(
-			0L, (String)null, RandomTestUtil.randomBoolean());
+		_persistence.countByG_UGK(0L, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -212,8 +206,7 @@ public class LVEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LVEntry newLVEntry = addLVEntry();
 
-		LVEntry existingLVEntry = _persistence.findByPrimaryKey(
-			newLVEntry.getPrimaryKey());
+		LVEntry existingLVEntry = _persistence.findByPrimaryKey(newLVEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingLVEntry, newLVEntry);
 	}
@@ -227,23 +220,21 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<LVEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"LVEntry", "mvccVersion", true, "uuid", true, "headId", true,
-			"defaultLanguageId", true, "lvEntryId", true, "groupId", true,
-			"uniqueGroupKey", true);
+		return OrderByComparatorFactoryUtil.create("LVEntry", "mvccVersion",
+			true, "uuid", true, "headId", true, "defaultLanguageId", true,
+			"lvEntryId", true, "groupId", true, "uniqueGroupKey", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		LVEntry newLVEntry = addLVEntry();
 
-		LVEntry existingLVEntry = _persistence.fetchByPrimaryKey(
-			newLVEntry.getPrimaryKey());
+		LVEntry existingLVEntry = _persistence.fetchByPrimaryKey(newLVEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingLVEntry, newLVEntry);
 	}
@@ -260,7 +251,6 @@ public class LVEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		LVEntry newLVEntry1 = addLVEntry();
 		LVEntry newLVEntry2 = addLVEntry();
 
@@ -269,20 +259,18 @@ public class LVEntryPersistenceTest {
 		primaryKeys.add(newLVEntry1.getPrimaryKey());
 		primaryKeys.add(newLVEntry2.getPrimaryKey());
 
-		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, lvEntries.size());
-		Assert.assertEquals(
-			newLVEntry1, lvEntries.get(newLVEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newLVEntry2, lvEntries.get(newLVEntry2.getPrimaryKey()));
+		Assert.assertEquals(newLVEntry1,
+			lvEntries.get(newLVEntry1.getPrimaryKey()));
+		Assert.assertEquals(newLVEntry2,
+			lvEntries.get(newLVEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -292,8 +280,7 @@ public class LVEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(lvEntries.isEmpty());
 	}
@@ -301,7 +288,6 @@ public class LVEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		LVEntry newLVEntry = addLVEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -311,57 +297,52 @@ public class LVEntryPersistenceTest {
 		primaryKeys.add(newLVEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, lvEntries.size());
-		Assert.assertEquals(
-			newLVEntry, lvEntries.get(newLVEntry.getPrimaryKey()));
+		Assert.assertEquals(newLVEntry,
+			lvEntries.get(newLVEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(lvEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		LVEntry newLVEntry = addLVEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newLVEntry.getPrimaryKey());
 
-		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, LVEntry> lvEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, lvEntries.size());
-		Assert.assertEquals(
-			newLVEntry, lvEntries.get(newLVEntry.getPrimaryKey()));
+		Assert.assertEquals(newLVEntry,
+			lvEntries.get(newLVEntry.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			LVEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = LVEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<LVEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LVEntry>() {
 				@Override
 				public void performAction(LVEntry lvEntry) {
 					Assert.assertNotNull(lvEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -370,14 +351,15 @@ public class LVEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		LVEntry newLVEntry = addLVEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LVEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LVEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("lvEntryId", newLVEntry.getLvEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("lvEntryId",
+				newLVEntry.getLvEntryId()));
 
 		List<LVEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -390,11 +372,11 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LVEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LVEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("lvEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("lvEntryId",
+				RandomTestUtil.nextLong()));
 
 		List<LVEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -402,19 +384,19 @@ public class LVEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		LVEntry newLVEntry = addLVEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LVEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LVEntry.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lvEntryId"));
 
 		Object newLvEntryId = newLVEntry.getLvEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"lvEntryId", new Object[] {newLvEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("lvEntryId",
+				new Object[] { newLvEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -427,14 +409,13 @@ public class LVEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LVEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LVEntry.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lvEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"lvEntryId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("lvEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -447,34 +428,25 @@ public class LVEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		LVEntry existingLVEntry = _persistence.findByPrimaryKey(
-			newLVEntry.getPrimaryKey());
+		LVEntry existingLVEntry = _persistence.findByPrimaryKey(newLVEntry.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingLVEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingLVEntry, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingLVEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLVEntry, "getOriginalGroupId", new Class<?>[0]));
-
-		Assert.assertEquals(
-			Long.valueOf(existingLVEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLVEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingLVEntry.getUniqueGroupKey(),
-				ReflectionTestUtil.invoke(
-					existingLVEntry, "getOriginalUniqueGroupKey",
+		Assert.assertTrue(Objects.equals(existingLVEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingLVEntry, "getOriginalUuid",
 					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingLVEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLVEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingLVEntry.getHeadId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLVEntry, "getOriginalHeadId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingLVEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLVEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingLVEntry.getUniqueGroupKey(),
+				ReflectionTestUtil.invoke(existingLVEntry,
+					"getOriginalUniqueGroupKey", new Class<?>[0])));
+
+		Assert.assertEquals(Long.valueOf(existingLVEntry.getHeadId()),
+			ReflectionTestUtil.<Long>invoke(existingLVEntry,
+				"getOriginalHeadId", new Class<?>[0]));
 	}
 
 	protected LVEntry addLVEntry() throws Exception {
@@ -502,5 +474,4 @@ public class LVEntryPersistenceTest {
 	private List<LVEntry> _lvEntries = new ArrayList<LVEntry>();
 	private LVEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

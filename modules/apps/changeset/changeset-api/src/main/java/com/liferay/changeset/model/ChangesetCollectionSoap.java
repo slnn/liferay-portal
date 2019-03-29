@@ -30,10 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class ChangesetCollectionSoap implements Serializable {
-
-	public static ChangesetCollectionSoap toSoapModel(
-		ChangesetCollection model) {
-
+	public static ChangesetCollectionSoap toSoapModel(ChangesetCollection model) {
 		ChangesetCollectionSoap soapModel = new ChangesetCollectionSoap();
 
 		soapModel.setChangesetCollectionId(model.getChangesetCollectionId());
@@ -51,9 +48,7 @@ public class ChangesetCollectionSoap implements Serializable {
 
 	public static ChangesetCollectionSoap[] toSoapModels(
 		ChangesetCollection[] models) {
-
-		ChangesetCollectionSoap[] soapModels =
-			new ChangesetCollectionSoap[models.length];
+		ChangesetCollectionSoap[] soapModels = new ChangesetCollectionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -64,12 +59,10 @@ public class ChangesetCollectionSoap implements Serializable {
 
 	public static ChangesetCollectionSoap[][] toSoapModels(
 		ChangesetCollection[][] models) {
-
 		ChangesetCollectionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new ChangesetCollectionSoap[models.length][models[0].length];
+			soapModels = new ChangesetCollectionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new ChangesetCollectionSoap[0][0];
@@ -84,16 +77,13 @@ public class ChangesetCollectionSoap implements Serializable {
 
 	public static ChangesetCollectionSoap[] toSoapModels(
 		List<ChangesetCollection> models) {
-
-		List<ChangesetCollectionSoap> soapModels =
-			new ArrayList<ChangesetCollectionSoap>(models.size());
+		List<ChangesetCollectionSoap> soapModels = new ArrayList<ChangesetCollectionSoap>(models.size());
 
 		for (ChangesetCollection model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new ChangesetCollectionSoap[soapModels.size()]);
+		return soapModels.toArray(new ChangesetCollectionSoap[soapModels.size()]);
 	}
 
 	public ChangesetCollectionSoap() {
@@ -188,5 +178,4 @@ public class ChangesetCollectionSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
-
 }

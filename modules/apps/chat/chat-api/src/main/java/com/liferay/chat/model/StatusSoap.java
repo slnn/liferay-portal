@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class StatusSoap implements Serializable {
-
 	public static StatusSoap toSoapModel(Status model) {
 		StatusSoap soapModel = new StatusSoap();
 
@@ -177,5 +176,4 @@ public class StatusSoap implements Serializable {
 	private String _activePanelIds;
 	private String _message;
 	private boolean _playSound;
-
 }

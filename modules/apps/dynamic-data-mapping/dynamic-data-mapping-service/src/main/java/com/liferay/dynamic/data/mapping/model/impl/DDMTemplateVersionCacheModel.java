@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class DDMTemplateVersionCacheModel
-	implements CacheModel<DDMTemplateVersion>, Externalizable {
-
+public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersion>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class DDMTemplateVersionCacheModel
 			return false;
 		}
 
-		DDMTemplateVersionCacheModel ddmTemplateVersionCacheModel =
-			(DDMTemplateVersionCacheModel)obj;
+		DDMTemplateVersionCacheModel ddmTemplateVersionCacheModel = (DDMTemplateVersionCacheModel)obj;
 
-		if (templateVersionId ==
-				ddmTemplateVersionCacheModel.templateVersionId) {
-
+		if (templateVersionId == ddmTemplateVersionCacheModel.templateVersionId) {
 			return true;
 		}
 
@@ -112,8 +110,7 @@ public class DDMTemplateVersionCacheModel
 
 	@Override
 	public DDMTemplateVersion toEntityModel() {
-		DDMTemplateVersionImpl ddmTemplateVersionImpl =
-			new DDMTemplateVersionImpl();
+		DDMTemplateVersionImpl ddmTemplateVersionImpl = new DDMTemplateVersionImpl();
 
 		ddmTemplateVersionImpl.setTemplateVersionId(templateVersionId);
 		ddmTemplateVersionImpl.setGroupId(groupId);
@@ -226,7 +223,8 @@ public class DDMTemplateVersionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(templateVersionId);
 
 		objectOutput.writeLong(groupId);
@@ -317,5 +315,4 @@ public class DDMTemplateVersionCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-
 }

@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
 import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.uad.constants.SBTestUADConstants;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the UADPartialEntry UAD display.
@@ -39,18 +40,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseUADPartialEntryUADDisplay
-	extends BaseModelUADDisplay<UADPartialEntry> {
-
+public abstract class BaseUADPartialEntryUADDisplay extends BaseModelUADDisplay<UADPartialEntry> {
 	@Override
-	public UADPartialEntry get(Serializable primaryKey) throws PortalException {
-		return uadPartialEntryLocalService.getUADPartialEntry(
-			Long.valueOf(primaryKey.toString()));
+	public UADPartialEntry get(Serializable primaryKey)
+		throws PortalException {
+		return uadPartialEntryLocalService.getUADPartialEntry(Long.valueOf(
+				primaryKey.toString()));
 	}
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"message"};
+		return new String[] { "message" };
 	}
 
 	@Override
@@ -69,11 +69,9 @@ public abstract class BaseUADPartialEntryUADDisplay
 	}
 
 	@Override
-	protected List<UADPartialEntry> doGetRange(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return uadPartialEntryLocalService.dynamicQuery(
-			dynamicQuery, start, end);
+	protected List<UADPartialEntry> doGetRange(DynamicQuery dynamicQuery,
+		int start, int end) {
+		return uadPartialEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	@Override
@@ -83,5 +81,4 @@ public abstract class BaseUADPartialEntryUADDisplay
 
 	@Reference
 	protected UADPartialEntryLocalService uadPartialEntryLocalService;
-
 }

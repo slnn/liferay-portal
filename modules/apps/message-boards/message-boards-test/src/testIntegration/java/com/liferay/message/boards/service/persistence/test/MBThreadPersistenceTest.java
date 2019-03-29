@@ -15,11 +15,13 @@
 package com.liferay.message.boards.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,6 +41,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -49,27 +60,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class MBThreadPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.message.boards.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.message.boards.service"));
 
 	@Before
 	public void setUp() {
@@ -108,8 +109,7 @@ public class MBThreadPersistenceTest {
 
 		_persistence.remove(newMBThread);
 
-		MBThread existingMBThread = _persistence.fetchByPrimaryKey(
-			newMBThread.getPrimaryKey());
+		MBThread existingMBThread = _persistence.fetchByPrimaryKey(newMBThread.getPrimaryKey());
 
 		Assert.assertNull(existingMBThread);
 	}
@@ -171,63 +171,56 @@ public class MBThreadPersistenceTest {
 
 		_mbThreads.add(_persistence.update(newMBThread));
 
-		MBThread existingMBThread = _persistence.findByPrimaryKey(
-			newMBThread.getPrimaryKey());
+		MBThread existingMBThread = _persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
 
 		Assert.assertEquals(existingMBThread.getUuid(), newMBThread.getUuid());
-		Assert.assertEquals(
-			existingMBThread.getThreadId(), newMBThread.getThreadId());
-		Assert.assertEquals(
-			existingMBThread.getGroupId(), newMBThread.getGroupId());
-		Assert.assertEquals(
-			existingMBThread.getCompanyId(), newMBThread.getCompanyId());
-		Assert.assertEquals(
-			existingMBThread.getUserId(), newMBThread.getUserId());
-		Assert.assertEquals(
-			existingMBThread.getUserName(), newMBThread.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBThread.getCreateDate()),
+		Assert.assertEquals(existingMBThread.getThreadId(),
+			newMBThread.getThreadId());
+		Assert.assertEquals(existingMBThread.getGroupId(),
+			newMBThread.getGroupId());
+		Assert.assertEquals(existingMBThread.getCompanyId(),
+			newMBThread.getCompanyId());
+		Assert.assertEquals(existingMBThread.getUserId(),
+			newMBThread.getUserId());
+		Assert.assertEquals(existingMBThread.getUserName(),
+			newMBThread.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThread.getCreateDate()),
 			Time.getShortTimestamp(newMBThread.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBThread.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThread.getModifiedDate()),
 			Time.getShortTimestamp(newMBThread.getModifiedDate()));
-		Assert.assertEquals(
-			existingMBThread.getCategoryId(), newMBThread.getCategoryId());
-		Assert.assertEquals(
-			existingMBThread.getRootMessageId(),
+		Assert.assertEquals(existingMBThread.getCategoryId(),
+			newMBThread.getCategoryId());
+		Assert.assertEquals(existingMBThread.getRootMessageId(),
 			newMBThread.getRootMessageId());
-		Assert.assertEquals(
-			existingMBThread.getRootMessageUserId(),
+		Assert.assertEquals(existingMBThread.getRootMessageUserId(),
 			newMBThread.getRootMessageUserId());
-		Assert.assertEquals(
-			existingMBThread.getTitle(), newMBThread.getTitle());
-		Assert.assertEquals(
-			existingMBThread.getMessageCount(), newMBThread.getMessageCount());
-		Assert.assertEquals(
-			existingMBThread.getViewCount(), newMBThread.getViewCount());
-		Assert.assertEquals(
-			existingMBThread.getLastPostByUserId(),
+		Assert.assertEquals(existingMBThread.getTitle(), newMBThread.getTitle());
+		Assert.assertEquals(existingMBThread.getMessageCount(),
+			newMBThread.getMessageCount());
+		Assert.assertEquals(existingMBThread.getViewCount(),
+			newMBThread.getViewCount());
+		Assert.assertEquals(existingMBThread.getLastPostByUserId(),
 			newMBThread.getLastPostByUserId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBThread.getLastPostDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThread.getLastPostDate()),
 			Time.getShortTimestamp(newMBThread.getLastPostDate()));
-		AssertUtils.assertEquals(
-			existingMBThread.getPriority(), newMBThread.getPriority());
-		Assert.assertEquals(
-			existingMBThread.isQuestion(), newMBThread.isQuestion());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBThread.getLastPublishDate()),
+		AssertUtils.assertEquals(existingMBThread.getPriority(),
+			newMBThread.getPriority());
+		Assert.assertEquals(existingMBThread.isQuestion(),
+			newMBThread.isQuestion());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThread.getLastPublishDate()),
 			Time.getShortTimestamp(newMBThread.getLastPublishDate()));
-		Assert.assertEquals(
-			existingMBThread.getStatus(), newMBThread.getStatus());
-		Assert.assertEquals(
-			existingMBThread.getStatusByUserId(),
+		Assert.assertEquals(existingMBThread.getStatus(),
+			newMBThread.getStatus());
+		Assert.assertEquals(existingMBThread.getStatusByUserId(),
 			newMBThread.getStatusByUserId());
-		Assert.assertEquals(
-			existingMBThread.getStatusByUserName(),
+		Assert.assertEquals(existingMBThread.getStatusByUserName(),
 			newMBThread.getStatusByUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBThread.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThread.getStatusDate()),
 			Time.getShortTimestamp(newMBThread.getStatusDate()));
 	}
 
@@ -274,108 +267,100 @@ public class MBThreadPersistenceTest {
 
 	@Test
 	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_CArrayable() throws Exception {
-		_persistence.countByG_C(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
 	}
 
 	@Test
 	public void testCountByG_NotC() throws Exception {
-		_persistence.countByG_NotC(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_NotC(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_NotC(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextDouble());
+		_persistence.countByC_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDouble());
 
 		_persistence.countByC_P(0L, 0D);
 	}
 
 	@Test
 	public void testCountByL_P() throws Exception {
-		_persistence.countByL_P(
-			RandomTestUtil.nextDate(), RandomTestUtil.nextDouble());
+		_persistence.countByL_P(RandomTestUtil.nextDate(),
+			RandomTestUtil.nextDouble());
 
 		_persistence.countByL_P(RandomTestUtil.nextDate(), 0D);
 	}
 
 	@Test
 	public void testCountByG_C_L() throws Exception {
-		_persistence.countByG_C_L(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDate());
+		_persistence.countByG_C_L(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextDate());
 
 		_persistence.countByG_C_L(0L, 0L, RandomTestUtil.nextDate());
 	}
 
 	@Test
 	public void testCountByG_C_S() throws Exception {
-		_persistence.countByG_C_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_C_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_C_SArrayable() throws Exception {
-		_persistence.countByG_C_S(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_C_S(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_C_NotS() throws Exception {
-		_persistence.countByG_C_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_C_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_NotS(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_C_NotSArrayable() throws Exception {
-		_persistence.countByG_C_NotS(
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_C_NotS(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_NotC_S() throws Exception {
-		_persistence.countByG_NotC_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_NotC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_NotC_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_NotC_NotS() throws Exception {
-		_persistence.countByG_NotC_NotS(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_NotC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_NotC_NotS(0L, 0L, 0);
 	}
@@ -384,8 +369,7 @@ public class MBThreadPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBThread newMBThread = addMBThread();
 
-		MBThread existingMBThread = _persistence.findByPrimaryKey(
-			newMBThread.getPrimaryKey());
+		MBThread existingMBThread = _persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
 
 		Assert.assertEquals(existingMBThread, newMBThread);
 	}
@@ -399,34 +383,32 @@ public class MBThreadPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<MBThread> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MBThread", "uuid", true, "threadId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "categoryId", true, "rootMessageId",
-			true, "rootMessageUserId", true, "title", true, "messageCount",
-			true, "viewCount", true, "lastPostByUserId", true, "lastPostDate",
-			true, "priority", true, "question", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+		return OrderByComparatorFactoryUtil.create("MBThread", "uuid", true,
+			"threadId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"categoryId", true, "rootMessageId", true, "rootMessageUserId",
+			true, "title", true, "messageCount", true, "viewCount", true,
+			"lastPostByUserId", true, "lastPostDate", true, "priority", true,
+			"question", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBThread newMBThread = addMBThread();
 
-		MBThread existingMBThread = _persistence.fetchByPrimaryKey(
-			newMBThread.getPrimaryKey());
+		MBThread existingMBThread = _persistence.fetchByPrimaryKey(newMBThread.getPrimaryKey());
 
 		Assert.assertEquals(existingMBThread, newMBThread);
 	}
@@ -443,7 +425,6 @@ public class MBThreadPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MBThread newMBThread1 = addMBThread();
 		MBThread newMBThread2 = addMBThread();
 
@@ -452,20 +433,18 @@ public class MBThreadPersistenceTest {
 		primaryKeys.add(newMBThread1.getPrimaryKey());
 		primaryKeys.add(newMBThread2.getPrimaryKey());
 
-		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, mbThreads.size());
-		Assert.assertEquals(
-			newMBThread1, mbThreads.get(newMBThread1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMBThread2, mbThreads.get(newMBThread2.getPrimaryKey()));
+		Assert.assertEquals(newMBThread1,
+			mbThreads.get(newMBThread1.getPrimaryKey()));
+		Assert.assertEquals(newMBThread2,
+			mbThreads.get(newMBThread2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -475,8 +454,7 @@ public class MBThreadPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbThreads.isEmpty());
 	}
@@ -484,7 +462,6 @@ public class MBThreadPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MBThread newMBThread = addMBThread();
 
 		long pk = RandomTestUtil.nextLong();
@@ -494,57 +471,52 @@ public class MBThreadPersistenceTest {
 		primaryKeys.add(newMBThread.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbThreads.size());
-		Assert.assertEquals(
-			newMBThread, mbThreads.get(newMBThread.getPrimaryKey()));
+		Assert.assertEquals(newMBThread,
+			mbThreads.get(newMBThread.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbThreads.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MBThread newMBThread = addMBThread();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMBThread.getPrimaryKey());
 
-		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbThreads.size());
-		Assert.assertEquals(
-			newMBThread, mbThreads.get(newMBThread.getPrimaryKey()));
+		Assert.assertEquals(newMBThread,
+			mbThreads.get(newMBThread.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MBThreadLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MBThreadLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBThread>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBThread>() {
 				@Override
 				public void performAction(MBThread mbThread) {
 					Assert.assertNotNull(mbThread);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -553,14 +525,15 @@ public class MBThreadPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MBThread newMBThread = addMBThread();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBThread.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("threadId", newMBThread.getThreadId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadId",
+				newMBThread.getThreadId()));
 
 		List<MBThread> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -573,11 +546,11 @@ public class MBThreadPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBThread.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("threadId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadId",
+				RandomTestUtil.nextLong()));
 
 		List<MBThread> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -585,18 +558,19 @@ public class MBThreadPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MBThread newMBThread = addMBThread();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBThread.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("threadId"));
 
 		Object newThreadId = newMBThread.getThreadId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("threadId", new Object[] {newThreadId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("threadId",
+				new Object[] { newThreadId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -609,14 +583,13 @@ public class MBThreadPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBThread.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("threadId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"threadId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("threadId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -629,23 +602,18 @@ public class MBThreadPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBThread existingMBThread = _persistence.findByPrimaryKey(
-			newMBThread.getPrimaryKey());
+		MBThread existingMBThread = _persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingMBThread.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingMBThread, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingMBThread.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMBThread, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingMBThread.getUuid(),
+				ReflectionTestUtil.invoke(existingMBThread, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingMBThread.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThread,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingMBThread.getRootMessageId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMBThread, "getOriginalRootMessageId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBThread.getRootMessageId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThread,
+				"getOriginalRootMessageId", new Class<?>[0]));
 	}
 
 	protected MBThread addMBThread() throws Exception {
@@ -705,5 +673,4 @@ public class MBThreadPersistenceTest {
 	private List<MBThread> _mbThreads = new ArrayList<MBThread>();
 	private MBThreadPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

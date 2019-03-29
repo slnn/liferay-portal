@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,136 +35,115 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class MicroblogsEntryServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.microblogs.service.impl.MicroblogsEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.microblogs.model.MicroblogsEntry
-			addMicroblogsEntry(
-				long userId, String content, int type,
-				long parentMicroblogsEntryId, int socialRelationType,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.microblogs.model.MicroblogsEntry addMicroblogsEntry(
+		long userId, String content, int type, long parentMicroblogsEntryId,
+		int socialRelationType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addMicroblogsEntry(
-			userId, content, type, parentMicroblogsEntryId, socialRelationType,
-			serviceContext);
+		return getService()
+				   .addMicroblogsEntry(userId, content, type,
+			parentMicroblogsEntryId, socialRelationType, serviceContext);
 	}
 
-	public static com.liferay.microblogs.model.MicroblogsEntry
-			deleteMicroblogsEntry(long microblogsEntryId)
+	public static com.liferay.microblogs.model.MicroblogsEntry deleteMicroblogsEntry(
+		long microblogsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().deleteMicroblogsEntry(microblogsEntryId);
 	}
 
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-			getMicroblogsEntries(int start, int end)
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getMicroblogsEntries(start, end);
 	}
 
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-			getMicroblogsEntries(String assetTagName, int start, int end)
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		String assetTagName, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getMicroblogsEntries(assetTagName, start, end);
 	}
 
 	public static int getMicroblogsEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getMicroblogsEntriesCount();
 	}
 
 	public static int getMicroblogsEntriesCount(String assetTagName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getMicroblogsEntriesCount(assetTagName);
 	}
 
-	public static com.liferay.microblogs.model.MicroblogsEntry
-			getMicroblogsEntry(long microblogsEntryId)
+	public static com.liferay.microblogs.model.MicroblogsEntry getMicroblogsEntry(
+		long microblogsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getMicroblogsEntry(microblogsEntryId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-			getUserMicroblogsEntries(
-				long microblogsEntryUserId, int start, int end)
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getUserMicroblogsEntries(
+		long microblogsEntryUserId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getUserMicroblogsEntries(
-			microblogsEntryUserId, start, end);
+		return getService()
+				   .getUserMicroblogsEntries(microblogsEntryUserId, start, end);
 	}
 
-	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
-			getUserMicroblogsEntries(
-				long microblogsEntryUserId, int type, int start, int end)
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getUserMicroblogsEntries(
+		long microblogsEntryUserId, int type, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getUserMicroblogsEntries(
-			microblogsEntryUserId, type, start, end);
+		return getService()
+				   .getUserMicroblogsEntries(microblogsEntryUserId, type,
+			start, end);
 	}
 
 	public static int getUserMicroblogsEntriesCount(long microblogsEntryUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getUserMicroblogsEntriesCount(
-			microblogsEntryUserId);
+		return getService().getUserMicroblogsEntriesCount(microblogsEntryUserId);
 	}
 
 	public static int getUserMicroblogsEntriesCount(
-			long microblogsEntryUserId, int type)
+		long microblogsEntryUserId, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getUserMicroblogsEntriesCount(
-			microblogsEntryUserId, type);
+		return getService()
+				   .getUserMicroblogsEntriesCount(microblogsEntryUserId, type);
 	}
 
-	public static com.liferay.microblogs.model.MicroblogsEntry
-			updateMicroblogsEntry(
-				long microblogsEntryId, String content, int socialRelationType,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
+		long microblogsEntryId, String content, int socialRelationType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateMicroblogsEntry(
-			microblogsEntryId, content, socialRelationType, serviceContext);
+		return getService()
+				   .updateMicroblogsEntry(microblogsEntryId, content,
+			socialRelationType, serviceContext);
 	}
 
 	public static MicroblogsEntryService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<MicroblogsEntryService, MicroblogsEntryService> _serviceTracker;
+	private static ServiceTracker<MicroblogsEntryService, MicroblogsEntryService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(MicroblogsEntryService.class);
 
-		ServiceTracker<MicroblogsEntryService, MicroblogsEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<MicroblogsEntryService, MicroblogsEntryService>(
-						bundle.getBundleContext(), MicroblogsEntryService.class,
-						null);
+		ServiceTracker<MicroblogsEntryService, MicroblogsEntryService> serviceTracker =
+			new ServiceTracker<MicroblogsEntryService, MicroblogsEntryService>(bundle.getBundleContext(),
+				MicroblogsEntryService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

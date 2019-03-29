@@ -33,13 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SyncDLFileVersionDiffWrapper
-	extends BaseModelWrapper<SyncDLFileVersionDiff>
+public class SyncDLFileVersionDiffWrapper extends BaseModelWrapper<SyncDLFileVersionDiff>
 	implements SyncDLFileVersionDiff, ModelWrapper<SyncDLFileVersionDiff> {
-
 	public SyncDLFileVersionDiffWrapper(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
-
 		super(syncDLFileVersionDiff);
 	}
 
@@ -61,7 +58,7 @@ public class SyncDLFileVersionDiffWrapper
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long syncDLFileVersionDiffId = (Long)attributes.get(
-			"syncDLFileVersionDiffId");
+				"syncDLFileVersionDiffId");
 
 		if (syncDLFileVersionDiffId != null) {
 			setSyncDLFileVersionDiffId(syncDLFileVersionDiffId);
@@ -105,80 +102,80 @@ public class SyncDLFileVersionDiffWrapper
 	}
 
 	/**
-	 * Returns the data file entry ID of this sync dl file version diff.
-	 *
-	 * @return the data file entry ID of this sync dl file version diff
-	 */
+	* Returns the data file entry ID of this sync dl file version diff.
+	*
+	* @return the data file entry ID of this sync dl file version diff
+	*/
 	@Override
 	public long getDataFileEntryId() {
 		return model.getDataFileEntryId();
 	}
 
 	/**
-	 * Returns the expiration date of this sync dl file version diff.
-	 *
-	 * @return the expiration date of this sync dl file version diff
-	 */
+	* Returns the expiration date of this sync dl file version diff.
+	*
+	* @return the expiration date of this sync dl file version diff
+	*/
 	@Override
 	public Date getExpirationDate() {
 		return model.getExpirationDate();
 	}
 
 	/**
-	 * Returns the file entry ID of this sync dl file version diff.
-	 *
-	 * @return the file entry ID of this sync dl file version diff
-	 */
+	* Returns the file entry ID of this sync dl file version diff.
+	*
+	* @return the file entry ID of this sync dl file version diff
+	*/
 	@Override
 	public long getFileEntryId() {
 		return model.getFileEntryId();
 	}
 
 	/**
-	 * Returns the primary key of this sync dl file version diff.
-	 *
-	 * @return the primary key of this sync dl file version diff
-	 */
+	* Returns the primary key of this sync dl file version diff.
+	*
+	* @return the primary key of this sync dl file version diff
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the size of this sync dl file version diff.
-	 *
-	 * @return the size of this sync dl file version diff
-	 */
+	* Returns the size of this sync dl file version diff.
+	*
+	* @return the size of this sync dl file version diff
+	*/
 	@Override
 	public long getSize() {
 		return model.getSize();
 	}
 
 	/**
-	 * Returns the source file version ID of this sync dl file version diff.
-	 *
-	 * @return the source file version ID of this sync dl file version diff
-	 */
+	* Returns the source file version ID of this sync dl file version diff.
+	*
+	* @return the source file version ID of this sync dl file version diff
+	*/
 	@Override
 	public long getSourceFileVersionId() {
 		return model.getSourceFileVersionId();
 	}
 
 	/**
-	 * Returns the sync dl file version diff ID of this sync dl file version diff.
-	 *
-	 * @return the sync dl file version diff ID of this sync dl file version diff
-	 */
+	* Returns the sync dl file version diff ID of this sync dl file version diff.
+	*
+	* @return the sync dl file version diff ID of this sync dl file version diff
+	*/
 	@Override
 	public long getSyncDLFileVersionDiffId() {
 		return model.getSyncDLFileVersionDiffId();
 	}
 
 	/**
-	 * Returns the target file version ID of this sync dl file version diff.
-	 *
-	 * @return the target file version ID of this sync dl file version diff
-	 */
+	* Returns the target file version ID of this sync dl file version diff.
+	*
+	* @return the target file version ID of this sync dl file version diff
+	*/
 	@Override
 	public long getTargetFileVersionId() {
 		return model.getTargetFileVersionId();
@@ -190,80 +187,80 @@ public class SyncDLFileVersionDiffWrapper
 	}
 
 	/**
-	 * Sets the data file entry ID of this sync dl file version diff.
-	 *
-	 * @param dataFileEntryId the data file entry ID of this sync dl file version diff
-	 */
+	* Sets the data file entry ID of this sync dl file version diff.
+	*
+	* @param dataFileEntryId the data file entry ID of this sync dl file version diff
+	*/
 	@Override
 	public void setDataFileEntryId(long dataFileEntryId) {
 		model.setDataFileEntryId(dataFileEntryId);
 	}
 
 	/**
-	 * Sets the expiration date of this sync dl file version diff.
-	 *
-	 * @param expirationDate the expiration date of this sync dl file version diff
-	 */
+	* Sets the expiration date of this sync dl file version diff.
+	*
+	* @param expirationDate the expiration date of this sync dl file version diff
+	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		model.setExpirationDate(expirationDate);
 	}
 
 	/**
-	 * Sets the file entry ID of this sync dl file version diff.
-	 *
-	 * @param fileEntryId the file entry ID of this sync dl file version diff
-	 */
+	* Sets the file entry ID of this sync dl file version diff.
+	*
+	* @param fileEntryId the file entry ID of this sync dl file version diff
+	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
 		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
-	 * Sets the primary key of this sync dl file version diff.
-	 *
-	 * @param primaryKey the primary key of this sync dl file version diff
-	 */
+	* Sets the primary key of this sync dl file version diff.
+	*
+	* @param primaryKey the primary key of this sync dl file version diff
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the size of this sync dl file version diff.
-	 *
-	 * @param size the size of this sync dl file version diff
-	 */
+	* Sets the size of this sync dl file version diff.
+	*
+	* @param size the size of this sync dl file version diff
+	*/
 	@Override
 	public void setSize(long size) {
 		model.setSize(size);
 	}
 
 	/**
-	 * Sets the source file version ID of this sync dl file version diff.
-	 *
-	 * @param sourceFileVersionId the source file version ID of this sync dl file version diff
-	 */
+	* Sets the source file version ID of this sync dl file version diff.
+	*
+	* @param sourceFileVersionId the source file version ID of this sync dl file version diff
+	*/
 	@Override
 	public void setSourceFileVersionId(long sourceFileVersionId) {
 		model.setSourceFileVersionId(sourceFileVersionId);
 	}
 
 	/**
-	 * Sets the sync dl file version diff ID of this sync dl file version diff.
-	 *
-	 * @param syncDLFileVersionDiffId the sync dl file version diff ID of this sync dl file version diff
-	 */
+	* Sets the sync dl file version diff ID of this sync dl file version diff.
+	*
+	* @param syncDLFileVersionDiffId the sync dl file version diff ID of this sync dl file version diff
+	*/
 	@Override
 	public void setSyncDLFileVersionDiffId(long syncDLFileVersionDiffId) {
 		model.setSyncDLFileVersionDiffId(syncDLFileVersionDiffId);
 	}
 
 	/**
-	 * Sets the target file version ID of this sync dl file version diff.
-	 *
-	 * @param targetFileVersionId the target file version ID of this sync dl file version diff
-	 */
+	* Sets the target file version ID of this sync dl file version diff.
+	*
+	* @param targetFileVersionId the target file version ID of this sync dl file version diff
+	*/
 	@Override
 	public void setTargetFileVersionId(long targetFileVersionId) {
 		model.setTargetFileVersionId(targetFileVersionId);
@@ -272,8 +269,6 @@ public class SyncDLFileVersionDiffWrapper
 	@Override
 	protected SyncDLFileVersionDiffWrapper wrap(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
-
 		return new SyncDLFileVersionDiffWrapper(syncDLFileVersionDiff);
 	}
-
 }

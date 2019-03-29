@@ -41,10 +41,8 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.tools.service.builder.test.service.impl.UADPartialEntryServiceImpl
  * @generated
  */
-public abstract class UADPartialEntryServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class UADPartialEntryServiceBaseImpl extends BaseServiceImpl
 	implements UADPartialEntryService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -56,9 +54,7 @@ public abstract class UADPartialEntryServiceBaseImpl
 	 *
 	 * @return the uad partial entry local service
 	 */
-	public com.liferay.portal.tools.service.builder.test.service.
-		UADPartialEntryLocalService getUADPartialEntryLocalService() {
-
+	public com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService getUADPartialEntryLocalService() {
 		return uadPartialEntryLocalService;
 	}
 
@@ -68,9 +64,7 @@ public abstract class UADPartialEntryServiceBaseImpl
 	 * @param uadPartialEntryLocalService the uad partial entry local service
 	 */
 	public void setUADPartialEntryLocalService(
-		com.liferay.portal.tools.service.builder.test.service.
-			UADPartialEntryLocalService uadPartialEntryLocalService) {
-
+		com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService uadPartialEntryLocalService) {
 		this.uadPartialEntryLocalService = uadPartialEntryLocalService;
 	}
 
@@ -90,7 +84,6 @@ public abstract class UADPartialEntryServiceBaseImpl
 	 */
 	public void setUADPartialEntryService(
 		UADPartialEntryService uadPartialEntryService) {
-
 		this.uadPartialEntryService = uadPartialEntryService;
 	}
 
@@ -110,7 +103,6 @@ public abstract class UADPartialEntryServiceBaseImpl
 	 */
 	public void setUADPartialEntryPersistence(
 		UADPartialEntryPersistence uadPartialEntryPersistence) {
-
 		this.uadPartialEntryPersistence = uadPartialEntryPersistence;
 	}
 
@@ -119,9 +111,7 @@ public abstract class UADPartialEntryServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -131,9 +121,7 @@ public abstract class UADPartialEntryServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -175,8 +163,8 @@ public abstract class UADPartialEntryServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -185,22 +173,12 @@ public abstract class UADPartialEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService.class
-	)
-	protected com.liferay.portal.tools.service.builder.test.service.
-		UADPartialEntryLocalService uadPartialEntryLocalService;
-
+	@BeanReference(type = com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService.class)
+	protected com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService uadPartialEntryLocalService;
 	@BeanReference(type = UADPartialEntryService.class)
 	protected UADPartialEntryService uadPartialEntryService;
-
 	@BeanReference(type = UADPartialEntryPersistence.class)
 	protected UADPartialEntryPersistence uadPartialEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 }

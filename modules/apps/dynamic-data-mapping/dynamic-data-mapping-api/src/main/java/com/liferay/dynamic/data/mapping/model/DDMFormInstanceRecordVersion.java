@@ -27,47 +27,38 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMFormInstanceRecordVersionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionImpl")
 @ProviderType
 public interface DDMFormInstanceRecordVersion
 	extends DDMFormInstanceRecordVersionModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMFormInstanceRecordVersion, Long>
-		FORM_INSTANCE_RECORD_VERSION_ID_ACCESSOR =
-			new Accessor<DDMFormInstanceRecordVersion, Long>() {
+	public static final Accessor<DDMFormInstanceRecordVersion, Long> FORM_INSTANCE_RECORD_VERSION_ID_ACCESSOR =
+		new Accessor<DDMFormInstanceRecordVersion, Long>() {
+			@Override
+			public Long get(
+				DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+				return ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId();
+			}
 
-				@Override
-				public Long get(
-					DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return ddmFormInstanceRecordVersion.
-						getFormInstanceRecordVersionId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<DDMFormInstanceRecordVersion> getTypeClass() {
-					return DDMFormInstanceRecordVersion.class;
-				}
-
-			};
+			@Override
+			public Class<DDMFormInstanceRecordVersion> getTypeClass() {
+				return DDMFormInstanceRecordVersion.class;
+			}
+		};
 
 	public DDMForm getDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-			getDDMFormValues()
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DDMFormInstance getFormInstance()
@@ -75,5 +66,4 @@ public interface DDMFormInstanceRecordVersion
 
 	public DDMFormInstanceRecord getFormInstanceRecord()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

@@ -17,6 +17,7 @@ package com.liferay.change.tracking.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.model.CTEntry;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -51,112 +52,106 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface CTEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService,
-			PersistedResourcedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface CTEntryLocalService extends BaseLocalService,
+	PersistedModelLocalService, PersistedResourcedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTEntryLocalServiceUtil} to access the ct entry local service. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addCTCollectionCTEntries(
-		long ctCollectionId, List<CTEntry> ctEntries);
+	public void addCTCollectionCTEntries(long ctCollectionId,
+		List<CTEntry> ctEntries);
 
-	public void addCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
+	public void addCTCollectionCTEntries(long ctCollectionId, long[] ctEntryIds);
 
 	public void addCTCollectionCTEntry(long ctCollectionId, CTEntry ctEntry);
 
 	public void addCTCollectionCTEntry(long ctCollectionId, long ctEntryId);
 
 	/**
-	 * Adds the ct entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ctEntry the ct entry
-	 * @return the ct entry that was added
-	 */
+	* Adds the ct entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param ctEntry the ct entry
+	* @return the ct entry that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry addCTEntry(CTEntry ctEntry);
 
-	public CTEntry addCTEntry(
-			long userId, long classNameId, long classPK, long resourcePrimKey,
-			int changeType, long ctCollectionId, ServiceContext serviceContext)
-		throws PortalException;
+	public CTEntry addCTEntry(long userId, long classNameId, long classPK,
+		long resourcePrimKey, int changeType, long ctCollectionId,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void addCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, List<CTEntry> ctEntries);
+	public void addCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		List<CTEntry> ctEntries);
 
-	public void addCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, long[] ctEntryIds);
+	public void addCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		long[] ctEntryIds);
 
-	public void addCTEntryAggregateCTEntry(
-		long ctEntryAggregateId, CTEntry ctEntry);
+	public void addCTEntryAggregateCTEntry(long ctEntryAggregateId,
+		CTEntry ctEntry);
 
-	public void addCTEntryAggregateCTEntry(
-		long ctEntryAggregateId, long ctEntryId);
+	public void addCTEntryAggregateCTEntry(long ctEntryAggregateId,
+		long ctEntryId);
 
 	public void clearCTCollectionCTEntries(long ctCollectionId);
 
 	public void clearCTEntryAggregateCTEntries(long ctEntryAggregateId);
 
 	/**
-	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
-	 *
-	 * @param ctEntryId the primary key for the new ct entry
-	 * @return the new ct entry
-	 */
+	* Creates a new ct entry with the primary key. Does not add the ct entry to the database.
+	*
+	* @param ctEntryId the primary key for the new ct entry
+	* @return the new ct entry
+	*/
 	@Transactional(enabled = false)
 	public CTEntry createCTEntry(long ctEntryId);
 
-	public void deleteCTCollectionCTEntries(
-		long ctCollectionId, List<CTEntry> ctEntries);
+	public void deleteCTCollectionCTEntries(long ctCollectionId,
+		List<CTEntry> ctEntries);
 
-	public void deleteCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
+	public void deleteCTCollectionCTEntries(long ctCollectionId,
+		long[] ctEntryIds);
 
 	public void deleteCTCollectionCTEntry(long ctCollectionId, CTEntry ctEntry);
 
 	public void deleteCTCollectionCTEntry(long ctCollectionId, long ctEntryId);
 
 	/**
-	 * Deletes the ct entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ctEntry the ct entry
-	 * @return the ct entry that was removed
-	 */
+	* Deletes the ct entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ctEntry the ct entry
+	* @return the ct entry that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CTEntry deleteCTEntry(CTEntry ctEntry);
 
 	/**
-	 * Deletes the ct entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ctEntryId the primary key of the ct entry
-	 * @return the ct entry that was removed
-	 * @throws PortalException if a ct entry with the primary key could not be found
-	 */
+	* Deletes the ct entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ctEntryId the primary key of the ct entry
+	* @return the ct entry that was removed
+	* @throws PortalException if a ct entry with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CTEntry deleteCTEntry(long ctEntryId) throws PortalException;
 
-	public void deleteCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, List<CTEntry> ctEntries);
+	public void deleteCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		List<CTEntry> ctEntries);
 
-	public void deleteCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, long[] ctEntryIds);
+	public void deleteCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		long[] ctEntryIds);
 
-	public void deleteCTEntryAggregateCTEntry(
-		long ctEntryAggregateId, CTEntry ctEntry);
+	public void deleteCTEntryAggregateCTEntry(long ctEntryAggregateId,
+		CTEntry ctEntry);
 
-	public void deleteCTEntryAggregateCTEntry(
-		long ctEntryAggregateId, long ctEntryId);
+	public void deleteCTEntryAggregateCTEntry(long ctEntryAggregateId,
+		long ctEntryId);
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -165,76 +160,74 @@ public interface CTEntryLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> fetchCTEntries(
-		long ctCollectionId, long resourcePrimKey,
+	public List<CTEntry> fetchCTEntries(long ctCollectionId,
+		long resourcePrimKey, QueryDefinition<CTEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> fetchCTEntries(long ctCollectionId,
 		QueryDefinition<CTEntry> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> fetchCTEntries(
-		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTEntry fetchCTEntry(long ctEntryId);
@@ -243,8 +236,8 @@ public interface CTEntryLocalService
 	public CTEntry fetchCTEntry(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTEntry fetchCTEntry(
-		long ctCollectionId, long classNameId, long classPK);
+	public CTEntry fetchCTEntry(long ctCollectionId, long classNameId,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -253,59 +246,58 @@ public interface CTEntryLocalService
 	public List<CTEntry> getCTCollectionCTEntries(long ctCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getCTCollectionCTEntries(
-		long ctCollectionId, int start, int end);
+	public List<CTEntry> getCTCollectionCTEntries(long ctCollectionId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getCTCollectionCTEntries(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator);
+	public List<CTEntry> getCTCollectionCTEntries(long ctCollectionId,
+		int start, int end, OrderByComparator<CTEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getCTCollectionCTEntriesByStatus(
-		long ctCollectionId, int status);
+	public List<CTEntry> getCTCollectionCTEntriesByStatus(long ctCollectionId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCTCollectionCTEntriesCount(long ctCollectionId);
 
 	/**
-	 * Returns the ctCollectionIds of the ct collections associated with the ct entry.
-	 *
-	 * @param ctEntryId the ctEntryId of the ct entry
-	 * @return long[] the ctCollectionIds of ct collections associated with the ct entry
-	 */
+	* Returns the ctCollectionIds of the ct collections associated with the ct entry.
+	*
+	* @param ctEntryId the ctEntryId of the ct entry
+	* @return long[] the ctCollectionIds of ct collections associated with the ct entry
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCTCollectionPrimaryKeys(long ctEntryId);
 
 	/**
-	 * Returns a range of all the ct entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct entries
-	 * @param end the upper bound of the range of ct entries (not inclusive)
-	 * @return the range of ct entries
-	 */
+	* Returns a range of all the ct entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of ct entries
+	* @param end the upper bound of the range of ct entries (not inclusive)
+	* @return the range of ct entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTEntry> getCTEntries(int start, int end);
 
 	/**
-	 * Returns the number of ct entries.
-	 *
-	 * @return the number of ct entries
-	 */
+	* Returns the number of ct entries.
+	*
+	* @return the number of ct entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCTEntriesCount();
 
 	/**
-	 * Returns the ct entry with the primary key.
-	 *
-	 * @param ctEntryId the primary key of the ct entry
-	 * @return the ct entry
-	 * @throws PortalException if a ct entry with the primary key could not be found
-	 */
+	* Returns the ct entry with the primary key.
+	*
+	* @param ctEntryId the primary key of the ct entry
+	* @return the ct entry
+	* @throws PortalException if a ct entry with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTEntry getCTEntry(long ctEntryId) throws PortalException;
 
@@ -313,23 +305,22 @@ public interface CTEntryLocalService
 	public List<CTEntry> getCTEntryAggregateCTEntries(long ctEntryAggregateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, int start, int end);
+	public List<CTEntry> getCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator);
+	public List<CTEntry> getCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		int start, int end, OrderByComparator<CTEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCTEntryAggregateCTEntriesCount(long ctEntryAggregateId);
 
 	/**
-	 * Returns the ctEntryAggregateIds of the ct entry aggregates associated with the ct entry.
-	 *
-	 * @param ctEntryId the ctEntryId of the ct entry
-	 * @return long[] the ctEntryAggregateIds of ct entry aggregates associated with the ct entry
-	 */
+	* Returns the ctEntryAggregateIds of the ct entry aggregates associated with the ct entry.
+	*
+	* @param ctEntryId the ctEntryId of the ct entry
+	* @return long[] the ctEntryAggregateIds of ct entry aggregates associated with the ct entry
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCTEntryAggregatePrimaryKeys(long ctEntryId);
 
@@ -337,16 +328,15 @@ public interface CTEntryLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<? extends PersistedModel> getPersistedModel(
-			long resourcePrimKey)
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
 		throws PortalException;
 
 	@Override
@@ -364,24 +354,22 @@ public interface CTEntryLocalService
 	public boolean hasCTEntryAggregateCTEntries(long ctEntryAggregateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTEntryAggregateCTEntry(
-		long ctEntryAggregateId, long ctEntryId);
+	public boolean hasCTEntryAggregateCTEntry(long ctEntryAggregateId,
+		long ctEntryId);
 
-	public void setCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
+	public void setCTCollectionCTEntries(long ctCollectionId, long[] ctEntryIds);
 
-	public void setCTEntryAggregateCTEntries(
-		long ctEntryAggregateId, long[] ctEntryIds);
+	public void setCTEntryAggregateCTEntries(long ctEntryAggregateId,
+		long[] ctEntryIds);
 
 	/**
-	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ctEntry the ct entry
-	 * @return the ct entry that was updated
-	 */
+	* Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ctEntry the ct entry
+	* @return the ct entry that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry updateCTEntry(CTEntry ctEntry);
 
 	public CTEntry updateStatus(long ctEntryId, int status);
-
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,7 +35,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class PollsChoiceServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,10 +42,10 @@ public class PollsChoiceServiceUtil {
 	 */
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -54,19 +54,16 @@ public class PollsChoiceServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PollsChoiceService, PollsChoiceService>
-		_serviceTracker;
+	private static ServiceTracker<PollsChoiceService, PollsChoiceService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(PollsChoiceService.class);
 
-		ServiceTracker<PollsChoiceService, PollsChoiceService> serviceTracker =
-			new ServiceTracker<PollsChoiceService, PollsChoiceService>(
-				bundle.getBundleContext(), PollsChoiceService.class, null);
+		ServiceTracker<PollsChoiceService, PollsChoiceService> serviceTracker = new ServiceTracker<PollsChoiceService, PollsChoiceService>(bundle.getBundleContext(),
+				PollsChoiceService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

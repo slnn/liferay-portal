@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDMFormInstanceRecordFinderBaseImpl
-	extends BasePersistenceImpl<DDMFormInstanceRecord> {
-
+public class DDMFormInstanceRecordFinderBaseImpl extends BasePersistenceImpl<DDMFormInstanceRecord> {
 	public DDMFormInstanceRecordFinderBaseImpl() {
 		setModelClass(DDMFormInstanceRecord.class);
 	}
@@ -44,9 +43,7 @@ public class DDMFormInstanceRecordFinderBaseImpl
 	 *
 	 * @return the ddm form instance record persistence
 	 */
-	public DDMFormInstanceRecordPersistence
-		getDDMFormInstanceRecordPersistence() {
-
+	public DDMFormInstanceRecordPersistence getDDMFormInstanceRecordPersistence() {
 		return ddmFormInstanceRecordPersistence;
 	}
 
@@ -57,15 +54,10 @@ public class DDMFormInstanceRecordFinderBaseImpl
 	 */
 	public void setDDMFormInstanceRecordPersistence(
 		DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence) {
-
-		this.ddmFormInstanceRecordPersistence =
-			ddmFormInstanceRecordPersistence;
+		this.ddmFormInstanceRecordPersistence = ddmFormInstanceRecordPersistence;
 	}
 
 	@BeanReference(type = DDMFormInstanceRecordPersistence.class)
 	protected DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstanceRecordFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(DDMFormInstanceRecordFinderBaseImpl.class);
 }

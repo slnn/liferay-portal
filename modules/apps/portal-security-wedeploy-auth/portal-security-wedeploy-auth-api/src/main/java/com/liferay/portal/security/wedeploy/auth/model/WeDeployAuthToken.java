@@ -27,37 +27,29 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see WeDeployAuthTokenModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenImpl"
-)
+@ImplementationClassName("com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenImpl")
 @ProviderType
-public interface WeDeployAuthToken
-	extends WeDeployAuthTokenModel, PersistedModel {
-
+public interface WeDeployAuthToken extends WeDeployAuthTokenModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WeDeployAuthToken, Long>
-		WE_DEPLOY_AUTH_TOKEN_ID_ACCESSOR =
-			new Accessor<WeDeployAuthToken, Long>() {
+	public static final Accessor<WeDeployAuthToken, Long> WE_DEPLOY_AUTH_TOKEN_ID_ACCESSOR =
+		new Accessor<WeDeployAuthToken, Long>() {
+			@Override
+			public Long get(WeDeployAuthToken weDeployAuthToken) {
+				return weDeployAuthToken.getWeDeployAuthTokenId();
+			}
 
-				@Override
-				public Long get(WeDeployAuthToken weDeployAuthToken) {
-					return weDeployAuthToken.getWeDeployAuthTokenId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<WeDeployAuthToken> getTypeClass() {
-					return WeDeployAuthToken.class;
-				}
-
-			};
-
+			@Override
+			public Class<WeDeployAuthToken> getTypeClass() {
+				return WeDeployAuthToken.class;
+			}
+		};
 }

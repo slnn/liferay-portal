@@ -18,10 +18,13 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryModel;
 import com.liferay.microblogs.model.MicroblogsEntrySoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -62,28 +65,29 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class MicroblogsEntryModelImpl
-	extends BaseModelImpl<MicroblogsEntry> implements MicroblogsEntryModel {
-
+public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
+	implements MicroblogsEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a microblogs entry model instance should use the <code>MicroblogsEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MicroblogsEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"microblogsEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"creatorClassNameId", Types.BIGINT}, {"creatorClassPK", Types.BIGINT},
-		{"content", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"parentMicroblogsEntryId", Types.BIGINT},
-		{"socialRelationType", Types.INTEGER}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "microblogsEntryId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "creatorClassNameId", Types.BIGINT },
+			{ "creatorClassPK", Types.BIGINT },
+			{ "content", Types.VARCHAR },
+			{ "type_", Types.INTEGER },
+			{ "parentMicroblogsEntryId", Types.BIGINT },
+			{ "socialRelationType", Types.INTEGER }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("microblogsEntryId", Types.BIGINT);
@@ -100,52 +104,29 @@ public class MicroblogsEntryModelImpl
 		TABLE_COLUMNS_MAP.put("socialRelationType", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MicroblogsEntry (microblogsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER)";
-
+	public static final String TABLE_SQL_CREATE = "create table MicroblogsEntry (microblogsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table MicroblogsEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY microblogsEntry.createDate DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY MicroblogsEntry.createDate DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY microblogsEntry.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY MicroblogsEntry.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.microblogs.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.microblogs.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.microblogs.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.microblogs.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.microblogs.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.microblogs.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.microblogs.model.MicroblogsEntry"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
-
 	public static final long CREATORCLASSNAMEID_COLUMN_BITMASK = 4L;
-
 	public static final long CREATORCLASSPK_COLUMN_BITMASK = 8L;
-
 	public static final long PARENTMICROBLOGSENTRYID_COLUMN_BITMASK = 16L;
-
 	public static final long SOCIALRELATIONTYPE_COLUMN_BITMASK = 32L;
-
 	public static final long TYPE_COLUMN_BITMASK = 64L;
-
 	public static final long USERID_COLUMN_BITMASK = 128L;
 
 	/**
@@ -171,8 +152,7 @@ public class MicroblogsEntryModelImpl
 		model.setCreatorClassPK(soapModel.getCreatorClassPK());
 		model.setContent(soapModel.getContent());
 		model.setType(soapModel.getType());
-		model.setParentMicroblogsEntryId(
-			soapModel.getParentMicroblogsEntryId());
+		model.setParentMicroblogsEntryId(soapModel.getParentMicroblogsEntryId());
 		model.setSocialRelationType(soapModel.getSocialRelationType());
 
 		return model;
@@ -186,13 +166,11 @@ public class MicroblogsEntryModelImpl
 	 */
 	public static List<MicroblogsEntry> toModels(
 		MicroblogsEntrySoap[] soapModels) {
-
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<MicroblogsEntry> models = new ArrayList<MicroblogsEntry>(
-			soapModels.length);
+		List<MicroblogsEntry> models = new ArrayList<MicroblogsEntry>(soapModels.length);
 
 		for (MicroblogsEntrySoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -201,9 +179,8 @@ public class MicroblogsEntryModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.microblogs.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.microblogs.model.MicroblogsEntry"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.microblogs.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.microblogs.model.MicroblogsEntry"));
 
 	public MicroblogsEntryModelImpl() {
 	}
@@ -242,18 +219,13 @@ public class MicroblogsEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MicroblogsEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<MicroblogsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MicroblogsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MicroblogsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MicroblogsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MicroblogsEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((MicroblogsEntry)this));
 		}
 
@@ -265,114 +237,65 @@ public class MicroblogsEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MicroblogsEntry, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MicroblogsEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MicroblogsEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MicroblogsEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(MicroblogsEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((MicroblogsEntry)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<MicroblogsEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<MicroblogsEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MicroblogsEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MicroblogsEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MicroblogsEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MicroblogsEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MicroblogsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MicroblogsEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MicroblogsEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<MicroblogsEntry, Object>>();
-		Map<String, BiConsumer<MicroblogsEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MicroblogsEntry, ?>>();
+		Map<String, Function<MicroblogsEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MicroblogsEntry, Object>>();
+		Map<String, BiConsumer<MicroblogsEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MicroblogsEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"microblogsEntryId", MicroblogsEntry::getMicroblogsEntryId);
-		attributeSetterBiConsumers.put(
-			"microblogsEntryId",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setMicroblogsEntryId);
-		attributeGetterFunctions.put(
-			"companyId", MicroblogsEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setCompanyId);
+
+		attributeGetterFunctions.put("microblogsEntryId", MicroblogsEntry::getMicroblogsEntryId);
+		attributeSetterBiConsumers.put("microblogsEntryId", (BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setMicroblogsEntryId);
+		attributeGetterFunctions.put("companyId", MicroblogsEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setCompanyId);
 		attributeGetterFunctions.put("userId", MicroblogsEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setUserId);
 		attributeGetterFunctions.put("userName", MicroblogsEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<MicroblogsEntry, String>)MicroblogsEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", MicroblogsEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MicroblogsEntry, Date>)MicroblogsEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MicroblogsEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MicroblogsEntry, Date>)
-				MicroblogsEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"creatorClassNameId", MicroblogsEntry::getCreatorClassNameId);
-		attributeSetterBiConsumers.put(
-			"creatorClassNameId",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setCreatorClassNameId);
-		attributeGetterFunctions.put(
-			"creatorClassPK", MicroblogsEntry::getCreatorClassPK);
-		attributeSetterBiConsumers.put(
-			"creatorClassPK",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setCreatorClassPK);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MicroblogsEntry, String>)MicroblogsEntry::setUserName);
+		attributeGetterFunctions.put("createDate", MicroblogsEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MicroblogsEntry, Date>)MicroblogsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MicroblogsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MicroblogsEntry, Date>)MicroblogsEntry::setModifiedDate);
+		attributeGetterFunctions.put("creatorClassNameId", MicroblogsEntry::getCreatorClassNameId);
+		attributeSetterBiConsumers.put("creatorClassNameId", (BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setCreatorClassNameId);
+		attributeGetterFunctions.put("creatorClassPK", MicroblogsEntry::getCreatorClassPK);
+		attributeSetterBiConsumers.put("creatorClassPK", (BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setCreatorClassPK);
 		attributeGetterFunctions.put("content", MicroblogsEntry::getContent);
-		attributeSetterBiConsumers.put(
-			"content",
-			(BiConsumer<MicroblogsEntry, String>)MicroblogsEntry::setContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<MicroblogsEntry, String>)MicroblogsEntry::setContent);
 		attributeGetterFunctions.put("type", MicroblogsEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<MicroblogsEntry, Integer>)MicroblogsEntry::setType);
-		attributeGetterFunctions.put(
-			"parentMicroblogsEntryId",
-			MicroblogsEntry::getParentMicroblogsEntryId);
-		attributeSetterBiConsumers.put(
-			"parentMicroblogsEntryId",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setParentMicroblogsEntryId);
-		attributeGetterFunctions.put(
-			"socialRelationType", MicroblogsEntry::getSocialRelationType);
-		attributeSetterBiConsumers.put(
-			"socialRelationType",
-			(BiConsumer<MicroblogsEntry, Integer>)
-				MicroblogsEntry::setSocialRelationType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<MicroblogsEntry, Integer>)MicroblogsEntry::setType);
+		attributeGetterFunctions.put("parentMicroblogsEntryId", MicroblogsEntry::getParentMicroblogsEntryId);
+		attributeSetterBiConsumers.put("parentMicroblogsEntryId", (BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setParentMicroblogsEntryId);
+		attributeGetterFunctions.put("socialRelationType", MicroblogsEntry::getSocialRelationType);
+		attributeSetterBiConsumers.put("socialRelationType", (BiConsumer<MicroblogsEntry, Integer>)MicroblogsEntry::setSocialRelationType);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -639,8 +562,8 @@ public class MicroblogsEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MicroblogsEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MicroblogsEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -653,9 +576,8 @@ public class MicroblogsEntryModelImpl
 	@Override
 	public MicroblogsEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MicroblogsEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MicroblogsEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -675,8 +597,7 @@ public class MicroblogsEntryModelImpl
 		microblogsEntryImpl.setCreatorClassPK(getCreatorClassPK());
 		microblogsEntryImpl.setContent(getContent());
 		microblogsEntryImpl.setType(getType());
-		microblogsEntryImpl.setParentMicroblogsEntryId(
-			getParentMicroblogsEntryId());
+		microblogsEntryImpl.setParentMicroblogsEntryId(getParentMicroblogsEntryId());
 		microblogsEntryImpl.setSocialRelationType(getSocialRelationType());
 
 		microblogsEntryImpl.resetOriginalValues();
@@ -688,8 +609,8 @@ public class MicroblogsEntryModelImpl
 	public int compareTo(MicroblogsEntry microblogsEntry) {
 		int value = 0;
 
-		value = DateUtil.compareTo(
-			getCreateDate(), microblogsEntry.getCreateDate());
+		value = DateUtil.compareTo(getCreateDate(),
+				microblogsEntry.getCreateDate());
 
 		value = value * -1;
 
@@ -741,28 +662,23 @@ public class MicroblogsEntryModelImpl
 	public void resetOriginalValues() {
 		MicroblogsEntryModelImpl microblogsEntryModelImpl = this;
 
-		microblogsEntryModelImpl._originalCompanyId =
-			microblogsEntryModelImpl._companyId;
+		microblogsEntryModelImpl._originalCompanyId = microblogsEntryModelImpl._companyId;
 
 		microblogsEntryModelImpl._setOriginalCompanyId = false;
 
-		microblogsEntryModelImpl._originalUserId =
-			microblogsEntryModelImpl._userId;
+		microblogsEntryModelImpl._originalUserId = microblogsEntryModelImpl._userId;
 
 		microblogsEntryModelImpl._setOriginalUserId = false;
 
-		microblogsEntryModelImpl._originalCreateDate =
-			microblogsEntryModelImpl._createDate;
+		microblogsEntryModelImpl._originalCreateDate = microblogsEntryModelImpl._createDate;
 
 		microblogsEntryModelImpl._setModifiedDate = false;
 
-		microblogsEntryModelImpl._originalCreatorClassNameId =
-			microblogsEntryModelImpl._creatorClassNameId;
+		microblogsEntryModelImpl._originalCreatorClassNameId = microblogsEntryModelImpl._creatorClassNameId;
 
 		microblogsEntryModelImpl._setOriginalCreatorClassNameId = false;
 
-		microblogsEntryModelImpl._originalCreatorClassPK =
-			microblogsEntryModelImpl._creatorClassPK;
+		microblogsEntryModelImpl._originalCreatorClassPK = microblogsEntryModelImpl._creatorClassPK;
 
 		microblogsEntryModelImpl._setOriginalCreatorClassPK = false;
 
@@ -770,13 +686,11 @@ public class MicroblogsEntryModelImpl
 
 		microblogsEntryModelImpl._setOriginalType = false;
 
-		microblogsEntryModelImpl._originalParentMicroblogsEntryId =
-			microblogsEntryModelImpl._parentMicroblogsEntryId;
+		microblogsEntryModelImpl._originalParentMicroblogsEntryId = microblogsEntryModelImpl._parentMicroblogsEntryId;
 
 		microblogsEntryModelImpl._setOriginalParentMicroblogsEntryId = false;
 
-		microblogsEntryModelImpl._originalSocialRelationType =
-			microblogsEntryModelImpl._socialRelationType;
+		microblogsEntryModelImpl._originalSocialRelationType = microblogsEntryModelImpl._socialRelationType;
 
 		microblogsEntryModelImpl._setOriginalSocialRelationType = false;
 
@@ -785,8 +699,7 @@ public class MicroblogsEntryModelImpl
 
 	@Override
 	public CacheModel<MicroblogsEntry> toCacheModel() {
-		MicroblogsEntryCacheModel microblogsEntryCacheModel =
-			new MicroblogsEntryCacheModel();
+		MicroblogsEntryCacheModel microblogsEntryCacheModel = new MicroblogsEntryCacheModel();
 
 		microblogsEntryCacheModel.microblogsEntryId = getMicroblogsEntryId();
 
@@ -834,8 +747,7 @@ public class MicroblogsEntryModelImpl
 
 		microblogsEntryCacheModel.type = getType();
 
-		microblogsEntryCacheModel.parentMicroblogsEntryId =
-			getParentMicroblogsEntryId();
+		microblogsEntryCacheModel.parentMicroblogsEntryId = getParentMicroblogsEntryId();
 
 		microblogsEntryCacheModel.socialRelationType = getSocialRelationType();
 
@@ -844,20 +756,16 @@ public class MicroblogsEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<MicroblogsEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<MicroblogsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MicroblogsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MicroblogsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MicroblogsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MicroblogsEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -876,22 +784,18 @@ public class MicroblogsEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MicroblogsEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<MicroblogsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MicroblogsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MicroblogsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<MicroblogsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<MicroblogsEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -905,12 +809,10 @@ public class MicroblogsEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MicroblogsEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = MicroblogsEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MicroblogsEntry.class, ModelWrapper.class
-	};
-
+			MicroblogsEntry.class, ModelWrapper.class
+		};
 	private long _microblogsEntryId;
 	private long _companyId;
 	private long _originalCompanyId;
@@ -941,5 +843,4 @@ public class MicroblogsEntryModelImpl
 	private boolean _setOriginalSocialRelationType;
 	private long _columnBitmask;
 	private MicroblogsEntry _escapedModel;
-
 }

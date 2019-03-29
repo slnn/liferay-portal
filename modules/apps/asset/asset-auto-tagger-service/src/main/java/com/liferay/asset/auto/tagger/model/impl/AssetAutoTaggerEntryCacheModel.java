@@ -17,8 +17,10 @@ package com.liferay.asset.auto.tagger.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AssetAutoTaggerEntryCacheModel
-	implements CacheModel<AssetAutoTaggerEntry>, Externalizable {
-
+public class AssetAutoTaggerEntryCacheModel implements CacheModel<AssetAutoTaggerEntry>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class AssetAutoTaggerEntryCacheModel
 			return false;
 		}
 
-		AssetAutoTaggerEntryCacheModel assetAutoTaggerEntryCacheModel =
-			(AssetAutoTaggerEntryCacheModel)obj;
+		AssetAutoTaggerEntryCacheModel assetAutoTaggerEntryCacheModel = (AssetAutoTaggerEntryCacheModel)obj;
 
-		if (assetAutoTaggerEntryId ==
-				assetAutoTaggerEntryCacheModel.assetAutoTaggerEntryId) {
-
+		if (assetAutoTaggerEntryId == assetAutoTaggerEntryCacheModel.assetAutoTaggerEntryId) {
 			return true;
 		}
 
@@ -90,11 +88,9 @@ public class AssetAutoTaggerEntryCacheModel
 
 	@Override
 	public AssetAutoTaggerEntry toEntityModel() {
-		AssetAutoTaggerEntryImpl assetAutoTaggerEntryImpl =
-			new AssetAutoTaggerEntryImpl();
+		AssetAutoTaggerEntryImpl assetAutoTaggerEntryImpl = new AssetAutoTaggerEntryImpl();
 
-		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(
-			assetAutoTaggerEntryId);
+		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(assetAutoTaggerEntryId);
 		assetAutoTaggerEntryImpl.setGroupId(groupId);
 		assetAutoTaggerEntryImpl.setCompanyId(companyId);
 
@@ -136,7 +132,8 @@ public class AssetAutoTaggerEntryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(assetAutoTaggerEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -157,5 +154,4 @@ public class AssetAutoTaggerEntryCacheModel
 	public long modifiedDate;
 	public long assetEntryId;
 	public long assetTagId;
-
 }

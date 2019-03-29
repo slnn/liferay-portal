@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SyncDLFileVersionDiffModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl"
-)
+@ImplementationClassName("com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl")
 @ProviderType
-public interface SyncDLFileVersionDiff
-	extends SyncDLFileVersionDiffModel, PersistedModel {
-
+public interface SyncDLFileVersionDiff extends SyncDLFileVersionDiffModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SyncDLFileVersionDiff, Long>
-		SYNC_DL_FILE_VERSION_DIFF_ID_ACCESSOR =
-			new Accessor<SyncDLFileVersionDiff, Long>() {
+	public static final Accessor<SyncDLFileVersionDiff, Long> SYNC_DL_FILE_VERSION_DIFF_ID_ACCESSOR =
+		new Accessor<SyncDLFileVersionDiff, Long>() {
+			@Override
+			public Long get(SyncDLFileVersionDiff syncDLFileVersionDiff) {
+				return syncDLFileVersionDiff.getSyncDLFileVersionDiffId();
+			}
 
-				@Override
-				public Long get(SyncDLFileVersionDiff syncDLFileVersionDiff) {
-					return syncDLFileVersionDiff.getSyncDLFileVersionDiffId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<SyncDLFileVersionDiff> getTypeClass() {
-					return SyncDLFileVersionDiff.class;
-				}
-
-			};
-
+			@Override
+			public Class<SyncDLFileVersionDiff> getTypeClass() {
+				return SyncDLFileVersionDiff.class;
+			}
+		};
 }

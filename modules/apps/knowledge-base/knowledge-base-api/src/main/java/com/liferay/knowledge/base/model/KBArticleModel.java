@@ -37,10 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KBArticleModel
-	extends BaseModel<KBArticle>, ResourcedModel, ShardedModel,
-			StagedGroupedModel, WorkflowedModel {
-
+public interface KBArticleModel extends BaseModel<KBArticle>, ResourcedModel,
+	ShardedModel, StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -614,5 +612,4 @@ public interface KBArticleModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

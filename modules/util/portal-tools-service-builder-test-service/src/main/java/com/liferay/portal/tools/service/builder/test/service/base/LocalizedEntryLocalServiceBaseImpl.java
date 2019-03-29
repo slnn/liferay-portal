@@ -67,9 +67,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class LocalizedEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements LocalizedEntryLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements LocalizedEntryLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -113,7 +112,6 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	@Override
 	public LocalizedEntry deleteLocalizedEntry(long localizedEntryId)
 		throws PortalException {
-
 		return localizedEntryPersistence.remove(localizedEntryId);
 	}
 
@@ -133,8 +131,8 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			LocalizedEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(LocalizedEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -161,11 +159,10 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return localizedEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return localizedEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -182,12 +179,10 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return localizedEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return localizedEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -209,11 +204,10 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return localizedEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return localizedEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -231,14 +225,12 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	@Override
 	public LocalizedEntry getLocalizedEntry(long localizedEntryId)
 		throws PortalException {
-
 		return localizedEntryPersistence.findByPrimaryKey(localizedEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(localizedEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -250,14 +242,10 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			localizedEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(localizedEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(LocalizedEntry.class);
 
@@ -269,7 +257,6 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(localizedEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LocalizedEntry.class);
@@ -283,15 +270,12 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return localizedEntryLocalService.deleteLocalizedEntry(
-			(LocalizedEntry)persistedModel);
+		return localizedEntryLocalService.deleteLocalizedEntry((LocalizedEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return localizedEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -336,58 +320,43 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	@Override
 	public LocalizedEntryLocalization fetchLocalizedEntryLocalization(
 		long localizedEntryId, String languageId) {
-
-		return localizedEntryLocalizationPersistence.
-			fetchByLocalizedEntryId_LanguageId(localizedEntryId, languageId);
+		return localizedEntryLocalizationPersistence.fetchByLocalizedEntryId_LanguageId(localizedEntryId,
+			languageId);
 	}
 
 	@Override
 	public LocalizedEntryLocalization getLocalizedEntryLocalization(
-			long localizedEntryId, String languageId)
-		throws PortalException {
-
-		return localizedEntryLocalizationPersistence.
-			findByLocalizedEntryId_LanguageId(localizedEntryId, languageId);
+		long localizedEntryId, String languageId) throws PortalException {
+		return localizedEntryLocalizationPersistence.findByLocalizedEntryId_LanguageId(localizedEntryId,
+			languageId);
 	}
 
 	@Override
 	public List<LocalizedEntryLocalization> getLocalizedEntryLocalizations(
 		long localizedEntryId) {
-
-		return localizedEntryLocalizationPersistence.findByLocalizedEntryId(
-			localizedEntryId);
+		return localizedEntryLocalizationPersistence.findByLocalizedEntryId(localizedEntryId);
 	}
 
 	@Override
 	public LocalizedEntryLocalization updateLocalizedEntryLocalization(
-			LocalizedEntry localizedEntry, String languageId, String title,
-			String content)
-		throws PortalException {
+		LocalizedEntry localizedEntry, String languageId, String title,
+		String content) throws PortalException {
+		localizedEntry = localizedEntryPersistence.findByPrimaryKey(localizedEntry.getPrimaryKey());
 
-		localizedEntry = localizedEntryPersistence.findByPrimaryKey(
-			localizedEntry.getPrimaryKey());
+		LocalizedEntryLocalization localizedEntryLocalization = localizedEntryLocalizationPersistence.fetchByLocalizedEntryId_LanguageId(localizedEntry.getLocalizedEntryId(),
+				languageId);
 
-		LocalizedEntryLocalization localizedEntryLocalization =
-			localizedEntryLocalizationPersistence.
-				fetchByLocalizedEntryId_LanguageId(
-					localizedEntry.getLocalizedEntryId(), languageId);
-
-		return _updateLocalizedEntryLocalization(
-			localizedEntry, localizedEntryLocalization, languageId, title,
-			content);
+		return _updateLocalizedEntryLocalization(localizedEntry,
+			localizedEntryLocalization, languageId, title, content);
 	}
 
 	@Override
 	public List<LocalizedEntryLocalization> updateLocalizedEntryLocalizations(
-			LocalizedEntry localizedEntry, Map<String, String> titleMap,
-			Map<String, String> contentMap)
-		throws PortalException {
+		LocalizedEntry localizedEntry, Map<String, String> titleMap,
+		Map<String, String> contentMap) throws PortalException {
+		localizedEntry = localizedEntryPersistence.findByPrimaryKey(localizedEntry.getPrimaryKey());
 
-		localizedEntry = localizedEntryPersistence.findByPrimaryKey(
-			localizedEntry.getPrimaryKey());
-
-		Map<String, String[]> localizedValuesMap =
-			new HashMap<String, String[]>();
+		Map<String, String[]> localizedValuesMap = new HashMap<String, String[]>();
 
 		for (Map.Entry<String, String> entry : titleMap.entrySet()) {
 			String languageId = entry.getKey();
@@ -417,55 +386,41 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 			localizedValues[1] = entry.getValue();
 		}
 
-		List<LocalizedEntryLocalization> localizedEntryLocalizations =
-			new ArrayList<LocalizedEntryLocalization>(
-				localizedValuesMap.size());
+		List<LocalizedEntryLocalization> localizedEntryLocalizations = new ArrayList<LocalizedEntryLocalization>(localizedValuesMap.size());
 
-		for (LocalizedEntryLocalization localizedEntryLocalization :
-				localizedEntryLocalizationPersistence.findByLocalizedEntryId(
-					localizedEntry.getLocalizedEntryId())) {
-
-			String[] localizedValues = localizedValuesMap.remove(
-				localizedEntryLocalization.getLanguageId());
+		for (LocalizedEntryLocalization localizedEntryLocalization : localizedEntryLocalizationPersistence.findByLocalizedEntryId(
+				localizedEntry.getLocalizedEntryId())) {
+			String[] localizedValues = localizedValuesMap.remove(localizedEntryLocalization.getLanguageId());
 
 			if (localizedValues == null) {
-				localizedEntryLocalizationPersistence.remove(
-					localizedEntryLocalization);
+				localizedEntryLocalizationPersistence.remove(localizedEntryLocalization);
 			}
 			else {
 				localizedEntryLocalization.setTitle(localizedValues[0]);
 				localizedEntryLocalization.setContent(localizedValues[1]);
 
-				localizedEntryLocalizations.add(
-					localizedEntryLocalizationPersistence.update(
+				localizedEntryLocalizations.add(localizedEntryLocalizationPersistence.update(
 						localizedEntryLocalization));
 			}
 		}
 
-		long batchCounter =
-			counterLocalService.increment(
-				LocalizedEntryLocalization.class.getName(),
+		long batchCounter = counterLocalService.increment(LocalizedEntryLocalization.class.getName(),
 				localizedValuesMap.size()) - localizedValuesMap.size();
 
-		for (Map.Entry<String, String[]> entry :
-				localizedValuesMap.entrySet()) {
-
+		for (Map.Entry<String, String[]> entry : localizedValuesMap.entrySet()) {
 			String languageId = entry.getKey();
 			String[] localizedValues = entry.getValue();
 
-			LocalizedEntryLocalization localizedEntryLocalization =
-				localizedEntryLocalizationPersistence.create(++batchCounter);
+			LocalizedEntryLocalization localizedEntryLocalization = localizedEntryLocalizationPersistence.create(++batchCounter);
 
-			localizedEntryLocalization.setLocalizedEntryId(
-				localizedEntry.getLocalizedEntryId());
+			localizedEntryLocalization.setLocalizedEntryId(localizedEntry.getLocalizedEntryId());
 
 			localizedEntryLocalization.setLanguageId(languageId);
 
 			localizedEntryLocalization.setTitle(localizedValues[0]);
 			localizedEntryLocalization.setContent(localizedValues[1]);
 
-			localizedEntryLocalizations.add(
-				localizedEntryLocalizationPersistence.update(
+			localizedEntryLocalizations.add(localizedEntryLocalizationPersistence.update(
 					localizedEntryLocalization));
 		}
 
@@ -473,29 +428,23 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	}
 
 	private LocalizedEntryLocalization _updateLocalizedEntryLocalization(
-			LocalizedEntry localizedEntry,
-			LocalizedEntryLocalization localizedEntryLocalization,
-			String languageId, String title, String content)
+		LocalizedEntry localizedEntry,
+		LocalizedEntryLocalization localizedEntryLocalization,
+		String languageId, String title, String content)
 		throws PortalException {
-
 		if (localizedEntryLocalization == null) {
-			long localizedEntryLocalizationId = counterLocalService.increment(
-				LocalizedEntryLocalization.class.getName());
+			long localizedEntryLocalizationId = counterLocalService.increment(LocalizedEntryLocalization.class.getName());
 
-			localizedEntryLocalization =
-				localizedEntryLocalizationPersistence.create(
-					localizedEntryLocalizationId);
+			localizedEntryLocalization = localizedEntryLocalizationPersistence.create(localizedEntryLocalizationId);
 
-			localizedEntryLocalization.setLocalizedEntryId(
-				localizedEntry.getLocalizedEntryId());
+			localizedEntryLocalization.setLocalizedEntryId(localizedEntry.getLocalizedEntryId());
 			localizedEntryLocalization.setLanguageId(languageId);
 		}
 
 		localizedEntryLocalization.setTitle(title);
 		localizedEntryLocalization.setContent(content);
 
-		return localizedEntryLocalizationPersistence.update(
-			localizedEntryLocalization);
+		return localizedEntryLocalizationPersistence.update(localizedEntryLocalization);
 	}
 
 	/**
@@ -514,7 +463,6 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 */
 	public void setLocalizedEntryLocalService(
 		LocalizedEntryLocalService localizedEntryLocalService) {
-
 		this.localizedEntryLocalService = localizedEntryLocalService;
 	}
 
@@ -534,7 +482,6 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 */
 	public void setLocalizedEntryPersistence(
 		LocalizedEntryPersistence localizedEntryPersistence) {
-
 		this.localizedEntryPersistence = localizedEntryPersistence;
 	}
 
@@ -543,9 +490,7 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -555,9 +500,7 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -566,9 +509,7 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 *
 	 * @return the localized entry localization persistence
 	 */
-	public LocalizedEntryLocalizationPersistence
-		getLocalizedEntryLocalizationPersistence() {
-
+	public LocalizedEntryLocalizationPersistence getLocalizedEntryLocalizationPersistence() {
 		return localizedEntryLocalizationPersistence;
 	}
 
@@ -578,16 +519,12 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	 * @param localizedEntryLocalizationPersistence the localized entry localization persistence
 	 */
 	public void setLocalizedEntryLocalizationPersistence(
-		LocalizedEntryLocalizationPersistence
-			localizedEntryLocalizationPersistence) {
-
-		this.localizedEntryLocalizationPersistence =
-			localizedEntryLocalizationPersistence;
+		LocalizedEntryLocalizationPersistence localizedEntryLocalizationPersistence) {
+		this.localizedEntryLocalizationPersistence = localizedEntryLocalizationPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.tools.service.builder.test.model.LocalizedEntry",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.tools.service.builder.test.model.LocalizedEntry",
 			localizedEntryLocalService);
 	}
 
@@ -628,8 +565,8 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -640,22 +577,12 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 
 	@BeanReference(type = LocalizedEntryLocalService.class)
 	protected LocalizedEntryLocalService localizedEntryLocalService;
-
 	@BeanReference(type = LocalizedEntryPersistence.class)
 	protected LocalizedEntryPersistence localizedEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = LocalizedEntryLocalizationPersistence.class)
-	protected LocalizedEntryLocalizationPersistence
-		localizedEntryLocalizationPersistence;
-
+	protected LocalizedEntryLocalizationPersistence localizedEntryLocalizationPersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

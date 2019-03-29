@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class SegmentsEntryRelSoap implements Serializable {
-
 	public static SegmentsEntryRelSoap toSoapModel(SegmentsEntryRel model) {
 		SegmentsEntryRelSoap soapModel = new SegmentsEntryRelSoap();
 
@@ -48,11 +47,8 @@ public class SegmentsEntryRelSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static SegmentsEntryRelSoap[] toSoapModels(
-		SegmentsEntryRel[] models) {
-
-		SegmentsEntryRelSoap[] soapModels =
-			new SegmentsEntryRelSoap[models.length];
+	public static SegmentsEntryRelSoap[] toSoapModels(SegmentsEntryRel[] models) {
+		SegmentsEntryRelSoap[] soapModels = new SegmentsEntryRelSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,12 +59,10 @@ public class SegmentsEntryRelSoap implements Serializable {
 
 	public static SegmentsEntryRelSoap[][] toSoapModels(
 		SegmentsEntryRel[][] models) {
-
 		SegmentsEntryRelSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new SegmentsEntryRelSoap[models.length][models[0].length];
+			soapModels = new SegmentsEntryRelSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SegmentsEntryRelSoap[0][0];
@@ -83,9 +77,7 @@ public class SegmentsEntryRelSoap implements Serializable {
 
 	public static SegmentsEntryRelSoap[] toSoapModels(
 		List<SegmentsEntryRel> models) {
-
-		List<SegmentsEntryRelSoap> soapModels =
-			new ArrayList<SegmentsEntryRelSoap>(models.size());
+		List<SegmentsEntryRelSoap> soapModels = new ArrayList<SegmentsEntryRelSoap>(models.size());
 
 		for (SegmentsEntryRel model : models) {
 			soapModels.add(toSoapModel(model));
@@ -195,5 +187,4 @@ public class SegmentsEntryRelSoap implements Serializable {
 	private long _segmentsEntryId;
 	private long _classNameId;
 	private long _classPK;
-
 }

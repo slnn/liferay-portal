@@ -51,21 +51,14 @@ import java.util.List;
  * @see VersionedEntryLocalServiceUtil
  * @generated
  */
-@OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.portal.tools.service.builder.test.model.VersionedEntry",
-		"version.model.class.name=com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion"
-	}
-)
+@OSGiBeanProperties(property =  {
+	"model.class.name=com.liferay.portal.tools.service.builder.test.model.VersionedEntry", "version.model.class.name=com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion"})
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface VersionedEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService,
-			VersionService<VersionedEntry, VersionedEntryVersion> {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface VersionedEntryLocalService extends BaseLocalService,
+	PersistedModelLocalService,
+	VersionService<VersionedEntry, VersionedEntryVersion> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -73,25 +66,24 @@ public interface VersionedEntryLocalService
 	 */
 
 	/**
-	 * Adds the versioned entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param versionedEntry the versioned entry
-	 * @return the versioned entry that was added
-	 */
+	* Adds the versioned entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param versionedEntry the versioned entry
+	* @return the versioned entry that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VersionedEntry addVersionedEntry(VersionedEntry versionedEntry);
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public VersionedEntry checkout(
-			VersionedEntry publishedVersionedEntry, int version)
-		throws PortalException;
+	public VersionedEntry checkout(VersionedEntry publishedVersionedEntry,
+		int version) throws PortalException;
 
 	/**
-	 * Creates a new versioned entry. Does not add the versioned entry to the database.
-	 *
-	 * @return the new versioned entry
-	 */
+	* Creates a new versioned entry. Does not add the versioned entry to the database.
+	*
+	* @return the new versioned entry
+	*/
 	@Transactional(enabled = false)
 	@Override
 	public VersionedEntry create();
@@ -107,34 +99,33 @@ public interface VersionedEntryLocalService
 		throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	@Override
 	public VersionedEntryVersion deleteVersion(
-			VersionedEntryVersion versionedEntryVersion)
-		throws PortalException;
+		VersionedEntryVersion versionedEntryVersion) throws PortalException;
 
 	/**
-	 * Deletes the versioned entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param versionedEntryId the primary key of the versioned entry
-	 * @return the versioned entry that was removed
-	 * @throws PortalException if a versioned entry with the primary key could not be found
-	 */
+	* Deletes the versioned entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param versionedEntryId the primary key of the versioned entry
+	* @return the versioned entry that was removed
+	* @throws PortalException if a versioned entry with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public VersionedEntry deleteVersionedEntry(long versionedEntryId)
 		throws PortalException;
 
 	/**
-	 * Deletes the versioned entry from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param versionedEntry the versioned entry
-	 * @return the versioned entry that was removed
-	 */
+	* Deletes the versioned entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param versionedEntry the versioned entry
+	* @return the versioned entry that was removed
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	public VersionedEntry deleteVersionedEntry(VersionedEntry versionedEntry);
 
@@ -142,67 +133,66 @@ public interface VersionedEntryLocalService
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -244,10 +234,10 @@ public interface VersionedEntryLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -257,39 +247,38 @@ public interface VersionedEntryLocalService
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VersionedEntryVersion getVersion(
-			VersionedEntry versionedEntry, int version)
-		throws PortalException;
+	public VersionedEntryVersion getVersion(VersionedEntry versionedEntry,
+		int version) throws PortalException;
 
 	/**
-	 * Returns a range of all the versioned entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of versioned entries
-	 * @param end the upper bound of the range of versioned entries (not inclusive)
-	 * @return the range of versioned entries
-	 */
+	* Returns a range of all the versioned entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of versioned entries
+	* @param end the upper bound of the range of versioned entries (not inclusive)
+	* @return the range of versioned entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<VersionedEntry> getVersionedEntries(int start, int end);
 
 	/**
-	 * Returns the number of versioned entries.
-	 *
-	 * @return the number of versioned entries
-	 */
+	* Returns the number of versioned entries.
+	*
+	* @return the number of versioned entries
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVersionedEntriesCount();
 
 	/**
-	 * Returns the versioned entry with the primary key.
-	 *
-	 * @param versionedEntryId the primary key of the versioned entry
-	 * @return the versioned entry
-	 * @throws PortalException if a versioned entry with the primary key could not be found
-	 */
+	* Returns the versioned entry with the primary key.
+	*
+	* @param versionedEntryId the primary key of the versioned entry
+	* @return the versioned entry
+	* @throws PortalException if a versioned entry with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VersionedEntry getVersionedEntry(long versionedEntryId)
 		throws PortalException;
@@ -306,13 +295,11 @@ public interface VersionedEntryLocalService
 
 	@Override
 	public void registerListener(
-		VersionServiceListener<VersionedEntry, VersionedEntryVersion>
-			versionServiceListener);
+		VersionServiceListener<VersionedEntry, VersionedEntryVersion> versionServiceListener);
 
 	@Override
 	public void unregisterListener(
-		VersionServiceListener<VersionedEntry, VersionedEntryVersion>
-			versionServiceListener);
+		VersionServiceListener<VersionedEntry, VersionedEntryVersion> versionServiceListener);
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -320,14 +307,12 @@ public interface VersionedEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the versioned entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param versionedEntry the versioned entry
-	 * @return the versioned entry that was updated
-	 */
+	* Updates the versioned entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param versionedEntry the versioned entry
+	* @return the versioned entry that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VersionedEntry updateVersionedEntry(
-			VersionedEntry draftVersionedEntry)
-		throws PortalException;
-
+		VersionedEntry draftVersionedEntry) throws PortalException;
 }

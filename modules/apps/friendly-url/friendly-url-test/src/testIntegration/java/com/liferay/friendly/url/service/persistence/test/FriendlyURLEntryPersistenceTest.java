@@ -15,11 +15,13 @@
 package com.liferay.friendly.url.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class FriendlyURLEntryPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.friendly.url.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.friendly.url.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class FriendlyURLEntryPersistenceTest {
 
 		_persistence.remove(newFriendlyURLEntry);
 
-		FriendlyURLEntry existingFriendlyURLEntry =
-			_persistence.fetchByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
+		FriendlyURLEntry existingFriendlyURLEntry = _persistence.fetchByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
 
 		Assert.assertNull(existingFriendlyURLEntry);
 	}
@@ -144,37 +144,29 @@ public class FriendlyURLEntryPersistenceTest {
 
 		_friendlyURLEntries.add(_persistence.update(newFriendlyURLEntry));
 
-		FriendlyURLEntry existingFriendlyURLEntry =
-			_persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
+		FriendlyURLEntry existingFriendlyURLEntry = _persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getMvccVersion(),
+		Assert.assertEquals(existingFriendlyURLEntry.getMvccVersion(),
 			newFriendlyURLEntry.getMvccVersion());
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getUuid(), newFriendlyURLEntry.getUuid());
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getDefaultLanguageId(),
+		Assert.assertEquals(existingFriendlyURLEntry.getUuid(),
+			newFriendlyURLEntry.getUuid());
+		Assert.assertEquals(existingFriendlyURLEntry.getDefaultLanguageId(),
 			newFriendlyURLEntry.getDefaultLanguageId());
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getFriendlyURLEntryId(),
+		Assert.assertEquals(existingFriendlyURLEntry.getFriendlyURLEntryId(),
 			newFriendlyURLEntry.getFriendlyURLEntryId());
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getGroupId(),
+		Assert.assertEquals(existingFriendlyURLEntry.getGroupId(),
 			newFriendlyURLEntry.getGroupId());
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getCompanyId(),
+		Assert.assertEquals(existingFriendlyURLEntry.getCompanyId(),
 			newFriendlyURLEntry.getCompanyId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingFriendlyURLEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFriendlyURLEntry.getCreateDate()),
 			Time.getShortTimestamp(newFriendlyURLEntry.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingFriendlyURLEntry.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFriendlyURLEntry.getModifiedDate()),
 			Time.getShortTimestamp(newFriendlyURLEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getClassNameId(),
+		Assert.assertEquals(existingFriendlyURLEntry.getClassNameId(),
 			newFriendlyURLEntry.getClassNameId());
-		Assert.assertEquals(
-			existingFriendlyURLEntry.getClassPK(),
+		Assert.assertEquals(existingFriendlyURLEntry.getClassPK(),
 			newFriendlyURLEntry.getClassPK());
 	}
 
@@ -207,9 +199,8 @@ public class FriendlyURLEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_C_C() throws Exception {
-		_persistence.countByG_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
@@ -218,8 +209,7 @@ public class FriendlyURLEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FriendlyURLEntry newFriendlyURLEntry = addFriendlyURLEntry();
 
-		FriendlyURLEntry existingFriendlyURLEntry =
-			_persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
+		FriendlyURLEntry existingFriendlyURLEntry = _persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingFriendlyURLEntry, newFriendlyURLEntry);
 	}
@@ -233,24 +223,23 @@ public class FriendlyURLEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<FriendlyURLEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"FriendlyURLEntry", "mvccVersion", true, "uuid", true,
-			"defaultLanguageId", true, "friendlyURLEntryId", true, "groupId",
-			true, "companyId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true);
+		return OrderByComparatorFactoryUtil.create("FriendlyURLEntry",
+			"mvccVersion", true, "uuid", true, "defaultLanguageId", true,
+			"friendlyURLEntryId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		FriendlyURLEntry newFriendlyURLEntry = addFriendlyURLEntry();
 
-		FriendlyURLEntry existingFriendlyURLEntry =
-			_persistence.fetchByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
+		FriendlyURLEntry existingFriendlyURLEntry = _persistence.fetchByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingFriendlyURLEntry, newFriendlyURLEntry);
 	}
@@ -259,8 +248,7 @@ public class FriendlyURLEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		FriendlyURLEntry missingFriendlyURLEntry =
-			_persistence.fetchByPrimaryKey(pk);
+		FriendlyURLEntry missingFriendlyURLEntry = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingFriendlyURLEntry);
 	}
@@ -268,7 +256,6 @@ public class FriendlyURLEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		FriendlyURLEntry newFriendlyURLEntry1 = addFriendlyURLEntry();
 		FriendlyURLEntry newFriendlyURLEntry2 = addFriendlyURLEntry();
 
@@ -277,22 +264,18 @@ public class FriendlyURLEntryPersistenceTest {
 		primaryKeys.add(newFriendlyURLEntry1.getPrimaryKey());
 		primaryKeys.add(newFriendlyURLEntry2.getPrimaryKey());
 
-		Map<Serializable, FriendlyURLEntry> friendlyURLEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FriendlyURLEntry> friendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, friendlyURLEntries.size());
-		Assert.assertEquals(
-			newFriendlyURLEntry1,
+		Assert.assertEquals(newFriendlyURLEntry1,
 			friendlyURLEntries.get(newFriendlyURLEntry1.getPrimaryKey()));
-		Assert.assertEquals(
-			newFriendlyURLEntry2,
+		Assert.assertEquals(newFriendlyURLEntry2,
 			friendlyURLEntries.get(newFriendlyURLEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -302,8 +285,7 @@ public class FriendlyURLEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, FriendlyURLEntry> friendlyURLEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FriendlyURLEntry> friendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(friendlyURLEntries.isEmpty());
 	}
@@ -311,7 +293,6 @@ public class FriendlyURLEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		FriendlyURLEntry newFriendlyURLEntry = addFriendlyURLEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -321,39 +302,36 @@ public class FriendlyURLEntryPersistenceTest {
 		primaryKeys.add(newFriendlyURLEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, FriendlyURLEntry> friendlyURLEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FriendlyURLEntry> friendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, friendlyURLEntries.size());
-		Assert.assertEquals(
-			newFriendlyURLEntry,
+		Assert.assertEquals(newFriendlyURLEntry,
 			friendlyURLEntries.get(newFriendlyURLEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, FriendlyURLEntry> friendlyURLEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FriendlyURLEntry> friendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(friendlyURLEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		FriendlyURLEntry newFriendlyURLEntry = addFriendlyURLEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newFriendlyURLEntry.getPrimaryKey());
 
-		Map<Serializable, FriendlyURLEntry> friendlyURLEntries =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, FriendlyURLEntry> friendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, friendlyURLEntries.size());
-		Assert.assertEquals(
-			newFriendlyURLEntry,
+		Assert.assertEquals(newFriendlyURLEntry,
 			friendlyURLEntries.get(newFriendlyURLEntry.getPrimaryKey()));
 	}
 
@@ -361,19 +339,15 @@ public class FriendlyURLEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			FriendlyURLEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = FriendlyURLEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<FriendlyURLEntry>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<FriendlyURLEntry>() {
 				@Override
 				public void performAction(FriendlyURLEntry friendlyURLEntry) {
 					Assert.assertNotNull(friendlyURLEntry);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -382,19 +356,17 @@ public class FriendlyURLEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		FriendlyURLEntry newFriendlyURLEntry = addFriendlyURLEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FriendlyURLEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURLEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"friendlyURLEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("friendlyURLEntryId",
 				newFriendlyURLEntry.getFriendlyURLEntryId()));
 
-		List<FriendlyURLEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<FriendlyURLEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -405,35 +377,32 @@ public class FriendlyURLEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FriendlyURLEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURLEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"friendlyURLEntryId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("friendlyURLEntryId",
+				RandomTestUtil.nextLong()));
 
-		List<FriendlyURLEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<FriendlyURLEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		FriendlyURLEntry newFriendlyURLEntry = addFriendlyURLEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FriendlyURLEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURLEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("friendlyURLEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"friendlyURLEntryId"));
 
-		Object newFriendlyURLEntryId =
-			newFriendlyURLEntry.getFriendlyURLEntryId();
+		Object newFriendlyURLEntryId = newFriendlyURLEntry.getFriendlyURLEntryId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"friendlyURLEntryId", new Object[] {newFriendlyURLEntryId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("friendlyURLEntryId",
+				new Object[] { newFriendlyURLEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -446,16 +415,14 @@ public class FriendlyURLEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			FriendlyURLEntry.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURLEntry.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("friendlyURLEntryId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"friendlyURLEntryId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"friendlyURLEntryId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("friendlyURLEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -468,20 +435,14 @@ public class FriendlyURLEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		FriendlyURLEntry existingFriendlyURLEntry =
-			_persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
+		FriendlyURLEntry existingFriendlyURLEntry = _persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingFriendlyURLEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingFriendlyURLEntry, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingFriendlyURLEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingFriendlyURLEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingFriendlyURLEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingFriendlyURLEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingFriendlyURLEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingFriendlyURLEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected FriendlyURLEntry addFriendlyURLEntry() throws Exception {
@@ -512,9 +473,7 @@ public class FriendlyURLEntryPersistenceTest {
 		return friendlyURLEntry;
 	}
 
-	private List<FriendlyURLEntry> _friendlyURLEntries =
-		new ArrayList<FriendlyURLEntry>();
+	private List<FriendlyURLEntry> _friendlyURLEntries = new ArrayList<FriendlyURLEntry>();
 	private FriendlyURLEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

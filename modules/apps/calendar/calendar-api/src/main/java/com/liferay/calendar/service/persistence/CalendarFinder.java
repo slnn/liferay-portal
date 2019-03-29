@@ -22,72 +22,59 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CalendarFinder {
+	public int countByKeywords(long companyId, long[] groupIds,
+		long[] calendarResourceIds, String keywords);
 
-	public int countByKeywords(
+	public int countByC_G_C_N_D(long companyId, long[] groupIds,
+		long[] calendarResourceIds, String name, String description,
+		boolean andOperator);
+
+	public int countByC_G_C_N_D(long companyId, long[] groupIds,
+		long[] calendarResourceIds, String[] names, String[] descriptions,
+		boolean andOperator);
+
+	public int filterCountByKeywords(long companyId, long[] groupIds,
+		long[] calendarResourceIds, String keywords);
+
+	public int filterCountByC_G_C_N_D(long companyId, long[] groupIds,
+		long[] calendarResourceIds, String name, String description,
+		boolean andOperator);
+
+	public int filterCountByC_G_C_N_D(long companyId, long[] groupIds,
+		long[] calendarResourceIds, String[] names, String[] descriptions,
+		boolean andOperator);
+
+	public java.util.List<com.liferay.calendar.model.Calendar> filterFindByKeywords(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		String keywords);
+		String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator);
 
-	public int countByC_G_C_N_D(
+	public java.util.List<com.liferay.calendar.model.Calendar> filterFindByC_G_C_N_D(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		String name, String description, boolean andOperator);
+		String name, String description, boolean andOperator, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator);
 
-	public int countByC_G_C_N_D(
+	public java.util.List<com.liferay.calendar.model.Calendar> filterFindByC_G_C_N_D(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
-		String[] names, String[] descriptions, boolean andOperator);
-
-	public int filterCountByKeywords(
-		long companyId, long[] groupIds, long[] calendarResourceIds,
-		String keywords);
-
-	public int filterCountByC_G_C_N_D(
-		long companyId, long[] groupIds, long[] calendarResourceIds,
-		String name, String description, boolean andOperator);
-
-	public int filterCountByC_G_C_N_D(
-		long companyId, long[] groupIds, long[] calendarResourceIds,
-		String[] names, String[] descriptions, boolean andOperator);
-
-	public java.util.List<com.liferay.calendar.model.Calendar>
-		filterFindByKeywords(
-			long companyId, long[] groupIds, long[] calendarResourceIds,
-			String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.Calendar> orderByComparator);
-
-	public java.util.List<com.liferay.calendar.model.Calendar>
-		filterFindByC_G_C_N_D(
-			long companyId, long[] groupIds, long[] calendarResourceIds,
-			String name, String description, boolean andOperator, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.Calendar> orderByComparator);
-
-	public java.util.List<com.liferay.calendar.model.Calendar>
-		filterFindByC_G_C_N_D(
-			long companyId, long[] groupIds, long[] calendarResourceIds,
-			String[] names, String[] descriptions, boolean andOperator,
-			int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.Calendar> orderByComparator);
+		String[] names, String[] descriptions, boolean andOperator, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator);
 
 	public java.util.List<com.liferay.calendar.model.Calendar> findByKeywords(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
 		String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.calendar.model.Calendar> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator);
 
 	public java.util.List<com.liferay.calendar.model.Calendar> findByC_G_C_N_D(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
 		String name, String description, boolean andOperator, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.calendar.model.Calendar> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator);
 
 	public java.util.List<com.liferay.calendar.model.Calendar> findByC_G_C_N_D(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
 		String[] names, String[] descriptions, boolean andOperator, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.calendar.model.Calendar> orderByComparator);
-
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.Calendar> orderByComparator);
 }

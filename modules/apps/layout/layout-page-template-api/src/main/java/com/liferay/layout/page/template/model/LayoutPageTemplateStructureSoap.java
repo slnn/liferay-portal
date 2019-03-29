@@ -30,16 +30,12 @@ import java.util.List;
  */
 @ProviderType
 public class LayoutPageTemplateStructureSoap implements Serializable {
-
 	public static LayoutPageTemplateStructureSoap toSoapModel(
 		LayoutPageTemplateStructure model) {
-
-		LayoutPageTemplateStructureSoap soapModel =
-			new LayoutPageTemplateStructureSoap();
+		LayoutPageTemplateStructureSoap soapModel = new LayoutPageTemplateStructureSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setLayoutPageTemplateStructureId(
-			model.getLayoutPageTemplateStructureId());
+		soapModel.setLayoutPageTemplateStructureId(model.getLayoutPageTemplateStructureId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -55,9 +51,7 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 
 	public static LayoutPageTemplateStructureSoap[] toSoapModels(
 		LayoutPageTemplateStructure[] models) {
-
-		LayoutPageTemplateStructureSoap[] soapModels =
-			new LayoutPageTemplateStructureSoap[models.length];
+		LayoutPageTemplateStructureSoap[] soapModels = new LayoutPageTemplateStructureSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -68,12 +62,10 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 
 	public static LayoutPageTemplateStructureSoap[][] toSoapModels(
 		LayoutPageTemplateStructure[][] models) {
-
 		LayoutPageTemplateStructureSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutPageTemplateStructureSoap
-				[models.length][models[0].length];
+			soapModels = new LayoutPageTemplateStructureSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LayoutPageTemplateStructureSoap[0][0];
@@ -88,16 +80,13 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 
 	public static LayoutPageTemplateStructureSoap[] toSoapModels(
 		List<LayoutPageTemplateStructure> models) {
-
-		List<LayoutPageTemplateStructureSoap> soapModels =
-			new ArrayList<LayoutPageTemplateStructureSoap>(models.size());
+		List<LayoutPageTemplateStructureSoap> soapModels = new ArrayList<LayoutPageTemplateStructureSoap>(models.size());
 
 		for (LayoutPageTemplateStructure model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new LayoutPageTemplateStructureSoap[soapModels.size()]);
+		return soapModels.toArray(new LayoutPageTemplateStructureSoap[soapModels.size()]);
 	}
 
 	public LayoutPageTemplateStructureSoap() {
@@ -125,7 +114,6 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 
 	public void setLayoutPageTemplateStructureId(
 		long layoutPageTemplateStructureId) {
-
 		_layoutPageTemplateStructureId = layoutPageTemplateStructureId;
 	}
 
@@ -212,5 +200,4 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _data;
-
 }

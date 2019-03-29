@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,7 +35,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class KaleoActionLocalServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,40 +42,35 @@ public class KaleoActionLocalServiceUtil {
 	 */
 
 	/**
-	 * Adds the kaleo action to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoAction the kaleo action
-	 * @return the kaleo action that was added
-	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-		addKaleoAction(
-			com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
-
+	* Adds the kaleo action to the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoAction the kaleo action
+	* @return the kaleo action that was added
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction addKaleoAction(
+		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
 		return getService().addKaleoAction(kaleoAction);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-			addKaleoAction(
-				String kaleoClassName, long kaleoClassPK,
-				long kaleoDefinitionVersionId, String kaleoNodeName,
-				com.liferay.portal.workflow.kaleo.definition.Action action,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction addKaleoAction(
+		String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionVersionId, String kaleoNodeName,
+		com.liferay.portal.workflow.kaleo.definition.Action action,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addKaleoAction(
-			kaleoClassName, kaleoClassPK, kaleoDefinitionVersionId,
-			kaleoNodeName, action, serviceContext);
+		return getService()
+				   .addKaleoAction(kaleoClassName, kaleoClassPK,
+			kaleoDefinitionVersionId, kaleoNodeName, action, serviceContext);
 	}
 
 	/**
-	 * Creates a new kaleo action with the primary key. Does not add the kaleo action to the database.
-	 *
-	 * @param kaleoActionId the primary key for the new kaleo action
-	 * @return the new kaleo action
-	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-		createKaleoAction(long kaleoActionId) {
-
+	* Creates a new kaleo action with the primary key. Does not add the kaleo action to the database.
+	*
+	* @param kaleoActionId the primary key for the new kaleo action
+	* @return the new kaleo action
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction createKaleoAction(
+		long kaleoActionId) {
 		return getService().createKaleoAction(kaleoActionId);
 	}
 
@@ -84,236 +79,207 @@ public class KaleoActionLocalServiceUtil {
 	}
 
 	/**
-	 * Deletes the kaleo action from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoAction the kaleo action
-	 * @return the kaleo action that was removed
-	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-		deleteKaleoAction(
-			com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
-
+	* Deletes the kaleo action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoAction the kaleo action
+	* @return the kaleo action that was removed
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction deleteKaleoAction(
+		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
 		return getService().deleteKaleoAction(kaleoAction);
 	}
 
 	/**
-	 * Deletes the kaleo action with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoActionId the primary key of the kaleo action
-	 * @return the kaleo action that was removed
-	 * @throws PortalException if a kaleo action with the primary key could not be found
-	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-			deleteKaleoAction(long kaleoActionId)
+	* Deletes the kaleo action with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoActionId the primary key of the kaleo action
+	* @return the kaleo action that was removed
+	* @throws PortalException if a kaleo action with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction deleteKaleoAction(
+		long kaleoActionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().deleteKaleoAction(kaleoActionId);
 	}
 
 	public static void deleteKaleoDefinitionVersionKaleoActions(
 		long kaleoDefinitionVersionId) {
-
-		getService().deleteKaleoDefinitionVersionKaleoActions(
-			kaleoDefinitionVersionId);
+		getService()
+			.deleteKaleoDefinitionVersionKaleoActions(kaleoDefinitionVersionId);
 	}
 
 	/**
-	 * @throws PortalException
-	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-
-		return getService().dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-		fetchKaleoAction(long kaleoActionId) {
-
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction fetchKaleoAction(
+		long kaleoActionId) {
 		return getService().fetchKaleoAction(kaleoActionId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static
-		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-			getIndexableActionableDynamicQuery() {
-
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	 * Returns the kaleo action with the primary key.
-	 *
-	 * @param kaleoActionId the primary key of the kaleo action
-	 * @return the kaleo action
-	 * @throws PortalException if a kaleo action with the primary key could not be found
-	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-			getKaleoAction(long kaleoActionId)
+	* Returns the kaleo action with the primary key.
+	*
+	* @param kaleoActionId the primary key of the kaleo action
+	* @return the kaleo action
+	* @throws PortalException if a kaleo action with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction getKaleoAction(
+		long kaleoActionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getKaleoAction(kaleoActionId);
 	}
 
 	/**
-	 * Returns a range of all the kaleo actions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo actions
-	 * @param end the upper bound of the range of kaleo actions (not inclusive)
-	 * @return the range of kaleo actions
-	 */
-	public static java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-			int start, int end) {
-
+	* Returns a range of all the kaleo actions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo actions
+	* @param end the upper bound of the range of kaleo actions (not inclusive)
+	* @return the range of kaleo actions
+	*/
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
+		int start, int end) {
 		return getService().getKaleoActions(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-			String kaleoClassName, long kaleoClassPK) {
-
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
+		String kaleoClassName, long kaleoClassPK) {
 		return getService().getKaleoActions(kaleoClassName, kaleoClassPK);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-			String kaleoClassName, long kaleoClassPK, String executionType) {
-
-		return getService().getKaleoActions(
-			kaleoClassName, kaleoClassPK, executionType);
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
+		String kaleoClassName, long kaleoClassPK, String executionType) {
+		return getService()
+				   .getKaleoActions(kaleoClassName, kaleoClassPK, executionType);
 	}
 
 	/**
-	 * Returns the number of kaleo actions.
-	 *
-	 * @return the number of kaleo actions
-	 */
+	* Returns the number of kaleo actions.
+	*
+	* @return the number of kaleo actions
+	*/
 	public static int getKaleoActionsCount() {
 		return getService().getKaleoActionsCount();
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	 * Updates the kaleo action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoAction the kaleo action
-	 * @return the kaleo action that was updated
-	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoAction
-		updateKaleoAction(
-			com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
-
+	* Updates the kaleo action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoAction the kaleo action
+	* @return the kaleo action that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoAction updateKaleoAction(
+		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
 		return getService().updateKaleoAction(kaleoAction);
 	}
 
@@ -321,22 +287,17 @@ public class KaleoActionLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<KaleoActionLocalService, KaleoActionLocalService> _serviceTracker;
+	private static ServiceTracker<KaleoActionLocalService, KaleoActionLocalService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(KaleoActionLocalService.class);
 
-		ServiceTracker<KaleoActionLocalService, KaleoActionLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<KaleoActionLocalService, KaleoActionLocalService>(
-						bundle.getBundleContext(),
-						KaleoActionLocalService.class, null);
+		ServiceTracker<KaleoActionLocalService, KaleoActionLocalService> serviceTracker =
+			new ServiceTracker<KaleoActionLocalService, KaleoActionLocalService>(bundle.getBundleContext(),
+				KaleoActionLocalService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

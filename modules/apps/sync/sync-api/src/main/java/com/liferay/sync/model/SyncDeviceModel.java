@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SyncDeviceModel
-	extends BaseModel<SyncDevice>, ShardedModel, StagedAuditedModel {
-
+public interface SyncDeviceModel extends BaseModel<SyncDevice>, ShardedModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -257,5 +256,4 @@ public interface SyncDeviceModel
 	 * @param status the status of this sync device
 	 */
 	public void setStatus(int status);
-
 }

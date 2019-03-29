@@ -27,45 +27,35 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see OAuth2ApplicationScopeAliasesModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl"
-)
+@ImplementationClassName("com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl")
 @ProviderType
 public interface OAuth2ApplicationScopeAliases
 	extends OAuth2ApplicationScopeAliasesModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuth2ApplicationScopeAliases, Long>
-		O_AUTH2_APPLICATION_SCOPE_ALIASES_ID_ACCESSOR =
-			new Accessor<OAuth2ApplicationScopeAliases, Long>() {
+	public static final Accessor<OAuth2ApplicationScopeAliases, Long> O_AUTH2_APPLICATION_SCOPE_ALIASES_ID_ACCESSOR =
+		new Accessor<OAuth2ApplicationScopeAliases, Long>() {
+			@Override
+			public Long get(
+				OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
+				return oAuth2ApplicationScopeAliases.getOAuth2ApplicationScopeAliasesId();
+			}
 
-				@Override
-				public Long get(
-					OAuth2ApplicationScopeAliases
-						oAuth2ApplicationScopeAliases) {
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-					return oAuth2ApplicationScopeAliases.
-						getOAuth2ApplicationScopeAliasesId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<OAuth2ApplicationScopeAliases> getTypeClass() {
-					return OAuth2ApplicationScopeAliases.class;
-				}
-
-			};
+			@Override
+			public Class<OAuth2ApplicationScopeAliases> getTypeClass() {
+				return OAuth2ApplicationScopeAliases.class;
+			}
+		};
 
 	public java.util.List<String> getScopeAliasesList();
 
 	public void setScopeAliasesList(java.util.List<String> scopeAliasesList);
-
 }

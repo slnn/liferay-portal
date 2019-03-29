@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoNodeModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl"
-)
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl")
 @ProviderType
 public interface KaleoNode extends KaleoNodeModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoNode, Long> KALEO_NODE_ID_ACCESSOR =
-		new Accessor<KaleoNode, Long>() {
-
+	public static final Accessor<KaleoNode, Long> KALEO_NODE_ID_ACCESSOR = new Accessor<KaleoNode, Long>() {
 			@Override
 			public Long get(KaleoNode kaleoNode) {
 				return kaleoNode.getKaleoNodeId();
@@ -55,7 +50,6 @@ public interface KaleoNode extends KaleoNodeModel, PersistedModel {
 			public Class<KaleoNode> getTypeClass() {
 				return KaleoNode.class;
 			}
-
 		};
 
 	public KaleoTransition getDefaultKaleoTransition()
@@ -67,5 +61,4 @@ public interface KaleoNode extends KaleoNodeModel, PersistedModel {
 	public java.util.List<KaleoTransition> getKaleoTransitions();
 
 	public boolean hasKaleoTransition();
-
 }

@@ -32,9 +32,8 @@ import com.liferay.mail.reader.service.MessageLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class MessageBaseImpl
-	extends MessageModelImpl implements Message {
-
+public abstract class MessageBaseImpl extends MessageModelImpl
+	implements Message {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class MessageBaseImpl
 			MessageLocalServiceUtil.updateMessage(this);
 		}
 	}
-
 }

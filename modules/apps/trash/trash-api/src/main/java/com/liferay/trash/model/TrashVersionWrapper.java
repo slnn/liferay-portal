@@ -32,10 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class TrashVersionWrapper
-	extends BaseModelWrapper<TrashVersion>
+public class TrashVersionWrapper extends BaseModelWrapper<TrashVersion>
 	implements TrashVersion, ModelWrapper<TrashVersion> {
-
 	public TrashVersionWrapper(TrashVersion trashVersion) {
 		super(trashVersion);
 	}
@@ -101,89 +99,87 @@ public class TrashVersionWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this trash version.
-	 *
-	 * @return the fully qualified class name of this trash version
-	 */
+	* Returns the fully qualified class name of this trash version.
+	*
+	* @return the fully qualified class name of this trash version
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this trash version.
-	 *
-	 * @return the class name ID of this trash version
-	 */
+	* Returns the class name ID of this trash version.
+	*
+	* @return the class name ID of this trash version
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this trash version.
-	 *
-	 * @return the class pk of this trash version
-	 */
+	* Returns the class pk of this trash version.
+	*
+	* @return the class pk of this trash version
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this trash version.
-	 *
-	 * @return the company ID of this trash version
-	 */
+	* Returns the company ID of this trash version.
+	*
+	* @return the company ID of this trash version
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the entry ID of this trash version.
-	 *
-	 * @return the entry ID of this trash version
-	 */
+	* Returns the entry ID of this trash version.
+	*
+	* @return the entry ID of this trash version
+	*/
 	@Override
 	public long getEntryId() {
 		return model.getEntryId();
 	}
 
 	/**
-	 * Returns the primary key of this trash version.
-	 *
-	 * @return the primary key of this trash version
-	 */
+	* Returns the primary key of this trash version.
+	*
+	* @return the primary key of this trash version
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the status of this trash version.
-	 *
-	 * @return the status of this trash version
-	 */
+	* Returns the status of this trash version.
+	*
+	* @return the status of this trash version
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the type settings of this trash version.
-	 *
-	 * @return the type settings of this trash version
-	 */
+	* Returns the type settings of this trash version.
+	*
+	* @return the type settings of this trash version
+	*/
 	@Override
 	public String getTypeSettings() {
 		return model.getTypeSettings();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties() {
-
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return model.getTypeSettingsProperties();
 	}
 
@@ -198,10 +194,10 @@ public class TrashVersionWrapper
 	}
 
 	/**
-	 * Returns the version ID of this trash version.
-	 *
-	 * @return the version ID of this trash version
-	 */
+	* Returns the version ID of this trash version.
+	*
+	* @return the version ID of this trash version
+	*/
 	@Override
 	public long getVersionId() {
 		return model.getVersionId();
@@ -218,70 +214,70 @@ public class TrashVersionWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this trash version.
-	 *
-	 * @param classNameId the class name ID of this trash version
-	 */
+	* Sets the class name ID of this trash version.
+	*
+	* @param classNameId the class name ID of this trash version
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this trash version.
-	 *
-	 * @param classPK the class pk of this trash version
-	 */
+	* Sets the class pk of this trash version.
+	*
+	* @param classPK the class pk of this trash version
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this trash version.
-	 *
-	 * @param companyId the company ID of this trash version
-	 */
+	* Sets the company ID of this trash version.
+	*
+	* @param companyId the company ID of this trash version
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the entry ID of this trash version.
-	 *
-	 * @param entryId the entry ID of this trash version
-	 */
+	* Sets the entry ID of this trash version.
+	*
+	* @param entryId the entry ID of this trash version
+	*/
 	@Override
 	public void setEntryId(long entryId) {
 		model.setEntryId(entryId);
 	}
 
 	/**
-	 * Sets the primary key of this trash version.
-	 *
-	 * @param primaryKey the primary key of this trash version
-	 */
+	* Sets the primary key of this trash version.
+	*
+	* @param primaryKey the primary key of this trash version
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the status of this trash version.
-	 *
-	 * @param status the status of this trash version
-	 */
+	* Sets the status of this trash version.
+	*
+	* @param status the status of this trash version
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the type settings of this trash version.
-	 *
-	 * @param typeSettings the type settings of this trash version
-	 */
+	* Sets the type settings of this trash version.
+	*
+	* @param typeSettings the type settings of this trash version
+	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
@@ -289,17 +285,15 @@ public class TrashVersionWrapper
 
 	@Override
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties) {
-
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
-	 * Sets the version ID of this trash version.
-	 *
-	 * @param versionId the version ID of this trash version
-	 */
+	* Sets the version ID of this trash version.
+	*
+	* @param versionId the version ID of this trash version
+	*/
 	@Override
 	public void setVersionId(long versionId) {
 		model.setVersionId(versionId);
@@ -309,5 +303,4 @@ public class TrashVersionWrapper
 	protected TrashVersionWrapper wrap(TrashVersion trashVersion) {
 		return new TrashVersionWrapper(trashVersion);
 	}
-
 }

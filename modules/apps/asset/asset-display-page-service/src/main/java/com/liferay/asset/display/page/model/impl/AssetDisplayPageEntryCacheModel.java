@@ -17,8 +17,10 @@ package com.liferay.asset.display.page.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AssetDisplayPageEntryCacheModel
-	implements CacheModel<AssetDisplayPageEntry>, Externalizable {
-
+public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayPageEntry>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class AssetDisplayPageEntryCacheModel
 			return false;
 		}
 
-		AssetDisplayPageEntryCacheModel assetDisplayPageEntryCacheModel =
-			(AssetDisplayPageEntryCacheModel)obj;
+		AssetDisplayPageEntryCacheModel assetDisplayPageEntryCacheModel = (AssetDisplayPageEntryCacheModel)obj;
 
-		if (assetDisplayPageEntryId ==
-				assetDisplayPageEntryCacheModel.assetDisplayPageEntryId) {
-
+		if (assetDisplayPageEntryId == assetDisplayPageEntryCacheModel.assetDisplayPageEntryId) {
 			return true;
 		}
 
@@ -102,8 +100,7 @@ public class AssetDisplayPageEntryCacheModel
 
 	@Override
 	public AssetDisplayPageEntry toEntityModel() {
-		AssetDisplayPageEntryImpl assetDisplayPageEntryImpl =
-			new AssetDisplayPageEntryImpl();
+		AssetDisplayPageEntryImpl assetDisplayPageEntryImpl = new AssetDisplayPageEntryImpl();
 
 		if (uuid == null) {
 			assetDisplayPageEntryImpl.setUuid("");
@@ -112,8 +109,7 @@ public class AssetDisplayPageEntryCacheModel
 			assetDisplayPageEntryImpl.setUuid(uuid);
 		}
 
-		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(
-			assetDisplayPageEntryId);
+		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(assetDisplayPageEntryId);
 		assetDisplayPageEntryImpl.setGroupId(groupId);
 		assetDisplayPageEntryImpl.setCompanyId(companyId);
 		assetDisplayPageEntryImpl.setUserId(userId);
@@ -141,8 +137,7 @@ public class AssetDisplayPageEntryCacheModel
 
 		assetDisplayPageEntryImpl.setClassNameId(classNameId);
 		assetDisplayPageEntryImpl.setClassPK(classPK);
-		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(
-			layoutPageTemplateEntryId);
+		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		assetDisplayPageEntryImpl.setType(type);
 		assetDisplayPageEntryImpl.setPlid(plid);
 
@@ -178,7 +173,8 @@ public class AssetDisplayPageEntryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -228,5 +224,4 @@ public class AssetDisplayPageEntryCacheModel
 	public long layoutPageTemplateEntryId;
 	public int type;
 	public long plid;
-
 }

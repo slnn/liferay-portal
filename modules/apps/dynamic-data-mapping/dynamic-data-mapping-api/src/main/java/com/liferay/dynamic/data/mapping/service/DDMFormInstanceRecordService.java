@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -43,47 +44,36 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=ddm",
-		"json.web.service.context.path=DDMFormInstanceRecord"
-	},
-	service = DDMFormInstanceRecordService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=ddm", "json.web.service.context.path=DDMFormInstanceRecord"}, service = DDMFormInstanceRecordService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface DDMFormInstanceRecordService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceRecordServiceUtil} to access the ddm form instance record remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public DDMFormInstanceRecord addFormInstanceRecord(
-			long groupId, long ddmFormInstanceId, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public DDMFormInstanceRecord addFormInstanceRecord(long groupId,
+		long ddmFormInstanceId, DDMFormValues ddmFormValues,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceRecord getFormInstanceRecord(
-			long ddmFormInstanceRecordId)
-		throws PortalException;
+		long ddmFormInstanceRecordId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstanceRecord> getFormInstanceRecords(
-			long ddmFormInstanceId)
-		throws PortalException;
+		long ddmFormInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstanceRecord> getFormInstanceRecords(
-			long ddmFormInstanceId, int status, int start, int end,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
+		long ddmFormInstanceId, int status, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -91,20 +81,18 @@ public interface DDMFormInstanceRecordService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
-	public void revertFormInstanceRecord(
-			long ddmFormInstanceRecordId, String version,
-			ServiceContext serviceContext)
+	public void revertFormInstanceRecord(long ddmFormInstanceRecordId,
+		String version, ServiceContext serviceContext)
 		throws PortalException;
 
 	public DDMFormInstanceRecord updateFormInstanceRecord(
-			long ddmFormInstanceRecordId, boolean majorVersion,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		long ddmFormInstanceRecordId, boolean majorVersion,
+		DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException;
-
 }

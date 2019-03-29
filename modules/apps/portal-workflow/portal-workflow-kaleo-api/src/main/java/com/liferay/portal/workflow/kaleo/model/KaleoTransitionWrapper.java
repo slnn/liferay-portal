@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class KaleoTransitionWrapper
-	extends BaseModelWrapper<KaleoTransition>
+public class KaleoTransitionWrapper extends BaseModelWrapper<KaleoTransition>
 	implements KaleoTransition, ModelWrapper<KaleoTransition> {
-
 	public KaleoTransitionWrapper(KaleoTransition kaleoTransition) {
 		super(kaleoTransition);
 	}
@@ -53,8 +51,7 @@ public class KaleoTransitionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put(
-			"kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
+		attributes.put("kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
 		attributes.put("kaleoNodeId", getKaleoNodeId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -118,7 +115,7 @@ public class KaleoTransitionWrapper
 		}
 
 		Long kaleoDefinitionVersionId = (Long)attributes.get(
-			"kaleoDefinitionVersionId");
+				"kaleoDefinitionVersionId");
 
 		if (kaleoDefinitionVersionId != null) {
 			setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
@@ -149,7 +146,7 @@ public class KaleoTransitionWrapper
 		}
 
 		String sourceKaleoNodeName = (String)attributes.get(
-			"sourceKaleoNodeName");
+				"sourceKaleoNodeName");
 
 		if (sourceKaleoNodeName != null) {
 			setSourceKaleoNodeName(sourceKaleoNodeName);
@@ -162,14 +159,13 @@ public class KaleoTransitionWrapper
 		}
 
 		String targetKaleoNodeName = (String)attributes.get(
-			"targetKaleoNodeName");
+				"targetKaleoNodeName");
 
 		if (targetKaleoNodeName != null) {
 			setTargetKaleoNodeName(targetKaleoNodeName);
 		}
 
-		Boolean defaultTransition = (Boolean)attributes.get(
-			"defaultTransition");
+		Boolean defaultTransition = (Boolean)attributes.get("defaultTransition");
 
 		if (defaultTransition != null) {
 			setDefaultTransition(defaultTransition);
@@ -177,120 +173,120 @@ public class KaleoTransitionWrapper
 	}
 
 	/**
-	 * Returns the company ID of this kaleo transition.
-	 *
-	 * @return the company ID of this kaleo transition
-	 */
+	* Returns the company ID of this kaleo transition.
+	*
+	* @return the company ID of this kaleo transition
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this kaleo transition.
-	 *
-	 * @return the create date of this kaleo transition
-	 */
+	* Returns the create date of this kaleo transition.
+	*
+	* @return the create date of this kaleo transition
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the default transition of this kaleo transition.
-	 *
-	 * @return the default transition of this kaleo transition
-	 */
+	* Returns the default transition of this kaleo transition.
+	*
+	* @return the default transition of this kaleo transition
+	*/
 	@Override
 	public boolean getDefaultTransition() {
 		return model.getDefaultTransition();
 	}
 
 	/**
-	 * Returns the description of this kaleo transition.
-	 *
-	 * @return the description of this kaleo transition
-	 */
+	* Returns the description of this kaleo transition.
+	*
+	* @return the description of this kaleo transition
+	*/
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	 * Returns the group ID of this kaleo transition.
-	 *
-	 * @return the group ID of this kaleo transition
-	 */
+	* Returns the group ID of this kaleo transition.
+	*
+	* @return the group ID of this kaleo transition
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the kaleo definition version ID of this kaleo transition.
-	 *
-	 * @return the kaleo definition version ID of this kaleo transition
-	 */
+	* Returns the kaleo definition version ID of this kaleo transition.
+	*
+	* @return the kaleo definition version ID of this kaleo transition
+	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
 		return model.getKaleoDefinitionVersionId();
 	}
 
 	/**
-	 * Returns the kaleo node ID of this kaleo transition.
-	 *
-	 * @return the kaleo node ID of this kaleo transition
-	 */
+	* Returns the kaleo node ID of this kaleo transition.
+	*
+	* @return the kaleo node ID of this kaleo transition
+	*/
 	@Override
 	public long getKaleoNodeId() {
 		return model.getKaleoNodeId();
 	}
 
 	/**
-	 * Returns the kaleo transition ID of this kaleo transition.
-	 *
-	 * @return the kaleo transition ID of this kaleo transition
-	 */
+	* Returns the kaleo transition ID of this kaleo transition.
+	*
+	* @return the kaleo transition ID of this kaleo transition
+	*/
 	@Override
 	public long getKaleoTransitionId() {
 		return model.getKaleoTransitionId();
 	}
 
 	/**
-	 * Returns the modified date of this kaleo transition.
-	 *
-	 * @return the modified date of this kaleo transition
-	 */
+	* Returns the modified date of this kaleo transition.
+	*
+	* @return the modified date of this kaleo transition
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the mvcc version of this kaleo transition.
-	 *
-	 * @return the mvcc version of this kaleo transition
-	 */
+	* Returns the mvcc version of this kaleo transition.
+	*
+	* @return the mvcc version of this kaleo transition
+	*/
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	 * Returns the name of this kaleo transition.
-	 *
-	 * @return the name of this kaleo transition
-	 */
+	* Returns the name of this kaleo transition.
+	*
+	* @return the name of this kaleo transition
+	*/
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	 * Returns the primary key of this kaleo transition.
-	 *
-	 * @return the primary key of this kaleo transition
-	 */
+	* Returns the primary key of this kaleo transition.
+	*
+	* @return the primary key of this kaleo transition
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -299,25 +295,24 @@ public class KaleoTransitionWrapper
 	@Override
 	public KaleoNode getSourceKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getSourceKaleoNode();
 	}
 
 	/**
-	 * Returns the source kaleo node ID of this kaleo transition.
-	 *
-	 * @return the source kaleo node ID of this kaleo transition
-	 */
+	* Returns the source kaleo node ID of this kaleo transition.
+	*
+	* @return the source kaleo node ID of this kaleo transition
+	*/
 	@Override
 	public long getSourceKaleoNodeId() {
 		return model.getSourceKaleoNodeId();
 	}
 
 	/**
-	 * Returns the source kaleo node name of this kaleo transition.
-	 *
-	 * @return the source kaleo node name of this kaleo transition
-	 */
+	* Returns the source kaleo node name of this kaleo transition.
+	*
+	* @return the source kaleo node name of this kaleo transition
+	*/
 	@Override
 	public String getSourceKaleoNodeName() {
 		return model.getSourceKaleoNodeName();
@@ -326,65 +321,64 @@ public class KaleoTransitionWrapper
 	@Override
 	public KaleoNode getTargetKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return model.getTargetKaleoNode();
 	}
 
 	/**
-	 * Returns the target kaleo node ID of this kaleo transition.
-	 *
-	 * @return the target kaleo node ID of this kaleo transition
-	 */
+	* Returns the target kaleo node ID of this kaleo transition.
+	*
+	* @return the target kaleo node ID of this kaleo transition
+	*/
 	@Override
 	public long getTargetKaleoNodeId() {
 		return model.getTargetKaleoNodeId();
 	}
 
 	/**
-	 * Returns the target kaleo node name of this kaleo transition.
-	 *
-	 * @return the target kaleo node name of this kaleo transition
-	 */
+	* Returns the target kaleo node name of this kaleo transition.
+	*
+	* @return the target kaleo node name of this kaleo transition
+	*/
 	@Override
 	public String getTargetKaleoNodeName() {
 		return model.getTargetKaleoNodeName();
 	}
 
 	/**
-	 * Returns the user ID of this kaleo transition.
-	 *
-	 * @return the user ID of this kaleo transition
-	 */
+	* Returns the user ID of this kaleo transition.
+	*
+	* @return the user ID of this kaleo transition
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this kaleo transition.
-	 *
-	 * @return the user name of this kaleo transition
-	 */
+	* Returns the user name of this kaleo transition.
+	*
+	* @return the user name of this kaleo transition
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this kaleo transition.
-	 *
-	 * @return the user uuid of this kaleo transition
-	 */
+	* Returns the user uuid of this kaleo transition.
+	*
+	* @return the user uuid of this kaleo transition
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns <code>true</code> if this kaleo transition is default transition.
-	 *
-	 * @return <code>true</code> if this kaleo transition is default transition; <code>false</code> otherwise
-	 */
+	* Returns <code>true</code> if this kaleo transition is default transition.
+	*
+	* @return <code>true</code> if this kaleo transition is default transition; <code>false</code> otherwise
+	*/
 	@Override
 	public boolean isDefaultTransition() {
 		return model.isDefaultTransition();
@@ -396,190 +390,190 @@ public class KaleoTransitionWrapper
 	}
 
 	/**
-	 * Sets the company ID of this kaleo transition.
-	 *
-	 * @param companyId the company ID of this kaleo transition
-	 */
+	* Sets the company ID of this kaleo transition.
+	*
+	* @param companyId the company ID of this kaleo transition
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this kaleo transition.
-	 *
-	 * @param createDate the create date of this kaleo transition
-	 */
+	* Sets the create date of this kaleo transition.
+	*
+	* @param createDate the create date of this kaleo transition
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets whether this kaleo transition is default transition.
-	 *
-	 * @param defaultTransition the default transition of this kaleo transition
-	 */
+	* Sets whether this kaleo transition is default transition.
+	*
+	* @param defaultTransition the default transition of this kaleo transition
+	*/
 	@Override
 	public void setDefaultTransition(boolean defaultTransition) {
 		model.setDefaultTransition(defaultTransition);
 	}
 
 	/**
-	 * Sets the description of this kaleo transition.
-	 *
-	 * @param description the description of this kaleo transition
-	 */
+	* Sets the description of this kaleo transition.
+	*
+	* @param description the description of this kaleo transition
+	*/
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	 * Sets the group ID of this kaleo transition.
-	 *
-	 * @param groupId the group ID of this kaleo transition
-	 */
+	* Sets the group ID of this kaleo transition.
+	*
+	* @param groupId the group ID of this kaleo transition
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the kaleo definition version ID of this kaleo transition.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo transition
-	 */
+	* Sets the kaleo definition version ID of this kaleo transition.
+	*
+	* @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo transition
+	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
 		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
-	 * Sets the kaleo node ID of this kaleo transition.
-	 *
-	 * @param kaleoNodeId the kaleo node ID of this kaleo transition
-	 */
+	* Sets the kaleo node ID of this kaleo transition.
+	*
+	* @param kaleoNodeId the kaleo node ID of this kaleo transition
+	*/
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
 		model.setKaleoNodeId(kaleoNodeId);
 	}
 
 	/**
-	 * Sets the kaleo transition ID of this kaleo transition.
-	 *
-	 * @param kaleoTransitionId the kaleo transition ID of this kaleo transition
-	 */
+	* Sets the kaleo transition ID of this kaleo transition.
+	*
+	* @param kaleoTransitionId the kaleo transition ID of this kaleo transition
+	*/
 	@Override
 	public void setKaleoTransitionId(long kaleoTransitionId) {
 		model.setKaleoTransitionId(kaleoTransitionId);
 	}
 
 	/**
-	 * Sets the modified date of this kaleo transition.
-	 *
-	 * @param modifiedDate the modified date of this kaleo transition
-	 */
+	* Sets the modified date of this kaleo transition.
+	*
+	* @param modifiedDate the modified date of this kaleo transition
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the mvcc version of this kaleo transition.
-	 *
-	 * @param mvccVersion the mvcc version of this kaleo transition
-	 */
+	* Sets the mvcc version of this kaleo transition.
+	*
+	* @param mvccVersion the mvcc version of this kaleo transition
+	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	 * Sets the name of this kaleo transition.
-	 *
-	 * @param name the name of this kaleo transition
-	 */
+	* Sets the name of this kaleo transition.
+	*
+	* @param name the name of this kaleo transition
+	*/
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	 * Sets the primary key of this kaleo transition.
-	 *
-	 * @param primaryKey the primary key of this kaleo transition
-	 */
+	* Sets the primary key of this kaleo transition.
+	*
+	* @param primaryKey the primary key of this kaleo transition
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the source kaleo node ID of this kaleo transition.
-	 *
-	 * @param sourceKaleoNodeId the source kaleo node ID of this kaleo transition
-	 */
+	* Sets the source kaleo node ID of this kaleo transition.
+	*
+	* @param sourceKaleoNodeId the source kaleo node ID of this kaleo transition
+	*/
 	@Override
 	public void setSourceKaleoNodeId(long sourceKaleoNodeId) {
 		model.setSourceKaleoNodeId(sourceKaleoNodeId);
 	}
 
 	/**
-	 * Sets the source kaleo node name of this kaleo transition.
-	 *
-	 * @param sourceKaleoNodeName the source kaleo node name of this kaleo transition
-	 */
+	* Sets the source kaleo node name of this kaleo transition.
+	*
+	* @param sourceKaleoNodeName the source kaleo node name of this kaleo transition
+	*/
 	@Override
 	public void setSourceKaleoNodeName(String sourceKaleoNodeName) {
 		model.setSourceKaleoNodeName(sourceKaleoNodeName);
 	}
 
 	/**
-	 * Sets the target kaleo node ID of this kaleo transition.
-	 *
-	 * @param targetKaleoNodeId the target kaleo node ID of this kaleo transition
-	 */
+	* Sets the target kaleo node ID of this kaleo transition.
+	*
+	* @param targetKaleoNodeId the target kaleo node ID of this kaleo transition
+	*/
 	@Override
 	public void setTargetKaleoNodeId(long targetKaleoNodeId) {
 		model.setTargetKaleoNodeId(targetKaleoNodeId);
 	}
 
 	/**
-	 * Sets the target kaleo node name of this kaleo transition.
-	 *
-	 * @param targetKaleoNodeName the target kaleo node name of this kaleo transition
-	 */
+	* Sets the target kaleo node name of this kaleo transition.
+	*
+	* @param targetKaleoNodeName the target kaleo node name of this kaleo transition
+	*/
 	@Override
 	public void setTargetKaleoNodeName(String targetKaleoNodeName) {
 		model.setTargetKaleoNodeName(targetKaleoNodeName);
 	}
 
 	/**
-	 * Sets the user ID of this kaleo transition.
-	 *
-	 * @param userId the user ID of this kaleo transition
-	 */
+	* Sets the user ID of this kaleo transition.
+	*
+	* @param userId the user ID of this kaleo transition
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this kaleo transition.
-	 *
-	 * @param userName the user name of this kaleo transition
-	 */
+	* Sets the user name of this kaleo transition.
+	*
+	* @param userName the user name of this kaleo transition
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this kaleo transition.
-	 *
-	 * @param userUuid the user uuid of this kaleo transition
-	 */
+	* Sets the user uuid of this kaleo transition.
+	*
+	* @param userUuid the user uuid of this kaleo transition
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -589,5 +583,4 @@ public class KaleoTransitionWrapper
 	protected KaleoTransitionWrapper wrap(KaleoTransition kaleoTransition) {
 		return new KaleoTransitionWrapper(kaleoTransition);
 	}
-
 }

@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
+
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryModel;
 import com.liferay.segments.model.SegmentsEntrySoap;
@@ -69,28 +72,31 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class SegmentsEntryModelImpl
-	extends BaseModelImpl<SegmentsEntry> implements SegmentsEntryModel {
-
+public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
+	implements SegmentsEntryModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a segments entry model instance should use the <code>SegmentsEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SegmentsEntry";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"segmentsEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"active_", Types.BOOLEAN},
-		{"criteria", Types.CLOB}, {"key_", Types.VARCHAR},
-		{"source", Types.VARCHAR}, {"type_", Types.VARCHAR}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "segmentsEntryId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "active_", Types.BOOLEAN },
+			{ "criteria", Types.CLOB },
+			{ "key_", Types.VARCHAR },
+			{ "source", Types.VARCHAR },
+			{ "type_", Types.VARCHAR }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
@@ -109,48 +115,27 @@ public class SegmentsEntryModelImpl
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,key_ VARCHAR(75) null,source VARCHAR(75) null,type_ VARCHAR(75) null)";
-
+	public static final String TABLE_SQL_CREATE = "create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,key_ VARCHAR(75) null,source VARCHAR(75) null,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntry";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY segmentsEntry.modifiedDate DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY SegmentsEntry.modifiedDate DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY segmentsEntry.modifiedDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY SegmentsEntry.modifiedDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.segments.model.SegmentsEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.segments.model.SegmentsEntry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.segments.model.SegmentsEntry"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.segments.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.segments.model.SegmentsEntry"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.segments.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.segments.model.SegmentsEntry"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.segments.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.segments.model.SegmentsEntry"),
+			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-
 	public static final long KEY_COLUMN_BITMASK = 4L;
-
 	public static final long SOURCE_COLUMN_BITMASK = 8L;
-
 	public static final long TYPE_COLUMN_BITMASK = 16L;
-
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
 
 	/**
@@ -195,8 +180,7 @@ public class SegmentsEntryModelImpl
 			return null;
 		}
 
-		List<SegmentsEntry> models = new ArrayList<SegmentsEntry>(
-			soapModels.length);
+		List<SegmentsEntry> models = new ArrayList<SegmentsEntry>(soapModels.length);
 
 		for (SegmentsEntrySoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -205,9 +189,8 @@ public class SegmentsEntryModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.segments.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.segments.model.SegmentsEntry"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.segments.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.segments.model.SegmentsEntry"));
 
 	public SegmentsEntryModelImpl() {
 	}
@@ -246,18 +229,13 @@ public class SegmentsEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SegmentsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SegmentsEntry, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((SegmentsEntry)this));
 		}
 
@@ -269,107 +247,69 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SegmentsEntry, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SegmentsEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SegmentsEntry, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SegmentsEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(SegmentsEntry)this, entry.getValue());
+				attributeSetterBiConsumer.accept((SegmentsEntry)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SegmentsEntry, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<SegmentsEntry, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SegmentsEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<SegmentsEntry, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SegmentsEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SegmentsEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<SegmentsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SegmentsEntry, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SegmentsEntry, Object>>();
-		Map<String, BiConsumer<SegmentsEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SegmentsEntry, ?>>();
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SegmentsEntry, Object>>();
+		Map<String, BiConsumer<SegmentsEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SegmentsEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"segmentsEntryId", SegmentsEntry::getSegmentsEntryId);
-		attributeSetterBiConsumers.put(
-			"segmentsEntryId",
-			(BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setSegmentsEntryId);
+
+		attributeGetterFunctions.put("segmentsEntryId", SegmentsEntry::getSegmentsEntryId);
+		attributeSetterBiConsumers.put("segmentsEntryId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setSegmentsEntryId);
 		attributeGetterFunctions.put("groupId", SegmentsEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setGroupId);
 		attributeGetterFunctions.put("companyId", SegmentsEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setCompanyId);
 		attributeGetterFunctions.put("userId", SegmentsEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setUserId);
 		attributeGetterFunctions.put("userName", SegmentsEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SegmentsEntry, String>)SegmentsEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", SegmentsEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", SegmentsEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setModifiedDate);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setUserName);
+		attributeGetterFunctions.put("createDate", SegmentsEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SegmentsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setModifiedDate);
 		attributeGetterFunctions.put("name", SegmentsEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setName);
-		attributeGetterFunctions.put(
-			"description", SegmentsEntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<SegmentsEntry, String>)SegmentsEntry::setDescription);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setName);
+		attributeGetterFunctions.put("description", SegmentsEntry::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setDescription);
 		attributeGetterFunctions.put("active", SegmentsEntry::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<SegmentsEntry, Boolean>)SegmentsEntry::setActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<SegmentsEntry, Boolean>)SegmentsEntry::setActive);
 		attributeGetterFunctions.put("criteria", SegmentsEntry::getCriteria);
-		attributeSetterBiConsumers.put(
-			"criteria",
-			(BiConsumer<SegmentsEntry, String>)SegmentsEntry::setCriteria);
+		attributeSetterBiConsumers.put("criteria", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setCriteria);
 		attributeGetterFunctions.put("key", SegmentsEntry::getKey);
-		attributeSetterBiConsumers.put(
-			"key", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setKey);
+		attributeSetterBiConsumers.put("key", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setKey);
 		attributeGetterFunctions.put("source", SegmentsEntry::getSource);
-		attributeSetterBiConsumers.put(
-			"source",
-			(BiConsumer<SegmentsEntry, String>)SegmentsEntry::setSource);
+		attributeSetterBiConsumers.put("source", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setSource);
 		attributeGetterFunctions.put("type", SegmentsEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setType);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -522,8 +462,8 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -560,14 +500,12 @@ public class SegmentsEntryModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
 		}
 	}
 
@@ -587,9 +525,7 @@ public class SegmentsEntryModelImpl
 			return;
 		}
 
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -625,8 +561,8 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -658,21 +594,18 @@ public class SegmentsEntryModelImpl
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
-
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
+			setDescription(LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
+			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -688,16 +621,14 @@ public class SegmentsEntryModelImpl
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -830,8 +761,8 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), SegmentsEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			SegmentsEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -867,8 +798,7 @@ public class SegmentsEntryModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -886,15 +816,12 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			SegmentsEntry.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(SegmentsEntry.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -903,7 +830,6 @@ public class SegmentsEntryModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -920,21 +846,19 @@ public class SegmentsEntryModelImpl
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(
-				getDescription(defaultLocale), defaultLocale, defaultLocale);
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 	}
 
 	@Override
 	public SegmentsEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SegmentsEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (SegmentsEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -968,8 +892,8 @@ public class SegmentsEntryModelImpl
 	public int compareTo(SegmentsEntry segmentsEntry) {
 		int value = 0;
 
-		value = DateUtil.compareTo(
-			getModifiedDate(), segmentsEntry.getModifiedDate());
+		value = DateUtil.compareTo(getModifiedDate(),
+				segmentsEntry.getModifiedDate());
 
 		value = value * -1;
 
@@ -1021,8 +945,7 @@ public class SegmentsEntryModelImpl
 	public void resetOriginalValues() {
 		SegmentsEntryModelImpl segmentsEntryModelImpl = this;
 
-		segmentsEntryModelImpl._originalGroupId =
-			segmentsEntryModelImpl._groupId;
+		segmentsEntryModelImpl._originalGroupId = segmentsEntryModelImpl._groupId;
 
 		segmentsEntryModelImpl._setOriginalGroupId = false;
 
@@ -1043,8 +966,7 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public CacheModel<SegmentsEntry> toCacheModel() {
-		SegmentsEntryCacheModel segmentsEntryCacheModel =
-			new SegmentsEntryCacheModel();
+		SegmentsEntryCacheModel segmentsEntryCacheModel = new SegmentsEntryCacheModel();
 
 		segmentsEntryCacheModel.segmentsEntryId = getSegmentsEntryId();
 
@@ -1135,20 +1057,16 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SegmentsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SegmentsEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1167,22 +1085,18 @@ public class SegmentsEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SegmentsEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<SegmentsEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<SegmentsEntry, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<SegmentsEntry, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1196,12 +1110,10 @@ public class SegmentsEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SegmentsEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader = SegmentsEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SegmentsEntry.class, ModelWrapper.class
-	};
-
+			SegmentsEntry.class, ModelWrapper.class
+		};
 	private long _segmentsEntryId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -1228,5 +1140,4 @@ public class SegmentsEntryModelImpl
 	private String _originalType;
 	private long _columnBitmask;
 	private SegmentsEntry _escapedModel;
-
 }

@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class HtmlPreviewEntryWrapper
-	extends BaseModelWrapper<HtmlPreviewEntry>
+public class HtmlPreviewEntryWrapper extends BaseModelWrapper<HtmlPreviewEntry>
 	implements HtmlPreviewEntry, ModelWrapper<HtmlPreviewEntry> {
-
 	public HtmlPreviewEntryWrapper(HtmlPreviewEntry htmlPreviewEntry) {
 		super(htmlPreviewEntry);
 	}
@@ -123,80 +121,80 @@ public class HtmlPreviewEntryWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this html preview entry.
-	 *
-	 * @return the fully qualified class name of this html preview entry
-	 */
+	* Returns the fully qualified class name of this html preview entry.
+	*
+	* @return the fully qualified class name of this html preview entry
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this html preview entry.
-	 *
-	 * @return the class name ID of this html preview entry
-	 */
+	* Returns the class name ID of this html preview entry.
+	*
+	* @return the class name ID of this html preview entry
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this html preview entry.
-	 *
-	 * @return the class pk of this html preview entry
-	 */
+	* Returns the class pk of this html preview entry.
+	*
+	* @return the class pk of this html preview entry
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this html preview entry.
-	 *
-	 * @return the company ID of this html preview entry
-	 */
+	* Returns the company ID of this html preview entry.
+	*
+	* @return the company ID of this html preview entry
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this html preview entry.
-	 *
-	 * @return the create date of this html preview entry
-	 */
+	* Returns the create date of this html preview entry.
+	*
+	* @return the create date of this html preview entry
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the file entry ID of this html preview entry.
-	 *
-	 * @return the file entry ID of this html preview entry
-	 */
+	* Returns the file entry ID of this html preview entry.
+	*
+	* @return the file entry ID of this html preview entry
+	*/
 	@Override
 	public long getFileEntryId() {
 		return model.getFileEntryId();
 	}
 
 	/**
-	 * Returns the group ID of this html preview entry.
-	 *
-	 * @return the group ID of this html preview entry
-	 */
+	* Returns the group ID of this html preview entry.
+	*
+	* @return the group ID of this html preview entry
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the html preview entry ID of this html preview entry.
-	 *
-	 * @return the html preview entry ID of this html preview entry
-	 */
+	* Returns the html preview entry ID of this html preview entry.
+	*
+	* @return the html preview entry ID of this html preview entry
+	*/
 	@Override
 	public long getHtmlPreviewEntryId() {
 		return model.getHtmlPreviewEntryId();
@@ -205,55 +203,54 @@ public class HtmlPreviewEntryWrapper
 	@Override
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-
 		return model.getImagePreviewURL(themeDisplay);
 	}
 
 	/**
-	 * Returns the modified date of this html preview entry.
-	 *
-	 * @return the modified date of this html preview entry
-	 */
+	* Returns the modified date of this html preview entry.
+	*
+	* @return the modified date of this html preview entry
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this html preview entry.
-	 *
-	 * @return the primary key of this html preview entry
-	 */
+	* Returns the primary key of this html preview entry.
+	*
+	* @return the primary key of this html preview entry
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the user ID of this html preview entry.
-	 *
-	 * @return the user ID of this html preview entry
-	 */
+	* Returns the user ID of this html preview entry.
+	*
+	* @return the user ID of this html preview entry
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this html preview entry.
-	 *
-	 * @return the user name of this html preview entry
-	 */
+	* Returns the user name of this html preview entry.
+	*
+	* @return the user name of this html preview entry
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this html preview entry.
-	 *
-	 * @return the user uuid of this html preview entry
-	 */
+	* Returns the user uuid of this html preview entry.
+	*
+	* @return the user uuid of this html preview entry
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -270,120 +267,120 @@ public class HtmlPreviewEntryWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this html preview entry.
-	 *
-	 * @param classNameId the class name ID of this html preview entry
-	 */
+	* Sets the class name ID of this html preview entry.
+	*
+	* @param classNameId the class name ID of this html preview entry
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this html preview entry.
-	 *
-	 * @param classPK the class pk of this html preview entry
-	 */
+	* Sets the class pk of this html preview entry.
+	*
+	* @param classPK the class pk of this html preview entry
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this html preview entry.
-	 *
-	 * @param companyId the company ID of this html preview entry
-	 */
+	* Sets the company ID of this html preview entry.
+	*
+	* @param companyId the company ID of this html preview entry
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this html preview entry.
-	 *
-	 * @param createDate the create date of this html preview entry
-	 */
+	* Sets the create date of this html preview entry.
+	*
+	* @param createDate the create date of this html preview entry
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the file entry ID of this html preview entry.
-	 *
-	 * @param fileEntryId the file entry ID of this html preview entry
-	 */
+	* Sets the file entry ID of this html preview entry.
+	*
+	* @param fileEntryId the file entry ID of this html preview entry
+	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
 		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
-	 * Sets the group ID of this html preview entry.
-	 *
-	 * @param groupId the group ID of this html preview entry
-	 */
+	* Sets the group ID of this html preview entry.
+	*
+	* @param groupId the group ID of this html preview entry
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the html preview entry ID of this html preview entry.
-	 *
-	 * @param htmlPreviewEntryId the html preview entry ID of this html preview entry
-	 */
+	* Sets the html preview entry ID of this html preview entry.
+	*
+	* @param htmlPreviewEntryId the html preview entry ID of this html preview entry
+	*/
 	@Override
 	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
 		model.setHtmlPreviewEntryId(htmlPreviewEntryId);
 	}
 
 	/**
-	 * Sets the modified date of this html preview entry.
-	 *
-	 * @param modifiedDate the modified date of this html preview entry
-	 */
+	* Sets the modified date of this html preview entry.
+	*
+	* @param modifiedDate the modified date of this html preview entry
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this html preview entry.
-	 *
-	 * @param primaryKey the primary key of this html preview entry
-	 */
+	* Sets the primary key of this html preview entry.
+	*
+	* @param primaryKey the primary key of this html preview entry
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this html preview entry.
-	 *
-	 * @param userId the user ID of this html preview entry
-	 */
+	* Sets the user ID of this html preview entry.
+	*
+	* @param userId the user ID of this html preview entry
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this html preview entry.
-	 *
-	 * @param userName the user name of this html preview entry
-	 */
+	* Sets the user name of this html preview entry.
+	*
+	* @param userName the user name of this html preview entry
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this html preview entry.
-	 *
-	 * @param userUuid the user uuid of this html preview entry
-	 */
+	* Sets the user uuid of this html preview entry.
+	*
+	* @param userUuid the user uuid of this html preview entry
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -393,5 +390,4 @@ public class HtmlPreviewEntryWrapper
 	protected HtmlPreviewEntryWrapper wrap(HtmlPreviewEntry htmlPreviewEntry) {
 		return new HtmlPreviewEntryWrapper(htmlPreviewEntry);
 	}
-
 }

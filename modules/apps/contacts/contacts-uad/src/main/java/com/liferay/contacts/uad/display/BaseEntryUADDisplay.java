@@ -17,15 +17,17 @@ package com.liferay.contacts.uad.display;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the Entry UAD display.
@@ -40,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
-
 	@Override
 	public Entry get(Serializable primaryKey) throws PortalException {
 		return entryLocalService.getEntry(Long.valueOf(primaryKey.toString()));
@@ -48,7 +49,7 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"fullName", "emailAddress", "comments"};
+		return new String[] { "fullName", "emailAddress", "comments" };
 	}
 
 	@Override
@@ -67,9 +68,8 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 	}
 
 	@Override
-	protected List<Entry> doGetRange(
-		DynamicQuery dynamicQuery, int start, int end) {
-
+	protected List<Entry> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return entryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -80,5 +80,4 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 
 	@Reference
 	protected EntryLocalService entryLocalService;
-
 }

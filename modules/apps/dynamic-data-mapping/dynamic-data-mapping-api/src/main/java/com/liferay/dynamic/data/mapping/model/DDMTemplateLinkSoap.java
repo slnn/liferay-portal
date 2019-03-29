@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class DDMTemplateLinkSoap implements Serializable {
-
 	public static DDMTemplateLinkSoap toSoapModel(DDMTemplateLink model) {
 		DDMTemplateLinkSoap soapModel = new DDMTemplateLinkSoap();
 
@@ -43,8 +42,7 @@ public class DDMTemplateLinkSoap implements Serializable {
 	}
 
 	public static DDMTemplateLinkSoap[] toSoapModels(DDMTemplateLink[] models) {
-		DDMTemplateLinkSoap[] soapModels =
-			new DDMTemplateLinkSoap[models.length];
+		DDMTemplateLinkSoap[] soapModels = new DDMTemplateLinkSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -55,12 +53,10 @@ public class DDMTemplateLinkSoap implements Serializable {
 
 	public static DDMTemplateLinkSoap[][] toSoapModels(
 		DDMTemplateLink[][] models) {
-
 		DDMTemplateLinkSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new DDMTemplateLinkSoap[models.length][models[0].length];
+			soapModels = new DDMTemplateLinkSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new DDMTemplateLinkSoap[0][0];
@@ -75,9 +71,7 @@ public class DDMTemplateLinkSoap implements Serializable {
 
 	public static DDMTemplateLinkSoap[] toSoapModels(
 		List<DDMTemplateLink> models) {
-
-		List<DDMTemplateLinkSoap> soapModels =
-			new ArrayList<DDMTemplateLinkSoap>(models.size());
+		List<DDMTemplateLinkSoap> soapModels = new ArrayList<DDMTemplateLinkSoap>(models.size());
 
 		for (DDMTemplateLink model : models) {
 			soapModels.add(toSoapModel(model));
@@ -142,5 +136,4 @@ public class DDMTemplateLinkSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _templateId;
-
 }

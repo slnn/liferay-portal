@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.model.MBBanModel;
 import com.liferay.message.boards.model.MBBanSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -64,24 +68,25 @@ import java.util.function.Function;
 @JSON(strict = true)
 @ProviderType
 public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards ban model instance should use the <code>MBBan</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "MBBan";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"banId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"banUserId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "banId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "banUserId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -96,46 +101,27 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBBan";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY mbBan.banId ASC";
-
 	public static final String ORDER_BY_SQL = " ORDER BY MBBan.banId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBBan"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBBan"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBBan"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBBan"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBBan"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBBan"),
+			true);
 	public static final long BANUSERID_COLUMN_BITMASK = 1L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
 	public static final long USERID_COLUMN_BITMASK = 8L;
-
 	public static final long UUID_COLUMN_BITMASK = 16L;
-
 	public static final long BANID_COLUMN_BITMASK = 32L;
 
 	/**
@@ -185,9 +171,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.message.boards.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.message.boards.model.MBBan"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBBan"));
 
 	public MBBanModelImpl() {
 	}
@@ -226,17 +211,14 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<MBBan, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBBan, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<MBBan, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBBan, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<MBBan, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((MBBan)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((MBBan)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -247,14 +229,12 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<MBBan, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<MBBan, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<MBBan, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<MBBan, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((MBBan)this, entry.getValue());
@@ -266,60 +246,42 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<MBBan, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<MBBan, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBBan, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBBan, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<MBBan, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBBan, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<MBBan, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<MBBan, Object>>();
-		Map<String, BiConsumer<MBBan, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MBBan, ?>>();
+		Map<String, Function<MBBan, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBBan, Object>>();
+		Map<String, BiConsumer<MBBan, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBBan, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", MBBan::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<MBBan, String>)MBBan::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBBan, String>)MBBan::setUuid);
 		attributeGetterFunctions.put("banId", MBBan::getBanId);
-		attributeSetterBiConsumers.put(
-			"banId", (BiConsumer<MBBan, Long>)MBBan::setBanId);
+		attributeSetterBiConsumers.put("banId", (BiConsumer<MBBan, Long>)MBBan::setBanId);
 		attributeGetterFunctions.put("groupId", MBBan::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<MBBan, Long>)MBBan::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBBan, Long>)MBBan::setGroupId);
 		attributeGetterFunctions.put("companyId", MBBan::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<MBBan, Long>)MBBan::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBBan, Long>)MBBan::setCompanyId);
 		attributeGetterFunctions.put("userId", MBBan::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<MBBan, Long>)MBBan::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBBan, Long>)MBBan::setUserId);
 		attributeGetterFunctions.put("userName", MBBan::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<MBBan, String>)MBBan::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBBan, String>)MBBan::setUserName);
 		attributeGetterFunctions.put("createDate", MBBan::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<MBBan, Date>)MBBan::setCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBBan, Date>)MBBan::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", MBBan::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate", (BiConsumer<MBBan, Date>)MBBan::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBBan, Date>)MBBan::setModifiedDate);
 		attributeGetterFunctions.put("banUserId", MBBan::getBanUserId);
-		attributeSetterBiConsumers.put(
-			"banUserId", (BiConsumer<MBBan, Long>)MBBan::setBanUserId);
-		attributeGetterFunctions.put(
-			"lastPublishDate", MBBan::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<MBBan, Date>)MBBan::setLastPublishDate);
+		attributeSetterBiConsumers.put("banUserId", (BiConsumer<MBBan, Long>)MBBan::setBanUserId);
+		attributeGetterFunctions.put("lastPublishDate", MBBan::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MBBan, Date>)MBBan::setLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -540,8 +502,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(MBBan.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MBBan.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -550,8 +512,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), MBBan.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			MBBan.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -564,9 +526,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	@Override
 	public MBBan toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBBan)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (MBBan)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -733,17 +694,14 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public String toString() {
-		Map<String, Function<MBBan, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBBan, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<MBBan, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBBan, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<MBBan, Object> attributeGetterFunction = entry.getValue();
 
@@ -764,19 +722,16 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<MBBan, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<MBBan, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<MBBan, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<MBBan, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<MBBan, Object> attributeGetterFunction = entry.getValue();
 
@@ -792,12 +747,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBBan.class.getClassLoader();
+	private static final ClassLoader _classLoader = MBBan.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBBan.class, ModelWrapper.class
-	};
-
+			MBBan.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _banId;
@@ -820,5 +773,4 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MBBan _escapedModel;
-
 }

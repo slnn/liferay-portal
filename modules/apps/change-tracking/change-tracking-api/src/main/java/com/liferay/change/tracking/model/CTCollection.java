@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see CTCollectionModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.change.tracking.model.impl.CTCollectionImpl"
-)
+@ImplementationClassName("com.liferay.change.tracking.model.impl.CTCollectionImpl")
 @ProviderType
 public interface CTCollection extends CTCollectionModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CTCollection, Long> CT_COLLECTION_ID_ACCESSOR =
-		new Accessor<CTCollection, Long>() {
-
+	public static final Accessor<CTCollection, Long> CT_COLLECTION_ID_ACCESSOR = new Accessor<CTCollection, Long>() {
 			@Override
 			public Long get(CTCollection ctCollection) {
 				return ctCollection.getCtCollectionId();
@@ -55,9 +50,7 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 			public Class<CTCollection> getTypeClass() {
 				return CTCollection.class;
 			}
-
 		};
 
 	public boolean isProduction();
-
 }

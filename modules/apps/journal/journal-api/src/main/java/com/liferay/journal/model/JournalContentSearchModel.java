@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface JournalContentSearchModel
-	extends BaseModel<JournalContentSearch>, ShardedModel {
-
+public interface JournalContentSearchModel extends BaseModel<JournalContentSearch>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -163,5 +162,4 @@ public interface JournalContentSearchModel
 	 * @param articleId the article ID of this journal content search
 	 */
 	public void setArticleId(String articleId);
-
 }

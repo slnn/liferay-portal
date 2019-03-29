@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class FragmentCollectionSoap implements Serializable {
-
 	public static FragmentCollectionSoap toSoapModel(FragmentCollection model) {
 		FragmentCollectionSoap soapModel = new FragmentCollectionSoap();
 
@@ -52,9 +51,7 @@ public class FragmentCollectionSoap implements Serializable {
 
 	public static FragmentCollectionSoap[] toSoapModels(
 		FragmentCollection[] models) {
-
-		FragmentCollectionSoap[] soapModels =
-			new FragmentCollectionSoap[models.length];
+		FragmentCollectionSoap[] soapModels = new FragmentCollectionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -65,12 +62,10 @@ public class FragmentCollectionSoap implements Serializable {
 
 	public static FragmentCollectionSoap[][] toSoapModels(
 		FragmentCollection[][] models) {
-
 		FragmentCollectionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new FragmentCollectionSoap[models.length][models[0].length];
+			soapModels = new FragmentCollectionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new FragmentCollectionSoap[0][0];
@@ -85,16 +80,13 @@ public class FragmentCollectionSoap implements Serializable {
 
 	public static FragmentCollectionSoap[] toSoapModels(
 		List<FragmentCollection> models) {
-
-		List<FragmentCollectionSoap> soapModels =
-			new ArrayList<FragmentCollectionSoap>(models.size());
+		List<FragmentCollectionSoap> soapModels = new ArrayList<FragmentCollectionSoap>(models.size());
 
 		for (FragmentCollection model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new FragmentCollectionSoap[soapModels.size()]);
+		return soapModels.toArray(new FragmentCollectionSoap[soapModels.size()]);
 	}
 
 	public FragmentCollectionSoap() {
@@ -216,5 +208,4 @@ public class FragmentCollectionSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private Date _lastPublishDate;
-
 }

@@ -17,6 +17,7 @@ package com.liferay.calendar.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.calendar.service.CalendarResourceServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -53,25 +54,20 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class CalendarResourceServiceHttp {
-
-	public static com.liferay.calendar.model.CalendarResource
-			addCalendarResource(
-				HttpPrincipal httpPrincipal, long groupId, long classNameId,
-				long classPK, String classUuid, String code,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.calendar.model.CalendarResource addCalendarResource(
+		HttpPrincipal httpPrincipal, long groupId, long classNameId,
+		long classPK, String classUuid, String code,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "addCalendarResource",
-				_addCalendarResourceParameterTypes0);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"addCalendarResource", _addCalendarResourceParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, classPK, classUuid, code,
-				nameMap, descriptionMap, active, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					classNameId, classPK, classUuid, code, nameMap,
+					descriptionMap, active, serviceContext);
 
 			Object returnObj = null;
 
@@ -79,15 +75,11 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.calendar.model.CalendarResource)returnObj;
@@ -99,18 +91,16 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			deleteCalendarResource(
-				HttpPrincipal httpPrincipal, long calendarResourceId)
+	public static com.liferay.calendar.model.CalendarResource deleteCalendarResource(
+		HttpPrincipal httpPrincipal, long calendarResourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "deleteCalendarResource",
-				_deleteCalendarResourceParameterTypes1);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"deleteCalendarResource",
+					_deleteCalendarResourceParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, calendarResourceId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					calendarResourceId);
 
 			Object returnObj = null;
 
@@ -118,15 +108,11 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.calendar.model.CalendarResource)returnObj;
@@ -138,18 +124,16 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			fetchCalendarResource(
-				HttpPrincipal httpPrincipal, long classNameId, long classPK)
+	public static com.liferay.calendar.model.CalendarResource fetchCalendarResource(
+		HttpPrincipal httpPrincipal, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "fetchCalendarResource",
-				_fetchCalendarResourceParameterTypes2);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"fetchCalendarResource",
+					_fetchCalendarResourceParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId, classPK);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					classNameId, classPK);
 
 			Object returnObj = null;
 
@@ -157,15 +141,11 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.calendar.model.CalendarResource)returnObj;
@@ -177,18 +157,15 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			getCalendarResource(
-				HttpPrincipal httpPrincipal, long calendarResourceId)
+	public static com.liferay.calendar.model.CalendarResource getCalendarResource(
+		HttpPrincipal httpPrincipal, long calendarResourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "getCalendarResource",
-				_getCalendarResourceParameterTypes3);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"getCalendarResource", _getCalendarResourceParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, calendarResourceId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					calendarResourceId);
 
 			Object returnObj = null;
 
@@ -196,15 +173,11 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.calendar.model.CalendarResource)returnObj;
@@ -216,94 +189,18 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.calendar.model.CalendarResource>
-		search(
-			HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-			long[] classNameIds, String keywords, boolean active,
-			boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.CalendarResource>
-					orderByComparator) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "search",
-				_searchParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupIds, classNameIds, keywords, active,
-				andOperator, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (java.util.List<com.liferay.calendar.model.CalendarResource>)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.calendar.model.CalendarResource>
-		search(
-			HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-			long[] classNameIds, String code, String name, String description,
-			boolean active, boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.CalendarResource>
-					orderByComparator) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "search",
-				_searchParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupIds, classNameIds, code, name,
-				description, active, andOperator, start, end,
-				orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (java.util.List<com.liferay.calendar.model.CalendarResource>)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int searchCount(
+	public static java.util.List<com.liferay.calendar.model.CalendarResource> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		long[] classNameIds, String keywords, boolean active) {
-
+		long[] classNameIds, String keywords, boolean active,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarResource> orderByComparator) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "searchCount",
-				_searchCountParameterTypes6);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"search", _searchParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupIds, classNameIds, keywords, active);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupIds, classNameIds, keywords, active,
+					andOperator, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -311,11 +208,10 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (java.util.List<com.liferay.calendar.model.CalendarResource>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -324,19 +220,18 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	public static int searchCount(
+	public static java.util.List<com.liferay.calendar.model.CalendarResource> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
 		long[] classNameIds, String code, String name, String description,
-		boolean active, boolean andOperator) {
-
+		boolean active, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarResource> orderByComparator) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "searchCount",
-				_searchCountParameterTypes7);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"search", _searchParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupIds, classNameIds, code, name,
-				description, active, andOperator);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupIds, classNameIds, code, name, description,
+					active, andOperator, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -344,8 +239,34 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.calendar.model.CalendarResource>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
+		long[] groupIds, long[] classNameIds, String keywords, boolean active) {
+		try {
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"searchCount", _searchCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupIds, classNameIds, keywords, active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -357,23 +278,16 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			updateCalendarResource(
-				HttpPrincipal httpPrincipal, long calendarResourceId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
+		long[] groupIds, long[] classNameIds, String code, String name,
+		String description, boolean active, boolean andOperator) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				CalendarResourceServiceUtil.class, "updateCalendarResource",
-				_updateCalendarResourceParameterTypes8);
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"searchCount", _searchCountParameterTypes7);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, calendarResourceId, nameMap, descriptionMap, active,
-				serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupIds, classNameIds, code, name, description,
+					active, andOperator);
 
 			Object returnObj = null;
 
@@ -381,15 +295,44 @@ public class CalendarResourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
 
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.calendar.model.CalendarResource updateCalendarResource(
+		HttpPrincipal httpPrincipal, long calendarResourceId,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
+					"updateCalendarResource",
+					_updateCalendarResourceParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					calendarResourceId, nameMap, descriptionMap, active,
+					serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.calendar.model.CalendarResource)returnObj;
@@ -401,42 +344,40 @@ public class CalendarResourceServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		CalendarResourceServiceHttp.class);
-
-	private static final Class<?>[] _addCalendarResourceParameterTypes0 =
-		new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(CalendarResourceServiceHttp.class);
+	private static final Class<?>[] _addCalendarResourceParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, String.class, String.class,
 			java.util.Map.class, java.util.Map.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCalendarResourceParameterTypes1 =
-		new Class[] {long.class};
-	private static final Class<?>[] _fetchCalendarResourceParameterTypes2 =
-		new Class[] {long.class, long.class};
-	private static final Class<?>[] _getCalendarResourceParameterTypes3 =
-		new Class[] {long.class};
+	private static final Class<?>[] _deleteCalendarResourceParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _fetchCalendarResourceParameterTypes2 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _getCalendarResourceParameterTypes3 = new Class[] {
+			long.class
+		};
 	private static final Class<?>[] _searchParameterTypes4 = new Class[] {
-		long.class, long[].class, long[].class, String.class, boolean.class,
-		boolean.class, int.class, int.class,
-		com.liferay.portal.kernel.util.OrderByComparator.class
-	};
+			long.class, long[].class, long[].class, String.class, boolean.class,
+			boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
 	private static final Class<?>[] _searchParameterTypes5 = new Class[] {
-		long.class, long[].class, long[].class, String.class, String.class,
-		String.class, boolean.class, boolean.class, int.class, int.class,
-		com.liferay.portal.kernel.util.OrderByComparator.class
-	};
+			long.class, long[].class, long[].class, String.class, String.class,
+			String.class, boolean.class, boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
 	private static final Class<?>[] _searchCountParameterTypes6 = new Class[] {
-		long.class, long[].class, long[].class, String.class, boolean.class
-	};
+			long.class, long[].class, long[].class, String.class, boolean.class
+		};
 	private static final Class<?>[] _searchCountParameterTypes7 = new Class[] {
-		long.class, long[].class, long[].class, String.class, String.class,
-		String.class, boolean.class, boolean.class
-	};
-	private static final Class<?>[] _updateCalendarResourceParameterTypes8 =
-		new Class[] {
+			long.class, long[].class, long[].class, String.class, String.class,
+			String.class, boolean.class, boolean.class
+		};
+	private static final Class<?>[] _updateCalendarResourceParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-
 }

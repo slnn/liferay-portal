@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -53,24 +54,18 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class LayoutPageTemplateCollectionServiceHttp {
-
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				addLayoutPageTemplateCollection(
-					HttpPrincipal httpPrincipal, long groupId, String name,
-					String description,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+		HttpPrincipal httpPrincipal, long groupId, String name,
+		String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"addLayoutPageTemplateCollection",
-				_addLayoutPageTemplateCollectionParameterTypes0);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"addLayoutPageTemplateCollection",
+					_addLayoutPageTemplateCollectionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, description, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					name, description, serviceContext);
 
 			Object returnObj = null;
 
@@ -78,19 +73,14 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.layout.page.template.model.
-				LayoutPageTemplateCollection)returnObj;
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateCollection)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -99,21 +89,16 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				deleteLayoutPageTemplateCollection(
-					HttpPrincipal httpPrincipal,
-					long layoutPageTemplateCollectionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"deleteLayoutPageTemplateCollection",
-				_deleteLayoutPageTemplateCollectionParameterTypes1);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"deleteLayoutPageTemplateCollection",
+					_deleteLayoutPageTemplateCollectionParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutPageTemplateCollectionId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateCollectionId);
 
 			Object returnObj = null;
 
@@ -121,19 +106,14 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.layout.page.template.model.
-				LayoutPageTemplateCollection)returnObj;
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateCollection)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -143,31 +123,25 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	}
 
 	public static void deleteLayoutPageTemplateCollections(
-			HttpPrincipal httpPrincipal, long[] layoutPageTemplateCollectionIds)
+		HttpPrincipal httpPrincipal, long[] layoutPageTemplateCollectionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"deleteLayoutPageTemplateCollections",
-				_deleteLayoutPageTemplateCollectionsParameterTypes2);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"deleteLayoutPageTemplateCollections",
+					_deleteLayoutPageTemplateCollectionsParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutPageTemplateCollectionIds);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateCollectionIds);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -177,21 +151,16 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				fetchLayoutPageTemplateCollection(
-					HttpPrincipal httpPrincipal,
-					long layoutPageTemplateCollectionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"fetchLayoutPageTemplateCollection",
-				_fetchLayoutPageTemplateCollectionParameterTypes3);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"fetchLayoutPageTemplateCollection",
+					_fetchLayoutPageTemplateCollectionParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutPageTemplateCollectionId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateCollectionId);
 
 			Object returnObj = null;
 
@@ -199,19 +168,14 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.layout.page.template.model.
-				LayoutPageTemplateCollection)returnObj;
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateCollection)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -220,16 +184,12 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId) {
-
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		HttpPrincipal httpPrincipal, long groupId) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"getLayoutPageTemplateCollections",
-				_getLayoutPageTemplateCollectionsParameterTypes4);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"getLayoutPageTemplateCollections",
+					_getLayoutPageTemplateCollectionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -239,13 +199,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List
-				<com.liferay.layout.page.template.model.
-					LayoutPageTemplateCollection>)returnObj;
+			return (java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -254,19 +211,15 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId, int start, int end) {
-
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"getLayoutPageTemplateCollections",
-				_getLayoutPageTemplateCollectionsParameterTypes5);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"getLayoutPageTemplateCollections",
+					_getLayoutPageTemplateCollectionsParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					start, end);
 
 			Object returnObj = null;
 
@@ -274,13 +227,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List
-				<com.liferay.layout.page.template.model.
-					LayoutPageTemplateCollection>)returnObj;
+			return (java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -289,22 +239,16 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
-
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"getLayoutPageTemplateCollections",
-				_getLayoutPageTemplateCollectionsParameterTypes6);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"getLayoutPageTemplateCollections",
+					_getLayoutPageTemplateCollectionsParameterTypes6);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end, orderByComparator);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -312,13 +256,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List
-				<com.liferay.layout.page.template.model.
-					LayoutPageTemplateCollection>)returnObj;
+			return (java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -327,23 +268,17 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				HttpPrincipal httpPrincipal, long groupId, String name,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
-
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		HttpPrincipal httpPrincipal, long groupId, String name, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"getLayoutPageTemplateCollections",
-				_getLayoutPageTemplateCollectionsParameterTypes7);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"getLayoutPageTemplateCollections",
+					_getLayoutPageTemplateCollectionsParameterTypes7);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, start, end, orderByComparator);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					name, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -351,13 +286,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List
-				<com.liferay.layout.page.template.model.
-					LayoutPageTemplateCollection>)returnObj;
+			return (java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -368,12 +300,10 @@ public class LayoutPageTemplateCollectionServiceHttp {
 
 	public static int getLayoutPageTemplateCollectionsCount(
 		HttpPrincipal httpPrincipal, long groupId) {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"getLayoutPageTemplateCollectionsCount",
-				_getLayoutPageTemplateCollectionsCountParameterTypes8);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"getLayoutPageTemplateCollectionsCount",
+					_getLayoutPageTemplateCollectionsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -383,8 +313,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -398,15 +327,13 @@ public class LayoutPageTemplateCollectionServiceHttp {
 
 	public static int getLayoutPageTemplateCollectionsCount(
 		HttpPrincipal httpPrincipal, long groupId, String name) {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"getLayoutPageTemplateCollectionsCount",
-				_getLayoutPageTemplateCollectionsCountParameterTypes9);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"getLayoutPageTemplateCollectionsCount",
+					_getLayoutPageTemplateCollectionsCountParameterTypes9);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					name);
 
 			Object returnObj = null;
 
@@ -414,8 +341,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -427,22 +353,17 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				updateLayoutPageTemplateCollection(
-					HttpPrincipal httpPrincipal,
-					long layoutPageTemplateCollectionId, String name,
-					String description)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateCollectionId,
+		String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutPageTemplateCollectionServiceUtil.class,
-				"updateLayoutPageTemplateCollection",
-				_updateLayoutPageTemplateCollectionParameterTypes10);
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateCollectionServiceUtil.class,
+					"updateLayoutPageTemplateCollection",
+					_updateLayoutPageTemplateCollectionParameterTypes10);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutPageTemplateCollectionId, name, description);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateCollectionId, name, description);
 
 			Object returnObj = null;
 
@@ -450,19 +371,14 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.layout.page.template.model.
-				LayoutPageTemplateCollection)returnObj;
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateCollection)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -471,55 +387,36 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplateCollectionServiceHttp.class);
-
-	private static final Class<?>[]
-		_addLayoutPageTemplateCollectionParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(LayoutPageTemplateCollectionServiceHttp.class);
+	private static final Class<?>[] _addLayoutPageTemplateCollectionParameterTypes0 =
+		new Class[] {
 			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[]
-		_deleteLayoutPageTemplateCollectionParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
-		_deleteLayoutPageTemplateCollectionsParameterTypes2 = new Class[] {
-			long[].class
-		};
-	private static final Class<?>[]
-		_fetchLayoutPageTemplateCollectionParameterTypes3 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
-		_getLayoutPageTemplateCollectionsParameterTypes4 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
-		_getLayoutPageTemplateCollectionsParameterTypes5 = new Class[] {
-			long.class, int.class, int.class
-		};
-	private static final Class<?>[]
-		_getLayoutPageTemplateCollectionsParameterTypes6 = new Class[] {
+	private static final Class<?>[] _deleteLayoutPageTemplateCollectionParameterTypes1 =
+		new Class[] { long.class };
+	private static final Class<?>[] _deleteLayoutPageTemplateCollectionsParameterTypes2 =
+		new Class[] { long[].class };
+	private static final Class<?>[] _fetchLayoutPageTemplateCollectionParameterTypes3 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsParameterTypes4 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsParameterTypes5 =
+		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsParameterTypes6 =
+		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[]
-		_getLayoutPageTemplateCollectionsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsParameterTypes7 =
+		new Class[] {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[]
-		_getLayoutPageTemplateCollectionsCountParameterTypes8 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
-		_getLayoutPageTemplateCollectionsCountParameterTypes9 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[]
-		_updateLayoutPageTemplateCollectionParameterTypes10 = new Class[] {
-			long.class, String.class, String.class
-		};
-
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes8 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes9 =
+		new Class[] { long.class, String.class };
+	private static final Class<?>[] _updateLayoutPageTemplateCollectionParameterTypes10 =
+		new Class[] { long.class, String.class, String.class };
 }

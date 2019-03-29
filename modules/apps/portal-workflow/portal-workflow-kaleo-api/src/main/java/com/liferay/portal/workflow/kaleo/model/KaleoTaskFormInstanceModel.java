@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTaskFormInstanceModel
-	extends BaseModel<KaleoTaskFormInstance>, GroupedModel, MVCCModel,
-			ShardedModel {
-
+public interface KaleoTaskFormInstanceModel extends BaseModel<KaleoTaskFormInstance>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -345,5 +343,4 @@ public interface KaleoTaskFormInstanceModel
 	 * @param metadata the metadata of this kaleo task form instance
 	 */
 	public void setMetadata(String metadata);
-
 }

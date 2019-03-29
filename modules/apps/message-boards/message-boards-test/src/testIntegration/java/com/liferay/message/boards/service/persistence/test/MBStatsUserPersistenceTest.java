@@ -15,11 +15,13 @@
 package com.liferay.message.boards.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.message.boards.exception.NoSuchStatsUserException;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.service.MBStatsUserLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBStatsUserPersistence;
 import com.liferay.message.boards.service.persistence.MBStatsUserUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -47,27 +58,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class MBStatsUserPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.message.boards.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.message.boards.service"));
 
 	@Before
 	public void setUp() {
@@ -106,8 +107,7 @@ public class MBStatsUserPersistenceTest {
 
 		_persistence.remove(newMBStatsUser);
 
-		MBStatsUser existingMBStatsUser = _persistence.fetchByPrimaryKey(
-			newMBStatsUser.getPrimaryKey());
+		MBStatsUser existingMBStatsUser = _persistence.fetchByPrimaryKey(newMBStatsUser.getPrimaryKey());
 
 		Assert.assertNull(existingMBStatsUser);
 	}
@@ -135,23 +135,20 @@ public class MBStatsUserPersistenceTest {
 
 		_mbStatsUsers.add(_persistence.update(newMBStatsUser));
 
-		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(
-			newMBStatsUser.getPrimaryKey());
+		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(newMBStatsUser.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingMBStatsUser.getStatsUserId(),
+		Assert.assertEquals(existingMBStatsUser.getStatsUserId(),
 			newMBStatsUser.getStatsUserId());
-		Assert.assertEquals(
-			existingMBStatsUser.getGroupId(), newMBStatsUser.getGroupId());
-		Assert.assertEquals(
-			existingMBStatsUser.getCompanyId(), newMBStatsUser.getCompanyId());
-		Assert.assertEquals(
-			existingMBStatsUser.getUserId(), newMBStatsUser.getUserId());
-		Assert.assertEquals(
-			existingMBStatsUser.getMessageCount(),
+		Assert.assertEquals(existingMBStatsUser.getGroupId(),
+			newMBStatsUser.getGroupId());
+		Assert.assertEquals(existingMBStatsUser.getCompanyId(),
+			newMBStatsUser.getCompanyId());
+		Assert.assertEquals(existingMBStatsUser.getUserId(),
+			newMBStatsUser.getUserId());
+		Assert.assertEquals(existingMBStatsUser.getMessageCount(),
 			newMBStatsUser.getMessageCount());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMBStatsUser.getLastPostDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBStatsUser.getLastPostDate()),
 			Time.getShortTimestamp(newMBStatsUser.getLastPostDate()));
 	}
 
@@ -171,17 +168,16 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testCountByG_U() throws Exception {
-		_persistence.countByG_U(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_U(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_NotU_NotM() throws Exception {
-		_persistence.countByG_NotU_NotM(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_NotU_NotM(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_NotU_NotM(0L, 0L, 0);
 	}
@@ -190,8 +186,7 @@ public class MBStatsUserPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
-		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(
-			newMBStatsUser.getPrimaryKey());
+		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(newMBStatsUser.getPrimaryKey());
 
 		Assert.assertEquals(existingMBStatsUser, newMBStatsUser);
 	}
@@ -205,22 +200,21 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<MBStatsUser> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MBStatsUser", "statsUserId", true, "groupId", true, "companyId",
-			true, "userId", true, "messageCount", true, "lastPostDate", true);
+		return OrderByComparatorFactoryUtil.create("MBStatsUser",
+			"statsUserId", true, "groupId", true, "companyId", true, "userId",
+			true, "messageCount", true, "lastPostDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
-		MBStatsUser existingMBStatsUser = _persistence.fetchByPrimaryKey(
-			newMBStatsUser.getPrimaryKey());
+		MBStatsUser existingMBStatsUser = _persistence.fetchByPrimaryKey(newMBStatsUser.getPrimaryKey());
 
 		Assert.assertEquals(existingMBStatsUser, newMBStatsUser);
 	}
@@ -237,7 +231,6 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MBStatsUser newMBStatsUser1 = addMBStatsUser();
 		MBStatsUser newMBStatsUser2 = addMBStatsUser();
 
@@ -246,20 +239,18 @@ public class MBStatsUserPersistenceTest {
 		primaryKeys.add(newMBStatsUser1.getPrimaryKey());
 		primaryKeys.add(newMBStatsUser2.getPrimaryKey());
 
-		Map<Serializable, MBStatsUser> mbStatsUsers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, mbStatsUsers.size());
-		Assert.assertEquals(
-			newMBStatsUser1, mbStatsUsers.get(newMBStatsUser1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMBStatsUser2, mbStatsUsers.get(newMBStatsUser2.getPrimaryKey()));
+		Assert.assertEquals(newMBStatsUser1,
+			mbStatsUsers.get(newMBStatsUser1.getPrimaryKey()));
+		Assert.assertEquals(newMBStatsUser2,
+			mbStatsUsers.get(newMBStatsUser2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -269,8 +260,7 @@ public class MBStatsUserPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MBStatsUser> mbStatsUsers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbStatsUsers.isEmpty());
 	}
@@ -278,7 +268,6 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
 		long pk = RandomTestUtil.nextLong();
@@ -288,57 +277,52 @@ public class MBStatsUserPersistenceTest {
 		primaryKeys.add(newMBStatsUser.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MBStatsUser> mbStatsUsers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbStatsUsers.size());
-		Assert.assertEquals(
-			newMBStatsUser, mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
+		Assert.assertEquals(newMBStatsUser,
+			mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBStatsUser> mbStatsUsers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(mbStatsUsers.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMBStatsUser.getPrimaryKey());
 
-		Map<Serializable, MBStatsUser> mbStatsUsers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, mbStatsUsers.size());
-		Assert.assertEquals(
-			newMBStatsUser, mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
+		Assert.assertEquals(newMBStatsUser,
+			mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MBStatsUserLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MBStatsUserLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBStatsUser>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBStatsUser>() {
 				@Override
 				public void performAction(MBStatsUser mbStatsUser) {
 					Assert.assertNotNull(mbStatsUser);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -347,18 +331,17 @@ public class MBStatsUserPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBStatsUser.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"statsUserId", newMBStatsUser.getStatsUserId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
+				newMBStatsUser.getStatsUserId()));
 
-		List<MBStatsUser> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MBStatsUser> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -369,34 +352,31 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBStatsUser.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"statsUserId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
+				RandomTestUtil.nextLong()));
 
-		List<MBStatsUser> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MBStatsUser> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBStatsUser.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("statsUserId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
 		Object newStatsUserId = newMBStatsUser.getStatsUserId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"statsUserId", new Object[] {newStatsUserId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("statsUserId",
+				new Object[] { newStatsUserId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -409,15 +389,13 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBStatsUser.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("statsUserId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"statsUserId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("statsUserId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -430,17 +408,14 @@ public class MBStatsUserPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(
-			newMBStatsUser.getPrimaryKey());
+		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(newMBStatsUser.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingMBStatsUser.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMBStatsUser, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingMBStatsUser.getUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingMBStatsUser, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBStatsUser.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBStatsUser,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBStatsUser.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingMBStatsUser,
+				"getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected MBStatsUser addMBStatsUser() throws Exception {
@@ -466,5 +441,4 @@ public class MBStatsUserPersistenceTest {
 	private List<MBStatsUser> _mbStatsUsers = new ArrayList<MBStatsUser>();
 	private MBStatsUserPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

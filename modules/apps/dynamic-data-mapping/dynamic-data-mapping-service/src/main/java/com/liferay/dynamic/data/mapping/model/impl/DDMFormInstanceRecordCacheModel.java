@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class DDMFormInstanceRecordCacheModel
-	implements CacheModel<DDMFormInstanceRecord>, Externalizable {
-
+public class DDMFormInstanceRecordCacheModel implements CacheModel<DDMFormInstanceRecord>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +49,9 @@ public class DDMFormInstanceRecordCacheModel
 			return false;
 		}
 
-		DDMFormInstanceRecordCacheModel ddmFormInstanceRecordCacheModel =
-			(DDMFormInstanceRecordCacheModel)obj;
+		DDMFormInstanceRecordCacheModel ddmFormInstanceRecordCacheModel = (DDMFormInstanceRecordCacheModel)obj;
 
-		if (formInstanceRecordId ==
-				ddmFormInstanceRecordCacheModel.formInstanceRecordId) {
-
+		if (formInstanceRecordId == ddmFormInstanceRecordCacheModel.formInstanceRecordId) {
 			return true;
 		}
 
@@ -106,8 +104,7 @@ public class DDMFormInstanceRecordCacheModel
 
 	@Override
 	public DDMFormInstanceRecord toEntityModel() {
-		DDMFormInstanceRecordImpl ddmFormInstanceRecordImpl =
-			new DDMFormInstanceRecordImpl();
+		DDMFormInstanceRecordImpl ddmFormInstanceRecordImpl = new DDMFormInstanceRecordImpl();
 
 		if (uuid == null) {
 			ddmFormInstanceRecordImpl.setUuid("");
@@ -157,8 +154,7 @@ public class DDMFormInstanceRecordCacheModel
 			ddmFormInstanceRecordImpl.setFormInstanceVersion("");
 		}
 		else {
-			ddmFormInstanceRecordImpl.setFormInstanceVersion(
-				formInstanceVersion);
+			ddmFormInstanceRecordImpl.setFormInstanceVersion(formInstanceVersion);
 		}
 
 		ddmFormInstanceRecordImpl.setStorageId(storageId);
@@ -174,8 +170,8 @@ public class DDMFormInstanceRecordCacheModel
 			ddmFormInstanceRecordImpl.setLastPublishDate(null);
 		}
 		else {
-			ddmFormInstanceRecordImpl.setLastPublishDate(
-				new Date(lastPublishDate));
+			ddmFormInstanceRecordImpl.setLastPublishDate(new Date(
+					lastPublishDate));
 		}
 
 		ddmFormInstanceRecordImpl.resetOriginalValues();
@@ -210,7 +206,8 @@ public class DDMFormInstanceRecordCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -281,5 +278,4 @@ public class DDMFormInstanceRecordCacheModel
 	public long storageId;
 	public String version;
 	public long lastPublishDate;
-
 }

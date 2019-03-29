@@ -28,108 +28,84 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class DDMFormInstanceRecordServiceWrapper
 	implements DDMFormInstanceRecordService,
-			   ServiceWrapper<DDMFormInstanceRecordService> {
-
+		ServiceWrapper<DDMFormInstanceRecordService> {
 	public DDMFormInstanceRecordServiceWrapper(
 		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
-
 		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-			addFormInstanceRecord(
-				long groupId, long ddmFormInstanceId,
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues
-					ddmFormValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord addFormInstanceRecord(
+		long groupId, long ddmFormInstanceId,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceRecordService.addFormInstanceRecord(
-			groupId, ddmFormInstanceId, ddmFormValues, serviceContext);
+		return _ddmFormInstanceRecordService.addFormInstanceRecord(groupId,
+			ddmFormInstanceId, ddmFormValues, serviceContext);
 	}
 
 	@Override
 	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_ddmFormInstanceRecordService.deleteFormInstanceRecord(
-			ddmFormInstanceRecordId);
+		_ddmFormInstanceRecordService.deleteFormInstanceRecord(ddmFormInstanceRecordId);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-			getFormInstanceRecord(long ddmFormInstanceRecordId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord getFormInstanceRecord(
+		long ddmFormInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceRecordService.getFormInstanceRecord(
-			ddmFormInstanceRecordId);
+		return _ddmFormInstanceRecordService.getFormInstanceRecord(ddmFormInstanceRecordId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord>
-				getFormInstanceRecords(long ddmFormInstanceId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceRecordService.getFormInstanceRecords(
-			ddmFormInstanceId);
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getFormInstanceRecords(
+		long ddmFormInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmFormInstanceRecordService.getFormInstanceRecords(ddmFormInstanceId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord>
-				getFormInstanceRecords(
-					long ddmFormInstanceId, int status, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMFormInstanceRecord> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceRecordService.getFormInstanceRecords(
-			ddmFormInstanceId, status, start, end, orderByComparator);
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getFormInstanceRecords(
+		long ddmFormInstanceId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmFormInstanceRecordService.getFormInstanceRecords(ddmFormInstanceId,
+			status, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getFormInstanceRecordsCount(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceRecordService.getFormInstanceRecordsCount(
-			ddmFormInstanceId);
+		return _ddmFormInstanceRecordService.getFormInstanceRecordsCount(ddmFormInstanceId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _ddmFormInstanceRecordService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void revertFormInstanceRecord(
-			long ddmFormInstanceRecordId, String version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void revertFormInstanceRecord(long ddmFormInstanceRecordId,
+		String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_ddmFormInstanceRecordService.revertFormInstanceRecord(
-			ddmFormInstanceRecordId, version, serviceContext);
+		_ddmFormInstanceRecordService.revertFormInstanceRecord(ddmFormInstanceRecordId,
+			version, serviceContext);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-			updateFormInstanceRecord(
-				long ddmFormInstanceRecordId, boolean majorVersion,
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues
-					ddmFormValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord updateFormInstanceRecord(
+		long ddmFormInstanceRecordId, boolean majorVersion,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceRecordService.updateFormInstanceRecord(
-			ddmFormInstanceRecordId, majorVersion, ddmFormValues,
-			serviceContext);
+		return _ddmFormInstanceRecordService.updateFormInstanceRecord(ddmFormInstanceRecordId,
+			majorVersion, ddmFormValues, serviceContext);
 	}
 
 	@Override
@@ -140,10 +116,8 @@ public class DDMFormInstanceRecordServiceWrapper
 	@Override
 	public void setWrappedService(
 		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
-
 		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
 	}
 
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
-
 }

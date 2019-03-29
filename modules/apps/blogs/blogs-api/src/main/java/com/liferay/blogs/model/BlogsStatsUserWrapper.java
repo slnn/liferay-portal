@@ -33,10 +33,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class BlogsStatsUserWrapper
-	extends BaseModelWrapper<BlogsStatsUser>
+public class BlogsStatsUserWrapper extends BaseModelWrapper<BlogsStatsUser>
 	implements BlogsStatsUser, ModelWrapper<BlogsStatsUser> {
-
 	public BlogsStatsUserWrapper(BlogsStatsUser blogsStatsUser) {
 		super(blogsStatsUser);
 	}
@@ -97,7 +95,7 @@ public class BlogsStatsUserWrapper
 		}
 
 		Integer ratingsTotalEntries = (Integer)attributes.get(
-			"ratingsTotalEntries");
+				"ratingsTotalEntries");
 
 		if (ratingsTotalEntries != null) {
 			setRatingsTotalEntries(ratingsTotalEntries);
@@ -110,7 +108,7 @@ public class BlogsStatsUserWrapper
 		}
 
 		Double ratingsAverageScore = (Double)attributes.get(
-			"ratingsAverageScore");
+				"ratingsAverageScore");
 
 		if (ratingsAverageScore != null) {
 			setRatingsAverageScore(ratingsAverageScore);
@@ -118,120 +116,120 @@ public class BlogsStatsUserWrapper
 	}
 
 	/**
-	 * Returns the company ID of this blogs stats user.
-	 *
-	 * @return the company ID of this blogs stats user
-	 */
+	* Returns the company ID of this blogs stats user.
+	*
+	* @return the company ID of this blogs stats user
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the entry count of this blogs stats user.
-	 *
-	 * @return the entry count of this blogs stats user
-	 */
+	* Returns the entry count of this blogs stats user.
+	*
+	* @return the entry count of this blogs stats user
+	*/
 	@Override
 	public int getEntryCount() {
 		return model.getEntryCount();
 	}
 
 	/**
-	 * Returns the group ID of this blogs stats user.
-	 *
-	 * @return the group ID of this blogs stats user
-	 */
+	* Returns the group ID of this blogs stats user.
+	*
+	* @return the group ID of this blogs stats user
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last post date of this blogs stats user.
-	 *
-	 * @return the last post date of this blogs stats user
-	 */
+	* Returns the last post date of this blogs stats user.
+	*
+	* @return the last post date of this blogs stats user
+	*/
 	@Override
 	public Date getLastPostDate() {
 		return model.getLastPostDate();
 	}
 
 	/**
-	 * Returns the primary key of this blogs stats user.
-	 *
-	 * @return the primary key of this blogs stats user
-	 */
+	* Returns the primary key of this blogs stats user.
+	*
+	* @return the primary key of this blogs stats user
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the ratings average score of this blogs stats user.
-	 *
-	 * @return the ratings average score of this blogs stats user
-	 */
+	* Returns the ratings average score of this blogs stats user.
+	*
+	* @return the ratings average score of this blogs stats user
+	*/
 	@Override
 	public double getRatingsAverageScore() {
 		return model.getRatingsAverageScore();
 	}
 
 	/**
-	 * Returns the ratings total entries of this blogs stats user.
-	 *
-	 * @return the ratings total entries of this blogs stats user
-	 */
+	* Returns the ratings total entries of this blogs stats user.
+	*
+	* @return the ratings total entries of this blogs stats user
+	*/
 	@Override
 	public int getRatingsTotalEntries() {
 		return model.getRatingsTotalEntries();
 	}
 
 	/**
-	 * Returns the ratings total score of this blogs stats user.
-	 *
-	 * @return the ratings total score of this blogs stats user
-	 */
+	* Returns the ratings total score of this blogs stats user.
+	*
+	* @return the ratings total score of this blogs stats user
+	*/
 	@Override
 	public double getRatingsTotalScore() {
 		return model.getRatingsTotalScore();
 	}
 
 	/**
-	 * Returns the stats user ID of this blogs stats user.
-	 *
-	 * @return the stats user ID of this blogs stats user
-	 */
+	* Returns the stats user ID of this blogs stats user.
+	*
+	* @return the stats user ID of this blogs stats user
+	*/
 	@Override
 	public long getStatsUserId() {
 		return model.getStatsUserId();
 	}
 
 	/**
-	 * Returns the stats user uuid of this blogs stats user.
-	 *
-	 * @return the stats user uuid of this blogs stats user
-	 */
+	* Returns the stats user uuid of this blogs stats user.
+	*
+	* @return the stats user uuid of this blogs stats user
+	*/
 	@Override
 	public String getStatsUserUuid() {
 		return model.getStatsUserUuid();
 	}
 
 	/**
-	 * Returns the user ID of this blogs stats user.
-	 *
-	 * @return the user ID of this blogs stats user
-	 */
+	* Returns the user ID of this blogs stats user.
+	*
+	* @return the user ID of this blogs stats user
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user uuid of this blogs stats user.
-	 *
-	 * @return the user uuid of this blogs stats user
-	 */
+	* Returns the user uuid of this blogs stats user.
+	*
+	* @return the user uuid of this blogs stats user
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -243,120 +241,120 @@ public class BlogsStatsUserWrapper
 	}
 
 	/**
-	 * Sets the company ID of this blogs stats user.
-	 *
-	 * @param companyId the company ID of this blogs stats user
-	 */
+	* Sets the company ID of this blogs stats user.
+	*
+	* @param companyId the company ID of this blogs stats user
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the entry count of this blogs stats user.
-	 *
-	 * @param entryCount the entry count of this blogs stats user
-	 */
+	* Sets the entry count of this blogs stats user.
+	*
+	* @param entryCount the entry count of this blogs stats user
+	*/
 	@Override
 	public void setEntryCount(int entryCount) {
 		model.setEntryCount(entryCount);
 	}
 
 	/**
-	 * Sets the group ID of this blogs stats user.
-	 *
-	 * @param groupId the group ID of this blogs stats user
-	 */
+	* Sets the group ID of this blogs stats user.
+	*
+	* @param groupId the group ID of this blogs stats user
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last post date of this blogs stats user.
-	 *
-	 * @param lastPostDate the last post date of this blogs stats user
-	 */
+	* Sets the last post date of this blogs stats user.
+	*
+	* @param lastPostDate the last post date of this blogs stats user
+	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
-	 * Sets the primary key of this blogs stats user.
-	 *
-	 * @param primaryKey the primary key of this blogs stats user
-	 */
+	* Sets the primary key of this blogs stats user.
+	*
+	* @param primaryKey the primary key of this blogs stats user
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the ratings average score of this blogs stats user.
-	 *
-	 * @param ratingsAverageScore the ratings average score of this blogs stats user
-	 */
+	* Sets the ratings average score of this blogs stats user.
+	*
+	* @param ratingsAverageScore the ratings average score of this blogs stats user
+	*/
 	@Override
 	public void setRatingsAverageScore(double ratingsAverageScore) {
 		model.setRatingsAverageScore(ratingsAverageScore);
 	}
 
 	/**
-	 * Sets the ratings total entries of this blogs stats user.
-	 *
-	 * @param ratingsTotalEntries the ratings total entries of this blogs stats user
-	 */
+	* Sets the ratings total entries of this blogs stats user.
+	*
+	* @param ratingsTotalEntries the ratings total entries of this blogs stats user
+	*/
 	@Override
 	public void setRatingsTotalEntries(int ratingsTotalEntries) {
 		model.setRatingsTotalEntries(ratingsTotalEntries);
 	}
 
 	/**
-	 * Sets the ratings total score of this blogs stats user.
-	 *
-	 * @param ratingsTotalScore the ratings total score of this blogs stats user
-	 */
+	* Sets the ratings total score of this blogs stats user.
+	*
+	* @param ratingsTotalScore the ratings total score of this blogs stats user
+	*/
 	@Override
 	public void setRatingsTotalScore(double ratingsTotalScore) {
 		model.setRatingsTotalScore(ratingsTotalScore);
 	}
 
 	/**
-	 * Sets the stats user ID of this blogs stats user.
-	 *
-	 * @param statsUserId the stats user ID of this blogs stats user
-	 */
+	* Sets the stats user ID of this blogs stats user.
+	*
+	* @param statsUserId the stats user ID of this blogs stats user
+	*/
 	@Override
 	public void setStatsUserId(long statsUserId) {
 		model.setStatsUserId(statsUserId);
 	}
 
 	/**
-	 * Sets the stats user uuid of this blogs stats user.
-	 *
-	 * @param statsUserUuid the stats user uuid of this blogs stats user
-	 */
+	* Sets the stats user uuid of this blogs stats user.
+	*
+	* @param statsUserUuid the stats user uuid of this blogs stats user
+	*/
 	@Override
 	public void setStatsUserUuid(String statsUserUuid) {
 		model.setStatsUserUuid(statsUserUuid);
 	}
 
 	/**
-	 * Sets the user ID of this blogs stats user.
-	 *
-	 * @param userId the user ID of this blogs stats user
-	 */
+	* Sets the user ID of this blogs stats user.
+	*
+	* @param userId the user ID of this blogs stats user
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user uuid of this blogs stats user.
-	 *
-	 * @param userUuid the user uuid of this blogs stats user
-	 */
+	* Sets the user uuid of this blogs stats user.
+	*
+	* @param userUuid the user uuid of this blogs stats user
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -366,5 +364,4 @@ public class BlogsStatsUserWrapper
 	protected BlogsStatsUserWrapper wrap(BlogsStatsUser blogsStatsUser) {
 		return new BlogsStatsUserWrapper(blogsStatsUser);
 	}
-
 }

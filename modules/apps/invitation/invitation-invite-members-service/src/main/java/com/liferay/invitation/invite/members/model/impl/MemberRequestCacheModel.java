@@ -17,8 +17,10 @@ package com.liferay.invitation.invite.members.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.invitation.invite.members.model.MemberRequest;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class MemberRequestCacheModel
-	implements CacheModel<MemberRequest>, Externalizable {
-
+public class MemberRequestCacheModel implements CacheModel<MemberRequest>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class MemberRequestCacheModel
 			return false;
 		}
 
-		MemberRequestCacheModel memberRequestCacheModel =
-			(MemberRequestCacheModel)obj;
+		MemberRequestCacheModel memberRequestCacheModel = (MemberRequestCacheModel)obj;
 
 		if (memberRequestId == memberRequestCacheModel.memberRequestId) {
 			return true;
@@ -167,7 +167,8 @@ public class MemberRequestCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(memberRequestId);
 
 		objectOutput.writeLong(groupId);
@@ -214,5 +215,4 @@ public class MemberRequestCacheModel
 	public long invitedRoleId;
 	public long invitedTeamId;
 	public int status;
-
 }

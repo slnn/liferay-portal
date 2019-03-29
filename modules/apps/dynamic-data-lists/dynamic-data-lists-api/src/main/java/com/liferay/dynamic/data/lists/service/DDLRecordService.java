@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -47,20 +48,12 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=ddl",
-		"json.web.service.context.path=DDLRecord"
-	},
-	service = DDLRecordService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=ddl", "json.web.service.context.path=DDLRecord"}, service = DDLRecordService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface DDLRecordService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,215 +61,205 @@ public interface DDLRecordService extends BaseService {
 	 */
 
 	/**
-	 * Adds a record referencing the record set.
-	 *
-	 * @param groupId the primary key of the record's group
-	 * @param recordSetId the primary key of the record set
-	 * @param displayIndex the index position in which the record is displayed
-	 in the spreadsheet view
-	 * @param ddmFormValues the record values. See <code>DDMFormValues</code>
-	 in the <code>dynamic.data.mapping.api</code> module.
-	 * @param serviceContext the service context to be applied. This can set
-	 the UUID, guest permissions, and group permissions for the
-	 record.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
-		throws PortalException;
+	* Adds a record referencing the record set.
+	*
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is displayed
+	in the spreadsheet view
+	* @param ddmFormValues the record values. See <code>DDMFormValues</code>
+	in the <code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can set
+	the UUID, guest permissions, and group permissions for the
+	record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecord addRecord(long groupId, long recordSetId,
+		int displayIndex, DDMFormValues ddmFormValues,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Adds a record referencing the record set.
-	 *
-	 * @param groupId the primary key of the record's group
-	 * @param recordSetId the primary key of the record set
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fields the record values. See <code>Fields</code> in the
-	 <code>dynamic.data.mapping.api</code> module.
-	 * @param serviceContext the service context to be applied. This can
-	 set the UUID, guest permissions, and group permissions for
-	 the record.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addRecord(long, long, int, DDMFormValues, ServiceContext)}
-	 */
+	* Adds a record referencing the record set.
+	*
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fields the record values. See <code>Fields</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can
+	set the UUID, guest permissions, and group permissions for
+	the record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addRecord(long, long, int, DDMFormValues, ServiceContext)}
+	*/
 	@Deprecated
-	public DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex, Fields fields,
-			ServiceContext serviceContext)
+	public DDLRecord addRecord(long groupId, long recordSetId,
+		int displayIndex, Fields fields, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Adds a record referencing the record set.
-	 *
-	 * @param groupId the primary key of the record's group
-	 * @param recordSetId the primary key of the record set
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fieldsMap the record values. The fieldsMap is a map of field
-	 names and its Serializable values.
-	 * @param serviceContext the service context to be applied. This can
-	 set the UUID, guest permissions, and group permissions for
-	 the record.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addRecord(long, long, int, DDMFormValues, ServiceContext)}
-	 */
+	* Adds a record referencing the record set.
+	*
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param serviceContext the service context to be applied. This can
+	set the UUID, guest permissions, and group permissions for
+	the record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#addRecord(long, long, int, DDMFormValues, ServiceContext)}
+	*/
 	@Deprecated
-	public DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex,
-			Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
-		throws PortalException;
+	public DDLRecord addRecord(long groupId, long recordSetId,
+		int displayIndex, Map<String, Serializable> fieldsMap,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Deletes the record and its resources.
-	 *
-	 * @param recordId the primary key of the record to be deleted
-	 * @throws PortalException
-	 */
+	* Deletes the record and its resources.
+	*
+	* @param recordId the primary key of the record to be deleted
+	* @throws PortalException
+	*/
 	public void deleteRecord(long recordId) throws PortalException;
 
 	/**
-	 * Disassociates the locale from the record.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param locale the locale of the record values to be removed
-	 * @param serviceContext the service context to be applied. This can
-	 set the record modified date.
-	 * @return the affected record
-	 * @throws PortalException
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateRecord(long, boolean, int, DDMFormValues,
-	 ServiceContext)}
-	 */
+	* Disassociates the locale from the record.
+	*
+	* @param recordId the primary key of the record
+	* @param locale the locale of the record values to be removed
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the affected record
+	* @throws PortalException
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
+	*/
 	@Deprecated
-	public DDLRecord deleteRecordLocale(
-			long recordId, Locale locale, ServiceContext serviceContext)
-		throws PortalException;
+	public DDLRecord deleteRecordLocale(long recordId, Locale locale,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	/**
-	 * Returns the record with the ID.
-	 *
-	 * @param recordId the primary key of the record
-	 * @return the record with the ID
-	 * @throws PortalException if a portal exception occurred
-	 */
+	* Returns the record with the ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the record with the ID
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecord getRecord(long recordId) throws PortalException;
 
 	/**
-	 * Returns all the records matching the record set ID
-	 *
-	 * @param recordSetId the record's record set ID
-	 * @return the matching records
-	 * @throws PortalException if a portal exception occurred
-	 */
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getRecords(long recordSetId) throws PortalException;
-
-	/**
-	 * Reverts the record to a given version.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param version the version to be reverted
-	 * @param serviceContext the service context to be applied. This can set
-	 the record modified date.
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public void revertRecord(
-			long recordId, String version, ServiceContext serviceContext)
+	public List<DDLRecord> getRecords(long recordSetId)
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #revertRecord(long, String, ServiceContext)}
-	 */
+	* Reverts the record to a given version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the version to be reverted
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void revertRecord(long recordId, String version,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#revertRecord(long, String, ServiceContext)}
+	*/
 	@Deprecated
-	public void revertRecordVersion(
-			long recordId, String version, ServiceContext serviceContext)
-		throws PortalException;
+	public void revertRecordVersion(long recordId, String version,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Updates a record, replacing its display index and values.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param majorVersion whether this update is a major change. A major
-	 change increments the record's major version number.
-	 * @param displayIndex the index position in which the record is displayed
-	 in the spreadsheet view
-	 * @param ddmFormValues the record values. See <code>DDMFormValues</code>
-	 in the <code>dynamic.data.mapping.api</code> module.
-	 * @param serviceContext the service context to be applied. This can set
-	 the record modified date.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public DDLRecord updateRecord(
-			long recordId, boolean majorVersion, int displayIndex,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
-		throws PortalException;
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param majorVersion whether this update is a major change. A major
+	change increments the record's major version number.
+	* @param displayIndex the index position in which the record is displayed
+	in the spreadsheet view
+	* @param ddmFormValues the record values. See <code>DDMFormValues</code>
+	in the <code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecord updateRecord(long recordId, boolean majorVersion,
+		int displayIndex, DDMFormValues ddmFormValues,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Updates a record, replacing its display index and values.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param majorVersion whether this update is a major change. Major
-	 changes causes the increment of the major version number.
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fields the record values. See <code>Fields</code> in the
-	 <code>dynamic.data.mapping.api</code> module.
-	 * @param mergeFields whether to merge the new fields with the existing
-	 ones; otherwise replace the existing fields
-	 * @param serviceContext the service context to be applied. This can
-	 set the record modified date.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateRecord(long, boolean, int, DDMFormValues,
-	 ServiceContext)}
-	 */
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param majorVersion whether this update is a major change. Major
+	changes causes the increment of the major version number.
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fields the record values. See <code>Fields</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
+	*/
 	@Deprecated
-	public DDLRecord updateRecord(
-			long recordId, boolean majorVersion, int displayIndex,
-			Fields fields, boolean mergeFields, ServiceContext serviceContext)
-		throws PortalException;
+	public DDLRecord updateRecord(long recordId, boolean majorVersion,
+		int displayIndex, Fields fields, boolean mergeFields,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Updates a record, replacing its display index and values.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fieldsMap the record values. The fieldsMap is a map of field
-	 names and its Serializable values.
-	 * @param mergeFields whether to merge the new fields with the existing
-	 ones; otherwise replace the existing fields
-	 * @param serviceContext the service context to be applied. This can
-	 set the record modified date.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateRecord(long, boolean, int, DDMFormValues,
-	 ServiceContext)}
-	 */
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateRecord(long, boolean, int, DDMFormValues,
+	ServiceContext)}
+	*/
 	@Deprecated
-	public DDLRecord updateRecord(
-			long recordId, int displayIndex,
-			Map<String, Serializable> fieldsMap, boolean mergeFields,
-			ServiceContext serviceContext)
-		throws PortalException;
-
+	public DDLRecord updateRecord(long recordId, int displayIndex,
+		Map<String, Serializable> fieldsMap, boolean mergeFields,
+		ServiceContext serviceContext) throws PortalException;
 }

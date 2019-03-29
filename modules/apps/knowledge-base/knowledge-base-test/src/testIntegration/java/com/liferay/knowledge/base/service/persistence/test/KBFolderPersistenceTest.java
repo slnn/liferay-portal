@@ -15,11 +15,13 @@
 package com.liferay.knowledge.base.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.service.persistence.KBFolderUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KBFolderPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.knowledge.base.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.knowledge.base.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class KBFolderPersistenceTest {
 
 		_persistence.remove(newKBFolder);
 
-		KBFolder existingKBFolder = _persistence.fetchByPrimaryKey(
-			newKBFolder.getPrimaryKey());
+		KBFolder existingKBFolder = _persistence.fetchByPrimaryKey(newKBFolder.getPrimaryKey());
 
 		Assert.assertNull(existingKBFolder);
 	}
@@ -150,36 +150,34 @@ public class KBFolderPersistenceTest {
 
 		_kbFolders.add(_persistence.update(newKBFolder));
 
-		KBFolder existingKBFolder = _persistence.findByPrimaryKey(
-			newKBFolder.getPrimaryKey());
+		KBFolder existingKBFolder = _persistence.findByPrimaryKey(newKBFolder.getPrimaryKey());
 
 		Assert.assertEquals(existingKBFolder.getUuid(), newKBFolder.getUuid());
-		Assert.assertEquals(
-			existingKBFolder.getKbFolderId(), newKBFolder.getKbFolderId());
-		Assert.assertEquals(
-			existingKBFolder.getGroupId(), newKBFolder.getGroupId());
-		Assert.assertEquals(
-			existingKBFolder.getCompanyId(), newKBFolder.getCompanyId());
-		Assert.assertEquals(
-			existingKBFolder.getUserId(), newKBFolder.getUserId());
-		Assert.assertEquals(
-			existingKBFolder.getUserName(), newKBFolder.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKBFolder.getCreateDate()),
+		Assert.assertEquals(existingKBFolder.getKbFolderId(),
+			newKBFolder.getKbFolderId());
+		Assert.assertEquals(existingKBFolder.getGroupId(),
+			newKBFolder.getGroupId());
+		Assert.assertEquals(existingKBFolder.getCompanyId(),
+			newKBFolder.getCompanyId());
+		Assert.assertEquals(existingKBFolder.getUserId(),
+			newKBFolder.getUserId());
+		Assert.assertEquals(existingKBFolder.getUserName(),
+			newKBFolder.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKBFolder.getCreateDate()),
 			Time.getShortTimestamp(newKBFolder.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKBFolder.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKBFolder.getModifiedDate()),
 			Time.getShortTimestamp(newKBFolder.getModifiedDate()));
-		Assert.assertEquals(
-			existingKBFolder.getParentKBFolderId(),
+		Assert.assertEquals(existingKBFolder.getParentKBFolderId(),
 			newKBFolder.getParentKBFolderId());
 		Assert.assertEquals(existingKBFolder.getName(), newKBFolder.getName());
-		Assert.assertEquals(
-			existingKBFolder.getUrlTitle(), newKBFolder.getUrlTitle());
-		Assert.assertEquals(
-			existingKBFolder.getDescription(), newKBFolder.getDescription());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingKBFolder.getLastPublishDate()),
+		Assert.assertEquals(existingKBFolder.getUrlTitle(),
+			newKBFolder.getUrlTitle());
+		Assert.assertEquals(existingKBFolder.getDescription(),
+			newKBFolder.getDescription());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingKBFolder.getLastPublishDate()),
 			Time.getShortTimestamp(newKBFolder.getLastPublishDate()));
 	}
 
@@ -212,16 +210,16 @@ public class KBFolderPersistenceTest {
 
 	@Test
 	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_P(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_P_N() throws Exception {
-		_persistence.countByG_P_N(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+		_persistence.countByG_P_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
 		_persistence.countByG_P_N(0L, 0L, "null");
 
@@ -230,8 +228,8 @@ public class KBFolderPersistenceTest {
 
 	@Test
 	public void testCountByG_P_UT() throws Exception {
-		_persistence.countByG_P_UT(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+		_persistence.countByG_P_UT(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
 		_persistence.countByG_P_UT(0L, 0L, "null");
 
@@ -242,8 +240,7 @@ public class KBFolderPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KBFolder newKBFolder = addKBFolder();
 
-		KBFolder existingKBFolder = _persistence.findByPrimaryKey(
-			newKBFolder.getPrimaryKey());
+		KBFolder existingKBFolder = _persistence.findByPrimaryKey(newKBFolder.getPrimaryKey());
 
 		Assert.assertEquals(existingKBFolder, newKBFolder);
 	}
@@ -257,24 +254,23 @@ public class KBFolderPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<KBFolder> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"KBFolder", "uuid", true, "kbFolderId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentKBFolderId", true, "name", true,
-			"urlTitle", true, "description", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("KBFolder", "uuid", true,
+			"kbFolderId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"parentKBFolderId", true, "name", true, "urlTitle", true,
+			"description", true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		KBFolder newKBFolder = addKBFolder();
 
-		KBFolder existingKBFolder = _persistence.fetchByPrimaryKey(
-			newKBFolder.getPrimaryKey());
+		KBFolder existingKBFolder = _persistence.fetchByPrimaryKey(newKBFolder.getPrimaryKey());
 
 		Assert.assertEquals(existingKBFolder, newKBFolder);
 	}
@@ -291,7 +287,6 @@ public class KBFolderPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		KBFolder newKBFolder1 = addKBFolder();
 		KBFolder newKBFolder2 = addKBFolder();
 
@@ -300,20 +295,18 @@ public class KBFolderPersistenceTest {
 		primaryKeys.add(newKBFolder1.getPrimaryKey());
 		primaryKeys.add(newKBFolder2.getPrimaryKey());
 
-		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kbFolders.size());
-		Assert.assertEquals(
-			newKBFolder1, kbFolders.get(newKBFolder1.getPrimaryKey()));
-		Assert.assertEquals(
-			newKBFolder2, kbFolders.get(newKBFolder2.getPrimaryKey()));
+		Assert.assertEquals(newKBFolder1,
+			kbFolders.get(newKBFolder1.getPrimaryKey()));
+		Assert.assertEquals(newKBFolder2,
+			kbFolders.get(newKBFolder2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -323,8 +316,7 @@ public class KBFolderPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kbFolders.isEmpty());
 	}
@@ -332,7 +324,6 @@ public class KBFolderPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		KBFolder newKBFolder = addKBFolder();
 
 		long pk = RandomTestUtil.nextLong();
@@ -342,57 +333,52 @@ public class KBFolderPersistenceTest {
 		primaryKeys.add(newKBFolder.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kbFolders.size());
-		Assert.assertEquals(
-			newKBFolder, kbFolders.get(newKBFolder.getPrimaryKey()));
+		Assert.assertEquals(newKBFolder,
+			kbFolders.get(newKBFolder.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kbFolders.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		KBFolder newKBFolder = addKBFolder();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKBFolder.getPrimaryKey());
 
-		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, KBFolder> kbFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kbFolders.size());
-		Assert.assertEquals(
-			newKBFolder, kbFolders.get(newKBFolder.getPrimaryKey()));
+		Assert.assertEquals(newKBFolder,
+			kbFolders.get(newKBFolder.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			KBFolderLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = KBFolderLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<KBFolder>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KBFolder>() {
 				@Override
 				public void performAction(KBFolder kbFolder) {
 					Assert.assertNotNull(kbFolder);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -401,15 +387,15 @@ public class KBFolderPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		KBFolder newKBFolder = addKBFolder();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KBFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KBFolder.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kbFolderId", newKBFolder.getKbFolderId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kbFolderId",
+				newKBFolder.getKbFolderId()));
 
 		List<KBFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -422,12 +408,11 @@ public class KBFolderPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KBFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KBFolder.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"kbFolderId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("kbFolderId",
+				RandomTestUtil.nextLong()));
 
 		List<KBFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -435,20 +420,19 @@ public class KBFolderPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		KBFolder newKBFolder = addKBFolder();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KBFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KBFolder.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kbFolderId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("kbFolderId"));
 
 		Object newKbFolderId = newKBFolder.getKbFolderId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kbFolderId", new Object[] {newKbFolderId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kbFolderId",
+				new Object[] { newKbFolderId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -461,15 +445,13 @@ public class KBFolderPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KBFolder.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KBFolder.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("kbFolderId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("kbFolderId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"kbFolderId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("kbFolderId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -482,48 +464,34 @@ public class KBFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		KBFolder existingKBFolder = _persistence.findByPrimaryKey(
-			newKBFolder.getPrimaryKey());
+		KBFolder existingKBFolder = _persistence.findByPrimaryKey(newKBFolder.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBFolder.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingKBFolder, "getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingKBFolder.getUuid(),
+				ReflectionTestUtil.invoke(existingKBFolder, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingKBFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingKBFolder,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getParentKBFolderId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalParentKBFolderId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBFolder.getName(),
-				ReflectionTestUtil.invoke(
-					existingKBFolder, "getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingKBFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingKBFolder,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingKBFolder.getParentKBFolderId()),
+			ReflectionTestUtil.<Long>invoke(existingKBFolder,
+				"getOriginalParentKBFolderId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingKBFolder.getName(),
+				ReflectionTestUtil.invoke(existingKBFolder, "getOriginalName",
+					new Class<?>[0])));
 
-		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getParentKBFolderId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalParentKBFolderId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBFolder.getUrlTitle(),
-				ReflectionTestUtil.invoke(
-					existingKBFolder, "getOriginalUrlTitle", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingKBFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingKBFolder,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingKBFolder.getParentKBFolderId()),
+			ReflectionTestUtil.<Long>invoke(existingKBFolder,
+				"getOriginalParentKBFolderId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingKBFolder.getUrlTitle(),
+				ReflectionTestUtil.invoke(existingKBFolder,
+					"getOriginalUrlTitle", new Class<?>[0])));
 	}
 
 	protected KBFolder addKBFolder() throws Exception {
@@ -563,5 +531,4 @@ public class KBFolderPersistenceTest {
 	private List<KBFolder> _kbFolders = new ArrayList<KBFolder>();
 	private KBFolderPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

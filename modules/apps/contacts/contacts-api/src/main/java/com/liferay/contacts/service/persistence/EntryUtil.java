@@ -17,19 +17,21 @@ package com.liferay.contacts.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.contacts.model.Entry;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the entry service. This utility wraps <code>com.liferay.contacts.service.persistence.impl.EntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -44,7 +46,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class EntryUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,7 +78,6 @@ public class EntryUtil {
 	 */
 	public static Map<Serializable, Entry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -91,21 +91,19 @@ public class EntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
-	public static List<Entry> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
+	public static List<Entry> findWithDynamicQuery(DynamicQuery dynamicQuery,
+		int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
-	public static List<Entry> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
-
-		return getPersistence().findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public static List<Entry> findWithDynamicQuery(DynamicQuery dynamicQuery,
+		int start, int end, OrderByComparator<Entry> orderByComparator) {
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -123,269 +121,256 @@ public class EntryUtil {
 	}
 
 	/**
-	 * Returns all the entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching entries
-	 */
+	* Returns all the entries where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching entries
+	*/
 	public static List<Entry> findByUserId(long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
 	/**
-	 * Returns a range of all the entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @return the range of matching entries
-	 */
+	* Returns a range of all the entries where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of entries
+	* @param end the upper bound of the range of entries (not inclusive)
+	* @return the range of matching entries
+	*/
 	public static List<Entry> findByUserId(long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching entries
-	 */
-	public static List<Entry> findByUserId(
-		long userId, int start, int end,
+	* Returns an ordered range of all the entries where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of entries
+	* @param end the upper bound of the range of entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching entries
+	*/
+	public static List<Entry> findByUserId(long userId, int start, int end,
 		OrderByComparator<Entry> orderByComparator) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching entries
-	 */
-	public static List<Entry> findByUserId(
-		long userId, int start, int end,
+	* Returns an ordered range of all the entries where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of entries
+	* @param end the upper bound of the range of entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching entries
+	*/
+	public static List<Entry> findByUserId(long userId, int start, int end,
 		OrderByComparator<Entry> orderByComparator, boolean retrieveFromCache) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, retrieveFromCache);
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	 * Returns the first entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching entry
-	 * @throws NoSuchEntryException if a matching entry could not be found
-	 */
-	public static Entry findByUserId_First(
-			long userId, OrderByComparator<Entry> orderByComparator)
+	* Returns the first entry in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching entry
+	* @throws NoSuchEntryException if a matching entry could not be found
+	*/
+	public static Entry findByUserId_First(long userId,
+		OrderByComparator<Entry> orderByComparator)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching entry, or <code>null</code> if a matching entry could not be found
-	 */
-	public static Entry fetchByUserId_First(
-		long userId, OrderByComparator<Entry> orderByComparator) {
-
+	* Returns the first entry in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching entry, or <code>null</code> if a matching entry could not be found
+	*/
+	public static Entry fetchByUserId_First(long userId,
+		OrderByComparator<Entry> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching entry
-	 * @throws NoSuchEntryException if a matching entry could not be found
-	 */
-	public static Entry findByUserId_Last(
-			long userId, OrderByComparator<Entry> orderByComparator)
+	* Returns the last entry in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching entry
+	* @throws NoSuchEntryException if a matching entry could not be found
+	*/
+	public static Entry findByUserId_Last(long userId,
+		OrderByComparator<Entry> orderByComparator)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last entry in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching entry, or <code>null</code> if a matching entry could not be found
-	 */
-	public static Entry fetchByUserId_Last(
-		long userId, OrderByComparator<Entry> orderByComparator) {
-
+	* Returns the last entry in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching entry, or <code>null</code> if a matching entry could not be found
+	*/
+	public static Entry fetchByUserId_Last(long userId,
+		OrderByComparator<Entry> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
-	 * Returns the entries before and after the current entry in the ordered set where userId = &#63;.
-	 *
-	 * @param entryId the primary key of the current entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next entry
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
-	public static Entry[] findByUserId_PrevAndNext(
-			long entryId, long userId,
-			OrderByComparator<Entry> orderByComparator)
+	* Returns the entries before and after the current entry in the ordered set where userId = &#63;.
+	*
+	* @param entryId the primary key of the current entry
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next entry
+	* @throws NoSuchEntryException if a entry with the primary key could not be found
+	*/
+	public static Entry[] findByUserId_PrevAndNext(long entryId, long userId,
+		OrderByComparator<Entry> orderByComparator)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			entryId, userId, orderByComparator);
+		return getPersistence()
+				   .findByUserId_PrevAndNext(entryId, userId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the entries where userId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 */
+	* Removes all the entries where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	*/
 	public static void removeByUserId(long userId) {
 		getPersistence().removeByUserId(userId);
 	}
 
 	/**
-	 * Returns the number of entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the number of matching entries
-	 */
+	* Returns the number of entries where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching entries
+	*/
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
 	}
 
 	/**
-	 * Returns the entry where userId = &#63; and emailAddress = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
-	 *
-	 * @param userId the user ID
-	 * @param emailAddress the email address
-	 * @return the matching entry
-	 * @throws NoSuchEntryException if a matching entry could not be found
-	 */
+	* Returns the entry where userId = &#63; and emailAddress = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	*
+	* @param userId the user ID
+	* @param emailAddress the email address
+	* @return the matching entry
+	* @throws NoSuchEntryException if a matching entry could not be found
+	*/
 	public static Entry findByU_EA(long userId, String emailAddress)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
 		return getPersistence().findByU_EA(userId, emailAddress);
 	}
 
 	/**
-	 * Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param emailAddress the email address
-	 * @return the matching entry, or <code>null</code> if a matching entry could not be found
-	 */
+	* Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param userId the user ID
+	* @param emailAddress the email address
+	* @return the matching entry, or <code>null</code> if a matching entry could not be found
+	*/
 	public static Entry fetchByU_EA(long userId, String emailAddress) {
 		return getPersistence().fetchByU_EA(userId, emailAddress);
 	}
 
 	/**
-	 * Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param emailAddress the email address
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching entry, or <code>null</code> if a matching entry could not be found
-	 */
-	public static Entry fetchByU_EA(
-		long userId, String emailAddress, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByU_EA(
-			userId, emailAddress, retrieveFromCache);
+	* Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param userId the user ID
+	* @param emailAddress the email address
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching entry, or <code>null</code> if a matching entry could not be found
+	*/
+	public static Entry fetchByU_EA(long userId, String emailAddress,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByU_EA(userId, emailAddress, retrieveFromCache);
 	}
 
 	/**
-	 * Removes the entry where userId = &#63; and emailAddress = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @param emailAddress the email address
-	 * @return the entry that was removed
-	 */
+	* Removes the entry where userId = &#63; and emailAddress = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param emailAddress the email address
+	* @return the entry that was removed
+	*/
 	public static Entry removeByU_EA(long userId, String emailAddress)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
 		return getPersistence().removeByU_EA(userId, emailAddress);
 	}
 
 	/**
-	 * Returns the number of entries where userId = &#63; and emailAddress = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param emailAddress the email address
-	 * @return the number of matching entries
-	 */
+	* Returns the number of entries where userId = &#63; and emailAddress = &#63;.
+	*
+	* @param userId the user ID
+	* @param emailAddress the email address
+	* @return the number of matching entries
+	*/
 	public static int countByU_EA(long userId, String emailAddress) {
 		return getPersistence().countByU_EA(userId, emailAddress);
 	}
 
 	/**
-	 * Caches the entry in the entity cache if it is enabled.
-	 *
-	 * @param entry the entry
-	 */
+	* Caches the entry in the entity cache if it is enabled.
+	*
+	* @param entry the entry
+	*/
 	public static void cacheResult(Entry entry) {
 		getPersistence().cacheResult(entry);
 	}
 
 	/**
-	 * Caches the entries in the entity cache if it is enabled.
-	 *
-	 * @param entries the entries
-	 */
+	* Caches the entries in the entity cache if it is enabled.
+	*
+	* @param entries the entries
+	*/
 	public static void cacheResult(List<Entry> entries) {
 		getPersistence().cacheResult(entries);
 	}
 
 	/**
-	 * Creates a new entry with the primary key. Does not add the entry to the database.
-	 *
-	 * @param entryId the primary key for the new entry
-	 * @return the new entry
-	 */
+	* Creates a new entry with the primary key. Does not add the entry to the database.
+	*
+	* @param entryId the primary key for the new entry
+	* @return the new entry
+	*/
 	public static Entry create(long entryId) {
 		return getPersistence().create(entryId);
 	}
 
 	/**
-	 * Removes the entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param entryId the primary key of the entry
-	 * @return the entry that was removed
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
+	* Removes the entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param entryId the primary key of the entry
+	* @return the entry that was removed
+	* @throws NoSuchEntryException if a entry with the primary key could not be found
+	*/
 	public static Entry remove(long entryId)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
 		return getPersistence().remove(entryId);
 	}
 
@@ -394,103 +379,99 @@ public class EntryUtil {
 	}
 
 	/**
-	 * Returns the entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the entry
-	 * @return the entry
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
+	* Returns the entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	*
+	* @param entryId the primary key of the entry
+	* @return the entry
+	* @throws NoSuchEntryException if a entry with the primary key could not be found
+	*/
 	public static Entry findByPrimaryKey(long entryId)
 		throws com.liferay.contacts.exception.NoSuchEntryException {
-
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 
 	/**
-	 * Returns the entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the entry
-	 * @return the entry, or <code>null</code> if a entry with the primary key could not be found
-	 */
+	* Returns the entry with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param entryId the primary key of the entry
+	* @return the entry, or <code>null</code> if a entry with the primary key could not be found
+	*/
 	public static Entry fetchByPrimaryKey(long entryId) {
 		return getPersistence().fetchByPrimaryKey(entryId);
 	}
 
 	/**
-	 * Returns all the entries.
-	 *
-	 * @return the entries
-	 */
+	* Returns all the entries.
+	*
+	* @return the entries
+	*/
 	public static List<Entry> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	 * Returns a range of all the entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @return the range of entries
-	 */
+	* Returns a range of all the entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of entries
+	* @param end the upper bound of the range of entries (not inclusive)
+	* @return the range of entries
+	*/
 	public static List<Entry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of entries
-	 */
-	public static List<Entry> findAll(
-		int start, int end, OrderByComparator<Entry> orderByComparator) {
-
+	* Returns an ordered range of all the entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of entries
+	* @param end the upper bound of the range of entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of entries
+	*/
+	public static List<Entry> findAll(int start, int end,
+		OrderByComparator<Entry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of entries
-	 */
-	public static List<Entry> findAll(
-		int start, int end, OrderByComparator<Entry> orderByComparator,
-		boolean retrieveFromCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, retrieveFromCache);
+	* Returns an ordered range of all the entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of entries
+	* @param end the upper bound of the range of entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of entries
+	*/
+	public static List<Entry> findAll(int start, int end,
+		OrderByComparator<Entry> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	 * Removes all the entries from the database.
-	 */
+	* Removes all the entries from the database.
+	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	 * Returns the number of entries.
-	 *
-	 * @return the number of entries
-	 */
+	* Returns the number of entries.
+	*
+	* @return the number of entries
+	*/
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -499,19 +480,16 @@ public class EntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<EntryPersistence, EntryPersistence>
-		_serviceTracker;
+	private static ServiceTracker<EntryPersistence, EntryPersistence> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(EntryPersistence.class);
 
-		ServiceTracker<EntryPersistence, EntryPersistence> serviceTracker =
-			new ServiceTracker<EntryPersistence, EntryPersistence>(
-				bundle.getBundleContext(), EntryPersistence.class, null);
+		ServiceTracker<EntryPersistence, EntryPersistence> serviceTracker = new ServiceTracker<EntryPersistence, EntryPersistence>(bundle.getBundleContext(),
+				EntryPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

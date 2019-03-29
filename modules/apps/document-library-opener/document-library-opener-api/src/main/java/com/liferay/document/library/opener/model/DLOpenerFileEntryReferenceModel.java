@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DLOpenerFileEntryReferenceModel
-	extends BaseModel<DLOpenerFileEntryReference>, GroupedModel, ShardedModel {
-
+public interface DLOpenerFileEntryReferenceModel extends BaseModel<DLOpenerFileEntryReference>,
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -228,5 +227,4 @@ public interface DLOpenerFileEntryReferenceModel
 	 * @param type the type of this dl opener file entry reference
 	 */
 	public void setType(int type);
-
 }

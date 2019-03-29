@@ -27,20 +27,16 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see VersionedEntryModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl"
-)
+@ImplementationClassName("com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl")
 @ProviderType
 public interface VersionedEntry extends VersionedEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<VersionedEntry, Long>
-		VERSIONED_ENTRY_ID_ACCESSOR = new Accessor<VersionedEntry, Long>() {
-
+	public static final Accessor<VersionedEntry, Long> VERSIONED_ENTRY_ID_ACCESSOR =
+		new Accessor<VersionedEntry, Long>() {
 			@Override
 			public Long get(VersionedEntry versionedEntry) {
 				return versionedEntry.getVersionedEntryId();
@@ -55,7 +51,5 @@ public interface VersionedEntry extends VersionedEntryModel, PersistedModel {
 			public Class<VersionedEntry> getTypeClass() {
 				return VersionedEntry.class;
 			}
-
 		};
-
 }

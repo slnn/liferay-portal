@@ -34,7 +34,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 @ProviderType
 public abstract class FragmentEntryLinkBaseImpl
 	extends FragmentEntryLinkModelImpl implements FragmentEntryLink {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class FragmentEntryLinkBaseImpl
 			FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(this);
 		}
 	}
-
 }

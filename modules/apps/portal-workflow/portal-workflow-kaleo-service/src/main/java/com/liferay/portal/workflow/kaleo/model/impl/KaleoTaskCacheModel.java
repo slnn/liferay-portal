@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoTaskCacheModel
-	implements CacheModel<KaleoTask>, Externalizable, MVCCModel {
-
+public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,8 +52,7 @@ public class KaleoTaskCacheModel
 		KaleoTaskCacheModel kaleoTaskCacheModel = (KaleoTaskCacheModel)obj;
 
 		if ((kaleoTaskId == kaleoTaskCacheModel.kaleoTaskId) &&
-			(mvccVersion == kaleoTaskCacheModel.mvccVersion)) {
-
+				(mvccVersion == kaleoTaskCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -186,7 +185,8 @@ public class KaleoTaskCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(kaleoTaskId);
@@ -238,5 +238,4 @@ public class KaleoTaskCacheModel
 	public long kaleoNodeId;
 	public String name;
 	public String description;
-
 }

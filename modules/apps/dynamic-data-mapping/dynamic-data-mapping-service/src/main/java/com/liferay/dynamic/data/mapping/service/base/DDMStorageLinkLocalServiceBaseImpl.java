@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -63,9 +64,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class DDMStorageLinkLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements DDMStorageLinkLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements DDMStorageLinkLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,7 +109,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Override
 	public DDMStorageLink deleteDDMStorageLink(long storageLinkId)
 		throws PortalException {
-
 		return ddmStorageLinkPersistence.remove(storageLinkId);
 	}
 
@@ -129,8 +128,8 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			DDMStorageLink.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -157,11 +156,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return ddmStorageLinkPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return ddmStorageLinkPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -178,12 +176,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return ddmStorageLinkPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return ddmStorageLinkPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -205,11 +201,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return ddmStorageLinkPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return ddmStorageLinkPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -225,11 +220,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	@Override
-	public DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return ddmStorageLinkPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
+	public DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return ddmStorageLinkPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
 	}
 
 	/**
@@ -242,14 +236,12 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Override
 	public DDMStorageLink getDDMStorageLink(long storageLinkId)
 		throws PortalException {
-
 		return ddmStorageLinkPersistence.findByPrimaryKey(storageLinkId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(ddmStorageLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -261,14 +253,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			ddmStorageLinkLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(ddmStorageLinkLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DDMStorageLink.class);
 
@@ -280,7 +268,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(ddmStorageLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMStorageLink.class);
@@ -294,15 +281,12 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return ddmStorageLinkLocalService.deleteDDMStorageLink(
-			(DDMStorageLink)persistedModel);
+		return ddmStorageLinkLocalService.deleteDDMStorageLink((DDMStorageLink)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return ddmStorageLinkPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -315,12 +299,10 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @throws PortalException if a matching ddm storage link could not be found
 	 */
 	@Override
-	public DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException {
-
-		return ddmStorageLinkPersistence.findByUuid_C_First(
-			uuid, companyId, null);
+	public DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException {
+		return ddmStorageLinkPersistence.findByUuid_C_First(uuid, companyId,
+			null);
 	}
 
 	/**
@@ -377,7 +359,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 */
 	public void setDDMStorageLinkLocalService(
 		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
 		this.ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 	}
 
@@ -397,7 +378,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 */
 	public void setDDMStorageLinkPersistence(
 		DDMStorageLinkPersistence ddmStorageLinkPersistence) {
-
 		this.ddmStorageLinkPersistence = ddmStorageLinkPersistence;
 	}
 
@@ -406,9 +386,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -418,9 +396,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -429,10 +405,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 *
 	 * @return the ddm structure version local service
 	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			getDDMStructureVersionLocalService() {
-
+	public com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService getDDMStructureVersionLocalService() {
 		return ddmStructureVersionLocalService;
 	}
 
@@ -442,9 +415,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @param ddmStructureVersionLocalService the ddm structure version local service
 	 */
 	public void setDDMStructureVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService) {
-
+		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
@@ -464,13 +435,11 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 */
 	public void setDDMStructureVersionPersistence(
 		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
-
 		this.ddmStructureVersionPersistence = ddmStructureVersionPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink",
+		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMStorageLink",
 			ddmStorageLinkLocalService);
 	}
 
@@ -511,8 +480,8 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -523,28 +492,14 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 
 	@BeanReference(type = DDMStorageLinkLocalService.class)
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
-
 	@BeanReference(type = DDMStorageLinkPersistence.class)
 	protected DDMStorageLinkPersistence ddmStorageLinkPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService;
 	@BeanReference(type = DDMStructureVersionPersistence.class)
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

@@ -28,95 +28,77 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class KaleoDefinitionLocalServiceWrapper
 	implements KaleoDefinitionLocalService,
-			   ServiceWrapper<KaleoDefinitionLocalService> {
-
+		ServiceWrapper<KaleoDefinitionLocalService> {
 	public KaleoDefinitionLocalServiceWrapper(
 		KaleoDefinitionLocalService kaleoDefinitionLocalService) {
-
 		_kaleoDefinitionLocalService = kaleoDefinitionLocalService;
 	}
 
 	@Override
-	public void activateKaleoDefinition(
-			long kaleoDefinitionId, long kaleoDefinitionVersionId,
-			long startKaleoNodeId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void activateKaleoDefinition(long kaleoDefinitionId,
+		long kaleoDefinitionVersionId, long startKaleoNodeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
+		_kaleoDefinitionLocalService.activateKaleoDefinition(kaleoDefinitionId,
+			kaleoDefinitionVersionId, startKaleoNodeId, serviceContext);
+	}
 
-		_kaleoDefinitionLocalService.activateKaleoDefinition(
-			kaleoDefinitionId, kaleoDefinitionVersionId, startKaleoNodeId,
+	@Override
+	public void activateKaleoDefinition(long kaleoDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kaleoDefinitionLocalService.activateKaleoDefinition(kaleoDefinitionId,
 			serviceContext);
 	}
 
 	@Override
-	public void activateKaleoDefinition(
-			long kaleoDefinitionId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void activateKaleoDefinition(String name, int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_kaleoDefinitionLocalService.activateKaleoDefinition(
-			kaleoDefinitionId, serviceContext);
-	}
-
-	@Override
-	public void activateKaleoDefinition(
-			String name, int version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_kaleoDefinitionLocalService.activateKaleoDefinition(
-			name, version, serviceContext);
+		_kaleoDefinitionLocalService.activateKaleoDefinition(name, version,
+			serviceContext);
 	}
 
 	/**
-	 * Adds the kaleo definition to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoDefinition the kaleo definition
-	 * @return the kaleo definition that was added
-	 */
+	* Adds the kaleo definition to the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDefinition the kaleo definition
+	* @return the kaleo definition that was added
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-		addKaleoDefinition(
-			com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-				kaleoDefinition) {
-
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition addKaleoDefinition(
+		com.liferay.portal.workflow.kaleo.model.KaleoDefinition kaleoDefinition) {
 		return _kaleoDefinitionLocalService.addKaleoDefinition(kaleoDefinition);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-			addKaleoDefinition(
-				String name, String title, String description, String content,
-				int version,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition addKaleoDefinition(
+		String name, String title, String description, String content,
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.addKaleoDefinition(
-			name, title, description, content, version, serviceContext);
+		return _kaleoDefinitionLocalService.addKaleoDefinition(name, title,
+			description, content, version, serviceContext);
 	}
 
 	/**
-	 * Creates a new kaleo definition with the primary key. Does not add the kaleo definition to the database.
-	 *
-	 * @param kaleoDefinitionId the primary key for the new kaleo definition
-	 * @return the new kaleo definition
-	 */
+	* Creates a new kaleo definition with the primary key. Does not add the kaleo definition to the database.
+	*
+	* @param kaleoDefinitionId the primary key for the new kaleo definition
+	* @return the new kaleo definition
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-		createKaleoDefinition(long kaleoDefinitionId) {
-
-		return _kaleoDefinitionLocalService.createKaleoDefinition(
-			kaleoDefinitionId);
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition createKaleoDefinition(
+		long kaleoDefinitionId) {
+		return _kaleoDefinitionLocalService.createKaleoDefinition(kaleoDefinitionId);
 	}
 
 	@Override
-	public void deactivateKaleoDefinition(
-			String name, int version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deactivateKaleoDefinition(String name, int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_kaleoDefinitionLocalService.deactivateKaleoDefinition(
-			name, version, serviceContext);
+		_kaleoDefinitionLocalService.deactivateKaleoDefinition(name, version,
+			serviceContext);
 	}
 
 	@Override
@@ -125,57 +107,46 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	/**
-	 * Deletes the kaleo definition from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoDefinition the kaleo definition
-	 * @return the kaleo definition that was removed
-	 */
+	* Deletes the kaleo definition from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDefinition the kaleo definition
+	* @return the kaleo definition that was removed
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-		deleteKaleoDefinition(
-			com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-				kaleoDefinition) {
-
-		return _kaleoDefinitionLocalService.deleteKaleoDefinition(
-			kaleoDefinition);
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition deleteKaleoDefinition(
+		com.liferay.portal.workflow.kaleo.model.KaleoDefinition kaleoDefinition) {
+		return _kaleoDefinitionLocalService.deleteKaleoDefinition(kaleoDefinition);
 	}
 
 	/**
-	 * Deletes the kaleo definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoDefinitionId the primary key of the kaleo definition
-	 * @return the kaleo definition that was removed
-	 * @throws PortalException if a kaleo definition with the primary key could not be found
-	 */
+	* Deletes the kaleo definition with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDefinitionId the primary key of the kaleo definition
+	* @return the kaleo definition that was removed
+	* @throws PortalException if a kaleo definition with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-			deleteKaleoDefinition(long kaleoDefinitionId)
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition deleteKaleoDefinition(
+		long kaleoDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.deleteKaleoDefinition(
-			kaleoDefinitionId);
+		return _kaleoDefinitionLocalService.deleteKaleoDefinition(kaleoDefinitionId);
 	}
 
 	@Override
-	public void deleteKaleoDefinition(
-			String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteKaleoDefinition(String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_kaleoDefinitionLocalService.deleteKaleoDefinition(
-			name, serviceContext);
+		_kaleoDefinitionLocalService.deleteKaleoDefinition(name, serviceContext);
 	}
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.deletePersistedModel(
-			persistedModel);
+		return _kaleoDefinitionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -184,250 +155,210 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return _kaleoDefinitionLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-
-		return _kaleoDefinitionLocalService.dynamicQuery(
-			dynamicQuery, start, end);
+		return _kaleoDefinitionLocalService.dynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-
-		return _kaleoDefinitionLocalService.dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return _kaleoDefinitionLocalService.dynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
 		return _kaleoDefinitionLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
-		return _kaleoDefinitionLocalService.dynamicQueryCount(
-			dynamicQuery, projection);
+		return _kaleoDefinitionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-		fetchKaleoDefinition(long kaleoDefinitionId) {
-
-		return _kaleoDefinitionLocalService.fetchKaleoDefinition(
-			kaleoDefinitionId);
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition fetchKaleoDefinition(
+		long kaleoDefinitionId) {
+		return _kaleoDefinitionLocalService.fetchKaleoDefinition(kaleoDefinitionId);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-		fetchKaleoDefinition(
-			String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoDefinitionLocalService.fetchKaleoDefinition(
-			name, serviceContext);
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition fetchKaleoDefinition(
+		String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoDefinitionLocalService.fetchKaleoDefinition(name,
+			serviceContext);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _kaleoDefinitionLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _kaleoDefinitionLocalService.
-			getIndexableActionableDynamicQuery();
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoDefinitionLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	 * Returns the kaleo definition with the primary key.
-	 *
-	 * @param kaleoDefinitionId the primary key of the kaleo definition
-	 * @return the kaleo definition
-	 * @throws PortalException if a kaleo definition with the primary key could not be found
-	 */
+	* Returns the kaleo definition with the primary key.
+	*
+	* @param kaleoDefinitionId the primary key of the kaleo definition
+	* @return the kaleo definition
+	* @throws PortalException if a kaleo definition with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-			getKaleoDefinition(long kaleoDefinitionId)
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition getKaleoDefinition(
+		long kaleoDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinition(
-			kaleoDefinitionId);
+		return _kaleoDefinitionLocalService.getKaleoDefinition(kaleoDefinitionId);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-			getKaleoDefinition(
-				String name,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition getKaleoDefinition(
+		String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinition(
-			name, serviceContext);
+		return _kaleoDefinitionLocalService.getKaleoDefinition(name,
+			serviceContext);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-			getKaleoDefinitions(
-				boolean active, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-						orderByComparator,
-				com.liferay.portal.kernel.service.ServiceContext
-					serviceContext) {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinitions(
-			active, start, end, orderByComparator, serviceContext);
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
+		boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> orderByComparator,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoDefinitionLocalService.getKaleoDefinitions(active, start,
+			end, orderByComparator, serviceContext);
 	}
 
 	/**
-	 * Returns a range of all the kaleo definitions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo definitions
-	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
-	 * @return the range of kaleo definitions
-	 */
+	* Returns a range of all the kaleo definitions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo definitions
+	* @param end the upper bound of the range of kaleo definitions (not inclusive)
+	* @return the range of kaleo definitions
+	*/
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-			getKaleoDefinitions(int start, int end) {
-
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
+		int start, int end) {
 		return _kaleoDefinitionLocalService.getKaleoDefinitions(start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-			getKaleoDefinitions(
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
-						orderByComparator,
-				com.liferay.portal.kernel.service.ServiceContext
-					serviceContext) {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinitions(
-			start, end, orderByComparator, serviceContext);
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> orderByComparator,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoDefinitionLocalService.getKaleoDefinitions(start, end,
+			orderByComparator, serviceContext);
 	}
 
 	/**
-	 * Returns the number of kaleo definitions.
-	 *
-	 * @return the number of kaleo definitions
-	 */
+	* Returns the number of kaleo definitions.
+	*
+	* @return the number of kaleo definitions
+	*/
 	@Override
 	public int getKaleoDefinitionsCount() {
 		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount();
 	}
 
 	@Override
-	public int getKaleoDefinitionsCount(
-		boolean active,
+	public int getKaleoDefinitionsCount(boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
-			active, serviceContext);
-	}
-
-	@Override
-	public int getKaleoDefinitionsCount(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
+		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(active,
 			serviceContext);
 	}
 
 	@Override
 	public int getKaleoDefinitionsCount(
-		String name, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
-			name, active, serviceContext);
+		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(serviceContext);
 	}
 
 	@Override
-	public int getKaleoDefinitionsCount(
-		String name,
+	public int getKaleoDefinitionsCount(String name, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(name,
+			active, serviceContext);
+	}
 
-		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
-			name, serviceContext);
+	@Override
+	public int getKaleoDefinitionsCount(String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(name,
+			serviceContext);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _kaleoDefinitionLocalService.getOSGiServiceIdentifier();
@@ -435,38 +366,31 @@ public class KaleoDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-			java.io.Serializable primaryKeyObj)
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _kaleoDefinitionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-			updatedKaleoDefinition(
-				long kaleoDefinitionId, String title, String description,
-				String content,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition updatedKaleoDefinition(
+		long kaleoDefinitionId, String title, String description,
+		String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.updatedKaleoDefinition(
-			kaleoDefinitionId, title, description, content, serviceContext);
+		return _kaleoDefinitionLocalService.updatedKaleoDefinition(kaleoDefinitionId,
+			title, description, content, serviceContext);
 	}
 
 	/**
-	 * Updates the kaleo definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param kaleoDefinition the kaleo definition
-	 * @return the kaleo definition that was updated
-	 */
+	* Updates the kaleo definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDefinition the kaleo definition
+	* @return the kaleo definition that was updated
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-		updateKaleoDefinition(
-			com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-				kaleoDefinition) {
-
-		return _kaleoDefinitionLocalService.updateKaleoDefinition(
-			kaleoDefinition);
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition updateKaleoDefinition(
+		com.liferay.portal.workflow.kaleo.model.KaleoDefinition kaleoDefinition) {
+		return _kaleoDefinitionLocalService.updateKaleoDefinition(kaleoDefinition);
 	}
 
 	@Override
@@ -477,10 +401,8 @@ public class KaleoDefinitionLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		KaleoDefinitionLocalService kaleoDefinitionLocalService) {
-
 		_kaleoDefinitionLocalService = kaleoDefinitionLocalService;
 	}
 
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
-
 }

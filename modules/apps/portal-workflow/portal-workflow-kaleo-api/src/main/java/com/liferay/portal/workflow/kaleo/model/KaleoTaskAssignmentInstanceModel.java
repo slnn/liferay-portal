@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTaskAssignmentInstanceModel
-	extends BaseModel<KaleoTaskAssignmentInstance>, GroupedModel, MVCCModel,
-			ShardedModel {
-
+public interface KaleoTaskAssignmentInstanceModel extends BaseModel<KaleoTaskAssignmentInstance>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -352,5 +350,4 @@ public interface KaleoTaskAssignmentInstanceModel
 	 * @param completionDate the completion date of this kaleo task assignment instance
 	 */
 	public void setCompletionDate(Date completionDate);
-
 }

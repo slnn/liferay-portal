@@ -20,6 +20,7 @@ import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.persistence.ChangesetCollectionPersistence;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -66,9 +67,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class ChangesetCollectionLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements ChangesetCollectionLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements ChangesetCollectionLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -85,7 +85,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	@Override
 	public ChangesetCollection addChangesetCollection(
 		ChangesetCollection changesetCollection) {
-
 		changesetCollection.setNew(true);
 
 		return changesetCollectionPersistence.update(changesetCollection);
@@ -101,7 +100,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public ChangesetCollection createChangesetCollection(
 		long changesetCollectionId) {
-
 		return changesetCollectionPersistence.create(changesetCollectionId);
 	}
 
@@ -115,9 +113,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ChangesetCollection deleteChangesetCollection(
-			long changesetCollectionId)
-		throws PortalException {
-
+		long changesetCollectionId) throws PortalException {
 		return changesetCollectionPersistence.remove(changesetCollectionId);
 	}
 
@@ -131,7 +127,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	@Override
 	public ChangesetCollection deleteChangesetCollection(
 		ChangesetCollection changesetCollection) {
-
 		return changesetCollectionPersistence.remove(changesetCollection);
 	}
 
@@ -139,8 +134,8 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			ChangesetCollection.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(ChangesetCollection.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -151,8 +146,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return changesetCollectionPersistence.findWithDynamicQuery(
-			dynamicQuery);
+		return changesetCollectionPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -168,11 +162,10 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return changesetCollectionPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return changesetCollectionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -189,12 +182,10 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return changesetCollectionPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return changesetCollectionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -205,8 +196,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return changesetCollectionPersistence.countWithDynamicQuery(
-			dynamicQuery);
+		return changesetCollectionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -217,19 +207,16 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return changesetCollectionPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return changesetCollectionPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public ChangesetCollection fetchChangesetCollection(
 		long changesetCollectionId) {
-
-		return changesetCollectionPersistence.fetchByPrimaryKey(
-			changesetCollectionId);
+		return changesetCollectionPersistence.fetchByPrimaryKey(changesetCollectionId);
 	}
 
 	/**
@@ -241,20 +228,15 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	@Override
 	public ChangesetCollection getChangesetCollection(
-			long changesetCollectionId)
-		throws PortalException {
-
-		return changesetCollectionPersistence.findByPrimaryKey(
-			changesetCollectionId);
+		long changesetCollectionId) throws PortalException {
+		return changesetCollectionPersistence.findByPrimaryKey(changesetCollectionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			changesetCollectionLocalService);
+		actionableDynamicQuery.setBaseLocalService(changesetCollectionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ChangesetCollection.class);
 
@@ -265,17 +247,12 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			changesetCollectionLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(changesetCollectionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(
-			ChangesetCollection.class);
+		indexableActionableDynamicQuery.setModelClass(ChangesetCollection.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"changesetCollectionId");
@@ -285,9 +262,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			changesetCollectionLocalService);
+		actionableDynamicQuery.setBaseLocalService(changesetCollectionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ChangesetCollection.class);
 
@@ -301,15 +276,12 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return changesetCollectionLocalService.deleteChangesetCollection(
-			(ChangesetCollection)persistedModel);
+		return changesetCollectionLocalService.deleteChangesetCollection((ChangesetCollection)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return changesetCollectionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -325,9 +297,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @return the range of changeset collections
 	 */
 	@Override
-	public List<ChangesetCollection> getChangesetCollections(
-		int start, int end) {
-
+	public List<ChangesetCollection> getChangesetCollections(int start, int end) {
 		return changesetCollectionPersistence.findAll(start, end);
 	}
 
@@ -351,7 +321,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	@Override
 	public ChangesetCollection updateChangesetCollection(
 		ChangesetCollection changesetCollection) {
-
 		return changesetCollectionPersistence.update(changesetCollection);
 	}
 
@@ -360,9 +329,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the changeset collection local service
 	 */
-	public ChangesetCollectionLocalService
-		getChangesetCollectionLocalService() {
-
+	public ChangesetCollectionLocalService getChangesetCollectionLocalService() {
 		return changesetCollectionLocalService;
 	}
 
@@ -373,7 +340,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	public void setChangesetCollectionLocalService(
 		ChangesetCollectionLocalService changesetCollectionLocalService) {
-
 		this.changesetCollectionLocalService = changesetCollectionLocalService;
 	}
 
@@ -393,7 +359,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	public void setChangesetCollectionPersistence(
 		ChangesetCollectionPersistence changesetCollectionPersistence) {
-
 		this.changesetCollectionPersistence = changesetCollectionPersistence;
 	}
 
@@ -402,9 +367,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the changeset entry local service
 	 */
-	public com.liferay.changeset.service.ChangesetEntryLocalService
-		getChangesetEntryLocalService() {
-
+	public com.liferay.changeset.service.ChangesetEntryLocalService getChangesetEntryLocalService() {
 		return changesetEntryLocalService;
 	}
 
@@ -414,9 +377,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @param changesetEntryLocalService the changeset entry local service
 	 */
 	public void setChangesetEntryLocalService(
-		com.liferay.changeset.service.ChangesetEntryLocalService
-			changesetEntryLocalService) {
-
+		com.liferay.changeset.service.ChangesetEntryLocalService changesetEntryLocalService) {
 		this.changesetEntryLocalService = changesetEntryLocalService;
 	}
 
@@ -436,7 +397,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	public void setChangesetEntryPersistence(
 		ChangesetEntryPersistence changesetEntryPersistence) {
-
 		this.changesetEntryPersistence = changesetEntryPersistence;
 	}
 
@@ -445,9 +405,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -457,9 +415,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -468,9 +424,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -480,9 +434,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -502,7 +454,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -511,9 +462,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
 		return groupLocalService;
 	}
 
@@ -524,7 +473,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -551,9 +499,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -563,9 +509,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -574,9 +518,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -587,7 +529,6 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -610,8 +551,7 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.changeset.model.ChangesetCollection",
+		persistedModelLocalServiceRegistry.register("com.liferay.changeset.model.ChangesetCollection",
 			changesetCollectionLocalService);
 	}
 
@@ -645,16 +585,15 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				changesetCollectionPersistence.getDataSource();
+			DataSource dataSource = changesetCollectionPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -665,60 +604,28 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 
 	@BeanReference(type = ChangesetCollectionLocalService.class)
 	protected ChangesetCollectionLocalService changesetCollectionLocalService;
-
 	@BeanReference(type = ChangesetCollectionPersistence.class)
 	protected ChangesetCollectionPersistence changesetCollectionPersistence;
-
-	@BeanReference(
-		type = com.liferay.changeset.service.ChangesetEntryLocalService.class
-	)
-	protected com.liferay.changeset.service.ChangesetEntryLocalService
-		changesetEntryLocalService;
-
+	@BeanReference(type = com.liferay.changeset.service.ChangesetEntryLocalService.class)
+	protected com.liferay.changeset.service.ChangesetEntryLocalService changesetEntryLocalService;
 	@BeanReference(type = ChangesetEntryPersistence.class)
 	protected ChangesetEntryPersistence changesetEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

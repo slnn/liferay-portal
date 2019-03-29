@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.model.WikiNodeSoap;
@@ -68,29 +72,33 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class WikiNodeModelImpl
-	extends BaseModelImpl<WikiNode> implements WikiNodeModel {
-
+public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
+	implements WikiNodeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a wiki node model instance should use the <code>WikiNode</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "WikiNode";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"nodeId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"lastPostDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "nodeId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "lastPostDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -111,44 +119,26 @@ public class WikiNodeModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table WikiNode (uuid_ VARCHAR(75) null,nodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table WikiNode (uuid_ VARCHAR(75) null,nodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table WikiNode";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY wikiNode.name ASC";
-
 	public static final String ORDER_BY_SQL = " ORDER BY WikiNode.name ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.wiki.model.WikiNode"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.wiki.model.WikiNode"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiNode"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.wiki.model.WikiNode"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.wiki.model.WikiNode"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiNode"),
+			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-
 	public static final long NAME_COLUMN_BITMASK = 4L;
-
 	public static final long STATUS_COLUMN_BITMASK = 8L;
-
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -204,9 +194,8 @@ public class WikiNodeModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.wiki.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.wiki.model.WikiNode"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.wiki.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.wiki.model.WikiNode"));
 
 	public WikiNodeModelImpl() {
 	}
@@ -245,18 +234,14 @@ public class WikiNodeModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<WikiNode, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WikiNode, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<WikiNode, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<WikiNode, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<WikiNode, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WikiNode, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((WikiNode)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((WikiNode)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -267,107 +252,72 @@ public class WikiNodeModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<WikiNode, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<WikiNode, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<WikiNode, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<WikiNode, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(WikiNode)this, entry.getValue());
+				attributeSetterBiConsumer.accept((WikiNode)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<WikiNode, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<WikiNode, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<WikiNode, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<WikiNode, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WikiNode, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WikiNode, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<WikiNode, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<WikiNode, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<WikiNode, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<WikiNode, Object>>();
-		Map<String, BiConsumer<WikiNode, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<WikiNode, ?>>();
+		Map<String, Function<WikiNode, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<WikiNode, Object>>();
+		Map<String, BiConsumer<WikiNode, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<WikiNode, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", WikiNode::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<WikiNode, String>)WikiNode::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<WikiNode, String>)WikiNode::setUuid);
 		attributeGetterFunctions.put("nodeId", WikiNode::getNodeId);
-		attributeSetterBiConsumers.put(
-			"nodeId", (BiConsumer<WikiNode, Long>)WikiNode::setNodeId);
+		attributeSetterBiConsumers.put("nodeId", (BiConsumer<WikiNode, Long>)WikiNode::setNodeId);
 		attributeGetterFunctions.put("groupId", WikiNode::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<WikiNode, Long>)WikiNode::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<WikiNode, Long>)WikiNode::setGroupId);
 		attributeGetterFunctions.put("companyId", WikiNode::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<WikiNode, Long>)WikiNode::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<WikiNode, Long>)WikiNode::setCompanyId);
 		attributeGetterFunctions.put("userId", WikiNode::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<WikiNode, Long>)WikiNode::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<WikiNode, Long>)WikiNode::setUserId);
 		attributeGetterFunctions.put("userName", WikiNode::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<WikiNode, String>)WikiNode::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<WikiNode, String>)WikiNode::setUserName);
 		attributeGetterFunctions.put("createDate", WikiNode::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<WikiNode, Date>)WikiNode::setCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<WikiNode, Date>)WikiNode::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", WikiNode::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<WikiNode, Date>)WikiNode::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<WikiNode, Date>)WikiNode::setModifiedDate);
 		attributeGetterFunctions.put("name", WikiNode::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<WikiNode, String>)WikiNode::setName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<WikiNode, String>)WikiNode::setName);
 		attributeGetterFunctions.put("description", WikiNode::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<WikiNode, String>)WikiNode::setDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<WikiNode, String>)WikiNode::setDescription);
 		attributeGetterFunctions.put("lastPostDate", WikiNode::getLastPostDate);
-		attributeSetterBiConsumers.put(
-			"lastPostDate",
-			(BiConsumer<WikiNode, Date>)WikiNode::setLastPostDate);
-		attributeGetterFunctions.put(
-			"lastPublishDate", WikiNode::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<WikiNode, Date>)WikiNode::setLastPublishDate);
+		attributeSetterBiConsumers.put("lastPostDate", (BiConsumer<WikiNode, Date>)WikiNode::setLastPostDate);
+		attributeGetterFunctions.put("lastPublishDate", WikiNode::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<WikiNode, Date>)WikiNode::setLastPublishDate);
 		attributeGetterFunctions.put("status", WikiNode::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<WikiNode, Integer>)WikiNode::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", WikiNode::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<WikiNode, Long>)WikiNode::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", WikiNode::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<WikiNode, String>)WikiNode::setStatusByUserName);
+		attributeSetterBiConsumers.put("status", (BiConsumer<WikiNode, Integer>)WikiNode::setStatus);
+		attributeGetterFunctions.put("statusByUserId", WikiNode::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<WikiNode, Long>)WikiNode::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", WikiNode::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<WikiNode, String>)WikiNode::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", WikiNode::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate", (BiConsumer<WikiNode, Date>)WikiNode::setStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<WikiNode, Date>)WikiNode::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -691,32 +641,28 @@ public class WikiNodeModelImpl
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(WikiNode.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				WikiNode.class.getName()));
 	}
 
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
-
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -733,18 +679,14 @@ public class WikiNodeModelImpl
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
+				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -757,13 +699,12 @@ public class WikiNodeModelImpl
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -778,19 +719,16 @@ public class WikiNodeModelImpl
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -812,9 +750,8 @@ public class WikiNodeModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -829,9 +766,8 @@ public class WikiNodeModelImpl
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -926,8 +862,8 @@ public class WikiNodeModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), WikiNode.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			WikiNode.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -940,9 +876,8 @@ public class WikiNodeModelImpl
 	@Override
 	public WikiNode toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WikiNode)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (WikiNode)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1155,20 +1090,16 @@ public class WikiNodeModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<WikiNode, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WikiNode, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<WikiNode, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<WikiNode, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<WikiNode, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WikiNode, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1187,22 +1118,18 @@ public class WikiNodeModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<WikiNode, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WikiNode, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<WikiNode, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<WikiNode, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<WikiNode, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WikiNode, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1216,12 +1143,10 @@ public class WikiNodeModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WikiNode.class.getClassLoader();
+	private static final ClassLoader _classLoader = WikiNode.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WikiNode.class, ModelWrapper.class
-	};
-
+			WikiNode.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _nodeId;
@@ -1249,5 +1174,4 @@ public class WikiNodeModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private WikiNode _escapedModel;
-
 }

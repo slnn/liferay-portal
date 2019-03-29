@@ -17,7 +17,9 @@ package com.liferay.wiki.uad.anonymizer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
@@ -38,12 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseWikiNodeUADAnonymizer
 	extends DynamicQueryUADAnonymizer<WikiNode> {
-
 	@Override
-	public void autoAnonymize(
-			WikiNode wikiNode, long userId, User anonymousUser)
+	public void autoAnonymize(WikiNode wikiNode, long userId, User anonymousUser)
 		throws PortalException {
-
 		if (wikiNode.getUserId() == userId) {
 			wikiNode.setUserId(anonymousUser.getUserId());
 			wikiNode.setUserName(anonymousUser.getFullName());
@@ -79,5 +78,4 @@ public abstract class BaseWikiNodeUADAnonymizer
 
 	@Reference
 	protected WikiNodeLocalService wikiNodeLocalService;
-
 }

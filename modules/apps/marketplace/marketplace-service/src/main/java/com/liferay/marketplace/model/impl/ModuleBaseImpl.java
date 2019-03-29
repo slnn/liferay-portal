@@ -33,7 +33,6 @@ import com.liferay.marketplace.service.ModuleLocalServiceUtil;
  */
 @ProviderType
 public abstract class ModuleBaseImpl extends ModuleModelImpl implements Module {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,5 +47,4 @@ public abstract class ModuleBaseImpl extends ModuleModelImpl implements Module {
 			ModuleLocalServiceUtil.updateModule(this);
 		}
 	}
-
 }

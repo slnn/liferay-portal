@@ -18,9 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.model.FolderModel;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,26 +59,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class FolderModelImpl
-	extends BaseModelImpl<Folder> implements FolderModel {
-
+public class FolderModelImpl extends BaseModelImpl<Folder>
+	implements FolderModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a folder model instance should use the <code>Folder</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Mail_Folder";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"folderId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"accountId", Types.BIGINT}, {"fullName", Types.VARCHAR},
-		{"displayName", Types.VARCHAR}, {"remoteMessageCount", Types.INTEGER}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "folderId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "accountId", Types.BIGINT },
+			{ "fullName", Types.VARCHAR },
+			{ "displayName", Types.VARCHAR },
+			{ "remoteMessageCount", Types.INTEGER }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("folderId", Types.BIGINT);
@@ -90,44 +94,26 @@ public class FolderModelImpl
 		TABLE_COLUMNS_MAP.put("remoteMessageCount", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table Mail_Folder (folderId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountId LONG,fullName VARCHAR(75) null,displayName VARCHAR(75) null,remoteMessageCount INTEGER)";
-
+	public static final String TABLE_SQL_CREATE = "create table Mail_Folder (folderId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountId LONG,fullName VARCHAR(75) null,displayName VARCHAR(75) null,remoteMessageCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Mail_Folder";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY folder.fullName ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY Mail_Folder.fullName ASC";
-
+	public static final String ORDER_BY_SQL = " ORDER BY Mail_Folder.fullName ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.mail.reader.model.Folder"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.mail.reader.model.Folder"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Folder"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.mail.reader.model.Folder"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.mail.reader.model.Folder"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Folder"),
+			true);
 	public static final long ACCOUNTID_COLUMN_BITMASK = 1L;
-
 	public static final long FULLNAME_COLUMN_BITMASK = 2L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.mail.reader.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.mail.reader.model.Folder"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.mail.reader.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.mail.reader.model.Folder"));
 
 	public FolderModelImpl() {
 	}
@@ -166,17 +152,14 @@ public class FolderModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Folder, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Folder, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Folder, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<Folder, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((Folder)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((Folder)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -187,18 +170,15 @@ public class FolderModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Folder, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Folder, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Folder, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Folder, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(Folder)this, entry.getValue());
+				attributeSetterBiConsumer.accept((Folder)this, entry.getValue());
 			}
 		}
 	}
@@ -207,60 +187,42 @@ public class FolderModelImpl
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Folder, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<Folder, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Folder, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Folder, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<Folder, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Folder, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Folder, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Folder, Object>>();
-		Map<String, BiConsumer<Folder, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Folder, ?>>();
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Folder, Object>>();
+		Map<String, BiConsumer<Folder, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Folder, ?>>();
+
 
 		attributeGetterFunctions.put("folderId", Folder::getFolderId);
-		attributeSetterBiConsumers.put(
-			"folderId", (BiConsumer<Folder, Long>)Folder::setFolderId);
+		attributeSetterBiConsumers.put("folderId", (BiConsumer<Folder, Long>)Folder::setFolderId);
 		attributeGetterFunctions.put("companyId", Folder::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Folder, Long>)Folder::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Folder, Long>)Folder::setCompanyId);
 		attributeGetterFunctions.put("userId", Folder::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Folder, Long>)Folder::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Folder, Long>)Folder::setUserId);
 		attributeGetterFunctions.put("userName", Folder::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Folder, String>)Folder::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Folder, String>)Folder::setUserName);
 		attributeGetterFunctions.put("createDate", Folder::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Folder, Date>)Folder::setCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Folder, Date>)Folder::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Folder::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate", (BiConsumer<Folder, Date>)Folder::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Folder, Date>)Folder::setModifiedDate);
 		attributeGetterFunctions.put("accountId", Folder::getAccountId);
-		attributeSetterBiConsumers.put(
-			"accountId", (BiConsumer<Folder, Long>)Folder::setAccountId);
+		attributeSetterBiConsumers.put("accountId", (BiConsumer<Folder, Long>)Folder::setAccountId);
 		attributeGetterFunctions.put("fullName", Folder::getFullName);
-		attributeSetterBiConsumers.put(
-			"fullName", (BiConsumer<Folder, String>)Folder::setFullName);
+		attributeSetterBiConsumers.put("fullName", (BiConsumer<Folder, String>)Folder::setFullName);
 		attributeGetterFunctions.put("displayName", Folder::getDisplayName);
-		attributeSetterBiConsumers.put(
-			"displayName", (BiConsumer<Folder, String>)Folder::setDisplayName);
-		attributeGetterFunctions.put(
-			"remoteMessageCount", Folder::getRemoteMessageCount);
-		attributeSetterBiConsumers.put(
-			"remoteMessageCount",
-			(BiConsumer<Folder, Integer>)Folder::setRemoteMessageCount);
+		attributeSetterBiConsumers.put("displayName", (BiConsumer<Folder, String>)Folder::setDisplayName);
+		attributeGetterFunctions.put("remoteMessageCount", Folder::getRemoteMessageCount);
+		attributeSetterBiConsumers.put("remoteMessageCount", (BiConsumer<Folder, Integer>)Folder::setRemoteMessageCount);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -428,8 +390,8 @@ public class FolderModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), Folder.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			Folder.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -442,9 +404,8 @@ public class FolderModelImpl
 	@Override
 	public Folder toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Folder)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (Folder)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -596,17 +557,14 @@ public class FolderModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<Folder, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Folder, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Folder, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<Folder, Object> attributeGetterFunction = entry.getValue();
 
@@ -627,19 +585,16 @@ public class FolderModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Folder, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<Folder, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Folder, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<Folder, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<Folder, Object> attributeGetterFunction = entry.getValue();
 
@@ -655,12 +610,10 @@ public class FolderModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Folder.class.getClassLoader();
+	private static final ClassLoader _classLoader = Folder.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Folder.class, ModelWrapper.class
-	};
-
+			Folder.class, ModelWrapper.class
+		};
 	private long _folderId;
 	private long _companyId;
 	private long _userId;
@@ -677,5 +630,4 @@ public class FolderModelImpl
 	private int _remoteMessageCount;
 	private long _columnBitmask;
 	private Folder _escapedModel;
-
 }

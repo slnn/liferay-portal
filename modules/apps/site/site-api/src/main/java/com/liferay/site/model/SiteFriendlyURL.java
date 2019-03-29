@@ -30,15 +30,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.site.model.impl.SiteFriendlyURLImpl")
 @ProviderType
 public interface SiteFriendlyURL extends SiteFriendlyURLModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.site.model.impl.SiteFriendlyURLImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SiteFriendlyURL, Long>
-		SITE_FRIENDLY_URL_ID_ACCESSOR = new Accessor<SiteFriendlyURL, Long>() {
-
+	public static final Accessor<SiteFriendlyURL, Long> SITE_FRIENDLY_URL_ID_ACCESSOR =
+		new Accessor<SiteFriendlyURL, Long>() {
 			@Override
 			public Long get(SiteFriendlyURL siteFriendlyURL) {
 				return siteFriendlyURL.getSiteFriendlyURLId();
@@ -53,7 +51,5 @@ public interface SiteFriendlyURL extends SiteFriendlyURLModel, PersistedModel {
 			public Class<SiteFriendlyURL> getTypeClass() {
 				return SiteFriendlyURL.class;
 			}
-
 		};
-
 }

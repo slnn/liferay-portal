@@ -15,11 +15,13 @@
 package com.liferay.calendar.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.calendar.exception.NoSuchNotificationTemplateException;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
 import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence;
 import com.liferay.calendar.service.persistence.CalendarNotificationTemplateUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class CalendarNotificationTemplatePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.calendar.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.calendar.service"));
 
 	@Before
 	public void setUp() {
@@ -81,8 +82,7 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<CalendarNotificationTemplate> iterator =
-			_calendarNotificationTemplates.iterator();
+		Iterator<CalendarNotificationTemplate> iterator = _calendarNotificationTemplates.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -95,8 +95,7 @@ public class CalendarNotificationTemplatePersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			_persistence.create(pk);
+		CalendarNotificationTemplate calendarNotificationTemplate = _persistence.create(pk);
 
 		Assert.assertNotNull(calendarNotificationTemplate);
 
@@ -105,14 +104,11 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
 		_persistence.remove(newCalendarNotificationTemplate);
 
-		CalendarNotificationTemplate existingCalendarNotificationTemplate =
-			_persistence.fetchByPrimaryKey(
-				newCalendarNotificationTemplate.getPrimaryKey());
+		CalendarNotificationTemplate existingCalendarNotificationTemplate = _persistence.fetchByPrimaryKey(newCalendarNotificationTemplate.getPrimaryKey());
 
 		Assert.assertNull(existingCalendarNotificationTemplate);
 	}
@@ -126,8 +122,7 @@ public class CalendarNotificationTemplatePersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			_persistence.create(pk);
+		CalendarNotificationTemplate newCalendarNotificationTemplate = _persistence.create(pk);
 
 		newCalendarNotificationTemplate.setUuid(RandomTestUtil.randomString());
 
@@ -137,92 +132,64 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		newCalendarNotificationTemplate.setUserId(RandomTestUtil.nextLong());
 
-		newCalendarNotificationTemplate.setUserName(
-			RandomTestUtil.randomString());
+		newCalendarNotificationTemplate.setUserName(RandomTestUtil.randomString());
 
-		newCalendarNotificationTemplate.setCreateDate(
-			RandomTestUtil.nextDate());
+		newCalendarNotificationTemplate.setCreateDate(RandomTestUtil.nextDate());
 
-		newCalendarNotificationTemplate.setModifiedDate(
-			RandomTestUtil.nextDate());
+		newCalendarNotificationTemplate.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCalendarNotificationTemplate.setCalendarId(
-			RandomTestUtil.nextLong());
+		newCalendarNotificationTemplate.setCalendarId(RandomTestUtil.nextLong());
 
-		newCalendarNotificationTemplate.setNotificationType(
-			RandomTestUtil.randomString());
+		newCalendarNotificationTemplate.setNotificationType(RandomTestUtil.randomString());
 
-		newCalendarNotificationTemplate.setNotificationTypeSettings(
-			RandomTestUtil.randomString());
+		newCalendarNotificationTemplate.setNotificationTypeSettings(RandomTestUtil.randomString());
 
-		newCalendarNotificationTemplate.setNotificationTemplateType(
-			RandomTestUtil.randomString());
+		newCalendarNotificationTemplate.setNotificationTemplateType(RandomTestUtil.randomString());
 
-		newCalendarNotificationTemplate.setSubject(
-			RandomTestUtil.randomString());
+		newCalendarNotificationTemplate.setSubject(RandomTestUtil.randomString());
 
 		newCalendarNotificationTemplate.setBody(RandomTestUtil.randomString());
 
-		newCalendarNotificationTemplate.setLastPublishDate(
-			RandomTestUtil.nextDate());
+		newCalendarNotificationTemplate.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_calendarNotificationTemplates.add(
-			_persistence.update(newCalendarNotificationTemplate));
+		_calendarNotificationTemplates.add(_persistence.update(
+				newCalendarNotificationTemplate));
 
-		CalendarNotificationTemplate existingCalendarNotificationTemplate =
-			_persistence.findByPrimaryKey(
-				newCalendarNotificationTemplate.getPrimaryKey());
+		CalendarNotificationTemplate existingCalendarNotificationTemplate = _persistence.findByPrimaryKey(newCalendarNotificationTemplate.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getUuid(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getUuid(),
 			newCalendarNotificationTemplate.getUuid());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.
-				getCalendarNotificationTemplateId(),
-			newCalendarNotificationTemplate.
-				getCalendarNotificationTemplateId());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getGroupId(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getCalendarNotificationTemplateId(),
+			newCalendarNotificationTemplate.getCalendarNotificationTemplateId());
+		Assert.assertEquals(existingCalendarNotificationTemplate.getGroupId(),
 			newCalendarNotificationTemplate.getGroupId());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getCompanyId(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getCompanyId(),
 			newCalendarNotificationTemplate.getCompanyId());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getUserId(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getUserId(),
 			newCalendarNotificationTemplate.getUserId());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getUserName(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getUserName(),
 			newCalendarNotificationTemplate.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarNotificationTemplate.getCreateDate()),
 			Time.getShortTimestamp(
 				newCalendarNotificationTemplate.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarNotificationTemplate.getModifiedDate()),
 			Time.getShortTimestamp(
 				newCalendarNotificationTemplate.getModifiedDate()));
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getCalendarId(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getCalendarId(),
 			newCalendarNotificationTemplate.getCalendarId());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getNotificationType(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getNotificationType(),
 			newCalendarNotificationTemplate.getNotificationType());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getNotificationTypeSettings(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getNotificationTypeSettings(),
 			newCalendarNotificationTemplate.getNotificationTypeSettings());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getNotificationTemplateType(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getNotificationTemplateType(),
 			newCalendarNotificationTemplate.getNotificationTemplateType());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getSubject(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getSubject(),
 			newCalendarNotificationTemplate.getSubject());
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate.getBody(),
+		Assert.assertEquals(existingCalendarNotificationTemplate.getBody(),
 			newCalendarNotificationTemplate.getBody());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarNotificationTemplate.getLastPublishDate()),
 			Time.getShortTimestamp(
 				newCalendarNotificationTemplate.getLastPublishDate()));
@@ -273,15 +240,11 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
-		CalendarNotificationTemplate existingCalendarNotificationTemplate =
-			_persistence.findByPrimaryKey(
-				newCalendarNotificationTemplate.getPrimaryKey());
+		CalendarNotificationTemplate existingCalendarNotificationTemplate = _persistence.findByPrimaryKey(newCalendarNotificationTemplate.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate,
+		Assert.assertEquals(existingCalendarNotificationTemplate,
 			newCalendarNotificationTemplate);
 	}
 
@@ -294,33 +257,27 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
-	protected OrderByComparator<CalendarNotificationTemplate>
-		getOrderByComparator() {
-
-		return OrderByComparatorFactoryUtil.create(
-			"CalendarNotificationTemplate", "uuid", true,
-			"calendarNotificationTemplateId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "calendarId", true, "notificationType",
-			true, "notificationTypeSettings", true, "notificationTemplateType",
-			true, "subject", true, "lastPublishDate", true);
+	protected OrderByComparator<CalendarNotificationTemplate> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("CalendarNotificationTemplate",
+			"uuid", true, "calendarNotificationTemplateId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "calendarId", true,
+			"notificationType", true, "notificationTypeSettings", true,
+			"notificationTemplateType", true, "subject", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
-		CalendarNotificationTemplate existingCalendarNotificationTemplate =
-			_persistence.fetchByPrimaryKey(
-				newCalendarNotificationTemplate.getPrimaryKey());
+		CalendarNotificationTemplate existingCalendarNotificationTemplate = _persistence.fetchByPrimaryKey(newCalendarNotificationTemplate.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate,
+		Assert.assertEquals(existingCalendarNotificationTemplate,
 			newCalendarNotificationTemplate);
 	}
 
@@ -328,8 +285,7 @@ public class CalendarNotificationTemplatePersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CalendarNotificationTemplate missingCalendarNotificationTemplate =
-			_persistence.fetchByPrimaryKey(pk);
+		CalendarNotificationTemplate missingCalendarNotificationTemplate = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingCalendarNotificationTemplate);
 	}
@@ -337,28 +293,22 @@ public class CalendarNotificationTemplatePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
-		CalendarNotificationTemplate newCalendarNotificationTemplate1 =
-			addCalendarNotificationTemplate();
-		CalendarNotificationTemplate newCalendarNotificationTemplate2 =
-			addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate1 = addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate2 = addCalendarNotificationTemplate();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCalendarNotificationTemplate1.getPrimaryKey());
 		primaryKeys.add(newCalendarNotificationTemplate2.getPrimaryKey());
 
-		Map<Serializable, CalendarNotificationTemplate>
-			calendarNotificationTemplates = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, CalendarNotificationTemplate> calendarNotificationTemplates =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, calendarNotificationTemplates.size());
-		Assert.assertEquals(
-			newCalendarNotificationTemplate1,
+		Assert.assertEquals(newCalendarNotificationTemplate1,
 			calendarNotificationTemplates.get(
 				newCalendarNotificationTemplate1.getPrimaryKey()));
-		Assert.assertEquals(
-			newCalendarNotificationTemplate2,
+		Assert.assertEquals(newCalendarNotificationTemplate2,
 			calendarNotificationTemplates.get(
 				newCalendarNotificationTemplate2.getPrimaryKey()));
 	}
@@ -366,7 +316,6 @@ public class CalendarNotificationTemplatePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -376,9 +325,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CalendarNotificationTemplate>
-			calendarNotificationTemplates = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, CalendarNotificationTemplate> calendarNotificationTemplates =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(calendarNotificationTemplates.isEmpty());
 	}
@@ -386,9 +334,7 @@ public class CalendarNotificationTemplatePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -397,44 +343,40 @@ public class CalendarNotificationTemplatePersistenceTest {
 		primaryKeys.add(newCalendarNotificationTemplate.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CalendarNotificationTemplate>
-			calendarNotificationTemplates = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, CalendarNotificationTemplate> calendarNotificationTemplates =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, calendarNotificationTemplates.size());
-		Assert.assertEquals(
-			newCalendarNotificationTemplate,
+		Assert.assertEquals(newCalendarNotificationTemplate,
 			calendarNotificationTemplates.get(
 				newCalendarNotificationTemplate.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalendarNotificationTemplate>
-			calendarNotificationTemplates = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, CalendarNotificationTemplate> calendarNotificationTemplates =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(calendarNotificationTemplates.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCalendarNotificationTemplate.getPrimaryKey());
 
-		Map<Serializable, CalendarNotificationTemplate>
-			calendarNotificationTemplates = _persistence.fetchByPrimaryKeys(
-				primaryKeys);
+		Map<Serializable, CalendarNotificationTemplate> calendarNotificationTemplates =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, calendarNotificationTemplates.size());
-		Assert.assertEquals(
-			newCalendarNotificationTemplate,
+		Assert.assertEquals(newCalendarNotificationTemplate,
 			calendarNotificationTemplates.get(
 				newCalendarNotificationTemplate.getPrimaryKey()));
 	}
@@ -443,23 +385,16 @@ public class CalendarNotificationTemplatePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			CalendarNotificationTemplateLocalServiceUtil.
-				getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CalendarNotificationTemplateLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<CalendarNotificationTemplate>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarNotificationTemplate>() {
 				@Override
 				public void performAction(
 					CalendarNotificationTemplate calendarNotificationTemplate) {
-
 					Assert.assertNotNull(calendarNotificationTemplate);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -468,65 +403,56 @@ public class CalendarNotificationTemplatePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarNotificationTemplate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarNotificationTemplate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"calendarNotificationTemplateId",
-				newCalendarNotificationTemplate.
-					getCalendarNotificationTemplateId()));
+				newCalendarNotificationTemplate.getCalendarNotificationTemplateId()));
 
-		List<CalendarNotificationTemplate> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<CalendarNotificationTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		CalendarNotificationTemplate existingCalendarNotificationTemplate =
-			result.get(0);
+		CalendarNotificationTemplate existingCalendarNotificationTemplate = result.get(0);
 
-		Assert.assertEquals(
-			existingCalendarNotificationTemplate,
+		Assert.assertEquals(existingCalendarNotificationTemplate,
 			newCalendarNotificationTemplate);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarNotificationTemplate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarNotificationTemplate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"calendarNotificationTemplateId", RandomTestUtil.nextLong()));
 
-		List<CalendarNotificationTemplate> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
+		List<CalendarNotificationTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarNotificationTemplate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarNotificationTemplate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("calendarNotificationTemplateId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"calendarNotificationTemplateId"));
 
-		Object newCalendarNotificationTemplateId =
-			newCalendarNotificationTemplate.getCalendarNotificationTemplateId();
+		Object newCalendarNotificationTemplateId = newCalendarNotificationTemplate.getCalendarNotificationTemplateId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"calendarNotificationTemplateId",
-				new Object[] {newCalendarNotificationTemplateId}));
+				new Object[] { newCalendarNotificationTemplateId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -534,23 +460,21 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		Object existingCalendarNotificationTemplateId = result.get(0);
 
-		Assert.assertEquals(
-			existingCalendarNotificationTemplateId,
+		Assert.assertEquals(existingCalendarNotificationTemplateId,
 			newCalendarNotificationTemplateId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarNotificationTemplate.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarNotificationTemplate.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("calendarNotificationTemplateId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"calendarNotificationTemplateId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"calendarNotificationTemplateId",
-				new Object[] {RandomTestUtil.nextLong()}));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -559,42 +483,35 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		CalendarNotificationTemplate newCalendarNotificationTemplate =
-			addCalendarNotificationTemplate();
+		CalendarNotificationTemplate newCalendarNotificationTemplate = addCalendarNotificationTemplate();
 
 		_persistence.clearCache();
 
-		CalendarNotificationTemplate existingCalendarNotificationTemplate =
-			_persistence.findByPrimaryKey(
-				newCalendarNotificationTemplate.getPrimaryKey());
+		CalendarNotificationTemplate existingCalendarNotificationTemplate = _persistence.findByPrimaryKey(newCalendarNotificationTemplate.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingCalendarNotificationTemplate.getUuid(),
 				ReflectionTestUtil.invoke(
 					existingCalendarNotificationTemplate, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarNotificationTemplate.getGroupId()),
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarNotificationTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCalendarNotificationTemplate, "getOriginalGroupId",
 				new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarNotificationTemplate.getCalendarId()),
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarNotificationTemplate.getCalendarId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCalendarNotificationTemplate, "getOriginalCalendarId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertTrue(Objects.equals(
 				existingCalendarNotificationTemplate.getNotificationType(),
 				ReflectionTestUtil.invoke(
 					existingCalendarNotificationTemplate,
 					"getOriginalNotificationType", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingCalendarNotificationTemplate.
-					getNotificationTemplateType(),
+		Assert.assertTrue(Objects.equals(
+				existingCalendarNotificationTemplate.getNotificationTemplateType(),
 				ReflectionTestUtil.invoke(
 					existingCalendarNotificationTemplate,
 					"getOriginalNotificationTemplateType", new Class<?>[0])));
@@ -602,11 +519,9 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 	protected CalendarNotificationTemplate addCalendarNotificationTemplate()
 		throws Exception {
-
 		long pk = RandomTestUtil.nextLong();
 
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			_persistence.create(pk);
+		CalendarNotificationTemplate calendarNotificationTemplate = _persistence.create(pk);
 
 		calendarNotificationTemplate.setUuid(RandomTestUtil.randomString());
 
@@ -624,31 +539,25 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		calendarNotificationTemplate.setCalendarId(RandomTestUtil.nextLong());
 
-		calendarNotificationTemplate.setNotificationType(
-			RandomTestUtil.randomString());
+		calendarNotificationTemplate.setNotificationType(RandomTestUtil.randomString());
 
-		calendarNotificationTemplate.setNotificationTypeSettings(
-			RandomTestUtil.randomString());
+		calendarNotificationTemplate.setNotificationTypeSettings(RandomTestUtil.randomString());
 
-		calendarNotificationTemplate.setNotificationTemplateType(
-			RandomTestUtil.randomString());
+		calendarNotificationTemplate.setNotificationTemplateType(RandomTestUtil.randomString());
 
 		calendarNotificationTemplate.setSubject(RandomTestUtil.randomString());
 
 		calendarNotificationTemplate.setBody(RandomTestUtil.randomString());
 
-		calendarNotificationTemplate.setLastPublishDate(
-			RandomTestUtil.nextDate());
+		calendarNotificationTemplate.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_calendarNotificationTemplates.add(
-			_persistence.update(calendarNotificationTemplate));
+		_calendarNotificationTemplates.add(_persistence.update(
+				calendarNotificationTemplate));
 
 		return calendarNotificationTemplate;
 	}
 
-	private List<CalendarNotificationTemplate> _calendarNotificationTemplates =
-		new ArrayList<CalendarNotificationTemplate>();
+	private List<CalendarNotificationTemplate> _calendarNotificationTemplates = new ArrayList<CalendarNotificationTemplate>();
 	private CalendarNotificationTemplatePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

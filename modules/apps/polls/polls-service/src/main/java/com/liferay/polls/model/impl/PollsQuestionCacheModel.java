@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.polls.model.PollsQuestion;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class PollsQuestionCacheModel
-	implements CacheModel<PollsQuestion>, Externalizable {
-
+public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class PollsQuestionCacheModel
 			return false;
 		}
 
-		PollsQuestionCacheModel pollsQuestionCacheModel =
-			(PollsQuestionCacheModel)obj;
+		PollsQuestionCacheModel pollsQuestionCacheModel = (PollsQuestionCacheModel)obj;
 
 		if (questionId == pollsQuestionCacheModel.questionId) {
 			return true;
@@ -197,7 +197,8 @@ public class PollsQuestionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -255,5 +256,4 @@ public class PollsQuestionCacheModel
 	public long expirationDate;
 	public long lastPublishDate;
 	public long lastVoteDate;
-
 }

@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTimerInstanceTokenModel
-	extends BaseModel<KaleoTimerInstanceToken>, GroupedModel, MVCCModel,
-			ShardedModel {
-
+public interface KaleoTimerInstanceTokenModel extends BaseModel<KaleoTimerInstanceToken>,
+	GroupedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -415,5 +413,4 @@ public interface KaleoTimerInstanceTokenModel
 	 * @param workflowContext the workflow context of this kaleo timer instance token
 	 */
 	public void setWorkflowContext(String workflowContext);
-
 }

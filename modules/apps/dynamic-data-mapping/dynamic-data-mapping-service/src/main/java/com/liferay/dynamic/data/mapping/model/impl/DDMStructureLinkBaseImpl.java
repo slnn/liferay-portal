@@ -32,9 +32,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil
  * @generated
  */
 @ProviderType
-public abstract class DDMStructureLinkBaseImpl
-	extends DDMStructureLinkModelImpl implements DDMStructureLink {
-
+public abstract class DDMStructureLinkBaseImpl extends DDMStructureLinkModelImpl
+	implements DDMStructureLink {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class DDMStructureLinkBaseImpl
 			DDMStructureLinkLocalServiceUtil.updateDDMStructureLink(this);
 		}
 	}
-
 }

@@ -53,208 +53,15 @@ import com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil;
  */
 @ProviderType
 public class AuditEventServiceHttp {
-
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					HttpPrincipal httpPrincipal, long companyId, int start,
-					int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AuditEventServiceUtil.class, "getAuditEvents",
-				_getAuditEventsParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (java.util.List
-				<com.liferay.portal.security.audit.storage.model.AuditEvent>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					HttpPrincipal httpPrincipal, long companyId, int start,
-					int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AuditEventServiceUtil.class, "getAuditEvents",
-				_getAuditEventsParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (java.util.List
-				<com.liferay.portal.security.audit.storage.model.AuditEvent>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					HttpPrincipal httpPrincipal, long companyId, long userId,
-					String userName, java.util.Date createDateGT,
-					java.util.Date createDateLT, String eventType,
-					String className, String classPK, String clientHost,
-					String clientIP, String serverName, int serverPort,
-					String sessionID, boolean andSearch, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AuditEventServiceUtil.class, "getAuditEvents",
-				_getAuditEventsParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId, userName, createDateGT,
-				createDateLT, eventType, className, classPK, clientHost,
-				clientIP, serverName, serverPort, sessionID, andSearch, start,
-				end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (java.util.List
-				<com.liferay.portal.security.audit.storage.model.AuditEvent>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					HttpPrincipal httpPrincipal, long companyId, long userId,
-					String userName, java.util.Date createDateGT,
-					java.util.Date createDateLT, String eventType,
-					String className, String classPK, String clientHost,
-					String clientIP, String serverName, int serverPort,
-					String sessionID, boolean andSearch, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AuditEventServiceUtil.class, "getAuditEvents",
-				_getAuditEventsParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId, userName, createDateGT,
-				createDateLT, eventType, className, classPK, clientHost,
-				clientIP, serverName, serverPort, sessionID, andSearch, start,
-				end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (java.util.List
-				<com.liferay.portal.security.audit.storage.model.AuditEvent>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getAuditEventsCount(
-			HttpPrincipal httpPrincipal, long companyId)
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		HttpPrincipal httpPrincipal, long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				AuditEventServiceUtil.class, "getAuditEventsCount",
-				_getAuditEventsCountParameterTypes4);
+			MethodKey methodKey = new MethodKey(AuditEventServiceUtil.class,
+					"getAuditEvents", _getAuditEventsParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, start, end);
 
 			Object returnObj = null;
 
@@ -262,15 +69,154 @@ public class AuditEventServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		HttpPrincipal httpPrincipal, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AuditEventServiceUtil.class,
+					"getAuditEvents", _getAuditEventsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		HttpPrincipal httpPrincipal, long companyId, long userId,
+		String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, String eventType, String className,
+		String classPK, String clientHost, String clientIP, String serverName,
+		int serverPort, String sessionID, boolean andSearch, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AuditEventServiceUtil.class,
+					"getAuditEvents", _getAuditEventsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, userId, userName, createDateGT, createDateLT,
+					eventType, className, classPK, clientHost, clientIP,
+					serverName, serverPort, sessionID, andSearch, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		HttpPrincipal httpPrincipal, long companyId, long userId,
+		String userName, java.util.Date createDateGT,
+		java.util.Date createDateLT, String eventType, String className,
+		String classPK, String clientHost, String clientIP, String serverName,
+		int serverPort, String sessionID, boolean andSearch, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AuditEventServiceUtil.class,
+					"getAuditEvents", _getAuditEventsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, userId, userName, createDateGT, createDateLT,
+					eventType, className, classPK, clientHost, clientIP,
+					serverName, serverPort, sessionID, andSearch, start, end,
+					orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getAuditEventsCount(HttpPrincipal httpPrincipal,
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AuditEventServiceUtil.class,
+					"getAuditEventsCount", _getAuditEventsCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -282,24 +228,21 @@ public class AuditEventServiceHttp {
 		}
 	}
 
-	public static int getAuditEventsCount(
-			HttpPrincipal httpPrincipal, long companyId, long userId,
-			String userName, java.util.Date createDateGT,
-			java.util.Date createDateLT, String eventType, String className,
-			String classPK, String clientHost, String clientIP,
-			String serverName, int serverPort, String sessionID,
-			boolean andSearch)
+	public static int getAuditEventsCount(HttpPrincipal httpPrincipal,
+		long companyId, long userId, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				AuditEventServiceUtil.class, "getAuditEventsCount",
-				_getAuditEventsCountParameterTypes5);
+			MethodKey methodKey = new MethodKey(AuditEventServiceUtil.class,
+					"getAuditEventsCount", _getAuditEventsCountParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId, userName, createDateGT,
-				createDateLT, eventType, className, classPK, clientHost,
-				clientIP, serverName, serverPort, sessionID, andSearch);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, userId, userName, createDateGT, createDateLT,
+					eventType, className, classPK, clientHost, clientIP,
+					serverName, serverPort, sessionID, andSearch);
 
 			Object returnObj = null;
 
@@ -307,15 +250,11 @@ public class AuditEventServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -327,39 +266,34 @@ public class AuditEventServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		AuditEventServiceHttp.class);
-
-	private static final Class<?>[] _getAuditEventsParameterTypes0 =
-		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getAuditEventsParameterTypes1 =
-		new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(AuditEventServiceHttp.class);
+	private static final Class<?>[] _getAuditEventsParameterTypes0 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getAuditEventsParameterTypes1 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getAuditEventsParameterTypes2 =
-		new Class[] {
+	private static final Class<?>[] _getAuditEventsParameterTypes2 = new Class[] {
 			long.class, long.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class, String.class, String.class,
 			String.class, String.class, String.class, int.class, String.class,
 			boolean.class, int.class, int.class
 		};
-	private static final Class<?>[] _getAuditEventsParameterTypes3 =
-		new Class[] {
+	private static final Class<?>[] _getAuditEventsParameterTypes3 = new Class[] {
 			long.class, long.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class, String.class, String.class,
 			String.class, String.class, String.class, int.class, String.class,
 			boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getAuditEventsCountParameterTypes4 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getAuditEventsCountParameterTypes5 =
-		new Class[] {
+	private static final Class<?>[] _getAuditEventsCountParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getAuditEventsCountParameterTypes5 = new Class[] {
 			long.class, long.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class, String.class, String.class,
 			String.class, String.class, String.class, int.class, String.class,
 			boolean.class
 		};
-
 }

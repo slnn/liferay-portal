@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class FragmentEntryLinkSoap implements Serializable {
-
 	public static FragmentEntryLinkSoap toSoapModel(FragmentEntryLink model) {
 		FragmentEntryLinkSoap soapModel = new FragmentEntryLinkSoap();
 
@@ -42,8 +41,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setOriginalFragmentEntryLinkId(
-			model.getOriginalFragmentEntryLinkId());
+		soapModel.setOriginalFragmentEntryLinkId(model.getOriginalFragmentEntryLinkId());
 		soapModel.setFragmentEntryId(model.getFragmentEntryId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
@@ -61,9 +59,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 
 	public static FragmentEntryLinkSoap[] toSoapModels(
 		FragmentEntryLink[] models) {
-
-		FragmentEntryLinkSoap[] soapModels =
-			new FragmentEntryLinkSoap[models.length];
+		FragmentEntryLinkSoap[] soapModels = new FragmentEntryLinkSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -74,12 +70,10 @@ public class FragmentEntryLinkSoap implements Serializable {
 
 	public static FragmentEntryLinkSoap[][] toSoapModels(
 		FragmentEntryLink[][] models) {
-
 		FragmentEntryLinkSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new FragmentEntryLinkSoap[models.length][models[0].length];
+			soapModels = new FragmentEntryLinkSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new FragmentEntryLinkSoap[0][0];
@@ -94,9 +88,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 
 	public static FragmentEntryLinkSoap[] toSoapModels(
 		List<FragmentEntryLink> models) {
-
-		List<FragmentEntryLinkSoap> soapModels =
-			new ArrayList<FragmentEntryLinkSoap>(models.size());
+		List<FragmentEntryLinkSoap> soapModels = new ArrayList<FragmentEntryLinkSoap>(models.size());
 
 		for (FragmentEntryLink model : models) {
 			soapModels.add(toSoapModel(model));
@@ -184,9 +176,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 		return _originalFragmentEntryLinkId;
 	}
 
-	public void setOriginalFragmentEntryLinkId(
-		long originalFragmentEntryLinkId) {
-
+	public void setOriginalFragmentEntryLinkId(long originalFragmentEntryLinkId) {
 		_originalFragmentEntryLinkId = originalFragmentEntryLinkId;
 	}
 
@@ -298,5 +288,4 @@ public class FragmentEntryLinkSoap implements Serializable {
 	private Date _lastPropagationDate;
 	private String _namespace;
 	private Date _lastPublishDate;
-
 }

@@ -26,21 +26,18 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class ReadingTimeEntryServiceWrapper
-	implements ReadingTimeEntryService,
-			   ServiceWrapper<ReadingTimeEntryService> {
-
+public class ReadingTimeEntryServiceWrapper implements ReadingTimeEntryService,
+	ServiceWrapper<ReadingTimeEntryService> {
 	public ReadingTimeEntryServiceWrapper(
 		ReadingTimeEntryService readingTimeEntryService) {
-
 		_readingTimeEntryService = readingTimeEntryService;
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _readingTimeEntryService.getOSGiServiceIdentifier();
@@ -54,10 +51,8 @@ public class ReadingTimeEntryServiceWrapper
 	@Override
 	public void setWrappedService(
 		ReadingTimeEntryService readingTimeEntryService) {
-
 		_readingTimeEntryService = readingTimeEntryService;
 	}
 
 	private ReadingTimeEntryService _readingTimeEntryService;
-
 }

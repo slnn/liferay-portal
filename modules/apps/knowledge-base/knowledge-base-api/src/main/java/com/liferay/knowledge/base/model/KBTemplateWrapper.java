@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class KBTemplateWrapper
-	extends BaseModelWrapper<KBTemplate>
+public class KBTemplateWrapper extends BaseModelWrapper<KBTemplate>
 	implements KBTemplate, ModelWrapper<KBTemplate> {
-
 	public KBTemplateWrapper(KBTemplate kbTemplate) {
 		super(kbTemplate);
 	}
@@ -131,130 +130,130 @@ public class KBTemplateWrapper
 	}
 
 	/**
-	 * Returns the company ID of this kb template.
-	 *
-	 * @return the company ID of this kb template
-	 */
+	* Returns the company ID of this kb template.
+	*
+	* @return the company ID of this kb template
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the content of this kb template.
-	 *
-	 * @return the content of this kb template
-	 */
+	* Returns the content of this kb template.
+	*
+	* @return the content of this kb template
+	*/
 	@Override
 	public String getContent() {
 		return model.getContent();
 	}
 
 	/**
-	 * Returns the create date of this kb template.
-	 *
-	 * @return the create date of this kb template
-	 */
+	* Returns the create date of this kb template.
+	*
+	* @return the create date of this kb template
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this kb template.
-	 *
-	 * @return the group ID of this kb template
-	 */
+	* Returns the group ID of this kb template.
+	*
+	* @return the group ID of this kb template
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the kb template ID of this kb template.
-	 *
-	 * @return the kb template ID of this kb template
-	 */
+	* Returns the kb template ID of this kb template.
+	*
+	* @return the kb template ID of this kb template
+	*/
 	@Override
 	public long getKbTemplateId() {
 		return model.getKbTemplateId();
 	}
 
 	/**
-	 * Returns the last publish date of this kb template.
-	 *
-	 * @return the last publish date of this kb template
-	 */
+	* Returns the last publish date of this kb template.
+	*
+	* @return the last publish date of this kb template
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this kb template.
-	 *
-	 * @return the modified date of this kb template
-	 */
+	* Returns the modified date of this kb template.
+	*
+	* @return the modified date of this kb template
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this kb template.
-	 *
-	 * @return the primary key of this kb template
-	 */
+	* Returns the primary key of this kb template.
+	*
+	* @return the primary key of this kb template
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the title of this kb template.
-	 *
-	 * @return the title of this kb template
-	 */
+	* Returns the title of this kb template.
+	*
+	* @return the title of this kb template
+	*/
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	 * Returns the user ID of this kb template.
-	 *
-	 * @return the user ID of this kb template
-	 */
+	* Returns the user ID of this kb template.
+	*
+	* @return the user ID of this kb template
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this kb template.
-	 *
-	 * @return the user name of this kb template
-	 */
+	* Returns the user name of this kb template.
+	*
+	* @return the user name of this kb template
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this kb template.
-	 *
-	 * @return the user uuid of this kb template
-	 */
+	* Returns the user uuid of this kb template.
+	*
+	* @return the user uuid of this kb template
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this kb template.
-	 *
-	 * @return the uuid of this kb template
-	 */
+	* Returns the uuid of this kb template.
+	*
+	* @return the uuid of this kb template
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -266,130 +265,130 @@ public class KBTemplateWrapper
 	}
 
 	/**
-	 * Sets the company ID of this kb template.
-	 *
-	 * @param companyId the company ID of this kb template
-	 */
+	* Sets the company ID of this kb template.
+	*
+	* @param companyId the company ID of this kb template
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the content of this kb template.
-	 *
-	 * @param content the content of this kb template
-	 */
+	* Sets the content of this kb template.
+	*
+	* @param content the content of this kb template
+	*/
 	@Override
 	public void setContent(String content) {
 		model.setContent(content);
 	}
 
 	/**
-	 * Sets the create date of this kb template.
-	 *
-	 * @param createDate the create date of this kb template
-	 */
+	* Sets the create date of this kb template.
+	*
+	* @param createDate the create date of this kb template
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this kb template.
-	 *
-	 * @param groupId the group ID of this kb template
-	 */
+	* Sets the group ID of this kb template.
+	*
+	* @param groupId the group ID of this kb template
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the kb template ID of this kb template.
-	 *
-	 * @param kbTemplateId the kb template ID of this kb template
-	 */
+	* Sets the kb template ID of this kb template.
+	*
+	* @param kbTemplateId the kb template ID of this kb template
+	*/
 	@Override
 	public void setKbTemplateId(long kbTemplateId) {
 		model.setKbTemplateId(kbTemplateId);
 	}
 
 	/**
-	 * Sets the last publish date of this kb template.
-	 *
-	 * @param lastPublishDate the last publish date of this kb template
-	 */
+	* Sets the last publish date of this kb template.
+	*
+	* @param lastPublishDate the last publish date of this kb template
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this kb template.
-	 *
-	 * @param modifiedDate the modified date of this kb template
-	 */
+	* Sets the modified date of this kb template.
+	*
+	* @param modifiedDate the modified date of this kb template
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this kb template.
-	 *
-	 * @param primaryKey the primary key of this kb template
-	 */
+	* Sets the primary key of this kb template.
+	*
+	* @param primaryKey the primary key of this kb template
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the title of this kb template.
-	 *
-	 * @param title the title of this kb template
-	 */
+	* Sets the title of this kb template.
+	*
+	* @param title the title of this kb template
+	*/
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
 	}
 
 	/**
-	 * Sets the user ID of this kb template.
-	 *
-	 * @param userId the user ID of this kb template
-	 */
+	* Sets the user ID of this kb template.
+	*
+	* @param userId the user ID of this kb template
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this kb template.
-	 *
-	 * @param userName the user name of this kb template
-	 */
+	* Sets the user name of this kb template.
+	*
+	* @param userName the user name of this kb template
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this kb template.
-	 *
-	 * @param userUuid the user uuid of this kb template
-	 */
+	* Sets the user uuid of this kb template.
+	*
+	* @param userUuid the user uuid of this kb template
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this kb template.
-	 *
-	 * @param uuid the uuid of this kb template
-	 */
+	* Sets the uuid of this kb template.
+	*
+	* @param uuid the uuid of this kb template
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -404,5 +403,4 @@ public class KBTemplateWrapper
 	protected KBTemplateWrapper wrap(KBTemplate kbTemplate) {
 		return new KBTemplateWrapper(kbTemplate);
 	}
-
 }

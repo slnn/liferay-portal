@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 
@@ -35,9 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AuditEventCacheModel
-	implements CacheModel<AuditEvent>, Externalizable {
-
+public class AuditEventCacheModel implements CacheModel<AuditEvent>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -216,7 +216,8 @@ public class AuditEventCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(auditEventId);
 
 		objectOutput.writeLong(companyId);
@@ -313,5 +314,4 @@ public class AuditEventCacheModel
 	public int serverPort;
 	public String sessionID;
 	public String additionalInfo;
-
 }

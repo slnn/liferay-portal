@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @generated
  */
 public class CTEntryFinderBaseImpl extends BasePersistenceImpl<CTEntry> {
-
 	public CTEntryFinderBaseImpl() {
 		setModelClass(CTEntry.class);
 	}
@@ -49,5 +49,4 @@ public class CTEntryFinderBaseImpl extends BasePersistenceImpl<CTEntry> {
 
 	@BeanReference(type = CTEntryPersistence.class)
 	protected CTEntryPersistence ctEntryPersistence;
-
 }

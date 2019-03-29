@@ -17,6 +17,7 @@ package com.liferay.message.boards.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,9 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class MBBanWrapper
-	extends BaseModelWrapper<MBBan> implements MBBan, ModelWrapper<MBBan> {
-
+public class MBBanWrapper extends BaseModelWrapper<MBBan> implements MBBan,
+	ModelWrapper<MBBan> {
 	public MBBanWrapper(MBBan mbBan) {
 		super(mbBan);
 	}
@@ -123,130 +123,130 @@ public class MBBanWrapper
 	}
 
 	/**
-	 * Returns the ban ID of this message boards ban.
-	 *
-	 * @return the ban ID of this message boards ban
-	 */
+	* Returns the ban ID of this message boards ban.
+	*
+	* @return the ban ID of this message boards ban
+	*/
 	@Override
 	public long getBanId() {
 		return model.getBanId();
 	}
 
 	/**
-	 * Returns the ban user ID of this message boards ban.
-	 *
-	 * @return the ban user ID of this message boards ban
-	 */
+	* Returns the ban user ID of this message boards ban.
+	*
+	* @return the ban user ID of this message boards ban
+	*/
 	@Override
 	public long getBanUserId() {
 		return model.getBanUserId();
 	}
 
 	/**
-	 * Returns the ban user uuid of this message boards ban.
-	 *
-	 * @return the ban user uuid of this message boards ban
-	 */
+	* Returns the ban user uuid of this message boards ban.
+	*
+	* @return the ban user uuid of this message boards ban
+	*/
 	@Override
 	public String getBanUserUuid() {
 		return model.getBanUserUuid();
 	}
 
 	/**
-	 * Returns the company ID of this message boards ban.
-	 *
-	 * @return the company ID of this message boards ban
-	 */
+	* Returns the company ID of this message boards ban.
+	*
+	* @return the company ID of this message boards ban
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this message boards ban.
-	 *
-	 * @return the create date of this message boards ban
-	 */
+	* Returns the create date of this message boards ban.
+	*
+	* @return the create date of this message boards ban
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the group ID of this message boards ban.
-	 *
-	 * @return the group ID of this message boards ban
-	 */
+	* Returns the group ID of this message boards ban.
+	*
+	* @return the group ID of this message boards ban
+	*/
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	 * Returns the last publish date of this message boards ban.
-	 *
-	 * @return the last publish date of this message boards ban
-	 */
+	* Returns the last publish date of this message boards ban.
+	*
+	* @return the last publish date of this message boards ban
+	*/
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	 * Returns the modified date of this message boards ban.
-	 *
-	 * @return the modified date of this message boards ban
-	 */
+	* Returns the modified date of this message boards ban.
+	*
+	* @return the modified date of this message boards ban
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this message boards ban.
-	 *
-	 * @return the primary key of this message boards ban
-	 */
+	* Returns the primary key of this message boards ban.
+	*
+	* @return the primary key of this message boards ban
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the user ID of this message boards ban.
-	 *
-	 * @return the user ID of this message boards ban
-	 */
+	* Returns the user ID of this message boards ban.
+	*
+	* @return the user ID of this message boards ban
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this message boards ban.
-	 *
-	 * @return the user name of this message boards ban
-	 */
+	* Returns the user name of this message boards ban.
+	*
+	* @return the user name of this message boards ban
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this message boards ban.
-	 *
-	 * @return the user uuid of this message boards ban
-	 */
+	* Returns the user uuid of this message boards ban.
+	*
+	* @return the user uuid of this message boards ban
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this message boards ban.
-	 *
-	 * @return the uuid of this message boards ban
-	 */
+	* Returns the uuid of this message boards ban.
+	*
+	* @return the uuid of this message boards ban
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -258,130 +258,130 @@ public class MBBanWrapper
 	}
 
 	/**
-	 * Sets the ban ID of this message boards ban.
-	 *
-	 * @param banId the ban ID of this message boards ban
-	 */
+	* Sets the ban ID of this message boards ban.
+	*
+	* @param banId the ban ID of this message boards ban
+	*/
 	@Override
 	public void setBanId(long banId) {
 		model.setBanId(banId);
 	}
 
 	/**
-	 * Sets the ban user ID of this message boards ban.
-	 *
-	 * @param banUserId the ban user ID of this message boards ban
-	 */
+	* Sets the ban user ID of this message boards ban.
+	*
+	* @param banUserId the ban user ID of this message boards ban
+	*/
 	@Override
 	public void setBanUserId(long banUserId) {
 		model.setBanUserId(banUserId);
 	}
 
 	/**
-	 * Sets the ban user uuid of this message boards ban.
-	 *
-	 * @param banUserUuid the ban user uuid of this message boards ban
-	 */
+	* Sets the ban user uuid of this message boards ban.
+	*
+	* @param banUserUuid the ban user uuid of this message boards ban
+	*/
 	@Override
 	public void setBanUserUuid(String banUserUuid) {
 		model.setBanUserUuid(banUserUuid);
 	}
 
 	/**
-	 * Sets the company ID of this message boards ban.
-	 *
-	 * @param companyId the company ID of this message boards ban
-	 */
+	* Sets the company ID of this message boards ban.
+	*
+	* @param companyId the company ID of this message boards ban
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this message boards ban.
-	 *
-	 * @param createDate the create date of this message boards ban
-	 */
+	* Sets the create date of this message boards ban.
+	*
+	* @param createDate the create date of this message boards ban
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the group ID of this message boards ban.
-	 *
-	 * @param groupId the group ID of this message boards ban
-	 */
+	* Sets the group ID of this message boards ban.
+	*
+	* @param groupId the group ID of this message boards ban
+	*/
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	 * Sets the last publish date of this message boards ban.
-	 *
-	 * @param lastPublishDate the last publish date of this message boards ban
-	 */
+	* Sets the last publish date of this message boards ban.
+	*
+	* @param lastPublishDate the last publish date of this message boards ban
+	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	 * Sets the modified date of this message boards ban.
-	 *
-	 * @param modifiedDate the modified date of this message boards ban
-	 */
+	* Sets the modified date of this message boards ban.
+	*
+	* @param modifiedDate the modified date of this message boards ban
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this message boards ban.
-	 *
-	 * @param primaryKey the primary key of this message boards ban
-	 */
+	* Sets the primary key of this message boards ban.
+	*
+	* @param primaryKey the primary key of this message boards ban
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the user ID of this message boards ban.
-	 *
-	 * @param userId the user ID of this message boards ban
-	 */
+	* Sets the user ID of this message boards ban.
+	*
+	* @param userId the user ID of this message boards ban
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this message boards ban.
-	 *
-	 * @param userName the user name of this message boards ban
-	 */
+	* Sets the user name of this message boards ban.
+	*
+	* @param userName the user name of this message boards ban
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this message boards ban.
-	 *
-	 * @param userUuid the user uuid of this message boards ban
-	 */
+	* Sets the user uuid of this message boards ban.
+	*
+	* @param userUuid the user uuid of this message boards ban
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this message boards ban.
-	 *
-	 * @param uuid the uuid of this message boards ban
-	 */
+	* Sets the uuid of this message boards ban.
+	*
+	* @param uuid the uuid of this message boards ban
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -396,5 +396,4 @@ public class MBBanWrapper
 	protected MBBanWrapper wrap(MBBan mbBan) {
 		return new MBBanWrapper(mbBan);
 	}
-
 }

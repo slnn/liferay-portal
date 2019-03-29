@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
 import com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -63,9 +64,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class HtmlPreviewEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements HtmlPreviewEntryLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements HtmlPreviewEntryLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -82,7 +82,6 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	@Override
 	public HtmlPreviewEntry addHtmlPreviewEntry(
 		HtmlPreviewEntry htmlPreviewEntry) {
-
 		htmlPreviewEntry.setNew(true);
 
 		return htmlPreviewEntryPersistence.update(htmlPreviewEntry);
@@ -111,7 +110,6 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	@Override
 	public HtmlPreviewEntry deleteHtmlPreviewEntry(long htmlPreviewEntryId)
 		throws PortalException {
-
 		return htmlPreviewEntryPersistence.remove(htmlPreviewEntryId);
 	}
 
@@ -125,9 +123,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public HtmlPreviewEntry deleteHtmlPreviewEntry(
-			HtmlPreviewEntry htmlPreviewEntry)
-		throws PortalException {
-
+		HtmlPreviewEntry htmlPreviewEntry) throws PortalException {
 		return htmlPreviewEntryPersistence.remove(htmlPreviewEntry);
 	}
 
@@ -135,8 +131,8 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			HtmlPreviewEntry.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(HtmlPreviewEntry.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -163,11 +159,10 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return htmlPreviewEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return htmlPreviewEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -184,12 +179,10 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return htmlPreviewEntryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return htmlPreviewEntryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -211,17 +204,15 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return htmlPreviewEntryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return htmlPreviewEntryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
 	public HtmlPreviewEntry fetchHtmlPreviewEntry(long htmlPreviewEntryId) {
-		return htmlPreviewEntryPersistence.fetchByPrimaryKey(
-			htmlPreviewEntryId);
+		return htmlPreviewEntryPersistence.fetchByPrimaryKey(htmlPreviewEntryId);
 	}
 
 	/**
@@ -234,17 +225,14 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	@Override
 	public HtmlPreviewEntry getHtmlPreviewEntry(long htmlPreviewEntryId)
 		throws PortalException {
-
 		return htmlPreviewEntryPersistence.findByPrimaryKey(htmlPreviewEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			htmlPreviewEntryLocalService);
+		actionableDynamicQuery.setBaseLocalService(htmlPreviewEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(HtmlPreviewEntry.class);
 
@@ -254,14 +242,10 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			htmlPreviewEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(htmlPreviewEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(HtmlPreviewEntry.class);
 
@@ -273,9 +257,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			htmlPreviewEntryLocalService);
+		actionableDynamicQuery.setBaseLocalService(htmlPreviewEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(HtmlPreviewEntry.class);
 
@@ -288,15 +270,12 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return htmlPreviewEntryLocalService.deleteHtmlPreviewEntry(
-			(HtmlPreviewEntry)persistedModel);
+		return htmlPreviewEntryLocalService.deleteHtmlPreviewEntry((HtmlPreviewEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return htmlPreviewEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -336,7 +315,6 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	@Override
 	public HtmlPreviewEntry updateHtmlPreviewEntry(
 		HtmlPreviewEntry htmlPreviewEntry) {
-
 		return htmlPreviewEntryPersistence.update(htmlPreviewEntry);
 	}
 
@@ -356,7 +334,6 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 */
 	public void setHtmlPreviewEntryLocalService(
 		HtmlPreviewEntryLocalService htmlPreviewEntryLocalService) {
-
 		this.htmlPreviewEntryLocalService = htmlPreviewEntryLocalService;
 	}
 
@@ -376,7 +353,6 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 */
 	public void setHtmlPreviewEntryPersistence(
 		HtmlPreviewEntryPersistence htmlPreviewEntryPersistence) {
-
 		this.htmlPreviewEntryPersistence = htmlPreviewEntryPersistence;
 	}
 
@@ -385,9 +361,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -397,9 +371,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -408,9 +380,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -421,7 +391,6 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -444,8 +413,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.html.preview.model.HtmlPreviewEntry",
+		persistedModelLocalServiceRegistry.register("com.liferay.html.preview.model.HtmlPreviewEntry",
 			htmlPreviewEntryLocalService);
 	}
 
@@ -486,8 +454,8 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -498,27 +466,14 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 
 	@BeanReference(type = HtmlPreviewEntryLocalService.class)
 	protected HtmlPreviewEntryLocalService htmlPreviewEntryLocalService;
-
 	@BeanReference(type = HtmlPreviewEntryPersistence.class)
 	protected HtmlPreviewEntryPersistence htmlPreviewEntryPersistence;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

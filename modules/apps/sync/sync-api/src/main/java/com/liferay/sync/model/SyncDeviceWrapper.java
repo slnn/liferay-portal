@@ -17,6 +17,7 @@ package com.liferay.sync.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SyncDeviceWrapper
-	extends BaseModelWrapper<SyncDevice>
+public class SyncDeviceWrapper extends BaseModelWrapper<SyncDevice>
 	implements SyncDevice, ModelWrapper<SyncDevice> {
-
 	public SyncDeviceWrapper(SyncDevice syncDevice) {
 		super(syncDevice);
 	}
@@ -140,145 +139,144 @@ public class SyncDeviceWrapper
 	@Override
 	public void checkStatus()
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		model.checkStatus();
 	}
 
 	/**
-	 * Returns the build number of this sync device.
-	 *
-	 * @return the build number of this sync device
-	 */
+	* Returns the build number of this sync device.
+	*
+	* @return the build number of this sync device
+	*/
 	@Override
 	public long getBuildNumber() {
 		return model.getBuildNumber();
 	}
 
 	/**
-	 * Returns the company ID of this sync device.
-	 *
-	 * @return the company ID of this sync device
-	 */
+	* Returns the company ID of this sync device.
+	*
+	* @return the company ID of this sync device
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the create date of this sync device.
-	 *
-	 * @return the create date of this sync device
-	 */
+	* Returns the create date of this sync device.
+	*
+	* @return the create date of this sync device
+	*/
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	 * Returns the feature set of this sync device.
-	 *
-	 * @return the feature set of this sync device
-	 */
+	* Returns the feature set of this sync device.
+	*
+	* @return the feature set of this sync device
+	*/
 	@Override
 	public int getFeatureSet() {
 		return model.getFeatureSet();
 	}
 
 	/**
-	 * Returns the hostname of this sync device.
-	 *
-	 * @return the hostname of this sync device
-	 */
+	* Returns the hostname of this sync device.
+	*
+	* @return the hostname of this sync device
+	*/
 	@Override
 	public String getHostname() {
 		return model.getHostname();
 	}
 
 	/**
-	 * Returns the modified date of this sync device.
-	 *
-	 * @return the modified date of this sync device
-	 */
+	* Returns the modified date of this sync device.
+	*
+	* @return the modified date of this sync device
+	*/
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	 * Returns the primary key of this sync device.
-	 *
-	 * @return the primary key of this sync device
-	 */
+	* Returns the primary key of this sync device.
+	*
+	* @return the primary key of this sync device
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the status of this sync device.
-	 *
-	 * @return the status of this sync device
-	 */
+	* Returns the status of this sync device.
+	*
+	* @return the status of this sync device
+	*/
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	 * Returns the sync device ID of this sync device.
-	 *
-	 * @return the sync device ID of this sync device
-	 */
+	* Returns the sync device ID of this sync device.
+	*
+	* @return the sync device ID of this sync device
+	*/
 	@Override
 	public long getSyncDeviceId() {
 		return model.getSyncDeviceId();
 	}
 
 	/**
-	 * Returns the type of this sync device.
-	 *
-	 * @return the type of this sync device
-	 */
+	* Returns the type of this sync device.
+	*
+	* @return the type of this sync device
+	*/
 	@Override
 	public String getType() {
 		return model.getType();
 	}
 
 	/**
-	 * Returns the user ID of this sync device.
-	 *
-	 * @return the user ID of this sync device
-	 */
+	* Returns the user ID of this sync device.
+	*
+	* @return the user ID of this sync device
+	*/
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	 * Returns the user name of this sync device.
-	 *
-	 * @return the user name of this sync device
-	 */
+	* Returns the user name of this sync device.
+	*
+	* @return the user name of this sync device
+	*/
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	 * Returns the user uuid of this sync device.
-	 *
-	 * @return the user uuid of this sync device
-	 */
+	* Returns the user uuid of this sync device.
+	*
+	* @return the user uuid of this sync device
+	*/
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	 * Returns the uuid of this sync device.
-	 *
-	 * @return the uuid of this sync device
-	 */
+	* Returns the uuid of this sync device.
+	*
+	* @return the uuid of this sync device
+	*/
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -300,140 +298,140 @@ public class SyncDeviceWrapper
 	}
 
 	/**
-	 * Sets the build number of this sync device.
-	 *
-	 * @param buildNumber the build number of this sync device
-	 */
+	* Sets the build number of this sync device.
+	*
+	* @param buildNumber the build number of this sync device
+	*/
 	@Override
 	public void setBuildNumber(long buildNumber) {
 		model.setBuildNumber(buildNumber);
 	}
 
 	/**
-	 * Sets the company ID of this sync device.
-	 *
-	 * @param companyId the company ID of this sync device
-	 */
+	* Sets the company ID of this sync device.
+	*
+	* @param companyId the company ID of this sync device
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the create date of this sync device.
-	 *
-	 * @param createDate the create date of this sync device
-	 */
+	* Sets the create date of this sync device.
+	*
+	* @param createDate the create date of this sync device
+	*/
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	 * Sets the feature set of this sync device.
-	 *
-	 * @param featureSet the feature set of this sync device
-	 */
+	* Sets the feature set of this sync device.
+	*
+	* @param featureSet the feature set of this sync device
+	*/
 	@Override
 	public void setFeatureSet(int featureSet) {
 		model.setFeatureSet(featureSet);
 	}
 
 	/**
-	 * Sets the hostname of this sync device.
-	 *
-	 * @param hostname the hostname of this sync device
-	 */
+	* Sets the hostname of this sync device.
+	*
+	* @param hostname the hostname of this sync device
+	*/
 	@Override
 	public void setHostname(String hostname) {
 		model.setHostname(hostname);
 	}
 
 	/**
-	 * Sets the modified date of this sync device.
-	 *
-	 * @param modifiedDate the modified date of this sync device
-	 */
+	* Sets the modified date of this sync device.
+	*
+	* @param modifiedDate the modified date of this sync device
+	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	 * Sets the primary key of this sync device.
-	 *
-	 * @param primaryKey the primary key of this sync device
-	 */
+	* Sets the primary key of this sync device.
+	*
+	* @param primaryKey the primary key of this sync device
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the status of this sync device.
-	 *
-	 * @param status the status of this sync device
-	 */
+	* Sets the status of this sync device.
+	*
+	* @param status the status of this sync device
+	*/
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	 * Sets the sync device ID of this sync device.
-	 *
-	 * @param syncDeviceId the sync device ID of this sync device
-	 */
+	* Sets the sync device ID of this sync device.
+	*
+	* @param syncDeviceId the sync device ID of this sync device
+	*/
 	@Override
 	public void setSyncDeviceId(long syncDeviceId) {
 		model.setSyncDeviceId(syncDeviceId);
 	}
 
 	/**
-	 * Sets the type of this sync device.
-	 *
-	 * @param type the type of this sync device
-	 */
+	* Sets the type of this sync device.
+	*
+	* @param type the type of this sync device
+	*/
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	 * Sets the user ID of this sync device.
-	 *
-	 * @param userId the user ID of this sync device
-	 */
+	* Sets the user ID of this sync device.
+	*
+	* @param userId the user ID of this sync device
+	*/
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	 * Sets the user name of this sync device.
-	 *
-	 * @param userName the user name of this sync device
-	 */
+	* Sets the user name of this sync device.
+	*
+	* @param userName the user name of this sync device
+	*/
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	 * Sets the user uuid of this sync device.
-	 *
-	 * @param userUuid the user uuid of this sync device
-	 */
+	* Sets the user uuid of this sync device.
+	*
+	* @param userUuid the user uuid of this sync device
+	*/
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	 * Sets the uuid of this sync device.
-	 *
-	 * @param uuid the uuid of this sync device
-	 */
+	* Sets the uuid of this sync device.
+	*
+	* @param uuid the uuid of this sync device
+	*/
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -453,5 +451,4 @@ public class SyncDeviceWrapper
 	protected SyncDeviceWrapper wrap(SyncDevice syncDevice) {
 		return new SyncDeviceWrapper(syncDevice);
 	}
-
 }

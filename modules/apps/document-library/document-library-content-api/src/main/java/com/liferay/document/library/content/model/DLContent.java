@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLContentModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.document.library.content.model.impl.DLContentImpl"
-)
+@ImplementationClassName("com.liferay.document.library.content.model.impl.DLContentImpl")
 @ProviderType
 public interface DLContent extends DLContentModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.content.model.impl.DLContentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DLContent, Long> CONTENT_ID_ACCESSOR =
-		new Accessor<DLContent, Long>() {
-
+	public static final Accessor<DLContent, Long> CONTENT_ID_ACCESSOR = new Accessor<DLContent, Long>() {
 			@Override
 			public Long get(DLContent dlContent) {
 				return dlContent.getContentId();
@@ -55,7 +50,5 @@ public interface DLContent extends DLContentModel, PersistedModel {
 			public Class<DLContent> getTypeClass() {
 				return DLContent.class;
 			}
-
 		};
-
 }

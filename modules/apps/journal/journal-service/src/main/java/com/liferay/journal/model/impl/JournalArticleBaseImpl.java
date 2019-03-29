@@ -32,9 +32,8 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class JournalArticleBaseImpl
-	extends JournalArticleModelImpl implements JournalArticle {
-
+public abstract class JournalArticleBaseImpl extends JournalArticleModelImpl
+	implements JournalArticle {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,5 +57,4 @@ public abstract class JournalArticleBaseImpl
 
 		JournalArticleLocalServiceUtil.updateJournalArticle(journalArticle);
 	}
-
 }

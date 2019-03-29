@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBDiscussionModel
-	extends AttachedModel, BaseModel<MBDiscussion>, ShardedModel,
-			StagedGroupedModel {
-
+public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion>,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -275,5 +273,4 @@ public interface MBDiscussionModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

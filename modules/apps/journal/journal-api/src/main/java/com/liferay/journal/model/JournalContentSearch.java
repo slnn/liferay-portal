@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see JournalContentSearchModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.journal.model.impl.JournalContentSearchImpl"
-)
+@ImplementationClassName("com.liferay.journal.model.impl.JournalContentSearchImpl")
 @ProviderType
-public interface JournalContentSearch
-	extends JournalContentSearchModel, PersistedModel {
-
+public interface JournalContentSearch extends JournalContentSearchModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalContentSearchImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<JournalContentSearch, Long>
-		CONTENT_SEARCH_ID_ACCESSOR =
-			new Accessor<JournalContentSearch, Long>() {
+	public static final Accessor<JournalContentSearch, Long> CONTENT_SEARCH_ID_ACCESSOR =
+		new Accessor<JournalContentSearch, Long>() {
+			@Override
+			public Long get(JournalContentSearch journalContentSearch) {
+				return journalContentSearch.getContentSearchId();
+			}
 
-				@Override
-				public Long get(JournalContentSearch journalContentSearch) {
-					return journalContentSearch.getContentSearchId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<JournalContentSearch> getTypeClass() {
-					return JournalContentSearch.class;
-				}
-
-			};
-
+			@Override
+			public Class<JournalContentSearch> getTypeClass() {
+				return JournalContentSearch.class;
+			}
+		};
 }

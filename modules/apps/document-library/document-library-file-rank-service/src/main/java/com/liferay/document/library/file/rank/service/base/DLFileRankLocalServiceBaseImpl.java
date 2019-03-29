@@ -21,6 +21,7 @@ import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -64,9 +65,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class DLFileRankLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements DLFileRankLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements DLFileRankLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -108,7 +108,8 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DLFileRank deleteDLFileRank(long fileRankId) throws PortalException {
+	public DLFileRank deleteDLFileRank(long fileRankId)
+		throws PortalException {
 		return dlFileRankPersistence.remove(fileRankId);
 	}
 
@@ -128,8 +129,8 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			DLFileRank.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(DLFileRank.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -156,11 +157,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return dlFileRankPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return dlFileRankPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -177,12 +177,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return dlFileRankPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return dlFileRankPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -204,11 +202,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return dlFileRankPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return dlFileRankPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -230,8 +227,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(dlFileRankLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -243,14 +239,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			dlFileRankLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(dlFileRankLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DLFileRank.class);
 
@@ -261,7 +253,6 @@ public abstract class DLFileRankLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(dlFileRankLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLFileRank.class);
@@ -275,15 +266,12 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return dlFileRankLocalService.deleteDLFileRank(
-			(DLFileRank)persistedModel);
+		return dlFileRankLocalService.deleteDLFileRank((DLFileRank)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return dlFileRankPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -341,7 +329,6 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 */
 	public void setDLFileRankLocalService(
 		DLFileRankLocalService dlFileRankLocalService) {
-
 		this.dlFileRankLocalService = dlFileRankLocalService;
 	}
 
@@ -361,7 +348,6 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 */
 	public void setDLFileRankPersistence(
 		DLFileRankPersistence dlFileRankPersistence) {
-
 		this.dlFileRankPersistence = dlFileRankPersistence;
 	}
 
@@ -388,9 +374,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -400,9 +384,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -411,9 +393,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @return the document library folder local service
 	 */
-	public com.liferay.document.library.kernel.service.DLFolderLocalService
-		getDLFolderLocalService() {
-
+	public com.liferay.document.library.kernel.service.DLFolderLocalService getDLFolderLocalService() {
 		return dlFolderLocalService;
 	}
 
@@ -423,9 +403,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param dlFolderLocalService the document library folder local service
 	 */
 	public void setDLFolderLocalService(
-		com.liferay.document.library.kernel.service.DLFolderLocalService
-			dlFolderLocalService) {
-
+		com.liferay.document.library.kernel.service.DLFolderLocalService dlFolderLocalService) {
 		this.dlFolderLocalService = dlFolderLocalService;
 	}
 
@@ -443,15 +421,12 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param dlFolderPersistence the document library folder persistence
 	 */
-	public void setDLFolderPersistence(
-		DLFolderPersistence dlFolderPersistence) {
-
+	public void setDLFolderPersistence(DLFolderPersistence dlFolderPersistence) {
 		this.dlFolderPersistence = dlFolderPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.file.rank.model.DLFileRank",
+		persistedModelLocalServiceRegistry.register("com.liferay.document.library.file.rank.model.DLFileRank",
 			dlFileRankLocalService);
 	}
 
@@ -492,8 +467,8 @@ public abstract class DLFileRankLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -504,30 +479,16 @@ public abstract class DLFileRankLocalServiceBaseImpl
 
 	@BeanReference(type = DLFileRankLocalService.class)
 	protected DLFileRankLocalService dlFileRankLocalService;
-
 	@BeanReference(type = DLFileRankPersistence.class)
 	protected DLFileRankPersistence dlFileRankPersistence;
-
 	@BeanReference(type = DLFileRankFinder.class)
 	protected DLFileRankFinder dlFileRankFinder;
-
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@ServiceReference(
-		type = com.liferay.document.library.kernel.service.DLFolderLocalService.class
-	)
-	protected com.liferay.document.library.kernel.service.DLFolderLocalService
-		dlFolderLocalService;
-
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.document.library.kernel.service.DLFolderLocalService.class)
+	protected com.liferay.document.library.kernel.service.DLFolderLocalService dlFolderLocalService;
 	@ServiceReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
-
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

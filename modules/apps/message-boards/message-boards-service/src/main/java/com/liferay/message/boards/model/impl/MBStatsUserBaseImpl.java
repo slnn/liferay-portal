@@ -32,9 +32,8 @@ import com.liferay.message.boards.service.MBStatsUserLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class MBStatsUserBaseImpl
-	extends MBStatsUserModelImpl implements MBStatsUser {
-
+public abstract class MBStatsUserBaseImpl extends MBStatsUserModelImpl
+	implements MBStatsUser {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class MBStatsUserBaseImpl
 			MBStatsUserLocalServiceUtil.updateMBStatsUser(this);
 		}
 	}
-
 }

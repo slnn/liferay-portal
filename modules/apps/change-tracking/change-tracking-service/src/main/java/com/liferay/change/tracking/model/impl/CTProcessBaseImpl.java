@@ -32,9 +32,8 @@ import com.liferay.change.tracking.service.CTProcessLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CTProcessBaseImpl
-	extends CTProcessModelImpl implements CTProcess {
-
+public abstract class CTProcessBaseImpl extends CTProcessModelImpl
+	implements CTProcess {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class CTProcessBaseImpl
 			CTProcessLocalServiceUtil.updateCTProcess(this);
 		}
 	}
-
 }

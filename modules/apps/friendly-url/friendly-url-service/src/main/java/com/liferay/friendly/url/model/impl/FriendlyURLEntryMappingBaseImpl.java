@@ -32,13 +32,10 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
  */
 @ProviderType
 public abstract class FriendlyURLEntryMappingBaseImpl
-	extends FriendlyURLEntryMappingModelImpl
-	implements FriendlyURLEntryMapping {
-
+	extends FriendlyURLEntryMappingModelImpl implements FriendlyURLEntryMapping {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a friendly url entry mapping model instance should use the <code>FriendlyURLEntryMapping</code> interface instead.
 	 */
-
 }

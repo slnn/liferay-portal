@@ -27,20 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DDMContentModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl"
-)
+@ImplementationClassName("com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl")
 @ProviderType
 public interface DDMContent extends DDMContentModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DDMContent, Long> CONTENT_ID_ACCESSOR =
-		new Accessor<DDMContent, Long>() {
-
+	public static final Accessor<DDMContent, Long> CONTENT_ID_ACCESSOR = new Accessor<DDMContent, Long>() {
 			@Override
 			public Long get(DDMContent ddmContent) {
 				return ddmContent.getContentId();
@@ -55,7 +50,5 @@ public interface DDMContent extends DDMContentModel, PersistedModel {
 			public Class<DDMContent> getTypeClass() {
 				return DDMContent.class;
 			}
-
 		};
-
 }

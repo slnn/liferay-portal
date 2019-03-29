@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AssetCategoryPropertyModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.asset.category.property.model.impl.AssetCategoryPropertyImpl"
-)
+@ImplementationClassName("com.liferay.asset.category.property.model.impl.AssetCategoryPropertyImpl")
 @ProviderType
-public interface AssetCategoryProperty
-	extends AssetCategoryPropertyModel, PersistedModel {
-
+public interface AssetCategoryProperty extends AssetCategoryPropertyModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.category.property.model.impl.AssetCategoryPropertyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetCategoryProperty, Long>
-		CATEGORY_PROPERTY_ID_ACCESSOR =
-			new Accessor<AssetCategoryProperty, Long>() {
+	public static final Accessor<AssetCategoryProperty, Long> CATEGORY_PROPERTY_ID_ACCESSOR =
+		new Accessor<AssetCategoryProperty, Long>() {
+			@Override
+			public Long get(AssetCategoryProperty assetCategoryProperty) {
+				return assetCategoryProperty.getCategoryPropertyId();
+			}
 
-				@Override
-				public Long get(AssetCategoryProperty assetCategoryProperty) {
-					return assetCategoryProperty.getCategoryPropertyId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<AssetCategoryProperty> getTypeClass() {
-					return AssetCategoryProperty.class;
-				}
-
-			};
-
+			@Override
+			public Class<AssetCategoryProperty> getTypeClass() {
+				return AssetCategoryProperty.class;
+			}
+		};
 }

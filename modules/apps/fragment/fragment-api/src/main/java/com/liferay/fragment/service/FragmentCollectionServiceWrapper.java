@@ -28,98 +28,78 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class FragmentCollectionServiceWrapper
 	implements FragmentCollectionService,
-			   ServiceWrapper<FragmentCollectionService> {
-
+		ServiceWrapper<FragmentCollectionService> {
 	public FragmentCollectionServiceWrapper(
 		FragmentCollectionService fragmentCollectionService) {
-
 		_fragmentCollectionService = fragmentCollectionService;
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-			long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long groupId, String name, String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionService.addFragmentCollection(
-			groupId, name, description, serviceContext);
+		return _fragmentCollectionService.addFragmentCollection(groupId, name,
+			description, serviceContext);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-			long groupId, String fragmentCollectionKey, String name,
-			String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long groupId, String fragmentCollectionKey, String name,
+		String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionService.addFragmentCollection(
-			groupId, fragmentCollectionKey, name, description, serviceContext);
+		return _fragmentCollectionService.addFragmentCollection(groupId,
+			fragmentCollectionKey, name, description, serviceContext);
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentCollection
-			deleteFragmentCollection(long fragmentCollectionId)
+	public com.liferay.fragment.model.FragmentCollection deleteFragmentCollection(
+		long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionService.deleteFragmentCollection(
-			fragmentCollectionId);
+		return _fragmentCollectionService.deleteFragmentCollection(fragmentCollectionId);
 	}
 
 	@Override
 	public void deleteFragmentCollections(long[] fragmentCollectionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_fragmentCollectionService.deleteFragmentCollections(
-			fragmentCollectionIds);
+		_fragmentCollectionService.deleteFragmentCollections(fragmentCollectionIds);
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentCollection
-			fetchFragmentCollection(long fragmentCollectionId)
+	public com.liferay.fragment.model.FragmentCollection fetchFragmentCollection(
+		long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionService.fetchFragmentCollection(
-			fragmentCollectionId);
+		return _fragmentCollectionService.fetchFragmentCollection(fragmentCollectionId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentCollection>
-		getFragmentCollections(long groupId) {
-
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId) {
 		return _fragmentCollectionService.getFragmentCollections(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentCollection>
-		getFragmentCollections(long groupId, int start, int end) {
-
-		return _fragmentCollectionService.getFragmentCollections(
-			groupId, start, end);
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId, int start, int end) {
+		return _fragmentCollectionService.getFragmentCollections(groupId,
+			start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentCollection>
-		getFragmentCollections(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentCollection>
-					orderByComparator) {
-
-		return _fragmentCollectionService.getFragmentCollections(
-			groupId, start, end, orderByComparator);
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
+		return _fragmentCollectionService.getFragmentCollections(groupId,
+			start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentCollection>
-		getFragmentCollections(
-			long groupId, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentCollection>
-					orderByComparator) {
-
-		return _fragmentCollectionService.getFragmentCollections(
-			groupId, name, start, end, orderByComparator);
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
+		return _fragmentCollectionService.getFragmentCollections(groupId, name,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -129,15 +109,15 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public int getFragmentCollectionsCount(long groupId, String name) {
-		return _fragmentCollectionService.getFragmentCollectionsCount(
-			groupId, name);
+		return _fragmentCollectionService.getFragmentCollectionsCount(groupId,
+			name);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _fragmentCollectionService.getOSGiServiceIdentifier();
@@ -146,18 +126,15 @@ public class FragmentCollectionServiceWrapper
 	@Override
 	public String[] getTempFileNames(long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _fragmentCollectionService.getTempFileNames(groupId, folderName);
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentCollection
-			updateFragmentCollection(
-				long fragmentCollectionId, String name, String description)
+	public com.liferay.fragment.model.FragmentCollection updateFragmentCollection(
+		long fragmentCollectionId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionService.updateFragmentCollection(
-			fragmentCollectionId, name, description);
+		return _fragmentCollectionService.updateFragmentCollection(fragmentCollectionId,
+			name, description);
 	}
 
 	@Override
@@ -168,10 +145,8 @@ public class FragmentCollectionServiceWrapper
 	@Override
 	public void setWrappedService(
 		FragmentCollectionService fragmentCollectionService) {
-
 		_fragmentCollectionService = fragmentCollectionService;
 	}
 
 	private FragmentCollectionService _fragmentCollectionService;
-
 }

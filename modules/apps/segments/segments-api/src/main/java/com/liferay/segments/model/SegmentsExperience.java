@@ -27,37 +27,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SegmentsExperienceModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.segments.model.impl.SegmentsExperienceImpl"
-)
+@ImplementationClassName("com.liferay.segments.model.impl.SegmentsExperienceImpl")
 @ProviderType
-public interface SegmentsExperience
-	extends SegmentsExperienceModel, PersistedModel {
-
+public interface SegmentsExperience extends SegmentsExperienceModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.segments.model.impl.SegmentsExperienceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SegmentsExperience, Long>
-		SEGMENTS_EXPERIENCE_ID_ACCESSOR =
-			new Accessor<SegmentsExperience, Long>() {
+	public static final Accessor<SegmentsExperience, Long> SEGMENTS_EXPERIENCE_ID_ACCESSOR =
+		new Accessor<SegmentsExperience, Long>() {
+			@Override
+			public Long get(SegmentsExperience segmentsExperience) {
+				return segmentsExperience.getSegmentsExperienceId();
+			}
 
-				@Override
-				public Long get(SegmentsExperience segmentsExperience) {
-					return segmentsExperience.getSegmentsExperienceId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<SegmentsExperience> getTypeClass() {
-					return SegmentsExperience.class;
-				}
-
-			};
-
+			@Override
+			public Class<SegmentsExperience> getTypeClass() {
+				return SegmentsExperience.class;
+			}
+		};
 }

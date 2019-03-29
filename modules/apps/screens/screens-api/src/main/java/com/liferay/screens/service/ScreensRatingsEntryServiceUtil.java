@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -34,74 +35,60 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @ProviderType
 public class ScreensRatingsEntryServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
-			long classPK, String className, int ratingsLength)
+		long classPK, String className, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteRatingsEntry(
-			classPK, className, ratingsLength);
+		return getService().deleteRatingsEntry(classPK, className, ratingsLength);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-			long assetEntryId, int ratingsLength)
+		long assetEntryId, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return getService().getRatingsEntries(assetEntryId, ratingsLength);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-			long classPK, String className, int ratingsLength)
+		long classPK, String className, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getRatingsEntries(
-			classPK, className, ratingsLength);
+		return getService().getRatingsEntries(classPK, className, ratingsLength);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
-			long classPK, String className, double score, int ratingsLength)
+		long classPK, String className, double score, int ratingsLength)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateRatingsEntry(
-			classPK, className, score, ratingsLength);
+		return getService()
+				   .updateRatingsEntry(classPK, className, score, ratingsLength);
 	}
 
 	public static ScreensRatingsEntryService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker
-		<ScreensRatingsEntryService, ScreensRatingsEntryService>
-			_serviceTracker;
+	private static ServiceTracker<ScreensRatingsEntryService, ScreensRatingsEntryService> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ScreensRatingsEntryService.class);
+		Bundle bundle = FrameworkUtil.getBundle(ScreensRatingsEntryService.class);
 
-		ServiceTracker<ScreensRatingsEntryService, ScreensRatingsEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<ScreensRatingsEntryService, ScreensRatingsEntryService>(
-						bundle.getBundleContext(),
-						ScreensRatingsEntryService.class, null);
+		ServiceTracker<ScreensRatingsEntryService, ScreensRatingsEntryService> serviceTracker =
+			new ServiceTracker<ScreensRatingsEntryService, ScreensRatingsEntryService>(bundle.getBundleContext(),
+				ScreensRatingsEntryService.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
-
 }

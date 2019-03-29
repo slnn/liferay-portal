@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface JournalArticleLocalizationModel
-	extends BaseModel<JournalArticleLocalization>, ShardedModel {
-
+public interface JournalArticleLocalizationModel extends BaseModel<JournalArticleLocalization>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,5 +142,4 @@ public interface JournalArticleLocalizationModel
 	 * @param languageId the language ID of this journal article localization
 	 */
 	public void setLanguageId(String languageId);
-
 }

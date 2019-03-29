@@ -34,9 +34,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OAuth2ApplicationScopeAliasesModel
-	extends BaseModel<OAuth2ApplicationScopeAliases>, ShardedModel {
-
+public interface OAuth2ApplicationScopeAliasesModel extends BaseModel<OAuth2ApplicationScopeAliases>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -187,5 +186,4 @@ public interface OAuth2ApplicationScopeAliasesModel
 	 * @param scopeAliasesHash the scope aliases hash of this o auth2 application scope aliases
 	 */
 	public void setScopeAliasesHash(long scopeAliasesHash);
-
 }

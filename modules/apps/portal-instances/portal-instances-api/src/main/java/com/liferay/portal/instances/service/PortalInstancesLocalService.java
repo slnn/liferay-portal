@@ -40,12 +40,9 @@ import javax.servlet.http.HttpServletRequest;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface PortalInstancesLocalService extends BaseLocalService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -66,17 +63,17 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	public long getDefaultCompanyId();
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getWebIds();
 
-	public void initializePortalInstance(
-		ServletContext servletContext, String webId);
+	public void initializePortalInstance(ServletContext servletContext,
+		String webId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isAutoLoginIgnoreHost(String host);
@@ -99,5 +96,4 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 
 	@Clusterable
 	public void synchronizePortalInstances();
-
 }

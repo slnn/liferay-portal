@@ -15,11 +15,13 @@
 package com.liferay.calendar.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
 import com.liferay.calendar.service.persistence.CalendarResourceUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +40,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,27 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class CalendarResourcePersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.calendar.service"));
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.calendar.service"));
 
 	@Before
 	public void setUp() {
@@ -107,8 +108,7 @@ public class CalendarResourcePersistenceTest {
 
 		_persistence.remove(newCalendarResource);
 
-		CalendarResource existingCalendarResource =
-			_persistence.fetchByPrimaryKey(newCalendarResource.getPrimaryKey());
+		CalendarResource existingCalendarResource = _persistence.fetchByPrimaryKey(newCalendarResource.getPrimaryKey());
 
 		Assert.assertNull(existingCalendarResource);
 	}
@@ -156,53 +156,41 @@ public class CalendarResourcePersistenceTest {
 
 		_calendarResources.add(_persistence.update(newCalendarResource));
 
-		CalendarResource existingCalendarResource =
-			_persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
+		CalendarResource existingCalendarResource = _persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCalendarResource.getUuid(), newCalendarResource.getUuid());
-		Assert.assertEquals(
-			existingCalendarResource.getCalendarResourceId(),
+		Assert.assertEquals(existingCalendarResource.getUuid(),
+			newCalendarResource.getUuid());
+		Assert.assertEquals(existingCalendarResource.getCalendarResourceId(),
 			newCalendarResource.getCalendarResourceId());
-		Assert.assertEquals(
-			existingCalendarResource.getGroupId(),
+		Assert.assertEquals(existingCalendarResource.getGroupId(),
 			newCalendarResource.getGroupId());
-		Assert.assertEquals(
-			existingCalendarResource.getCompanyId(),
+		Assert.assertEquals(existingCalendarResource.getCompanyId(),
 			newCalendarResource.getCompanyId());
-		Assert.assertEquals(
-			existingCalendarResource.getUserId(),
+		Assert.assertEquals(existingCalendarResource.getUserId(),
 			newCalendarResource.getUserId());
-		Assert.assertEquals(
-			existingCalendarResource.getUserName(),
+		Assert.assertEquals(existingCalendarResource.getUserName(),
 			newCalendarResource.getUserName());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCalendarResource.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarResource.getCreateDate()),
 			Time.getShortTimestamp(newCalendarResource.getCreateDate()));
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingCalendarResource.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarResource.getModifiedDate()),
 			Time.getShortTimestamp(newCalendarResource.getModifiedDate()));
-		Assert.assertEquals(
-			existingCalendarResource.getClassNameId(),
+		Assert.assertEquals(existingCalendarResource.getClassNameId(),
 			newCalendarResource.getClassNameId());
-		Assert.assertEquals(
-			existingCalendarResource.getClassPK(),
+		Assert.assertEquals(existingCalendarResource.getClassPK(),
 			newCalendarResource.getClassPK());
-		Assert.assertEquals(
-			existingCalendarResource.getClassUuid(),
+		Assert.assertEquals(existingCalendarResource.getClassUuid(),
 			newCalendarResource.getClassUuid());
-		Assert.assertEquals(
-			existingCalendarResource.getCode(), newCalendarResource.getCode());
-		Assert.assertEquals(
-			existingCalendarResource.getName(), newCalendarResource.getName());
-		Assert.assertEquals(
-			existingCalendarResource.getDescription(),
+		Assert.assertEquals(existingCalendarResource.getCode(),
+			newCalendarResource.getCode());
+		Assert.assertEquals(existingCalendarResource.getName(),
+			newCalendarResource.getName());
+		Assert.assertEquals(existingCalendarResource.getDescription(),
 			newCalendarResource.getDescription());
-		Assert.assertEquals(
-			existingCalendarResource.isActive(),
+		Assert.assertEquals(existingCalendarResource.isActive(),
 			newCalendarResource.isActive());
-		Assert.assertEquals(
-			Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarResource.getLastPublishDate()),
 			Time.getShortTimestamp(newCalendarResource.getLastPublishDate()));
 	}
@@ -259,44 +247,42 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testCountByG_CArrayable() throws Exception {
-		_persistence.countByG_C(
-			new long[] {RandomTestUtil.nextLong(), 0L},
+		_persistence.countByG_C(new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testCountByG_A() throws Exception {
-		_persistence.countByG_A(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+		_persistence.countByG_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C_A() throws Exception {
-		_persistence.countByC_C_A(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+		_persistence.countByC_C_A(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_C_A(0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_C_A(
-			0L, (String)null, RandomTestUtil.randomBoolean());
+		_persistence.countByC_C_A(0L, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CalendarResource newCalendarResource = addCalendarResource();
 
-		CalendarResource existingCalendarResource =
-			_persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
+		CalendarResource existingCalendarResource = _persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
 
 		Assert.assertEquals(existingCalendarResource, newCalendarResource);
 	}
@@ -310,31 +296,30 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<CalendarResource> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"CalendarResource", "uuid", true, "calendarResourceId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "classUuid", true, "code", true, "name", true,
-			"description", true, "active", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("CalendarResource", "uuid",
+			true, "calendarResourceId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"classUuid", true, "code", true, "name", true, "description", true,
+			"active", true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		CalendarResource newCalendarResource = addCalendarResource();
 
-		CalendarResource existingCalendarResource =
-			_persistence.fetchByPrimaryKey(newCalendarResource.getPrimaryKey());
+		CalendarResource existingCalendarResource = _persistence.fetchByPrimaryKey(newCalendarResource.getPrimaryKey());
 
 		Assert.assertEquals(existingCalendarResource, newCalendarResource);
 	}
@@ -343,8 +328,7 @@ public class CalendarResourcePersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CalendarResource missingCalendarResource =
-			_persistence.fetchByPrimaryKey(pk);
+		CalendarResource missingCalendarResource = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingCalendarResource);
 	}
@@ -352,7 +336,6 @@ public class CalendarResourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		CalendarResource newCalendarResource1 = addCalendarResource();
 		CalendarResource newCalendarResource2 = addCalendarResource();
 
@@ -361,22 +344,18 @@ public class CalendarResourcePersistenceTest {
 		primaryKeys.add(newCalendarResource1.getPrimaryKey());
 		primaryKeys.add(newCalendarResource2.getPrimaryKey());
 
-		Map<Serializable, CalendarResource> calendarResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarResource> calendarResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, calendarResources.size());
-		Assert.assertEquals(
-			newCalendarResource1,
+		Assert.assertEquals(newCalendarResource1,
 			calendarResources.get(newCalendarResource1.getPrimaryKey()));
-		Assert.assertEquals(
-			newCalendarResource2,
+		Assert.assertEquals(newCalendarResource2,
 			calendarResources.get(newCalendarResource2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -386,8 +365,7 @@ public class CalendarResourcePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CalendarResource> calendarResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarResource> calendarResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(calendarResources.isEmpty());
 	}
@@ -395,7 +373,6 @@ public class CalendarResourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		CalendarResource newCalendarResource = addCalendarResource();
 
 		long pk = RandomTestUtil.nextLong();
@@ -405,39 +382,36 @@ public class CalendarResourcePersistenceTest {
 		primaryKeys.add(newCalendarResource.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CalendarResource> calendarResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarResource> calendarResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, calendarResources.size());
-		Assert.assertEquals(
-			newCalendarResource,
+		Assert.assertEquals(newCalendarResource,
 			calendarResources.get(newCalendarResource.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalendarResource> calendarResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarResource> calendarResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(calendarResources.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		CalendarResource newCalendarResource = addCalendarResource();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newCalendarResource.getPrimaryKey());
 
-		Map<Serializable, CalendarResource> calendarResources =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CalendarResource> calendarResources = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, calendarResources.size());
-		Assert.assertEquals(
-			newCalendarResource,
+		Assert.assertEquals(newCalendarResource,
 			calendarResources.get(newCalendarResource.getPrimaryKey()));
 	}
 
@@ -445,19 +419,15 @@ public class CalendarResourcePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			CalendarResourceLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CalendarResourceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<CalendarResource>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarResource>() {
 				@Override
 				public void performAction(CalendarResource calendarResource) {
 					Assert.assertNotNull(calendarResource);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -466,19 +436,17 @@ public class CalendarResourcePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		CalendarResource newCalendarResource = addCalendarResource();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"calendarResourceId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("calendarResourceId",
 				newCalendarResource.getCalendarResourceId()));
 
-		List<CalendarResource> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CalendarResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -489,35 +457,32 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"calendarResourceId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("calendarResourceId",
+				RandomTestUtil.nextLong()));
 
-		List<CalendarResource> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<CalendarResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		CalendarResource newCalendarResource = addCalendarResource();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("calendarResourceId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"calendarResourceId"));
 
-		Object newCalendarResourceId =
-			newCalendarResource.getCalendarResourceId();
+		Object newCalendarResourceId = newCalendarResource.getCalendarResourceId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"calendarResourceId", new Object[] {newCalendarResourceId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("calendarResourceId",
+				new Object[] { newCalendarResourceId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -530,16 +495,14 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalendarResource.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalendarResource.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("calendarResourceId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"calendarResourceId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"calendarResourceId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("calendarResourceId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -552,31 +515,22 @@ public class CalendarResourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		CalendarResource existingCalendarResource =
-			_persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
+		CalendarResource existingCalendarResource = _persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingCalendarResource.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingCalendarResource, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarResource.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarResource, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCalendarResource.getUuid(),
+				ReflectionTestUtil.invoke(existingCalendarResource,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingCalendarResource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarResource,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarResource.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarResource, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingCalendarResource.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCalendarResource, "getOriginalClassPK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarResource.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarResource,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingCalendarResource.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarResource,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected CalendarResource addCalendarResource() throws Exception {
@@ -619,9 +573,7 @@ public class CalendarResourcePersistenceTest {
 		return calendarResource;
 	}
 
-	private List<CalendarResource> _calendarResources =
-		new ArrayList<CalendarResource>();
+	private List<CalendarResource> _calendarResources = new ArrayList<CalendarResource>();
 	private CalendarResourcePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

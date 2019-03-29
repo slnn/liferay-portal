@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
+
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
@@ -32,9 +33,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @generated
  */
 @ProviderType
-public interface FriendlyURLEntryMappingPersistence
-	extends BasePersistence<FriendlyURLEntryMapping> {
-
+public interface FriendlyURLEntryMappingPersistence extends BasePersistence<FriendlyURLEntryMapping> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,85 +41,85 @@ public interface FriendlyURLEntryMappingPersistence
 	 */
 
 	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entry mapping
-	 * @throws NoSuchFriendlyURLEntryMappingException if a matching friendly url entry mapping could not be found
-	 */
+	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching friendly url entry mapping
+	* @throws NoSuchFriendlyURLEntryMappingException if a matching friendly url entry mapping could not be found
+	*/
 	public FriendlyURLEntryMapping findByC_C(long classNameId, long classPK)
 		throws NoSuchFriendlyURLEntryMappingException;
 
 	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
-	 */
+	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
+	*/
 	public FriendlyURLEntryMapping fetchByC_C(long classNameId, long classPK);
 
 	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
-	 */
-	public FriendlyURLEntryMapping fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache);
+	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
+	*/
+	public FriendlyURLEntryMapping fetchByC_C(long classNameId, long classPK,
+		boolean retrieveFromCache);
 
 	/**
-	 * Removes the friendly url entry mapping where classNameId = &#63; and classPK = &#63; from the database.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the friendly url entry mapping that was removed
-	 */
+	* Removes the friendly url entry mapping where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the friendly url entry mapping that was removed
+	*/
 	public FriendlyURLEntryMapping removeByC_C(long classNameId, long classPK)
 		throws NoSuchFriendlyURLEntryMappingException;
 
 	/**
-	 * Returns the number of friendly url entry mappings where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the number of matching friendly url entry mappings
-	 */
+	* Returns the number of friendly url entry mappings where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching friendly url entry mappings
+	*/
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the friendly url entry mapping in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMapping the friendly url entry mapping
-	 */
+	* Caches the friendly url entry mapping in the entity cache if it is enabled.
+	*
+	* @param friendlyURLEntryMapping the friendly url entry mapping
+	*/
 	public void cacheResult(FriendlyURLEntryMapping friendlyURLEntryMapping);
 
 	/**
-	 * Caches the friendly url entry mappings in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMappings the friendly url entry mappings
-	 */
+	* Caches the friendly url entry mappings in the entity cache if it is enabled.
+	*
+	* @param friendlyURLEntryMappings the friendly url entry mappings
+	*/
 	public void cacheResult(
 		java.util.List<FriendlyURLEntryMapping> friendlyURLEntryMappings);
 
 	/**
-	 * Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
-	 *
-	 * @param friendlyURLEntryMappingId the primary key for the new friendly url entry mapping
-	 * @return the new friendly url entry mapping
-	 */
+	* Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
+	*
+	* @param friendlyURLEntryMappingId the primary key for the new friendly url entry mapping
+	* @return the new friendly url entry mapping
+	*/
 	public FriendlyURLEntryMapping create(long friendlyURLEntryMappingId);
 
 	/**
-	 * Removes the friendly url entry mapping with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
-	 * @return the friendly url entry mapping that was removed
-	 * @throws NoSuchFriendlyURLEntryMappingException if a friendly url entry mapping with the primary key could not be found
-	 */
+	* Removes the friendly url entry mapping with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
+	* @return the friendly url entry mapping that was removed
+	* @throws NoSuchFriendlyURLEntryMappingException if a friendly url entry mapping with the primary key could not be found
+	*/
 	public FriendlyURLEntryMapping remove(long friendlyURLEntryMappingId)
 		throws NoSuchFriendlyURLEntryMappingException;
 
@@ -128,91 +127,86 @@ public interface FriendlyURLEntryMappingPersistence
 		FriendlyURLEntryMapping friendlyURLEntryMapping);
 
 	/**
-	 * Returns the friendly url entry mapping with the primary key or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
-	 *
-	 * @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
-	 * @return the friendly url entry mapping
-	 * @throws NoSuchFriendlyURLEntryMappingException if a friendly url entry mapping with the primary key could not be found
-	 */
+	* Returns the friendly url entry mapping with the primary key or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
+	*
+	* @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
+	* @return the friendly url entry mapping
+	* @throws NoSuchFriendlyURLEntryMappingException if a friendly url entry mapping with the primary key could not be found
+	*/
 	public FriendlyURLEntryMapping findByPrimaryKey(
-			long friendlyURLEntryMappingId)
+		long friendlyURLEntryMappingId)
 		throws NoSuchFriendlyURLEntryMappingException;
 
 	/**
-	 * Returns the friendly url entry mapping with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
-	 * @return the friendly url entry mapping, or <code>null</code> if a friendly url entry mapping with the primary key could not be found
-	 */
+	* Returns the friendly url entry mapping with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
+	* @return the friendly url entry mapping, or <code>null</code> if a friendly url entry mapping with the primary key could not be found
+	*/
 	public FriendlyURLEntryMapping fetchByPrimaryKey(
 		long friendlyURLEntryMappingId);
 
 	/**
-	 * Returns all the friendly url entry mappings.
-	 *
-	 * @return the friendly url entry mappings
-	 */
+	* Returns all the friendly url entry mappings.
+	*
+	* @return the friendly url entry mappings
+	*/
 	public java.util.List<FriendlyURLEntryMapping> findAll();
 
 	/**
-	 * Returns a range of all the friendly url entry mappings.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of friendly url entry mappings
-	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
-	 * @return the range of friendly url entry mappings
-	 */
+	* Returns a range of all the friendly url entry mappings.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of friendly url entry mappings
+	* @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	* @return the range of friendly url entry mappings
+	*/
 	public java.util.List<FriendlyURLEntryMapping> findAll(int start, int end);
 
 	/**
-	 * Returns an ordered range of all the friendly url entry mappings.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of friendly url entry mappings
-	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of friendly url entry mappings
-	 */
-	public java.util.List<FriendlyURLEntryMapping> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryMapping> orderByComparator);
+	* Returns an ordered range of all the friendly url entry mappings.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of friendly url entry mappings
+	* @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of friendly url entry mappings
+	*/
+	public java.util.List<FriendlyURLEntryMapping> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntryMapping> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the friendly url entry mappings.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of friendly url entry mappings
-	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of friendly url entry mappings
-	 */
-	public java.util.List<FriendlyURLEntryMapping> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<FriendlyURLEntryMapping> orderByComparator,
+	* Returns an ordered range of all the friendly url entry mappings.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of friendly url entry mappings
+	* @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of friendly url entry mappings
+	*/
+	public java.util.List<FriendlyURLEntryMapping> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntryMapping> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	 * Removes all the friendly url entry mappings from the database.
-	 */
+	* Removes all the friendly url entry mappings from the database.
+	*/
 	public void removeAll();
 
 	/**
-	 * Returns the number of friendly url entry mappings.
-	 *
-	 * @return the number of friendly url entry mappings
-	 */
+	* Returns the number of friendly url entry mappings.
+	*
+	* @return the number of friendly url entry mappings
+	*/
 	public int countAll();
-
 }

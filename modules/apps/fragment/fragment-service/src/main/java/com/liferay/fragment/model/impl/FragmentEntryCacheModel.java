@@ -17,8 +17,10 @@ package com.liferay.fragment.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentEntry;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class FragmentEntryCacheModel
-	implements CacheModel<FragmentEntry>, Externalizable {
-
+public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class FragmentEntryCacheModel
 			return false;
 		}
 
-		FragmentEntryCacheModel fragmentEntryCacheModel =
-			(FragmentEntryCacheModel)obj;
+		FragmentEntryCacheModel fragmentEntryCacheModel = (FragmentEntryCacheModel)obj;
 
 		if (fragmentEntryId == fragmentEntryCacheModel.fragmentEntryId) {
 			return true;
@@ -255,7 +255,8 @@ public class FragmentEntryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -358,5 +359,4 @@ public class FragmentEntryCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-
 }

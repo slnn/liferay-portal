@@ -39,34 +39,30 @@ import java.util.Locale;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface ERUserLocalService extends BaseLocalService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ERUserLocalServiceUtil} to access the er user local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public User addOrUpdateUser(
-			String externalReferenceCode, long creatorUserId, long companyId,
-			boolean autoPassword, String password1, String password2,
-			boolean autoScreenName, String screenName, String emailAddress,
-			Locale locale, String firstName, String middleName, String lastName,
-			long prefixId, long suffixId, boolean male, int birthdayMonth,
-			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+	public User addOrUpdateUser(String externalReferenceCode,
+		long creatorUserId, long companyId, boolean autoPassword,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, Locale locale,
+		String firstName, String middleName, String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
+		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+		boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

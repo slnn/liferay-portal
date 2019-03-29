@@ -35,27 +35,22 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface ERUserGroupLocalService extends BaseLocalService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ERUserGroupLocalServiceUtil} to access the er user group local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERUserGroupLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public UserGroup addOrUpdateUserGroup(
-			String externalReferenceCode, long userId, long companyId,
-			String name, String description, ServiceContext serviceContext)
-		throws PortalException;
+	public UserGroup addOrUpdateUserGroup(String externalReferenceCode,
+		long userId, long companyId, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

@@ -17,6 +17,7 @@ package com.liferay.bookmarks.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -64,19 +65,15 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class BookmarksFolderServiceSoap {
-
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap addFolder(
-			long parentFolderId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long parentFolderId, String name, String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.addFolder(
-					parentFolderId, name, description, serviceContext);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.addFolder(parentFolderId,
+					name, description, serviceContext);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -96,13 +93,11 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static void deleteFolder(
-			long folderId, boolean includeTrashedEntries)
+	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws RemoteException {
-
 		try {
-			BookmarksFolderServiceUtil.deleteFolder(
-				folderId, includeTrashedEntries);
+			BookmarksFolderServiceUtil.deleteFolder(folderId,
+				includeTrashedEntries);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -112,15 +107,11 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap getFolder(
-			long folderId)
-		throws RemoteException {
-
+		long folderId) throws RemoteException {
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.getFolder(folderId);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.getFolder(folderId);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -131,10 +122,9 @@ public class BookmarksFolderServiceSoap {
 
 	public static Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
-
 		try {
-			java.util.List<Long> returnValue =
-				BookmarksFolderServiceUtil.getFolderIds(groupId, folderId);
+			java.util.List<Long> returnValue = BookmarksFolderServiceUtil.getFolderIds(groupId,
+					folderId);
 
 			return returnValue.toArray(new Long[returnValue.size()]);
 		}
@@ -146,15 +136,12 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap[] getFolders(
-			long groupId)
-		throws RemoteException {
-
+		long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-				returnValue = BookmarksFolderServiceUtil.getFolders(groupId);
+			java.util.List<com.liferay.bookmarks.model.BookmarksFolder> returnValue =
+				BookmarksFolderServiceUtil.getFolders(groupId);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -164,16 +151,12 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap[] getFolders(
-			long groupId, long parentFolderId)
-		throws RemoteException {
-
+		long groupId, long parentFolderId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-				returnValue = BookmarksFolderServiceUtil.getFolders(
-					groupId, parentFolderId);
+			java.util.List<com.liferay.bookmarks.model.BookmarksFolder> returnValue =
+				BookmarksFolderServiceUtil.getFolders(groupId, parentFolderId);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -183,16 +166,14 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap[] getFolders(
-			long groupId, long parentFolderId, int start, int end)
+		long groupId, long parentFolderId, int start, int end)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-				returnValue = BookmarksFolderServiceUtil.getFolders(
-					groupId, parentFolderId, start, end);
+			java.util.List<com.liferay.bookmarks.model.BookmarksFolder> returnValue =
+				BookmarksFolderServiceUtil.getFolders(groupId, parentFolderId,
+					start, end);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -202,16 +183,14 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap[] getFolders(
-			long groupId, long parentFolderId, int status, int start, int end)
+		long groupId, long parentFolderId, int status, int start, int end)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-				returnValue = BookmarksFolderServiceUtil.getFolders(
-					groupId, parentFolderId, status, start, end);
+			java.util.List<com.liferay.bookmarks.model.BookmarksFolder> returnValue =
+				BookmarksFolderServiceUtil.getFolders(groupId, parentFolderId,
+					status, start, end);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -222,11 +201,9 @@ public class BookmarksFolderServiceSoap {
 
 	public static int getFoldersAndEntriesCount(long groupId, long folderId)
 		throws RemoteException {
-
 		try {
-			int returnValue =
-				BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
-					groupId, folderId);
+			int returnValue = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(groupId,
+					folderId);
 
 			return returnValue;
 		}
@@ -237,14 +214,11 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static int getFoldersAndEntriesCount(
-			long groupId, long folderId, int status)
-		throws RemoteException {
-
+	public static int getFoldersAndEntriesCount(long groupId, long folderId,
+		int status) throws RemoteException {
 		try {
-			int returnValue =
-				BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
-					groupId, folderId, status);
+			int returnValue = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(groupId,
+					folderId, status);
 
 			return returnValue;
 		}
@@ -257,10 +231,9 @@ public class BookmarksFolderServiceSoap {
 
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
-
 		try {
-			int returnValue = BookmarksFolderServiceUtil.getFoldersCount(
-				groupId, parentFolderId);
+			int returnValue = BookmarksFolderServiceUtil.getFoldersCount(groupId,
+					parentFolderId);
 
 			return returnValue;
 		}
@@ -271,13 +244,11 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static int getFoldersCount(
-			long groupId, long parentFolderId, int status)
-		throws RemoteException {
-
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		int status) throws RemoteException {
 		try {
-			int returnValue = BookmarksFolderServiceUtil.getFoldersCount(
-				groupId, parentFolderId, status);
+			int returnValue = BookmarksFolderServiceUtil.getFoldersCount(groupId,
+					parentFolderId, status);
 
 			return returnValue;
 		}
@@ -289,17 +260,15 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSubfolderIds(List, long, long, boolean)}
-	 */
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#getSubfolderIds(List, long, long, boolean)}
+	*/
 	@Deprecated
-	public static void getSubfolderIds(
-			Long[] folderIds, long groupId, long folderId)
-		throws RemoteException {
-
+	public static void getSubfolderIds(Long[] folderIds, long groupId,
+		long folderId) throws RemoteException {
 		try {
-			BookmarksFolderServiceUtil.getSubfolderIds(
-				ListUtil.toList(folderIds), groupId, folderId);
+			BookmarksFolderServiceUtil.getSubfolderIds(ListUtil.toList(
+					folderIds), groupId, folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -308,13 +277,11 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static void getSubfolderIds(
-			Long[] folderIds, long groupId, long folderId, boolean recurse)
-		throws RemoteException {
-
+	public static void getSubfolderIds(Long[] folderIds, long groupId,
+		long folderId, boolean recurse) throws RemoteException {
 		try {
-			BookmarksFolderServiceUtil.getSubfolderIds(
-				ListUtil.toList(folderIds), groupId, folderId, recurse);
+			BookmarksFolderServiceUtil.getSubfolderIds(ListUtil.toList(
+					folderIds), groupId, folderId, recurse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -323,14 +290,11 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static Long[] getSubfolderIds(
-			long groupId, long folderId, boolean recurse)
-		throws RemoteException {
-
+	public static Long[] getSubfolderIds(long groupId, long folderId,
+		boolean recurse) throws RemoteException {
 		try {
-			java.util.List<Long> returnValue =
-				BookmarksFolderServiceUtil.getSubfolderIds(
-					groupId, folderId, recurse);
+			java.util.List<Long> returnValue = BookmarksFolderServiceUtil.getSubfolderIds(groupId,
+					folderId, recurse);
 
 			return returnValue.toArray(new Long[returnValue.size()]);
 		}
@@ -343,7 +307,6 @@ public class BookmarksFolderServiceSoap {
 
 	public static void mergeFolders(long folderId, long parentFolderId)
 		throws RemoteException {
-
 		try {
 			BookmarksFolderServiceUtil.mergeFolders(folderId, parentFolderId);
 		}
@@ -355,15 +318,12 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap moveFolder(
-			long folderId, long parentFolderId)
-		throws RemoteException {
-
+		long folderId, long parentFolderId) throws RemoteException {
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.moveFolder(folderId, parentFolderId);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.moveFolder(folderId,
+					parentFolderId);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -372,17 +332,13 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.bookmarks.model.BookmarksFolderSoap
-			moveFolderFromTrash(long folderId, long parentFolderId)
-		throws RemoteException {
-
+	public static com.liferay.bookmarks.model.BookmarksFolderSoap moveFolderFromTrash(
+		long folderId, long parentFolderId) throws RemoteException {
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.moveFolderFromTrash(
-					folderId, parentFolderId);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.moveFolderFromTrash(folderId,
+					parentFolderId);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -391,16 +347,12 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.bookmarks.model.BookmarksFolderSoap
-			moveFolderToTrash(long folderId)
-		throws RemoteException {
-
+	public static com.liferay.bookmarks.model.BookmarksFolderSoap moveFolderToTrash(
+		long folderId) throws RemoteException {
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.moveFolderToTrash(folderId);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.moveFolderToTrash(folderId);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -411,7 +363,6 @@ public class BookmarksFolderServiceSoap {
 
 	public static void restoreFolderFromTrash(long folderId)
 		throws RemoteException {
-
 		try {
 			BookmarksFolderServiceUtil.restoreFolderFromTrash(folderId);
 		}
@@ -424,7 +375,6 @@ public class BookmarksFolderServiceSoap {
 
 	public static void subscribeFolder(long groupId, long folderId)
 		throws RemoteException {
-
 		try {
 			BookmarksFolderServiceUtil.subscribeFolder(groupId, folderId);
 		}
@@ -437,7 +387,6 @@ public class BookmarksFolderServiceSoap {
 
 	public static void unsubscribeFolder(long groupId, long folderId)
 		throws RemoteException {
-
 		try {
 			BookmarksFolderServiceUtil.unsubscribeFolder(groupId, folderId);
 		}
@@ -449,25 +398,22 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateFolder(long, long, String, String, ServiceContext)}
-	 and {@link #mergeFolders(long, long)}
-	 */
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#updateFolder(long, long, String, String, ServiceContext)}
+	and {@link #mergeFolders(long, long)}
+	*/
 	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long folderId, long parentFolderId, String name, String description,
+		boolean mergeWithParentFolder,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.updateFolder(
-					folderId, parentFolderId, name, description,
-					mergeWithParentFolder, serviceContext);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.updateFolder(folderId,
+					parentFolderId, name, description, mergeWithParentFolder,
+					serviceContext);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -477,18 +423,14 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long folderId, long parentFolderId, String name, String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.bookmarks.model.BookmarksFolder returnValue =
-				BookmarksFolderServiceUtil.updateFolder(
-					folderId, parentFolderId, name, description,
-					serviceContext);
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.updateFolder(folderId,
+					parentFolderId, name, description, serviceContext);
 
-			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(
-				returnValue);
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -497,7 +439,5 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		BookmarksFolderServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(BookmarksFolderServiceSoap.class);
 }

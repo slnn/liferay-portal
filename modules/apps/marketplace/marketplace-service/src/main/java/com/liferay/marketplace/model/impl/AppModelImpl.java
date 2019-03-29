@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.AppModel;
 import com.liferay.marketplace.model.AppSoap;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -64,26 +68,29 @@ import java.util.function.Function;
 @JSON(strict = true)
 @ProviderType
 public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a app model instance should use the <code>App</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Marketplace_App";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"appId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"remoteAppId", Types.BIGINT},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"category", Types.VARCHAR}, {"iconURL", Types.VARCHAR},
-		{"version", Types.VARCHAR}, {"required", Types.BOOLEAN}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "uuid_", Types.VARCHAR },
+			{ "appId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "remoteAppId", Types.BIGINT },
+			{ "title", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "category", Types.VARCHAR },
+			{ "iconURL", Types.VARCHAR },
+			{ "version", Types.VARCHAR },
+			{ "required", Types.BOOLEAN }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -102,45 +109,26 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null,required BOOLEAN)";
-
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null,required BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_App";
-
 	public static final String ORDER_BY_JPQL = " ORDER BY app.appId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY Marketplace_App.appId ASC";
-
+	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_App.appId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.marketplace.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.marketplace.model.App"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.marketplace.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.marketplace.model.App"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.marketplace.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.marketplace.model.App"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.marketplace.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.marketplace.model.App"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.marketplace.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.marketplace.model.App"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.marketplace.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.marketplace.model.App"),
+			true);
 	public static final long CATEGORY_COLUMN_BITMASK = 1L;
-
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-
 	public static final long REMOTEAPPID_COLUMN_BITMASK = 4L;
-
 	public static final long UUID_COLUMN_BITMASK = 8L;
-
 	public static final long APPID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -194,9 +182,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.marketplace.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.marketplace.model.App"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.marketplace.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.marketplace.model.App"));
 
 	public AppModelImpl() {
 	}
@@ -235,17 +222,14 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<App, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<App, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<App, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<App, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<App, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName, attributeGetterFunction.apply((App)this));
+			attributes.put(attributeName,
+				attributeGetterFunction.apply((App)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -256,14 +240,12 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<App, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<App, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<App, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<App, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((App)this, entry.getValue());
@@ -275,70 +257,50 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<App, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<App, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<App, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<App, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<App, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<App, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<App, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<App, Object>>();
-		Map<String, BiConsumer<App, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<App, ?>>();
+		Map<String, Function<App, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<App, Object>>();
+		Map<String, BiConsumer<App, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<App, ?>>();
+
 
 		attributeGetterFunctions.put("uuid", App::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<App, String>)App::setUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<App, String>)App::setUuid);
 		attributeGetterFunctions.put("appId", App::getAppId);
-		attributeSetterBiConsumers.put(
-			"appId", (BiConsumer<App, Long>)App::setAppId);
+		attributeSetterBiConsumers.put("appId", (BiConsumer<App, Long>)App::setAppId);
 		attributeGetterFunctions.put("companyId", App::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<App, Long>)App::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<App, Long>)App::setCompanyId);
 		attributeGetterFunctions.put("userId", App::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<App, Long>)App::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<App, Long>)App::setUserId);
 		attributeGetterFunctions.put("userName", App::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<App, String>)App::setUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<App, String>)App::setUserName);
 		attributeGetterFunctions.put("createDate", App::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<App, Date>)App::setCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<App, Date>)App::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", App::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate", (BiConsumer<App, Date>)App::setModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<App, Date>)App::setModifiedDate);
 		attributeGetterFunctions.put("remoteAppId", App::getRemoteAppId);
-		attributeSetterBiConsumers.put(
-			"remoteAppId", (BiConsumer<App, Long>)App::setRemoteAppId);
+		attributeSetterBiConsumers.put("remoteAppId", (BiConsumer<App, Long>)App::setRemoteAppId);
 		attributeGetterFunctions.put("title", App::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<App, String>)App::setTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<App, String>)App::setTitle);
 		attributeGetterFunctions.put("description", App::getDescription);
-		attributeSetterBiConsumers.put(
-			"description", (BiConsumer<App, String>)App::setDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<App, String>)App::setDescription);
 		attributeGetterFunctions.put("category", App::getCategory);
-		attributeSetterBiConsumers.put(
-			"category", (BiConsumer<App, String>)App::setCategory);
+		attributeSetterBiConsumers.put("category", (BiConsumer<App, String>)App::setCategory);
 		attributeGetterFunctions.put("iconURL", App::getIconURL);
-		attributeSetterBiConsumers.put(
-			"iconURL", (BiConsumer<App, String>)App::setIconURL);
+		attributeSetterBiConsumers.put("iconURL", (BiConsumer<App, String>)App::setIconURL);
 		attributeGetterFunctions.put("version", App::getVersion);
-		attributeSetterBiConsumers.put(
-			"version", (BiConsumer<App, String>)App::setVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<App, String>)App::setVersion);
 		attributeGetterFunctions.put("required", App::getRequired);
-		attributeSetterBiConsumers.put(
-			"required", (BiConsumer<App, Boolean>)App::setRequired);
+		attributeSetterBiConsumers.put("required", (BiConsumer<App, Boolean>)App::setRequired);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -604,8 +566,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(App.class.getName()));
+		return new StagedModelType(PortalUtil.getClassNameId(
+				App.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -614,8 +576,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), App.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			App.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -628,9 +590,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	@Override
 	public App toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (App)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (App)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -826,17 +787,14 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public String toString() {
-		Map<String, Function<App, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<App, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<App, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<App, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<App, Object> attributeGetterFunction = entry.getValue();
 
@@ -857,19 +815,16 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<App, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<App, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<App, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<App, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
 			Function<App, Object> attributeGetterFunction = entry.getValue();
 
@@ -887,9 +842,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	private static final ClassLoader _classLoader = App.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		App.class, ModelWrapper.class
-	};
-
+			App.class, ModelWrapper.class
+		};
 	private String _uuid;
 	private String _originalUuid;
 	private long _appId;
@@ -913,5 +867,4 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private boolean _required;
 	private long _columnBitmask;
 	private App _escapedModel;
-
 }
