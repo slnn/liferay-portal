@@ -63,23 +63,18 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class AddressServiceSoap {
-
 	public static com.liferay.portal.kernel.model.AddressSoap addAddress(
-			String className, long classPK, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, long typeId, boolean mailing, boolean primary,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		String className, long classPK, String street1, String street2,
+		String street3, String city, String zip, long regionId, long countryId,
+		long typeId, boolean mailing, boolean primary,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.Address returnValue =
-				AddressServiceUtil.addAddress(
-					className, classPK, street1, street2, street3, city, zip,
-					regionId, countryId, typeId, mailing, primary,
-					serviceContext);
+			com.liferay.portal.kernel.model.Address returnValue = AddressServiceUtil.addAddress(className,
+					classPK, street1, street2, street3, city, zip, regionId,
+					countryId, typeId, mailing, primary, serviceContext);
 
-			return com.liferay.portal.kernel.model.AddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.AddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -100,15 +95,11 @@ public class AddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.AddressSoap getAddress(
-			long addressId)
-		throws RemoteException {
-
+		long addressId) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Address returnValue =
-				AddressServiceUtil.getAddress(addressId);
+			com.liferay.portal.kernel.model.Address returnValue = AddressServiceUtil.getAddress(addressId);
 
-			return com.liferay.portal.kernel.model.AddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.AddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -118,16 +109,12 @@ public class AddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.AddressSoap[] getAddresses(
-			String className, long classPK)
-		throws RemoteException {
-
+		String className, long classPK) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.kernel.model.Address>
-				returnValue = AddressServiceUtil.getAddresses(
-					className, classPK);
+			java.util.List<com.liferay.portal.kernel.model.Address> returnValue = AddressServiceUtil.getAddresses(className,
+					classPK);
 
-			return com.liferay.portal.kernel.model.AddressSoap.toSoapModels(
-				returnValue);
+			return com.liferay.portal.kernel.model.AddressSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -137,19 +124,15 @@ public class AddressServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.AddressSoap updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
-		throws RemoteException {
-
+		long addressId, String street1, String street2, String street3,
+		String city, String zip, long regionId, long countryId, long typeId,
+		boolean mailing, boolean primary) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Address returnValue =
-				AddressServiceUtil.updateAddress(
-					addressId, street1, street2, street3, city, zip, regionId,
-					countryId, typeId, mailing, primary);
+			com.liferay.portal.kernel.model.Address returnValue = AddressServiceUtil.updateAddress(addressId,
+					street1, street2, street3, city, zip, regionId, countryId,
+					typeId, mailing, primary);
 
-			return com.liferay.portal.kernel.model.AddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.AddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -159,5 +142,4 @@ public class AddressServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AddressServiceSoap.class);
-
 }

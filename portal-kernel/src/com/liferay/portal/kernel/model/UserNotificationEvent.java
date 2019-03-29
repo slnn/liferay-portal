@@ -26,37 +26,30 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see UserNotificationEventModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portal.model.impl.UserNotificationEventImpl"
-)
+@ImplementationClassName("com.liferay.portal.model.impl.UserNotificationEventImpl")
 @ProviderType
-public interface UserNotificationEvent
-	extends UserNotificationEventModel, PersistedModel {
-
+public interface UserNotificationEvent extends UserNotificationEventModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserNotificationEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<UserNotificationEvent, Long>
-		USER_NOTIFICATION_EVENT_ID_ACCESSOR =
-			new Accessor<UserNotificationEvent, Long>() {
+	public static final Accessor<UserNotificationEvent, Long> USER_NOTIFICATION_EVENT_ID_ACCESSOR =
+		new Accessor<UserNotificationEvent, Long>() {
+			@Override
+			public Long get(UserNotificationEvent userNotificationEvent) {
+				return userNotificationEvent.getUserNotificationEventId();
+			}
 
-				@Override
-				public Long get(UserNotificationEvent userNotificationEvent) {
-					return userNotificationEvent.getUserNotificationEventId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<UserNotificationEvent> getTypeClass() {
-					return UserNotificationEvent.class;
-				}
-
-			};
-
+			@Override
+			public Class<UserNotificationEvent> getTypeClass() {
+				return UserNotificationEvent.class;
+			}
+		};
 }

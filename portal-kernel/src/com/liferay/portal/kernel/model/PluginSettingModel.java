@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface PluginSettingModel
-	extends BaseModel<PluginSetting>, MVCCModel, ShardedModel {
-
+public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -164,5 +163,4 @@ public interface PluginSettingModel
 	 * @param active the active of this plugin setting
 	 */
 	public void setActive(boolean active);
-
 }

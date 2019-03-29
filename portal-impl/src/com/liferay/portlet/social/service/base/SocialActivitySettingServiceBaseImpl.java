@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.service.SocialActivitySettingService;
 import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence;
@@ -44,9 +45,8 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class SocialActivitySettingServiceBaseImpl
-	extends BaseServiceImpl
-	implements SocialActivitySettingService, IdentifiableOSGiService {
-
+	extends BaseServiceImpl implements SocialActivitySettingService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,9 +58,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the social activity setting local service
 	 */
-	public com.liferay.social.kernel.service.SocialActivitySettingLocalService
-		getSocialActivitySettingLocalService() {
-
+	public com.liferay.social.kernel.service.SocialActivitySettingLocalService getSocialActivitySettingLocalService() {
 		return socialActivitySettingLocalService;
 	}
 
@@ -70,11 +68,8 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 * @param socialActivitySettingLocalService the social activity setting local service
 	 */
 	public void setSocialActivitySettingLocalService(
-		com.liferay.social.kernel.service.SocialActivitySettingLocalService
-			socialActivitySettingLocalService) {
-
-		this.socialActivitySettingLocalService =
-			socialActivitySettingLocalService;
+		com.liferay.social.kernel.service.SocialActivitySettingLocalService socialActivitySettingLocalService) {
+		this.socialActivitySettingLocalService = socialActivitySettingLocalService;
 	}
 
 	/**
@@ -93,7 +88,6 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	public void setSocialActivitySettingService(
 		SocialActivitySettingService socialActivitySettingService) {
-
 		this.socialActivitySettingService = socialActivitySettingService;
 	}
 
@@ -102,9 +96,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the social activity setting persistence
 	 */
-	public SocialActivitySettingPersistence
-		getSocialActivitySettingPersistence() {
-
+	public SocialActivitySettingPersistence getSocialActivitySettingPersistence() {
 		return socialActivitySettingPersistence;
 	}
 
@@ -115,9 +107,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	public void setSocialActivitySettingPersistence(
 		SocialActivitySettingPersistence socialActivitySettingPersistence) {
-
-		this.socialActivitySettingPersistence =
-			socialActivitySettingPersistence;
+		this.socialActivitySettingPersistence = socialActivitySettingPersistence;
 	}
 
 	/**
@@ -125,9 +115,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -137,9 +125,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -148,9 +134,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -160,9 +144,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -171,9 +153,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -184,7 +164,6 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -204,7 +183,6 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -213,9 +191,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
 		return groupLocalService;
 	}
 
@@ -226,7 +202,6 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -246,7 +221,6 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	public void setGroupService(
 		com.liferay.portal.kernel.service.GroupService groupService) {
-
 		this.groupService = groupService;
 	}
 
@@ -317,16 +291,15 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				socialActivitySettingPersistence.getDataSource();
+			DataSource dataSource = socialActivitySettingPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -335,53 +308,26 @@ public abstract class SocialActivitySettingServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.social.kernel.service.SocialActivitySettingLocalService.class
-	)
-	protected
-		com.liferay.social.kernel.service.SocialActivitySettingLocalService
-			socialActivitySettingLocalService;
-
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivitySettingLocalService.class)
+	protected com.liferay.social.kernel.service.SocialActivitySettingLocalService socialActivitySettingLocalService;
 	@BeanReference(type = SocialActivitySettingService.class)
 	protected SocialActivitySettingService socialActivitySettingService;
-
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.GroupService.class)
 	protected com.liferay.portal.kernel.service.GroupService groupService;
-
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-
 	@BeanReference(type = GroupFinder.class)
 	protected GroupFinder groupFinder;
-
 }

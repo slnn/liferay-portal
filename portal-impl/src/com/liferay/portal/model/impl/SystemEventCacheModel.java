@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.SystemEvent;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SystemEventCacheModel
-	implements CacheModel<SystemEvent>, Externalizable, MVCCModel {
-
+public class SystemEventCacheModel implements CacheModel<SystemEvent>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class SystemEventCacheModel
 			return false;
 		}
 
-		SystemEventCacheModel systemEventCacheModel =
-			(SystemEventCacheModel)obj;
+		SystemEventCacheModel systemEventCacheModel = (SystemEventCacheModel)obj;
 
 		if ((systemEventId == systemEventCacheModel.systemEventId) &&
-			(mvccVersion == systemEventCacheModel.mvccVersion)) {
-
+				(mvccVersion == systemEventCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -198,7 +196,8 @@ public class SystemEventCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(systemEventId);
@@ -260,5 +259,4 @@ public class SystemEventCacheModel
 	public long systemEventSetKey;
 	public int type;
 	public String extraData;
-
 }

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 @ProviderType
 public abstract class PortalPreferencesBaseImpl
 	extends PortalPreferencesModelImpl implements PortalPreferences {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class PortalPreferencesBaseImpl
 			PortalPreferencesLocalServiceUtil.updatePortalPreferences(this);
 		}
 	}
-
 }

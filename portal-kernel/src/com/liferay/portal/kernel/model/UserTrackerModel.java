@@ -32,9 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerModel
-	extends BaseModel<UserTracker>, MVCCModel, ShardedModel {
-
+public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -202,5 +201,4 @@ public interface UserTrackerModel
 	 * @param userAgent the user agent of this user tracker
 	 */
 	public void setUserAgent(String userAgent);
-
 }

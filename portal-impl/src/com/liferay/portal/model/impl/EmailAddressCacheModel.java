@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class EmailAddressCacheModel
-	implements CacheModel<EmailAddress>, Externalizable, MVCCModel {
-
+public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class EmailAddressCacheModel
 			return false;
 		}
 
-		EmailAddressCacheModel emailAddressCacheModel =
-			(EmailAddressCacheModel)obj;
+		EmailAddressCacheModel emailAddressCacheModel = (EmailAddressCacheModel)obj;
 
 		if ((emailAddressId == emailAddressCacheModel.emailAddressId) &&
-			(mvccVersion == emailAddressCacheModel.mvccVersion)) {
-
+				(mvccVersion == emailAddressCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -194,7 +192,8 @@ public class EmailAddressCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -249,5 +248,4 @@ public class EmailAddressCacheModel
 	public String address;
 	public long typeId;
 	public boolean primary;
-
 }

@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class ContactSoap implements Serializable {
-
 	public static ContactSoap toSoapModel(Contact model) {
 		ContactSoap soapModel = new ContactSoap();
 
@@ -95,8 +94,7 @@ public class ContactSoap implements Serializable {
 	}
 
 	public static ContactSoap[] toSoapModels(List<Contact> models) {
-		List<ContactSoap> soapModels = new ArrayList<ContactSoap>(
-			models.size());
+		List<ContactSoap> soapModels = new ArrayList<ContactSoap>(models.size());
 
 		for (Contact model : models) {
 			soapModels.add(toSoapModel(model));
@@ -381,5 +379,4 @@ public class ContactSoap implements Serializable {
 	private String _jobTitle;
 	private String _jobClass;
 	private String _hoursOfOperation;
-
 }

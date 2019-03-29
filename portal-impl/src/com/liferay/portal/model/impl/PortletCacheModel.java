@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Portlet;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class PortletCacheModel
-	implements CacheModel<Portlet>, Externalizable, MVCCModel {
-
+public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
+	MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,8 +50,7 @@ public class PortletCacheModel
 		PortletCacheModel portletCacheModel = (PortletCacheModel)obj;
 
 		if ((id == portletCacheModel.id) &&
-			(mvccVersion == portletCacheModel.mvccVersion)) {
-
+				(mvccVersion == portletCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -139,7 +138,8 @@ public class PortletCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(id);
@@ -169,5 +169,4 @@ public class PortletCacheModel
 	public String portletId;
 	public String roles;
 	public boolean active;
-
 }

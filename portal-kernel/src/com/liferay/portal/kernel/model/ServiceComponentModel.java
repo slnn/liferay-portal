@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface ServiceComponentModel
-	extends BaseModel<ServiceComponent>, MVCCModel {
-
+public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -140,5 +139,4 @@ public interface ServiceComponentModel
 	 * @param data the data of this service component
 	 */
 	public void setData(String data);
-
 }

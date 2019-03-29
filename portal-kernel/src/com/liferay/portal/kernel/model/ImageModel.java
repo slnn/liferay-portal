@@ -33,7 +33,6 @@ import java.util.Date;
  */
 @ProviderType
 public interface ImageModel extends BaseModel<Image>, MVCCModel, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -170,5 +169,4 @@ public interface ImageModel extends BaseModel<Image>, MVCCModel, ShardedModel {
 	 * @param size the size of this image
 	 */
 	public void setSize(int size);
-
 }

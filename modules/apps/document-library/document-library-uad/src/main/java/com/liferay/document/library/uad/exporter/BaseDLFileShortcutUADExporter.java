@@ -17,8 +17,11 @@ package com.liferay.document.library.uad.exporter;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDLFileShortcutUADExporter
 	extends DynamicQueryUADExporter<DLFileShortcut> {
-
 	@Override
 	public Class<DLFileShortcut> getTypeClass() {
 		return DLFileShortcut.class;
@@ -89,5 +91,4 @@ public abstract class BaseDLFileShortcutUADExporter
 
 	@Reference
 	protected DLFileShortcutLocalService dlFileShortcutLocalService;
-
 }

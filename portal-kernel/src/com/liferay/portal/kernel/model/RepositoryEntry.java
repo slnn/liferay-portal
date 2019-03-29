@@ -29,15 +29,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.RepositoryEntryImpl")
 @ProviderType
 public interface RepositoryEntry extends RepositoryEntryModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RepositoryEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<RepositoryEntry, Long>
-		REPOSITORY_ENTRY_ID_ACCESSOR = new Accessor<RepositoryEntry, Long>() {
-
+	public static final Accessor<RepositoryEntry, Long> REPOSITORY_ENTRY_ID_ACCESSOR =
+		new Accessor<RepositoryEntry, Long>() {
 			@Override
 			public Long get(RepositoryEntry repositoryEntry) {
 				return repositoryEntry.getRepositoryEntryId();
@@ -52,7 +50,5 @@ public interface RepositoryEntry extends RepositoryEntryModel, PersistedModel {
 			public Class<RepositoryEntry> getTypeClass() {
 				return RepositoryEntry.class;
 			}
-
 		};
-
 }

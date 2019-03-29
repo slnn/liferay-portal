@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AccountBaseImpl
-	extends AccountModelImpl implements Account {
-
+public abstract class AccountBaseImpl extends AccountModelImpl
+	implements Account {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class AccountBaseImpl
 			AccountLocalServiceUtil.updateAccount(this);
 		}
 	}
-
 }

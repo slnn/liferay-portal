@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface VirtualHostModel
-	extends BaseModel<VirtualHost>, MVCCModel, ShardedModel {
-
+public interface VirtualHostModel extends BaseModel<VirtualHost>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -127,5 +126,4 @@ public interface VirtualHostModel
 	 * @param hostname the hostname of this virtual host
 	 */
 	public void setHostname(String hostname);
-
 }

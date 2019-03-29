@@ -15,9 +15,11 @@
 package com.liferay.user.groups.admin.uad.exporter;
 
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 import com.liferay.user.groups.admin.uad.constants.UserGroupsAdminUADConstants;
 
@@ -35,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseUserGroupUADExporter
-	extends DynamicQueryUADExporter<UserGroup> {
-
+public abstract class BaseUserGroupUADExporter extends DynamicQueryUADExporter<UserGroup> {
 	@Override
 	public Class<UserGroup> getTypeClass() {
 		return UserGroup.class;
@@ -81,5 +81,4 @@ public abstract class BaseUserGroupUADExporter
 
 	@Reference
 	protected UserGroupLocalService userGroupLocalService;
-
 }

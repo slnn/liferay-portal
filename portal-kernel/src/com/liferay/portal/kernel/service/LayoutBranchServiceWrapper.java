@@ -24,35 +24,32 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class LayoutBranchServiceWrapper
-	implements LayoutBranchService, ServiceWrapper<LayoutBranchService> {
-
+public class LayoutBranchServiceWrapper implements LayoutBranchService,
+	ServiceWrapper<LayoutBranchService> {
 	public LayoutBranchServiceWrapper(LayoutBranchService layoutBranchService) {
 		_layoutBranchService = layoutBranchService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
-			long layoutRevisionId, String name, String description,
-			boolean master, ServiceContext serviceContext)
+		long layoutRevisionId, String name, String description, boolean master,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutBranchService.addLayoutBranch(
-			layoutRevisionId, name, description, master, serviceContext);
+		return _layoutBranchService.addLayoutBranch(layoutRevisionId, name,
+			description, master, serviceContext);
 	}
 
 	@Override
 	public void deleteLayoutBranch(long layoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		_layoutBranchService.deleteLayoutBranch(layoutBranchId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _layoutBranchService.getOSGiServiceIdentifier();
@@ -60,12 +57,11 @@ public class LayoutBranchServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch updateLayoutBranch(
-			long layoutBranchId, String name, String description,
-			ServiceContext serviceContext)
+		long layoutBranchId, String name, String description,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutBranchService.updateLayoutBranch(
-			layoutBranchId, name, description, serviceContext);
+		return _layoutBranchService.updateLayoutBranch(layoutBranchId, name,
+			description, serviceContext);
 	}
 
 	@Override
@@ -79,5 +75,4 @@ public class LayoutBranchServiceWrapper
 	}
 
 	private LayoutBranchService _layoutBranchService;
-
 }

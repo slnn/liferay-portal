@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  */
 @ProviderType
 public interface CompanyModel extends BaseModel<Company>, MVCCModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -225,5 +224,4 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	 * @param active the active of this company
 	 */
 	public void setActive(boolean active);
-
 }

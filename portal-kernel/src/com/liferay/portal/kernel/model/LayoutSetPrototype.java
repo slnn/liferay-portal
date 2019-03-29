@@ -28,34 +28,30 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.LayoutSetPrototypeImpl")
 @ProviderType
-public interface LayoutSetPrototype
-	extends LayoutSetPrototypeModel, PersistedModel {
-
+public interface LayoutSetPrototype extends LayoutSetPrototypeModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutSetPrototypeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutSetPrototype, Long>
-		LAYOUT_SET_PROTOTYPE_ID_ACCESSOR =
-			new Accessor<LayoutSetPrototype, Long>() {
+	public static final Accessor<LayoutSetPrototype, Long> LAYOUT_SET_PROTOTYPE_ID_ACCESSOR =
+		new Accessor<LayoutSetPrototype, Long>() {
+			@Override
+			public Long get(LayoutSetPrototype layoutSetPrototype) {
+				return layoutSetPrototype.getLayoutSetPrototypeId();
+			}
 
-				@Override
-				public Long get(LayoutSetPrototype layoutSetPrototype) {
-					return layoutSetPrototype.getLayoutSetPrototypeId();
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<LayoutSetPrototype> getTypeClass() {
-					return LayoutSetPrototype.class;
-				}
-
-			};
+			@Override
+			public Class<LayoutSetPrototype> getTypeClass() {
+				return LayoutSetPrototype.class;
+			}
+		};
 
 	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -66,8 +62,7 @@ public interface LayoutSetPrototype
 	public LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
 	public String getSettingsProperty(String key);
 
@@ -75,5 +70,4 @@ public interface LayoutSetPrototype
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
-
 }

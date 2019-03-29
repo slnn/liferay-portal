@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface SocialRelationModel
-	extends BaseModel<SocialRelation>, ShardedModel {
-
+public interface SocialRelationModel extends BaseModel<SocialRelation>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -155,5 +154,4 @@ public interface SocialRelationModel
 	 * @param type the type of this social relation
 	 */
 	public void setType(int type);
-
 }

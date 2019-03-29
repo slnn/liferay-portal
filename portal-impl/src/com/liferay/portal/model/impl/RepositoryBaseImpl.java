@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class RepositoryBaseImpl
-	extends RepositoryModelImpl implements Repository {
-
+public abstract class RepositoryBaseImpl extends RepositoryModelImpl
+	implements Repository {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class RepositoryBaseImpl
 			RepositoryLocalServiceUtil.updateRepository(this);
 		}
 	}
-
 }

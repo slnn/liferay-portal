@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class ResourcePermissionSoap implements Serializable {
-
 	public static ResourcePermissionSoap toSoapModel(ResourcePermission model) {
 		ResourcePermissionSoap soapModel = new ResourcePermissionSoap();
 
@@ -50,9 +49,7 @@ public class ResourcePermissionSoap implements Serializable {
 
 	public static ResourcePermissionSoap[] toSoapModels(
 		ResourcePermission[] models) {
-
-		ResourcePermissionSoap[] soapModels =
-			new ResourcePermissionSoap[models.length];
+		ResourcePermissionSoap[] soapModels = new ResourcePermissionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,12 +60,10 @@ public class ResourcePermissionSoap implements Serializable {
 
 	public static ResourcePermissionSoap[][] toSoapModels(
 		ResourcePermission[][] models) {
-
 		ResourcePermissionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new ResourcePermissionSoap[models.length][models[0].length];
+			soapModels = new ResourcePermissionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new ResourcePermissionSoap[0][0];
@@ -83,16 +78,13 @@ public class ResourcePermissionSoap implements Serializable {
 
 	public static ResourcePermissionSoap[] toSoapModels(
 		List<ResourcePermission> models) {
-
-		List<ResourcePermissionSoap> soapModels =
-			new ArrayList<ResourcePermissionSoap>(models.size());
+		List<ResourcePermissionSoap> soapModels = new ArrayList<ResourcePermissionSoap>(models.size());
 
 		for (ResourcePermission model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new ResourcePermissionSoap[soapModels.size()]);
+		return soapModels.toArray(new ResourcePermissionSoap[soapModels.size()]);
 	}
 
 	public ResourcePermissionSoap() {
@@ -209,5 +201,4 @@ public class ResourcePermissionSoap implements Serializable {
 	private long _ownerId;
 	private long _actionIds;
 	private boolean _viewActionId;
-
 }

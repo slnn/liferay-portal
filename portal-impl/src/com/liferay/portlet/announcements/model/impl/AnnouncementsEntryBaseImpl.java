@@ -34,7 +34,6 @@ import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUt
 @ProviderType
 public abstract class AnnouncementsEntryBaseImpl
 	extends AnnouncementsEntryModelImpl implements AnnouncementsEntry {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class AnnouncementsEntryBaseImpl
 			AnnouncementsEntryLocalServiceUtil.updateAnnouncementsEntry(this);
 		}
 	}
-
 }

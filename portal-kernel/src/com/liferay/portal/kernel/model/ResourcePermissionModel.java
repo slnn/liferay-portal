@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface ResourcePermissionModel
-	extends BaseModel<ResourcePermission>, MVCCModel, ShardedModel {
-
+public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -219,5 +218,4 @@ public interface ResourcePermissionModel
 	 * @param viewActionId the view action ID of this resource permission
 	 */
 	public void setViewActionId(boolean viewActionId);
-
 }

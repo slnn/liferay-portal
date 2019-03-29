@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class CountrySoap implements Serializable {
-
 	public static CountrySoap toSoapModel(Country model) {
 		CountrySoap soapModel = new CountrySoap();
 
@@ -74,8 +73,7 @@ public class CountrySoap implements Serializable {
 	}
 
 	public static CountrySoap[] toSoapModels(List<Country> models) {
-		List<CountrySoap> soapModels = new ArrayList<CountrySoap>(
-			models.size());
+		List<CountrySoap> soapModels = new ArrayList<CountrySoap>(models.size());
 
 		for (Country model : models) {
 			soapModels.add(toSoapModel(model));
@@ -184,5 +182,4 @@ public class CountrySoap implements Serializable {
 	private String _idd;
 	private boolean _zipRequired;
 	private boolean _active;
-
 }

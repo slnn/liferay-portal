@@ -35,7 +35,6 @@ import java.util.Date;
  */
 @ProviderType
 public interface AssetLinkModel extends BaseModel<AssetLink>, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -198,5 +197,4 @@ public interface AssetLinkModel extends BaseModel<AssetLink>, ShardedModel {
 	 * @param weight the weight of this asset link
 	 */
 	public void setWeight(int weight);
-
 }

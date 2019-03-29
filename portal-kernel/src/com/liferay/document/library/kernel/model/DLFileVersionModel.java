@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DLFileVersionModel
-	extends BaseModel<DLFileVersion>, ShardedModel, StagedGroupedModel,
-			WorkflowedModel {
-
+public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
+	ShardedModel, StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -584,5 +582,4 @@ public interface DLFileVersionModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

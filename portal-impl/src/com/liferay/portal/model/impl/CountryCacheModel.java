@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class CountryCacheModel
-	implements CacheModel<Country>, Externalizable, MVCCModel {
-
+public class CountryCacheModel implements CacheModel<Country>, Externalizable,
+	MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,8 +50,7 @@ public class CountryCacheModel
 		CountryCacheModel countryCacheModel = (CountryCacheModel)obj;
 
 		if ((countryId == countryCacheModel.countryId) &&
-			(mvccVersion == countryCacheModel.mvccVersion)) {
-
+				(mvccVersion == countryCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -169,7 +168,8 @@ public class CountryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(countryId);
@@ -223,5 +223,4 @@ public class CountryCacheModel
 	public String idd;
 	public boolean zipRequired;
 	public boolean active;
-
 }

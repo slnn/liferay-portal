@@ -28,17 +28,14 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.OrganizationImpl")
 @ProviderType
-public interface Organization
-	extends OrganizationModel, PersistedModel, TreeModel {
-
+public interface Organization extends OrganizationModel, PersistedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.OrganizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Organization, Long> ORGANIZATION_ID_ACCESSOR =
-		new Accessor<Organization, Long>() {
-
+	public static final Accessor<Organization, Long> ORGANIZATION_ID_ACCESSOR = new Accessor<Organization, Long>() {
 			@Override
 			public Long get(Organization organization) {
 				return organization.getOrganizationId();
@@ -53,11 +50,9 @@ public interface Organization
 			public Class<Organization> getTypeClass() {
 				return Organization.class;
 			}
-
 		};
-	public static final Accessor<Organization, String> NAME_ACCESSOR =
-		new Accessor<Organization, String>() {
 
+	public static final Accessor<Organization, String> NAME_ACCESSOR = new Accessor<Organization, String>() {
 			@Override
 			public String get(Organization organization) {
 				return organization.getName();
@@ -72,7 +67,6 @@ public interface Organization
 			public Class<Organization> getTypeClass() {
 				return Organization.class;
 			}
-
 		};
 
 	public Address getAddress();
@@ -124,5 +118,4 @@ public interface Organization
 	public boolean isParentable();
 
 	public boolean isRoot();
-
 }

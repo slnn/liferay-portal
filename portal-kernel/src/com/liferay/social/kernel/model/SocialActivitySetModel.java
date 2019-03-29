@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface SocialActivitySetModel
-	extends AttachedModel, BaseModel<SocialActivitySet>, ShardedModel {
-
+public interface SocialActivitySetModel extends AttachedModel,
+	BaseModel<SocialActivitySet>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -238,5 +237,4 @@ public interface SocialActivitySetModel
 	 * @param activityCount the activity count of this social activity set
 	 */
 	public void setActivityCount(int activityCount);
-
 }

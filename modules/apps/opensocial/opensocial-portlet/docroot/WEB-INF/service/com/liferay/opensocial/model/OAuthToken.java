@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.opensocial.model.impl.OAuthTokenImpl")
 @ProviderType
 public interface OAuthToken extends OAuthTokenModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.opensocial.model.impl.OAuthTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuthToken, Long> O_AUTH_TOKEN_ID_ACCESSOR =
-		new Accessor<OAuthToken, Long>() {
-
+	public static final Accessor<OAuthToken, Long> O_AUTH_TOKEN_ID_ACCESSOR = new Accessor<OAuthToken, Long>() {
 			@Override
 			public Long get(OAuthToken oAuthToken) {
 				return oAuthToken.getOAuthTokenId();
@@ -53,7 +50,5 @@ public interface OAuthToken extends OAuthTokenModel, PersistedModel {
 			public Class<OAuthToken> getTypeClass() {
 				return OAuthToken.class;
 			}
-
 		};
-
 }

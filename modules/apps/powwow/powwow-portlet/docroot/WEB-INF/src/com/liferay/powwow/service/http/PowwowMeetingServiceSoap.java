@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 
 import java.rmi.RemoteException;
@@ -63,17 +64,12 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PowwowMeetingServiceSoap {
-
-	public static com.liferay.powwow.model.PowwowMeetingSoap
-			deletePowwowMeeting(long powwowMeetingId)
-		throws RemoteException {
-
+	public static com.liferay.powwow.model.PowwowMeetingSoap deletePowwowMeeting(
+		long powwowMeetingId) throws RemoteException {
 		try {
-			com.liferay.powwow.model.PowwowMeeting returnValue =
-				PowwowMeetingServiceUtil.deletePowwowMeeting(powwowMeetingId);
+			com.liferay.powwow.model.PowwowMeeting returnValue = PowwowMeetingServiceUtil.deletePowwowMeeting(powwowMeetingId);
 
-			return com.liferay.powwow.model.PowwowMeetingSoap.toSoapModel(
-				returnValue);
+			return com.liferay.powwow.model.PowwowMeetingSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -83,15 +79,11 @@ public class PowwowMeetingServiceSoap {
 	}
 
 	public static com.liferay.powwow.model.PowwowMeetingSoap getPowwowMeeting(
-			long powwowMeetingId)
-		throws RemoteException {
-
+		long powwowMeetingId) throws RemoteException {
 		try {
-			com.liferay.powwow.model.PowwowMeeting returnValue =
-				PowwowMeetingServiceUtil.getPowwowMeeting(powwowMeetingId);
+			com.liferay.powwow.model.PowwowMeeting returnValue = PowwowMeetingServiceUtil.getPowwowMeeting(powwowMeetingId);
 
-			return com.liferay.powwow.model.PowwowMeetingSoap.toSoapModel(
-				returnValue);
+			return com.liferay.powwow.model.PowwowMeetingSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -100,19 +92,15 @@ public class PowwowMeetingServiceSoap {
 		}
 	}
 
-	public static com.liferay.powwow.model.PowwowMeetingSoap[]
-			getPowwowMeetings(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator obc)
+	public static com.liferay.powwow.model.PowwowMeetingSoap[] getPowwowMeetings(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.powwow.model.PowwowMeeting> returnValue =
-				PowwowMeetingServiceUtil.getPowwowMeetings(
-					groupId, start, end, obc);
+			java.util.List<com.liferay.powwow.model.PowwowMeeting> returnValue = PowwowMeetingServiceUtil.getPowwowMeetings(groupId,
+					start, end, obc);
 
-			return com.liferay.powwow.model.PowwowMeetingSoap.toSoapModels(
-				returnValue);
+			return com.liferay.powwow.model.PowwowMeetingSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -123,10 +111,8 @@ public class PowwowMeetingServiceSoap {
 
 	public static int getPowwowMeetingsCount(long groupId)
 		throws RemoteException {
-
 		try {
-			int returnValue = PowwowMeetingServiceUtil.getPowwowMeetingsCount(
-				groupId);
+			int returnValue = PowwowMeetingServiceUtil.getPowwowMeetingsCount(groupId);
 
 			return returnValue;
 		}
@@ -137,7 +123,5 @@ public class PowwowMeetingServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PowwowMeetingServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(PowwowMeetingServiceSoap.class);
 }

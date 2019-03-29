@@ -39,10 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DLFolderModel
-	extends BaseModel<DLFolder>, ContainerModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
-
+public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
+	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -613,5 +611,4 @@ public interface DLFolderModel
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
-
 }

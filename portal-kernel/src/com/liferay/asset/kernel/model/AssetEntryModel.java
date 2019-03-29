@@ -40,10 +40,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface AssetEntryModel
-	extends AttachedModel, BaseModel<AssetEntry>, GroupedModel, LocalizedModel,
-			ShardedModel {
-
+public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
+	GroupedModel, LocalizedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -554,8 +552,8 @@ public interface AssetEntryModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -572,8 +570,8 @@ public interface AssetEntryModel
 	 * @param descriptionMap the locales and localized descriptions of this asset entry
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the summary of this asset entry.
@@ -672,8 +670,8 @@ public interface AssetEntryModel
 	 * @param summaryMap the locales and localized summaries of this asset entry
 	 * @param defaultLocale the default locale
 	 */
-	public void setSummaryMap(
-		Map<Locale, String> summaryMap, Locale defaultLocale);
+	public void setSummaryMap(Map<Locale, String> summaryMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the url of this asset entry.
@@ -773,5 +771,4 @@ public interface AssetEntryModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

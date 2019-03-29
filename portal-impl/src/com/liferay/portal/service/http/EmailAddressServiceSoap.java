@@ -63,22 +63,16 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class EmailAddressServiceSoap {
-
-	public static com.liferay.portal.kernel.model.EmailAddressSoap
-			addEmailAddress(
-				String className, long classPK, String address, long typeId,
-				boolean primary,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.kernel.model.EmailAddressSoap addEmailAddress(
+		String className, long classPK, String address, long typeId,
+		boolean primary,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.EmailAddress returnValue =
-				EmailAddressServiceUtil.addEmailAddress(
-					className, classPK, address, typeId, primary,
-					serviceContext);
+			com.liferay.portal.kernel.model.EmailAddress returnValue = EmailAddressServiceUtil.addEmailAddress(className,
+					classPK, address, typeId, primary, serviceContext);
 
-			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -89,7 +83,6 @@ public class EmailAddressServiceSoap {
 
 	public static void deleteEmailAddress(long emailAddressId)
 		throws RemoteException {
-
 		try {
 			EmailAddressServiceUtil.deleteEmailAddress(emailAddressId);
 		}
@@ -101,23 +94,19 @@ public class EmailAddressServiceSoap {
 	}
 
 	/**
-	 * Returns the email address with the primary key.
-	 *
-	 * @param emailAddressId the primary key of the email address
-	 * @return the email address with the primary key, or <code>null</code> if
-	 an email address with the primary key could not be found or if
-	 the user did not have permission to view the email address
-	 */
-	public static com.liferay.portal.kernel.model.EmailAddressSoap
-			fetchEmailAddress(long emailAddressId)
-		throws RemoteException {
-
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address with the primary key, or <code>null</code> if
+	an email address with the primary key could not be found or if
+	the user did not have permission to view the email address
+	*/
+	public static com.liferay.portal.kernel.model.EmailAddressSoap fetchEmailAddress(
+		long emailAddressId) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.EmailAddress returnValue =
-				EmailAddressServiceUtil.fetchEmailAddress(emailAddressId);
+			com.liferay.portal.kernel.model.EmailAddress returnValue = EmailAddressServiceUtil.fetchEmailAddress(emailAddressId);
 
-			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -126,16 +115,12 @@ public class EmailAddressServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddressSoap
-			getEmailAddress(long emailAddressId)
-		throws RemoteException {
-
+	public static com.liferay.portal.kernel.model.EmailAddressSoap getEmailAddress(
+		long emailAddressId) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.EmailAddress returnValue =
-				EmailAddressServiceUtil.getEmailAddress(emailAddressId);
+			com.liferay.portal.kernel.model.EmailAddress returnValue = EmailAddressServiceUtil.getEmailAddress(emailAddressId);
 
-			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -144,17 +129,13 @@ public class EmailAddressServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddressSoap[]
-			getEmailAddresses(String className, long classPK)
-		throws RemoteException {
-
+	public static com.liferay.portal.kernel.model.EmailAddressSoap[] getEmailAddresses(
+		String className, long classPK) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.kernel.model.EmailAddress>
-				returnValue = EmailAddressServiceUtil.getEmailAddresses(
-					className, classPK);
+			java.util.List<com.liferay.portal.kernel.model.EmailAddress> returnValue =
+				EmailAddressServiceUtil.getEmailAddresses(className, classPK);
 
-			return com.liferay.portal.kernel.model.EmailAddressSoap.
-				toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -163,19 +144,14 @@ public class EmailAddressServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddressSoap
-			updateEmailAddress(
-				long emailAddressId, String address, long typeId,
-				boolean primary)
+	public static com.liferay.portal.kernel.model.EmailAddressSoap updateEmailAddress(
+		long emailAddressId, String address, long typeId, boolean primary)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.EmailAddress returnValue =
-				EmailAddressServiceUtil.updateEmailAddress(
-					emailAddressId, address, typeId, primary);
+			com.liferay.portal.kernel.model.EmailAddress returnValue = EmailAddressServiceUtil.updateEmailAddress(emailAddressId,
+					address, typeId, primary);
 
-			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.EmailAddressSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -184,7 +160,5 @@ public class EmailAddressServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		EmailAddressServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(EmailAddressServiceSoap.class);
 }

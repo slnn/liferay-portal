@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class PortletSoap implements Serializable {
-
 	public static PortletSoap toSoapModel(Portlet model) {
 		PortletSoap soapModel = new PortletSoap();
 
@@ -71,8 +70,7 @@ public class PortletSoap implements Serializable {
 	}
 
 	public static PortletSoap[] toSoapModels(List<Portlet> models) {
-		List<PortletSoap> soapModels = new ArrayList<PortletSoap>(
-			models.size());
+		List<PortletSoap> soapModels = new ArrayList<PortletSoap>(models.size());
 
 		for (Portlet model : models) {
 			soapModels.add(toSoapModel(model));
@@ -150,5 +148,4 @@ public class PortletSoap implements Serializable {
 	private String _portletId;
 	private String _roles;
 	private boolean _active;
-
 }

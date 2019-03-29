@@ -32,10 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WebsiteModel
-	extends AttachedModel, BaseModel<Website>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
-
+public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
+	MVCCModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -305,5 +303,4 @@ public interface WebsiteModel
 	 * @param lastPublishDate the last publish date of this website
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

@@ -31,7 +31,6 @@ import java.util.List;
 @Deprecated
 @ProviderType
 public class ResourceBlockSoap implements Serializable {
-
 	public static ResourceBlockSoap toSoapModel(ResourceBlock model) {
 		ResourceBlockSoap soapModel = new ResourceBlockSoap();
 
@@ -74,8 +73,7 @@ public class ResourceBlockSoap implements Serializable {
 	}
 
 	public static ResourceBlockSoap[] toSoapModels(List<ResourceBlock> models) {
-		List<ResourceBlockSoap> soapModels = new ArrayList<ResourceBlockSoap>(
-			models.size());
+		List<ResourceBlockSoap> soapModels = new ArrayList<ResourceBlockSoap>(models.size());
 
 		for (ResourceBlock model : models) {
 			soapModels.add(toSoapModel(model));
@@ -158,5 +156,4 @@ public class ResourceBlockSoap implements Serializable {
 	private String _name;
 	private String _permissionsHash;
 	private long _referenceCount;
-
 }

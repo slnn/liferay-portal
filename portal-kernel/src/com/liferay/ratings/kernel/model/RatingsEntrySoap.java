@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class RatingsEntrySoap implements Serializable {
-
 	public static RatingsEntrySoap toSoapModel(RatingsEntry model) {
 		RatingsEntrySoap soapModel = new RatingsEntrySoap();
 
@@ -76,8 +75,7 @@ public class RatingsEntrySoap implements Serializable {
 	}
 
 	public static RatingsEntrySoap[] toSoapModels(List<RatingsEntry> models) {
-		List<RatingsEntrySoap> soapModels = new ArrayList<RatingsEntrySoap>(
-			models.size());
+		List<RatingsEntrySoap> soapModels = new ArrayList<RatingsEntrySoap>(models.size());
 
 		for (RatingsEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -187,5 +185,4 @@ public class RatingsEntrySoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private double _score;
-
 }

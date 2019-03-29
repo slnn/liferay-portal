@@ -17,6 +17,7 @@ package com.liferay.opensocial.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.opensocial.service.GadgetServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -63,19 +64,15 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class GadgetServiceSoap {
-
 	public static com.liferay.opensocial.model.GadgetSoap addGadget(
-			long companyId, String url, String portletCategoryNames,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long companyId, String url, String portletCategoryNames,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.opensocial.model.Gadget returnValue =
-				GadgetServiceUtil.addGadget(
-					companyId, url, portletCategoryNames, serviceContext);
+			com.liferay.opensocial.model.Gadget returnValue = GadgetServiceUtil.addGadget(companyId,
+					url, portletCategoryNames, serviceContext);
 
-			return com.liferay.opensocial.model.GadgetSoap.toSoapModel(
-				returnValue);
+			return com.liferay.opensocial.model.GadgetSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -84,11 +81,9 @@ public class GadgetServiceSoap {
 		}
 	}
 
-	public static void deleteGadget(
-			long gadgetId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void deleteGadget(long gadgetId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
 			GadgetServiceUtil.deleteGadget(gadgetId, serviceContext);
 		}
@@ -99,14 +94,12 @@ public class GadgetServiceSoap {
 		}
 	}
 
-	public static void updateGadget(
-			long gadgetId, String portletCategoryNames,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void updateGadget(long gadgetId, String portletCategoryNames,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			GadgetServiceUtil.updateGadget(
-				gadgetId, portletCategoryNames, serviceContext);
+			GadgetServiceUtil.updateGadget(gadgetId, portletCategoryNames,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -116,5 +109,4 @@ public class GadgetServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(GadgetServiceSoap.class);
-
 }

@@ -36,6 +36,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -45,23 +52,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 /**
  * @generated
  */
 public class MembershipRequestPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,9 +99,7 @@ public class MembershipRequestPersistenceTest {
 
 		_persistence.remove(newMembershipRequest);
 
-		MembershipRequest existingMembershipRequest =
-			_persistence.fetchByPrimaryKey(
-				newMembershipRequest.getPrimaryKey());
+		MembershipRequest existingMembershipRequest = _persistence.fetchByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
 		Assert.assertNull(existingMembershipRequest);
 	}
@@ -141,41 +137,31 @@ public class MembershipRequestPersistenceTest {
 
 		_membershipRequests.add(_persistence.update(newMembershipRequest));
 
-		MembershipRequest existingMembershipRequest =
-			_persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
+		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingMembershipRequest.getMvccVersion(),
+		Assert.assertEquals(existingMembershipRequest.getMvccVersion(),
 			newMembershipRequest.getMvccVersion());
-		Assert.assertEquals(
-			existingMembershipRequest.getMembershipRequestId(),
+		Assert.assertEquals(existingMembershipRequest.getMembershipRequestId(),
 			newMembershipRequest.getMembershipRequestId());
-		Assert.assertEquals(
-			existingMembershipRequest.getGroupId(),
+		Assert.assertEquals(existingMembershipRequest.getGroupId(),
 			newMembershipRequest.getGroupId());
-		Assert.assertEquals(
-			existingMembershipRequest.getCompanyId(),
+		Assert.assertEquals(existingMembershipRequest.getCompanyId(),
 			newMembershipRequest.getCompanyId());
-		Assert.assertEquals(
-			existingMembershipRequest.getUserId(),
+		Assert.assertEquals(existingMembershipRequest.getUserId(),
 			newMembershipRequest.getUserId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMembershipRequest.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMembershipRequest.getCreateDate()),
 			Time.getShortTimestamp(newMembershipRequest.getCreateDate()));
-		Assert.assertEquals(
-			existingMembershipRequest.getComments(),
+		Assert.assertEquals(existingMembershipRequest.getComments(),
 			newMembershipRequest.getComments());
-		Assert.assertEquals(
-			existingMembershipRequest.getReplyComments(),
+		Assert.assertEquals(existingMembershipRequest.getReplyComments(),
 			newMembershipRequest.getReplyComments());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingMembershipRequest.getReplyDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMembershipRequest.getReplyDate()),
 			Time.getShortTimestamp(newMembershipRequest.getReplyDate()));
-		Assert.assertEquals(
-			existingMembershipRequest.getReplierUserId(),
+		Assert.assertEquals(existingMembershipRequest.getReplierUserId(),
 			newMembershipRequest.getReplierUserId());
-		Assert.assertEquals(
-			existingMembershipRequest.getStatusId(),
+		Assert.assertEquals(existingMembershipRequest.getStatusId(),
 			newMembershipRequest.getStatusId());
 	}
 
@@ -195,17 +181,16 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_S(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_U_S() throws Exception {
-		_persistence.countByG_U_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_U_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_U_S(0L, 0L, 0L);
 	}
@@ -214,8 +199,7 @@ public class MembershipRequestPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
-		MembershipRequest existingMembershipRequest =
-			_persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
+		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
 		Assert.assertEquals(existingMembershipRequest, newMembershipRequest);
 	}
@@ -229,25 +213,23 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<MembershipRequest> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"MembershipRequest", "mvccVersion", true, "membershipRequestId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"createDate", true, "comments", true, "replyComments", true,
-			"replyDate", true, "replierUserId", true, "statusId", true);
+		return OrderByComparatorFactoryUtil.create("MembershipRequest",
+			"mvccVersion", true, "membershipRequestId", true, "groupId", true,
+			"companyId", true, "userId", true, "createDate", true, "comments",
+			true, "replyComments", true, "replyDate", true, "replierUserId",
+			true, "statusId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
-		MembershipRequest existingMembershipRequest =
-			_persistence.fetchByPrimaryKey(
-				newMembershipRequest.getPrimaryKey());
+		MembershipRequest existingMembershipRequest = _persistence.fetchByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
 		Assert.assertEquals(existingMembershipRequest, newMembershipRequest);
 	}
@@ -256,8 +238,7 @@ public class MembershipRequestPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		MembershipRequest missingMembershipRequest =
-			_persistence.fetchByPrimaryKey(pk);
+		MembershipRequest missingMembershipRequest = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingMembershipRequest);
 	}
@@ -265,7 +246,6 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		MembershipRequest newMembershipRequest1 = addMembershipRequest();
 		MembershipRequest newMembershipRequest2 = addMembershipRequest();
 
@@ -274,22 +254,18 @@ public class MembershipRequestPersistenceTest {
 		primaryKeys.add(newMembershipRequest1.getPrimaryKey());
 		primaryKeys.add(newMembershipRequest2.getPrimaryKey());
 
-		Map<Serializable, MembershipRequest> membershipRequests =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, membershipRequests.size());
-		Assert.assertEquals(
-			newMembershipRequest1,
+		Assert.assertEquals(newMembershipRequest1,
 			membershipRequests.get(newMembershipRequest1.getPrimaryKey()));
-		Assert.assertEquals(
-			newMembershipRequest2,
+		Assert.assertEquals(newMembershipRequest2,
 			membershipRequests.get(newMembershipRequest2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -299,8 +275,7 @@ public class MembershipRequestPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, MembershipRequest> membershipRequests =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(membershipRequests.isEmpty());
 	}
@@ -308,7 +283,6 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
 		long pk = RandomTestUtil.nextLong();
@@ -318,39 +292,36 @@ public class MembershipRequestPersistenceTest {
 		primaryKeys.add(newMembershipRequest.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, MembershipRequest> membershipRequests =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, membershipRequests.size());
-		Assert.assertEquals(
-			newMembershipRequest,
+		Assert.assertEquals(newMembershipRequest,
 			membershipRequests.get(newMembershipRequest.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MembershipRequest> membershipRequests =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(membershipRequests.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newMembershipRequest.getPrimaryKey());
 
-		Map<Serializable, MembershipRequest> membershipRequests =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, membershipRequests.size());
-		Assert.assertEquals(
-			newMembershipRequest,
+		Assert.assertEquals(newMembershipRequest,
 			membershipRequests.get(newMembershipRequest.getPrimaryKey()));
 	}
 
@@ -358,20 +329,15 @@ public class MembershipRequestPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			MembershipRequestLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = MembershipRequestLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<MembershipRequest>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MembershipRequest>() {
 				@Override
 				public void performAction(MembershipRequest membershipRequest) {
 					Assert.assertNotNull(membershipRequest);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -380,19 +346,17 @@ public class MembershipRequestPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MembershipRequest.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"membershipRequestId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("membershipRequestId",
 				newMembershipRequest.getMembershipRequestId()));
 
-		List<MembershipRequest> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MembershipRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -403,35 +367,32 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MembershipRequest.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"membershipRequestId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("membershipRequestId",
+				RandomTestUtil.nextLong()));
 
-		List<MembershipRequest> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<MembershipRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MembershipRequest.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("membershipRequestId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"membershipRequestId"));
 
-		Object newMembershipRequestId =
-			newMembershipRequest.getMembershipRequestId();
+		Object newMembershipRequestId = newMembershipRequest.getMembershipRequestId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"membershipRequestId", new Object[] {newMembershipRequestId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("membershipRequestId",
+				new Object[] { newMembershipRequestId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -439,29 +400,27 @@ public class MembershipRequestPersistenceTest {
 
 		Object existingMembershipRequestId = result.get(0);
 
-		Assert.assertEquals(
-			existingMembershipRequestId, newMembershipRequestId);
+		Assert.assertEquals(existingMembershipRequestId, newMembershipRequestId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MembershipRequest.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("membershipRequestId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"membershipRequestId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"membershipRequestId",
-				new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("membershipRequestId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
-	protected MembershipRequest addMembershipRequest() throws Exception {
+	protected MembershipRequest addMembershipRequest()
+		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		MembershipRequest membershipRequest = _persistence.create(pk);
@@ -491,9 +450,7 @@ public class MembershipRequestPersistenceTest {
 		return membershipRequest;
 	}
 
-	private List<MembershipRequest> _membershipRequests =
-		new ArrayList<MembershipRequest>();
+	private List<MembershipRequest> _membershipRequests = new ArrayList<MembershipRequest>();
 	private MembershipRequestPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

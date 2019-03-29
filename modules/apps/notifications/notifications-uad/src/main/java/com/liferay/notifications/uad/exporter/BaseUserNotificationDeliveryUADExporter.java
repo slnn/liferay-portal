@@ -15,10 +15,13 @@
 package com.liferay.notifications.uad.exporter;
 
 import com.liferay.notifications.uad.constants.NotificationsUADConstants;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUserNotificationDeliveryUADExporter
 	extends DynamicQueryUADExporter<UserNotificationDelivery> {
-
 	@Override
 	public Class<UserNotificationDelivery> getTypeClass() {
 		return UserNotificationDelivery.class;
@@ -50,14 +52,12 @@ public abstract class BaseUserNotificationDeliveryUADExporter
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return NotificationsUADConstants.
-			USER_ID_FIELD_NAMES_USER_NOTIFICATION_DELIVERY;
+		return NotificationsUADConstants.USER_ID_FIELD_NAMES_USER_NOTIFICATION_DELIVERY;
 	}
 
 	@Override
 	protected String toXmlString(
 		UserNotificationDelivery userNotificationDelivery) {
-
 		StringBundler sb = new StringBundler(10);
 
 		sb.append("<model><model-name>");
@@ -79,7 +79,5 @@ public abstract class BaseUserNotificationDeliveryUADExporter
 	}
 
 	@Reference
-	protected UserNotificationDeliveryLocalService
-		userNotificationDeliveryLocalService;
-
+	protected UserNotificationDeliveryLocalService userNotificationDeliveryLocalService;
 }

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
  */
 @ProviderType
 public abstract class TeamBaseImpl extends TeamModelImpl implements Team {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,5 +47,4 @@ public abstract class TeamBaseImpl extends TeamModelImpl implements Team {
 			TeamLocalServiceUtil.updateTeam(this);
 		}
 	}
-
 }

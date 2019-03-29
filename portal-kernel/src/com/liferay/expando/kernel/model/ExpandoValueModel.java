@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface ExpandoValueModel
-	extends AttachedModel, BaseModel<ExpandoValue>, ShardedModel {
-
+public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -184,5 +183,4 @@ public interface ExpandoValueModel
 	 * @param data the data of this expando value
 	 */
 	public void setData(String data);
-
 }

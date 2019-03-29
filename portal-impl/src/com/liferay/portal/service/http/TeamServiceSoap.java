@@ -63,22 +63,19 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class TeamServiceSoap {
-
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
-	 String, String, ServiceContext)}
-	 */
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
+	String, String, ServiceContext)}
+	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.TeamSoap addTeam(
-			long groupId, String name, String description)
+		long groupId, String name, String description)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.Team returnValue =
-				TeamServiceUtil.addTeam(groupId, name, description);
+			com.liferay.portal.kernel.model.Team returnValue = TeamServiceUtil.addTeam(groupId,
+					name, description);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -88,17 +85,14 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.TeamSoap addTeam(
-			long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long groupId, String name, String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.Team returnValue =
-				TeamServiceUtil.addTeam(
-					groupId, name, description, serviceContext);
+			com.liferay.portal.kernel.model.Team returnValue = TeamServiceUtil.addTeam(groupId,
+					name, description, serviceContext);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -119,15 +113,11 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.TeamSoap[] getGroupTeams(
-			long groupId)
-		throws RemoteException {
-
+		long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.kernel.model.Team> returnValue =
-				TeamServiceUtil.getGroupTeams(groupId);
+			java.util.List<com.liferay.portal.kernel.model.Team> returnValue = TeamServiceUtil.getGroupTeams(groupId);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModels(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -138,13 +128,10 @@ public class TeamServiceSoap {
 
 	public static com.liferay.portal.kernel.model.TeamSoap getTeam(long teamId)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.Team returnValue =
-				TeamServiceUtil.getTeam(teamId);
+			com.liferay.portal.kernel.model.Team returnValue = TeamServiceUtil.getTeam(teamId);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -154,15 +141,12 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.TeamSoap getTeam(
-			long groupId, String name)
-		throws RemoteException {
-
+		long groupId, String name) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Team returnValue =
-				TeamServiceUtil.getTeam(groupId, name);
+			com.liferay.portal.kernel.model.Team returnValue = TeamServiceUtil.getTeam(groupId,
+					name);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -172,15 +156,11 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.TeamSoap[] getUserTeams(
-			long userId)
-		throws RemoteException {
-
+		long userId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.kernel.model.Team> returnValue =
-				TeamServiceUtil.getUserTeams(userId);
+			java.util.List<com.liferay.portal.kernel.model.Team> returnValue = TeamServiceUtil.getUserTeams(userId);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModels(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -190,15 +170,12 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.TeamSoap[] getUserTeams(
-			long userId, long groupId)
-		throws RemoteException {
-
+		long userId, long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.kernel.model.Team> returnValue =
-				TeamServiceUtil.getUserTeams(userId, groupId);
+			java.util.List<com.liferay.portal.kernel.model.Team> returnValue = TeamServiceUtil.getUserTeams(userId,
+					groupId);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModels(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -209,7 +186,6 @@ public class TeamServiceSoap {
 
 	public static boolean hasUserTeam(long userId, long teamId)
 		throws RemoteException {
-
 		try {
 			boolean returnValue = TeamServiceUtil.hasUserTeam(userId, teamId);
 
@@ -223,15 +199,12 @@ public class TeamServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.TeamSoap updateTeam(
-			long teamId, String name, String description)
-		throws RemoteException {
-
+		long teamId, String name, String description) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Team returnValue =
-				TeamServiceUtil.updateTeam(teamId, name, description);
+			com.liferay.portal.kernel.model.Team returnValue = TeamServiceUtil.updateTeam(teamId,
+					name, description);
 
-			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.TeamSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -241,5 +214,4 @@ public class TeamServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(TeamServiceSoap.class);
-
 }

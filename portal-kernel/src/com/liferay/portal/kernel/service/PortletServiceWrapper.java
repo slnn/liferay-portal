@@ -24,18 +24,17 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class PortletServiceWrapper
-	implements PortletService, ServiceWrapper<PortletService> {
-
+public class PortletServiceWrapper implements PortletService,
+	ServiceWrapper<PortletService> {
 	public PortletServiceWrapper(PortletService portletService) {
 		_portletService = portletService;
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _portletService.getOSGiServiceIdentifier();
@@ -48,11 +47,9 @@ public class PortletServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Portlet updatePortlet(
-			long companyId, String portletId, String roles, boolean active)
+		long companyId, String portletId, String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _portletService.updatePortlet(
-			companyId, portletId, roles, active);
+		return _portletService.updatePortlet(companyId, portletId, roles, active);
 	}
 
 	@Override
@@ -66,5 +63,4 @@ public class PortletServiceWrapper
 	}
 
 	private PortletService _portletService;
-
 }

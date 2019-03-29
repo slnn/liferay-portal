@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PluginSetting;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class PluginSettingCacheModel
-	implements CacheModel<PluginSetting>, Externalizable, MVCCModel {
-
+public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,12 +47,10 @@ public class PluginSettingCacheModel
 			return false;
 		}
 
-		PluginSettingCacheModel pluginSettingCacheModel =
-			(PluginSettingCacheModel)obj;
+		PluginSettingCacheModel pluginSettingCacheModel = (PluginSettingCacheModel)obj;
 
 		if ((pluginSettingId == pluginSettingCacheModel.pluginSettingId) &&
-			(mvccVersion == pluginSettingCacheModel.mvccVersion)) {
-
+				(mvccVersion == pluginSettingCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -150,7 +148,8 @@ public class PluginSettingCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(pluginSettingId);
@@ -188,5 +187,4 @@ public class PluginSettingCacheModel
 	public String pluginType;
 	public String roles;
 	public boolean active;
-
 }

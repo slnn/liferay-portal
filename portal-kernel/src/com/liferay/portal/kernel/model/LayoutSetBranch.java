@@ -29,15 +29,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.LayoutSetBranchImpl")
 @ProviderType
 public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutSetBranchImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutSetBranch, Long>
-		LAYOUT_SET_BRANCH_ID_ACCESSOR = new Accessor<LayoutSetBranch, Long>() {
-
+	public static final Accessor<LayoutSetBranch, Long> LAYOUT_SET_BRANCH_ID_ACCESSOR =
+		new Accessor<LayoutSetBranch, Long>() {
 			@Override
 			public Long get(LayoutSetBranch layoutSetBranch) {
 				return layoutSetBranch.getLayoutSetBranchId();
@@ -52,7 +50,6 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 			public Class<LayoutSetBranch> getTypeClass() {
 				return LayoutSetBranch.class;
 			}
-
 		};
 
 	public ColorScheme getColorScheme();
@@ -66,8 +63,7 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 
 	public boolean getLogo();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
 	public String getSettingsProperty(String key);
 
@@ -81,5 +77,4 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
-
 }

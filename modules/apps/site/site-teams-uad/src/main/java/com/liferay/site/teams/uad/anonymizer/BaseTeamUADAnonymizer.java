@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TeamLocalService;
+
 import com.liferay.site.teams.uad.constants.SiteTeamsUADConstants;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -36,13 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseTeamUADAnonymizer
-	extends DynamicQueryUADAnonymizer<Team> {
-
+public abstract class BaseTeamUADAnonymizer extends DynamicQueryUADAnonymizer<Team> {
 	@Override
 	public void autoAnonymize(Team team, long userId, User anonymousUser)
 		throws PortalException {
-
 		if (team.getUserId() == userId) {
 			team.setUserId(anonymousUser.getUserId());
 			team.setUserName(anonymousUser.getFullName());
@@ -73,5 +72,4 @@ public abstract class BaseTeamUADAnonymizer
 
 	@Reference
 	protected TeamLocalService teamLocalService;
-
 }

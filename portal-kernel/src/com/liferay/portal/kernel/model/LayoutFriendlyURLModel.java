@@ -32,10 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutFriendlyURLModel
-	extends BaseModel<LayoutFriendlyURL>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
-
+public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
+	MVCCModel, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -296,5 +294,4 @@ public interface LayoutFriendlyURLModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

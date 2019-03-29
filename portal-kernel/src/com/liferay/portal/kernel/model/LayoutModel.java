@@ -35,10 +35,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface LayoutModel
-	extends BaseModel<Layout>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedGroupedModel {
-
+public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCModel,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -588,8 +586,8 @@ public interface LayoutModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -606,8 +604,8 @@ public interface LayoutModel
 	 * @param descriptionMap the locales and localized descriptions of this layout
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the keywords of this layout.
@@ -689,8 +687,7 @@ public interface LayoutModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setKeywords(
-		String keywords, Locale locale, Locale defaultLocale);
+	public void setKeywords(String keywords, Locale locale, Locale defaultLocale);
 
 	public void setKeywordsCurrentLanguageId(String languageId);
 
@@ -707,8 +704,8 @@ public interface LayoutModel
 	 * @param keywordsMap the locales and localized keywordses of this layout
 	 * @param defaultLocale the default locale
 	 */
-	public void setKeywordsMap(
-		Map<Locale, String> keywordsMap, Locale defaultLocale);
+	public void setKeywordsMap(Map<Locale, String> keywordsMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the robots of this layout.
@@ -807,8 +804,7 @@ public interface LayoutModel
 	 * @param robotsMap the locales and localized robotses of this layout
 	 * @param defaultLocale the default locale
 	 */
-	public void setRobotsMap(
-		Map<Locale, String> robotsMap, Locale defaultLocale);
+	public void setRobotsMap(Map<Locale, String> robotsMap, Locale defaultLocale);
 
 	/**
 	 * Returns the type of this layout.
@@ -1050,5 +1046,4 @@ public interface LayoutModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

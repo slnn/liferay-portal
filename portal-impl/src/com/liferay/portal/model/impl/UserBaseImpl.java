@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
  */
 @ProviderType
 public abstract class UserBaseImpl extends UserModelImpl implements User {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,5 +47,4 @@ public abstract class UserBaseImpl extends UserModelImpl implements User {
 			UserLocalServiceUtil.updateUser(this);
 		}
 	}
-
 }

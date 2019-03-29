@@ -28,9 +28,8 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface BrowserTrackerModel
-	extends BaseModel<BrowserTracker>, MVCCModel, ShardedModel {
-
+public interface BrowserTrackerModel extends BaseModel<BrowserTracker>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -138,5 +137,4 @@ public interface BrowserTrackerModel
 	 * @param browserKey the browser key of this browser tracker
 	 */
 	public void setBrowserKey(long browserKey);
-
 }

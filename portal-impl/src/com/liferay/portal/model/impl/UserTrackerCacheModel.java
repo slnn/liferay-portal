@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserTracker;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class UserTrackerCacheModel
-	implements CacheModel<UserTracker>, Externalizable, MVCCModel {
-
+public class UserTrackerCacheModel implements CacheModel<UserTracker>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class UserTrackerCacheModel
 			return false;
 		}
 
-		UserTrackerCacheModel userTrackerCacheModel =
-			(UserTrackerCacheModel)obj;
+		UserTrackerCacheModel userTrackerCacheModel = (UserTrackerCacheModel)obj;
 
 		if ((userTrackerId == userTrackerCacheModel.userTrackerId) &&
-			(mvccVersion == userTrackerCacheModel.mvccVersion)) {
-
+				(mvccVersion == userTrackerCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -171,7 +169,8 @@ public class UserTrackerCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(userTrackerId);
@@ -219,5 +218,4 @@ public class UserTrackerCacheModel
 	public String remoteAddr;
 	public String remoteHost;
 	public String userAgent;
-
 }

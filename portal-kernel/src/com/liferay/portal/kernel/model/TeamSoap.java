@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class TeamSoap implements Serializable {
-
 	public static TeamSoap toSoapModel(Team model) {
 		TeamSoap soapModel = new TeamSoap();
 
@@ -206,5 +205,4 @@ public class TeamSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private Date _lastPublishDate;
-
 }

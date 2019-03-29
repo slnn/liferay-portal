@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface SocialActivityLimitModel
-	extends AttachedModel, BaseModel<SocialActivityLimit>, ShardedModel {
-
+public interface SocialActivityLimitModel extends AttachedModel,
+	BaseModel<SocialActivityLimit>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -213,5 +212,4 @@ public interface SocialActivityLimitModel
 	 * @param value the value of this social activity limit
 	 */
 	public void setValue(String value);
-
 }

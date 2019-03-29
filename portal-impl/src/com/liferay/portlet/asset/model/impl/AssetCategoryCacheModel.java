@@ -17,8 +17,10 @@ package com.liferay.portlet.asset.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AssetCategoryCacheModel
-	implements CacheModel<AssetCategory>, Externalizable {
-
+public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class AssetCategoryCacheModel
 			return false;
 		}
 
-		AssetCategoryCacheModel assetCategoryCacheModel =
-			(AssetCategoryCacheModel)obj;
+		AssetCategoryCacheModel assetCategoryCacheModel = (AssetCategoryCacheModel)obj;
 
 		if (categoryId == assetCategoryCacheModel.categoryId) {
 			return true;
@@ -219,7 +219,8 @@ public class AssetCategoryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -300,5 +301,4 @@ public class AssetCategoryCacheModel
 	public String description;
 	public long vocabularyId;
 	public long lastPublishDate;
-
 }

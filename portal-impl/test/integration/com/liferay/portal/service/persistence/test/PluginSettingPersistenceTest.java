@@ -36,6 +36,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,23 +53,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 /**
  * @generated
  */
 public class PluginSettingPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -102,8 +100,7 @@ public class PluginSettingPersistenceTest {
 
 		_persistence.remove(newPluginSetting);
 
-		PluginSetting existingPluginSetting = _persistence.fetchByPrimaryKey(
-			newPluginSetting.getPrimaryKey());
+		PluginSetting existingPluginSetting = _persistence.fetchByPrimaryKey(newPluginSetting.getPrimaryKey());
 
 		Assert.assertNull(existingPluginSetting);
 	}
@@ -133,28 +130,22 @@ public class PluginSettingPersistenceTest {
 
 		_pluginSettings.add(_persistence.update(newPluginSetting));
 
-		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(
-			newPluginSetting.getPrimaryKey());
+		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(newPluginSetting.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingPluginSetting.getMvccVersion(),
+		Assert.assertEquals(existingPluginSetting.getMvccVersion(),
 			newPluginSetting.getMvccVersion());
-		Assert.assertEquals(
-			existingPluginSetting.getPluginSettingId(),
+		Assert.assertEquals(existingPluginSetting.getPluginSettingId(),
 			newPluginSetting.getPluginSettingId());
-		Assert.assertEquals(
-			existingPluginSetting.getCompanyId(),
+		Assert.assertEquals(existingPluginSetting.getCompanyId(),
 			newPluginSetting.getCompanyId());
-		Assert.assertEquals(
-			existingPluginSetting.getPluginId(),
+		Assert.assertEquals(existingPluginSetting.getPluginId(),
 			newPluginSetting.getPluginId());
-		Assert.assertEquals(
-			existingPluginSetting.getPluginType(),
+		Assert.assertEquals(existingPluginSetting.getPluginType(),
 			newPluginSetting.getPluginType());
-		Assert.assertEquals(
-			existingPluginSetting.getRoles(), newPluginSetting.getRoles());
-		Assert.assertEquals(
-			existingPluginSetting.isActive(), newPluginSetting.isActive());
+		Assert.assertEquals(existingPluginSetting.getRoles(),
+			newPluginSetting.getRoles());
+		Assert.assertEquals(existingPluginSetting.isActive(),
+			newPluginSetting.isActive());
 	}
 
 	@Test
@@ -177,8 +168,7 @@ public class PluginSettingPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 
-		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(
-			newPluginSetting.getPrimaryKey());
+		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(newPluginSetting.getPrimaryKey());
 
 		Assert.assertEquals(existingPluginSetting, newPluginSetting);
 	}
@@ -192,23 +182,21 @@ public class PluginSettingPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<PluginSetting> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"PluginSetting", "mvccVersion", true, "pluginSettingId", true,
-			"companyId", true, "pluginId", true, "pluginType", true, "roles",
-			true, "active", true);
+		return OrderByComparatorFactoryUtil.create("PluginSetting",
+			"mvccVersion", true, "pluginSettingId", true, "companyId", true,
+			"pluginId", true, "pluginType", true, "roles", true, "active", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 
-		PluginSetting existingPluginSetting = _persistence.fetchByPrimaryKey(
-			newPluginSetting.getPrimaryKey());
+		PluginSetting existingPluginSetting = _persistence.fetchByPrimaryKey(newPluginSetting.getPrimaryKey());
 
 		Assert.assertEquals(existingPluginSetting, newPluginSetting);
 	}
@@ -225,7 +213,6 @@ public class PluginSettingPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		PluginSetting newPluginSetting1 = addPluginSetting();
 		PluginSetting newPluginSetting2 = addPluginSetting();
 
@@ -234,22 +221,18 @@ public class PluginSettingPersistenceTest {
 		primaryKeys.add(newPluginSetting1.getPrimaryKey());
 		primaryKeys.add(newPluginSetting2.getPrimaryKey());
 
-		Map<Serializable, PluginSetting> pluginSettings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, pluginSettings.size());
-		Assert.assertEquals(
-			newPluginSetting1,
+		Assert.assertEquals(newPluginSetting1,
 			pluginSettings.get(newPluginSetting1.getPrimaryKey()));
-		Assert.assertEquals(
-			newPluginSetting2,
+		Assert.assertEquals(newPluginSetting2,
 			pluginSettings.get(newPluginSetting2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -259,8 +242,7 @@ public class PluginSettingPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, PluginSetting> pluginSettings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(pluginSettings.isEmpty());
 	}
@@ -268,7 +250,6 @@ public class PluginSettingPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		PluginSetting newPluginSetting = addPluginSetting();
 
 		long pk = RandomTestUtil.nextLong();
@@ -278,39 +259,36 @@ public class PluginSettingPersistenceTest {
 		primaryKeys.add(newPluginSetting.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, PluginSetting> pluginSettings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, pluginSettings.size());
-		Assert.assertEquals(
-			newPluginSetting,
+		Assert.assertEquals(newPluginSetting,
 			pluginSettings.get(newPluginSetting.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PluginSetting> pluginSettings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(pluginSettings.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newPluginSetting.getPrimaryKey());
 
-		Map<Serializable, PluginSetting> pluginSettings =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, pluginSettings.size());
-		Assert.assertEquals(
-			newPluginSetting,
+		Assert.assertEquals(newPluginSetting,
 			pluginSettings.get(newPluginSetting.getPrimaryKey()));
 	}
 
@@ -318,19 +296,15 @@ public class PluginSettingPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			PluginSettingLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = PluginSettingLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<PluginSetting>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PluginSetting>() {
 				@Override
 				public void performAction(PluginSetting pluginSetting) {
 					Assert.assertNotNull(pluginSetting);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -339,18 +313,17 @@ public class PluginSettingPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PluginSetting.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PluginSetting.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"pluginSettingId", newPluginSetting.getPluginSettingId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("pluginSettingId",
+				newPluginSetting.getPluginSettingId()));
 
-		List<PluginSetting> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<PluginSetting> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -361,34 +334,32 @@ public class PluginSettingPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PluginSetting.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PluginSetting.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"pluginSettingId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("pluginSettingId",
+				RandomTestUtil.nextLong()));
 
-		List<PluginSetting> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<PluginSetting> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PluginSetting.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PluginSetting.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("pluginSettingId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"pluginSettingId"));
 
 		Object newPluginSettingId = newPluginSetting.getPluginSettingId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"pluginSettingId", new Object[] {newPluginSettingId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("pluginSettingId",
+				new Object[] { newPluginSettingId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -401,15 +372,14 @@ public class PluginSettingPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PluginSetting.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PluginSetting.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("pluginSettingId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"pluginSettingId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"pluginSettingId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("pluginSettingId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -422,26 +392,18 @@ public class PluginSettingPersistenceTest {
 
 		_persistence.clearCache();
 
-		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(
-			newPluginSetting.getPrimaryKey());
+		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(newPluginSetting.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingPluginSetting.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingPluginSetting, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingPluginSetting.getPluginId(),
-				ReflectionTestUtil.invoke(
-					existingPluginSetting, "getOriginalPluginId",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
+		Assert.assertEquals(Long.valueOf(existingPluginSetting.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingPluginSetting,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingPluginSetting.getPluginId(),
+				ReflectionTestUtil.invoke(existingPluginSetting,
+					"getOriginalPluginId", new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(
 				existingPluginSetting.getPluginType(),
-				ReflectionTestUtil.invoke(
-					existingPluginSetting, "getOriginalPluginType",
-					new Class<?>[0])));
+				ReflectionTestUtil.invoke(existingPluginSetting,
+					"getOriginalPluginType", new Class<?>[0])));
 	}
 
 	protected PluginSetting addPluginSetting() throws Exception {
@@ -466,9 +428,7 @@ public class PluginSettingPersistenceTest {
 		return pluginSetting;
 	}
 
-	private List<PluginSetting> _pluginSettings =
-		new ArrayList<PluginSetting>();
+	private List<PluginSetting> _pluginSettings = new ArrayList<PluginSetting>();
 	private PluginSettingPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

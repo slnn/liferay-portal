@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class CounterFinderUtil {
-
 	public static java.util.List<String> getNames() {
 		return getFinder().getNames();
 	}
@@ -64,11 +63,10 @@ public class CounterFinderUtil {
 
 	public static CounterFinder getFinder() {
 		if (_finder == null) {
-			_finder = (CounterFinder)PortalBeanLocatorUtil.locate(
-				CounterFinder.class.getName());
+			_finder = (CounterFinder)PortalBeanLocatorUtil.locate(CounterFinder.class.getName());
 
-			ReferenceRegistry.registerReference(
-				CounterFinderUtil.class, "_finder");
+			ReferenceRegistry.registerReference(CounterFinderUtil.class,
+				"_finder");
 		}
 
 		return _finder;
@@ -81,5 +79,4 @@ public class CounterFinderUtil {
 	}
 
 	private static CounterFinder _finder;
-
 }

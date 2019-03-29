@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  */
 @Deprecated
 @ProviderType
-public interface ResourceBlockModel
-	extends BaseModel<ResourceBlock>, MVCCModel, ShardedModel {
-
+public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -158,5 +157,4 @@ public interface ResourceBlockModel
 	 * @param referenceCount the reference count of this resource block
 	 */
 	public void setReferenceCount(long referenceCount);
-
 }

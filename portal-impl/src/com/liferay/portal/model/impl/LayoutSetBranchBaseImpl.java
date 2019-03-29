@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class LayoutSetBranchBaseImpl
-	extends LayoutSetBranchModelImpl implements LayoutSetBranch {
-
+public abstract class LayoutSetBranchBaseImpl extends LayoutSetBranchModelImpl
+	implements LayoutSetBranch {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class LayoutSetBranchBaseImpl
 			LayoutSetBranchLocalServiceUtil.updateLayoutSetBranch(this);
 		}
 	}
-
 }

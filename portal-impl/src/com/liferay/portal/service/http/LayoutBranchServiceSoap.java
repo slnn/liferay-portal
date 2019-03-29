@@ -63,22 +63,15 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class LayoutBranchServiceSoap {
-
-	public static com.liferay.portal.kernel.model.LayoutBranchSoap
-			addLayoutBranch(
-				long layoutRevisionId, String name, String description,
-				boolean master,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.kernel.model.LayoutBranchSoap addLayoutBranch(
+		long layoutRevisionId, String name, String description, boolean master,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.LayoutBranch returnValue =
-				LayoutBranchServiceUtil.addLayoutBranch(
-					layoutRevisionId, name, description, master,
-					serviceContext);
+			com.liferay.portal.kernel.model.LayoutBranch returnValue = LayoutBranchServiceUtil.addLayoutBranch(layoutRevisionId,
+					name, description, master, serviceContext);
 
-			return com.liferay.portal.kernel.model.LayoutBranchSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.LayoutBranchSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -89,7 +82,6 @@ public class LayoutBranchServiceSoap {
 
 	public static void deleteLayoutBranch(long layoutBranchId)
 		throws RemoteException {
-
 		try {
 			LayoutBranchServiceUtil.deleteLayoutBranch(layoutBranchId);
 		}
@@ -100,19 +92,15 @@ public class LayoutBranchServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutBranchSoap
-			updateLayoutBranch(
-				long layoutBranchId, String name, String description,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.kernel.model.LayoutBranchSoap updateLayoutBranch(
+		long layoutBranchId, String name, String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.LayoutBranch returnValue =
-				LayoutBranchServiceUtil.updateLayoutBranch(
-					layoutBranchId, name, description, serviceContext);
+			com.liferay.portal.kernel.model.LayoutBranch returnValue = LayoutBranchServiceUtil.updateLayoutBranch(layoutBranchId,
+					name, description, serviceContext);
 
-			return com.liferay.portal.kernel.model.LayoutBranchSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.LayoutBranchSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -121,7 +109,5 @@ public class LayoutBranchServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		LayoutBranchServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(LayoutBranchServiceSoap.class);
 }

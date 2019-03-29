@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.ClusterGroupLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ClusterGroupBaseImpl
-	extends ClusterGroupModelImpl implements ClusterGroup {
-
+public abstract class ClusterGroupBaseImpl extends ClusterGroupModelImpl
+	implements ClusterGroup {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class ClusterGroupBaseImpl
 			ClusterGroupLocalServiceUtil.updateClusterGroup(this);
 		}
 	}
-
 }

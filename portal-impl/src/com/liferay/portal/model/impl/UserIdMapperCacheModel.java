@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserIdMapper;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class UserIdMapperCacheModel
-	implements CacheModel<UserIdMapper>, Externalizable, MVCCModel {
-
+public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,12 +47,10 @@ public class UserIdMapperCacheModel
 			return false;
 		}
 
-		UserIdMapperCacheModel userIdMapperCacheModel =
-			(UserIdMapperCacheModel)obj;
+		UserIdMapperCacheModel userIdMapperCacheModel = (UserIdMapperCacheModel)obj;
 
 		if ((userIdMapperId == userIdMapperCacheModel.userIdMapperId) &&
-			(mvccVersion == userIdMapperCacheModel.mvccVersion)) {
-
+				(mvccVersion == userIdMapperCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -149,7 +147,8 @@ public class UserIdMapperCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(userIdMapperId);
@@ -187,5 +186,4 @@ public class UserIdMapperCacheModel
 	public String type;
 	public String description;
 	public String externalUserId;
-
 }

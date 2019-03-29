@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.OrgLaborLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class OrgLaborBaseImpl
-	extends OrgLaborModelImpl implements OrgLabor {
-
+public abstract class OrgLaborBaseImpl extends OrgLaborModelImpl
+	implements OrgLabor {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class OrgLaborBaseImpl
 			OrgLaborLocalServiceUtil.updateOrgLabor(this);
 		}
 	}
-
 }

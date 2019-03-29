@@ -24,18 +24,16 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class ContactServiceWrapper
-	implements ContactService, ServiceWrapper<ContactService> {
-
+public class ContactServiceWrapper implements ContactService,
+	ServiceWrapper<ContactService> {
 	public ContactServiceWrapper(ContactService contactService) {
 		_contactService = contactService;
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Contact>
-			getCompanyContacts(long companyId, int start, int end)
+	public java.util.List<com.liferay.portal.kernel.model.Contact> getCompanyContacts(
+		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _contactService.getCompanyContacts(companyId, start, end);
 	}
 
@@ -47,33 +45,29 @@ public class ContactServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Contact getContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _contactService.getContact(contactId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
-			long classNameId, long classPK, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Contact> orderByComparator)
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _contactService.getContacts(
-			classNameId, classPK, start, end, orderByComparator);
+		return _contactService.getContacts(classNameId, classPK, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _contactService.getContactsCount(classNameId, classPK);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _contactService.getOSGiServiceIdentifier();
@@ -90,5 +84,4 @@ public class ContactServiceWrapper
 	}
 
 	private ContactService _contactService;
-
 }

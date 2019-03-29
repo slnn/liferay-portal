@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class LayoutSetPrototypeCacheModel
-	implements CacheModel<LayoutSetPrototype>, Externalizable, MVCCModel {
-
+public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototype>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +49,10 @@ public class LayoutSetPrototypeCacheModel
 			return false;
 		}
 
-		LayoutSetPrototypeCacheModel layoutSetPrototypeCacheModel =
-			(LayoutSetPrototypeCacheModel)obj;
+		LayoutSetPrototypeCacheModel layoutSetPrototypeCacheModel = (LayoutSetPrototypeCacheModel)obj;
 
-		if ((layoutSetPrototypeId ==
-				layoutSetPrototypeCacheModel.layoutSetPrototypeId) &&
-			(mvccVersion == layoutSetPrototypeCacheModel.mvccVersion)) {
-
+		if ((layoutSetPrototypeId == layoutSetPrototypeCacheModel.layoutSetPrototypeId) &&
+				(mvccVersion == layoutSetPrototypeCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -114,8 +111,7 @@ public class LayoutSetPrototypeCacheModel
 
 	@Override
 	public LayoutSetPrototype toEntityModel() {
-		LayoutSetPrototypeImpl layoutSetPrototypeImpl =
-			new LayoutSetPrototypeImpl();
+		LayoutSetPrototypeImpl layoutSetPrototypeImpl = new LayoutSetPrototypeImpl();
 
 		layoutSetPrototypeImpl.setMvccVersion(mvccVersion);
 
@@ -200,7 +196,8 @@ public class LayoutSetPrototypeCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -262,5 +259,4 @@ public class LayoutSetPrototypeCacheModel
 	public String description;
 	public String settings;
 	public boolean active;
-
 }

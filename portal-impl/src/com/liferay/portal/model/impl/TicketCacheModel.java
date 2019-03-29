@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Ticket;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class TicketCacheModel
-	implements CacheModel<Ticket>, Externalizable, MVCCModel {
-
+public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
+	MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,8 +52,7 @@ public class TicketCacheModel
 		TicketCacheModel ticketCacheModel = (TicketCacheModel)obj;
 
 		if ((ticketId == ticketCacheModel.ticketId) &&
-			(mvccVersion == ticketCacheModel.mvccVersion)) {
-
+				(mvccVersion == ticketCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -172,7 +171,8 @@ public class TicketCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ticketId);
@@ -213,5 +213,4 @@ public class TicketCacheModel
 	public int type;
 	public String extraInfo;
 	public long expirationDate;
-
 }

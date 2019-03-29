@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -40,12 +41,9 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface DLFileVersionService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,15 +66,13 @@ public interface DLFileVersionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getLatestFileVersion(
-			long fileEntryId, boolean excludeWorkingCopy)
-		throws PortalException;
+	public DLFileVersion getLatestFileVersion(long fileEntryId,
+		boolean excludeWorkingCopy) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
-
 }

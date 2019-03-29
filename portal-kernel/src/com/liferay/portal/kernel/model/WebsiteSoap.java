@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class WebsiteSoap implements Serializable {
-
 	public static WebsiteSoap toSoapModel(Website model) {
 		WebsiteSoap soapModel = new WebsiteSoap();
 
@@ -80,8 +79,7 @@ public class WebsiteSoap implements Serializable {
 	}
 
 	public static WebsiteSoap[] toSoapModels(List<Website> models) {
-		List<WebsiteSoap> soapModels = new ArrayList<WebsiteSoap>(
-			models.size());
+		List<WebsiteSoap> soapModels = new ArrayList<WebsiteSoap>(models.size());
 
 		for (Website model : models) {
 			soapModels.add(toSoapModel(model));
@@ -231,5 +229,4 @@ public class WebsiteSoap implements Serializable {
 	private long _typeId;
 	private boolean _primary;
 	private Date _lastPublishDate;
-
 }

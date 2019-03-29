@@ -28,7 +28,6 @@ import java.util.Set;
  * @generated
  */
 public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
-
 	public LayoutFinderBaseImpl() {
 		setModelClass(Layout.class);
 	}
@@ -58,8 +57,5 @@ public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
 
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(LayoutFinderBaseImpl.class);
 }

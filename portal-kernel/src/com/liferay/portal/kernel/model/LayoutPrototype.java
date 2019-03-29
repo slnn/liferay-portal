@@ -29,15 +29,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.LayoutPrototypeImpl")
 @ProviderType
 public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutPrototypeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutPrototype, Long>
-		LAYOUT_PROTOTYPE_ID_ACCESSOR = new Accessor<LayoutPrototype, Long>() {
-
+	public static final Accessor<LayoutPrototype, Long> LAYOUT_PROTOTYPE_ID_ACCESSOR =
+		new Accessor<LayoutPrototype, Long>() {
 			@Override
 			public Long get(LayoutPrototype layoutPrototype) {
 				return layoutPrototype.getLayoutPrototypeId();
@@ -52,7 +50,6 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 			public Class<LayoutPrototype> getTypeClass() {
 				return LayoutPrototype.class;
 			}
-
 		};
 
 	public Group getGroup()
@@ -65,5 +62,4 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasSetModifiedDate();
-
 }

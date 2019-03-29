@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsDeliveryModel
-	extends BaseModel<AnnouncementsDelivery>, ShardedModel {
-
+public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDelivery>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -190,5 +189,4 @@ public interface AnnouncementsDeliveryModel
 	 * @param website the website of this announcements delivery
 	 */
 	public void setWebsite(boolean website);
-
 }

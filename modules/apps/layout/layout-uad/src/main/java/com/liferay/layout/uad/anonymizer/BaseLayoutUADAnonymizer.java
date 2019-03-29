@@ -15,11 +15,13 @@
 package com.liferay.layout.uad.anonymizer;
 
 import com.liferay.layout.uad.constants.LayoutUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -36,13 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseLayoutUADAnonymizer
-	extends DynamicQueryUADAnonymizer<Layout> {
-
+public abstract class BaseLayoutUADAnonymizer extends DynamicQueryUADAnonymizer<Layout> {
 	@Override
 	public void autoAnonymize(Layout layout, long userId, User anonymousUser)
 		throws PortalException {
-
 		if (layout.getUserId() == userId) {
 			layout.setUserId(anonymousUser.getUserId());
 			layout.setUserName(anonymousUser.getFullName());
@@ -73,5 +72,4 @@ public abstract class BaseLayoutUADAnonymizer
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;
-
 }

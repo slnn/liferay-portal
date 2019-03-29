@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
@@ -27,9 +28,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SocialActivityFinderBaseImpl
-	extends BasePersistenceImpl<SocialActivity> {
-
+public class SocialActivityFinderBaseImpl extends BasePersistenceImpl<SocialActivity> {
 	public SocialActivityFinderBaseImpl() {
 		setModelClass(SocialActivity.class);
 	}
@@ -55,14 +54,10 @@ public class SocialActivityFinderBaseImpl
 	 */
 	public void setSocialActivityPersistence(
 		SocialActivityPersistence socialActivityPersistence) {
-
 		this.socialActivityPersistence = socialActivityPersistence;
 	}
 
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SocialActivityFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(SocialActivityFinderBaseImpl.class);
 }

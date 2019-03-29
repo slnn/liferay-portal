@@ -60,10 +60,8 @@ import javax.sql.DataSource;
  * @generated
  */
 @ProviderType
-public abstract class ClassNameLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
+public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements ClassNameLocalService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -105,7 +103,8 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ClassName deleteClassName(long classNameId) throws PortalException {
+	public ClassName deleteClassName(long classNameId)
+		throws PortalException {
 		return classNamePersistence.remove(classNameId);
 	}
 
@@ -125,8 +124,8 @@ public abstract class ClassNameLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			ClassName.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(ClassName.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -153,11 +152,10 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return classNamePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return classNamePersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -174,12 +172,10 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return classNamePersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return classNamePersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -201,11 +197,10 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return classNamePersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return classNamePersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -227,8 +222,7 @@ public abstract class ClassNameLocalServiceBaseImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(classNameLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -240,26 +234,20 @@ public abstract class ClassNameLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			classNameLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(classNameLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ClassName.class);
 
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"classNameId");
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("classNameId");
 
 		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(classNameLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ClassName.class);
@@ -273,14 +261,12 @@ public abstract class ClassNameLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
 		return classNameLocalService.deleteClassName((ClassName)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return classNamePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -338,7 +324,6 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 */
 	public void setClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {
-
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -358,7 +343,6 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -367,9 +351,7 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -379,15 +361,13 @@ public abstract class ClassNameLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.ClassName", classNameLocalService);
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.ClassName",
+			classNameLocalService);
 	}
 
 	public void destroy() {
@@ -427,8 +407,8 @@ public abstract class ClassNameLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -439,18 +419,10 @@ public abstract class ClassNameLocalServiceBaseImpl
 
 	@BeanReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
-
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

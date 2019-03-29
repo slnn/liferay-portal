@@ -34,7 +34,6 @@ import com.liferay.social.kernel.service.SocialActivitySettingLocalServiceUtil;
 @ProviderType
 public abstract class SocialActivitySettingBaseImpl
 	extends SocialActivitySettingModelImpl implements SocialActivitySetting {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,13 +42,10 @@ public abstract class SocialActivitySettingBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(
-				this);
+			SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(this);
 		}
 		else {
-			SocialActivitySettingLocalServiceUtil.updateSocialActivitySetting(
-				this);
+			SocialActivitySettingLocalServiceUtil.updateSocialActivitySetting(this);
 		}
 	}
-
 }

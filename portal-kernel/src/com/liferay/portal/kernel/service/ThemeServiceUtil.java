@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ThemeServiceUtil {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -41,17 +40,16 @@ public class ThemeServiceUtil {
 	 */
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Theme>
-		getThemes(long companyId) {
-
+	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
+		long companyId) {
 		return getService().getThemes(companyId);
 	}
 
@@ -61,16 +59,14 @@ public class ThemeServiceUtil {
 
 	public static ThemeService getService() {
 		if (_service == null) {
-			_service = (ThemeService)PortalBeanLocatorUtil.locate(
-				ThemeService.class.getName());
+			_service = (ThemeService)PortalBeanLocatorUtil.locate(ThemeService.class.getName());
 
-			ReferenceRegistry.registerReference(
-				ThemeServiceUtil.class, "_service");
+			ReferenceRegistry.registerReference(ThemeServiceUtil.class,
+				"_service");
 		}
 
 		return _service;
 	}
 
 	private static ThemeService _service;
-
 }

@@ -31,7 +31,6 @@ import java.util.List;
  */
 @ProviderType
 public class OrgGroupRoleSoap implements Serializable {
-
 	public static OrgGroupRoleSoap toSoapModel(OrgGroupRole model) {
 		OrgGroupRoleSoap soapModel = new OrgGroupRoleSoap();
 
@@ -72,8 +71,7 @@ public class OrgGroupRoleSoap implements Serializable {
 	}
 
 	public static OrgGroupRoleSoap[] toSoapModels(List<OrgGroupRole> models) {
-		List<OrgGroupRoleSoap> soapModels = new ArrayList<OrgGroupRoleSoap>(
-			models.size());
+		List<OrgGroupRoleSoap> soapModels = new ArrayList<OrgGroupRoleSoap>(models.size());
 
 		for (OrgGroupRole model : models) {
 			soapModels.add(toSoapModel(model));
@@ -140,5 +138,4 @@ public class OrgGroupRoleSoap implements Serializable {
 	private long _groupId;
 	private long _roleId;
 	private long _companyId;
-
 }

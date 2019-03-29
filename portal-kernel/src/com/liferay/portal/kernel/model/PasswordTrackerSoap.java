@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class PasswordTrackerSoap implements Serializable {
-
 	public static PasswordTrackerSoap toSoapModel(PasswordTracker model) {
 		PasswordTrackerSoap soapModel = new PasswordTrackerSoap();
 
@@ -45,8 +44,7 @@ public class PasswordTrackerSoap implements Serializable {
 	}
 
 	public static PasswordTrackerSoap[] toSoapModels(PasswordTracker[] models) {
-		PasswordTrackerSoap[] soapModels =
-			new PasswordTrackerSoap[models.length];
+		PasswordTrackerSoap[] soapModels = new PasswordTrackerSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,12 +55,10 @@ public class PasswordTrackerSoap implements Serializable {
 
 	public static PasswordTrackerSoap[][] toSoapModels(
 		PasswordTracker[][] models) {
-
 		PasswordTrackerSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new PasswordTrackerSoap[models.length][models[0].length];
+			soapModels = new PasswordTrackerSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new PasswordTrackerSoap[0][0];
@@ -77,9 +73,7 @@ public class PasswordTrackerSoap implements Serializable {
 
 	public static PasswordTrackerSoap[] toSoapModels(
 		List<PasswordTracker> models) {
-
-		List<PasswordTrackerSoap> soapModels =
-			new ArrayList<PasswordTrackerSoap>(models.size());
+		List<PasswordTrackerSoap> soapModels = new ArrayList<PasswordTrackerSoap>(models.size());
 
 		for (PasswordTracker model : models) {
 			soapModels.add(toSoapModel(model));
@@ -153,5 +147,4 @@ public class PasswordTrackerSoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private String _password;
-
 }

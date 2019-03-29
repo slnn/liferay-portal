@@ -15,11 +15,13 @@
 package com.liferay.layout.uad.anonymizer;
 
 import com.liferay.layout.uad.constants.LayoutUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLayoutSetBranchUADAnonymizer
 	extends DynamicQueryUADAnonymizer<LayoutSetBranch> {
-
 	@Override
-	public void autoAnonymize(
-			LayoutSetBranch layoutSetBranch, long userId, User anonymousUser)
-		throws PortalException {
-
+	public void autoAnonymize(LayoutSetBranch layoutSetBranch, long userId,
+		User anonymousUser) throws PortalException {
 		if (layoutSetBranch.getUserId() == userId) {
 			layoutSetBranch.setUserId(anonymousUser.getUserId());
 			layoutSetBranch.setUserName(anonymousUser.getFullName());
@@ -53,7 +52,8 @@ public abstract class BaseLayoutSetBranchUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutSetBranch layoutSetBranch) throws PortalException {
+	public void delete(LayoutSetBranch layoutSetBranch)
+		throws PortalException {
 		layoutSetBranchLocalService.deleteLayoutSetBranch(layoutSetBranch);
 	}
 
@@ -74,5 +74,4 @@ public abstract class BaseLayoutSetBranchUADAnonymizer
 
 	@Reference
 	protected LayoutSetBranchLocalService layoutSetBranchLocalService;
-
 }

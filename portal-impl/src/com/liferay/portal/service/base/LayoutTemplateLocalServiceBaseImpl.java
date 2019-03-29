@@ -44,9 +44,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class LayoutTemplateLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements LayoutTemplateLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements LayoutTemplateLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,7 +68,6 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 */
 	public void setLayoutTemplateLocalService(
 		LayoutTemplateLocalService layoutTemplateLocalService) {
-
 		this.layoutTemplateLocalService = layoutTemplateLocalService;
 	}
 
@@ -78,9 +76,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -90,9 +86,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -101,9 +95,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 *
 	 * @return the plugin setting local service
 	 */
-	public com.liferay.portal.kernel.service.PluginSettingLocalService
-		getPluginSettingLocalService() {
-
+	public com.liferay.portal.kernel.service.PluginSettingLocalService getPluginSettingLocalService() {
 		return pluginSettingLocalService;
 	}
 
@@ -113,9 +105,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 * @param pluginSettingLocalService the plugin setting local service
 	 */
 	public void setPluginSettingLocalService(
-		com.liferay.portal.kernel.service.PluginSettingLocalService
-			pluginSettingLocalService) {
-
+		com.liferay.portal.kernel.service.PluginSettingLocalService pluginSettingLocalService) {
 		this.pluginSettingLocalService = pluginSettingLocalService;
 	}
 
@@ -135,7 +125,6 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 */
 	public void setPluginSettingPersistence(
 		PluginSettingPersistence pluginSettingPersistence) {
-
 		this.pluginSettingPersistence = pluginSettingPersistence;
 	}
 
@@ -169,8 +158,8 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -181,20 +170,10 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 
 	@BeanReference(type = LayoutTemplateLocalService.class)
 	protected LayoutTemplateLocalService layoutTemplateLocalService;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PluginSettingLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.PluginSettingLocalService
-		pluginSettingLocalService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PluginSettingLocalService.class)
+	protected com.liferay.portal.kernel.service.PluginSettingLocalService pluginSettingLocalService;
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;
-
 }

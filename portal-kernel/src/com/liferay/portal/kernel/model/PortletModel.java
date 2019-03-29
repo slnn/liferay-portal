@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface PortletModel
-	extends BaseModel<Portlet>, MVCCModel, ShardedModel {
-
+public interface PortletModel extends BaseModel<Portlet>, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -149,5 +147,4 @@ public interface PortletModel
 	 * @param active the active of this portlet
 	 */
 	public void setActive(boolean active);
-
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -65,23 +66,18 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class LayoutSetPersistenceImpl
-	extends BasePersistenceImpl<LayoutSet> implements LayoutSetPersistence {
-
+public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
+	implements LayoutSetPersistence {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>LayoutSetUtil</code> to access the layout set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY =
-		LayoutSetImpl.class.getName();
-
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List1";
-
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List2";
-
+	public static final String FINDER_CLASS_NAME_ENTITY = LayoutSetImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -97,8 +93,7 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public List<LayoutSet> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -132,10 +127,8 @@ public class LayoutSetPersistenceImpl
 	 * @return the ordered range of matching layout sets
 	 */
 	@Override
-	public List<LayoutSet> findByGroupId(
-		long groupId, int start, int end,
+	public List<LayoutSet> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<LayoutSet> orderByComparator) {
-
 		return findByGroupId(groupId, start, end, orderByComparator, true);
 	}
 
@@ -154,32 +147,29 @@ public class LayoutSetPersistenceImpl
 	 * @return the ordered range of matching layout sets
 	 */
 	@Override
-	public List<LayoutSet> findByGroupId(
-		long groupId, int start, int end,
+	public List<LayoutSet> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+			finderArgs = new Object[] { groupId };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
+			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
 		List<LayoutSet> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<LayoutSet>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSet layoutSet : list) {
@@ -196,8 +186,8 @@ public class LayoutSetPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -208,10 +198,11 @@ public class LayoutSetPersistenceImpl
 			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(LayoutSetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -229,16 +220,16 @@ public class LayoutSetPersistenceImpl
 				qPos.add(groupId);
 
 				if (!pagination) {
-					list = (List<LayoutSet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<LayoutSet>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<LayoutSet>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<LayoutSet>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -267,10 +258,9 @@ public class LayoutSetPersistenceImpl
 	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
 	 */
 	@Override
-	public LayoutSet findByGroupId_First(
-			long groupId, OrderByComparator<LayoutSet> orderByComparator)
+	public LayoutSet findByGroupId_First(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (layoutSet != null) {
@@ -297,9 +287,8 @@ public class LayoutSetPersistenceImpl
 	 * @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
 	@Override
-	public LayoutSet fetchByGroupId_First(
-		long groupId, OrderByComparator<LayoutSet> orderByComparator) {
-
+	public LayoutSet fetchByGroupId_First(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator) {
 		List<LayoutSet> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -318,10 +307,9 @@ public class LayoutSetPersistenceImpl
 	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
 	 */
 	@Override
-	public LayoutSet findByGroupId_Last(
-			long groupId, OrderByComparator<LayoutSet> orderByComparator)
+	public LayoutSet findByGroupId_Last(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (layoutSet != null) {
@@ -348,17 +336,16 @@ public class LayoutSetPersistenceImpl
 	 * @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
 	@Override
-	public LayoutSet fetchByGroupId_Last(
-		long groupId, OrderByComparator<LayoutSet> orderByComparator) {
-
+	public LayoutSet fetchByGroupId_Last(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<LayoutSet> list = findByGroupId(
-			groupId, count - 1, count, orderByComparator);
+		List<LayoutSet> list = findByGroupId(groupId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -377,11 +364,9 @@ public class LayoutSetPersistenceImpl
 	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	 */
 	@Override
-	public LayoutSet[] findByGroupId_PrevAndNext(
-			long layoutSetId, long groupId,
-			OrderByComparator<LayoutSet> orderByComparator)
+	public LayoutSet[] findByGroupId_PrevAndNext(long layoutSetId,
+		long groupId, OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = findByPrimaryKey(layoutSetId);
 
 		Session session = null;
@@ -391,13 +376,13 @@ public class LayoutSetPersistenceImpl
 
 			LayoutSet[] array = new LayoutSetImpl[3];
 
-			array[0] = getByGroupId_PrevAndNext(
-				session, layoutSet, groupId, orderByComparator, true);
+			array[0] = getByGroupId_PrevAndNext(session, layoutSet, groupId,
+					orderByComparator, true);
 
 			array[1] = layoutSet;
 
-			array[2] = getByGroupId_PrevAndNext(
-				session, layoutSet, groupId, orderByComparator, false);
+			array[2] = getByGroupId_PrevAndNext(session, layoutSet, groupId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -409,15 +394,14 @@ public class LayoutSetPersistenceImpl
 		}
 	}
 
-	protected LayoutSet getByGroupId_PrevAndNext(
-		Session session, LayoutSet layoutSet, long groupId,
+	protected LayoutSet getByGroupId_PrevAndNext(Session session,
+		LayoutSet layoutSet, long groupId,
 		OrderByComparator<LayoutSet> orderByComparator, boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -429,8 +413,7 @@ public class LayoutSetPersistenceImpl
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -500,9 +483,8 @@ public class LayoutSetPersistenceImpl
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(layoutSet)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					layoutSet)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -524,10 +506,8 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (LayoutSet layoutSet :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
+		for (LayoutSet layoutSet : findByGroupId(groupId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(layoutSet);
 		}
 	}
@@ -542,10 +522,10 @@ public class LayoutSetPersistenceImpl
 	public int countByGroupId(long groupId) {
 		FinderPath finderPath = _finderPathCountByGroupId;
 
-		Object[] finderArgs = new Object[] {groupId};
+		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -584,9 +564,7 @@ public class LayoutSetPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"layoutSet.groupId = ?";
-
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layoutSet.groupId = ?";
 	private FinderPath _finderPathWithPaginationFindByLayoutSetPrototypeUuid;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutSetPrototypeUuid;
 	private FinderPath _finderPathCountByLayoutSetPrototypeUuid;
@@ -600,9 +578,8 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public List<LayoutSet> findByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid) {
-
-		return findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -620,9 +597,8 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public List<LayoutSet> findByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid, int start, int end) {
-
-		return findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, start, end, null);
+		return findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start, end,
+			null);
 	}
 
 	/**
@@ -642,9 +618,8 @@ public class LayoutSetPersistenceImpl
 	public List<LayoutSet> findByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid, int start, int end,
 		OrderByComparator<LayoutSet> orderByComparator) {
-
-		return findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, start, end, orderByComparator, true);
+		return findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -666,7 +641,6 @@ public class LayoutSetPersistenceImpl
 		String layoutSetPrototypeUuid, int start, int end,
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean retrieveFromCache) {
-
 		layoutSetPrototypeUuid = Objects.toString(layoutSetPrototypeUuid, "");
 
 		boolean pagination = true;
@@ -674,31 +648,30 @@ public class LayoutSetPersistenceImpl
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid;
-			finderArgs = new Object[] {layoutSetPrototypeUuid};
+			finderPath = _finderPathWithoutPaginationFindByLayoutSetPrototypeUuid;
+			finderArgs = new Object[] { layoutSetPrototypeUuid };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByLayoutSetPrototypeUuid;
 			finderArgs = new Object[] {
-				layoutSetPrototypeUuid, start, end, orderByComparator
-			};
+					layoutSetPrototypeUuid,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<LayoutSet> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<LayoutSet>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSet layoutSet : list) {
 					if (!layoutSetPrototypeUuid.equals(
-							layoutSet.getLayoutSetPrototypeUuid())) {
-
+								layoutSet.getLayoutSetPrototypeUuid())) {
 						list = null;
 
 						break;
@@ -711,8 +684,8 @@ public class LayoutSetPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -723,21 +696,20 @@ public class LayoutSetPersistenceImpl
 			boolean bindLayoutSetPrototypeUuid = false;
 
 			if (layoutSetPrototypeUuid.isEmpty()) {
-				query.append(
-					_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
 			}
 			else {
 				bindLayoutSetPrototypeUuid = true;
 
-				query.append(
-					_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(LayoutSetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -757,16 +729,16 @@ public class LayoutSetPersistenceImpl
 				}
 
 				if (!pagination) {
-					list = (List<LayoutSet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<LayoutSet>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<LayoutSet>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<LayoutSet>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -796,12 +768,11 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public LayoutSet findByLayoutSetPrototypeUuid_First(
-			String layoutSetPrototypeUuid,
-			OrderByComparator<LayoutSet> orderByComparator)
+		String layoutSetPrototypeUuid,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
-
-		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_First(
-			layoutSetPrototypeUuid, orderByComparator);
+		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
+				orderByComparator);
 
 		if (layoutSet != null) {
 			return layoutSet;
@@ -830,9 +801,8 @@ public class LayoutSetPersistenceImpl
 	public LayoutSet fetchByLayoutSetPrototypeUuid_First(
 		String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator) {
-
-		List<LayoutSet> list = findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, 0, 1, orderByComparator);
+		List<LayoutSet> list = findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid,
+				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -851,12 +821,11 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public LayoutSet findByLayoutSetPrototypeUuid_Last(
-			String layoutSetPrototypeUuid,
-			OrderByComparator<LayoutSet> orderByComparator)
+		String layoutSetPrototypeUuid,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
-
-		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_Last(
-			layoutSetPrototypeUuid, orderByComparator);
+		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
+				orderByComparator);
 
 		if (layoutSet != null) {
 			return layoutSet;
@@ -885,15 +854,14 @@ public class LayoutSetPersistenceImpl
 	public LayoutSet fetchByLayoutSetPrototypeUuid_Last(
 		String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator) {
-
 		int count = countByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<LayoutSet> list = findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, count - 1, count, orderByComparator);
+		List<LayoutSet> list = findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid,
+				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -913,10 +881,9 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
-			long layoutSetId, String layoutSetPrototypeUuid,
-			OrderByComparator<LayoutSet> orderByComparator)
+		long layoutSetId, String layoutSetPrototypeUuid,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
-
 		layoutSetPrototypeUuid = Objects.toString(layoutSetPrototypeUuid, "");
 
 		LayoutSet layoutSet = findByPrimaryKey(layoutSetId);
@@ -928,15 +895,13 @@ public class LayoutSetPersistenceImpl
 
 			LayoutSet[] array = new LayoutSetImpl[3];
 
-			array[0] = getByLayoutSetPrototypeUuid_PrevAndNext(
-				session, layoutSet, layoutSetPrototypeUuid, orderByComparator,
-				true);
+			array[0] = getByLayoutSetPrototypeUuid_PrevAndNext(session,
+					layoutSet, layoutSetPrototypeUuid, orderByComparator, true);
 
 			array[1] = layoutSet;
 
-			array[2] = getByLayoutSetPrototypeUuid_PrevAndNext(
-				session, layoutSet, layoutSetPrototypeUuid, orderByComparator,
-				false);
+			array[2] = getByLayoutSetPrototypeUuid_PrevAndNext(session,
+					layoutSet, layoutSetPrototypeUuid, orderByComparator, false);
 
 			return array;
 		}
@@ -951,12 +916,11 @@ public class LayoutSetPersistenceImpl
 	protected LayoutSet getByLayoutSetPrototypeUuid_PrevAndNext(
 		Session session, LayoutSet layoutSet, String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator, boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -968,19 +932,16 @@ public class LayoutSetPersistenceImpl
 		boolean bindLayoutSetPrototypeUuid = false;
 
 		if (layoutSetPrototypeUuid.isEmpty()) {
-			query.append(
-				_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
+			query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
 		}
 		else {
 			bindLayoutSetPrototypeUuid = true;
 
-			query.append(
-				_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
+			query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1052,9 +1013,8 @@ public class LayoutSetPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(layoutSet)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					layoutSet)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1076,11 +1036,9 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public void removeByLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
-		for (LayoutSet layoutSet :
-				findByLayoutSetPrototypeUuid(
-					layoutSetPrototypeUuid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
+		for (LayoutSet layoutSet : findByLayoutSetPrototypeUuid(
+				layoutSetPrototypeUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
 			remove(layoutSet);
 		}
 	}
@@ -1097,10 +1055,10 @@ public class LayoutSetPersistenceImpl
 
 		FinderPath finderPath = _finderPathCountByLayoutSetPrototypeUuid;
 
-		Object[] finderArgs = new Object[] {layoutSetPrototypeUuid};
+		Object[] finderArgs = new Object[] { layoutSetPrototypeUuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1110,14 +1068,12 @@ public class LayoutSetPersistenceImpl
 			boolean bindLayoutSetPrototypeUuid = false;
 
 			if (layoutSetPrototypeUuid.isEmpty()) {
-				query.append(
-					_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
 			}
 			else {
 				bindLayoutSetPrototypeUuid = true;
 
-				query.append(
-					_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
 			}
 
 			String sql = query.toString();
@@ -1152,14 +1108,10 @@ public class LayoutSetPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2 =
-			"layoutSet.layoutSetPrototypeUuid = ?";
-
-	private static final String
-		_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3 =
-			"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = '')";
-
+	private static final String _FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2 =
+		"layoutSet.layoutSetPrototypeUuid = ?";
+	private static final String _FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3 =
+		"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = '')";
 	private FinderPath _finderPathFetchByG_P;
 	private FinderPath _finderPathCountByG_P;
 
@@ -1174,7 +1126,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet findByG_P(long groupId, boolean privateLayout)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = fetchByG_P(groupId, privateLayout);
 
 		if (layoutSet == null) {
@@ -1221,24 +1172,22 @@ public class LayoutSetPersistenceImpl
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
 	@Override
-	public LayoutSet fetchByG_P(
-		long groupId, boolean privateLayout, boolean retrieveFromCache) {
-
-		Object[] finderArgs = new Object[] {groupId, privateLayout};
+	public LayoutSet fetchByG_P(long groupId, boolean privateLayout,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, privateLayout };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_P, finderArgs, this);
+			result = FinderCacheUtil.getResult(_finderPathFetchByG_P,
+					finderArgs, this);
 		}
 
 		if (result instanceof LayoutSet) {
 			LayoutSet layoutSet = (LayoutSet)result;
 
 			if ((groupId != layoutSet.getGroupId()) ||
-				(privateLayout != layoutSet.isPrivateLayout())) {
-
+					(privateLayout != layoutSet.isPrivateLayout())) {
 				result = null;
 			}
 		}
@@ -1270,8 +1219,8 @@ public class LayoutSetPersistenceImpl
 				List<LayoutSet> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByG_P, finderArgs, list);
+					FinderCacheUtil.putResult(_finderPathFetchByG_P,
+						finderArgs, list);
 				}
 				else {
 					LayoutSet layoutSet = list.get(0);
@@ -1309,7 +1258,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet removeByG_P(long groupId, boolean privateLayout)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = findByG_P(groupId, privateLayout);
 
 		return remove(layoutSet);
@@ -1326,10 +1274,10 @@ public class LayoutSetPersistenceImpl
 	public int countByG_P(long groupId, boolean privateLayout) {
 		FinderPath finderPath = _finderPathCountByG_P;
 
-		Object[] finderArgs = new Object[] {groupId, privateLayout};
+		Object[] finderArgs = new Object[] { groupId, privateLayout };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1372,12 +1320,8 @@ public class LayoutSetPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_P_GROUPID_2 =
-		"layoutSet.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2 =
-		"layoutSet.privateLayout = ?";
-
+	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "layoutSet.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2 = "layoutSet.privateLayout = ?";
 	private FinderPath _finderPathFetchByP_L;
 	private FinderPath _finderPathCountByP_L;
 
@@ -1392,7 +1336,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet findByP_L(boolean privateLayout, long logoId)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = fetchByP_L(privateLayout, logoId);
 
 		if (layoutSet == null) {
@@ -1439,24 +1382,22 @@ public class LayoutSetPersistenceImpl
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
 	@Override
-	public LayoutSet fetchByP_L(
-		boolean privateLayout, long logoId, boolean retrieveFromCache) {
-
-		Object[] finderArgs = new Object[] {privateLayout, logoId};
+	public LayoutSet fetchByP_L(boolean privateLayout, long logoId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { privateLayout, logoId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByP_L, finderArgs, this);
+			result = FinderCacheUtil.getResult(_finderPathFetchByP_L,
+					finderArgs, this);
 		}
 
 		if (result instanceof LayoutSet) {
 			LayoutSet layoutSet = (LayoutSet)result;
 
 			if ((privateLayout != layoutSet.isPrivateLayout()) ||
-				(logoId != layoutSet.getLogoId())) {
-
+					(logoId != layoutSet.getLogoId())) {
 				result = null;
 			}
 		}
@@ -1488,8 +1429,8 @@ public class LayoutSetPersistenceImpl
 				List<LayoutSet> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByP_L, finderArgs, list);
+					FinderCacheUtil.putResult(_finderPathFetchByP_L,
+						finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -1498,8 +1439,8 @@ public class LayoutSetPersistenceImpl
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"LayoutSetPersistenceImpl.fetchByP_L(boolean, long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -1538,7 +1479,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet removeByP_L(boolean privateLayout, long logoId)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = findByP_L(privateLayout, logoId);
 
 		return remove(layoutSet);
@@ -1555,10 +1495,10 @@ public class LayoutSetPersistenceImpl
 	public int countByP_L(boolean privateLayout, long logoId) {
 		FinderPath finderPath = _finderPathCountByP_L;
 
-		Object[] finderArgs = new Object[] {privateLayout, logoId};
+		Object[] finderArgs = new Object[] { privateLayout, logoId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1601,11 +1541,8 @@ public class LayoutSetPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_P_L_PRIVATELAYOUT_2 =
-		"layoutSet.privateLayout = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_L_LOGOID_2 =
-		"layoutSet.logoId = ?";
+	private static final String _FINDER_COLUMN_P_L_PRIVATELAYOUT_2 = "layoutSet.privateLayout = ? AND ";
+	private static final String _FINDER_COLUMN_P_L_LOGOID_2 = "layoutSet.logoId = ?";
 
 	public LayoutSetPersistenceImpl() {
 		setModelClass(LayoutSet.class);
@@ -1622,18 +1559,15 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(LayoutSet layoutSet) {
-		EntityCacheUtil.putResult(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED, LayoutSetImpl.class,
-			layoutSet.getPrimaryKey(), layoutSet);
+		EntityCacheUtil.putResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetImpl.class, layoutSet.getPrimaryKey(), layoutSet);
 
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P,
-			new Object[] {layoutSet.getGroupId(), layoutSet.isPrivateLayout()},
+		FinderCacheUtil.putResult(_finderPathFetchByG_P,
+			new Object[] { layoutSet.getGroupId(), layoutSet.isPrivateLayout() },
 			layoutSet);
 
-		FinderCacheUtil.putResult(
-			_finderPathFetchByP_L,
-			new Object[] {layoutSet.isPrivateLayout(), layoutSet.getLogoId()},
+		FinderCacheUtil.putResult(_finderPathFetchByP_L,
+			new Object[] { layoutSet.isPrivateLayout(), layoutSet.getLogoId() },
 			layoutSet);
 
 		layoutSet.resetOriginalValues();
@@ -1648,9 +1582,8 @@ public class LayoutSetPersistenceImpl
 	public void cacheResult(List<LayoutSet> layoutSets) {
 		for (LayoutSet layoutSet : layoutSets) {
 			if (EntityCacheUtil.getResult(
-					LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
-
+						LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+						LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
 				cacheResult(layoutSet);
 			}
 			else {
@@ -1684,9 +1617,8 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public void clearCache(LayoutSet layoutSet) {
-		EntityCacheUtil.removeResult(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED, LayoutSetImpl.class,
-			layoutSet.getPrimaryKey());
+		EntityCacheUtil.removeResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetImpl.class, layoutSet.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1700,9 +1632,8 @@ public class LayoutSetPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (LayoutSet layoutSet : layoutSets) {
-			EntityCacheUtil.removeResult(
-				LayoutSetModelImpl.ENTITY_CACHE_ENABLED, LayoutSetImpl.class,
-				layoutSet.getPrimaryKey());
+			EntityCacheUtil.removeResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetImpl.class, layoutSet.getPrimaryKey());
 
 			clearUniqueFindersCache((LayoutSetModelImpl)layoutSet, true);
 		}
@@ -1710,47 +1641,45 @@ public class LayoutSetPersistenceImpl
 
 	protected void cacheUniqueFindersCache(
 		LayoutSetModelImpl layoutSetModelImpl) {
-
 		Object[] args = new Object[] {
-			layoutSetModelImpl.getGroupId(),
-			layoutSetModelImpl.isPrivateLayout()
-		};
+				layoutSetModelImpl.getGroupId(),
+				layoutSetModelImpl.isPrivateLayout()
+			};
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByG_P, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P, args, layoutSetModelImpl, false);
+		FinderCacheUtil.putResult(_finderPathCountByG_P, args, Long.valueOf(1),
+			false);
+		FinderCacheUtil.putResult(_finderPathFetchByG_P, args,
+			layoutSetModelImpl, false);
 
 		args = new Object[] {
-			layoutSetModelImpl.isPrivateLayout(), layoutSetModelImpl.getLogoId()
-		};
+				layoutSetModelImpl.isPrivateLayout(),
+				layoutSetModelImpl.getLogoId()
+			};
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByP_L, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByP_L, args, layoutSetModelImpl, false);
+		FinderCacheUtil.putResult(_finderPathCountByP_L, args, Long.valueOf(1),
+			false);
+		FinderCacheUtil.putResult(_finderPathFetchByP_L, args,
+			layoutSetModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		LayoutSetModelImpl layoutSetModelImpl, boolean clearCurrent) {
-
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				layoutSetModelImpl.getGroupId(),
-				layoutSetModelImpl.isPrivateLayout()
-			};
+					layoutSetModelImpl.getGroupId(),
+					layoutSetModelImpl.isPrivateLayout()
+				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByG_P, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByG_P, args);
 		}
 
 		if ((layoutSetModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_P.getColumnBitmask()) != 0) {
-
+				_finderPathFetchByG_P.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-				layoutSetModelImpl.getOriginalGroupId(),
-				layoutSetModelImpl.getOriginalPrivateLayout()
-			};
+					layoutSetModelImpl.getOriginalGroupId(),
+					layoutSetModelImpl.getOriginalPrivateLayout()
+				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByG_P, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByG_P, args);
@@ -1758,21 +1687,20 @@ public class LayoutSetPersistenceImpl
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				layoutSetModelImpl.isPrivateLayout(),
-				layoutSetModelImpl.getLogoId()
-			};
+					layoutSetModelImpl.isPrivateLayout(),
+					layoutSetModelImpl.getLogoId()
+				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByP_L, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByP_L, args);
 		}
 
 		if ((layoutSetModelImpl.getColumnBitmask() &
-			 _finderPathFetchByP_L.getColumnBitmask()) != 0) {
-
+				_finderPathFetchByP_L.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-				layoutSetModelImpl.getOriginalPrivateLayout(),
-				layoutSetModelImpl.getOriginalLogoId()
-			};
+					layoutSetModelImpl.getOriginalPrivateLayout(),
+					layoutSetModelImpl.getOriginalLogoId()
+				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByP_L, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByP_L, args);
@@ -1819,22 +1747,21 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet remove(Serializable primaryKey)
 		throws NoSuchLayoutSetException {
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			LayoutSet layoutSet = (LayoutSet)session.get(
-				LayoutSetImpl.class, primaryKey);
+			LayoutSet layoutSet = (LayoutSet)session.get(LayoutSetImpl.class,
+					primaryKey);
 
 			if (layoutSet == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchLayoutSetException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				throw new NoSuchLayoutSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					primaryKey);
 			}
 
 			return remove(layoutSet);
@@ -1858,8 +1785,8 @@ public class LayoutSetPersistenceImpl
 			session = openSession();
 
 			if (!session.contains(layoutSet)) {
-				layoutSet = (LayoutSet)session.get(
-					LayoutSetImpl.class, layoutSet.getPrimaryKeyObj());
+				layoutSet = (LayoutSet)session.get(LayoutSetImpl.class,
+						layoutSet.getPrimaryKeyObj());
 			}
 
 			if (layoutSet != null) {
@@ -1892,18 +1819,17 @@ public class LayoutSetPersistenceImpl
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in layoutSet proxy " +
-						invocationHandler.getClass());
+					invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom LayoutSet implementation " +
-					layoutSet.getClass());
+				layoutSet.getClass());
 		}
 
 		LayoutSetModelImpl layoutSetModelImpl = (LayoutSetModelImpl)layoutSet;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -1949,79 +1875,70 @@ public class LayoutSetPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!LayoutSetModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else if (isNew) {
-			Object[] args = new Object[] {layoutSetModelImpl.getGroupId()};
+		else
+		 if (isNew) {
+			Object[] args = new Object[] { layoutSetModelImpl.getGroupId() };
 
 			FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByGroupId,
+				args);
 
-			args = new Object[] {
-				layoutSetModelImpl.getLayoutSetPrototypeUuid()
-			};
+			args = new Object[] { layoutSetModelImpl.getLayoutSetPrototypeUuid() };
 
-			FinderCacheUtil.removeResult(
-				_finderPathCountByLayoutSetPrototypeUuid, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid, args);
+			FinderCacheUtil.removeResult(_finderPathCountByLayoutSetPrototypeUuid,
+				args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid,
+				args);
 
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
+				FINDER_ARGS_EMPTY);
 		}
+
 		else {
 			if ((layoutSetModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
-
+					_finderPathWithoutPaginationFindByGroupId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-					layoutSetModelImpl.getOriginalGroupId()
-				};
+						layoutSetModelImpl.getOriginalGroupId()
+					};
 
 				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByGroupId,
+					args);
 
-				args = new Object[] {layoutSetModelImpl.getGroupId()};
+				args = new Object[] { layoutSetModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByGroupId,
+					args);
 			}
 
 			if ((layoutSetModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByLayoutSetPrototypeUuid.
-					 getColumnBitmask()) != 0) {
-
+					_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-					layoutSetModelImpl.getOriginalLayoutSetPrototypeUuid()
-				};
+						layoutSetModelImpl.getOriginalLayoutSetPrototypeUuid()
+					};
 
-				FinderCacheUtil.removeResult(
-					_finderPathCountByLayoutSetPrototypeUuid, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid,
+				FinderCacheUtil.removeResult(_finderPathCountByLayoutSetPrototypeUuid,
+					args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid,
 					args);
 
 				args = new Object[] {
-					layoutSetModelImpl.getLayoutSetPrototypeUuid()
-				};
+						layoutSetModelImpl.getLayoutSetPrototypeUuid()
+					};
 
-				FinderCacheUtil.removeResult(
-					_finderPathCountByLayoutSetPrototypeUuid, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid,
+				FinderCacheUtil.removeResult(_finderPathCountByLayoutSetPrototypeUuid,
+					args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED, LayoutSetImpl.class,
-			layoutSet.getPrimaryKey(), layoutSet, false);
+		EntityCacheUtil.putResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetImpl.class, layoutSet.getPrimaryKey(), layoutSet, false);
 
 		clearUniqueFindersCache(layoutSetModelImpl, false);
 		cacheUniqueFindersCache(layoutSetModelImpl);
@@ -2041,7 +1958,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchLayoutSetException {
-
 		LayoutSet layoutSet = fetchByPrimaryKey(primaryKey);
 
 		if (layoutSet == null) {
@@ -2049,8 +1965,8 @@ public class LayoutSetPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchLayoutSetException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			throw new NoSuchLayoutSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
 		}
 
 		return layoutSet;
@@ -2066,7 +1982,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet findByPrimaryKey(long layoutSetId)
 		throws NoSuchLayoutSetException {
-
 		return findByPrimaryKey((Serializable)layoutSetId);
 	}
 
@@ -2120,9 +2035,8 @@ public class LayoutSetPersistenceImpl
 	 * @return the ordered range of layout sets
 	 */
 	@Override
-	public List<LayoutSet> findAll(
-		int start, int end, OrderByComparator<LayoutSet> orderByComparator) {
-
+	public List<LayoutSet> findAll(int start, int end,
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -2140,31 +2054,29 @@ public class LayoutSetPersistenceImpl
 	 * @return the ordered range of layout sets
 	 */
 	@Override
-	public List<LayoutSet> findAll(
-		int start, int end, OrderByComparator<LayoutSet> orderByComparator,
+	public List<LayoutSet> findAll(int start, int end,
+		OrderByComparator<LayoutSet> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
+			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
 		List<LayoutSet> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<LayoutSet>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2172,13 +2084,13 @@ public class LayoutSetPersistenceImpl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(2 +
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_LAYOUTSET);
 
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2198,16 +2110,16 @@ public class LayoutSetPersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<LayoutSet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<LayoutSet>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<LayoutSet>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<LayoutSet>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -2245,8 +2157,8 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2258,12 +2170,12 @@ public class LayoutSetPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(_finderPathCountAll,
+					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(_finderPathCountAll,
+					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2304,98 +2216,88 @@ public class LayoutSetPersistenceImpl
 	 * Initializes the layout set persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
 
-		_finderPathCountAll = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathCountAll = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByGroupId = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()},
-			LayoutSetModelImpl.GROUPID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+				new String[] { Long.class.getName() },
+				LayoutSetModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByGroupId = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()});
+		_finderPathCountByGroupId = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+				new String[] { Long.class.getName() });
 
-		_finderPathWithPaginationFindByLayoutSetPrototypeUuid = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLayoutSetPrototypeUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByLayoutSetPrototypeUuid = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByLayoutSetPrototypeUuid",
+				new String[] {
+					String.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid =
-			new FinderPath(
-				LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+		_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByLayoutSetPrototypeUuid",
-				new String[] {String.class.getName()},
+				new String[] { String.class.getName() },
 				LayoutSetModelImpl.LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK);
 
-		_finderPathCountByLayoutSetPrototypeUuid = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutSetPrototypeUuid",
-			new String[] {String.class.getName()});
+		_finderPathCountByLayoutSetPrototypeUuid = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByLayoutSetPrototypeUuid",
+				new String[] { String.class.getName() });
 
-		_finderPathFetchByG_P = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			LayoutSetModelImpl.GROUPID_COLUMN_BITMASK |
-			LayoutSetModelImpl.PRIVATELAYOUT_COLUMN_BITMASK);
+		_finderPathFetchByG_P = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
+				new String[] { Long.class.getName(), Boolean.class.getName() },
+				LayoutSetModelImpl.GROUPID_COLUMN_BITMASK |
+				LayoutSetModelImpl.PRIVATELAYOUT_COLUMN_BITMASK);
 
-		_finderPathCountByG_P = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()});
+		_finderPathCountByG_P = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+				new String[] { Long.class.getName(), Boolean.class.getName() });
 
-		_finderPathFetchByP_L = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_L",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			LayoutSetModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
-			LayoutSetModelImpl.LOGOID_COLUMN_BITMASK);
+		_finderPathFetchByP_L = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByP_L",
+				new String[] { Boolean.class.getName(), Long.class.getName() },
+				LayoutSetModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+				LayoutSetModelImpl.LOGOID_COLUMN_BITMASK);
 
-		_finderPathCountByP_L = new FinderPath(
-			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_L",
-			new String[] {Boolean.class.getName(), Long.class.getName()});
+		_finderPathCountByP_L = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_L",
+				new String[] { Boolean.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {
@@ -2407,31 +2309,15 @@ public class LayoutSetPersistenceImpl
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-
-	private static final String _SQL_SELECT_LAYOUTSET =
-		"SELECT layoutSet FROM LayoutSet layoutSet";
-
-	private static final String _SQL_SELECT_LAYOUTSET_WHERE =
-		"SELECT layoutSet FROM LayoutSet layoutSet WHERE ";
-
-	private static final String _SQL_COUNT_LAYOUTSET =
-		"SELECT COUNT(layoutSet) FROM LayoutSet layoutSet";
-
-	private static final String _SQL_COUNT_LAYOUTSET_WHERE =
-		"SELECT COUNT(layoutSet) FROM LayoutSet layoutSet WHERE ";
-
+	private static final String _SQL_SELECT_LAYOUTSET = "SELECT layoutSet FROM LayoutSet layoutSet";
+	private static final String _SQL_SELECT_LAYOUTSET_WHERE = "SELECT layoutSet FROM LayoutSet layoutSet WHERE ";
+	private static final String _SQL_COUNT_LAYOUTSET = "SELECT COUNT(layoutSet) FROM LayoutSet layoutSet";
+	private static final String _SQL_COUNT_LAYOUTSET_WHERE = "SELECT COUNT(layoutSet) FROM LayoutSet layoutSet WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutSet.";
-
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutSet exists with the primary key ";
-
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LayoutSet exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSetPersistenceImpl.class);
-
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"settings"});
-
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutSet exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSet exists with the key {";
+	private static final Log _log = LogFactoryUtil.getLog(LayoutSetPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"settings"
+			});
 }

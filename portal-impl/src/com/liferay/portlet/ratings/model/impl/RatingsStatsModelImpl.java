@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
+
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.model.RatingsStatsModel;
 
@@ -54,25 +57,24 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class RatingsStatsModelImpl
-	extends BaseModelImpl<RatingsStats> implements RatingsStatsModel {
-
+public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
+	implements RatingsStatsModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ratings stats model instance should use the <code>RatingsStats</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "RatingsStats";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"statsId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"totalEntries", Types.INTEGER}, {"totalScore", Types.DOUBLE},
-		{"averageScore", Types.DOUBLE}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "statsId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
+			{ "totalEntries", Types.INTEGER },
+			{ "totalScore", Types.DOUBLE },
+			{ "averageScore", Types.DOUBLE }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("statsId", Types.BIGINT);
@@ -84,47 +86,27 @@ public class RatingsStatsModelImpl
 		TABLE_COLUMNS_MAP.put("averageScore", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table RatingsStats (statsId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
-
+	public static final String TABLE_SQL_CREATE = "create table RatingsStats (statsId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY ratingsStats.statsId ASC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY RatingsStats.statsId ASC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY ratingsStats.statsId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY RatingsStats.statsId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.entity.cache.enabled.com.liferay.ratings.kernel.model.RatingsStats"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.finder.cache.enabled.com.liferay.ratings.kernel.model.RatingsStats"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.column.bitmask.enabled.com.liferay.ratings.kernel.model.RatingsStats"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.entity.cache.enabled.com.liferay.ratings.kernel.model.RatingsStats"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.com.liferay.ratings.kernel.model.RatingsStats"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.ratings.kernel.model.RatingsStats"),
+			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-
 	public static final long STATSID_COLUMN_BITMASK = 4L;
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.util.PropsUtil.get(
-			"lock.expiration.time.com.liferay.ratings.kernel.model.RatingsStats"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
+				"lock.expiration.time.com.liferay.ratings.kernel.model.RatingsStats"));
 
 	public RatingsStatsModelImpl() {
 	}
@@ -163,18 +145,13 @@ public class RatingsStatsModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<RatingsStats, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<RatingsStats, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<RatingsStats, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<RatingsStats, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((RatingsStats)this));
 		}
 
@@ -186,81 +163,55 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<RatingsStats, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<RatingsStats, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<RatingsStats, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<RatingsStats, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(RatingsStats)this, entry.getValue());
+				attributeSetterBiConsumer.accept((RatingsStats)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<RatingsStats, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<RatingsStats, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<RatingsStats, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<RatingsStats, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<RatingsStats, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<RatingsStats, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<RatingsStats, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<RatingsStats, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<RatingsStats, Object>>();
-		Map<String, BiConsumer<RatingsStats, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<RatingsStats, ?>>();
+		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<RatingsStats, Object>>();
+		Map<String, BiConsumer<RatingsStats, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<RatingsStats, ?>>();
+
 
 		attributeGetterFunctions.put("statsId", RatingsStats::getStatsId);
-		attributeSetterBiConsumers.put(
-			"statsId",
-			(BiConsumer<RatingsStats, Long>)RatingsStats::setStatsId);
+		attributeSetterBiConsumers.put("statsId", (BiConsumer<RatingsStats, Long>)RatingsStats::setStatsId);
 		attributeGetterFunctions.put("companyId", RatingsStats::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<RatingsStats, Long>)RatingsStats::setCompanyId);
-		attributeGetterFunctions.put(
-			"classNameId", RatingsStats::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<RatingsStats, Long>)RatingsStats::setClassNameId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<RatingsStats, Long>)RatingsStats::setCompanyId);
+		attributeGetterFunctions.put("classNameId", RatingsStats::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<RatingsStats, Long>)RatingsStats::setClassNameId);
 		attributeGetterFunctions.put("classPK", RatingsStats::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<RatingsStats, Long>)RatingsStats::setClassPK);
-		attributeGetterFunctions.put(
-			"totalEntries", RatingsStats::getTotalEntries);
-		attributeSetterBiConsumers.put(
-			"totalEntries",
-			(BiConsumer<RatingsStats, Integer>)RatingsStats::setTotalEntries);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<RatingsStats, Long>)RatingsStats::setClassPK);
+		attributeGetterFunctions.put("totalEntries", RatingsStats::getTotalEntries);
+		attributeSetterBiConsumers.put("totalEntries", (BiConsumer<RatingsStats, Integer>)RatingsStats::setTotalEntries);
 		attributeGetterFunctions.put("totalScore", RatingsStats::getTotalScore);
-		attributeSetterBiConsumers.put(
-			"totalScore",
-			(BiConsumer<RatingsStats, Double>)RatingsStats::setTotalScore);
-		attributeGetterFunctions.put(
-			"averageScore", RatingsStats::getAverageScore);
-		attributeSetterBiConsumers.put(
-			"averageScore",
-			(BiConsumer<RatingsStats, Double>)RatingsStats::setAverageScore);
+		attributeSetterBiConsumers.put("totalScore", (BiConsumer<RatingsStats, Double>)RatingsStats::setTotalScore);
+		attributeGetterFunctions.put("averageScore", RatingsStats::getAverageScore);
+		attributeSetterBiConsumers.put("averageScore", (BiConsumer<RatingsStats, Double>)RatingsStats::setAverageScore);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -383,8 +334,8 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), RatingsStats.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			RatingsStats.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -397,9 +348,8 @@ public class RatingsStatsModelImpl
 	@Override
 	public RatingsStats toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RatingsStats)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (RatingsStats)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -478,8 +428,7 @@ public class RatingsStatsModelImpl
 	public void resetOriginalValues() {
 		RatingsStatsModelImpl ratingsStatsModelImpl = this;
 
-		ratingsStatsModelImpl._originalClassNameId =
-			ratingsStatsModelImpl._classNameId;
+		ratingsStatsModelImpl._originalClassNameId = ratingsStatsModelImpl._classNameId;
 
 		ratingsStatsModelImpl._setOriginalClassNameId = false;
 
@@ -492,8 +441,7 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public CacheModel<RatingsStats> toCacheModel() {
-		RatingsStatsCacheModel ratingsStatsCacheModel =
-			new RatingsStatsCacheModel();
+		RatingsStatsCacheModel ratingsStatsCacheModel = new RatingsStatsCacheModel();
 
 		ratingsStatsCacheModel.statsId = getStatsId();
 
@@ -514,20 +462,16 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<RatingsStats, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<RatingsStats, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<RatingsStats, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<RatingsStats, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -546,22 +490,18 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<RatingsStats, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<RatingsStats, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<RatingsStats, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<RatingsStats, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -575,12 +515,10 @@ public class RatingsStatsModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RatingsStats.class.getClassLoader();
+	private static final ClassLoader _classLoader = RatingsStats.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RatingsStats.class, ModelWrapper.class
-	};
-
+			RatingsStats.class, ModelWrapper.class
+		};
 	private long _statsId;
 	private long _companyId;
 	private long _classNameId;
@@ -594,5 +532,4 @@ public class RatingsStatsModelImpl
 	private double _averageScore;
 	private long _columnBitmask;
 	private RatingsStats _escapedModel;
-
 }

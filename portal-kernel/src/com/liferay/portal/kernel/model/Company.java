@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.CompanyImpl")
 @ProviderType
 public interface Company extends CompanyModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.CompanyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Company, Long> COMPANY_ID_ACCESSOR =
-		new Accessor<Company, Long>() {
-
+	public static final Accessor<Company, Long> COMPANY_ID_ACCESSOR = new Accessor<Company, Long>() {
 			@Override
 			public Long get(Company company) {
 				return company.getCompanyId();
@@ -52,7 +49,6 @@ public interface Company extends CompanyModel, PersistedModel {
 			public Class<Company> getTypeClass() {
 				return Company.class;
 			}
-
 		};
 
 	public int compareTo(Company company);
@@ -82,7 +78,7 @@ public interface Company extends CompanyModel, PersistedModel {
 	public java.util.Locale getLocale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@com.liferay.portal.kernel.bean.AutoEscape
+	@com.liferay.portal.kernel.bean.AutoEscape()
 	public String getName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -116,5 +112,4 @@ public interface Company extends CompanyModel, PersistedModel {
 	public void setKeyObj(java.security.Key keyObj);
 
 	public void setVirtualHostname(String virtualHostname);
-
 }

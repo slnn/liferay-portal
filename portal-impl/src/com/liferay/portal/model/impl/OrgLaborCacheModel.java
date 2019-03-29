@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class OrgLaborCacheModel
-	implements CacheModel<OrgLabor>, Externalizable, MVCCModel {
-
+public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
+	MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,8 +50,7 @@ public class OrgLaborCacheModel
 		OrgLaborCacheModel orgLaborCacheModel = (OrgLaborCacheModel)obj;
 
 		if ((orgLaborId == orgLaborCacheModel.orgLaborId) &&
-			(mvccVersion == orgLaborCacheModel.mvccVersion)) {
-
+				(mvccVersion == orgLaborCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -193,7 +192,8 @@ public class OrgLaborCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(orgLaborId);
@@ -252,5 +252,4 @@ public class OrgLaborCacheModel
 	public int friClose;
 	public int satOpen;
 	public int satClose;
-
 }

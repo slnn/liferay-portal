@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ReleaseBaseImpl
-	extends ReleaseModelImpl implements Release {
-
+public abstract class ReleaseBaseImpl extends ReleaseModelImpl
+	implements Release {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class ReleaseBaseImpl
 			ReleaseLocalServiceUtil.updateRelease(this);
 		}
 	}
-
 }

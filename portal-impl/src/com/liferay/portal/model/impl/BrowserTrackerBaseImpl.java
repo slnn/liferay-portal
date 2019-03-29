@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class BrowserTrackerBaseImpl
-	extends BrowserTrackerModelImpl implements BrowserTracker {
-
+public abstract class BrowserTrackerBaseImpl extends BrowserTrackerModelImpl
+	implements BrowserTracker {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class BrowserTrackerBaseImpl
 			BrowserTrackerLocalServiceUtil.updateBrowserTracker(this);
 		}
 	}
-
 }

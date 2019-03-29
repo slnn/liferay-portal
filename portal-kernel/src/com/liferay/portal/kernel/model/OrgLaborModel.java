@@ -28,9 +28,8 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface OrgLaborModel
-	extends BaseModel<OrgLabor>, MVCCModel, ShardedModel {
-
+public interface OrgLaborModel extends BaseModel<OrgLabor>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -320,5 +319,4 @@ public interface OrgLaborModel
 	 * @param satClose the sat close of this org labor
 	 */
 	public void setSatClose(int satClose);
-
 }

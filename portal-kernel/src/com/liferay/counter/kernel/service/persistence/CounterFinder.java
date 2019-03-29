@@ -22,7 +22,6 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CounterFinder {
-
 	public java.util.List<String> getNames();
 
 	public String getRegistryName();
@@ -40,5 +39,4 @@ public interface CounterFinder {
 	public void reset(String name);
 
 	public void reset(String name, long size);
-
 }

@@ -32,10 +32,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class RatingsStatsWrapper
-	extends BaseModelWrapper<RatingsStats>
+public class RatingsStatsWrapper extends BaseModelWrapper<RatingsStats>
 	implements RatingsStats, ModelWrapper<RatingsStats> {
-
 	public RatingsStatsWrapper(RatingsStats ratingsStats) {
 		super(ratingsStats);
 	}
@@ -101,90 +99,90 @@ public class RatingsStatsWrapper
 	}
 
 	/**
-	 * Returns the average score of this ratings stats.
-	 *
-	 * @return the average score of this ratings stats
-	 */
+	* Returns the average score of this ratings stats.
+	*
+	* @return the average score of this ratings stats
+	*/
 	@Override
 	public double getAverageScore() {
 		return model.getAverageScore();
 	}
 
 	/**
-	 * Returns the fully qualified class name of this ratings stats.
-	 *
-	 * @return the fully qualified class name of this ratings stats
-	 */
+	* Returns the fully qualified class name of this ratings stats.
+	*
+	* @return the fully qualified class name of this ratings stats
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this ratings stats.
-	 *
-	 * @return the class name ID of this ratings stats
-	 */
+	* Returns the class name ID of this ratings stats.
+	*
+	* @return the class name ID of this ratings stats
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the class pk of this ratings stats.
-	 *
-	 * @return the class pk of this ratings stats
-	 */
+	* Returns the class pk of this ratings stats.
+	*
+	* @return the class pk of this ratings stats
+	*/
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	 * Returns the company ID of this ratings stats.
-	 *
-	 * @return the company ID of this ratings stats
-	 */
+	* Returns the company ID of this ratings stats.
+	*
+	* @return the company ID of this ratings stats
+	*/
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	 * Returns the primary key of this ratings stats.
-	 *
-	 * @return the primary key of this ratings stats
-	 */
+	* Returns the primary key of this ratings stats.
+	*
+	* @return the primary key of this ratings stats
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the stats ID of this ratings stats.
-	 *
-	 * @return the stats ID of this ratings stats
-	 */
+	* Returns the stats ID of this ratings stats.
+	*
+	* @return the stats ID of this ratings stats
+	*/
 	@Override
 	public long getStatsId() {
 		return model.getStatsId();
 	}
 
 	/**
-	 * Returns the total entries of this ratings stats.
-	 *
-	 * @return the total entries of this ratings stats
-	 */
+	* Returns the total entries of this ratings stats.
+	*
+	* @return the total entries of this ratings stats
+	*/
 	@Override
 	public int getTotalEntries() {
 		return model.getTotalEntries();
 	}
 
 	/**
-	 * Returns the total score of this ratings stats.
-	 *
-	 * @return the total score of this ratings stats
-	 */
+	* Returns the total score of this ratings stats.
+	*
+	* @return the total score of this ratings stats
+	*/
 	@Override
 	public double getTotalScore() {
 		return model.getTotalScore();
@@ -196,10 +194,10 @@ public class RatingsStatsWrapper
 	}
 
 	/**
-	 * Sets the average score of this ratings stats.
-	 *
-	 * @param averageScore the average score of this ratings stats
-	 */
+	* Sets the average score of this ratings stats.
+	*
+	* @param averageScore the average score of this ratings stats
+	*/
 	@Override
 	public void setAverageScore(double averageScore) {
 		model.setAverageScore(averageScore);
@@ -211,70 +209,70 @@ public class RatingsStatsWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this ratings stats.
-	 *
-	 * @param classNameId the class name ID of this ratings stats
-	 */
+	* Sets the class name ID of this ratings stats.
+	*
+	* @param classNameId the class name ID of this ratings stats
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the class pk of this ratings stats.
-	 *
-	 * @param classPK the class pk of this ratings stats
-	 */
+	* Sets the class pk of this ratings stats.
+	*
+	* @param classPK the class pk of this ratings stats
+	*/
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	 * Sets the company ID of this ratings stats.
-	 *
-	 * @param companyId the company ID of this ratings stats
-	 */
+	* Sets the company ID of this ratings stats.
+	*
+	* @param companyId the company ID of this ratings stats
+	*/
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	 * Sets the primary key of this ratings stats.
-	 *
-	 * @param primaryKey the primary key of this ratings stats
-	 */
+	* Sets the primary key of this ratings stats.
+	*
+	* @param primaryKey the primary key of this ratings stats
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the stats ID of this ratings stats.
-	 *
-	 * @param statsId the stats ID of this ratings stats
-	 */
+	* Sets the stats ID of this ratings stats.
+	*
+	* @param statsId the stats ID of this ratings stats
+	*/
 	@Override
 	public void setStatsId(long statsId) {
 		model.setStatsId(statsId);
 	}
 
 	/**
-	 * Sets the total entries of this ratings stats.
-	 *
-	 * @param totalEntries the total entries of this ratings stats
-	 */
+	* Sets the total entries of this ratings stats.
+	*
+	* @param totalEntries the total entries of this ratings stats
+	*/
 	@Override
 	public void setTotalEntries(int totalEntries) {
 		model.setTotalEntries(totalEntries);
 	}
 
 	/**
-	 * Sets the total score of this ratings stats.
-	 *
-	 * @param totalScore the total score of this ratings stats
-	 */
+	* Sets the total score of this ratings stats.
+	*
+	* @param totalScore the total score of this ratings stats
+	*/
 	@Override
 	public void setTotalScore(double totalScore) {
 		model.setTotalScore(totalScore);
@@ -284,5 +282,4 @@ public class RatingsStatsWrapper
 	protected RatingsStatsWrapper wrap(RatingsStats ratingsStats) {
 		return new RatingsStatsWrapper(ratingsStats);
 	}
-
 }

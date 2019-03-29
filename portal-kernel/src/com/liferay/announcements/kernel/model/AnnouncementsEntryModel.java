@@ -36,10 +36,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsEntryModel
-	extends AttachedModel, BaseModel<AnnouncementsEntry>, ShardedModel,
-			StagedAuditedModel {
-
+public interface AnnouncementsEntryModel extends AttachedModel,
+	BaseModel<AnnouncementsEntry>, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -352,5 +350,4 @@ public interface AnnouncementsEntryModel
 	 * @param alert the alert of this announcements entry
 	 */
 	public void setAlert(boolean alert);
-
 }

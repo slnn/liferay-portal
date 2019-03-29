@@ -32,9 +32,8 @@ import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AssetLinkBaseImpl
-	extends AssetLinkModelImpl implements AssetLink {
-
+public abstract class AssetLinkBaseImpl extends AssetLinkModelImpl
+	implements AssetLink {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class AssetLinkBaseImpl
 			AssetLinkLocalServiceUtil.updateAssetLink(this);
 		}
 	}
-
 }

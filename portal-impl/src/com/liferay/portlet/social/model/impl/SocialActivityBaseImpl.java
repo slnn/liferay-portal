@@ -32,9 +32,8 @@ import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SocialActivityBaseImpl
-	extends SocialActivityModelImpl implements SocialActivity {
-
+public abstract class SocialActivityBaseImpl extends SocialActivityModelImpl
+	implements SocialActivity {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class SocialActivityBaseImpl
 			SocialActivityLocalServiceUtil.updateSocialActivity(this);
 		}
 	}
-
 }

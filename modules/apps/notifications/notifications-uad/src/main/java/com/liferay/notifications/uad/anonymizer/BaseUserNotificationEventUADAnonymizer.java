@@ -15,11 +15,13 @@
 package com.liferay.notifications.uad.anonymizer;
 
 import com.liferay.notifications.uad.constants.NotificationsUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,13 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUserNotificationEventUADAnonymizer
 	extends DynamicQueryUADAnonymizer<UserNotificationEvent> {
-
 	@Override
-	public void autoAnonymize(
-			UserNotificationEvent userNotificationEvent, long userId,
-			User anonymousUser)
-		throws PortalException {
-
+	public void autoAnonymize(UserNotificationEvent userNotificationEvent,
+		long userId, User anonymousUser) throws PortalException {
 		if (userNotificationEvent.getUserId() == userId) {
 			delete(userNotificationEvent);
 		}
@@ -53,9 +51,7 @@ public abstract class BaseUserNotificationEventUADAnonymizer
 	@Override
 	public void delete(UserNotificationEvent userNotificationEvent)
 		throws PortalException {
-
-		userNotificationEventLocalService.deleteUserNotificationEvent(
-			userNotificationEvent);
+		userNotificationEventLocalService.deleteUserNotificationEvent(userNotificationEvent);
 	}
 
 	@Override
@@ -70,12 +66,9 @@ public abstract class BaseUserNotificationEventUADAnonymizer
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return NotificationsUADConstants.
-			USER_ID_FIELD_NAMES_USER_NOTIFICATION_EVENT;
+		return NotificationsUADConstants.USER_ID_FIELD_NAMES_USER_NOTIFICATION_EVENT;
 	}
 
 	@Reference
-	protected UserNotificationEventLocalService
-		userNotificationEventLocalService;
-
+	protected UserNotificationEventLocalService userNotificationEventLocalService;
 }

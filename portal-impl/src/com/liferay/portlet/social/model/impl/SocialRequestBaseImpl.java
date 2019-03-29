@@ -32,9 +32,8 @@ import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SocialRequestBaseImpl
-	extends SocialRequestModelImpl implements SocialRequest {
-
+public abstract class SocialRequestBaseImpl extends SocialRequestModelImpl
+	implements SocialRequest {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class SocialRequestBaseImpl
 			SocialRequestLocalServiceUtil.updateSocialRequest(this);
 		}
 	}
-
 }

@@ -63,14 +63,10 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class UserGroupRoleServiceSoap {
-
-	public static void addUserGroupRoles(
-			long userId, long groupId, long[] roleIds)
-		throws RemoteException {
-
+	public static void addUserGroupRoles(long userId, long groupId,
+		long[] roleIds) throws RemoteException {
 		try {
-			UserGroupRoleServiceUtil.addUserGroupRoles(
-				userId, groupId, roleIds);
+			UserGroupRoleServiceUtil.addUserGroupRoles(userId, groupId, roleIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -79,13 +75,10 @@ public class UserGroupRoleServiceSoap {
 		}
 	}
 
-	public static void addUserGroupRoles(
-			long[] userIds, long groupId, long roleId)
-		throws RemoteException {
-
+	public static void addUserGroupRoles(long[] userIds, long groupId,
+		long roleId) throws RemoteException {
 		try {
-			UserGroupRoleServiceUtil.addUserGroupRoles(
-				userIds, groupId, roleId);
+			UserGroupRoleServiceUtil.addUserGroupRoles(userIds, groupId, roleId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -94,13 +87,11 @@ public class UserGroupRoleServiceSoap {
 		}
 	}
 
-	public static void deleteUserGroupRoles(
-			long userId, long groupId, long[] roleIds)
-		throws RemoteException {
-
+	public static void deleteUserGroupRoles(long userId, long groupId,
+		long[] roleIds) throws RemoteException {
 		try {
-			UserGroupRoleServiceUtil.deleteUserGroupRoles(
-				userId, groupId, roleIds);
+			UserGroupRoleServiceUtil.deleteUserGroupRoles(userId, groupId,
+				roleIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -109,13 +100,11 @@ public class UserGroupRoleServiceSoap {
 		}
 	}
 
-	public static void deleteUserGroupRoles(
-			long[] userIds, long groupId, long roleId)
-		throws RemoteException {
-
+	public static void deleteUserGroupRoles(long[] userIds, long groupId,
+		long roleId) throws RemoteException {
 		try {
-			UserGroupRoleServiceUtil.deleteUserGroupRoles(
-				userIds, groupId, roleId);
+			UserGroupRoleServiceUtil.deleteUserGroupRoles(userIds, groupId,
+				roleId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -124,14 +113,11 @@ public class UserGroupRoleServiceSoap {
 		}
 	}
 
-	public static void updateUserGroupRoles(
-			long userId, long groupId, long[] addedRoleIds,
-			long[] deletedRoleIds)
-		throws RemoteException {
-
+	public static void updateUserGroupRoles(long userId, long groupId,
+		long[] addedRoleIds, long[] deletedRoleIds) throws RemoteException {
 		try {
-			UserGroupRoleServiceUtil.updateUserGroupRoles(
-				userId, groupId, addedRoleIds, deletedRoleIds);
+			UserGroupRoleServiceUtil.updateUserGroupRoles(userId, groupId,
+				addedRoleIds, deletedRoleIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -140,7 +126,5 @@ public class UserGroupRoleServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		UserGroupRoleServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(UserGroupRoleServiceSoap.class);
 }

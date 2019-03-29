@@ -36,6 +36,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -45,23 +52,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 /**
  * @generated
  */
 public class UserTrackerPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,8 +99,7 @@ public class UserTrackerPersistenceTest {
 
 		_persistence.remove(newUserTracker);
 
-		UserTracker existingUserTracker = _persistence.fetchByPrimaryKey(
-			newUserTracker.getPrimaryKey());
+		UserTracker existingUserTracker = _persistence.fetchByPrimaryKey(newUserTracker.getPrimaryKey());
 
 		Assert.assertNull(existingUserTracker);
 	}
@@ -136,32 +133,27 @@ public class UserTrackerPersistenceTest {
 
 		_userTrackers.add(_persistence.update(newUserTracker));
 
-		UserTracker existingUserTracker = _persistence.findByPrimaryKey(
-			newUserTracker.getPrimaryKey());
+		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingUserTracker.getMvccVersion(),
+		Assert.assertEquals(existingUserTracker.getMvccVersion(),
 			newUserTracker.getMvccVersion());
-		Assert.assertEquals(
-			existingUserTracker.getUserTrackerId(),
+		Assert.assertEquals(existingUserTracker.getUserTrackerId(),
 			newUserTracker.getUserTrackerId());
-		Assert.assertEquals(
-			existingUserTracker.getCompanyId(), newUserTracker.getCompanyId());
-		Assert.assertEquals(
-			existingUserTracker.getUserId(), newUserTracker.getUserId());
-		Assert.assertEquals(
-			Time.getShortTimestamp(existingUserTracker.getModifiedDate()),
+		Assert.assertEquals(existingUserTracker.getCompanyId(),
+			newUserTracker.getCompanyId());
+		Assert.assertEquals(existingUserTracker.getUserId(),
+			newUserTracker.getUserId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingUserTracker.getModifiedDate()),
 			Time.getShortTimestamp(newUserTracker.getModifiedDate()));
-		Assert.assertEquals(
-			existingUserTracker.getSessionId(), newUserTracker.getSessionId());
-		Assert.assertEquals(
-			existingUserTracker.getRemoteAddr(),
+		Assert.assertEquals(existingUserTracker.getSessionId(),
+			newUserTracker.getSessionId());
+		Assert.assertEquals(existingUserTracker.getRemoteAddr(),
 			newUserTracker.getRemoteAddr());
-		Assert.assertEquals(
-			existingUserTracker.getRemoteHost(),
+		Assert.assertEquals(existingUserTracker.getRemoteHost(),
 			newUserTracker.getRemoteHost());
-		Assert.assertEquals(
-			existingUserTracker.getUserAgent(), newUserTracker.getUserAgent());
+		Assert.assertEquals(existingUserTracker.getUserAgent(),
+			newUserTracker.getUserAgent());
 	}
 
 	@Test
@@ -191,8 +183,7 @@ public class UserTrackerPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
-		UserTracker existingUserTracker = _persistence.findByPrimaryKey(
-			newUserTracker.getPrimaryKey());
+		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
 
 		Assert.assertEquals(existingUserTracker, newUserTracker);
 	}
@@ -206,24 +197,22 @@ public class UserTrackerPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<UserTracker> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"UserTracker", "mvccVersion", true, "userTrackerId", true,
-			"companyId", true, "userId", true, "modifiedDate", true,
-			"sessionId", true, "remoteAddr", true, "remoteHost", true,
-			"userAgent", true);
+		return OrderByComparatorFactoryUtil.create("UserTracker",
+			"mvccVersion", true, "userTrackerId", true, "companyId", true,
+			"userId", true, "modifiedDate", true, "sessionId", true,
+			"remoteAddr", true, "remoteHost", true, "userAgent", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
-		UserTracker existingUserTracker = _persistence.fetchByPrimaryKey(
-			newUserTracker.getPrimaryKey());
+		UserTracker existingUserTracker = _persistence.fetchByPrimaryKey(newUserTracker.getPrimaryKey());
 
 		Assert.assertEquals(existingUserTracker, newUserTracker);
 	}
@@ -240,7 +229,6 @@ public class UserTrackerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		UserTracker newUserTracker1 = addUserTracker();
 		UserTracker newUserTracker2 = addUserTracker();
 
@@ -249,20 +237,18 @@ public class UserTrackerPersistenceTest {
 		primaryKeys.add(newUserTracker1.getPrimaryKey());
 		primaryKeys.add(newUserTracker2.getPrimaryKey());
 
-		Map<Serializable, UserTracker> userTrackers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserTracker> userTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, userTrackers.size());
-		Assert.assertEquals(
-			newUserTracker1, userTrackers.get(newUserTracker1.getPrimaryKey()));
-		Assert.assertEquals(
-			newUserTracker2, userTrackers.get(newUserTracker2.getPrimaryKey()));
+		Assert.assertEquals(newUserTracker1,
+			userTrackers.get(newUserTracker1.getPrimaryKey()));
+		Assert.assertEquals(newUserTracker2,
+			userTrackers.get(newUserTracker2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -272,8 +258,7 @@ public class UserTrackerPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, UserTracker> userTrackers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserTracker> userTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userTrackers.isEmpty());
 	}
@@ -281,7 +266,6 @@ public class UserTrackerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		UserTracker newUserTracker = addUserTracker();
 
 		long pk = RandomTestUtil.nextLong();
@@ -291,57 +275,52 @@ public class UserTrackerPersistenceTest {
 		primaryKeys.add(newUserTracker.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, UserTracker> userTrackers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserTracker> userTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userTrackers.size());
-		Assert.assertEquals(
-			newUserTracker, userTrackers.get(newUserTracker.getPrimaryKey()));
+		Assert.assertEquals(newUserTracker,
+			userTrackers.get(newUserTracker.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserTracker> userTrackers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserTracker> userTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userTrackers.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUserTracker.getPrimaryKey());
 
-		Map<Serializable, UserTracker> userTrackers =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserTracker> userTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userTrackers.size());
-		Assert.assertEquals(
-			newUserTracker, userTrackers.get(newUserTracker.getPrimaryKey()));
+		Assert.assertEquals(newUserTracker,
+			userTrackers.get(newUserTracker.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			UserTrackerLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = UserTrackerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<UserTracker>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserTracker>() {
 				@Override
 				public void performAction(UserTracker userTracker) {
 					Assert.assertNotNull(userTracker);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -350,18 +329,17 @@ public class UserTrackerPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UserTracker.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTracker.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"userTrackerId", newUserTracker.getUserTrackerId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerId",
+				newUserTracker.getUserTrackerId()));
 
-		List<UserTracker> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<UserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -372,34 +350,32 @@ public class UserTrackerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UserTracker.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTracker.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"userTrackerId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerId",
+				RandomTestUtil.nextLong()));
 
-		List<UserTracker> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<UserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UserTracker.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTracker.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("userTrackerId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"userTrackerId"));
 
 		Object newUserTrackerId = newUserTracker.getUserTrackerId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"userTrackerId", new Object[] {newUserTrackerId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerId",
+				new Object[] { newUserTrackerId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -412,15 +388,14 @@ public class UserTrackerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			UserTracker.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTracker.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("userTrackerId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"userTrackerId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"userTrackerId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -456,5 +431,4 @@ public class UserTrackerPersistenceTest {
 	private List<UserTracker> _userTrackers = new ArrayList<UserTracker>();
 	private UserTrackerPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

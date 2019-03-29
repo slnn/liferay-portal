@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SystemEventBaseImpl
-	extends SystemEventModelImpl implements SystemEvent {
-
+public abstract class SystemEventBaseImpl extends SystemEventModelImpl
+	implements SystemEvent {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class SystemEventBaseImpl
 			SystemEventLocalServiceUtil.updateSystemEvent(this);
 		}
 	}
-
 }

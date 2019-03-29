@@ -53,19 +53,15 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class ContactServiceHttp {
-
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-			getCompanyContacts(
-				HttpPrincipal httpPrincipal, long companyId, int start, int end)
+	public static java.util.List<com.liferay.portal.kernel.model.Contact> getCompanyContacts(
+		HttpPrincipal httpPrincipal, long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ContactServiceUtil.class, "getCompanyContacts",
-				_getCompanyContactsParameterTypes0);
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
+					"getCompanyContacts", _getCompanyContactsParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, start, end);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, start, end);
 
 			Object returnObj = null;
 
@@ -73,19 +69,14 @@ public class ContactServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.kernel.model.Contact>)
-				returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Contact>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -94,16 +85,14 @@ public class ContactServiceHttp {
 		}
 	}
 
-	public static int getCompanyContactsCount(
-		HttpPrincipal httpPrincipal, long companyId) {
-
+	public static int getCompanyContactsCount(HttpPrincipal httpPrincipal,
+		long companyId) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				ContactServiceUtil.class, "getCompanyContactsCount",
-				_getCompanyContactsCountParameterTypes1);
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
+					"getCompanyContactsCount",
+					_getCompanyContactsCountParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
 
 			Object returnObj = null;
 
@@ -111,8 +100,7 @@ public class ContactServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -125,16 +113,13 @@ public class ContactServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Contact getContact(
-			HttpPrincipal httpPrincipal, long contactId)
+		HttpPrincipal httpPrincipal, long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ContactServiceUtil.class, "getContact",
-				_getContactParameterTypes2);
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
+					"getContact", _getContactParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, contactId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, contactId);
 
 			Object returnObj = null;
 
@@ -142,15 +127,11 @@ public class ContactServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.model.Contact)returnObj;
@@ -162,21 +143,17 @@ public class ContactServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-			getContacts(
-				HttpPrincipal httpPrincipal, long classNameId, long classPK,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.kernel.model.Contact> orderByComparator)
+	public static java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
+		HttpPrincipal httpPrincipal, long classNameId, long classPK, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ContactServiceUtil.class, "getContacts",
-				_getContactsParameterTypes3);
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
+					"getContacts", _getContactsParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId, classPK, start, end, orderByComparator);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					classNameId, classPK, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -184,19 +161,14 @@ public class ContactServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.kernel.model.Contact>)
-				returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Contact>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -205,17 +177,15 @@ public class ContactServiceHttp {
 		}
 	}
 
-	public static int getContactsCount(
-			HttpPrincipal httpPrincipal, long classNameId, long classPK)
+	public static int getContactsCount(HttpPrincipal httpPrincipal,
+		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ContactServiceUtil.class, "getContactsCount",
-				_getContactsCountParameterTypes4);
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
+					"getContactsCount", _getContactsCountParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId, classPK);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					classNameId, classPK);
 
 			Object returnObj = null;
 
@@ -223,15 +193,11 @@ public class ContactServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -244,19 +210,20 @@ public class ContactServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ContactServiceHttp.class);
-
-	private static final Class<?>[] _getCompanyContactsParameterTypes0 =
-		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCompanyContactsCountParameterTypes1 =
-		new Class[] {long.class};
+	private static final Class<?>[] _getCompanyContactsParameterTypes0 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCompanyContactsCountParameterTypes1 = new Class[] {
+			long.class
+		};
 	private static final Class<?>[] _getContactParameterTypes2 = new Class[] {
-		long.class
-	};
+			long.class
+		};
 	private static final Class<?>[] _getContactsParameterTypes3 = new Class[] {
-		long.class, long.class, int.class, int.class,
-		com.liferay.portal.kernel.util.OrderByComparator.class
-	};
-	private static final Class<?>[] _getContactsCountParameterTypes4 =
-		new Class[] {long.class, long.class};
-
+			long.class, long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getContactsCountParameterTypes4 = new Class[] {
+			long.class, long.class
+		};
 }

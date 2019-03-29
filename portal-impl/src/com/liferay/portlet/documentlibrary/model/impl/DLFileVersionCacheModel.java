@@ -17,8 +17,10 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class DLFileVersionCacheModel
-	implements CacheModel<DLFileVersion>, Externalizable {
-
+public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
+	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,8 +49,7 @@ public class DLFileVersionCacheModel
 			return false;
 		}
 
-		DLFileVersionCacheModel dlFileVersionCacheModel =
-			(DLFileVersionCacheModel)obj;
+		DLFileVersionCacheModel dlFileVersionCacheModel = (DLFileVersionCacheModel)obj;
 
 		if (fileVersionId == dlFileVersionCacheModel.fileVersionId) {
 			return true;
@@ -316,7 +316,8 @@ public class DLFileVersionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -466,5 +467,4 @@ public class DLFileVersionCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-
 }

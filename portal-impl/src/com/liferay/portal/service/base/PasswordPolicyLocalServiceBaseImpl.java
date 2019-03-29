@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -72,9 +73,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class PasswordPolicyLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements PasswordPolicyLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements PasswordPolicyLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -118,7 +118,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Override
 	public PasswordPolicy deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException {
-
 		return passwordPolicyPersistence.remove(passwordPolicyId);
 	}
 
@@ -133,7 +132,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Override
 	public PasswordPolicy deletePasswordPolicy(PasswordPolicy passwordPolicy)
 		throws PortalException {
-
 		return passwordPolicyPersistence.remove(passwordPolicy);
 	}
 
@@ -141,8 +139,8 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			PasswordPolicy.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(PasswordPolicy.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -169,11 +167,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return passwordPolicyPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return passwordPolicyPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -190,12 +187,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return passwordPolicyPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return passwordPolicyPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -217,11 +212,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return passwordPolicyPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return passwordPolicyPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -237,11 +231,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	 */
 	@Override
-	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return passwordPolicyPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
+	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return passwordPolicyPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
 	}
 
 	/**
@@ -254,14 +247,12 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Override
 	public PasswordPolicy getPasswordPolicy(long passwordPolicyId)
 		throws PortalException {
-
 		return passwordPolicyPersistence.findByPrimaryKey(passwordPolicyId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(passwordPolicyLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -273,14 +264,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			passwordPolicyLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(passwordPolicyLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(PasswordPolicy.class);
 
@@ -292,7 +279,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(passwordPolicyLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PasswordPolicy.class);
@@ -303,64 +289,49 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
 
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
 
 					return modelAdditionCount;
 				}
-
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
 				}
-
 			});
 
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<PasswordPolicy>() {
-
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PasswordPolicy>() {
 				@Override
 				public void performAction(PasswordPolicy passwordPolicy)
 					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, passwordPolicy);
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						passwordPolicy);
 				}
-
 			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
 				PortalUtil.getClassNameId(PasswordPolicy.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -372,15 +343,12 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return passwordPolicyLocalService.deletePasswordPolicy(
-			(PasswordPolicy)persistedModel);
+		return passwordPolicyLocalService.deletePasswordPolicy((PasswordPolicy)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return passwordPolicyPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -393,12 +361,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @throws PortalException if a matching password policy could not be found
 	 */
 	@Override
-	public PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException {
-
-		return passwordPolicyPersistence.findByUuid_C_First(
-			uuid, companyId, null);
+	public PasswordPolicy getPasswordPolicyByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException {
+		return passwordPolicyPersistence.findByUuid_C_First(uuid, companyId,
+			null);
 	}
 
 	/**
@@ -455,7 +421,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 */
 	public void setPasswordPolicyLocalService(
 		PasswordPolicyLocalService passwordPolicyLocalService) {
-
 		this.passwordPolicyLocalService = passwordPolicyLocalService;
 	}
 
@@ -475,7 +440,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 */
 	public void setPasswordPolicyPersistence(
 		PasswordPolicyPersistence passwordPolicyPersistence) {
-
 		this.passwordPolicyPersistence = passwordPolicyPersistence;
 	}
 
@@ -495,7 +459,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 */
 	public void setPasswordPolicyFinder(
 		PasswordPolicyFinder passwordPolicyFinder) {
-
 		this.passwordPolicyFinder = passwordPolicyFinder;
 	}
 
@@ -504,9 +467,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -516,9 +477,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -527,9 +486,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -539,9 +496,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -561,7 +516,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -570,9 +524,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 *
 	 * @return the password policy rel local service
 	 */
-	public com.liferay.portal.kernel.service.PasswordPolicyRelLocalService
-		getPasswordPolicyRelLocalService() {
-
+	public com.liferay.portal.kernel.service.PasswordPolicyRelLocalService getPasswordPolicyRelLocalService() {
 		return passwordPolicyRelLocalService;
 	}
 
@@ -582,9 +534,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @param passwordPolicyRelLocalService the password policy rel local service
 	 */
 	public void setPasswordPolicyRelLocalService(
-		com.liferay.portal.kernel.service.PasswordPolicyRelLocalService
-			passwordPolicyRelLocalService) {
-
+		com.liferay.portal.kernel.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
 		this.passwordPolicyRelLocalService = passwordPolicyRelLocalService;
 	}
 
@@ -604,7 +554,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 */
 	public void setPasswordPolicyRelPersistence(
 		PasswordPolicyRelPersistence passwordPolicyRelPersistence) {
-
 		this.passwordPolicyRelPersistence = passwordPolicyRelPersistence;
 	}
 
@@ -613,9 +562,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -625,9 +572,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -636,9 +581,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -649,7 +592,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -690,8 +632,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.PasswordPolicy",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.PasswordPolicy",
 			passwordPolicyLocalService);
 	}
 
@@ -732,8 +673,8 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -744,57 +685,28 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 
 	@BeanReference(type = PasswordPolicyLocalService.class)
 	protected PasswordPolicyLocalService passwordPolicyLocalService;
-
 	@BeanReference(type = PasswordPolicyPersistence.class)
 	protected PasswordPolicyPersistence passwordPolicyPersistence;
-
 	@BeanReference(type = PasswordPolicyFinder.class)
 	protected PasswordPolicyFinder passwordPolicyFinder;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PasswordPolicyRelLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.PasswordPolicyRelLocalService
-		passwordPolicyRelLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyRelLocalService.class)
+	protected com.liferay.portal.kernel.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService;
 	@BeanReference(type = PasswordPolicyRelPersistence.class)
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

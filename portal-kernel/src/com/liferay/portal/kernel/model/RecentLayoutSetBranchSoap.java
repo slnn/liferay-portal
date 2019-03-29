@@ -29,15 +29,12 @@ import java.util.List;
  */
 @ProviderType
 public class RecentLayoutSetBranchSoap implements Serializable {
-
 	public static RecentLayoutSetBranchSoap toSoapModel(
 		RecentLayoutSetBranch model) {
-
 		RecentLayoutSetBranchSoap soapModel = new RecentLayoutSetBranchSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setRecentLayoutSetBranchId(
-			model.getRecentLayoutSetBranchId());
+		soapModel.setRecentLayoutSetBranchId(model.getRecentLayoutSetBranchId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -49,9 +46,7 @@ public class RecentLayoutSetBranchSoap implements Serializable {
 
 	public static RecentLayoutSetBranchSoap[] toSoapModels(
 		RecentLayoutSetBranch[] models) {
-
-		RecentLayoutSetBranchSoap[] soapModels =
-			new RecentLayoutSetBranchSoap[models.length];
+		RecentLayoutSetBranchSoap[] soapModels = new RecentLayoutSetBranchSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -62,12 +57,10 @@ public class RecentLayoutSetBranchSoap implements Serializable {
 
 	public static RecentLayoutSetBranchSoap[][] toSoapModels(
 		RecentLayoutSetBranch[][] models) {
-
 		RecentLayoutSetBranchSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new RecentLayoutSetBranchSoap[models.length][models[0].length];
+			soapModels = new RecentLayoutSetBranchSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new RecentLayoutSetBranchSoap[0][0];
@@ -82,16 +75,13 @@ public class RecentLayoutSetBranchSoap implements Serializable {
 
 	public static RecentLayoutSetBranchSoap[] toSoapModels(
 		List<RecentLayoutSetBranch> models) {
-
-		List<RecentLayoutSetBranchSoap> soapModels =
-			new ArrayList<RecentLayoutSetBranchSoap>(models.size());
+		List<RecentLayoutSetBranchSoap> soapModels = new ArrayList<RecentLayoutSetBranchSoap>(models.size());
 
 		for (RecentLayoutSetBranch model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new RecentLayoutSetBranchSoap[soapModels.size()]);
+		return soapModels.toArray(new RecentLayoutSetBranchSoap[soapModels.size()]);
 	}
 
 	public RecentLayoutSetBranchSoap() {
@@ -168,5 +158,4 @@ public class RecentLayoutSetBranchSoap implements Serializable {
 	private long _userId;
 	private long _layoutSetBranchId;
 	private long _layoutSetId;
-
 }

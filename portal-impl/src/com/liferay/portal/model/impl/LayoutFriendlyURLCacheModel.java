@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class LayoutFriendlyURLCacheModel
-	implements CacheModel<LayoutFriendlyURL>, Externalizable, MVCCModel {
-
+public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +49,10 @@ public class LayoutFriendlyURLCacheModel
 			return false;
 		}
 
-		LayoutFriendlyURLCacheModel layoutFriendlyURLCacheModel =
-			(LayoutFriendlyURLCacheModel)obj;
+		LayoutFriendlyURLCacheModel layoutFriendlyURLCacheModel = (LayoutFriendlyURLCacheModel)obj;
 
-		if ((layoutFriendlyURLId ==
-				layoutFriendlyURLCacheModel.layoutFriendlyURLId) &&
-			(mvccVersion == layoutFriendlyURLCacheModel.mvccVersion)) {
-
+		if ((layoutFriendlyURLId == layoutFriendlyURLCacheModel.layoutFriendlyURLId) &&
+				(mvccVersion == layoutFriendlyURLCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -118,8 +115,7 @@ public class LayoutFriendlyURLCacheModel
 
 	@Override
 	public LayoutFriendlyURL toEntityModel() {
-		LayoutFriendlyURLImpl layoutFriendlyURLImpl =
-			new LayoutFriendlyURLImpl();
+		LayoutFriendlyURLImpl layoutFriendlyURLImpl = new LayoutFriendlyURLImpl();
 
 		layoutFriendlyURLImpl.setMvccVersion(mvccVersion);
 
@@ -210,7 +206,8 @@ public class LayoutFriendlyURLCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -273,5 +270,4 @@ public class LayoutFriendlyURLCacheModel
 	public String friendlyURL;
 	public String languageId;
 	public long lastPublishDate;
-
 }

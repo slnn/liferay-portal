@@ -28,9 +28,8 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface RecentLayoutSetBranchModel
-	extends BaseModel<RecentLayoutSetBranch>, MVCCModel, ShardedModel {
-
+public interface RecentLayoutSetBranchModel extends BaseModel<RecentLayoutSetBranch>,
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -166,5 +165,4 @@ public interface RecentLayoutSetBranchModel
 	 * @param layoutSetId the layout set ID of this recent layout set branch
 	 */
 	public void setLayoutSetId(long layoutSetId);
-
 }

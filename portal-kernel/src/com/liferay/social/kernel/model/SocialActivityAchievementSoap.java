@@ -29,12 +29,9 @@ import java.util.List;
  */
 @ProviderType
 public class SocialActivityAchievementSoap implements Serializable {
-
 	public static SocialActivityAchievementSoap toSoapModel(
 		SocialActivityAchievement model) {
-
-		SocialActivityAchievementSoap soapModel =
-			new SocialActivityAchievementSoap();
+		SocialActivityAchievementSoap soapModel = new SocialActivityAchievementSoap();
 
 		soapModel.setActivityAchievementId(model.getActivityAchievementId());
 		soapModel.setGroupId(model.getGroupId());
@@ -49,9 +46,7 @@ public class SocialActivityAchievementSoap implements Serializable {
 
 	public static SocialActivityAchievementSoap[] toSoapModels(
 		SocialActivityAchievement[] models) {
-
-		SocialActivityAchievementSoap[] soapModels =
-			new SocialActivityAchievementSoap[models.length];
+		SocialActivityAchievementSoap[] soapModels = new SocialActivityAchievementSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -62,13 +57,10 @@ public class SocialActivityAchievementSoap implements Serializable {
 
 	public static SocialActivityAchievementSoap[][] toSoapModels(
 		SocialActivityAchievement[][] models) {
-
 		SocialActivityAchievementSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new SocialActivityAchievementSoap
-					[models.length][models[0].length];
+			soapModels = new SocialActivityAchievementSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SocialActivityAchievementSoap[0][0];
@@ -83,16 +75,13 @@ public class SocialActivityAchievementSoap implements Serializable {
 
 	public static SocialActivityAchievementSoap[] toSoapModels(
 		List<SocialActivityAchievement> models) {
-
-		List<SocialActivityAchievementSoap> soapModels =
-			new ArrayList<SocialActivityAchievementSoap>(models.size());
+		List<SocialActivityAchievementSoap> soapModels = new ArrayList<SocialActivityAchievementSoap>(models.size());
 
 		for (SocialActivityAchievement model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new SocialActivityAchievementSoap[soapModels.size()]);
+		return soapModels.toArray(new SocialActivityAchievementSoap[soapModels.size()]);
 	}
 
 	public SocialActivityAchievementSoap() {
@@ -173,5 +162,4 @@ public class SocialActivityAchievementSoap implements Serializable {
 	private long _createDate;
 	private String _name;
 	private boolean _firstInGroup;
-
 }

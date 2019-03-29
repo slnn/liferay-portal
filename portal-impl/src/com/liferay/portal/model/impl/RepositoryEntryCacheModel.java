@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.RepositoryEntry;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class RepositoryEntryCacheModel
-	implements CacheModel<RepositoryEntry>, Externalizable, MVCCModel {
-
+public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,13 +49,10 @@ public class RepositoryEntryCacheModel
 			return false;
 		}
 
-		RepositoryEntryCacheModel repositoryEntryCacheModel =
-			(RepositoryEntryCacheModel)obj;
+		RepositoryEntryCacheModel repositoryEntryCacheModel = (RepositoryEntryCacheModel)obj;
 
-		if ((repositoryEntryId ==
-				repositoryEntryCacheModel.repositoryEntryId) &&
-			(mvccVersion == repositoryEntryCacheModel.mvccVersion)) {
-
+		if ((repositoryEntryId == repositoryEntryCacheModel.repositoryEntryId) &&
+				(mvccVersion == repositoryEntryCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -200,7 +197,8 @@ public class RepositoryEntryCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -254,5 +252,4 @@ public class RepositoryEntryCacheModel
 	public String mappedId;
 	public boolean manualCheckInRequired;
 	public long lastPublishDate;
-
 }

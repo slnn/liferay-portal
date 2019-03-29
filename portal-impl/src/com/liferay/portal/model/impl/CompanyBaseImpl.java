@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CompanyBaseImpl
-	extends CompanyModelImpl implements Company {
-
+public abstract class CompanyBaseImpl extends CompanyModelImpl
+	implements Company {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class CompanyBaseImpl
 			CompanyLocalServiceUtil.updateCompany(this);
 		}
 	}
-
 }

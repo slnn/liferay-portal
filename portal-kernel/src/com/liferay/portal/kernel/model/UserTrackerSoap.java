@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class UserTrackerSoap implements Serializable {
-
 	public static UserTrackerSoap toSoapModel(UserTracker model) {
 		UserTrackerSoap soapModel = new UserTrackerSoap();
 
@@ -75,8 +74,7 @@ public class UserTrackerSoap implements Serializable {
 	}
 
 	public static UserTrackerSoap[] toSoapModels(List<UserTracker> models) {
-		List<UserTrackerSoap> soapModels = new ArrayList<UserTrackerSoap>(
-			models.size());
+		List<UserTrackerSoap> soapModels = new ArrayList<UserTrackerSoap>(models.size());
 
 		for (UserTracker model : models) {
 			soapModels.add(toSoapModel(model));
@@ -177,5 +175,4 @@ public class UserTrackerSoap implements Serializable {
 	private String _remoteAddr;
 	private String _remoteHost;
 	private String _userAgent;
-
 }

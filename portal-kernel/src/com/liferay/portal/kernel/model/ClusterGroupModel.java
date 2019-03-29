@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  */
 @ProviderType
 public interface ClusterGroupModel extends BaseModel<ClusterGroup>, MVCCModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -132,5 +131,4 @@ public interface ClusterGroupModel extends BaseModel<ClusterGroup>, MVCCModel {
 	 * @param wholeCluster the whole cluster of this cluster group
 	 */
 	public void setWholeCluster(boolean wholeCluster);
-
 }

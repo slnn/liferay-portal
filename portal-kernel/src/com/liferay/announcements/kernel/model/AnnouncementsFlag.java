@@ -27,21 +27,15 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AnnouncementsFlagModel
  * @generated
  */
-@ImplementationClassName(
-	"com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl"
-)
+@ImplementationClassName("com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl")
 @ProviderType
-public interface AnnouncementsFlag
-	extends AnnouncementsFlagModel, PersistedModel {
-
+public interface AnnouncementsFlag extends AnnouncementsFlagModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AnnouncementsFlag, Long> FLAG_ID_ACCESSOR =
-		new Accessor<AnnouncementsFlag, Long>() {
-
+	public static final Accessor<AnnouncementsFlag, Long> FLAG_ID_ACCESSOR = new Accessor<AnnouncementsFlag, Long>() {
 			@Override
 			public Long get(AnnouncementsFlag announcementsFlag) {
 				return announcementsFlag.getFlagId();
@@ -56,7 +50,5 @@ public interface AnnouncementsFlag
 			public Class<AnnouncementsFlag> getTypeClass() {
 				return AnnouncementsFlag.class;
 			}
-
 		};
-
 }

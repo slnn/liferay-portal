@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+
 import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 
 /**
@@ -53,27 +54,23 @@ import com.liferay.powwow.service.PowwowMeetingServiceUtil;
  */
 @ProviderType
 public class PowwowMeetingServiceHttp {
-
 	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-			HttpPrincipal httpPrincipal, long groupId, String portletId,
-			long powwowServerId, String name, String description,
-			String providerType,
-			java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
-			String languageId, long calendarBookingId, int status,
-			java.util.List<com.liferay.powwow.model.PowwowParticipant>
-				powwowParticipants,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		HttpPrincipal httpPrincipal, long groupId, String portletId,
+		long powwowServerId, String name, String description,
+		String providerType,
+		java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
+		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				PowwowMeetingServiceUtil.class, "addPowwowMeeting",
-				_addPowwowMeetingParameterTypes0);
+			MethodKey methodKey = new MethodKey(PowwowMeetingServiceUtil.class,
+					"addPowwowMeeting", _addPowwowMeetingParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, portletId, powwowServerId, name,
-				description, providerType, providerTypeMetadataMap, languageId,
-				calendarBookingId, status, powwowParticipants, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					portletId, powwowServerId, name, description, providerType,
+					providerTypeMetadataMap, languageId, calendarBookingId,
+					status, powwowParticipants, serviceContext);
 
 			Object returnObj = null;
 
@@ -81,15 +78,11 @@ public class PowwowMeetingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.powwow.model.PowwowMeeting)returnObj;
@@ -102,16 +95,14 @@ public class PowwowMeetingServiceHttp {
 	}
 
 	public static com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-			HttpPrincipal httpPrincipal, long powwowMeetingId)
+		HttpPrincipal httpPrincipal, long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				PowwowMeetingServiceUtil.class, "deletePowwowMeeting",
-				_deletePowwowMeetingParameterTypes1);
+			MethodKey methodKey = new MethodKey(PowwowMeetingServiceUtil.class,
+					"deletePowwowMeeting", _deletePowwowMeetingParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, powwowMeetingId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					powwowMeetingId);
 
 			Object returnObj = null;
 
@@ -119,15 +110,11 @@ public class PowwowMeetingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.powwow.model.PowwowMeeting)returnObj;
@@ -140,16 +127,14 @@ public class PowwowMeetingServiceHttp {
 	}
 
 	public static com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
-			HttpPrincipal httpPrincipal, long powwowMeetingId)
+		HttpPrincipal httpPrincipal, long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				PowwowMeetingServiceUtil.class, "getPowwowMeeting",
-				_getPowwowMeetingParameterTypes2);
+			MethodKey methodKey = new MethodKey(PowwowMeetingServiceUtil.class,
+					"getPowwowMeeting", _getPowwowMeetingParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, powwowMeetingId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					powwowMeetingId);
 
 			Object returnObj = null;
 
@@ -157,15 +142,11 @@ public class PowwowMeetingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.powwow.model.PowwowMeeting)returnObj;
@@ -177,18 +158,15 @@ public class PowwowMeetingServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getPowwowMeetings(
-			HttpPrincipal httpPrincipal, long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator obc) {
-
+	public static java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				PowwowMeetingServiceUtil.class, "getPowwowMeetings",
-				_getPowwowMeetingsParameterTypes3);
+			MethodKey methodKey = new MethodKey(PowwowMeetingServiceUtil.class,
+					"getPowwowMeetings", _getPowwowMeetingsParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end, obc);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					start, end, obc);
 
 			Object returnObj = null;
 
@@ -196,12 +174,10 @@ public class PowwowMeetingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.powwow.model.PowwowMeeting>)
-				returnObj;
+			return (java.util.List<com.liferay.powwow.model.PowwowMeeting>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -210,13 +186,12 @@ public class PowwowMeetingServiceHttp {
 		}
 	}
 
-	public static int getPowwowMeetingsCount(
-		HttpPrincipal httpPrincipal, long groupId) {
-
+	public static int getPowwowMeetingsCount(HttpPrincipal httpPrincipal,
+		long groupId) {
 		try {
-			MethodKey methodKey = new MethodKey(
-				PowwowMeetingServiceUtil.class, "getPowwowMeetingsCount",
-				_getPowwowMeetingsCountParameterTypes4);
+			MethodKey methodKey = new MethodKey(PowwowMeetingServiceUtil.class,
+					"getPowwowMeetingsCount",
+					_getPowwowMeetingsCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -226,8 +201,7 @@ public class PowwowMeetingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -240,25 +214,22 @@ public class PowwowMeetingServiceHttp {
 	}
 
 	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-			HttpPrincipal httpPrincipal, long powwowMeetingId,
-			long powwowServerId, String name, String description,
-			String providerType,
-			java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
-			String languageId, long calendarBookingId, int status,
-			java.util.List<com.liferay.powwow.model.PowwowParticipant>
-				powwowParticipants,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		HttpPrincipal httpPrincipal, long powwowMeetingId, long powwowServerId,
+		String name, String description, String providerType,
+		java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+		String languageId, long calendarBookingId, int status,
+		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				PowwowMeetingServiceUtil.class, "updatePowwowMeeting",
-				_updatePowwowMeetingParameterTypes5);
+			MethodKey methodKey = new MethodKey(PowwowMeetingServiceUtil.class,
+					"updatePowwowMeeting", _updatePowwowMeetingParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, powwowMeetingId, powwowServerId, name, description,
-				providerType, providerTypeMetadataMap, languageId,
-				calendarBookingId, status, powwowParticipants, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					powwowMeetingId, powwowServerId, name, description,
+					providerType, providerTypeMetadataMap, languageId,
+					calendarBookingId, status, powwowParticipants,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -266,15 +237,11 @@ public class PowwowMeetingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.powwow.model.PowwowMeeting)returnObj;
@@ -286,33 +253,30 @@ public class PowwowMeetingServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PowwowMeetingServiceHttp.class);
-
-	private static final Class<?>[] _addPowwowMeetingParameterTypes0 =
-		new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(PowwowMeetingServiceHttp.class);
+	private static final Class<?>[] _addPowwowMeetingParameterTypes0 = new Class[] {
 			long.class, String.class, long.class, String.class, String.class,
 			String.class, java.util.Map.class, String.class, long.class,
 			int.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deletePowwowMeetingParameterTypes1 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getPowwowMeetingParameterTypes2 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getPowwowMeetingsParameterTypes3 =
-		new Class[] {
+	private static final Class<?>[] _deletePowwowMeetingParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getPowwowMeetingParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getPowwowMeetingsParameterTypes3 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getPowwowMeetingsCountParameterTypes4 =
-		new Class[] {long.class};
-	private static final Class<?>[] _updatePowwowMeetingParameterTypes5 =
-		new Class[] {
+	private static final Class<?>[] _getPowwowMeetingsCountParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updatePowwowMeetingParameterTypes5 = new Class[] {
 			long.class, long.class, String.class, String.class, String.class,
 			java.util.Map.class, String.class, long.class, int.class,
 			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-
 }

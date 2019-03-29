@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Organization;
@@ -36,9 +37,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class OrganizationCacheModel
-	implements CacheModel<Organization>, Externalizable, MVCCModel {
-
+public class OrganizationCacheModel implements CacheModel<Organization>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,12 +49,10 @@ public class OrganizationCacheModel
 			return false;
 		}
 
-		OrganizationCacheModel organizationCacheModel =
-			(OrganizationCacheModel)obj;
+		OrganizationCacheModel organizationCacheModel = (OrganizationCacheModel)obj;
 
 		if ((organizationId == organizationCacheModel.organizationId) &&
-			(mvccVersion == organizationCacheModel.mvccVersion)) {
-
+				(mvccVersion == organizationCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -245,7 +243,8 @@ public class OrganizationCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -338,5 +337,4 @@ public class OrganizationCacheModel
 	public long statusId;
 	public String comments;
 	public long logoId;
-
 }

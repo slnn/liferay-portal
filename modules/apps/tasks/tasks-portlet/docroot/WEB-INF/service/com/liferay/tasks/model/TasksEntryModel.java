@@ -35,9 +35,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TasksEntryModel
-	extends BaseModel<TasksEntry>, GroupedModel, ShardedModel {
-
+public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -311,5 +310,4 @@ public interface TasksEntryModel
 	 * @param status the status of this tasks entry
 	 */
 	public void setStatus(int status);
-
 }

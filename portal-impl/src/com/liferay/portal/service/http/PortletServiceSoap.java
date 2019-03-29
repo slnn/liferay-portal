@@ -63,11 +63,9 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PortletServiceSoap {
-
 	public static String getWARPortlets() throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue =
-				PortletServiceUtil.getWARPortlets();
+			com.liferay.portal.kernel.json.JSONArray returnValue = PortletServiceUtil.getWARPortlets();
 
 			return returnValue.toString();
 		}
@@ -79,16 +77,13 @@ public class PortletServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PortletSoap updatePortlet(
-			long companyId, String portletId, String roles, boolean active)
+		long companyId, String portletId, String roles, boolean active)
 		throws RemoteException {
-
 		try {
-			com.liferay.portal.kernel.model.Portlet returnValue =
-				PortletServiceUtil.updatePortlet(
-					companyId, portletId, roles, active);
+			com.liferay.portal.kernel.model.Portlet returnValue = PortletServiceUtil.updatePortlet(companyId,
+					portletId, roles, active);
 
-			return com.liferay.portal.kernel.model.PortletSoap.toSoapModel(
-				returnValue);
+			return com.liferay.portal.kernel.model.PortletSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -98,5 +93,4 @@ public class PortletServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletServiceSoap.class);
-
 }

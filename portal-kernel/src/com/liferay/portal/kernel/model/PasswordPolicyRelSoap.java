@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class PasswordPolicyRelSoap implements Serializable {
-
 	public static PasswordPolicyRelSoap toSoapModel(PasswordPolicyRel model) {
 		PasswordPolicyRelSoap soapModel = new PasswordPolicyRelSoap();
 
@@ -45,9 +44,7 @@ public class PasswordPolicyRelSoap implements Serializable {
 
 	public static PasswordPolicyRelSoap[] toSoapModels(
 		PasswordPolicyRel[] models) {
-
-		PasswordPolicyRelSoap[] soapModels =
-			new PasswordPolicyRelSoap[models.length];
+		PasswordPolicyRelSoap[] soapModels = new PasswordPolicyRelSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,12 +55,10 @@ public class PasswordPolicyRelSoap implements Serializable {
 
 	public static PasswordPolicyRelSoap[][] toSoapModels(
 		PasswordPolicyRel[][] models) {
-
 		PasswordPolicyRelSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new PasswordPolicyRelSoap[models.length][models[0].length];
+			soapModels = new PasswordPolicyRelSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new PasswordPolicyRelSoap[0][0];
@@ -78,9 +73,7 @@ public class PasswordPolicyRelSoap implements Serializable {
 
 	public static PasswordPolicyRelSoap[] toSoapModels(
 		List<PasswordPolicyRel> models) {
-
-		List<PasswordPolicyRelSoap> soapModels =
-			new ArrayList<PasswordPolicyRelSoap>(models.size());
+		List<PasswordPolicyRelSoap> soapModels = new ArrayList<PasswordPolicyRelSoap>(models.size());
 
 		for (PasswordPolicyRel model : models) {
 			soapModels.add(toSoapModel(model));
@@ -154,5 +147,4 @@ public class PasswordPolicyRelSoap implements Serializable {
 	private long _passwordPolicyId;
 	private long _classNameId;
 	private long _classPK;
-
 }

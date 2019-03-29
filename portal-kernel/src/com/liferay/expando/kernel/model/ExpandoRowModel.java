@@ -34,7 +34,6 @@ import java.util.Date;
  */
 @ProviderType
 public interface ExpandoRowModel extends BaseModel<ExpandoRow>, ShardedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -126,5 +125,4 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow>, ShardedModel {
 	 * @param classPK the class pk of this expando row
 	 */
 	public void setClassPK(long classPK);
-
 }

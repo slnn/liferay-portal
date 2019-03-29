@@ -53,17 +53,14 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class ClassNameServiceHttp {
-
 	public static com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
 		HttpPrincipal httpPrincipal, long classNameId) {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ClassNameServiceUtil.class, "fetchByClassNameId",
-				_fetchByClassNameIdParameterTypes0);
+			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
+					"fetchByClassNameId", _fetchByClassNameIdParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					classNameId);
 
 			Object returnObj = null;
 
@@ -71,8 +68,7 @@ public class ClassNameServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.model.ClassName)returnObj;
@@ -86,11 +82,9 @@ public class ClassNameServiceHttp {
 
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
 		HttpPrincipal httpPrincipal, String value) {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				ClassNameServiceUtil.class, "fetchClassName",
-				_fetchClassNameParameterTypes1);
+			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
+					"fetchClassName", _fetchClassNameParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, value);
 
@@ -100,8 +94,7 @@ public class ClassNameServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.model.ClassName)returnObj;
@@ -114,10 +107,10 @@ public class ClassNameServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ClassNameServiceHttp.class);
-
-	private static final Class<?>[] _fetchByClassNameIdParameterTypes0 =
-		new Class[] {long.class};
-	private static final Class<?>[] _fetchClassNameParameterTypes1 =
-		new Class[] {String.class};
-
+	private static final Class<?>[] _fetchByClassNameIdParameterTypes0 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _fetchClassNameParameterTypes1 = new Class[] {
+			String.class
+		};
 }

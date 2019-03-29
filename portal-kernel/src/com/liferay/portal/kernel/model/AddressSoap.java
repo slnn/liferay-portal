@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class AddressSoap implements Serializable {
-
 	public static AddressSoap toSoapModel(Address model) {
 		AddressSoap soapModel = new AddressSoap();
 
@@ -86,8 +85,7 @@ public class AddressSoap implements Serializable {
 	}
 
 	public static AddressSoap[] toSoapModels(List<Address> models) {
-		List<AddressSoap> soapModels = new ArrayList<AddressSoap>(
-			models.size());
+		List<AddressSoap> soapModels = new ArrayList<AddressSoap>(models.size());
 
 		for (Address model : models) {
 			soapModels.add(toSoapModel(model));
@@ -295,5 +293,4 @@ public class AddressSoap implements Serializable {
 	private long _typeId;
 	private boolean _mailing;
 	private boolean _primary;
-
 }

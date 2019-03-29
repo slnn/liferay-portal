@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 @ProviderType
 public abstract class UserGroupGroupRoleBaseImpl
 	extends UserGroupGroupRoleModelImpl implements UserGroupGroupRole {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class UserGroupGroupRoleBaseImpl
 			UserGroupGroupRoleLocalServiceUtil.updateUserGroupGroupRole(this);
 		}
 	}
-
 }

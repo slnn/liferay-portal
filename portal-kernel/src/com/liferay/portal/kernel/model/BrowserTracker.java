@@ -29,15 +29,13 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.BrowserTrackerImpl")
 @ProviderType
 public interface BrowserTracker extends BrowserTrackerModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.BrowserTrackerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<BrowserTracker, Long>
-		BROWSER_TRACKER_ID_ACCESSOR = new Accessor<BrowserTracker, Long>() {
-
+	public static final Accessor<BrowserTracker, Long> BROWSER_TRACKER_ID_ACCESSOR =
+		new Accessor<BrowserTracker, Long>() {
 			@Override
 			public Long get(BrowserTracker browserTracker) {
 				return browserTracker.getBrowserTrackerId();
@@ -52,7 +50,5 @@ public interface BrowserTracker extends BrowserTrackerModel, PersistedModel {
 			public Class<BrowserTracker> getTypeClass() {
 				return BrowserTracker.class;
 			}
-
 		};
-
 }

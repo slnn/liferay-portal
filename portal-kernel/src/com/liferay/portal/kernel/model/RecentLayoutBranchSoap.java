@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class RecentLayoutBranchSoap implements Serializable {
-
 	public static RecentLayoutBranchSoap toSoapModel(RecentLayoutBranch model) {
 		RecentLayoutBranchSoap soapModel = new RecentLayoutBranchSoap();
 
@@ -47,9 +46,7 @@ public class RecentLayoutBranchSoap implements Serializable {
 
 	public static RecentLayoutBranchSoap[] toSoapModels(
 		RecentLayoutBranch[] models) {
-
-		RecentLayoutBranchSoap[] soapModels =
-			new RecentLayoutBranchSoap[models.length];
+		RecentLayoutBranchSoap[] soapModels = new RecentLayoutBranchSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -60,12 +57,10 @@ public class RecentLayoutBranchSoap implements Serializable {
 
 	public static RecentLayoutBranchSoap[][] toSoapModels(
 		RecentLayoutBranch[][] models) {
-
 		RecentLayoutBranchSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels =
-				new RecentLayoutBranchSoap[models.length][models[0].length];
+			soapModels = new RecentLayoutBranchSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new RecentLayoutBranchSoap[0][0];
@@ -80,16 +75,13 @@ public class RecentLayoutBranchSoap implements Serializable {
 
 	public static RecentLayoutBranchSoap[] toSoapModels(
 		List<RecentLayoutBranch> models) {
-
-		List<RecentLayoutBranchSoap> soapModels =
-			new ArrayList<RecentLayoutBranchSoap>(models.size());
+		List<RecentLayoutBranchSoap> soapModels = new ArrayList<RecentLayoutBranchSoap>(models.size());
 
 		for (RecentLayoutBranch model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(
-			new RecentLayoutBranchSoap[soapModels.size()]);
+		return soapModels.toArray(new RecentLayoutBranchSoap[soapModels.size()]);
 	}
 
 	public RecentLayoutBranchSoap() {
@@ -175,5 +167,4 @@ public class RecentLayoutBranchSoap implements Serializable {
 	private long _layoutBranchId;
 	private long _layoutSetBranchId;
 	private long _plid;
-
 }

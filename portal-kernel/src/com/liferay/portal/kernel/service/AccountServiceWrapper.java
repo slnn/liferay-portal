@@ -24,18 +24,17 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class AccountServiceWrapper
-	implements AccountService, ServiceWrapper<AccountService> {
-
+public class AccountServiceWrapper implements AccountService,
+	ServiceWrapper<AccountService> {
 	public AccountServiceWrapper(AccountService accountService) {
 		_accountService = accountService;
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _accountService.getOSGiServiceIdentifier();
@@ -52,5 +51,4 @@ public class AccountServiceWrapper
 	}
 
 	private AccountService _accountService;
-
 }

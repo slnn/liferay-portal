@@ -30,14 +30,13 @@ import com.liferay.asset.kernel.service.AssetTagStatsLocalServiceUtil;
  * @see AssetTagStatsImpl
  * @see AssetTagStats
  * @deprecated As of Judson (7.1.x), replaced by {@link
- com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
+            com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */
 @Deprecated
 @ProviderType
-public abstract class AssetTagStatsBaseImpl
-	extends AssetTagStatsModelImpl implements AssetTagStats {
-
+public abstract class AssetTagStatsBaseImpl extends AssetTagStatsModelImpl
+	implements AssetTagStats {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -52,5 +51,4 @@ public abstract class AssetTagStatsBaseImpl
 			AssetTagStatsLocalServiceUtil.updateAssetTagStats(this);
 		}
 	}
-
 }

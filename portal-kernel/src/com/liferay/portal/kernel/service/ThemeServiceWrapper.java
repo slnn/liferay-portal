@@ -24,18 +24,17 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class ThemeServiceWrapper
-	implements ThemeService, ServiceWrapper<ThemeService> {
-
+public class ThemeServiceWrapper implements ThemeService,
+	ServiceWrapper<ThemeService> {
 	public ThemeServiceWrapper(ThemeService themeService) {
 		_themeService = themeService;
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _themeService.getOSGiServiceIdentifier();
@@ -44,7 +43,6 @@ public class ThemeServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
 		long companyId) {
-
 		return _themeService.getThemes(companyId);
 	}
 
@@ -64,5 +62,4 @@ public class ThemeServiceWrapper
 	}
 
 	private ThemeService _themeService;
-
 }

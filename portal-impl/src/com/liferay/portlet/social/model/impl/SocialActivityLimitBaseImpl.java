@@ -34,7 +34,6 @@ import com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil;
 @ProviderType
 public abstract class SocialActivityLimitBaseImpl
 	extends SocialActivityLimitModelImpl implements SocialActivityLimit {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class SocialActivityLimitBaseImpl
 			SocialActivityLimitLocalServiceUtil.updateSocialActivityLimit(this);
 		}
 	}
-
 }

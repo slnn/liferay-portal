@@ -34,7 +34,6 @@ import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
 @ProviderType
 public abstract class PowwowParticipantBaseImpl
 	extends PowwowParticipantModelImpl implements PowwowParticipant {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class PowwowParticipantBaseImpl
 			PowwowParticipantLocalServiceUtil.updatePowwowParticipant(this);
 		}
 	}
-
 }

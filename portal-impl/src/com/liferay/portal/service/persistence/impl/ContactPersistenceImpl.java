@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -61,23 +62,18 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ContactPersistenceImpl
-	extends BasePersistenceImpl<Contact> implements ContactPersistence {
-
+public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
+	implements ContactPersistence {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>ContactUtil</code> to access the contact persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY =
-		ContactImpl.class.getName();
-
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List1";
-
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List2";
-
+	public static final String FINDER_CLASS_NAME_ENTITY = ContactImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -93,8 +89,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public List<Contact> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
@@ -128,10 +124,8 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByCompanyId(
-		long companyId, int start, int end,
+	public List<Contact> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator<Contact> orderByComparator) {
-
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
@@ -150,34 +144,28 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
-
+	public List<Contact> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<Contact> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+			finderArgs = new Object[] { companyId };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Contact contact : list) {
@@ -194,8 +182,8 @@ public class ContactPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -206,10 +194,11 @@ public class ContactPersistenceImpl
 			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(ContactModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -227,16 +216,16 @@ public class ContactPersistenceImpl
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -265,10 +254,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a matching contact could not be found
 	 */
 	@Override
-	public Contact findByCompanyId_First(
-			long companyId, OrderByComparator<Contact> orderByComparator)
+	public Contact findByCompanyId_First(long companyId,
+		OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (contact != null) {
@@ -295,11 +283,9 @@ public class ContactPersistenceImpl
 	 * @return the first matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	@Override
-	public Contact fetchByCompanyId_First(
-		long companyId, OrderByComparator<Contact> orderByComparator) {
-
-		List<Contact> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
+	public Contact fetchByCompanyId_First(long companyId,
+		OrderByComparator<Contact> orderByComparator) {
+		List<Contact> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -317,10 +303,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a matching contact could not be found
 	 */
 	@Override
-	public Contact findByCompanyId_Last(
-			long companyId, OrderByComparator<Contact> orderByComparator)
+	public Contact findByCompanyId_Last(long companyId,
+		OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (contact != null) {
@@ -347,17 +332,16 @@ public class ContactPersistenceImpl
 	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	@Override
-	public Contact fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Contact> orderByComparator) {
-
+	public Contact fetchByCompanyId_Last(long companyId,
+		OrderByComparator<Contact> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Contact> list = findByCompanyId(
-			companyId, count - 1, count, orderByComparator);
+		List<Contact> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -376,11 +360,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a contact with the primary key could not be found
 	 */
 	@Override
-	public Contact[] findByCompanyId_PrevAndNext(
-			long contactId, long companyId,
-			OrderByComparator<Contact> orderByComparator)
+	public Contact[] findByCompanyId_PrevAndNext(long contactId,
+		long companyId, OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = findByPrimaryKey(contactId);
 
 		Session session = null;
@@ -390,13 +372,13 @@ public class ContactPersistenceImpl
 
 			Contact[] array = new ContactImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(
-				session, contact, companyId, orderByComparator, true);
+			array[0] = getByCompanyId_PrevAndNext(session, contact, companyId,
+					orderByComparator, true);
 
 			array[1] = contact;
 
-			array[2] = getByCompanyId_PrevAndNext(
-				session, contact, companyId, orderByComparator, false);
+			array[2] = getByCompanyId_PrevAndNext(session, contact, companyId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -408,15 +390,14 @@ public class ContactPersistenceImpl
 		}
 	}
 
-	protected Contact getByCompanyId_PrevAndNext(
-		Session session, Contact contact, long companyId,
+	protected Contact getByCompanyId_PrevAndNext(Session session,
+		Contact contact, long companyId,
 		OrderByComparator<Contact> orderByComparator, boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -428,8 +409,7 @@ public class ContactPersistenceImpl
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -499,9 +479,8 @@ public class ContactPersistenceImpl
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(contact)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					contact)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -523,10 +502,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (Contact contact :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
+		for (Contact contact : findByCompanyId(companyId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(contact);
 		}
 	}
@@ -541,10 +518,10 @@ public class ContactPersistenceImpl
 	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Object[] finderArgs = new Object[] {companyId};
+		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -583,9 +560,7 @@ public class ContactPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"contact.companyId = ?";
-
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "contact.companyId = ?";
 	private FinderPath _finderPathWithPaginationFindByAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountId;
 	private FinderPath _finderPathCountByAccountId;
@@ -598,8 +573,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public List<Contact> findByAccountId(long accountId) {
-		return findByAccountId(
-			accountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByAccountId(accountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
@@ -633,10 +608,8 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByAccountId(
-		long accountId, int start, int end,
+	public List<Contact> findByAccountId(long accountId, int start, int end,
 		OrderByComparator<Contact> orderByComparator) {
-
 		return findByAccountId(accountId, start, end, orderByComparator, true);
 	}
 
@@ -655,34 +628,28 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByAccountId(
-		long accountId, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
-
+	public List<Contact> findByAccountId(long accountId, int start, int end,
+		OrderByComparator<Contact> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByAccountId;
-			finderArgs = new Object[] {accountId};
+			finderArgs = new Object[] { accountId };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByAccountId;
-			finderArgs = new Object[] {
-				accountId, start, end, orderByComparator
-			};
+			finderArgs = new Object[] { accountId, start, end, orderByComparator };
 		}
 
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Contact contact : list) {
@@ -699,8 +666,8 @@ public class ContactPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -711,10 +678,11 @@ public class ContactPersistenceImpl
 			query.append(_FINDER_COLUMN_ACCOUNTID_ACCOUNTID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(ContactModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -732,16 +700,16 @@ public class ContactPersistenceImpl
 				qPos.add(accountId);
 
 				if (!pagination) {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -770,10 +738,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a matching contact could not be found
 	 */
 	@Override
-	public Contact findByAccountId_First(
-			long accountId, OrderByComparator<Contact> orderByComparator)
+	public Contact findByAccountId_First(long accountId,
+		OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = fetchByAccountId_First(accountId, orderByComparator);
 
 		if (contact != null) {
@@ -800,11 +767,9 @@ public class ContactPersistenceImpl
 	 * @return the first matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	@Override
-	public Contact fetchByAccountId_First(
-		long accountId, OrderByComparator<Contact> orderByComparator) {
-
-		List<Contact> list = findByAccountId(
-			accountId, 0, 1, orderByComparator);
+	public Contact fetchByAccountId_First(long accountId,
+		OrderByComparator<Contact> orderByComparator) {
+		List<Contact> list = findByAccountId(accountId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -822,10 +787,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a matching contact could not be found
 	 */
 	@Override
-	public Contact findByAccountId_Last(
-			long accountId, OrderByComparator<Contact> orderByComparator)
+	public Contact findByAccountId_Last(long accountId,
+		OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = fetchByAccountId_Last(accountId, orderByComparator);
 
 		if (contact != null) {
@@ -852,17 +816,16 @@ public class ContactPersistenceImpl
 	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	@Override
-	public Contact fetchByAccountId_Last(
-		long accountId, OrderByComparator<Contact> orderByComparator) {
-
+	public Contact fetchByAccountId_Last(long accountId,
+		OrderByComparator<Contact> orderByComparator) {
 		int count = countByAccountId(accountId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Contact> list = findByAccountId(
-			accountId, count - 1, count, orderByComparator);
+		List<Contact> list = findByAccountId(accountId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -881,11 +844,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a contact with the primary key could not be found
 	 */
 	@Override
-	public Contact[] findByAccountId_PrevAndNext(
-			long contactId, long accountId,
-			OrderByComparator<Contact> orderByComparator)
+	public Contact[] findByAccountId_PrevAndNext(long contactId,
+		long accountId, OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = findByPrimaryKey(contactId);
 
 		Session session = null;
@@ -895,13 +856,13 @@ public class ContactPersistenceImpl
 
 			Contact[] array = new ContactImpl[3];
 
-			array[0] = getByAccountId_PrevAndNext(
-				session, contact, accountId, orderByComparator, true);
+			array[0] = getByAccountId_PrevAndNext(session, contact, accountId,
+					orderByComparator, true);
 
 			array[1] = contact;
 
-			array[2] = getByAccountId_PrevAndNext(
-				session, contact, accountId, orderByComparator, false);
+			array[2] = getByAccountId_PrevAndNext(session, contact, accountId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -913,15 +874,14 @@ public class ContactPersistenceImpl
 		}
 	}
 
-	protected Contact getByAccountId_PrevAndNext(
-		Session session, Contact contact, long accountId,
+	protected Contact getByAccountId_PrevAndNext(Session session,
+		Contact contact, long accountId,
 		OrderByComparator<Contact> orderByComparator, boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -933,8 +893,7 @@ public class ContactPersistenceImpl
 		query.append(_FINDER_COLUMN_ACCOUNTID_ACCOUNTID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1004,9 +963,8 @@ public class ContactPersistenceImpl
 		qPos.add(accountId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(contact)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					contact)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1028,10 +986,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public void removeByAccountId(long accountId) {
-		for (Contact contact :
-				findByAccountId(
-					accountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
+		for (Contact contact : findByAccountId(accountId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(contact);
 		}
 	}
@@ -1046,10 +1002,10 @@ public class ContactPersistenceImpl
 	public int countByAccountId(long accountId) {
 		FinderPath finderPath = _finderPathCountByAccountId;
 
-		Object[] finderArgs = new Object[] {accountId};
+		Object[] finderArgs = new Object[] { accountId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1088,9 +1044,7 @@ public class ContactPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACCOUNTID_ACCOUNTID_2 =
-		"contact.accountId = ?";
-
+	private static final String _FINDER_COLUMN_ACCOUNTID_ACCOUNTID_2 = "contact.accountId = ?";
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
@@ -1104,8 +1058,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public List<Contact> findByC_C(long classNameId, long classPK) {
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByC_C(classNameId, classPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1122,9 +1076,8 @@ public class ContactPersistenceImpl
 	 * @return the range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
+	public List<Contact> findByC_C(long classNameId, long classPK, int start,
+		int end) {
 		return findByC_C(classNameId, classPK, start, end, null);
 	}
 
@@ -1143,12 +1096,10 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Contact> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
+	public List<Contact> findByC_C(long classNameId, long classPK, int start,
+		int end, OrderByComparator<Contact> orderByComparator) {
+		return findByC_C(classNameId, classPK, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -1167,40 +1118,38 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of matching contacts
 	 */
 	@Override
-	public List<Contact> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Contact> orderByComparator,
+	public List<Contact> findByC_C(long classNameId, long classPK, int start,
+		int end, OrderByComparator<Contact> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {classNameId, classPK};
+			finderArgs = new Object[] { classNameId, classPK };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
-				classNameId, classPK, start, end, orderByComparator
-			};
+					classNameId, classPK,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Contact contact : list) {
 					if ((classNameId != contact.getClassNameId()) ||
-						(classPK != contact.getClassPK())) {
-
+							(classPK != contact.getClassPK())) {
 						list = null;
 
 						break;
@@ -1213,8 +1162,8 @@ public class ContactPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1227,10 +1176,11 @@ public class ContactPersistenceImpl
 			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(ContactModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1250,16 +1200,16 @@ public class ContactPersistenceImpl
 				qPos.add(classPK);
 
 				if (!pagination) {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -1289,13 +1239,11 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a matching contact could not be found
 	 */
 	@Override
-	public Contact findByC_C_First(
-			long classNameId, long classPK,
-			OrderByComparator<Contact> orderByComparator)
+	public Contact findByC_C_First(long classNameId, long classPK,
+		OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
-		Contact contact = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
+		Contact contact = fetchByC_C_First(classNameId, classPK,
+				orderByComparator);
 
 		if (contact != null) {
 			return contact;
@@ -1325,12 +1273,10 @@ public class ContactPersistenceImpl
 	 * @return the first matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	@Override
-	public Contact fetchByC_C_First(
-		long classNameId, long classPK,
+	public Contact fetchByC_C_First(long classNameId, long classPK,
 		OrderByComparator<Contact> orderByComparator) {
-
-		List<Contact> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
+		List<Contact> list = findByC_C(classNameId, classPK, 0, 1,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1349,13 +1295,11 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a matching contact could not be found
 	 */
 	@Override
-	public Contact findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<Contact> orderByComparator)
+	public Contact findByC_C_Last(long classNameId, long classPK,
+		OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
-		Contact contact = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
+		Contact contact = fetchByC_C_Last(classNameId, classPK,
+				orderByComparator);
 
 		if (contact != null) {
 			return contact;
@@ -1385,18 +1329,16 @@ public class ContactPersistenceImpl
 	 * @return the last matching contact, or <code>null</code> if a matching contact could not be found
 	 */
 	@Override
-	public Contact fetchByC_C_Last(
-		long classNameId, long classPK,
+	public Contact fetchByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<Contact> orderByComparator) {
-
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Contact> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
+		List<Contact> list = findByC_C(classNameId, classPK, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1416,11 +1358,9 @@ public class ContactPersistenceImpl
 	 * @throws NoSuchContactException if a contact with the primary key could not be found
 	 */
 	@Override
-	public Contact[] findByC_C_PrevAndNext(
-			long contactId, long classNameId, long classPK,
-			OrderByComparator<Contact> orderByComparator)
+	public Contact[] findByC_C_PrevAndNext(long contactId, long classNameId,
+		long classPK, OrderByComparator<Contact> orderByComparator)
 		throws NoSuchContactException {
-
 		Contact contact = findByPrimaryKey(contactId);
 
 		Session session = null;
@@ -1430,15 +1370,13 @@ public class ContactPersistenceImpl
 
 			Contact[] array = new ContactImpl[3];
 
-			array[0] = getByC_C_PrevAndNext(
-				session, contact, classNameId, classPK, orderByComparator,
-				true);
+			array[0] = getByC_C_PrevAndNext(session, contact, classNameId,
+					classPK, orderByComparator, true);
 
 			array[1] = contact;
 
-			array[2] = getByC_C_PrevAndNext(
-				session, contact, classNameId, classPK, orderByComparator,
-				false);
+			array[2] = getByC_C_PrevAndNext(session, contact, classNameId,
+					classPK, orderByComparator, false);
 
 			return array;
 		}
@@ -1450,15 +1388,14 @@ public class ContactPersistenceImpl
 		}
 	}
 
-	protected Contact getByC_C_PrevAndNext(
-		Session session, Contact contact, long classNameId, long classPK,
+	protected Contact getByC_C_PrevAndNext(Session session, Contact contact,
+		long classNameId, long classPK,
 		OrderByComparator<Contact> orderByComparator, boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1472,8 +1409,7 @@ public class ContactPersistenceImpl
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1545,9 +1481,8 @@ public class ContactPersistenceImpl
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(contact)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					contact)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1570,11 +1505,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (Contact contact :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
+		for (Contact contact : findByC_C(classNameId, classPK,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(contact);
 		}
 	}
@@ -1590,10 +1522,10 @@ public class ContactPersistenceImpl
 	public int countByC_C(long classNameId, long classPK) {
 		FinderPath finderPath = _finderPathCountByC_C;
 
-		Object[] finderArgs = new Object[] {classNameId, classPK};
+		Object[] finderArgs = new Object[] { classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1636,11 +1568,8 @@ public class ContactPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"contact.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
-		"contact.classPK = ?";
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "contact.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "contact.classPK = ?";
 
 	public ContactPersistenceImpl() {
 		setModelClass(Contact.class);
@@ -1657,9 +1586,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(Contact contact) {
-		EntityCacheUtil.putResult(
-			ContactModelImpl.ENTITY_CACHE_ENABLED, ContactImpl.class,
-			contact.getPrimaryKey(), contact);
+		EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			ContactImpl.class, contact.getPrimaryKey(), contact);
 
 		contact.resetOriginalValues();
 	}
@@ -1673,9 +1601,8 @@ public class ContactPersistenceImpl
 	public void cacheResult(List<Contact> contacts) {
 		for (Contact contact : contacts) {
 			if (EntityCacheUtil.getResult(
-					ContactModelImpl.ENTITY_CACHE_ENABLED, ContactImpl.class,
-					contact.getPrimaryKey()) == null) {
-
+						ContactModelImpl.ENTITY_CACHE_ENABLED,
+						ContactImpl.class, contact.getPrimaryKey()) == null) {
 				cacheResult(contact);
 			}
 			else {
@@ -1709,9 +1636,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public void clearCache(Contact contact) {
-		EntityCacheUtil.removeResult(
-			ContactModelImpl.ENTITY_CACHE_ENABLED, ContactImpl.class,
-			contact.getPrimaryKey());
+		EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			ContactImpl.class, contact.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1723,9 +1649,8 @@ public class ContactPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Contact contact : contacts) {
-			EntityCacheUtil.removeResult(
-				ContactModelImpl.ENTITY_CACHE_ENABLED, ContactImpl.class,
-				contact.getPrimaryKey());
+			EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactImpl.class, contact.getPrimaryKey());
 		}
 	}
 
@@ -1769,22 +1694,20 @@ public class ContactPersistenceImpl
 	@Override
 	public Contact remove(Serializable primaryKey)
 		throws NoSuchContactException {
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Contact contact = (Contact)session.get(
-				ContactImpl.class, primaryKey);
+			Contact contact = (Contact)session.get(ContactImpl.class, primaryKey);
 
 			if (contact == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchContactException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				throw new NoSuchContactException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					primaryKey);
 			}
 
 			return remove(contact);
@@ -1808,8 +1731,8 @@ public class ContactPersistenceImpl
 			session = openSession();
 
 			if (!session.contains(contact)) {
-				contact = (Contact)session.get(
-					ContactImpl.class, contact.getPrimaryKeyObj());
+				contact = (Contact)session.get(ContactImpl.class,
+						contact.getPrimaryKeyObj());
 			}
 
 			if (contact != null) {
@@ -1842,18 +1765,17 @@ public class ContactPersistenceImpl
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in contact proxy " +
-						invocationHandler.getClass());
+					invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom Contact implementation " +
-					contact.getClass());
+				contact.getClass());
 		}
 
 		ContactModelImpl contactModelImpl = (ContactModelImpl)contact;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -1899,101 +1821,95 @@ public class ContactPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!ContactModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else if (isNew) {
-			Object[] args = new Object[] {contactModelImpl.getCompanyId()};
+		else
+		 if (isNew) {
+			Object[] args = new Object[] { contactModelImpl.getCompanyId() };
 
 			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByCompanyId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
+				args);
 
-			args = new Object[] {contactModelImpl.getAccountId()};
+			args = new Object[] { contactModelImpl.getAccountId() };
 
 			FinderCacheUtil.removeResult(_finderPathCountByAccountId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByAccountId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByAccountId,
+				args);
 
 			args = new Object[] {
-				contactModelImpl.getClassNameId(), contactModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByC_C, args);
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((contactModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCompanyId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					contactModelImpl.getOriginalCompanyId()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
-
-				args = new Object[] {contactModelImpl.getCompanyId()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
-			}
-
-			if ((contactModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByAccountId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					contactModelImpl.getOriginalAccountId()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByAccountId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByAccountId, args);
-
-				args = new Object[] {contactModelImpl.getAccountId()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByAccountId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByAccountId, args);
-			}
-
-			if ((contactModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByC_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					contactModelImpl.getOriginalClassNameId(),
-					contactModelImpl.getOriginalClassPK()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByC_C, args);
-
-				args = new Object[] {
 					contactModelImpl.getClassNameId(),
 					contactModelImpl.getClassPK()
 				};
 
+			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
+				args);
+
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
+				FINDER_ARGS_EMPTY);
+		}
+
+		else {
+			if ((contactModelImpl.getColumnBitmask() &
+					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						contactModelImpl.getOriginalCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
+					args);
+
+				args = new Object[] { contactModelImpl.getCompanyId() };
+
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
+					args);
+			}
+
+			if ((contactModelImpl.getColumnBitmask() &
+					_finderPathWithoutPaginationFindByAccountId.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						contactModelImpl.getOriginalAccountId()
+					};
+
+				FinderCacheUtil.removeResult(_finderPathCountByAccountId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByAccountId,
+					args);
+
+				args = new Object[] { contactModelImpl.getAccountId() };
+
+				FinderCacheUtil.removeResult(_finderPathCountByAccountId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByAccountId,
+					args);
+			}
+
+			if ((contactModelImpl.getColumnBitmask() &
+					_finderPathWithoutPaginationFindByC_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						contactModelImpl.getOriginalClassNameId(),
+						contactModelImpl.getOriginalClassPK()
+					};
+
 				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByC_C, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
+					args);
+
+				args = new Object[] {
+						contactModelImpl.getClassNameId(),
+						contactModelImpl.getClassPK()
+					};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
+					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(
-			ContactModelImpl.ENTITY_CACHE_ENABLED, ContactImpl.class,
-			contact.getPrimaryKey(), contact, false);
+		EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			ContactImpl.class, contact.getPrimaryKey(), contact, false);
 
 		contact.resetOriginalValues();
 
@@ -2010,7 +1926,6 @@ public class ContactPersistenceImpl
 	@Override
 	public Contact findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchContactException {
-
 		Contact contact = fetchByPrimaryKey(primaryKey);
 
 		if (contact == null) {
@@ -2018,8 +1933,8 @@ public class ContactPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchContactException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			throw new NoSuchContactException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
 		}
 
 		return contact;
@@ -2035,7 +1950,6 @@ public class ContactPersistenceImpl
 	@Override
 	public Contact findByPrimaryKey(long contactId)
 		throws NoSuchContactException {
-
 		return findByPrimaryKey((Serializable)contactId);
 	}
 
@@ -2089,9 +2003,8 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of contacts
 	 */
 	@Override
-	public List<Contact> findAll(
-		int start, int end, OrderByComparator<Contact> orderByComparator) {
-
+	public List<Contact> findAll(int start, int end,
+		OrderByComparator<Contact> orderByComparator) {
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -2109,31 +2022,28 @@ public class ContactPersistenceImpl
 	 * @return the ordered range of contacts
 	 */
 	@Override
-	public List<Contact> findAll(
-		int start, int end, OrderByComparator<Contact> orderByComparator,
-		boolean retrieveFromCache) {
-
+	public List<Contact> findAll(int start, int end,
+		OrderByComparator<Contact> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
+			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2141,13 +2051,13 @@ public class ContactPersistenceImpl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(2 +
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CONTACT);
 
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2167,16 +2077,16 @@ public class ContactPersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Contact>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<Contact>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
 
 				cacheResult(list);
@@ -2214,8 +2124,8 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2227,12 +2137,12 @@ public class ContactPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(_finderPathCountAll,
+					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(_finderPathCountAll,
+					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2268,90 +2178,83 @@ public class ContactPersistenceImpl
 	 * Initializes the contact persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
 
-		_finderPathCountAll = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathCountAll = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+				new String[0]);
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()},
-			ContactModelImpl.COMPANYID_COLUMN_BITMASK);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
-
-		_finderPathWithPaginationFindByAccountId = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByAccountId = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountId",
-			new String[] {Long.class.getName()},
-			ContactModelImpl.ACCOUNTID_COLUMN_BITMASK);
-
-		_finderPathCountByAccountId = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountId",
-			new String[] {Long.class.getName()});
-
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+				new String[] {
+					Long.class.getName(),
+					
 				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			ContactModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			ContactModelImpl.CLASSPK_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+				new String[] { Long.class.getName() },
+				ContactModelImpl.COMPANYID_COLUMN_BITMASK);
 
-		_finderPathCountByC_C = new FinderPath(
-			ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
+		_finderPathCountByCompanyId = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByAccountId = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByAccountId = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountId",
+				new String[] { Long.class.getName() },
+				ContactModelImpl.ACCOUNTID_COLUMN_BITMASK);
+
+		_finderPathCountByAccountId = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountId",
+				new String[] { Long.class.getName() });
+
+		_finderPathWithPaginationFindByC_C = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
+
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				ContactModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+				ContactModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {
@@ -2363,28 +2266,12 @@ public class ContactPersistenceImpl
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-
-	private static final String _SQL_SELECT_CONTACT =
-		"SELECT contact FROM Contact contact";
-
-	private static final String _SQL_SELECT_CONTACT_WHERE =
-		"SELECT contact FROM Contact contact WHERE ";
-
-	private static final String _SQL_COUNT_CONTACT =
-		"SELECT COUNT(contact) FROM Contact contact";
-
-	private static final String _SQL_COUNT_CONTACT_WHERE =
-		"SELECT COUNT(contact) FROM Contact contact WHERE ";
-
+	private static final String _SQL_SELECT_CONTACT = "SELECT contact FROM Contact contact";
+	private static final String _SQL_SELECT_CONTACT_WHERE = "SELECT contact FROM Contact contact WHERE ";
+	private static final String _SQL_COUNT_CONTACT = "SELECT COUNT(contact) FROM Contact contact";
+	private static final String _SQL_COUNT_CONTACT_WHERE = "SELECT COUNT(contact) FROM Contact contact WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "contact.";
-
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Contact exists with the primary key ";
-
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Contact exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContactPersistenceImpl.class);
-
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Contact exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Contact exists with the key {";
+	private static final Log _log = LogFactoryUtil.getLog(ContactPersistenceImpl.class);
 }

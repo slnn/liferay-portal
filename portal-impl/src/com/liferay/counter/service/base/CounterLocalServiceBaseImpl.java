@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.persistence.CounterFinder;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
@@ -35,10 +36,8 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
  * @generated
  */
 @ProviderType
-public abstract class CounterLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
+public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements CounterLocalService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,9 +58,7 @@ public abstract class CounterLocalServiceBaseImpl
 	 *
 	 * @param counterLocalService the counter local service
 	 */
-	public void setCounterLocalService(
-		CounterLocalService counterLocalService) {
-
+	public void setCounterLocalService(CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -109,8 +106,6 @@ public abstract class CounterLocalServiceBaseImpl
 
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
-
 	@BeanReference(type = CounterFinder.class)
 	protected CounterFinder counterFinder;
-
 }

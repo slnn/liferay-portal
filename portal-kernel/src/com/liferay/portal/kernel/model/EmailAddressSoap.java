@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class EmailAddressSoap implements Serializable {
-
 	public static EmailAddressSoap toSoapModel(EmailAddress model) {
 		EmailAddressSoap soapModel = new EmailAddressSoap();
 
@@ -79,8 +78,7 @@ public class EmailAddressSoap implements Serializable {
 	}
 
 	public static EmailAddressSoap[] toSoapModels(List<EmailAddress> models) {
-		List<EmailAddressSoap> soapModels = new ArrayList<EmailAddressSoap>(
-			models.size());
+		List<EmailAddressSoap> soapModels = new ArrayList<EmailAddressSoap>(models.size());
 
 		for (EmailAddress model : models) {
 			soapModels.add(toSoapModel(model));
@@ -221,5 +219,4 @@ public class EmailAddressSoap implements Serializable {
 	private String _address;
 	private long _typeId;
 	private boolean _primary;
-
 }

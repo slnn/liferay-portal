@@ -36,7 +36,6 @@ import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceUtil;
 @ProviderType
 public abstract class AssetCategoryPropertyBaseImpl
 	extends AssetCategoryPropertyModelImpl implements AssetCategoryProperty {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -45,13 +44,10 @@ public abstract class AssetCategoryPropertyBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			AssetCategoryPropertyLocalServiceUtil.addAssetCategoryProperty(
-				this);
+			AssetCategoryPropertyLocalServiceUtil.addAssetCategoryProperty(this);
 		}
 		else {
-			AssetCategoryPropertyLocalServiceUtil.updateAssetCategoryProperty(
-				this);
+			AssetCategoryPropertyLocalServiceUtil.updateAssetCategoryProperty(this);
 		}
 	}
-
 }

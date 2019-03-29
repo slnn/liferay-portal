@@ -32,10 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PhoneModel
-	extends AttachedModel, BaseModel<Phone>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
-
+public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -306,5 +304,4 @@ public interface PhoneModel
 	 * @param primary the primary of this phone
 	 */
 	public void setPrimary(boolean primary);
-
 }

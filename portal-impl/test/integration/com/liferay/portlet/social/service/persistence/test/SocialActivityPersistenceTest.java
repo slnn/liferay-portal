@@ -30,11 +30,19 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+
 import com.liferay.social.kernel.exception.NoSuchActivityException;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 import com.liferay.social.kernel.service.persistence.SocialActivityUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 
 import java.io.Serializable;
 
@@ -45,23 +53,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 /**
  * @generated
  */
 public class SocialActivityPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,8 +100,7 @@ public class SocialActivityPersistenceTest {
 
 		_persistence.remove(newSocialActivity);
 
-		SocialActivity existingSocialActivity = _persistence.fetchByPrimaryKey(
-			newSocialActivity.getPrimaryKey());
+		SocialActivity existingSocialActivity = _persistence.fetchByPrimaryKey(newSocialActivity.getPrimaryKey());
 
 		Assert.assertNull(existingSocialActivity);
 	}
@@ -146,48 +144,35 @@ public class SocialActivityPersistenceTest {
 
 		_socialActivities.add(_persistence.update(newSocialActivity));
 
-		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(
-			newSocialActivity.getPrimaryKey());
+		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingSocialActivity.getActivityId(),
+		Assert.assertEquals(existingSocialActivity.getActivityId(),
 			newSocialActivity.getActivityId());
-		Assert.assertEquals(
-			existingSocialActivity.getGroupId(),
+		Assert.assertEquals(existingSocialActivity.getGroupId(),
 			newSocialActivity.getGroupId());
-		Assert.assertEquals(
-			existingSocialActivity.getCompanyId(),
+		Assert.assertEquals(existingSocialActivity.getCompanyId(),
 			newSocialActivity.getCompanyId());
-		Assert.assertEquals(
-			existingSocialActivity.getUserId(), newSocialActivity.getUserId());
-		Assert.assertEquals(
-			existingSocialActivity.getCreateDate(),
+		Assert.assertEquals(existingSocialActivity.getUserId(),
+			newSocialActivity.getUserId());
+		Assert.assertEquals(existingSocialActivity.getCreateDate(),
 			newSocialActivity.getCreateDate());
-		Assert.assertEquals(
-			existingSocialActivity.getActivitySetId(),
+		Assert.assertEquals(existingSocialActivity.getActivitySetId(),
 			newSocialActivity.getActivitySetId());
-		Assert.assertEquals(
-			existingSocialActivity.getMirrorActivityId(),
+		Assert.assertEquals(existingSocialActivity.getMirrorActivityId(),
 			newSocialActivity.getMirrorActivityId());
-		Assert.assertEquals(
-			existingSocialActivity.getClassNameId(),
+		Assert.assertEquals(existingSocialActivity.getClassNameId(),
 			newSocialActivity.getClassNameId());
-		Assert.assertEquals(
-			existingSocialActivity.getClassPK(),
+		Assert.assertEquals(existingSocialActivity.getClassPK(),
 			newSocialActivity.getClassPK());
-		Assert.assertEquals(
-			existingSocialActivity.getParentClassNameId(),
+		Assert.assertEquals(existingSocialActivity.getParentClassNameId(),
 			newSocialActivity.getParentClassNameId());
-		Assert.assertEquals(
-			existingSocialActivity.getParentClassPK(),
+		Assert.assertEquals(existingSocialActivity.getParentClassPK(),
 			newSocialActivity.getParentClassPK());
-		Assert.assertEquals(
-			existingSocialActivity.getType(), newSocialActivity.getType());
-		Assert.assertEquals(
-			existingSocialActivity.getExtraData(),
+		Assert.assertEquals(existingSocialActivity.getType(),
+			newSocialActivity.getType());
+		Assert.assertEquals(existingSocialActivity.getExtraData(),
 			newSocialActivity.getExtraData());
-		Assert.assertEquals(
-			existingSocialActivity.getReceiverUserId(),
+		Assert.assertEquals(existingSocialActivity.getReceiverUserId(),
 			newSocialActivity.getReceiverUserId());
 	}
 
@@ -242,47 +227,44 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByM_C_C() throws Exception {
-		_persistence.countByM_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByM_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByM_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C_T() throws Exception {
-		_persistence.countByC_C_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByC_C_T(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_U_C_C_T_R() throws Exception {
-		_persistence.countByG_U_C_C_T_R(
+		_persistence.countByG_U_C_C_T_R(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_U_C_C_T_R(0L, 0L, 0L, 0L, 0, 0L);
 	}
 
 	@Test
 	public void testCountByG_U_CD_C_C_T_R() throws Exception {
-		_persistence.countByG_U_CD_C_C_T_R(
+		_persistence.countByG_U_CD_C_C_T_R(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			RandomTestUtil.nextLong());
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_U_CD_C_C_T_R(0L, 0L, 0L, 0L, 0L, 0, 0L);
 	}
@@ -291,8 +273,7 @@ public class SocialActivityPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
-		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(
-			newSocialActivity.getPrimaryKey());
+		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
 		Assert.assertEquals(existingSocialActivity, newSocialActivity);
 	}
@@ -306,14 +287,14 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SocialActivity> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"SocialActivity", "activityId", true, "groupId", true, "companyId",
-			true, "userId", true, "createDate", true, "activitySetId", true,
+		return OrderByComparatorFactoryUtil.create("SocialActivity",
+			"activityId", true, "groupId", true, "companyId", true, "userId",
+			true, "createDate", true, "activitySetId", true,
 			"mirrorActivityId", true, "classNameId", true, "classPK", true,
 			"parentClassNameId", true, "parentClassPK", true, "type", true,
 			"extraData", true, "receiverUserId", true);
@@ -323,8 +304,7 @@ public class SocialActivityPersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
-		SocialActivity existingSocialActivity = _persistence.fetchByPrimaryKey(
-			newSocialActivity.getPrimaryKey());
+		SocialActivity existingSocialActivity = _persistence.fetchByPrimaryKey(newSocialActivity.getPrimaryKey());
 
 		Assert.assertEquals(existingSocialActivity, newSocialActivity);
 	}
@@ -333,8 +313,7 @@ public class SocialActivityPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		SocialActivity missingSocialActivity = _persistence.fetchByPrimaryKey(
-			pk);
+		SocialActivity missingSocialActivity = _persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingSocialActivity);
 	}
@@ -342,7 +321,6 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		SocialActivity newSocialActivity1 = addSocialActivity();
 		SocialActivity newSocialActivity2 = addSocialActivity();
 
@@ -351,22 +329,18 @@ public class SocialActivityPersistenceTest {
 		primaryKeys.add(newSocialActivity1.getPrimaryKey());
 		primaryKeys.add(newSocialActivity2.getPrimaryKey());
 
-		Map<Serializable, SocialActivity> socialActivities =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivity> socialActivities = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, socialActivities.size());
-		Assert.assertEquals(
-			newSocialActivity1,
+		Assert.assertEquals(newSocialActivity1,
 			socialActivities.get(newSocialActivity1.getPrimaryKey()));
-		Assert.assertEquals(
-			newSocialActivity2,
+		Assert.assertEquals(newSocialActivity2,
 			socialActivities.get(newSocialActivity2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -376,8 +350,7 @@ public class SocialActivityPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SocialActivity> socialActivities =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivity> socialActivities = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(socialActivities.isEmpty());
 	}
@@ -385,7 +358,6 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		SocialActivity newSocialActivity = addSocialActivity();
 
 		long pk = RandomTestUtil.nextLong();
@@ -395,39 +367,36 @@ public class SocialActivityPersistenceTest {
 		primaryKeys.add(newSocialActivity.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SocialActivity> socialActivities =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivity> socialActivities = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, socialActivities.size());
-		Assert.assertEquals(
-			newSocialActivity,
+		Assert.assertEquals(newSocialActivity,
 			socialActivities.get(newSocialActivity.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivity> socialActivities =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivity> socialActivities = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(socialActivities.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSocialActivity.getPrimaryKey());
 
-		Map<Serializable, SocialActivity> socialActivities =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivity> socialActivities = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, socialActivities.size());
-		Assert.assertEquals(
-			newSocialActivity,
+		Assert.assertEquals(newSocialActivity,
 			socialActivities.get(newSocialActivity.getPrimaryKey()));
 	}
 
@@ -435,19 +404,15 @@ public class SocialActivityPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			SocialActivityLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = SocialActivityLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<SocialActivity>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialActivity>() {
 				@Override
 				public void performAction(SocialActivity socialActivity) {
 					Assert.assertNotNull(socialActivity);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -456,18 +421,17 @@ public class SocialActivityPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SocialActivity.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivity.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"activityId", newSocialActivity.getActivityId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityId",
+				newSocialActivity.getActivityId()));
 
-		List<SocialActivity> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SocialActivity> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -478,34 +442,31 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SocialActivity.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivity.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"activityId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityId",
+				RandomTestUtil.nextLong()));
 
-		List<SocialActivity> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<SocialActivity> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SocialActivity.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivity.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("activityId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("activityId"));
 
 		Object newActivityId = newSocialActivity.getActivityId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"activityId", new Object[] {newActivityId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("activityId",
+				new Object[] { newActivityId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -518,15 +479,13 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SocialActivity.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivity.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("activityId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("activityId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"activityId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("activityId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -539,46 +498,36 @@ public class SocialActivityPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(
-			newSocialActivity.getPrimaryKey());
+		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getMirrorActivityId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalMirrorActivityId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivity.getMirrorActivityId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalMirrorActivityId", new Class<?>[0]));
 
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getCreateDate()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalCreateDate",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(
-			Integer.valueOf(existingSocialActivity.getType()),
-			ReflectionTestUtil.<Integer>invoke(
-				existingSocialActivity, "getOriginalType", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getReceiverUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalReceiverUserId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getCreateDate()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalCreateDate", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivity.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(existingSocialActivity.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingSocialActivity,
+				"getOriginalType", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivity.getReceiverUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
+				"getOriginalReceiverUserId", new Class<?>[0]));
 	}
 
 	protected SocialActivity addSocialActivity() throws Exception {
@@ -617,9 +566,7 @@ public class SocialActivityPersistenceTest {
 		return socialActivity;
 	}
 
-	private List<SocialActivity> _socialActivities =
-		new ArrayList<SocialActivity>();
+	private List<SocialActivity> _socialActivities = new ArrayList<SocialActivity>();
 	private SocialActivityPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

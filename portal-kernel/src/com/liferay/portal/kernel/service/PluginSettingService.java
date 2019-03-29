@@ -36,12 +36,9 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface PluginSettingService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,15 +46,13 @@ public interface PluginSettingService extends BaseService {
 	 */
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
-	public PluginSetting updatePluginSetting(
-			long companyId, String pluginId, String pluginType, String roles,
-			boolean active)
+	public PluginSetting updatePluginSetting(long companyId, String pluginId,
+		String pluginType, String roles, boolean active)
 		throws PortalException;
-
 }

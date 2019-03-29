@@ -15,10 +15,13 @@
 package com.liferay.password.policies.admin.uad.exporter;
 
 import com.liferay.password.policies.admin.uad.constants.PasswordPoliciesAdminUADConstants;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
+
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BasePasswordPolicyUADExporter
 	extends DynamicQueryUADExporter<PasswordPolicy> {
-
 	@Override
 	public Class<PasswordPolicy> getTypeClass() {
 		return PasswordPolicy.class;
@@ -50,8 +52,7 @@ public abstract class BasePasswordPolicyUADExporter
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return PasswordPoliciesAdminUADConstants.
-			USER_ID_FIELD_NAMES_PASSWORD_POLICY;
+		return PasswordPoliciesAdminUADConstants.USER_ID_FIELD_NAMES_PASSWORD_POLICY;
 	}
 
 	@Override
@@ -82,5 +83,4 @@ public abstract class BasePasswordPolicyUADExporter
 
 	@Reference
 	protected PasswordPolicyLocalService passwordPolicyLocalService;
-
 }

@@ -24,12 +24,9 @@ import aQute.bnd.annotation.ProviderType;
 @Deprecated
 @ProviderType
 public interface RatingsStatsFinder {
+	public java.util.Map<java.io.Serializable, com.liferay.ratings.kernel.model.RatingsStats> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
-	public java.util.Map
-		<java.io.Serializable, com.liferay.ratings.kernel.model.RatingsStats>
-			fetchByPrimaryKeys(java.util.Set<java.io.Serializable> primaryKeys);
-
-	public java.util.List<com.liferay.ratings.kernel.model.RatingsStats>
-		findByC_C(long classNameId, java.util.List<Long> classPKs);
-
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsStats> findByC_C(
+		long classNameId, java.util.List<Long> classPKs);
 }

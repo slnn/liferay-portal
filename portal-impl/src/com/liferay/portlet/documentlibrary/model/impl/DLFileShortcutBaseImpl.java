@@ -32,9 +32,8 @@ import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUti
  * @generated
  */
 @ProviderType
-public abstract class DLFileShortcutBaseImpl
-	extends DLFileShortcutModelImpl implements DLFileShortcut {
-
+public abstract class DLFileShortcutBaseImpl extends DLFileShortcutModelImpl
+	implements DLFileShortcut {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,5 +57,4 @@ public abstract class DLFileShortcutBaseImpl
 
 		DLFileShortcutLocalServiceUtil.updateDLFileShortcut(dlFileShortcut);
 	}
-
 }

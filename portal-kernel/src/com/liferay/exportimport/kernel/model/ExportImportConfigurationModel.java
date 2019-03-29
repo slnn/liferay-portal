@@ -39,10 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ExportImportConfigurationModel
-	extends BaseModel<ExportImportConfiguration>, GroupedModel, MVCCModel,
-			ShardedModel, TrashedModel, WorkflowedModel {
-
+public interface ExportImportConfigurationModel extends BaseModel<ExportImportConfiguration>,
+	GroupedModel, MVCCModel, ShardedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,8 +89,7 @@ public interface ExportImportConfigurationModel
 	 *
 	 * @param exportImportConfigurationId the export import configuration ID of this export import configuration
 	 */
-	public void setExportImportConfigurationId(
-		long exportImportConfigurationId);
+	public void setExportImportConfigurationId(long exportImportConfigurationId);
 
 	/**
 	 * Returns the group ID of this export import configuration.
@@ -459,5 +456,4 @@ public interface ExportImportConfigurationModel
 	 */
 	@Override
 	public boolean isScheduled();
-
 }

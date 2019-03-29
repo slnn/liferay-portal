@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -60,24 +61,18 @@ import java.util.Map;
  */
 @Deprecated
 @ProviderType
-public class ResourceBlockPermissionPersistenceImpl
-	extends BasePersistenceImpl<ResourceBlockPermission>
+public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<ResourceBlockPermission>
 	implements ResourceBlockPermissionPersistence {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>ResourceBlockPermissionUtil</code> to access the resource block permission persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY =
-		ResourceBlockPermissionImpl.class.getName();
-
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List1";
-
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
-		FINDER_CLASS_NAME_ENTITY + ".List2";
-
+	public static final String FINDER_CLASS_NAME_ENTITY = ResourceBlockPermissionImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -94,9 +89,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public List<ResourceBlockPermission> findByResourceBlockId(
 		long resourceBlockId) {
-
-		return findByResourceBlockId(
-			resourceBlockId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByResourceBlockId(resourceBlockId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -114,7 +108,6 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public List<ResourceBlockPermission> findByResourceBlockId(
 		long resourceBlockId, int start, int end) {
-
 		return findByResourceBlockId(resourceBlockId, start, end, null);
 	}
 
@@ -135,9 +128,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	public List<ResourceBlockPermission> findByResourceBlockId(
 		long resourceBlockId, int start, int end,
 		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
-		return findByResourceBlockId(
-			resourceBlockId, start, end, orderByComparator, true);
+		return findByResourceBlockId(resourceBlockId, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -159,36 +151,34 @@ public class ResourceBlockPermissionPersistenceImpl
 		long resourceBlockId, int start, int end,
 		OrderByComparator<ResourceBlockPermission> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByResourceBlockId;
-			finderArgs = new Object[] {resourceBlockId};
+			finderArgs = new Object[] { resourceBlockId };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByResourceBlockId;
 			finderArgs = new Object[] {
-				resourceBlockId, start, end, orderByComparator
-			};
+					resourceBlockId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<ResourceBlockPermission> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourceBlockPermission resourceBlockPermission : list) {
-					if ((resourceBlockId !=
-							resourceBlockPermission.getResourceBlockId())) {
-
+					if ((resourceBlockId != resourceBlockPermission.getResourceBlockId())) {
 						list = null;
 
 						break;
@@ -201,8 +191,8 @@ public class ResourceBlockPermissionPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -213,10 +203,11 @@ public class ResourceBlockPermissionPersistenceImpl
 			query.append(_FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(ResourceBlockPermissionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -234,16 +225,16 @@ public class ResourceBlockPermissionPersistenceImpl
 				qPos.add(resourceBlockId);
 
 				if (!pagination) {
-					list = (List<ResourceBlockPermission>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<ResourceBlockPermission>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -273,12 +264,11 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public ResourceBlockPermission findByResourceBlockId_First(
-			long resourceBlockId,
-			OrderByComparator<ResourceBlockPermission> orderByComparator)
+		long resourceBlockId,
+		OrderByComparator<ResourceBlockPermission> orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission =
-			fetchByResourceBlockId_First(resourceBlockId, orderByComparator);
+		ResourceBlockPermission resourceBlockPermission = fetchByResourceBlockId_First(resourceBlockId,
+				orderByComparator);
 
 		if (resourceBlockPermission != null) {
 			return resourceBlockPermission;
@@ -307,9 +297,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	public ResourceBlockPermission fetchByResourceBlockId_First(
 		long resourceBlockId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
-		List<ResourceBlockPermission> list = findByResourceBlockId(
-			resourceBlockId, 0, 1, orderByComparator);
+		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
+				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -328,12 +317,11 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public ResourceBlockPermission findByResourceBlockId_Last(
-			long resourceBlockId,
-			OrderByComparator<ResourceBlockPermission> orderByComparator)
+		long resourceBlockId,
+		OrderByComparator<ResourceBlockPermission> orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission =
-			fetchByResourceBlockId_Last(resourceBlockId, orderByComparator);
+		ResourceBlockPermission resourceBlockPermission = fetchByResourceBlockId_Last(resourceBlockId,
+				orderByComparator);
 
 		if (resourceBlockPermission != null) {
 			return resourceBlockPermission;
@@ -362,15 +350,14 @@ public class ResourceBlockPermissionPersistenceImpl
 	public ResourceBlockPermission fetchByResourceBlockId_Last(
 		long resourceBlockId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
 		int count = countByResourceBlockId(resourceBlockId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ResourceBlockPermission> list = findByResourceBlockId(
-			resourceBlockId, count - 1, count, orderByComparator);
+		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
+				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -390,30 +377,27 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
-			long resourceBlockPermissionId, long resourceBlockId,
-			OrderByComparator<ResourceBlockPermission> orderByComparator)
+		long resourceBlockPermissionId, long resourceBlockId,
+		OrderByComparator<ResourceBlockPermission> orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(
-			resourceBlockPermissionId);
+		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(resourceBlockPermissionId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ResourceBlockPermission[] array =
-				new ResourceBlockPermissionImpl[3];
+			ResourceBlockPermission[] array = new ResourceBlockPermissionImpl[3];
 
-			array[0] = getByResourceBlockId_PrevAndNext(
-				session, resourceBlockPermission, resourceBlockId,
-				orderByComparator, true);
+			array[0] = getByResourceBlockId_PrevAndNext(session,
+					resourceBlockPermission, resourceBlockId,
+					orderByComparator, true);
 
 			array[1] = resourceBlockPermission;
 
-			array[2] = getByResourceBlockId_PrevAndNext(
-				session, resourceBlockPermission, resourceBlockId,
-				orderByComparator, false);
+			array[2] = getByResourceBlockId_PrevAndNext(session,
+					resourceBlockPermission, resourceBlockId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -430,12 +414,11 @@ public class ResourceBlockPermissionPersistenceImpl
 		long resourceBlockId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator,
 		boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -447,8 +430,7 @@ public class ResourceBlockPermissionPersistenceImpl
 		query.append(_FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -518,10 +500,8 @@ public class ResourceBlockPermissionPersistenceImpl
 		qPos.add(resourceBlockId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						resourceBlockPermission)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					resourceBlockPermission)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -543,11 +523,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByResourceBlockId(long resourceBlockId) {
-		for (ResourceBlockPermission resourceBlockPermission :
-				findByResourceBlockId(
-					resourceBlockId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
+		for (ResourceBlockPermission resourceBlockPermission : findByResourceBlockId(
+				resourceBlockId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(resourceBlockPermission);
 		}
 	}
@@ -562,10 +539,10 @@ public class ResourceBlockPermissionPersistenceImpl
 	public int countByResourceBlockId(long resourceBlockId) {
 		FinderPath finderPath = _finderPathCountByResourceBlockId;
 
-		Object[] finderArgs = new Object[] {resourceBlockId};
+		Object[] finderArgs = new Object[] { resourceBlockId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -604,10 +581,8 @@ public class ResourceBlockPermissionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2 =
-			"resourceBlockPermission.resourceBlockId = ?";
-
+	private static final String _FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2 =
+		"resourceBlockPermission.resourceBlockId = ?";
 	private FinderPath _finderPathWithPaginationFindByRoleId;
 	private FinderPath _finderPathWithoutPaginationFindByRoleId;
 	private FinderPath _finderPathCountByRoleId;
@@ -636,9 +611,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the range of matching resource block permissions
 	 */
 	@Override
-	public List<ResourceBlockPermission> findByRoleId(
-		long roleId, int start, int end) {
-
+	public List<ResourceBlockPermission> findByRoleId(long roleId, int start,
+		int end) {
 		return findByRoleId(roleId, start, end, null);
 	}
 
@@ -656,10 +630,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the ordered range of matching resource block permissions
 	 */
 	@Override
-	public List<ResourceBlockPermission> findByRoleId(
-		long roleId, int start, int end,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
+	public List<ResourceBlockPermission> findByRoleId(long roleId, int start,
+		int end, OrderByComparator<ResourceBlockPermission> orderByComparator) {
 		return findByRoleId(roleId, start, end, orderByComparator, true);
 	}
 
@@ -678,32 +650,29 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the ordered range of matching resource block permissions
 	 */
 	@Override
-	public List<ResourceBlockPermission> findByRoleId(
-		long roleId, int start, int end,
-		OrderByComparator<ResourceBlockPermission> orderByComparator,
+	public List<ResourceBlockPermission> findByRoleId(long roleId, int start,
+		int end, OrderByComparator<ResourceBlockPermission> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByRoleId;
-			finderArgs = new Object[] {roleId};
+			finderArgs = new Object[] { roleId };
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByRoleId;
-			finderArgs = new Object[] {roleId, start, end, orderByComparator};
+			finderArgs = new Object[] { roleId, start, end, orderByComparator };
 		}
 
 		List<ResourceBlockPermission> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourceBlockPermission resourceBlockPermission : list) {
@@ -720,8 +689,8 @@ public class ResourceBlockPermissionPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -732,10 +701,11 @@ public class ResourceBlockPermissionPersistenceImpl
 			query.append(_FINDER_COLUMN_ROLEID_ROLEID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (pagination) {
+			else
+			 if (pagination) {
 				query.append(ResourceBlockPermissionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -753,16 +723,16 @@ public class ResourceBlockPermissionPersistenceImpl
 				qPos.add(roleId);
 
 				if (!pagination) {
-					list = (List<ResourceBlockPermission>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<ResourceBlockPermission>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -791,13 +761,11 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @throws NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
 	 */
 	@Override
-	public ResourceBlockPermission findByRoleId_First(
-			long roleId,
-			OrderByComparator<ResourceBlockPermission> orderByComparator)
+	public ResourceBlockPermission findByRoleId_First(long roleId,
+		OrderByComparator<ResourceBlockPermission> orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = fetchByRoleId_First(
-			roleId, orderByComparator);
+		ResourceBlockPermission resourceBlockPermission = fetchByRoleId_First(roleId,
+				orderByComparator);
 
 		if (resourceBlockPermission != null) {
 			return resourceBlockPermission;
@@ -823,12 +791,10 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the first matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
 	 */
 	@Override
-	public ResourceBlockPermission fetchByRoleId_First(
-		long roleId,
+	public ResourceBlockPermission fetchByRoleId_First(long roleId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
-		List<ResourceBlockPermission> list = findByRoleId(
-			roleId, 0, 1, orderByComparator);
+		List<ResourceBlockPermission> list = findByRoleId(roleId, 0, 1,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -846,13 +812,11 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @throws NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
 	 */
 	@Override
-	public ResourceBlockPermission findByRoleId_Last(
-			long roleId,
-			OrderByComparator<ResourceBlockPermission> orderByComparator)
+	public ResourceBlockPermission findByRoleId_Last(long roleId,
+		OrderByComparator<ResourceBlockPermission> orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = fetchByRoleId_Last(
-			roleId, orderByComparator);
+		ResourceBlockPermission resourceBlockPermission = fetchByRoleId_Last(roleId,
+				orderByComparator);
 
 		if (resourceBlockPermission != null) {
 			return resourceBlockPermission;
@@ -878,18 +842,16 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the last matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
 	 */
 	@Override
-	public ResourceBlockPermission fetchByRoleId_Last(
-		long roleId,
+	public ResourceBlockPermission fetchByRoleId_Last(long roleId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
 		int count = countByRoleId(roleId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ResourceBlockPermission> list = findByRoleId(
-			roleId, count - 1, count, orderByComparator);
+		List<ResourceBlockPermission> list = findByRoleId(roleId, count - 1,
+				count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -909,30 +871,25 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public ResourceBlockPermission[] findByRoleId_PrevAndNext(
-			long resourceBlockPermissionId, long roleId,
-			OrderByComparator<ResourceBlockPermission> orderByComparator)
+		long resourceBlockPermissionId, long roleId,
+		OrderByComparator<ResourceBlockPermission> orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(
-			resourceBlockPermissionId);
+		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(resourceBlockPermissionId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ResourceBlockPermission[] array =
-				new ResourceBlockPermissionImpl[3];
+			ResourceBlockPermission[] array = new ResourceBlockPermissionImpl[3];
 
-			array[0] = getByRoleId_PrevAndNext(
-				session, resourceBlockPermission, roleId, orderByComparator,
-				true);
+			array[0] = getByRoleId_PrevAndNext(session,
+					resourceBlockPermission, roleId, orderByComparator, true);
 
 			array[1] = resourceBlockPermission;
 
-			array[2] = getByRoleId_PrevAndNext(
-				session, resourceBlockPermission, roleId, orderByComparator,
-				false);
+			array[2] = getByRoleId_PrevAndNext(session,
+					resourceBlockPermission, roleId, orderByComparator, false);
 
 			return array;
 		}
@@ -944,17 +901,15 @@ public class ResourceBlockPermissionPersistenceImpl
 		}
 	}
 
-	protected ResourceBlockPermission getByRoleId_PrevAndNext(
-		Session session, ResourceBlockPermission resourceBlockPermission,
-		long roleId,
+	protected ResourceBlockPermission getByRoleId_PrevAndNext(Session session,
+		ResourceBlockPermission resourceBlockPermission, long roleId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator,
 		boolean previous) {
-
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -966,8 +921,7 @@ public class ResourceBlockPermissionPersistenceImpl
 		query.append(_FINDER_COLUMN_ROLEID_ROLEID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1037,10 +991,8 @@ public class ResourceBlockPermissionPersistenceImpl
 		qPos.add(roleId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						resourceBlockPermission)) {
-
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					resourceBlockPermission)) {
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1062,10 +1014,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByRoleId(long roleId) {
-		for (ResourceBlockPermission resourceBlockPermission :
-				findByRoleId(
-					roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
+		for (ResourceBlockPermission resourceBlockPermission : findByRoleId(
+				roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(resourceBlockPermission);
 		}
 	}
@@ -1080,10 +1030,10 @@ public class ResourceBlockPermissionPersistenceImpl
 	public int countByRoleId(long roleId) {
 		FinderPath finderPath = _finderPathCountByRoleId;
 
-		Object[] finderArgs = new Object[] {roleId};
+		Object[] finderArgs = new Object[] { roleId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1122,9 +1072,7 @@ public class ResourceBlockPermissionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ROLEID_ROLEID_2 =
-		"resourceBlockPermission.roleId = ?";
-
+	private static final String _FINDER_COLUMN_ROLEID_ROLEID_2 = "resourceBlockPermission.roleId = ?";
 	private FinderPath _finderPathFetchByR_R;
 	private FinderPath _finderPathCountByR_R;
 
@@ -1139,9 +1087,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public ResourceBlockPermission findByR_R(long resourceBlockId, long roleId)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = fetchByR_R(
-			resourceBlockId, roleId);
+		ResourceBlockPermission resourceBlockPermission = fetchByR_R(resourceBlockId,
+				roleId);
 
 		if (resourceBlockPermission == null) {
 			StringBundler msg = new StringBundler(6);
@@ -1174,9 +1121,7 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
 	 */
 	@Override
-	public ResourceBlockPermission fetchByR_R(
-		long resourceBlockId, long roleId) {
-
+	public ResourceBlockPermission fetchByR_R(long resourceBlockId, long roleId) {
 		return fetchByR_R(resourceBlockId, roleId, true);
 	}
 
@@ -1189,26 +1134,22 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
 	 */
 	@Override
-	public ResourceBlockPermission fetchByR_R(
-		long resourceBlockId, long roleId, boolean retrieveFromCache) {
-
-		Object[] finderArgs = new Object[] {resourceBlockId, roleId};
+	public ResourceBlockPermission fetchByR_R(long resourceBlockId,
+		long roleId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { resourceBlockId, roleId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByR_R, finderArgs, this);
+			result = FinderCacheUtil.getResult(_finderPathFetchByR_R,
+					finderArgs, this);
 		}
 
 		if (result instanceof ResourceBlockPermission) {
-			ResourceBlockPermission resourceBlockPermission =
-				(ResourceBlockPermission)result;
+			ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)result;
 
-			if ((resourceBlockId !=
-					resourceBlockPermission.getResourceBlockId()) ||
-				(roleId != resourceBlockPermission.getRoleId())) {
-
+			if ((resourceBlockId != resourceBlockPermission.getResourceBlockId()) ||
+					(roleId != resourceBlockPermission.getRoleId())) {
 				result = null;
 			}
 		}
@@ -1240,12 +1181,11 @@ public class ResourceBlockPermissionPersistenceImpl
 				List<ResourceBlockPermission> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByR_R, finderArgs, list);
+					FinderCacheUtil.putResult(_finderPathFetchByR_R,
+						finderArgs, list);
 				}
 				else {
-					ResourceBlockPermission resourceBlockPermission = list.get(
-						0);
+					ResourceBlockPermission resourceBlockPermission = list.get(0);
 
 					result = resourceBlockPermission;
 
@@ -1278,12 +1218,10 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the resource block permission that was removed
 	 */
 	@Override
-	public ResourceBlockPermission removeByR_R(
-			long resourceBlockId, long roleId)
+	public ResourceBlockPermission removeByR_R(long resourceBlockId, long roleId)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = findByR_R(
-			resourceBlockId, roleId);
+		ResourceBlockPermission resourceBlockPermission = findByR_R(resourceBlockId,
+				roleId);
 
 		return remove(resourceBlockPermission);
 	}
@@ -1299,10 +1237,10 @@ public class ResourceBlockPermissionPersistenceImpl
 	public int countByR_R(long resourceBlockId, long roleId) {
 		FinderPath finderPath = _finderPathCountByR_R;
 
-		Object[] finderArgs = new Object[] {resourceBlockId, roleId};
+		Object[] finderArgs = new Object[] { resourceBlockId, roleId };
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1345,19 +1283,15 @@ public class ResourceBlockPermissionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_R_R_RESOURCEBLOCKID_2 =
-		"resourceBlockPermission.resourceBlockId = ? AND ";
-
-	private static final String _FINDER_COLUMN_R_R_ROLEID_2 =
-		"resourceBlockPermission.roleId = ?";
+	private static final String _FINDER_COLUMN_R_R_RESOURCEBLOCKID_2 = "resourceBlockPermission.resourceBlockId = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_ROLEID_2 = "resourceBlockPermission.roleId = ?";
 
 	public ResourceBlockPermissionPersistenceImpl() {
 		setModelClass(ResourceBlockPermission.class);
 
 		setModelImplClass(ResourceBlockPermissionImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED);
+		setEntityCacheEnabled(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1367,18 +1301,15 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(ResourceBlockPermission resourceBlockPermission) {
-		EntityCacheUtil.putResult(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission);
 
-		FinderCacheUtil.putResult(
-			_finderPathFetchByR_R,
+		FinderCacheUtil.putResult(_finderPathFetchByR_R,
 			new Object[] {
 				resourceBlockPermission.getResourceBlockId(),
 				resourceBlockPermission.getRoleId()
-			},
-			resourceBlockPermission);
+			}, resourceBlockPermission);
 
 		resourceBlockPermission.resetOriginalValues();
 	}
@@ -1391,15 +1322,11 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public void cacheResult(
 		List<ResourceBlockPermission> resourceBlockPermissions) {
-
-		for (ResourceBlockPermission resourceBlockPermission :
-				resourceBlockPermissions) {
-
+		for (ResourceBlockPermission resourceBlockPermission : resourceBlockPermissions) {
 			if (EntityCacheUtil.getResult(
-					ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockPermissionImpl.class,
-					resourceBlockPermission.getPrimaryKey()) == null) {
-
+						ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+						ResourceBlockPermissionImpl.class,
+						resourceBlockPermission.getPrimaryKey()) == null) {
 				cacheResult(resourceBlockPermission);
 			}
 			else {
@@ -1433,75 +1360,65 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public void clearCache(ResourceBlockPermission resourceBlockPermission) {
-		EntityCacheUtil.removeResult(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(
-			(ResourceBlockPermissionModelImpl)resourceBlockPermission, true);
+		clearUniqueFindersCache((ResourceBlockPermissionModelImpl)resourceBlockPermission,
+			true);
 	}
 
 	@Override
 	public void clearCache(
 		List<ResourceBlockPermission> resourceBlockPermissions) {
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (ResourceBlockPermission resourceBlockPermission :
-				resourceBlockPermissions) {
-
-			EntityCacheUtil.removeResult(
-				ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+		for (ResourceBlockPermission resourceBlockPermission : resourceBlockPermissions) {
+			EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceBlockPermissionImpl.class,
 				resourceBlockPermission.getPrimaryKey());
 
-			clearUniqueFindersCache(
-				(ResourceBlockPermissionModelImpl)resourceBlockPermission,
+			clearUniqueFindersCache((ResourceBlockPermissionModelImpl)resourceBlockPermission,
 				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
 		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl) {
-
 		Object[] args = new Object[] {
-			resourceBlockPermissionModelImpl.getResourceBlockId(),
-			resourceBlockPermissionModelImpl.getRoleId()
-		};
+				resourceBlockPermissionModelImpl.getResourceBlockId(),
+				resourceBlockPermissionModelImpl.getRoleId()
+			};
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByR_R, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByR_R, args, resourceBlockPermissionModelImpl,
+		FinderCacheUtil.putResult(_finderPathCountByR_R, args, Long.valueOf(1),
 			false);
+		FinderCacheUtil.putResult(_finderPathFetchByR_R, args,
+			resourceBlockPermissionModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl,
 		boolean clearCurrent) {
-
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				resourceBlockPermissionModelImpl.getResourceBlockId(),
-				resourceBlockPermissionModelImpl.getRoleId()
-			};
+					resourceBlockPermissionModelImpl.getResourceBlockId(),
+					resourceBlockPermissionModelImpl.getRoleId()
+				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByR_R, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByR_R, args);
 		}
 
 		if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
-			 _finderPathFetchByR_R.getColumnBitmask()) != 0) {
-
+				_finderPathFetchByR_R.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-				resourceBlockPermissionModelImpl.getOriginalResourceBlockId(),
-				resourceBlockPermissionModelImpl.getOriginalRoleId()
-			};
+					resourceBlockPermissionModelImpl.getOriginalResourceBlockId(),
+					resourceBlockPermissionModelImpl.getOriginalRoleId()
+				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByR_R, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByR_R, args);
@@ -1516,8 +1433,7 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public ResourceBlockPermission create(long resourceBlockPermissionId) {
-		ResourceBlockPermission resourceBlockPermission =
-			new ResourceBlockPermissionImpl();
+		ResourceBlockPermission resourceBlockPermission = new ResourceBlockPermissionImpl();
 
 		resourceBlockPermission.setNew(true);
 		resourceBlockPermission.setPrimaryKey(resourceBlockPermissionId);
@@ -1537,7 +1453,6 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public ResourceBlockPermission remove(long resourceBlockPermissionId)
 		throws NoSuchResourceBlockPermissionException {
-
 		return remove((Serializable)resourceBlockPermissionId);
 	}
 
@@ -1551,23 +1466,21 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public ResourceBlockPermission remove(Serializable primaryKey)
 		throws NoSuchResourceBlockPermissionException {
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ResourceBlockPermission resourceBlockPermission =
-				(ResourceBlockPermission)session.get(
-					ResourceBlockPermissionImpl.class, primaryKey);
+			ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
+					primaryKey);
 
 			if (resourceBlockPermission == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchResourceBlockPermissionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					primaryKey);
 			}
 
 			return remove(resourceBlockPermission);
@@ -1586,16 +1499,14 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	protected ResourceBlockPermission removeImpl(
 		ResourceBlockPermission resourceBlockPermission) {
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			if (!session.contains(resourceBlockPermission)) {
-				resourceBlockPermission = (ResourceBlockPermission)session.get(
-					ResourceBlockPermissionImpl.class,
-					resourceBlockPermission.getPrimaryKeyObj());
+				resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
+						resourceBlockPermission.getPrimaryKeyObj());
 			}
 
 			if (resourceBlockPermission != null) {
@@ -1619,30 +1530,25 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public ResourceBlockPermission updateImpl(
 		ResourceBlockPermission resourceBlockPermission) {
-
 		boolean isNew = resourceBlockPermission.isNew();
 
-		if (!(resourceBlockPermission instanceof
-				ResourceBlockPermissionModelImpl)) {
-
+		if (!(resourceBlockPermission instanceof ResourceBlockPermissionModelImpl)) {
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(resourceBlockPermission.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(
-					resourceBlockPermission);
+				invocationHandler = ProxyUtil.getInvocationHandler(resourceBlockPermission);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in resourceBlockPermission proxy " +
-						invocationHandler.getClass());
+					invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom ResourceBlockPermission implementation " +
-					resourceBlockPermission.getClass());
+				resourceBlockPermission.getClass());
 		}
 
-		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl =
-			(ResourceBlockPermissionModelImpl)resourceBlockPermission;
+		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
 
 		Session session = null;
 
@@ -1655,9 +1561,7 @@ public class ResourceBlockPermissionPersistenceImpl
 				resourceBlockPermission.setNew(false);
 			}
 			else {
-				resourceBlockPermission =
-					(ResourceBlockPermission)session.merge(
-						resourceBlockPermission);
+				resourceBlockPermission = (ResourceBlockPermission)session.merge(resourceBlockPermission);
 			}
 		}
 		catch (Exception e) {
@@ -1670,79 +1574,70 @@ public class ResourceBlockPermissionPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!ResourceBlockPermissionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else if (isNew) {
+		else
+		 if (isNew) {
 			Object[] args = new Object[] {
-				resourceBlockPermissionModelImpl.getResourceBlockId()
-			};
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountByResourceBlockId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByResourceBlockId, args);
-
-			args = new Object[] {resourceBlockPermissionModelImpl.getRoleId()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByRoleId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByRoleId, args);
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByResourceBlockId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					resourceBlockPermissionModelImpl.
-						getOriginalResourceBlockId()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByResourceBlockId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByResourceBlockId, args);
-
-				args = new Object[] {
 					resourceBlockPermissionModelImpl.getResourceBlockId()
 				};
 
-				FinderCacheUtil.removeResult(
-					_finderPathCountByResourceBlockId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByResourceBlockId, args);
+			FinderCacheUtil.removeResult(_finderPathCountByResourceBlockId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByResourceBlockId,
+				args);
+
+			args = new Object[] { resourceBlockPermissionModelImpl.getRoleId() };
+
+			FinderCacheUtil.removeResult(_finderPathCountByRoleId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByRoleId,
+				args);
+
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
+				FINDER_ARGS_EMPTY);
+		}
+
+		else {
+			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
+					_finderPathWithoutPaginationFindByResourceBlockId.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						resourceBlockPermissionModelImpl.getOriginalResourceBlockId()
+					};
+
+				FinderCacheUtil.removeResult(_finderPathCountByResourceBlockId,
+					args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByResourceBlockId,
+					args);
+
+				args = new Object[] {
+						resourceBlockPermissionModelImpl.getResourceBlockId()
+					};
+
+				FinderCacheUtil.removeResult(_finderPathCountByResourceBlockId,
+					args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByResourceBlockId,
+					args);
 			}
 
 			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByRoleId.getColumnBitmask()) !=
-					 0) {
-
+					_finderPathWithoutPaginationFindByRoleId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-					resourceBlockPermissionModelImpl.getOriginalRoleId()
-				};
+						resourceBlockPermissionModelImpl.getOriginalRoleId()
+					};
 
 				FinderCacheUtil.removeResult(_finderPathCountByRoleId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByRoleId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByRoleId,
+					args);
 
-				args = new Object[] {
-					resourceBlockPermissionModelImpl.getRoleId()
-				};
+				args = new Object[] { resourceBlockPermissionModelImpl.getRoleId() };
 
 				FinderCacheUtil.removeResult(_finderPathCountByRoleId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByRoleId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByRoleId,
+					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission,
 			false);
@@ -1765,17 +1660,15 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public ResourceBlockPermission findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchResourceBlockPermissionException {
-
-		ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(
-			primaryKey);
+		ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(primaryKey);
 
 		if (resourceBlockPermission == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchResourceBlockPermissionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
 		}
 
 		return resourceBlockPermission;
@@ -1790,9 +1683,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public ResourceBlockPermission findByPrimaryKey(
-			long resourceBlockPermissionId)
+		long resourceBlockPermissionId)
 		throws NoSuchResourceBlockPermissionException {
-
 		return findByPrimaryKey((Serializable)resourceBlockPermissionId);
 	}
 
@@ -1805,7 +1697,6 @@ public class ResourceBlockPermissionPersistenceImpl
 	@Override
 	public ResourceBlockPermission fetchByPrimaryKey(
 		long resourceBlockPermissionId) {
-
 		return fetchByPrimaryKey((Serializable)resourceBlockPermissionId);
 	}
 
@@ -1848,10 +1739,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the ordered range of resource block permissions
 	 */
 	@Override
-	public List<ResourceBlockPermission> findAll(
-		int start, int end,
+	public List<ResourceBlockPermission> findAll(int start, int end,
 		OrderByComparator<ResourceBlockPermission> orderByComparator) {
-
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -1869,32 +1758,29 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * @return the ordered range of resource block permissions
 	 */
 	@Override
-	public List<ResourceBlockPermission> findAll(
-		int start, int end,
+	public List<ResourceBlockPermission> findAll(int start, int end,
 		OrderByComparator<ResourceBlockPermission> orderByComparator,
 		boolean retrieveFromCache) {
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
+				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
+			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
 		List<ResourceBlockPermission> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1902,13 +1788,13 @@ public class ResourceBlockPermissionPersistenceImpl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(2 +
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION);
 
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1916,8 +1802,7 @@ public class ResourceBlockPermissionPersistenceImpl
 				sql = _SQL_SELECT_RESOURCEBLOCKPERMISSION;
 
 				if (pagination) {
-					sql = sql.concat(
-						ResourceBlockPermissionModelImpl.ORDER_BY_JPQL);
+					sql = sql.concat(ResourceBlockPermissionModelImpl.ORDER_BY_JPQL);
 				}
 			}
 
@@ -1929,16 +1814,16 @@ public class ResourceBlockPermissionPersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<ResourceBlockPermission>)QueryUtil.list(
-						q, getDialect(), start, end, false);
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<ResourceBlockPermission>)QueryUtil.list(
-						q, getDialect(), start, end);
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1976,8 +1861,8 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1985,17 +1870,16 @@ public class ResourceBlockPermissionPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(
-					_SQL_COUNT_RESOURCEBLOCKPERMISSION);
+				Query q = session.createQuery(_SQL_COUNT_RESOURCEBLOCKPERMISSION);
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(_finderPathCountAll,
+					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(_finderPathCountAll,
+					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2031,92 +1915,86 @@ public class ResourceBlockPermissionPersistenceImpl
 	 * Initializes the resource block permission persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+				new String[0]);
 
-		_finderPathCountAll = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathCountAll = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]);
 
-		_finderPathWithPaginationFindByResourceBlockId = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourceBlockId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByResourceBlockId = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByResourceBlockId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByResourceBlockId = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourceBlockId",
-			new String[] {Long.class.getName()},
-			ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByResourceBlockId = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByResourceBlockId", new String[] { Long.class.getName() },
+				ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK);
 
-		_finderPathCountByResourceBlockId = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByResourceBlockId",
-			new String[] {Long.class.getName()});
+		_finderPathCountByResourceBlockId = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByResourceBlockId", new String[] { Long.class.getName() });
 
-		_finderPathWithPaginationFindByRoleId = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindByRoleId = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
+				new String[] {
+					Long.class.getName(),
+					
+				Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				});
 
-		_finderPathWithoutPaginationFindByRoleId = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
-			new String[] {Long.class.getName()},
-			ResourceBlockPermissionModelImpl.ROLEID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByRoleId = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class,
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
+				new String[] { Long.class.getName() },
+				ResourceBlockPermissionModelImpl.ROLEID_COLUMN_BITMASK);
 
-		_finderPathCountByRoleId = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
-			new String[] {Long.class.getName()});
+		_finderPathCountByRoleId = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByRoleId", new String[] { Long.class.getName() });
 
-		_finderPathFetchByR_R = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByR_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK |
-			ResourceBlockPermissionModelImpl.ROLEID_COLUMN_BITMASK);
+		_finderPathFetchByR_R = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_ENTITY,
+				"fetchByR_R",
+				new String[] { Long.class.getName(), Long.class.getName() },
+				ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK |
+				ResourceBlockPermissionModelImpl.ROLEID_COLUMN_BITMASK);
 
-		_finderPathCountByR_R = new FinderPath(
-			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
-			new String[] {Long.class.getName(), Long.class.getName()});
+		_finderPathCountByR_R = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countByR_R",
+				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(
-			ResourceBlockPermissionImpl.class.getName());
+		EntityCacheUtil.removeCache(ResourceBlockPermissionImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2124,29 +2002,12 @@ public class ResourceBlockPermissionPersistenceImpl
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-
-	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION =
-		"SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission";
-
-	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE =
-		"SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE ";
-
-	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION =
-		"SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission";
-
-	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE =
-		"SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"resourceBlockPermission.";
-
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ResourceBlockPermission exists with the primary key ";
-
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ResourceBlockPermission exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ResourceBlockPermissionPersistenceImpl.class);
-
+	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission";
+	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE ";
+	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission";
+	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission WHERE ";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlockPermission.";
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceBlockPermission exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceBlockPermission exists with the key {";
+	private static final Log _log = LogFactoryUtil.getLog(ResourceBlockPermissionPersistenceImpl.class);
 }

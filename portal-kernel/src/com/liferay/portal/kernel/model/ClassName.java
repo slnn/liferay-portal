@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.ClassNameImpl")
 @ProviderType
 public interface ClassName extends ClassNameModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ClassNameImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ClassName, Long> CLASS_NAME_ID_ACCESSOR =
-		new Accessor<ClassName, Long>() {
-
+	public static final Accessor<ClassName, Long> CLASS_NAME_ID_ACCESSOR = new Accessor<ClassName, Long>() {
 			@Override
 			public Long get(ClassName className) {
 				return className.getClassNameId();
@@ -52,7 +49,5 @@ public interface ClassName extends ClassNameModel, PersistedModel {
 			public Class<ClassName> getTypeClass() {
 				return ClassName.class;
 			}
-
 		};
-
 }

@@ -28,10 +28,8 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface PasswordPolicyRelModel
-	extends AttachedModel, BaseModel<PasswordPolicyRel>, MVCCModel,
-			ShardedModel {
-
+public interface PasswordPolicyRelModel extends AttachedModel,
+	BaseModel<PasswordPolicyRel>, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -153,5 +151,4 @@ public interface PasswordPolicyRelModel
 	 */
 	@Override
 	public void setClassPK(long classPK);
-
 }

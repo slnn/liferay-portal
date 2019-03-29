@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.UserGroupImpl")
 @ProviderType
 public interface UserGroup extends UserGroupModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserGroupImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<UserGroup, Long> USER_GROUP_ID_ACCESSOR =
-		new Accessor<UserGroup, Long>() {
-
+	public static final Accessor<UserGroup, Long> USER_GROUP_ID_ACCESSOR = new Accessor<UserGroup, Long>() {
 			@Override
 			public Long get(UserGroup userGroup) {
 				return userGroup.getUserGroupId();
@@ -52,11 +49,9 @@ public interface UserGroup extends UserGroupModel, PersistedModel {
 			public Class<UserGroup> getTypeClass() {
 				return UserGroup.class;
 			}
-
 		};
-	public static final Accessor<UserGroup, String> NAME_ACCESSOR =
-		new Accessor<UserGroup, String>() {
 
+	public static final Accessor<UserGroup, String> NAME_ACCESSOR = new Accessor<UserGroup, String>() {
 			@Override
 			public String get(UserGroup userGroup) {
 				return userGroup.getName();
@@ -71,7 +66,6 @@ public interface UserGroup extends UserGroupModel, PersistedModel {
 			public Class<UserGroup> getTypeClass() {
 				return UserGroup.class;
 			}
-
 		};
 
 	public Group getGroup()
@@ -91,5 +85,4 @@ public interface UserGroup extends UserGroupModel, PersistedModel {
 
 	public boolean hasPublicLayouts()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

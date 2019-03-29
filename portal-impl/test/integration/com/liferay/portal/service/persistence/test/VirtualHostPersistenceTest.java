@@ -36,6 +36,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,23 +53,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 /**
  * @generated
  */
 public class VirtualHostPersistenceTest {
-
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -102,8 +100,7 @@ public class VirtualHostPersistenceTest {
 
 		_persistence.remove(newVirtualHost);
 
-		VirtualHost existingVirtualHost = _persistence.fetchByPrimaryKey(
-			newVirtualHost.getPrimaryKey());
+		VirtualHost existingVirtualHost = _persistence.fetchByPrimaryKey(newVirtualHost.getPrimaryKey());
 
 		Assert.assertNull(existingVirtualHost);
 	}
@@ -129,22 +126,18 @@ public class VirtualHostPersistenceTest {
 
 		_virtualHosts.add(_persistence.update(newVirtualHost));
 
-		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(
-			newVirtualHost.getPrimaryKey());
+		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingVirtualHost.getMvccVersion(),
+		Assert.assertEquals(existingVirtualHost.getMvccVersion(),
 			newVirtualHost.getMvccVersion());
-		Assert.assertEquals(
-			existingVirtualHost.getVirtualHostId(),
+		Assert.assertEquals(existingVirtualHost.getVirtualHostId(),
 			newVirtualHost.getVirtualHostId());
-		Assert.assertEquals(
-			existingVirtualHost.getCompanyId(), newVirtualHost.getCompanyId());
-		Assert.assertEquals(
-			existingVirtualHost.getLayoutSetId(),
+		Assert.assertEquals(existingVirtualHost.getCompanyId(),
+			newVirtualHost.getCompanyId());
+		Assert.assertEquals(existingVirtualHost.getLayoutSetId(),
 			newVirtualHost.getLayoutSetId());
-		Assert.assertEquals(
-			existingVirtualHost.getHostname(), newVirtualHost.getHostname());
+		Assert.assertEquals(existingVirtualHost.getHostname(),
+			newVirtualHost.getHostname());
 	}
 
 	@Test
@@ -158,8 +151,8 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testCountByC_L() throws Exception {
-		_persistence.countByC_L(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_L(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_L(0L, 0L);
 	}
@@ -168,8 +161,7 @@ public class VirtualHostPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
-		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(
-			newVirtualHost.getPrimaryKey());
+		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
 		Assert.assertEquals(existingVirtualHost, newVirtualHost);
 	}
@@ -183,22 +175,21 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<VirtualHost> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"VirtualHost", "mvccVersion", true, "virtualHostId", true,
-			"companyId", true, "layoutSetId", true, "hostname", true);
+		return OrderByComparatorFactoryUtil.create("VirtualHost",
+			"mvccVersion", true, "virtualHostId", true, "companyId", true,
+			"layoutSetId", true, "hostname", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
-		VirtualHost existingVirtualHost = _persistence.fetchByPrimaryKey(
-			newVirtualHost.getPrimaryKey());
+		VirtualHost existingVirtualHost = _persistence.fetchByPrimaryKey(newVirtualHost.getPrimaryKey());
 
 		Assert.assertEquals(existingVirtualHost, newVirtualHost);
 	}
@@ -215,7 +206,6 @@ public class VirtualHostPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-
 		VirtualHost newVirtualHost1 = addVirtualHost();
 		VirtualHost newVirtualHost2 = addVirtualHost();
 
@@ -224,20 +214,18 @@ public class VirtualHostPersistenceTest {
 		primaryKeys.add(newVirtualHost1.getPrimaryKey());
 		primaryKeys.add(newVirtualHost2.getPrimaryKey());
 
-		Map<Serializable, VirtualHost> virtualHosts =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, virtualHosts.size());
-		Assert.assertEquals(
-			newVirtualHost1, virtualHosts.get(newVirtualHost1.getPrimaryKey()));
-		Assert.assertEquals(
-			newVirtualHost2, virtualHosts.get(newVirtualHost2.getPrimaryKey()));
+		Assert.assertEquals(newVirtualHost1,
+			virtualHosts.get(newVirtualHost1.getPrimaryKey()));
+		Assert.assertEquals(newVirtualHost2,
+			virtualHosts.get(newVirtualHost2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -247,8 +235,7 @@ public class VirtualHostPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, VirtualHost> virtualHosts =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(virtualHosts.isEmpty());
 	}
@@ -256,7 +243,6 @@ public class VirtualHostPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		long pk = RandomTestUtil.nextLong();
@@ -266,57 +252,52 @@ public class VirtualHostPersistenceTest {
 		primaryKeys.add(newVirtualHost.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, VirtualHost> virtualHosts =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, virtualHosts.size());
-		Assert.assertEquals(
-			newVirtualHost, virtualHosts.get(newVirtualHost.getPrimaryKey()));
+		Assert.assertEquals(newVirtualHost,
+			virtualHosts.get(newVirtualHost.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, VirtualHost> virtualHosts =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(virtualHosts.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newVirtualHost.getPrimaryKey());
 
-		Map<Serializable, VirtualHost> virtualHosts =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, virtualHosts.size());
-		Assert.assertEquals(
-			newVirtualHost, virtualHosts.get(newVirtualHost.getPrimaryKey()));
+		Assert.assertEquals(newVirtualHost,
+			virtualHosts.get(newVirtualHost.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			VirtualHostLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = VirtualHostLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<VirtualHost>() {
-
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<VirtualHost>() {
 				@Override
 				public void performAction(VirtualHost virtualHost) {
 					Assert.assertNotNull(virtualHost);
 
 					count.increment();
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -325,18 +306,17 @@ public class VirtualHostPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			VirtualHost.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"virtualHostId", newVirtualHost.getVirtualHostId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
+				newVirtualHost.getVirtualHostId()));
 
-		List<VirtualHost> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -347,34 +327,32 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			VirtualHost.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"virtualHostId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
+				RandomTestUtil.nextLong()));
 
-		List<VirtualHost> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
+		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting() throws Exception {
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			VirtualHost.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("virtualHostId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"virtualHostId"));
 
 		Object newVirtualHostId = newVirtualHost.getVirtualHostId();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"virtualHostId", new Object[] {newVirtualHostId}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("virtualHostId",
+				new Object[] { newVirtualHostId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -387,15 +365,14 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			VirtualHost.class, _dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
+				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("virtualHostId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"virtualHostId"));
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"virtualHostId", new Object[] {RandomTestUtil.nextLong()}));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("virtualHostId",
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -408,25 +385,18 @@ public class VirtualHostPersistenceTest {
 
 		_persistence.clearCache();
 
-		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(
-			newVirtualHost.getPrimaryKey());
+		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingVirtualHost.getHostname(),
-				ReflectionTestUtil.invoke(
-					existingVirtualHost, "getOriginalHostname",
-					new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(existingVirtualHost.getHostname(),
+				ReflectionTestUtil.invoke(existingVirtualHost,
+					"getOriginalHostname", new Class<?>[0])));
 
-		Assert.assertEquals(
-			Long.valueOf(existingVirtualHost.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingVirtualHost, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingVirtualHost.getLayoutSetId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingVirtualHost, "getOriginalLayoutSetId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingVirtualHost.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingVirtualHost,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingVirtualHost.getLayoutSetId()),
+			ReflectionTestUtil.<Long>invoke(existingVirtualHost,
+				"getOriginalLayoutSetId", new Class<?>[0]));
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {
@@ -450,5 +420,4 @@ public class VirtualHostPersistenceTest {
 	private List<VirtualHost> _virtualHosts = new ArrayList<VirtualHost>();
 	private VirtualHostPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
-
 }

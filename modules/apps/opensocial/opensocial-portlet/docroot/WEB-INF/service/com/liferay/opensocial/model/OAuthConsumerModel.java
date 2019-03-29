@@ -34,9 +34,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OAuthConsumerModel
-	extends BaseModel<OAuthConsumer>, ShardedModel {
-
+public interface OAuthConsumerModel extends BaseModel<OAuthConsumer>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -189,5 +188,4 @@ public interface OAuthConsumerModel
 	 * @param keyType the key type of this o auth consumer
 	 */
 	public void setKeyType(String keyType);
-
 }

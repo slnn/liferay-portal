@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class UserGroupBaseImpl
-	extends UserGroupModelImpl implements UserGroup {
-
+public abstract class UserGroupBaseImpl extends UserGroupModelImpl
+	implements UserGroup {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class UserGroupBaseImpl
 			UserGroupLocalServiceUtil.updateUserGroup(this);
 		}
 	}
-
 }

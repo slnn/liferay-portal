@@ -38,10 +38,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DLFileEntryModel
-	extends AttachedModel, BaseModel<DLFileEntry>, ShardedModel,
-			StagedGroupedModel, TrashedModel {
-
+public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
+	ShardedModel, StagedGroupedModel, TrashedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -602,5 +600,4 @@ public interface DLFileEntryModel
 
 	@Override
 	public boolean isInTrashImplicitly();
-
 }

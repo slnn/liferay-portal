@@ -30,9 +30,8 @@ import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
  * @generated
  */
 @ProviderType
-public interface UserGroupRoleModel
-	extends BaseModel<UserGroupRole>, MVCCModel, ShardedModel {
-
+public interface UserGroupRoleModel extends BaseModel<UserGroupRole>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -140,5 +139,4 @@ public interface UserGroupRoleModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
-
 }

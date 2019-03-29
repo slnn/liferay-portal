@@ -30,14 +30,13 @@ import com.liferay.portal.kernel.model.TypedModel;
  * @author Brian Wing Shun Chan
  * @see AssetTagStats
  * @deprecated As of Judson (7.1.x), replaced by {@link
- com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
+            com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */
 @Deprecated
 @ProviderType
-public interface AssetTagStatsModel
-	extends BaseModel<AssetTagStats>, ShardedModel, TypedModel {
-
+public interface AssetTagStatsModel extends BaseModel<AssetTagStats>,
+	ShardedModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -141,5 +140,4 @@ public interface AssetTagStatsModel
 	 * @param assetCount the asset count of this asset tag stats
 	 */
 	public void setAssetCount(int assetCount);
-
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.liferay.social.kernel.service.SocialActivitySettingServiceUtil;
 
 import java.rmi.RemoteException;
@@ -63,20 +64,13 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class SocialActivitySettingServiceSoap {
-
-	public static com.liferay.social.kernel.model.SocialActivitySettingSoap[]
-			getActivitySettings(long groupId)
-		throws RemoteException {
-
+	public static com.liferay.social.kernel.model.SocialActivitySettingSoap[] getActivitySettings(
+		long groupId) throws RemoteException {
 		try {
-			java.util.List
-				<com.liferay.social.kernel.model.SocialActivitySetting>
-					returnValue =
-						SocialActivitySettingServiceUtil.getActivitySettings(
-							groupId);
+			java.util.List<com.liferay.social.kernel.model.SocialActivitySetting> returnValue =
+				SocialActivitySettingServiceUtil.getActivitySettings(groupId);
 
-			return com.liferay.social.kernel.model.SocialActivitySettingSoap.
-				toSoapModels(returnValue);
+			return com.liferay.social.kernel.model.SocialActivitySettingSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -85,14 +79,11 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static String getJSONActivityDefinitions(
-			long groupId, String className)
-		throws RemoteException {
-
+	public static String getJSONActivityDefinitions(long groupId,
+		String className) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue =
-				SocialActivitySettingServiceUtil.getJSONActivityDefinitions(
-					groupId, className);
+			com.liferay.portal.kernel.json.JSONArray returnValue = SocialActivitySettingServiceUtil.getJSONActivityDefinitions(groupId,
+					className);
 
 			return returnValue.toString();
 		}
@@ -103,13 +94,11 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static void updateActivitySetting(
-			long groupId, String className, boolean enabled)
-		throws RemoteException {
-
+	public static void updateActivitySetting(long groupId, String className,
+		boolean enabled) throws RemoteException {
 		try {
-			SocialActivitySettingServiceUtil.updateActivitySetting(
-				groupId, className, enabled);
+			SocialActivitySettingServiceUtil.updateActivitySetting(groupId,
+				className, enabled);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -118,15 +107,13 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static void updateActivitySetting(
-			long groupId, String className, int activityType,
-			com.liferay.social.kernel.model.SocialActivityCounterDefinition
-				activityCounterDefinition)
+	public static void updateActivitySetting(long groupId, String className,
+		int activityType,
+		com.liferay.social.kernel.model.SocialActivityCounterDefinition activityCounterDefinition)
 		throws RemoteException {
-
 		try {
-			SocialActivitySettingServiceUtil.updateActivitySetting(
-				groupId, className, activityType, activityCounterDefinition);
+			SocialActivitySettingServiceUtil.updateActivitySetting(groupId,
+				className, activityType, activityCounterDefinition);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -135,16 +122,13 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	public static void updateActivitySettings(
-			long groupId, String className, int activityType,
-			java.util.List
-				<com.liferay.social.kernel.model.
-					SocialActivityCounterDefinition> activityCounterDefinitions)
+	public static void updateActivitySettings(long groupId, String className,
+		int activityType,
+		java.util.List<com.liferay.social.kernel.model.SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws RemoteException {
-
 		try {
-			SocialActivitySettingServiceUtil.updateActivitySettings(
-				groupId, className, activityType, activityCounterDefinitions);
+			SocialActivitySettingServiceUtil.updateActivitySettings(groupId,
+				className, activityType, activityCounterDefinitions);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -153,7 +137,5 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		SocialActivitySettingServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(SocialActivitySettingServiceSoap.class);
 }

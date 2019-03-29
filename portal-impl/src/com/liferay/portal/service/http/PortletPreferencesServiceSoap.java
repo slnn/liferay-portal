@@ -63,13 +63,10 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PortletPreferencesServiceSoap {
-
 	public static void deleteArchivedPreferences(long portletItemId)
 		throws RemoteException {
-
 		try {
-			PortletPreferencesServiceUtil.deleteArchivedPreferences(
-				portletItemId);
+			PortletPreferencesServiceUtil.deleteArchivedPreferences(portletItemId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -78,7 +75,5 @@ public class PortletPreferencesServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PortletPreferencesServiceSoap.class);
-
+	private static Log _log = LogFactoryUtil.getLog(PortletPreferencesServiceSoap.class);
 }

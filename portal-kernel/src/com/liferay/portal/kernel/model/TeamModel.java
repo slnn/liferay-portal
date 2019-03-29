@@ -32,9 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TeamModel
-	extends BaseModel<Team>, MVCCModel, ShardedModel, StagedGroupedModel {
-
+public interface TeamModel extends BaseModel<Team>, MVCCModel, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -260,5 +259,4 @@ public interface TeamModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
 }

@@ -32,9 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerPathModel
-	extends BaseModel<UserTrackerPath>, MVCCModel, ShardedModel {
-
+public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,5 +142,4 @@ public interface UserTrackerPathModel
 	 * @param pathDate the path date of this user tracker path
 	 */
 	public void setPathDate(Date pathDate);
-
 }

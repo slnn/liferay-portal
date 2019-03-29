@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  */
 @ProviderType
 public interface ListTypeModel extends BaseModel<ListType>, MVCCModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -111,5 +110,4 @@ public interface ListTypeModel extends BaseModel<ListType>, MVCCModel {
 	 * @param type the type of this list type
 	 */
 	public void setType(String type);
-
 }

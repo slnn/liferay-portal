@@ -26,9 +26,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class CounterLocalServiceWrapper
-	implements CounterLocalService, ServiceWrapper<CounterLocalService> {
-
+public class CounterLocalServiceWrapper implements CounterLocalService,
+	ServiceWrapper<CounterLocalService> {
 	public CounterLocalServiceWrapper(CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;
 	}
@@ -39,10 +38,10 @@ public class CounterLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _counterLocalService.getOSGiServiceIdentifier();
@@ -89,5 +88,4 @@ public class CounterLocalServiceWrapper
 	}
 
 	private CounterLocalService _counterLocalService;
-
 }

@@ -34,10 +34,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface GroupModel
-	extends AttachedModel, BaseModel<Group>, LocalizedModel, MVCCModel,
-			ShardedModel {
-
+public interface GroupModel extends AttachedModel, BaseModel<Group>,
+	LocalizedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -426,8 +424,8 @@ public interface GroupModel
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale);
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -444,8 +442,8 @@ public interface GroupModel
 	 * @param descriptionMap the locales and localized descriptions of this group
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale);
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the type of this group.
@@ -615,5 +613,4 @@ public interface GroupModel
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
 }

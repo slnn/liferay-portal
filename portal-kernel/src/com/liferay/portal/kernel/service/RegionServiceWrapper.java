@@ -24,18 +24,16 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class RegionServiceWrapper
-	implements RegionService, ServiceWrapper<RegionService> {
-
+public class RegionServiceWrapper implements RegionService,
+	ServiceWrapper<RegionService> {
 	public RegionServiceWrapper(RegionService regionService) {
 		_regionService = regionService;
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Region addRegion(
-			long countryId, String regionCode, String name, boolean active)
+	public com.liferay.portal.kernel.model.Region addRegion(long countryId,
+		String regionCode, String name, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _regionService.addRegion(countryId, regionCode, name, active);
 	}
 
@@ -45,17 +43,16 @@ public class RegionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Region fetchRegion(
-		long countryId, String regionCode) {
-
+	public com.liferay.portal.kernel.model.Region fetchRegion(long countryId,
+		String regionCode) {
 		return _regionService.fetchRegion(countryId, regionCode);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _regionService.getOSGiServiceIdentifier();
@@ -64,15 +61,13 @@ public class RegionServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Region getRegion(long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _regionService.getRegion(regionId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Region getRegion(
-			long countryId, String regionCode)
+	public com.liferay.portal.kernel.model.Region getRegion(long countryId,
+		String regionCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		return _regionService.getRegion(countryId, regionCode);
 	}
 
@@ -84,21 +79,18 @@ public class RegionServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Region> getRegions(
 		boolean active) {
-
 		return _regionService.getRegions(active);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Region> getRegions(
 		long countryId) {
-
 		return _regionService.getRegions(countryId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Region> getRegions(
 		long countryId, boolean active) {
-
 		return _regionService.getRegions(countryId, active);
 	}
 
@@ -113,5 +105,4 @@ public class RegionServiceWrapper
 	}
 
 	private RegionService _regionService;
-
 }

@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PortletItemBaseImpl
-	extends PortletItemModelImpl implements PortletItem {
-
+public abstract class PortletItemBaseImpl extends PortletItemModelImpl
+	implements PortletItem {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class PortletItemBaseImpl
 			PortletItemLocalServiceUtil.updatePortletItem(this);
 		}
 	}
-
 }

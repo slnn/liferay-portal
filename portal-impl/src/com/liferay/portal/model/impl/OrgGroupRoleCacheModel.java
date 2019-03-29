@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.OrgGroupRole;
@@ -35,9 +36,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class OrgGroupRoleCacheModel
-	implements CacheModel<OrgGroupRole>, Externalizable, MVCCModel {
-
+public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,12 +48,10 @@ public class OrgGroupRoleCacheModel
 			return false;
 		}
 
-		OrgGroupRoleCacheModel orgGroupRoleCacheModel =
-			(OrgGroupRoleCacheModel)obj;
+		OrgGroupRoleCacheModel orgGroupRoleCacheModel = (OrgGroupRoleCacheModel)obj;
 
 		if (orgGroupRolePK.equals(orgGroupRoleCacheModel.orgGroupRolePK) &&
-			(mvccVersion == orgGroupRoleCacheModel.mvccVersion)) {
-
+				(mvccVersion == orgGroupRoleCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -127,7 +125,8 @@ public class OrgGroupRoleCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(organizationId);
@@ -145,5 +144,4 @@ public class OrgGroupRoleCacheModel
 	public long roleId;
 	public long companyId;
 	public transient OrgGroupRolePK orgGroupRolePK;
-
 }

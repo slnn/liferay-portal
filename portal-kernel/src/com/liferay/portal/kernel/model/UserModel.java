@@ -32,9 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserModel
-	extends BaseModel<User>, MVCCModel, ShardedModel, StagedModel {
-
+public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -742,5 +741,4 @@ public interface UserModel
 	 * @param status the status of this user
 	 */
 	public void setStatus(int status);
-
 }

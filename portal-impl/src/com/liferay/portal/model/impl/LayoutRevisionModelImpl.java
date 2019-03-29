@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,36 +72,46 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class LayoutRevisionModelImpl
-	extends BaseModelImpl<LayoutRevision> implements LayoutRevisionModel {
-
+public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
+	implements LayoutRevisionModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout revision model instance should use the <code>LayoutRevision</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "LayoutRevision";
-
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"layoutRevisionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"layoutSetBranchId", Types.BIGINT}, {"layoutBranchId", Types.BIGINT},
-		{"parentLayoutRevisionId", Types.BIGINT}, {"head", Types.BOOLEAN},
-		{"major", Types.BOOLEAN}, {"plid", Types.BIGINT},
-		{"privateLayout", Types.BOOLEAN}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"keywords", Types.VARCHAR}, {"robots", Types.VARCHAR},
-		{"typeSettings", Types.CLOB}, {"iconImageId", Types.BIGINT},
-		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
-		{"css", Types.CLOB}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
-	};
-
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
-		new HashMap<String, Integer>();
+			{ "mvccVersion", Types.BIGINT },
+			{ "layoutRevisionId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "layoutSetBranchId", Types.BIGINT },
+			{ "layoutBranchId", Types.BIGINT },
+			{ "parentLayoutRevisionId", Types.BIGINT },
+			{ "head", Types.BOOLEAN },
+			{ "major", Types.BOOLEAN },
+			{ "plid", Types.BIGINT },
+			{ "privateLayout", Types.BOOLEAN },
+			{ "name", Types.VARCHAR },
+			{ "title", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "keywords", Types.VARCHAR },
+			{ "robots", Types.VARCHAR },
+			{ "typeSettings", Types.CLOB },
+			{ "iconImageId", Types.BIGINT },
+			{ "themeId", Types.VARCHAR },
+			{ "colorSchemeId", Types.VARCHAR },
+			{ "css", Types.CLOB },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
+		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -133,50 +145,28 @@ public class LayoutRevisionModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE =
-		"create table LayoutRevision (mvccVersion LONG default 0 not null,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
-
+	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (mvccVersion LONG default 0 not null,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutRevision";
-
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY layoutRevision.modifiedDate DESC";
-
-	public static final String ORDER_BY_SQL =
-		" ORDER BY LayoutRevision.modifiedDate DESC";
-
+	public static final String ORDER_BY_JPQL = " ORDER BY layoutRevision.modifiedDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY LayoutRevision.modifiedDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
-
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
-
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.LayoutRevision"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.LayoutRevision"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.LayoutRevision"),
-		true);
-
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.LayoutRevision"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.LayoutRevision"),
+			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.LayoutRevision"),
+			true);
 	public static final long HEAD_COLUMN_BITMASK = 1L;
-
 	public static final long LAYOUTBRANCHID_COLUMN_BITMASK = 2L;
-
 	public static final long LAYOUTSETBRANCHID_COLUMN_BITMASK = 4L;
-
 	public static final long PARENTLAYOUTREVISIONID_COLUMN_BITMASK = 8L;
-
 	public static final long PLID_COLUMN_BITMASK = 16L;
-
 	public static final long STATUS_COLUMN_BITMASK = 32L;
-
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 64L;
 
 	/**
@@ -231,15 +221,12 @@ public class LayoutRevisionModelImpl
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
 	 */
-	public static List<LayoutRevision> toModels(
-		LayoutRevisionSoap[] soapModels) {
-
+	public static List<LayoutRevision> toModels(LayoutRevisionSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<LayoutRevision> models = new ArrayList<LayoutRevision>(
-			soapModels.length);
+		List<LayoutRevision> models = new ArrayList<LayoutRevision>(soapModels.length);
 
 		for (LayoutRevisionSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -248,9 +235,8 @@ public class LayoutRevisionModelImpl
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.portal.util.PropsUtil.get(
-			"lock.expiration.time.com.liferay.portal.kernel.model.LayoutRevision"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
+				"lock.expiration.time.com.liferay.portal.kernel.model.LayoutRevision"));
 
 	public LayoutRevisionModelImpl() {
 	}
@@ -289,18 +275,13 @@ public class LayoutRevisionModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<LayoutRevision, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LayoutRevision, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LayoutRevision, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(
-				attributeName,
+			attributes.put(attributeName,
 				attributeGetterFunction.apply((LayoutRevision)this));
 		}
 
@@ -312,189 +293,99 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<LayoutRevision, Object>>
-			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<LayoutRevision, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<LayoutRevision, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<LayoutRevision, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept(
-					(LayoutRevision)this, entry.getValue());
+				attributeSetterBiConsumer.accept((LayoutRevision)this,
+					entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<LayoutRevision, Object>>
-		getAttributeGetterFunctions() {
-
+	public Map<String, Function<LayoutRevision, Object>> getAttributeGetterFunctions() {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<LayoutRevision, Object>>
-		getAttributeSetterBiConsumers() {
-
+	public Map<String, BiConsumer<LayoutRevision, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LayoutRevision, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LayoutRevision, Object>>
-		_attributeSetterBiConsumers;
+	private static final Map<String, Function<LayoutRevision, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LayoutRevision, Object>> _attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<LayoutRevision, Object>>();
-		Map<String, BiConsumer<LayoutRevision, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<LayoutRevision, ?>>();
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LayoutRevision, Object>>();
+		Map<String, BiConsumer<LayoutRevision, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LayoutRevision, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", LayoutRevision::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<LayoutRevision, Long>)LayoutRevision::setMvccVersion);
-		attributeGetterFunctions.put(
-			"layoutRevisionId", LayoutRevision::getLayoutRevisionId);
-		attributeSetterBiConsumers.put(
-			"layoutRevisionId",
-			(BiConsumer<LayoutRevision, Long>)
-				LayoutRevision::setLayoutRevisionId);
+
+		attributeGetterFunctions.put("mvccVersion", LayoutRevision::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setMvccVersion);
+		attributeGetterFunctions.put("layoutRevisionId", LayoutRevision::getLayoutRevisionId);
+		attributeSetterBiConsumers.put("layoutRevisionId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setLayoutRevisionId);
 		attributeGetterFunctions.put("groupId", LayoutRevision::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<LayoutRevision, Long>)LayoutRevision::setGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setGroupId);
 		attributeGetterFunctions.put("companyId", LayoutRevision::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<LayoutRevision, Long>)LayoutRevision::setCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setCompanyId);
 		attributeGetterFunctions.put("userId", LayoutRevision::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<LayoutRevision, Long>)LayoutRevision::setUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setUserId);
 		attributeGetterFunctions.put("userName", LayoutRevision::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", LayoutRevision::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<LayoutRevision, Date>)LayoutRevision::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", LayoutRevision::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<LayoutRevision, Date>)LayoutRevision::setModifiedDate);
-		attributeGetterFunctions.put(
-			"layoutSetBranchId", LayoutRevision::getLayoutSetBranchId);
-		attributeSetterBiConsumers.put(
-			"layoutSetBranchId",
-			(BiConsumer<LayoutRevision, Long>)
-				LayoutRevision::setLayoutSetBranchId);
-		attributeGetterFunctions.put(
-			"layoutBranchId", LayoutRevision::getLayoutBranchId);
-		attributeSetterBiConsumers.put(
-			"layoutBranchId",
-			(BiConsumer<LayoutRevision, Long>)
-				LayoutRevision::setLayoutBranchId);
-		attributeGetterFunctions.put(
-			"parentLayoutRevisionId",
-			LayoutRevision::getParentLayoutRevisionId);
-		attributeSetterBiConsumers.put(
-			"parentLayoutRevisionId",
-			(BiConsumer<LayoutRevision, Long>)
-				LayoutRevision::setParentLayoutRevisionId);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<LayoutRevision, String>)LayoutRevision::setUserName);
+		attributeGetterFunctions.put("createDate", LayoutRevision::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<LayoutRevision, Date>)LayoutRevision::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", LayoutRevision::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<LayoutRevision, Date>)LayoutRevision::setModifiedDate);
+		attributeGetterFunctions.put("layoutSetBranchId", LayoutRevision::getLayoutSetBranchId);
+		attributeSetterBiConsumers.put("layoutSetBranchId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setLayoutSetBranchId);
+		attributeGetterFunctions.put("layoutBranchId", LayoutRevision::getLayoutBranchId);
+		attributeSetterBiConsumers.put("layoutBranchId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setLayoutBranchId);
+		attributeGetterFunctions.put("parentLayoutRevisionId", LayoutRevision::getParentLayoutRevisionId);
+		attributeSetterBiConsumers.put("parentLayoutRevisionId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setParentLayoutRevisionId);
 		attributeGetterFunctions.put("head", LayoutRevision::getHead);
-		attributeSetterBiConsumers.put(
-			"head",
-			(BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setHead);
+		attributeSetterBiConsumers.put("head", (BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setHead);
 		attributeGetterFunctions.put("major", LayoutRevision::getMajor);
-		attributeSetterBiConsumers.put(
-			"major",
-			(BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setMajor);
+		attributeSetterBiConsumers.put("major", (BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setMajor);
 		attributeGetterFunctions.put("plid", LayoutRevision::getPlid);
-		attributeSetterBiConsumers.put(
-			"plid", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setPlid);
-		attributeGetterFunctions.put(
-			"privateLayout", LayoutRevision::getPrivateLayout);
-		attributeSetterBiConsumers.put(
-			"privateLayout",
-			(BiConsumer<LayoutRevision, Boolean>)
-				LayoutRevision::setPrivateLayout);
+		attributeSetterBiConsumers.put("plid", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setPlid);
+		attributeGetterFunctions.put("privateLayout", LayoutRevision::getPrivateLayout);
+		attributeSetterBiConsumers.put("privateLayout", (BiConsumer<LayoutRevision, Boolean>)LayoutRevision::setPrivateLayout);
 		attributeGetterFunctions.put("name", LayoutRevision::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<LayoutRevision, String>)LayoutRevision::setName);
 		attributeGetterFunctions.put("title", LayoutRevision::getTitle);
-		attributeSetterBiConsumers.put(
-			"title",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setTitle);
-		attributeGetterFunctions.put(
-			"description", LayoutRevision::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setDescription);
+		attributeSetterBiConsumers.put("title", (BiConsumer<LayoutRevision, String>)LayoutRevision::setTitle);
+		attributeGetterFunctions.put("description", LayoutRevision::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<LayoutRevision, String>)LayoutRevision::setDescription);
 		attributeGetterFunctions.put("keywords", LayoutRevision::getKeywords);
-		attributeSetterBiConsumers.put(
-			"keywords",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setKeywords);
+		attributeSetterBiConsumers.put("keywords", (BiConsumer<LayoutRevision, String>)LayoutRevision::setKeywords);
 		attributeGetterFunctions.put("robots", LayoutRevision::getRobots);
-		attributeSetterBiConsumers.put(
-			"robots",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setRobots);
-		attributeGetterFunctions.put(
-			"typeSettings", LayoutRevision::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<LayoutRevision, String>)
-				LayoutRevision::setTypeSettings);
-		attributeGetterFunctions.put(
-			"iconImageId", LayoutRevision::getIconImageId);
-		attributeSetterBiConsumers.put(
-			"iconImageId",
-			(BiConsumer<LayoutRevision, Long>)LayoutRevision::setIconImageId);
+		attributeSetterBiConsumers.put("robots", (BiConsumer<LayoutRevision, String>)LayoutRevision::setRobots);
+		attributeGetterFunctions.put("typeSettings", LayoutRevision::getTypeSettings);
+		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<LayoutRevision, String>)LayoutRevision::setTypeSettings);
+		attributeGetterFunctions.put("iconImageId", LayoutRevision::getIconImageId);
+		attributeSetterBiConsumers.put("iconImageId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setIconImageId);
 		attributeGetterFunctions.put("themeId", LayoutRevision::getThemeId);
-		attributeSetterBiConsumers.put(
-			"themeId",
-			(BiConsumer<LayoutRevision, String>)LayoutRevision::setThemeId);
-		attributeGetterFunctions.put(
-			"colorSchemeId", LayoutRevision::getColorSchemeId);
-		attributeSetterBiConsumers.put(
-			"colorSchemeId",
-			(BiConsumer<LayoutRevision, String>)
-				LayoutRevision::setColorSchemeId);
+		attributeSetterBiConsumers.put("themeId", (BiConsumer<LayoutRevision, String>)LayoutRevision::setThemeId);
+		attributeGetterFunctions.put("colorSchemeId", LayoutRevision::getColorSchemeId);
+		attributeSetterBiConsumers.put("colorSchemeId", (BiConsumer<LayoutRevision, String>)LayoutRevision::setColorSchemeId);
 		attributeGetterFunctions.put("css", LayoutRevision::getCss);
-		attributeSetterBiConsumers.put(
-			"css", (BiConsumer<LayoutRevision, String>)LayoutRevision::setCss);
+		attributeSetterBiConsumers.put("css", (BiConsumer<LayoutRevision, String>)LayoutRevision::setCss);
 		attributeGetterFunctions.put("status", LayoutRevision::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<LayoutRevision, Integer>)LayoutRevision::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", LayoutRevision::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<LayoutRevision, Long>)
-				LayoutRevision::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", LayoutRevision::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<LayoutRevision, String>)
-				LayoutRevision::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", LayoutRevision::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<LayoutRevision, Date>)LayoutRevision::setStatusDate);
+		attributeSetterBiConsumers.put("status", (BiConsumer<LayoutRevision, Integer>)LayoutRevision::setStatus);
+		attributeGetterFunctions.put("statusByUserId", LayoutRevision::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<LayoutRevision, Long>)LayoutRevision::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", LayoutRevision::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<LayoutRevision, String>)LayoutRevision::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", LayoutRevision::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<LayoutRevision, Date>)LayoutRevision::setStatusDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -801,8 +692,8 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -839,14 +730,12 @@ public class LayoutRevisionModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+					languageId));
 		}
 	}
 
@@ -866,9 +755,7 @@ public class LayoutRevisionModelImpl
 			return;
 		}
 
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -904,8 +791,8 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getTitle(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getTitle(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -942,14 +829,12 @@ public class LayoutRevisionModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(title)) {
-			setTitle(
-				LocalizationUtil.updateLocalization(
-					getTitle(), "Title", title, languageId, defaultLanguageId));
+			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
+					title, languageId, defaultLanguageId));
 		}
 		else {
-			setTitle(
-				LocalizationUtil.removeLocalization(
-					getTitle(), "Title", languageId));
+			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
+					languageId));
 		}
 	}
 
@@ -964,17 +849,13 @@ public class LayoutRevisionModelImpl
 	}
 
 	@Override
-	public void setTitleMap(
-		Map<Locale, String> titleMap, Locale defaultLocale) {
-
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
 		if (titleMap == null) {
 			return;
 		}
 
-		setTitle(
-			LocalizationUtil.updateLocalization(
-				titleMap, getTitle(), "Title",
-				LocaleUtil.toLanguageId(defaultLocale)));
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -1009,8 +890,8 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -1042,21 +923,18 @@ public class LayoutRevisionModelImpl
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
-
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
+			setDescription(LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
+			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -1072,16 +950,14 @@ public class LayoutRevisionModelImpl
 	}
 
 	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -1117,8 +993,8 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String getKeywords(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getKeywords(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getKeywords(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -1150,22 +1026,17 @@ public class LayoutRevisionModelImpl
 	}
 
 	@Override
-	public void setKeywords(
-		String keywords, Locale locale, Locale defaultLocale) {
-
+	public void setKeywords(String keywords, Locale locale, Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(keywords)) {
-			setKeywords(
-				LocalizationUtil.updateLocalization(
-					getKeywords(), "Keywords", keywords, languageId,
-					defaultLanguageId));
+			setKeywords(LocalizationUtil.updateLocalization(getKeywords(),
+					"Keywords", keywords, languageId, defaultLanguageId));
 		}
 		else {
-			setKeywords(
-				LocalizationUtil.removeLocalization(
-					getKeywords(), "Keywords", languageId));
+			setKeywords(LocalizationUtil.removeLocalization(getKeywords(),
+					"Keywords", languageId));
 		}
 	}
 
@@ -1180,16 +1051,14 @@ public class LayoutRevisionModelImpl
 	}
 
 	@Override
-	public void setKeywordsMap(
-		Map<Locale, String> keywordsMap, Locale defaultLocale) {
-
+	public void setKeywordsMap(Map<Locale, String> keywordsMap,
+		Locale defaultLocale) {
 		if (keywordsMap == null) {
 			return;
 		}
 
-		setKeywords(
-			LocalizationUtil.updateLocalization(
-				keywordsMap, getKeywords(), "Keywords",
+		setKeywords(LocalizationUtil.updateLocalization(keywordsMap,
+				getKeywords(), "Keywords",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -1225,8 +1094,8 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String getRobots(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getRobots(), languageId, useDefault);
+		return LocalizationUtil.getLocalization(getRobots(), languageId,
+			useDefault);
 	}
 
 	@Override
@@ -1263,15 +1132,12 @@ public class LayoutRevisionModelImpl
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(robots)) {
-			setRobots(
-				LocalizationUtil.updateLocalization(
-					getRobots(), "Robots", robots, languageId,
-					defaultLanguageId));
+			setRobots(LocalizationUtil.updateLocalization(getRobots(),
+					"Robots", robots, languageId, defaultLanguageId));
 		}
 		else {
-			setRobots(
-				LocalizationUtil.removeLocalization(
-					getRobots(), "Robots", languageId));
+			setRobots(LocalizationUtil.removeLocalization(getRobots(),
+					"Robots", languageId));
 		}
 	}
 
@@ -1286,17 +1152,13 @@ public class LayoutRevisionModelImpl
 	}
 
 	@Override
-	public void setRobotsMap(
-		Map<Locale, String> robotsMap, Locale defaultLocale) {
-
+	public void setRobotsMap(Map<Locale, String> robotsMap, Locale defaultLocale) {
 		if (robotsMap == null) {
 			return;
 		}
 
-		setRobots(
-			LocalizationUtil.updateLocalization(
-				robotsMap, getRobots(), "Robots",
-				LocaleUtil.toLanguageId(defaultLocale)));
+		setRobots(LocalizationUtil.updateLocalization(robotsMap, getRobots(),
+				"Robots", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -1537,8 +1399,8 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), LayoutRevision.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+			LayoutRevision.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1607,8 +1469,7 @@ public class LayoutRevisionModelImpl
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -1626,15 +1487,12 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			LayoutRevision.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(LayoutRevision.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -1643,7 +1501,6 @@ public class LayoutRevisionModelImpl
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -1669,12 +1526,11 @@ public class LayoutRevisionModelImpl
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(
-				getDescription(defaultLocale), defaultLocale, defaultLocale);
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 
 		String keywords = getKeywords(defaultLocale);
@@ -1683,8 +1539,7 @@ public class LayoutRevisionModelImpl
 			setKeywords(getKeywords(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setKeywords(
-				getKeywords(defaultLocale), defaultLocale, defaultLocale);
+			setKeywords(getKeywords(defaultLocale), defaultLocale, defaultLocale);
 		}
 
 		String robots = getRobots(defaultLocale);
@@ -1700,9 +1555,8 @@ public class LayoutRevisionModelImpl
 	@Override
 	public LayoutRevision toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LayoutRevision)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
-				new AutoEscapeBeanHandler(this));
+			_escapedModel = (LayoutRevision)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1722,8 +1576,7 @@ public class LayoutRevisionModelImpl
 		layoutRevisionImpl.setModifiedDate(getModifiedDate());
 		layoutRevisionImpl.setLayoutSetBranchId(getLayoutSetBranchId());
 		layoutRevisionImpl.setLayoutBranchId(getLayoutBranchId());
-		layoutRevisionImpl.setParentLayoutRevisionId(
-			getParentLayoutRevisionId());
+		layoutRevisionImpl.setParentLayoutRevisionId(getParentLayoutRevisionId());
 		layoutRevisionImpl.setHead(isHead());
 		layoutRevisionImpl.setMajor(isMajor());
 		layoutRevisionImpl.setPlid(getPlid());
@@ -1752,8 +1605,8 @@ public class LayoutRevisionModelImpl
 	public int compareTo(LayoutRevision layoutRevision) {
 		int value = 0;
 
-		value = DateUtil.compareTo(
-			getModifiedDate(), layoutRevision.getModifiedDate());
+		value = DateUtil.compareTo(getModifiedDate(),
+				layoutRevision.getModifiedDate());
 
 		value = value * -1;
 
@@ -1807,18 +1660,15 @@ public class LayoutRevisionModelImpl
 
 		layoutRevisionModelImpl._setModifiedDate = false;
 
-		layoutRevisionModelImpl._originalLayoutSetBranchId =
-			layoutRevisionModelImpl._layoutSetBranchId;
+		layoutRevisionModelImpl._originalLayoutSetBranchId = layoutRevisionModelImpl._layoutSetBranchId;
 
 		layoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
 
-		layoutRevisionModelImpl._originalLayoutBranchId =
-			layoutRevisionModelImpl._layoutBranchId;
+		layoutRevisionModelImpl._originalLayoutBranchId = layoutRevisionModelImpl._layoutBranchId;
 
 		layoutRevisionModelImpl._setOriginalLayoutBranchId = false;
 
-		layoutRevisionModelImpl._originalParentLayoutRevisionId =
-			layoutRevisionModelImpl._parentLayoutRevisionId;
+		layoutRevisionModelImpl._originalParentLayoutRevisionId = layoutRevisionModelImpl._parentLayoutRevisionId;
 
 		layoutRevisionModelImpl._setOriginalParentLayoutRevisionId = false;
 
@@ -1830,8 +1680,7 @@ public class LayoutRevisionModelImpl
 
 		layoutRevisionModelImpl._setOriginalPlid = false;
 
-		layoutRevisionModelImpl._originalStatus =
-			layoutRevisionModelImpl._status;
+		layoutRevisionModelImpl._originalStatus = layoutRevisionModelImpl._status;
 
 		layoutRevisionModelImpl._setOriginalStatus = false;
 
@@ -1840,8 +1689,7 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public CacheModel<LayoutRevision> toCacheModel() {
-		LayoutRevisionCacheModel layoutRevisionCacheModel =
-			new LayoutRevisionCacheModel();
+		LayoutRevisionCacheModel layoutRevisionCacheModel = new LayoutRevisionCacheModel();
 
 		layoutRevisionCacheModel.mvccVersion = getMvccVersion();
 
@@ -1883,8 +1731,7 @@ public class LayoutRevisionModelImpl
 
 		layoutRevisionCacheModel.layoutBranchId = getLayoutBranchId();
 
-		layoutRevisionCacheModel.parentLayoutRevisionId =
-			getParentLayoutRevisionId();
+		layoutRevisionCacheModel.parentLayoutRevisionId = getParentLayoutRevisionId();
 
 		layoutRevisionCacheModel.head = isHead();
 
@@ -1994,20 +1841,16 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
+				2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<LayoutRevision, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LayoutRevision, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LayoutRevision, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -2026,22 +1869,18 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<LayoutRevision, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
+				4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<LayoutRevision, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
+		for (Map.Entry<String, Function<LayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
 			String attributeName = entry.getKey();
-			Function<LayoutRevision, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<LayoutRevision, Object> attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -2055,12 +1894,10 @@ public class LayoutRevisionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LayoutRevision.class.getClassLoader();
+	private static final ClassLoader _classLoader = LayoutRevision.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LayoutRevision.class, ModelWrapper.class
-	};
-
+			LayoutRevision.class, ModelWrapper.class
+		};
 	private long _mvccVersion;
 	private long _layoutRevisionId;
 	private long _groupId;
@@ -2110,5 +1947,4 @@ public class LayoutRevisionModelImpl
 	private Date _statusDate;
 	private long _columnBitmask;
 	private LayoutRevision _escapedModel;
-
 }

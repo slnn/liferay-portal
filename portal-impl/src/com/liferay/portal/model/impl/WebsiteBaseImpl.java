@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class WebsiteBaseImpl
-	extends WebsiteModelImpl implements Website {
-
+public abstract class WebsiteBaseImpl extends WebsiteModelImpl
+	implements Website {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class WebsiteBaseImpl
 			WebsiteLocalServiceUtil.updateWebsite(this);
 		}
 	}
-
 }

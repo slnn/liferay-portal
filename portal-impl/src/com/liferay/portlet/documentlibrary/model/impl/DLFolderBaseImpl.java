@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
@@ -37,9 +39,8 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-public abstract class DLFolderBaseImpl
-	extends DLFolderModelImpl implements DLFolder {
-
+public abstract class DLFolderBaseImpl extends DLFolderModelImpl
+	implements DLFolder {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,11 +66,10 @@ public abstract class DLFolderBaseImpl
 		while (dlFolder != null) {
 			dlFolders.add(dlFolder);
 
-			dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
-				dlFolder.getParentFolderId());
+			dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(dlFolder.getParentFolderId());
 		}
 
-		StringBundler sb = new StringBundler(dlFolders.size() * 2 + 1);
+		StringBundler sb = new StringBundler((dlFolders.size() * 2) + 1);
 
 		sb.append("/");
 
@@ -91,5 +91,4 @@ public abstract class DLFolderBaseImpl
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 	}
-
 }

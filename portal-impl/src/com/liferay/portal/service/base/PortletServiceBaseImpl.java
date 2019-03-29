@@ -46,9 +46,8 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.service.impl.PortletServiceImpl
  * @generated
  */
-public abstract class PortletServiceBaseImpl
-	extends BaseServiceImpl implements PortletService, IdentifiableOSGiService {
-
+public abstract class PortletServiceBaseImpl extends BaseServiceImpl
+	implements PortletService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,9 +59,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the portlet local service
 	 */
-	public com.liferay.portal.kernel.service.PortletLocalService
-		getPortletLocalService() {
-
+	public com.liferay.portal.kernel.service.PortletLocalService getPortletLocalService() {
 		return portletLocalService;
 	}
 
@@ -72,9 +69,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param portletLocalService the portlet local service
 	 */
 	public void setPortletLocalService(
-		com.liferay.portal.kernel.service.PortletLocalService
-			portletLocalService) {
-
+		com.liferay.portal.kernel.service.PortletLocalService portletLocalService) {
 		this.portletLocalService = portletLocalService;
 	}
 
@@ -119,9 +114,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -131,9 +124,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -142,9 +133,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the portlet preferences local service
 	 */
-	public com.liferay.portal.kernel.service.PortletPreferencesLocalService
-		getPortletPreferencesLocalService() {
-
+	public com.liferay.portal.kernel.service.PortletPreferencesLocalService getPortletPreferencesLocalService() {
 		return portletPreferencesLocalService;
 	}
 
@@ -154,9 +143,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param portletPreferencesLocalService the portlet preferences local service
 	 */
 	public void setPortletPreferencesLocalService(
-		com.liferay.portal.kernel.service.PortletPreferencesLocalService
-			portletPreferencesLocalService) {
-
+		com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService) {
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
@@ -165,9 +152,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the portlet preferences remote service
 	 */
-	public com.liferay.portal.kernel.service.PortletPreferencesService
-		getPortletPreferencesService() {
-
+	public com.liferay.portal.kernel.service.PortletPreferencesService getPortletPreferencesService() {
 		return portletPreferencesService;
 	}
 
@@ -177,9 +162,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param portletPreferencesService the portlet preferences remote service
 	 */
 	public void setPortletPreferencesService(
-		com.liferay.portal.kernel.service.PortletPreferencesService
-			portletPreferencesService) {
-
+		com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService) {
 		this.portletPreferencesService = portletPreferencesService;
 	}
 
@@ -199,7 +182,6 @@ public abstract class PortletServiceBaseImpl
 	 */
 	public void setPortletPreferencesPersistence(
 		PortletPreferencesPersistence portletPreferencesPersistence) {
-
 		this.portletPreferencesPersistence = portletPreferencesPersistence;
 	}
 
@@ -219,7 +201,6 @@ public abstract class PortletServiceBaseImpl
 	 */
 	public void setPortletPreferencesFinder(
 		PortletPreferencesFinder portletPreferencesFinder) {
-
 		this.portletPreferencesFinder = portletPreferencesFinder;
 	}
 
@@ -228,9 +209,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -240,9 +219,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -251,9 +228,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the resource permission local service
 	 */
-	public com.liferay.portal.kernel.service.ResourcePermissionLocalService
-		getResourcePermissionLocalService() {
-
+	public com.liferay.portal.kernel.service.ResourcePermissionLocalService getResourcePermissionLocalService() {
 		return resourcePermissionLocalService;
 	}
 
@@ -263,9 +238,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param resourcePermissionLocalService the resource permission local service
 	 */
 	public void setResourcePermissionLocalService(
-		com.liferay.portal.kernel.service.ResourcePermissionLocalService
-			resourcePermissionLocalService) {
-
+		com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService) {
 		this.resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
@@ -274,9 +247,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the resource permission remote service
 	 */
-	public com.liferay.portal.kernel.service.ResourcePermissionService
-		getResourcePermissionService() {
-
+	public com.liferay.portal.kernel.service.ResourcePermissionService getResourcePermissionService() {
 		return resourcePermissionService;
 	}
 
@@ -286,9 +257,7 @@ public abstract class PortletServiceBaseImpl
 	 * @param resourcePermissionService the resource permission remote service
 	 */
 	public void setResourcePermissionService(
-		com.liferay.portal.kernel.service.ResourcePermissionService
-			resourcePermissionService) {
-
+		com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService) {
 		this.resourcePermissionService = resourcePermissionService;
 	}
 
@@ -308,7 +277,6 @@ public abstract class PortletServiceBaseImpl
 	 */
 	public void setResourcePermissionPersistence(
 		ResourcePermissionPersistence resourcePermissionPersistence) {
-
 		this.resourcePermissionPersistence = resourcePermissionPersistence;
 	}
 
@@ -328,7 +296,6 @@ public abstract class PortletServiceBaseImpl
 	 */
 	public void setResourcePermissionFinder(
 		ResourcePermissionFinder resourcePermissionFinder) {
-
 		this.resourcePermissionFinder = resourcePermissionFinder;
 	}
 
@@ -337,9 +304,7 @@ public abstract class PortletServiceBaseImpl
 	 *
 	 * @return the role local service
 	 */
-	public com.liferay.portal.kernel.service.RoleLocalService
-		getRoleLocalService() {
-
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -350,7 +315,6 @@ public abstract class PortletServiceBaseImpl
 	 */
 	public void setRoleLocalService(
 		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
-
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -370,7 +334,6 @@ public abstract class PortletServiceBaseImpl
 	 */
 	public void setRoleService(
 		com.liferay.portal.kernel.service.RoleService roleService) {
-
 		this.roleService = roleService;
 	}
 
@@ -448,8 +411,8 @@ public abstract class PortletServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -458,79 +421,38 @@ public abstract class PortletServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PortletLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.PortletLocalService
-		portletLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.PortletLocalService.class)
+	protected com.liferay.portal.kernel.service.PortletLocalService portletLocalService;
 	@BeanReference(type = PortletService.class)
 	protected PortletService portletService;
-
 	@BeanReference(type = PortletPersistence.class)
 	protected PortletPersistence portletPersistence;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.PortletPreferencesLocalService
-		portletPreferencesLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PortletPreferencesService.class
-	)
-	protected com.liferay.portal.kernel.service.PortletPreferencesService
-		portletPreferencesService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class)
+	protected com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PortletPreferencesService.class)
+	protected com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService;
 	@BeanReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
-
 	@BeanReference(type = PortletPreferencesFinder.class)
 	protected PortletPreferencesFinder portletPreferencesFinder;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService
-		resourcePermissionLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ResourcePermissionService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourcePermissionService
-		resourcePermissionService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
-
 	@BeanReference(type = ResourcePermissionFinder.class)
 	protected ResourcePermissionFinder resourcePermissionFinder;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.RoleLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.RoleLocalService
-		roleLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.RoleService.class)
 	protected com.liferay.portal.kernel.service.RoleService roleService;
-
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
-
 	@BeanReference(type = RoleFinder.class)
 	protected RoleFinder roleFinder;
-
 }

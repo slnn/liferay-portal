@@ -30,10 +30,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface UserNotificationDeliveryModel
-	extends BaseModel<UserNotificationDelivery>, MVCCModel, ShardedModel,
-			TypedModel {
-
+public interface UserNotificationDeliveryModel extends BaseModel<UserNotificationDelivery>,
+	MVCCModel, ShardedModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -217,5 +215,4 @@ public interface UserNotificationDeliveryModel
 	 * @param deliver the deliver of this user notification delivery
 	 */
 	public void setDeliver(boolean deliver);
-
 }

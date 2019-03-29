@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface DLFileEntryMetadataModel
-	extends BaseModel<DLFileEntryMetadata>, ShardedModel {
-
+public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -155,5 +154,4 @@ public interface DLFileEntryMetadataModel
 	 * @param fileVersionId the file version ID of this document library file entry metadata
 	 */
 	public void setFileVersionId(long fileVersionId);
-
 }

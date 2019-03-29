@@ -32,9 +32,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutSetModel
-	extends BaseModel<LayoutSet>, MVCCModel, ShardedModel {
-
+public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -288,5 +287,4 @@ public interface LayoutSetModel
 	 */
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled);
-
 }

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalServiceUtil;
 @ProviderType
 public abstract class RecentLayoutRevisionBaseImpl
 	extends RecentLayoutRevisionModelImpl implements RecentLayoutRevision {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -46,9 +45,7 @@ public abstract class RecentLayoutRevisionBaseImpl
 			RecentLayoutRevisionLocalServiceUtil.addRecentLayoutRevision(this);
 		}
 		else {
-			RecentLayoutRevisionLocalServiceUtil.updateRecentLayoutRevision(
-				this);
+			RecentLayoutRevisionLocalServiceUtil.updateRecentLayoutRevision(this);
 		}
 	}
-
 }

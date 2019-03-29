@@ -53,20 +53,16 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class PluginSettingServiceHttp {
-
-	public static com.liferay.portal.kernel.model.PluginSetting
-			updatePluginSetting(
-				HttpPrincipal httpPrincipal, long companyId, String pluginId,
-				String pluginType, String roles, boolean active)
+	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
+		HttpPrincipal httpPrincipal, long companyId, String pluginId,
+		String pluginType, String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		try {
-			MethodKey methodKey = new MethodKey(
-				PluginSettingServiceUtil.class, "updatePluginSetting",
-				_updatePluginSettingParameterTypes0);
+			MethodKey methodKey = new MethodKey(PluginSettingServiceUtil.class,
+					"updatePluginSetting", _updatePluginSettingParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, pluginId, pluginType, roles, active);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, pluginId, pluginType, roles, active);
 
 			Object returnObj = null;
 
@@ -74,15 +70,11 @@ public class PluginSettingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
 			return (com.liferay.portal.kernel.model.PluginSetting)returnObj;
@@ -94,12 +86,8 @@ public class PluginSettingServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PluginSettingServiceHttp.class);
-
-	private static final Class<?>[] _updatePluginSettingParameterTypes0 =
-		new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(PluginSettingServiceHttp.class);
+	private static final Class<?>[] _updatePluginSettingParameterTypes0 = new Class[] {
 			long.class, String.class, String.class, String.class, boolean.class
 		};
-
 }

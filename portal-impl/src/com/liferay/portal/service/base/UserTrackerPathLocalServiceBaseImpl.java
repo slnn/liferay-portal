@@ -61,9 +61,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class UserTrackerPathLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements UserTrackerPathLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements UserTrackerPathLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -107,7 +106,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Override
 	public UserTrackerPath deleteUserTrackerPath(long userTrackerPathId)
 		throws PortalException {
-
 		return userTrackerPathPersistence.remove(userTrackerPathId);
 	}
 
@@ -121,7 +119,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Override
 	public UserTrackerPath deleteUserTrackerPath(
 		UserTrackerPath userTrackerPath) {
-
 		return userTrackerPathPersistence.remove(userTrackerPath);
 	}
 
@@ -129,8 +126,8 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			UserTrackerPath.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -157,11 +154,10 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return userTrackerPathPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return userTrackerPathPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -178,12 +174,10 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return userTrackerPathPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return userTrackerPathPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -205,11 +199,10 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return userTrackerPathPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return userTrackerPathPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -227,14 +220,12 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Override
 	public UserTrackerPath getUserTrackerPath(long userTrackerPathId)
 		throws PortalException {
-
 		return userTrackerPathPersistence.findByPrimaryKey(userTrackerPathId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(userTrackerPathLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -246,14 +237,10 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			userTrackerPathLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(userTrackerPathLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(UserTrackerPath.class);
 
@@ -265,7 +252,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
 		actionableDynamicQuery.setBaseLocalService(userTrackerPathLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserTrackerPath.class);
@@ -279,15 +265,12 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return userTrackerPathLocalService.deleteUserTrackerPath(
-			(UserTrackerPath)persistedModel);
+		return userTrackerPathLocalService.deleteUserTrackerPath((UserTrackerPath)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return userTrackerPathPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -327,7 +310,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Override
 	public UserTrackerPath updateUserTrackerPath(
 		UserTrackerPath userTrackerPath) {
-
 		return userTrackerPathPersistence.update(userTrackerPath);
 	}
 
@@ -347,7 +329,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 */
 	public void setUserTrackerPathLocalService(
 		UserTrackerPathLocalService userTrackerPathLocalService) {
-
 		this.userTrackerPathLocalService = userTrackerPathLocalService;
 	}
 
@@ -367,7 +348,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 */
 	public void setUserTrackerPathPersistence(
 		UserTrackerPathPersistence userTrackerPathPersistence) {
-
 		this.userTrackerPathPersistence = userTrackerPathPersistence;
 	}
 
@@ -376,9 +356,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -388,15 +366,12 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.UserTrackerPath",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.UserTrackerPath",
 			userTrackerPathLocalService);
 	}
 
@@ -437,8 +412,8 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -449,18 +424,10 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 
 	@BeanReference(type = UserTrackerPathLocalService.class)
 	protected UserTrackerPathLocalService userTrackerPathLocalService;
-
 	@BeanReference(type = UserTrackerPathPersistence.class)
 	protected UserTrackerPathPersistence userTrackerPathPersistence;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

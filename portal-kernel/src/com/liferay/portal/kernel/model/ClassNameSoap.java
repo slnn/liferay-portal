@@ -29,7 +29,6 @@ import java.util.List;
  */
 @ProviderType
 public class ClassNameSoap implements Serializable {
-
 	public static ClassNameSoap toSoapModel(ClassName model) {
 		ClassNameSoap soapModel = new ClassNameSoap();
 
@@ -68,8 +67,7 @@ public class ClassNameSoap implements Serializable {
 	}
 
 	public static ClassNameSoap[] toSoapModels(List<ClassName> models) {
-		List<ClassNameSoap> soapModels = new ArrayList<ClassNameSoap>(
-			models.size());
+		List<ClassNameSoap> soapModels = new ArrayList<ClassNameSoap>(models.size());
 
 		for (ClassName model : models) {
 			soapModels.add(toSoapModel(model));
@@ -116,5 +114,4 @@ public class ClassNameSoap implements Serializable {
 	private long _mvccVersion;
 	private long _classNameId;
 	private String _value;
-
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.VirtualHost;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class VirtualHostCacheModel
-	implements CacheModel<VirtualHost>, Externalizable, MVCCModel {
-
+public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,12 +47,10 @@ public class VirtualHostCacheModel
 			return false;
 		}
 
-		VirtualHostCacheModel virtualHostCacheModel =
-			(VirtualHostCacheModel)obj;
+		VirtualHostCacheModel virtualHostCacheModel = (VirtualHostCacheModel)obj;
 
 		if ((virtualHostId == virtualHostCacheModel.virtualHostId) &&
-			(mvccVersion == virtualHostCacheModel.mvccVersion)) {
-
+				(mvccVersion == virtualHostCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -129,7 +127,8 @@ public class VirtualHostCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(virtualHostId);
@@ -151,5 +150,4 @@ public class VirtualHostCacheModel
 	public long companyId;
 	public long layoutSetId;
 	public String hostname;
-
 }

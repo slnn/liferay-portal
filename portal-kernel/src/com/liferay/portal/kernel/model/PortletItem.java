@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.PortletItemImpl")
 @ProviderType
 public interface PortletItem extends PortletItemModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PortletItemImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PortletItem, Long> PORTLET_ITEM_ID_ACCESSOR =
-		new Accessor<PortletItem, Long>() {
-
+	public static final Accessor<PortletItem, Long> PORTLET_ITEM_ID_ACCESSOR = new Accessor<PortletItem, Long>() {
 			@Override
 			public Long get(PortletItem portletItem) {
 				return portletItem.getPortletItemId();
@@ -52,7 +49,5 @@ public interface PortletItem extends PortletItemModel, PersistedModel {
 			public Class<PortletItem> getTypeClass() {
 				return PortletItem.class;
 			}
-
 		};
-
 }

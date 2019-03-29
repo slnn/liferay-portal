@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.service.WebDAVPropsLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class WebDAVPropsBaseImpl
-	extends WebDAVPropsModelImpl implements WebDAVProps {
-
+public abstract class WebDAVPropsBaseImpl extends WebDAVPropsModelImpl
+	implements WebDAVProps {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class WebDAVPropsBaseImpl
 			WebDAVPropsLocalServiceUtil.updateWebDAVProps(this);
 		}
 	}
-
 }

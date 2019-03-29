@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -63,9 +64,8 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl
-	implements AnnouncementsDeliveryLocalService, IdentifiableOSGiService {
-
+	extends BaseLocalServiceImpl implements AnnouncementsDeliveryLocalService,
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -82,7 +82,6 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Override
 	public AnnouncementsDelivery addAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) {
-
 		announcementsDelivery.setNew(true);
 
 		return announcementsDeliveryPersistence.update(announcementsDelivery);
@@ -111,7 +110,6 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Override
 	public AnnouncementsDelivery deleteAnnouncementsDelivery(long deliveryId)
 		throws PortalException {
-
 		return announcementsDeliveryPersistence.remove(deliveryId);
 	}
 
@@ -125,7 +123,6 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Override
 	public AnnouncementsDelivery deleteAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) {
-
 		return announcementsDeliveryPersistence.remove(announcementsDelivery);
 	}
 
@@ -133,8 +130,8 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(
-			AnnouncementsDelivery.class, clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
+			clazz.getClassLoader());
 	}
 
 	/**
@@ -145,8 +142,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return announcementsDeliveryPersistence.findWithDynamicQuery(
-			dynamicQuery);
+		return announcementsDeliveryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -162,11 +158,10 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return announcementsDeliveryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return announcementsDeliveryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
 	}
 
 	/**
@@ -183,12 +178,10 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return announcementsDeliveryPersistence.findWithDynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
+		return announcementsDeliveryPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -199,8 +192,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return announcementsDeliveryPersistence.countWithDynamicQuery(
-			dynamicQuery);
+		return announcementsDeliveryPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -211,11 +203,10 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return announcementsDeliveryPersistence.countWithDynamicQuery(
-			dynamicQuery, projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) {
+		return announcementsDeliveryPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
 	}
 
 	@Override
@@ -233,17 +224,14 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Override
 	public AnnouncementsDelivery getAnnouncementsDelivery(long deliveryId)
 		throws PortalException {
-
 		return announcementsDeliveryPersistence.findByPrimaryKey(deliveryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(
-			announcementsDeliveryLocalService);
+		actionableDynamicQuery.setBaseLocalService(announcementsDeliveryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsDelivery.class);
 
@@ -253,17 +241,12 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			announcementsDeliveryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(announcementsDeliveryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(
-			AnnouncementsDelivery.class);
+		indexableActionableDynamicQuery.setModelClass(AnnouncementsDelivery.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("deliveryId");
 
@@ -272,9 +255,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			announcementsDeliveryLocalService);
+		actionableDynamicQuery.setBaseLocalService(announcementsDeliveryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsDelivery.class);
 
@@ -287,15 +268,12 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-
-		return announcementsDeliveryLocalService.deleteAnnouncementsDelivery(
-			(AnnouncementsDelivery)persistedModel);
+		return announcementsDeliveryLocalService.deleteAnnouncementsDelivery((AnnouncementsDelivery)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-
 		return announcementsDeliveryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -311,9 +289,8 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the range of announcements deliveries
 	 */
 	@Override
-	public List<AnnouncementsDelivery> getAnnouncementsDeliveries(
-		int start, int end) {
-
+	public List<AnnouncementsDelivery> getAnnouncementsDeliveries(int start,
+		int end) {
 		return announcementsDeliveryPersistence.findAll(start, end);
 	}
 
@@ -337,7 +314,6 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Override
 	public AnnouncementsDelivery updateAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) {
-
 		return announcementsDeliveryPersistence.update(announcementsDelivery);
 	}
 
@@ -346,9 +322,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 *
 	 * @return the announcements delivery local service
 	 */
-	public AnnouncementsDeliveryLocalService
-		getAnnouncementsDeliveryLocalService() {
-
+	public AnnouncementsDeliveryLocalService getAnnouncementsDeliveryLocalService() {
 		return announcementsDeliveryLocalService;
 	}
 
@@ -359,9 +333,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 */
 	public void setAnnouncementsDeliveryLocalService(
 		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
-
-		this.announcementsDeliveryLocalService =
-			announcementsDeliveryLocalService;
+		this.announcementsDeliveryLocalService = announcementsDeliveryLocalService;
 	}
 
 	/**
@@ -369,9 +341,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 *
 	 * @return the announcements delivery persistence
 	 */
-	public AnnouncementsDeliveryPersistence
-		getAnnouncementsDeliveryPersistence() {
-
+	public AnnouncementsDeliveryPersistence getAnnouncementsDeliveryPersistence() {
 		return announcementsDeliveryPersistence;
 	}
 
@@ -382,9 +352,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 */
 	public void setAnnouncementsDeliveryPersistence(
 		AnnouncementsDeliveryPersistence announcementsDeliveryPersistence) {
-
-		this.announcementsDeliveryPersistence =
-			announcementsDeliveryPersistence;
+		this.announcementsDeliveryPersistence = announcementsDeliveryPersistence;
 	}
 
 	/**
@@ -392,9 +360,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -404,9 +370,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -415,9 +379,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -428,7 +390,6 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -469,8 +430,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.announcements.kernel.model.AnnouncementsDelivery",
+		persistedModelLocalServiceRegistry.register("com.liferay.announcements.kernel.model.AnnouncementsDelivery",
 			announcementsDeliveryLocalService);
 	}
 
@@ -504,16 +464,15 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource =
-				announcementsDeliveryPersistence.getDataSource();
+			DataSource dataSource = announcementsDeliveryPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -523,32 +482,17 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
-	protected AnnouncementsDeliveryLocalService
-		announcementsDeliveryLocalService;
-
+	protected AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
 	@BeanReference(type = AnnouncementsDeliveryPersistence.class)
 	protected AnnouncementsDeliveryPersistence announcementsDeliveryPersistence;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
-
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class ResourcePermissionCacheModel
-	implements CacheModel<ResourcePermission>, Externalizable, MVCCModel {
-
+public class ResourcePermissionCacheModel implements CacheModel<ResourcePermission>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,13 +47,10 @@ public class ResourcePermissionCacheModel
 			return false;
 		}
 
-		ResourcePermissionCacheModel resourcePermissionCacheModel =
-			(ResourcePermissionCacheModel)obj;
+		ResourcePermissionCacheModel resourcePermissionCacheModel = (ResourcePermissionCacheModel)obj;
 
-		if ((resourcePermissionId ==
-				resourcePermissionCacheModel.resourcePermissionId) &&
-			(mvccVersion == resourcePermissionCacheModel.mvccVersion)) {
-
+		if ((resourcePermissionId == resourcePermissionCacheModel.resourcePermissionId) &&
+				(mvccVersion == resourcePermissionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -110,8 +107,7 @@ public class ResourcePermissionCacheModel
 
 	@Override
 	public ResourcePermission toEntityModel() {
-		ResourcePermissionImpl resourcePermissionImpl =
-			new ResourcePermissionImpl();
+		ResourcePermissionImpl resourcePermissionImpl = new ResourcePermissionImpl();
 
 		resourcePermissionImpl.setMvccVersion(mvccVersion);
 		resourcePermissionImpl.setResourcePermissionId(resourcePermissionId);
@@ -168,7 +164,8 @@ public class ResourcePermissionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(resourcePermissionId);
@@ -213,5 +210,4 @@ public class ResourcePermissionCacheModel
 	public long ownerId;
 	public long actionIds;
 	public boolean viewActionId;
-
 }

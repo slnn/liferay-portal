@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class DLFolderSoap implements Serializable {
-
 	public static DLFolderSoap toSoapModel(DLFolder model) {
 		DLFolderSoap soapModel = new DLFolderSoap();
 
@@ -89,8 +88,7 @@ public class DLFolderSoap implements Serializable {
 	}
 
 	public static DLFolderSoap[] toSoapModels(List<DLFolder> models) {
-		List<DLFolderSoap> soapModels = new ArrayList<DLFolderSoap>(
-			models.size());
+		List<DLFolderSoap> soapModels = new ArrayList<DLFolderSoap>(models.size());
 
 		for (DLFolder model : models) {
 			soapModels.add(toSoapModel(model));
@@ -325,5 +323,4 @@ public class DLFolderSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

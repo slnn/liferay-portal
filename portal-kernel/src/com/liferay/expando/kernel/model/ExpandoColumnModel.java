@@ -32,9 +32,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface ExpandoColumnModel
-	extends BaseModel<ExpandoColumn>, ShardedModel {
-
+public interface ExpandoColumnModel extends BaseModel<ExpandoColumn>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -157,5 +156,4 @@ public interface ExpandoColumnModel
 	 * @param typeSettings the type settings of this expando column
 	 */
 	public void setTypeSettings(String typeSettings);
-
 }

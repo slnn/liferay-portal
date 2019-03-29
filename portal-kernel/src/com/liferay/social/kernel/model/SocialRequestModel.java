@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface SocialRequestModel
-	extends AttachedModel, BaseModel<SocialRequest>, ShardedModel {
-
+public interface SocialRequestModel extends AttachedModel,
+	BaseModel<SocialRequest>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -283,5 +282,4 @@ public interface SocialRequestModel
 	 * @param status the status of this social request
 	 */
 	public void setStatus(int status);
-
 }

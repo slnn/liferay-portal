@@ -31,10 +31,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ClassNameWrapper
-	extends BaseModelWrapper<ClassName>
+public class ClassNameWrapper extends BaseModelWrapper<ClassName>
 	implements ClassName, ModelWrapper<ClassName> {
-
 	public ClassNameWrapper(ClassName className) {
 		super(className);
 	}
@@ -72,50 +70,50 @@ public class ClassNameWrapper
 	}
 
 	/**
-	 * Returns the fully qualified class name of this class name.
-	 *
-	 * @return the fully qualified class name of this class name
-	 */
+	* Returns the fully qualified class name of this class name.
+	*
+	* @return the fully qualified class name of this class name
+	*/
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	 * Returns the class name ID of this class name.
-	 *
-	 * @return the class name ID of this class name
-	 */
+	* Returns the class name ID of this class name.
+	*
+	* @return the class name ID of this class name
+	*/
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	 * Returns the mvcc version of this class name.
-	 *
-	 * @return the mvcc version of this class name
-	 */
+	* Returns the mvcc version of this class name.
+	*
+	* @return the mvcc version of this class name
+	*/
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	 * Returns the primary key of this class name.
-	 *
-	 * @return the primary key of this class name
-	 */
+	* Returns the primary key of this class name.
+	*
+	* @return the primary key of this class name
+	*/
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	 * Returns the value of this class name.
-	 *
-	 * @return the value of this class name
-	 */
+	* Returns the value of this class name.
+	*
+	* @return the value of this class name
+	*/
 	@Override
 	public String getValue() {
 		return model.getValue();
@@ -132,40 +130,40 @@ public class ClassNameWrapper
 	}
 
 	/**
-	 * Sets the class name ID of this class name.
-	 *
-	 * @param classNameId the class name ID of this class name
-	 */
+	* Sets the class name ID of this class name.
+	*
+	* @param classNameId the class name ID of this class name
+	*/
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	 * Sets the mvcc version of this class name.
-	 *
-	 * @param mvccVersion the mvcc version of this class name
-	 */
+	* Sets the mvcc version of this class name.
+	*
+	* @param mvccVersion the mvcc version of this class name
+	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	 * Sets the primary key of this class name.
-	 *
-	 * @param primaryKey the primary key of this class name
-	 */
+	* Sets the primary key of this class name.
+	*
+	* @param primaryKey the primary key of this class name
+	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	 * Sets the value of this class name.
-	 *
-	 * @param value the value of this class name
-	 */
+	* Sets the value of this class name.
+	*
+	* @param value the value of this class name
+	*/
 	@Override
 	public void setValue(String value) {
 		model.setValue(value);
@@ -175,5 +173,4 @@ public class ClassNameWrapper
 	protected ClassNameWrapper wrap(ClassName className) {
 		return new ClassNameWrapper(className);
 	}
-
 }

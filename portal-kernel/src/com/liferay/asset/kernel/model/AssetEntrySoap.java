@@ -30,7 +30,6 @@ import java.util.List;
  */
 @ProviderType
 public class AssetEntrySoap implements Serializable {
-
 	public static AssetEntrySoap toSoapModel(AssetEntry model) {
 		AssetEntrySoap soapModel = new AssetEntrySoap();
 
@@ -93,8 +92,7 @@ public class AssetEntrySoap implements Serializable {
 	}
 
 	public static AssetEntrySoap[] toSoapModels(List<AssetEntry> models) {
-		List<AssetEntrySoap> soapModels = new ArrayList<AssetEntrySoap>(
-			models.size());
+		List<AssetEntrySoap> soapModels = new ArrayList<AssetEntrySoap>(models.size());
 
 		for (AssetEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -365,5 +363,4 @@ public class AssetEntrySoap implements Serializable {
 	private int _width;
 	private double _priority;
 	private int _viewCount;
-
 }

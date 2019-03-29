@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -34,9 +35,8 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class ResourceActionCacheModel
-	implements CacheModel<ResourceAction>, Externalizable, MVCCModel {
-
+public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,12 +47,10 @@ public class ResourceActionCacheModel
 			return false;
 		}
 
-		ResourceActionCacheModel resourceActionCacheModel =
-			(ResourceActionCacheModel)obj;
+		ResourceActionCacheModel resourceActionCacheModel = (ResourceActionCacheModel)obj;
 
 		if ((resourceActionId == resourceActionCacheModel.resourceActionId) &&
-			(mvccVersion == resourceActionCacheModel.mvccVersion)) {
-
+				(mvccVersion == resourceActionCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -135,7 +133,8 @@ public class ResourceActionCacheModel
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(resourceActionId);
@@ -162,5 +161,4 @@ public class ResourceActionCacheModel
 	public String name;
 	public String actionId;
 	public long bitwiseValue;
-
 }

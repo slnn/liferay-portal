@@ -24,61 +24,53 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class UserGroupRoleServiceWrapper
-	implements UserGroupRoleService, ServiceWrapper<UserGroupRoleService> {
-
+public class UserGroupRoleServiceWrapper implements UserGroupRoleService,
+	ServiceWrapper<UserGroupRoleService> {
 	public UserGroupRoleServiceWrapper(
 		UserGroupRoleService userGroupRoleService) {
-
 		_userGroupRoleService = userGroupRoleService;
 	}
 
 	@Override
 	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		_userGroupRoleService.addUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	@Override
 	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		_userGroupRoleService.addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	@Override
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		_userGroupRoleService.deleteUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	@Override
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
 		_userGroupRoleService.deleteUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _userGroupRoleService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void updateUserGroupRoles(
-			long userId, long groupId, long[] addedRoleIds,
-			long[] deletedRoleIds)
+	public void updateUserGroupRoles(long userId, long groupId,
+		long[] addedRoleIds, long[] deletedRoleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_userGroupRoleService.updateUserGroupRoles(
-			userId, groupId, addedRoleIds, deletedRoleIds);
+		_userGroupRoleService.updateUserGroupRoles(userId, groupId,
+			addedRoleIds, deletedRoleIds);
 	}
 
 	@Override
@@ -92,5 +84,4 @@ public class UserGroupRoleServiceWrapper
 	}
 
 	private UserGroupRoleService _userGroupRoleService;
-
 }

@@ -44,10 +44,8 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.service.impl.EmailAddressServiceImpl
  * @generated
  */
-public abstract class EmailAddressServiceBaseImpl
-	extends BaseServiceImpl
+public abstract class EmailAddressServiceBaseImpl extends BaseServiceImpl
 	implements EmailAddressService, IdentifiableOSGiService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,9 +57,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the email address local service
 	 */
-	public com.liferay.portal.kernel.service.EmailAddressLocalService
-		getEmailAddressLocalService() {
-
+	public com.liferay.portal.kernel.service.EmailAddressLocalService getEmailAddressLocalService() {
 		return emailAddressLocalService;
 	}
 
@@ -71,9 +67,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 * @param emailAddressLocalService the email address local service
 	 */
 	public void setEmailAddressLocalService(
-		com.liferay.portal.kernel.service.EmailAddressLocalService
-			emailAddressLocalService) {
-
+		com.liferay.portal.kernel.service.EmailAddressLocalService emailAddressLocalService) {
 		this.emailAddressLocalService = emailAddressLocalService;
 	}
 
@@ -91,9 +85,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @param emailAddressService the email address remote service
 	 */
-	public void setEmailAddressService(
-		EmailAddressService emailAddressService) {
-
+	public void setEmailAddressService(EmailAddressService emailAddressService) {
 		this.emailAddressService = emailAddressService;
 	}
 
@@ -113,7 +105,6 @@ public abstract class EmailAddressServiceBaseImpl
 	 */
 	public void setEmailAddressPersistence(
 		EmailAddressPersistence emailAddressPersistence) {
-
 		this.emailAddressPersistence = emailAddressPersistence;
 	}
 
@@ -122,9 +113,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -134,9 +123,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -145,9 +132,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -157,9 +142,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -168,9 +151,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService
-		getClassNameService() {
-
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -181,7 +162,6 @@ public abstract class EmailAddressServiceBaseImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
-
 		this.classNameService = classNameService;
 	}
 
@@ -201,7 +181,6 @@ public abstract class EmailAddressServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
-
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -210,9 +189,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the list type local service
 	 */
-	public com.liferay.portal.kernel.service.ListTypeLocalService
-		getListTypeLocalService() {
-
+	public com.liferay.portal.kernel.service.ListTypeLocalService getListTypeLocalService() {
 		return listTypeLocalService;
 	}
 
@@ -222,9 +199,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 * @param listTypeLocalService the list type local service
 	 */
 	public void setListTypeLocalService(
-		com.liferay.portal.kernel.service.ListTypeLocalService
-			listTypeLocalService) {
-
+		com.liferay.portal.kernel.service.ListTypeLocalService listTypeLocalService) {
 		this.listTypeLocalService = listTypeLocalService;
 	}
 
@@ -233,9 +208,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the list type remote service
 	 */
-	public com.liferay.portal.kernel.service.ListTypeService
-		getListTypeService() {
-
+	public com.liferay.portal.kernel.service.ListTypeService getListTypeService() {
 		return listTypeService;
 	}
 
@@ -246,7 +219,6 @@ public abstract class EmailAddressServiceBaseImpl
 	 */
 	public void setListTypeService(
 		com.liferay.portal.kernel.service.ListTypeService listTypeService) {
-
 		this.listTypeService = listTypeService;
 	}
 
@@ -264,9 +236,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @param listTypePersistence the list type persistence
 	 */
-	public void setListTypePersistence(
-		ListTypePersistence listTypePersistence) {
-
+	public void setListTypePersistence(ListTypePersistence listTypePersistence) {
 		this.listTypePersistence = listTypePersistence;
 	}
 
@@ -275,9 +245,7 @@ public abstract class EmailAddressServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -288,7 +256,6 @@ public abstract class EmailAddressServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
 		this.userLocalService = userLocalService;
 	}
 
@@ -308,7 +275,6 @@ public abstract class EmailAddressServiceBaseImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
-
 		this.userService = userService;
 	}
 
@@ -386,8 +352,8 @@ public abstract class EmailAddressServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -396,66 +362,32 @@ public abstract class EmailAddressServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.EmailAddressLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.EmailAddressLocalService
-		emailAddressLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.EmailAddressLocalService.class)
+	protected com.liferay.portal.kernel.service.EmailAddressLocalService emailAddressLocalService;
 	@BeanReference(type = EmailAddressService.class)
 	protected EmailAddressService emailAddressService;
-
 	@BeanReference(type = EmailAddressPersistence.class)
 	protected EmailAddressPersistence emailAddressPersistence;
-
-	@BeanReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
-	protected com.liferay.counter.kernel.service.CounterLocalService
-		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ClassNameService.class
-	)
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ListTypeLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ListTypeLocalService
-		listTypeLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ListTypeService.class
-	)
+	@BeanReference(type = com.liferay.portal.kernel.service.ListTypeLocalService.class)
+	protected com.liferay.portal.kernel.service.ListTypeLocalService listTypeLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ListTypeService.class)
 	protected com.liferay.portal.kernel.service.ListTypeService listTypeService;
-
 	@BeanReference(type = ListTypePersistence.class)
 	protected ListTypePersistence listTypePersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-
 }

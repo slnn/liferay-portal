@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -44,12 +45,9 @@ import java.util.Map;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface StagingService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,48 +60,41 @@ public interface StagingService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRemoteLayout(
-			String uuid, long groupId, boolean privateLayout)
-		throws PortalException;
+	public boolean hasRemoteLayout(String uuid, long groupId,
+		boolean privateLayout) throws PortalException;
 
-	public void propagateExportImportLifecycleEvent(
-			int code, int processFlag, String processId,
-			List<Serializable> arguments)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public MissingReferences publishStagingRequest(
-			long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException;
-
-	public MissingReferences publishStagingRequest(
-			long stagingRequestId,
-			ExportImportConfiguration exportImportConfiguration)
-		throws PortalException;
-
-	public void updateStagingRequest(
-			long stagingRequestId, String fileName, byte[] bytes)
+	public void propagateExportImportLifecycleEvent(int code, int processFlag,
+		String processId, List<Serializable> arguments)
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #publishStagingRequest(long, boolean, Map)}
-	 */
+	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	*/
 	@Deprecated
-	public MissingReferences validateStagingRequest(
-			long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
+	public MissingReferences publishStagingRequest(long stagingRequestId,
+		boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException;
 
+	public MissingReferences publishStagingRequest(long stagingRequestId,
+		ExportImportConfiguration exportImportConfiguration)
+		throws PortalException;
+
+	public void updateStagingRequest(long stagingRequestId, String fileName,
+		byte[] bytes) throws PortalException;
+
+	/**
+	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	#publishStagingRequest(long, boolean, Map)}
+	*/
+	@Deprecated
+	public MissingReferences validateStagingRequest(long stagingRequestId,
+		boolean privateLayout, Map<String, String[]> parameterMap)
+		throws PortalException;
 }

@@ -32,9 +32,8 @@ import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PowwowServerBaseImpl
-	extends PowwowServerModelImpl implements PowwowServer {
-
+public abstract class PowwowServerBaseImpl extends PowwowServerModelImpl
+	implements PowwowServer {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,5 +48,4 @@ public abstract class PowwowServerBaseImpl
 			PowwowServerLocalServiceUtil.updatePowwowServer(this);
 		}
 	}
-
 }
