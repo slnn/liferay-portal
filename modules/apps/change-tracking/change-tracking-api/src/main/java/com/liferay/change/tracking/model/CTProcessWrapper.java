@@ -155,7 +155,9 @@ public class CTProcessWrapper
 	}
 
 	@Override
-	public int getStatus() {
+	public int getStatus()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getStatus();
 	}
 
