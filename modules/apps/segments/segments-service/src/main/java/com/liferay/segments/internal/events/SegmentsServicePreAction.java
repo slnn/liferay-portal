@@ -15,7 +15,6 @@
 package com.liferay.segments.internal.events;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -33,15 +31,10 @@ import com.liferay.segments.context.Context;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,7 +72,7 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsServiceConfiguration.class, properties);
 	}
 
-	protected void doRun(HttpServletRequest request) throws PortalException {
+	protected void doRun(HttpServletRequest request) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -88,12 +81,8 @@ public class SegmentsServicePreAction extends Action {
 		}
 
 		long[] segmentsEntryIds = null;
-		long[] segmentsExperienceIds = null;
 
 		Layout layout = themeDisplay.getLayout();
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
 
 		if (_segmentsServiceConfiguration.segmentationEnabled() &&
 			!layout.isTypeControlPanel()) {
@@ -103,11 +92,6 @@ public class SegmentsServicePreAction extends Action {
 
 				segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 					User.class.getName(), themeDisplay.getUserId(), context);
-
-				segmentsExperienceIds = _getSegmentsExperienceIds(
-					layout.getGroupId(), segmentsEntryIds, classNameId,
-					layout.getPrimaryKey());
-
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
@@ -125,45 +109,12 @@ public class SegmentsServicePreAction extends Action {
 			segmentsEntryIds = new long[] {segmentsEntry.getSegmentsEntryId()};
 		}
 
-		if (segmentsExperienceIds == null) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
-					layout.getGroupId(), classNameId, layout.getPrimaryKey(),
-					true);
-
-			segmentsExperienceIds = new long[] {
-				segmentsExperience.getSegmentsExperienceId()
-			};
-		}
-
 		request.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
-		request.setAttribute(
-			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS, segmentsExperienceIds);
-	}
-
-	private long[] _getSegmentsExperienceIds(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK)
-		throws PortalException {
-
-		List<SegmentsExperience> segmentsExperiences =
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, segmentsEntryIds, classNameId, classPK, true, true,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
-
-		return stream.mapToLong(
-			SegmentsExperienceModel::getSegmentsExperienceId
-		).toArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsServicePreAction.class);
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;
@@ -173,9 +124,6 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private SegmentsServiceConfiguration _segmentsServiceConfiguration;
 
