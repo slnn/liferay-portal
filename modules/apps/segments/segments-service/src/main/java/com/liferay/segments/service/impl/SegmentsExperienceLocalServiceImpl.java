@@ -296,7 +296,7 @@ public class SegmentsExperienceLocalServiceImpl
 		throws PortalException {
 
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
-			_getResourceBundleLoader(), "default-experience-name");
+			_getResourceBundleLoader(), "default-experience");
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -86,7 +86,7 @@ public class AddDefaultSegmentsEntryPortalInstanceLifecycleListener
 		}
 
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
-			_resourceBundleLoader, "default-segment-name");
+			_resourceBundleLoader, "default-segment");
 
 		_segmentsEntryLocalService.addSegmentsEntry(
 			nameMap, Collections.emptyMap(), true, StringPool.BLANK,
