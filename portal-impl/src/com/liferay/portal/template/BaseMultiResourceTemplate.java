@@ -60,13 +60,13 @@ public abstract class BaseMultiResourceTemplate extends BaseTemplate {
 
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
-		if (errorTemplateResource == null) {
-			try {
-				processTemplates(templateResources, writer);
+		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
 
-				return;
-			}
-			catch (Exception e) {
+		try {
+			doProcessTemplate(writer);
+		}
+		catch (Exception e) {
+			if (errorTemplateResource == null) {
 				StringBuilder sb = new StringBuilder();
 
 				for (TemplateResource templateResource : templateResources) {
@@ -76,14 +76,7 @@ public abstract class BaseMultiResourceTemplate extends BaseTemplate {
 
 				throw new TemplateException("Unable to process templates", e);
 			}
-		}
 
-		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
-
-		try {
-			doProcessTemplate(writer);
-		}
-		catch (Exception e) {
 			put(TemplateConstants.WRITER, writer);
 
 			handleException(e, writer);
