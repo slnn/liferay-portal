@@ -130,23 +130,6 @@ public class XSLTemplate implements Template {
 
 		Transformer transformer = null;
 
-		if (_errorTemplateResource == null) {
-			try {
-				transformer = _getTransformer(_xslTemplateResource);
-
-				transformer.transform(
-					_xmlStreamSource, new StreamResult(writer));
-
-				return;
-			}
-			catch (Exception e) {
-				throw new TemplateException(
-					"Unable to process XSL template " +
-						_xslTemplateResource.getTemplateId(),
-					e);
-			}
-		}
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		transformer = _getTransformer(_xslTemplateResource);
@@ -212,6 +195,13 @@ public class XSLTemplate implements Template {
 			doProcessTemplate(writer);
 		}
 		catch (Exception e1) {
+			if (_errorTemplateResource == null) {
+				throw new TemplateException(
+					"Unable to process XSL template " +
+						_xslTemplateResource.getTemplateId(),
+					e1);
+			}
+
 			Transformer errorTransformer = _getTransformer(
 				_errorTemplateResource);
 

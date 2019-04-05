@@ -64,26 +64,19 @@ public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
-		if (errorTemplateResource == null) {
-			try {
-				processTemplate(templateResource, writer);
-
-				return;
-			}
-			catch (Exception e) {
-				throw new TemplateException(
-					"Unable to process template " +
-						templateResource.getTemplateId(),
-					e);
-			}
-		}
-
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
 
 		try {
 			doProcessTemplate(writer);
 		}
 		catch (Exception e) {
+			if (errorTemplateResource == null) {
+				throw new TemplateException(
+					"Unable to process template " +
+						templateResource.getTemplateId(),
+					e);
+			}
+
 			put(TemplateConstants.WRITER, writer);
 
 			handleException(e, writer);
