@@ -171,4 +171,6 @@ public class CTJournalArticleServiceWrapper
 	@Reference
 	private UserLocalService _userLocalService;
 
+	@Reference
+	private JournalArticleService _journalArticleService;
 }
