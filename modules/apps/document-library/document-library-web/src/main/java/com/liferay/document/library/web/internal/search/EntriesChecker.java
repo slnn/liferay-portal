@@ -70,6 +70,40 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String primaryKey) {
 
+		String checkBoxRowIds = getEntryRowIds();
+
+		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
+		String checkBoxPostOnClick =
+			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
+
+		return getRowCheckBox(
+			httpServletRequest, checked, disabled,
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
+				getName(primaryKey),
+			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
+	}
+
+	protected String getEntryRowIds() {
+		StringBundler sb = new StringBundler(13);
+
+		sb.append("['");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append(RowChecker.ROW_IDS);
+		sb.append(_SIMPLE_NAME_FOLDER);
+		sb.append("', '");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append(RowChecker.ROW_IDS);
+		sb.append(_SIMPLE_NAME_DL_FILE_SHORTCUT);
+		sb.append("', '");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append(RowChecker.ROW_IDS);
+		sb.append(_SIMPLE_NAME_FILE_ENTRY);
+		sb.append("']");
+
+		return sb.toString();
+	}
+
+	protected String getName(String primaryKey) {
 		FileEntry fileEntry = null;
 		FileShortcut fileShortcut = null;
 		Folder folder = null;
@@ -117,36 +151,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			name = _SIMPLE_NAME_FOLDER;
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
-
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-		String checkBoxPostOnClick =
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
-
-		return getRowCheckBox(
-			httpServletRequest, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
-	}
-
-	protected String getEntryRowIds() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("['");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append(RowChecker.ROW_IDS);
-		sb.append(_SIMPLE_NAME_FOLDER);
-		sb.append("', '");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append(RowChecker.ROW_IDS);
-		sb.append(_SIMPLE_NAME_DL_FILE_SHORTCUT);
-		sb.append("', '");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append(RowChecker.ROW_IDS);
-		sb.append(_SIMPLE_NAME_FILE_ENTRY);
-		sb.append("']");
-
-		return sb.toString();
+		return name;
 	}
 
 	private static final String _SIMPLE_NAME_DL_FILE_SHORTCUT =

@@ -44,6 +44,12 @@ entriesChecker.setCssClass("entry-selector");
 
 entriesChecker.setRememberCheckBoxStateURLRegex(dlAdminDisplayContext.getRememberCheckBoxStateURLRegex());
 
+FolderEntriesChecker folderEntriesChecker = new FolderEntriesChecker(liferayPortletRequest, liferayPortletResponse);
+
+folderEntriesChecker.setCssClass("entry-selector");
+
+folderEntriesChecker.setRememberCheckBoxStateURLRegex(dlAdminDisplayContext.getRememberCheckBoxStateURLRegex());
+
 EntriesMover entriesMover = new EntriesMover(dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
@@ -349,7 +355,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 					<%
 					if (dlSearchContainer.getRowChecker() == null) {
-						dlSearchContainer.setRowChecker(entriesChecker);
+						dlSearchContainer.setRowChecker(folderEntriesChecker);
 					}
 
 					boolean draggable = false;
@@ -410,7 +416,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									actionJsp="/document_library/folder_action.jsp"
 									actionJspServletContext="<%= application %>"
 									resultRow="<%= row %>"
-									rowChecker="<%= entriesChecker %>"
+									rowChecker="<%= folderEntriesChecker %>"
 									text="<%= curFolder.getName() %>"
 									url="<%= rowURL.toString() %>"
 								>
