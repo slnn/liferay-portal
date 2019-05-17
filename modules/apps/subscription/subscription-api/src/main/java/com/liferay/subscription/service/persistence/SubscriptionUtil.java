@@ -995,6 +995,209 @@ public class SubscriptionUtil {
 	}
 
 	/**
+	 * Returns all the subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @return the matching subscriptions
+	 */
+	public static List<Subscription> findByC_U_C(
+		long companyId, long userId, long classNameId) {
+
+		return getPersistence().findByC_U_C(companyId, userId, classNameId);
+	}
+
+	/**
+	 * Returns a range of all the subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SubscriptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of subscriptions
+	 * @param end the upper bound of the range of subscriptions (not inclusive)
+	 * @return the range of matching subscriptions
+	 */
+	public static List<Subscription> findByC_U_C(
+		long companyId, long userId, long classNameId, int start, int end) {
+
+		return getPersistence().findByC_U_C(
+			companyId, userId, classNameId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SubscriptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of subscriptions
+	 * @param end the upper bound of the range of subscriptions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching subscriptions
+	 */
+	public static List<Subscription> findByC_U_C(
+		long companyId, long userId, long classNameId, int start, int end,
+		OrderByComparator<Subscription> orderByComparator) {
+
+		return getPersistence().findByC_U_C(
+			companyId, userId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SubscriptionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of subscriptions
+	 * @param end the upper bound of the range of subscriptions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching subscriptions
+	 */
+	public static List<Subscription> findByC_U_C(
+		long companyId, long userId, long classNameId, int start, int end,
+		OrderByComparator<Subscription> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByC_U_C(
+			companyId, userId, classNameId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first subscription in the ordered set where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching subscription
+	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
+	 */
+	public static Subscription findByC_U_C_First(
+			long companyId, long userId, long classNameId,
+			OrderByComparator<Subscription> orderByComparator)
+		throws com.liferay.subscription.exception.NoSuchSubscriptionException {
+
+		return getPersistence().findByC_U_C_First(
+			companyId, userId, classNameId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first subscription in the ordered set where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
+	 */
+	public static Subscription fetchByC_U_C_First(
+		long companyId, long userId, long classNameId,
+		OrderByComparator<Subscription> orderByComparator) {
+
+		return getPersistence().fetchByC_U_C_First(
+			companyId, userId, classNameId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last subscription in the ordered set where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching subscription
+	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
+	 */
+	public static Subscription findByC_U_C_Last(
+			long companyId, long userId, long classNameId,
+			OrderByComparator<Subscription> orderByComparator)
+		throws com.liferay.subscription.exception.NoSuchSubscriptionException {
+
+		return getPersistence().findByC_U_C_Last(
+			companyId, userId, classNameId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last subscription in the ordered set where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
+	 */
+	public static Subscription fetchByC_U_C_Last(
+		long companyId, long userId, long classNameId,
+		OrderByComparator<Subscription> orderByComparator) {
+
+		return getPersistence().fetchByC_U_C_Last(
+			companyId, userId, classNameId, orderByComparator);
+	}
+
+	/**
+	 * Returns the subscriptions before and after the current subscription in the ordered set where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param subscriptionId the primary key of the current subscription
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next subscription
+	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
+	 */
+	public static Subscription[] findByC_U_C_PrevAndNext(
+			long subscriptionId, long companyId, long userId, long classNameId,
+			OrderByComparator<Subscription> orderByComparator)
+		throws com.liferay.subscription.exception.NoSuchSubscriptionException {
+
+		return getPersistence().findByC_U_C_PrevAndNext(
+			subscriptionId, companyId, userId, classNameId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 */
+	public static void removeByC_U_C(
+		long companyId, long userId, long classNameId) {
+
+		getPersistence().removeByC_U_C(companyId, userId, classNameId);
+	}
+
+	/**
+	 * Returns the number of subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching subscriptions
+	 */
+	public static int countByC_U_C(
+		long companyId, long userId, long classNameId) {
+
+		return getPersistence().countByC_U_C(companyId, userId, classNameId);
+	}
+
+	/**
 	 * Returns all the subscriptions where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param companyId the company ID

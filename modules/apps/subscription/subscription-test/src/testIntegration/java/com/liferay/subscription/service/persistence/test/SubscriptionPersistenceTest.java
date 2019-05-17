@@ -217,6 +217,15 @@ public class SubscriptionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_U_C() throws Exception {
+		_persistence.countByC_U_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_U_C(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_C() throws Exception {
 		_persistence.countByC_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
