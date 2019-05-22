@@ -107,7 +107,22 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 </aui:script>
 
 <%
-MBThreadFlagLocalServiceUtil.addThreadFlag(themeDisplay.getUserId(), thread, new ServiceContext());
+long threadFlagModifiedTime = ParamUtil.getLong(request, "threadFlagModifiedTime");
+
+if (threadFlagModifiedTime > 0) {
+	Date lastPostDate = thread.getLastPostDate();
+
+	if (threadFlagModifiedTime < lastPostDate.getTime()) {
+		MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDisplay.getUserId(), thread);
+
+		threadFlag.setModifiedDate(lastPostDate);
+
+		MBThreadFlagLocalServiceUtil.updateMBThreadFlag(threadFlag);
+	}
+}
+else {
+	MBThreadFlagLocalServiceUtil.addThreadFlag(themeDisplay.getUserId(), thread, new ServiceContext());
+}
 
 PortalUtil.setPageSubtitle(message.getSubject(), request);
 PortalUtil.setPageDescription(message.getSubject(), request);

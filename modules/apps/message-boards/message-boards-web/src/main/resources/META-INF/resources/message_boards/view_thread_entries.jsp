@@ -40,17 +40,40 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 			row.setSkip(true);
 		}
 
+		boolean readThread = false;
+		long threadFlagModifiedTime = 0;
+
 		if (message != null) {
 			message = message.toEscapedModel();
 
 			row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+
+			if (themeDisplay.isSignedIn()) {
+				MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDisplay.getUserId(), thread);
+
+				if (threadFlag != null) {
+					Date threadFlagModifiedDate = threadFlag.getModifiedDate();
+
+					threadFlagModifiedTime = threadFlagModifiedDate.getTime();
+
+					Date lastPostDate = thread.getLastPostDate();
+
+					if (threadFlagModifiedTime < lastPostDate.getTime()) {
+						readThread = true;
+					}
+				}
+				else {
+					readThread = true;
+				}
+			}
 		}
 		%>
 
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 			<portlet:param name="messageId" value="<%= (message != null) ? String.valueOf(message.getMessageId()) : String.valueOf(MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) %>" />
+			<portlet:param name="threadFlagModifiedTime" value="<%= String.valueOf(threadFlagModifiedTime) %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container-column-text>
@@ -66,7 +89,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 				<aui:a href="<%= rowURL.toString() %>">
 					<c:if test="<%= message != null %>">
 						<c:choose>
-							<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
+							<c:when test="<%= readThread %>">
 								<strong><%= message.getSubject() %></strong>
 							</c:when>
 							<c:otherwise>
