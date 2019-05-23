@@ -438,11 +438,11 @@ public class SubscriptionLocalServiceImpl
 	public boolean isSubscribed(
 		long companyId, long userId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		if (subscriptionPersistence.countByU_C(userId, classNameId) == 0) {
+		if (subscriptionPersistence.countByUserId(userId) == 0) {
 			return false;
 		}
+
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
 			companyId, userId, classNameId, classPK);

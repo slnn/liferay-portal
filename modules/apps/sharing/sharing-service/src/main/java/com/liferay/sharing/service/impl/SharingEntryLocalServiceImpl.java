@@ -610,6 +610,10 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId, long classPK,
 		SharingEntryAction sharingEntryAction) {
 
+		if (sharingEntryPersistence.countByUserId(toUserId) == 0) {
+			return false;
+		}
+
 		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByTU_C(
 			toUserId, classNameId);
 
