@@ -52,7 +52,6 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 			row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
-            messageInfo += thread.getCategoryId() + "," + thread.getThreadId() + "," + thread.getRootMessageId() + "|";
 
 			if (themeDisplay.isSignedIn()) {
 				MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDisplay.getUserId(), thread);
@@ -72,6 +71,8 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 					readThread = true;
 				}
 			}
+
+			messageInfo += thread.getCategoryId() + "," + thread.getThreadId() + "," + thread.getRootMessageId() + "," + String.valueOf(threadFlagModifiedTime) + "|";
 		}
 		%>
 
