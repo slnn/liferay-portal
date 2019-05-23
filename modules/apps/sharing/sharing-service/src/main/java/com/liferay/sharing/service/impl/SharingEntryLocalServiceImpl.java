@@ -610,7 +610,7 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId, long classPK,
 		SharingEntryAction sharingEntryAction) {
 
-		if (sharingEntryPersistence.countByUserId(toUserId) == 0) {
+		if (sharingEntryPersistence.countByToUserId(toUserId) == 0) {
 			return false;
 		}
 
