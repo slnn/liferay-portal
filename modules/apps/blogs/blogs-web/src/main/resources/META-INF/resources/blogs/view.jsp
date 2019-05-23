@@ -73,7 +73,14 @@ else {
 
 	searchContainer.setTotal(total);
 
-	results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, status, searchContainer.getStart(), searchContainer.getEnd());
+	results = BlogsEntryLocalServiceUtil.getGroupEntries(scopeGroupId,
+		new com.liferay.portal.kernel.dao.orm.QueryDefinition(status,searchContainer.getStart(),searchContainer.getEnd(),
+			new com.liferay.portal.kernel.util.OrderByComparator() {
+				public int compare(Object obj1, Object obj2) {return 0;}
+				public String getOrderBy() {return "displayDate ASC";}
+				public String[] getOrderByFields() {
+				String[] orderByFields = {"displayDate"};
+				return orderByFields;}}));
 }
 
 searchContainer.setResults(results);

@@ -18,11 +18,14 @@
 
 <%
 SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-threadEntriesSearchContainer");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/message_boards/view");
 %>
 
 <liferay-ui:search-container
 	searchContainer="<%= entriesSearchContainer %>"
 >
+<%String messageInfo = ""; %>
+
 	<liferay-ui:search-container-row
 		className="Object"
 		escapedModel="<%= true %>"
@@ -32,6 +35,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 		<%@ include file="/message_boards/cast_result.jspf" %>
 
 		<%
+        do {
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
 
 		if (message == null) {
@@ -48,6 +52,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 			row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+            messageInfo += thread.getCategoryId() + "," + thread.getThreadId() + "," + thread.getRootMessageId() + "|";
 
 			if (themeDisplay.isSignedIn()) {
 				MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDisplay.getUserId(), thread);
@@ -199,8 +204,12 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 				path="/message_boards/message_action.jsp"
 			/>
 		</c:if>
+        <%} while ((messageInfo.length() == 0) && mvcRenderCommandName.equals("/message_boards/view_recent_posts")); %>
 	</liferay-ui:search-container-row>
 
+    <c:if test="<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts")%>">
+		<p><%= "@@@" + messageInfo.substring(0, messageInfo.length() - 1) + "$$$"%></p>
+	</c:if>
 	<liferay-ui:search-iterator
 		displayStyle="descriptive"
 		markupView="lexicon"

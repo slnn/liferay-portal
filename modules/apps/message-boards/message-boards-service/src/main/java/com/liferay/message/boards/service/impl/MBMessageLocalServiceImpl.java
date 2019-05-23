@@ -1278,7 +1278,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return new MBMessageDisplayImpl(
-			userId, message, parentMessage, category, thread, status, this,
+			userId, message, parentMessage, category, thread, status, mbMessageLocalService,
 			comparator);
 	}
 
