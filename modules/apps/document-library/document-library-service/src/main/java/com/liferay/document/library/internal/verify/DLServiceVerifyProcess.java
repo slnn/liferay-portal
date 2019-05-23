@@ -236,11 +236,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		checkDLFileEntryMetadata();
-		checkMimeTypes();
-		updateClassNameId();
-		updateFileEntryAssets();
-		updateFolderAssets();
+
 	}
 
 	@Reference(

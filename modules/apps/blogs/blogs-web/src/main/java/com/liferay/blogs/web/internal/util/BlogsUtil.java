@@ -250,6 +250,8 @@ public class BlogsUtil {
 		assetEntryQuery.setExcludeZeroViewCount(false);
 		assetEntryQuery.setOrderByCol1("publishDate");
 		assetEntryQuery.setVisible(Boolean.TRUE);
+		assetEntryQuery.setOrderByCol1("createDate");
+		assetEntryQuery.setOrderByType1("ASC");
 
 		int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
