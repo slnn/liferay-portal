@@ -65,14 +65,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 			<h2 class="h5">
 				<aui:a href="<%= rowURL.toString() %>">
 					<c:if test="<%= message != null %>">
-						<c:choose>
-							<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
-								<strong><%= message.getSubject() %></strong>
-							</c:when>
-							<c:otherwise>
-								<%= message.getSubject() %>
-							</c:otherwise>
-						</c:choose>
+							<%= message.getSubject() %>
 					</c:if>
 				</aui:a>
 
