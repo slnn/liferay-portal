@@ -56,6 +56,8 @@ import com.liferay.registry.ServiceTracker;
 
 import java.io.Writer;
 
+import java.lang.reflect.Constructor;
+
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Map;
@@ -91,6 +93,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockActionRequest;
@@ -219,16 +224,27 @@ public class DLAdminDisplayContextTest {
 	}
 
 	private SearchContainer _getSearchContainer(
-		MockHttpServletRequest mockHttpServletRequest) {
+			MockHttpServletRequest mockHttpServletRequest)
+		throws Exception {
 
 		Object dlAdminDisplayContextProvider = _serviceTracker.getService();
 
+		Bundle webBundle = FrameworkUtil.getBundle(
+			dlAdminDisplayContextProvider.getClass());
+
+		Class<?> clazz = webBundle.loadClass(
+			"com.liferay.document.library.web.internal.display.context.util." +
+				"DLRequestHelper");
+
+		Constructor<?> constructor = clazz.getConstructor(
+			HttpServletRequest.class);
+
+		Object dlRequestHelper = constructor.newInstance(
+			_getHttpServletRequest(mockHttpServletRequest));
+
 		Object dlAdminDisplayContext = ReflectionTestUtil.invoke(
 			dlAdminDisplayContextProvider, "getDLAdminDisplayContext",
-			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class
-			},
-			_getHttpServletRequest(mockHttpServletRequest), null);
+			new Class<?>[] {clazz}, dlRequestHelper);
 
 		return ReflectionTestUtil.invoke(
 			dlAdminDisplayContext, "getSearchContainer", new Class<?>[0], null);
