@@ -156,20 +156,10 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
-
-			status = WorkflowConstants.STATUS_ANY;
-		}
-
 		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
-			status, themeDisplay.getUserId(), true, searchContainer.getStart(),
-			searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			WorkflowConstants.STATUS_APPROVED, themeDisplay.getUserId(), true,
+			searchContainer.getStart(), searchContainer.getEnd(),
+			searchContainer.getOrderByComparator());
 
 		searchContainer.setTotal(
 			MBCategoryServiceUtil.getCategoriesCount(
