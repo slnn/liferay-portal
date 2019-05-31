@@ -454,17 +454,21 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
 		}
+
+		_mbCategoryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mbCategoryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mbCategoryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -475,19 +479,21 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setCategoryId(long categoryId) {
-		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCategoryId) {
-			_setOriginalCategoryId = true;
-
-			_originalCategoryId = _categoryId;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
 		}
+
+		_mbCategoryOriginalValues._columnBitmask |= CATEGORYID_COLUMN_BITMASK;
 
 		_categoryId = categoryId;
 	}
 
 	public long getOriginalCategoryId() {
-		return _originalCategoryId;
+		if (_mbCategoryOriginalValues == null) {
+			return _categoryId;
+		}
+
+		return _mbCategoryOriginalValues._originalCategoryId;
 	}
 
 	@JSON
@@ -498,19 +504,21 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
 		}
+
+		_mbCategoryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbCategoryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbCategoryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -521,19 +529,21 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
 		}
+
+		_mbCategoryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mbCategoryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mbCategoryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -615,19 +625,21 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setParentCategoryId(long parentCategoryId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalParentCategoryId) {
-			_setOriginalParentCategoryId = true;
-
-			_originalParentCategoryId = _parentCategoryId;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
 		}
+
+		_mbCategoryOriginalValues._columnBitmask = -1L;
 
 		_parentCategoryId = parentCategoryId;
 	}
 
 	public long getOriginalParentCategoryId() {
-		return _originalParentCategoryId;
+		if (_mbCategoryOriginalValues == null) {
+			return _parentCategoryId;
+		}
+
+		return _mbCategoryOriginalValues._originalParentCategoryId;
 	}
 
 	@JSON
@@ -643,7 +655,11 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
+		}
+
+		_mbCategoryOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
@@ -732,19 +748,21 @@ public class MBCategoryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_mbCategoryOriginalValues == null) {
+			_mbCategoryOriginalValues = new MBCategoryOriginalValues(this);
 		}
+
+		_mbCategoryOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_mbCategoryOriginalValues == null) {
+			return _status;
+		}
+
+		return _mbCategoryOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1058,7 +1076,11 @@ public class MBCategoryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbCategoryOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbCategoryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1182,33 +1204,9 @@ public class MBCategoryModelImpl
 	public void resetOriginalValues() {
 		MBCategoryModelImpl mbCategoryModelImpl = this;
 
-		mbCategoryModelImpl._originalUuid = mbCategoryModelImpl._uuid;
-
-		mbCategoryModelImpl._originalCategoryId =
-			mbCategoryModelImpl._categoryId;
-
-		mbCategoryModelImpl._setOriginalCategoryId = false;
-
-		mbCategoryModelImpl._originalGroupId = mbCategoryModelImpl._groupId;
-
-		mbCategoryModelImpl._setOriginalGroupId = false;
-
-		mbCategoryModelImpl._originalCompanyId = mbCategoryModelImpl._companyId;
-
-		mbCategoryModelImpl._setOriginalCompanyId = false;
+		mbCategoryModelImpl._mbCategoryOriginalValues = null;
 
 		mbCategoryModelImpl._setModifiedDate = false;
-
-		mbCategoryModelImpl._originalParentCategoryId =
-			mbCategoryModelImpl._parentCategoryId;
-
-		mbCategoryModelImpl._setOriginalParentCategoryId = false;
-
-		mbCategoryModelImpl._originalStatus = mbCategoryModelImpl._status;
-
-		mbCategoryModelImpl._setOriginalStatus = false;
-
-		mbCategoryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1392,28 +1390,43 @@ public class MBCategoryModelImpl
 		return sb.toString();
 	}
 
+	private static class MBCategoryOriginalValues {
+
+		private MBCategoryOriginalValues(
+			MBCategoryModelImpl mbCategoryModelImpl) {
+
+			_originalUuid = mbCategoryModelImpl._uuid;
+			_originalCategoryId = mbCategoryModelImpl._categoryId;
+			_originalGroupId = mbCategoryModelImpl._groupId;
+			_originalCompanyId = mbCategoryModelImpl._companyId;
+			_originalParentCategoryId = mbCategoryModelImpl._parentCategoryId;
+			_originalStatus = mbCategoryModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCategoryId;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentCategoryId;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBCategory>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBCategoryOriginalValues _mbCategoryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _categoryId;
-	private long _originalCategoryId;
-	private boolean _setOriginalCategoryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentCategoryId;
-	private long _originalParentCategoryId;
-	private boolean _setOriginalParentCategoryId;
 	private String _name;
 	private String _description;
 	private String _displayStyle;
@@ -1422,12 +1435,9 @@ public class MBCategoryModelImpl
 	private Date _lastPostDate;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private MBCategory _escapedModel;
 
 }

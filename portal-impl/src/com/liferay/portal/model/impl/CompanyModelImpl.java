@@ -397,17 +397,21 @@ public class CompanyModelImpl
 
 	@Override
 	public void setWebId(String webId) {
-		_columnBitmask |= WEBID_COLUMN_BITMASK;
-
-		if (_originalWebId == null) {
-			_originalWebId = _webId;
+		if (_companyOriginalValues == null) {
+			_companyOriginalValues = new CompanyOriginalValues(this);
 		}
+
+		_companyOriginalValues._columnBitmask |= WEBID_COLUMN_BITMASK;
 
 		_webId = webId;
 	}
 
 	public String getOriginalWebId() {
-		return GetterUtil.getString(_originalWebId);
+		if (_companyOriginalValues == null) {
+			return GetterUtil.getString(_webId);
+		}
+
+		return GetterUtil.getString(_companyOriginalValues._originalWebId);
 	}
 
 	@JSON
@@ -439,17 +443,21 @@ public class CompanyModelImpl
 
 	@Override
 	public void setMx(String mx) {
-		_columnBitmask |= MX_COLUMN_BITMASK;
-
-		if (_originalMx == null) {
-			_originalMx = _mx;
+		if (_companyOriginalValues == null) {
+			_companyOriginalValues = new CompanyOriginalValues(this);
 		}
+
+		_companyOriginalValues._columnBitmask |= MX_COLUMN_BITMASK;
 
 		_mx = mx;
 	}
 
 	public String getOriginalMx() {
-		return GetterUtil.getString(_originalMx);
+		if (_companyOriginalValues == null) {
+			return GetterUtil.getString(_mx);
+		}
+
+		return GetterUtil.getString(_companyOriginalValues._originalMx);
 	}
 
 	@JSON
@@ -476,19 +484,21 @@ public class CompanyModelImpl
 
 	@Override
 	public void setLogoId(long logoId) {
-		_columnBitmask |= LOGOID_COLUMN_BITMASK;
-
-		if (!_setOriginalLogoId) {
-			_setOriginalLogoId = true;
-
-			_originalLogoId = _logoId;
+		if (_companyOriginalValues == null) {
+			_companyOriginalValues = new CompanyOriginalValues(this);
 		}
+
+		_companyOriginalValues._columnBitmask |= LOGOID_COLUMN_BITMASK;
 
 		_logoId = logoId;
 	}
 
 	public long getOriginalLogoId() {
-		return _originalLogoId;
+		if (_companyOriginalValues == null) {
+			return _logoId;
+		}
+
+		return _companyOriginalValues._originalLogoId;
 	}
 
 	@JSON
@@ -505,19 +515,21 @@ public class CompanyModelImpl
 
 	@Override
 	public void setSystem(boolean system) {
-		_columnBitmask |= SYSTEM_COLUMN_BITMASK;
-
-		if (!_setOriginalSystem) {
-			_setOriginalSystem = true;
-
-			_originalSystem = _system;
+		if (_companyOriginalValues == null) {
+			_companyOriginalValues = new CompanyOriginalValues(this);
 		}
+
+		_companyOriginalValues._columnBitmask |= SYSTEM_COLUMN_BITMASK;
 
 		_system = system;
 	}
 
 	public boolean getOriginalSystem() {
-		return _originalSystem;
+		if (_companyOriginalValues == null) {
+			return _system;
+		}
+
+		return _companyOriginalValues._originalSystem;
 	}
 
 	@JSON
@@ -571,7 +583,11 @@ public class CompanyModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_companyOriginalValues == null) {
+			return 0;
+		}
+
+		return _companyOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -674,25 +690,13 @@ public class CompanyModelImpl
 	public void resetOriginalValues() {
 		CompanyModelImpl companyModelImpl = this;
 
-		companyModelImpl._originalWebId = companyModelImpl._webId;
-
-		companyModelImpl._originalMx = companyModelImpl._mx;
-
-		companyModelImpl._originalLogoId = companyModelImpl._logoId;
-
-		companyModelImpl._setOriginalLogoId = false;
-
-		companyModelImpl._originalSystem = companyModelImpl._system;
-
-		companyModelImpl._setOriginalSystem = false;
+		companyModelImpl._companyOriginalValues = null;
 
 		setCompanySecurityBag(null);
 
 		setKeyObj(null);
 
 		setVirtualHostname(null);
-
-		companyModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -817,27 +821,38 @@ public class CompanyModelImpl
 		return sb.toString();
 	}
 
+	private static class CompanyOriginalValues {
+
+		private CompanyOriginalValues(CompanyModelImpl companyModelImpl) {
+			_originalWebId = companyModelImpl._webId;
+			_originalMx = companyModelImpl._mx;
+			_originalLogoId = companyModelImpl._logoId;
+			_originalSystem = companyModelImpl._system;
+		}
+
+		private final String _originalWebId;
+		private final String _originalMx;
+		private final long _originalLogoId;
+		private final boolean _originalSystem;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Company>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private CompanyOriginalValues _companyOriginalValues;
 	private long _mvccVersion;
 	private long _companyId;
 	private long _accountId;
 	private String _webId;
-	private String _originalWebId;
 	private String _key;
 	private String _mx;
-	private String _originalMx;
 	private String _homeURL;
 	private long _logoId;
-	private long _originalLogoId;
-	private boolean _setOriginalLogoId;
 	private boolean _system;
-	private boolean _originalSystem;
-	private boolean _setOriginalSystem;
 	private int _maxUsers;
 	private boolean _active;
-	private long _columnBitmask;
 	private Company _escapedModel;
 
 }

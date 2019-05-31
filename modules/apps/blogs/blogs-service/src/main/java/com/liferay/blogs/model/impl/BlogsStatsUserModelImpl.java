@@ -337,19 +337,22 @@ public class BlogsStatsUserModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_blogsStatsUserOriginalValues == null) {
+			_blogsStatsUserOriginalValues = new BlogsStatsUserOriginalValues(
+				this);
 		}
+
+		_blogsStatsUserOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_blogsStatsUserOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _blogsStatsUserOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -359,19 +362,23 @@ public class BlogsStatsUserModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_blogsStatsUserOriginalValues == null) {
+			_blogsStatsUserOriginalValues = new BlogsStatsUserOriginalValues(
+				this);
 		}
+
+		_blogsStatsUserOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_blogsStatsUserOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _blogsStatsUserOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -381,13 +388,12 @@ public class BlogsStatsUserModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_blogsStatsUserOriginalValues == null) {
+			_blogsStatsUserOriginalValues = new BlogsStatsUserOriginalValues(
+				this);
 		}
+
+		_blogsStatsUserOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -409,7 +415,11 @@ public class BlogsStatsUserModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_blogsStatsUserOriginalValues == null) {
+			return _userId;
+		}
+
+		return _blogsStatsUserOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -419,19 +429,22 @@ public class BlogsStatsUserModelImpl
 
 	@Override
 	public void setEntryCount(int entryCount) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalEntryCount) {
-			_setOriginalEntryCount = true;
-
-			_originalEntryCount = _entryCount;
+		if (_blogsStatsUserOriginalValues == null) {
+			_blogsStatsUserOriginalValues = new BlogsStatsUserOriginalValues(
+				this);
 		}
+
+		_blogsStatsUserOriginalValues._columnBitmask = -1L;
 
 		_entryCount = entryCount;
 	}
 
 	public int getOriginalEntryCount() {
-		return _originalEntryCount;
+		if (_blogsStatsUserOriginalValues == null) {
+			return _entryCount;
+		}
+
+		return _blogsStatsUserOriginalValues._originalEntryCount;
 	}
 
 	@Override
@@ -441,17 +454,23 @@ public class BlogsStatsUserModelImpl
 
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_columnBitmask |= LASTPOSTDATE_COLUMN_BITMASK;
-
-		if (_originalLastPostDate == null) {
-			_originalLastPostDate = _lastPostDate;
+		if (_blogsStatsUserOriginalValues == null) {
+			_blogsStatsUserOriginalValues = new BlogsStatsUserOriginalValues(
+				this);
 		}
+
+		_blogsStatsUserOriginalValues._columnBitmask |=
+			LASTPOSTDATE_COLUMN_BITMASK;
 
 		_lastPostDate = lastPostDate;
 	}
 
 	public Date getOriginalLastPostDate() {
-		return _originalLastPostDate;
+		if (_blogsStatsUserOriginalValues == null) {
+			return _lastPostDate;
+		}
+
+		return _blogsStatsUserOriginalValues._originalLastPostDate;
 	}
 
 	@Override
@@ -485,7 +504,11 @@ public class BlogsStatsUserModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_blogsStatsUserOriginalValues == null) {
+			return 0;
+		}
+
+		return _blogsStatsUserOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -594,30 +617,7 @@ public class BlogsStatsUserModelImpl
 	public void resetOriginalValues() {
 		BlogsStatsUserModelImpl blogsStatsUserModelImpl = this;
 
-		blogsStatsUserModelImpl._originalGroupId =
-			blogsStatsUserModelImpl._groupId;
-
-		blogsStatsUserModelImpl._setOriginalGroupId = false;
-
-		blogsStatsUserModelImpl._originalCompanyId =
-			blogsStatsUserModelImpl._companyId;
-
-		blogsStatsUserModelImpl._setOriginalCompanyId = false;
-
-		blogsStatsUserModelImpl._originalUserId =
-			blogsStatsUserModelImpl._userId;
-
-		blogsStatsUserModelImpl._setOriginalUserId = false;
-
-		blogsStatsUserModelImpl._originalEntryCount =
-			blogsStatsUserModelImpl._entryCount;
-
-		blogsStatsUserModelImpl._setOriginalEntryCount = false;
-
-		blogsStatsUserModelImpl._originalLastPostDate =
-			blogsStatsUserModelImpl._lastPostDate;
-
-		blogsStatsUserModelImpl._columnBitmask = 0;
+		blogsStatsUserModelImpl._blogsStatsUserOriginalValues = null;
 	}
 
 	@Override
@@ -716,30 +716,42 @@ public class BlogsStatsUserModelImpl
 		return sb.toString();
 	}
 
+	private static class BlogsStatsUserOriginalValues {
+
+		private BlogsStatsUserOriginalValues(
+			BlogsStatsUserModelImpl blogsStatsUserModelImpl) {
+
+			_originalGroupId = blogsStatsUserModelImpl._groupId;
+			_originalCompanyId = blogsStatsUserModelImpl._companyId;
+			_originalUserId = blogsStatsUserModelImpl._userId;
+			_originalEntryCount = blogsStatsUserModelImpl._entryCount;
+			_originalLastPostDate = blogsStatsUserModelImpl._lastPostDate;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final int _originalEntryCount;
+		private final Date _originalLastPostDate;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, BlogsStatsUser>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private BlogsStatsUserOriginalValues _blogsStatsUserOriginalValues;
 	private long _statsUserId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private int _entryCount;
-	private int _originalEntryCount;
-	private boolean _setOriginalEntryCount;
 	private Date _lastPostDate;
-	private Date _originalLastPostDate;
 	private int _ratingsTotalEntries;
 	private double _ratingsTotalScore;
 	private double _ratingsAverageScore;
-	private long _columnBitmask;
 	private BlogsStatsUser _escapedModel;
 
 }

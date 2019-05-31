@@ -362,19 +362,22 @@ public class ExpandoColumnModelImpl
 
 	@Override
 	public void setTableId(long tableId) {
-		_columnBitmask |= TABLEID_COLUMN_BITMASK;
-
-		if (!_setOriginalTableId) {
-			_setOriginalTableId = true;
-
-			_originalTableId = _tableId;
+		if (_expandoColumnOriginalValues == null) {
+			_expandoColumnOriginalValues = new ExpandoColumnOriginalValues(
+				this);
 		}
+
+		_expandoColumnOriginalValues._columnBitmask |= TABLEID_COLUMN_BITMASK;
 
 		_tableId = tableId;
 	}
 
 	public long getOriginalTableId() {
-		return _originalTableId;
+		if (_expandoColumnOriginalValues == null) {
+			return _tableId;
+		}
+
+		return _expandoColumnOriginalValues._originalTableId;
 	}
 
 	@JSON
@@ -390,17 +393,22 @@ public class ExpandoColumnModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_expandoColumnOriginalValues == null) {
+			_expandoColumnOriginalValues = new ExpandoColumnOriginalValues(
+				this);
 		}
+
+		_expandoColumnOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_expandoColumnOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_expandoColumnOriginalValues._originalName);
 	}
 
 	@JSON
@@ -447,7 +455,11 @@ public class ExpandoColumnModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_expandoColumnOriginalValues == null) {
+			return 0;
+		}
+
+		return _expandoColumnOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -531,14 +543,7 @@ public class ExpandoColumnModelImpl
 	public void resetOriginalValues() {
 		ExpandoColumnModelImpl expandoColumnModelImpl = this;
 
-		expandoColumnModelImpl._originalTableId =
-			expandoColumnModelImpl._tableId;
-
-		expandoColumnModelImpl._setOriginalTableId = false;
-
-		expandoColumnModelImpl._originalName = expandoColumnModelImpl._name;
-
-		expandoColumnModelImpl._columnBitmask = 0;
+		expandoColumnModelImpl._expandoColumnOriginalValues = null;
 	}
 
 	@Override
@@ -644,20 +649,32 @@ public class ExpandoColumnModelImpl
 		return sb.toString();
 	}
 
+	private static class ExpandoColumnOriginalValues {
+
+		private ExpandoColumnOriginalValues(
+			ExpandoColumnModelImpl expandoColumnModelImpl) {
+
+			_originalTableId = expandoColumnModelImpl._tableId;
+			_originalName = expandoColumnModelImpl._name;
+		}
+
+		private final long _originalTableId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ExpandoColumn>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ExpandoColumnOriginalValues _expandoColumnOriginalValues;
 	private long _columnId;
 	private long _companyId;
 	private long _tableId;
-	private long _originalTableId;
-	private boolean _setOriginalTableId;
 	private String _name;
-	private String _originalName;
 	private int _type;
 	private String _defaultData;
 	private String _typeSettings;
-	private long _columnBitmask;
 	private ExpandoColumn _escapedModel;
 
 }

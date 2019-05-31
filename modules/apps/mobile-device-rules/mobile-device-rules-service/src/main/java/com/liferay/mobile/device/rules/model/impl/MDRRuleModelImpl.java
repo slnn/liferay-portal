@@ -401,17 +401,21 @@ public class MDRRuleModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mdrRuleOriginalValues == null) {
+			_mdrRuleOriginalValues = new MDRRuleOriginalValues(this);
 		}
+
+		_mdrRuleOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mdrRuleOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mdrRuleOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -433,19 +437,21 @@ public class MDRRuleModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mdrRuleOriginalValues == null) {
+			_mdrRuleOriginalValues = new MDRRuleOriginalValues(this);
 		}
+
+		_mdrRuleOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mdrRuleOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mdrRuleOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -456,19 +462,21 @@ public class MDRRuleModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mdrRuleOriginalValues == null) {
+			_mdrRuleOriginalValues = new MDRRuleOriginalValues(this);
 		}
+
+		_mdrRuleOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mdrRuleOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mdrRuleOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -522,7 +530,11 @@ public class MDRRuleModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_mdrRuleOriginalValues == null) {
+			_mdrRuleOriginalValues = new MDRRuleOriginalValues(this);
+		}
+
+		_mdrRuleOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -552,19 +564,21 @@ public class MDRRuleModelImpl
 
 	@Override
 	public void setRuleGroupId(long ruleGroupId) {
-		_columnBitmask |= RULEGROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalRuleGroupId) {
-			_setOriginalRuleGroupId = true;
-
-			_originalRuleGroupId = _ruleGroupId;
+		if (_mdrRuleOriginalValues == null) {
+			_mdrRuleOriginalValues = new MDRRuleOriginalValues(this);
 		}
+
+		_mdrRuleOriginalValues._columnBitmask |= RULEGROUPID_COLUMN_BITMASK;
 
 		_ruleGroupId = ruleGroupId;
 	}
 
 	public long getOriginalRuleGroupId() {
-		return _originalRuleGroupId;
+		if (_mdrRuleOriginalValues == null) {
+			return _ruleGroupId;
+		}
+
+		return _mdrRuleOriginalValues._originalRuleGroupId;
 	}
 
 	@JSON
@@ -828,7 +842,11 @@ public class MDRRuleModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mdrRuleOriginalValues == null) {
+			return 0;
+		}
+
+		return _mdrRuleOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1020,23 +1038,9 @@ public class MDRRuleModelImpl
 	public void resetOriginalValues() {
 		MDRRuleModelImpl mdrRuleModelImpl = this;
 
-		mdrRuleModelImpl._originalUuid = mdrRuleModelImpl._uuid;
-
-		mdrRuleModelImpl._originalGroupId = mdrRuleModelImpl._groupId;
-
-		mdrRuleModelImpl._setOriginalGroupId = false;
-
-		mdrRuleModelImpl._originalCompanyId = mdrRuleModelImpl._companyId;
-
-		mdrRuleModelImpl._setOriginalCompanyId = false;
+		mdrRuleModelImpl._mdrRuleOriginalValues = null;
 
 		mdrRuleModelImpl._setModifiedDate = false;
-
-		mdrRuleModelImpl._originalRuleGroupId = mdrRuleModelImpl._ruleGroupId;
-
-		mdrRuleModelImpl._setOriginalRuleGroupId = false;
-
-		mdrRuleModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1194,26 +1198,37 @@ public class MDRRuleModelImpl
 		return sb.toString();
 	}
 
+	private static class MDRRuleOriginalValues {
+
+		private MDRRuleOriginalValues(MDRRuleModelImpl mdrRuleModelImpl) {
+			_originalUuid = mdrRuleModelImpl._uuid;
+			_originalGroupId = mdrRuleModelImpl._groupId;
+			_originalCompanyId = mdrRuleModelImpl._companyId;
+			_originalRuleGroupId = mdrRuleModelImpl._ruleGroupId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalRuleGroupId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MDRRule>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MDRRuleOriginalValues _mdrRuleOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _ruleId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _ruleGroupId;
-	private long _originalRuleGroupId;
-	private boolean _setOriginalRuleGroupId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;
@@ -1221,7 +1236,6 @@ public class MDRRuleModelImpl
 	private String _type;
 	private String _typeSettings;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private MDRRule _escapedModel;
 
 }

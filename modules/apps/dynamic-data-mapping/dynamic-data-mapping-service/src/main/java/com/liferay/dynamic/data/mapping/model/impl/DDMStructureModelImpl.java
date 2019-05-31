@@ -465,17 +465,21 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ddmStructureOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_ddmStructureOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -497,19 +501,21 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_ddmStructureOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _ddmStructureOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -520,19 +526,21 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ddmStructureOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ddmStructureOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -657,19 +665,22 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setParentStructureId(long parentStructureId) {
-		_columnBitmask |= PARENTSTRUCTUREID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentStructureId) {
-			_setOriginalParentStructureId = true;
-
-			_originalParentStructureId = _parentStructureId;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |=
+			PARENTSTRUCTUREID_COLUMN_BITMASK;
 
 		_parentStructureId = parentStructureId;
 	}
 
 	public long getOriginalParentStructureId() {
-		return _originalParentStructureId;
+		if (_ddmStructureOriginalValues == null) {
+			return _parentStructureId;
+		}
+
+		return _ddmStructureOriginalValues._originalParentStructureId;
 	}
 
 	@JSON
@@ -680,19 +691,22 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_ddmStructureOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _ddmStructureOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -708,17 +722,23 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setStructureKey(String structureKey) {
-		_columnBitmask |= STRUCTUREKEY_COLUMN_BITMASK;
-
-		if (_originalStructureKey == null) {
-			_originalStructureKey = _structureKey;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |=
+			STRUCTUREKEY_COLUMN_BITMASK;
 
 		_structureKey = structureKey;
 	}
 
 	public String getOriginalStructureKey() {
-		return GetterUtil.getString(_originalStructureKey);
+		if (_ddmStructureOriginalValues == null) {
+			return GetterUtil.getString(_structureKey);
+		}
+
+		return GetterUtil.getString(
+			_ddmStructureOriginalValues._originalStructureKey);
 	}
 
 	@JSON
@@ -793,11 +813,11 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
@@ -847,7 +867,11 @@ public class DDMStructureModelImpl
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_ddmStructureOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_ddmStructureOriginalValues._originalName);
 	}
 
 	@JSON
@@ -906,11 +930,12 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void setDescription(String description) {
-		_columnBitmask |= DESCRIPTION_COLUMN_BITMASK;
-
-		if (_originalDescription == null) {
-			_originalDescription = _description;
+		if (_ddmStructureOriginalValues == null) {
+			_ddmStructureOriginalValues = new DDMStructureOriginalValues(this);
 		}
+
+		_ddmStructureOriginalValues._columnBitmask |=
+			DESCRIPTION_COLUMN_BITMASK;
 
 		_description = description;
 	}
@@ -965,7 +990,12 @@ public class DDMStructureModelImpl
 	}
 
 	public String getOriginalDescription() {
-		return GetterUtil.getString(_originalDescription);
+		if (_ddmStructureOriginalValues == null) {
+			return GetterUtil.getString(_description);
+		}
+
+		return GetterUtil.getString(
+			_ddmStructureOriginalValues._originalDescription);
 	}
 
 	@JSON
@@ -1045,7 +1075,11 @@ public class DDMStructureModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmStructureOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmStructureOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1245,42 +1279,13 @@ public class DDMStructureModelImpl
 	public void resetOriginalValues() {
 		DDMStructureModelImpl ddmStructureModelImpl = this;
 
-		ddmStructureModelImpl._originalUuid = ddmStructureModelImpl._uuid;
-
-		ddmStructureModelImpl._originalGroupId = ddmStructureModelImpl._groupId;
-
-		ddmStructureModelImpl._setOriginalGroupId = false;
-
-		ddmStructureModelImpl._originalCompanyId =
-			ddmStructureModelImpl._companyId;
-
-		ddmStructureModelImpl._setOriginalCompanyId = false;
+		ddmStructureModelImpl._ddmStructureOriginalValues = null;
 
 		ddmStructureModelImpl._setModifiedDate = false;
-
-		ddmStructureModelImpl._originalParentStructureId =
-			ddmStructureModelImpl._parentStructureId;
-
-		ddmStructureModelImpl._setOriginalParentStructureId = false;
-
-		ddmStructureModelImpl._originalClassNameId =
-			ddmStructureModelImpl._classNameId;
-
-		ddmStructureModelImpl._setOriginalClassNameId = false;
-
-		ddmStructureModelImpl._originalStructureKey =
-			ddmStructureModelImpl._structureKey;
-
-		ddmStructureModelImpl._originalName = ddmStructureModelImpl._name;
-
-		ddmStructureModelImpl._originalDescription =
-			ddmStructureModelImpl._description;
 
 		setClassName(null);
 
 		setDDMForm(null);
-
-		ddmStructureModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1473,18 +1478,42 @@ public class DDMStructureModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMStructureOriginalValues {
+
+		private DDMStructureOriginalValues(
+			DDMStructureModelImpl ddmStructureModelImpl) {
+
+			_originalUuid = ddmStructureModelImpl._uuid;
+			_originalGroupId = ddmStructureModelImpl._groupId;
+			_originalCompanyId = ddmStructureModelImpl._companyId;
+			_originalParentStructureId =
+				ddmStructureModelImpl._parentStructureId;
+			_originalClassNameId = ddmStructureModelImpl._classNameId;
+			_originalStructureKey = ddmStructureModelImpl._structureKey;
+			_originalName = ddmStructureModelImpl._name;
+			_originalDescription = ddmStructureModelImpl._description;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentStructureId;
+		private final long _originalClassNameId;
+		private final String _originalStructureKey;
+		private final String _originalName;
+		private final String _originalDescription;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMStructure>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMStructureOriginalValues _ddmStructureOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _structureId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private long _versionUserId;
@@ -1493,25 +1522,17 @@ public class DDMStructureModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentStructureId;
-	private long _originalParentStructureId;
-	private boolean _setOriginalParentStructureId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private String _structureKey;
-	private String _originalStructureKey;
 	private String _version;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private String _originalName;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
-	private String _originalDescription;
 	private String _definition;
 	private String _storageType;
 	private int _type;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private DDMStructure _escapedModel;
 
 }

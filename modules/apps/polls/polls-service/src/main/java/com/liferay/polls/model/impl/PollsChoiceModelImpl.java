@@ -398,17 +398,21 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_pollsChoiceOriginalValues == null) {
+			_pollsChoiceOriginalValues = new PollsChoiceOriginalValues(this);
 		}
+
+		_pollsChoiceOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_pollsChoiceOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_pollsChoiceOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -430,19 +434,21 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_pollsChoiceOriginalValues == null) {
+			_pollsChoiceOriginalValues = new PollsChoiceOriginalValues(this);
 		}
+
+		_pollsChoiceOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_pollsChoiceOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _pollsChoiceOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -453,19 +459,21 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_pollsChoiceOriginalValues == null) {
+			_pollsChoiceOriginalValues = new PollsChoiceOriginalValues(this);
 		}
+
+		_pollsChoiceOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_pollsChoiceOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _pollsChoiceOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -547,19 +555,21 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void setQuestionId(long questionId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalQuestionId) {
-			_setOriginalQuestionId = true;
-
-			_originalQuestionId = _questionId;
+		if (_pollsChoiceOriginalValues == null) {
+			_pollsChoiceOriginalValues = new PollsChoiceOriginalValues(this);
 		}
+
+		_pollsChoiceOriginalValues._columnBitmask = -1L;
 
 		_questionId = questionId;
 	}
 
 	public long getOriginalQuestionId() {
-		return _originalQuestionId;
+		if (_pollsChoiceOriginalValues == null) {
+			return _questionId;
+		}
+
+		return _pollsChoiceOriginalValues._originalQuestionId;
 	}
 
 	@JSON
@@ -575,17 +585,21 @@ public class PollsChoiceModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_pollsChoiceOriginalValues == null) {
+			_pollsChoiceOriginalValues = new PollsChoiceOriginalValues(this);
 		}
+
+		_pollsChoiceOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_pollsChoiceOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_pollsChoiceOriginalValues._originalName);
 	}
 
 	@JSON
@@ -714,7 +728,11 @@ public class PollsChoiceModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_pollsChoiceOriginalValues == null) {
+			return 0;
+		}
+
+		return _pollsChoiceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -898,27 +916,9 @@ public class PollsChoiceModelImpl
 	public void resetOriginalValues() {
 		PollsChoiceModelImpl pollsChoiceModelImpl = this;
 
-		pollsChoiceModelImpl._originalUuid = pollsChoiceModelImpl._uuid;
-
-		pollsChoiceModelImpl._originalGroupId = pollsChoiceModelImpl._groupId;
-
-		pollsChoiceModelImpl._setOriginalGroupId = false;
-
-		pollsChoiceModelImpl._originalCompanyId =
-			pollsChoiceModelImpl._companyId;
-
-		pollsChoiceModelImpl._setOriginalCompanyId = false;
+		pollsChoiceModelImpl._pollsChoiceOriginalValues = null;
 
 		pollsChoiceModelImpl._setModifiedDate = false;
-
-		pollsChoiceModelImpl._originalQuestionId =
-			pollsChoiceModelImpl._questionId;
-
-		pollsChoiceModelImpl._setOriginalQuestionId = false;
-
-		pollsChoiceModelImpl._originalName = pollsChoiceModelImpl._name;
-
-		pollsChoiceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1061,32 +1061,45 @@ public class PollsChoiceModelImpl
 		return sb.toString();
 	}
 
+	private static class PollsChoiceOriginalValues {
+
+		private PollsChoiceOriginalValues(
+			PollsChoiceModelImpl pollsChoiceModelImpl) {
+
+			_originalUuid = pollsChoiceModelImpl._uuid;
+			_originalGroupId = pollsChoiceModelImpl._groupId;
+			_originalCompanyId = pollsChoiceModelImpl._companyId;
+			_originalQuestionId = pollsChoiceModelImpl._questionId;
+			_originalName = pollsChoiceModelImpl._name;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalQuestionId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PollsChoice>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PollsChoiceOriginalValues _pollsChoiceOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _choiceId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _questionId;
-	private long _originalQuestionId;
-	private boolean _setOriginalQuestionId;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private PollsChoice _escapedModel;
 
 }

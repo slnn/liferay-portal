@@ -495,13 +495,13 @@ public class OAuth2AuthorizationModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			_oAuth2AuthorizationOriginalValues =
+				new OAuth2AuthorizationOriginalValues(this);
 		}
+
+		_oAuth2AuthorizationOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -523,7 +523,11 @@ public class OAuth2AuthorizationModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			return _userId;
+		}
+
+		return _oAuth2AuthorizationOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -558,19 +562,23 @@ public class OAuth2AuthorizationModelImpl
 
 	@Override
 	public void setOAuth2ApplicationId(long oAuth2ApplicationId) {
-		_columnBitmask |= OAUTH2APPLICATIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalOAuth2ApplicationId) {
-			_setOriginalOAuth2ApplicationId = true;
-
-			_originalOAuth2ApplicationId = _oAuth2ApplicationId;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			_oAuth2AuthorizationOriginalValues =
+				new OAuth2AuthorizationOriginalValues(this);
 		}
+
+		_oAuth2AuthorizationOriginalValues._columnBitmask |=
+			OAUTH2APPLICATIONID_COLUMN_BITMASK;
 
 		_oAuth2ApplicationId = oAuth2ApplicationId;
 	}
 
 	public long getOriginalOAuth2ApplicationId() {
-		return _originalOAuth2ApplicationId;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			return _oAuth2ApplicationId;
+		}
+
+		return _oAuth2AuthorizationOriginalValues._originalOAuth2ApplicationId;
 	}
 
 	@Override
@@ -607,19 +615,24 @@ public class OAuth2AuthorizationModelImpl
 
 	@Override
 	public void setAccessTokenContentHash(long accessTokenContentHash) {
-		_columnBitmask |= ACCESSTOKENCONTENTHASH_COLUMN_BITMASK;
-
-		if (!_setOriginalAccessTokenContentHash) {
-			_setOriginalAccessTokenContentHash = true;
-
-			_originalAccessTokenContentHash = _accessTokenContentHash;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			_oAuth2AuthorizationOriginalValues =
+				new OAuth2AuthorizationOriginalValues(this);
 		}
+
+		_oAuth2AuthorizationOriginalValues._columnBitmask |=
+			ACCESSTOKENCONTENTHASH_COLUMN_BITMASK;
 
 		_accessTokenContentHash = accessTokenContentHash;
 	}
 
 	public long getOriginalAccessTokenContentHash() {
-		return _originalAccessTokenContentHash;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			return _accessTokenContentHash;
+		}
+
+		return _oAuth2AuthorizationOriginalValues.
+			_originalAccessTokenContentHash;
 	}
 
 	@Override
@@ -694,19 +707,24 @@ public class OAuth2AuthorizationModelImpl
 
 	@Override
 	public void setRefreshTokenContentHash(long refreshTokenContentHash) {
-		_columnBitmask |= REFRESHTOKENCONTENTHASH_COLUMN_BITMASK;
-
-		if (!_setOriginalRefreshTokenContentHash) {
-			_setOriginalRefreshTokenContentHash = true;
-
-			_originalRefreshTokenContentHash = _refreshTokenContentHash;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			_oAuth2AuthorizationOriginalValues =
+				new OAuth2AuthorizationOriginalValues(this);
 		}
+
+		_oAuth2AuthorizationOriginalValues._columnBitmask |=
+			REFRESHTOKENCONTENTHASH_COLUMN_BITMASK;
 
 		_refreshTokenContentHash = refreshTokenContentHash;
 	}
 
 	public long getOriginalRefreshTokenContentHash() {
-		return _originalRefreshTokenContentHash;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			return _refreshTokenContentHash;
+		}
+
+		return _oAuth2AuthorizationOriginalValues.
+			_originalRefreshTokenContentHash;
 	}
 
 	@Override
@@ -730,7 +748,11 @@ public class OAuth2AuthorizationModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_oAuth2AuthorizationOriginalValues == null) {
+			return 0;
+		}
+
+		return _oAuth2AuthorizationOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -851,28 +873,7 @@ public class OAuth2AuthorizationModelImpl
 	public void resetOriginalValues() {
 		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl = this;
 
-		oAuth2AuthorizationModelImpl._originalUserId =
-			oAuth2AuthorizationModelImpl._userId;
-
-		oAuth2AuthorizationModelImpl._setOriginalUserId = false;
-
-		oAuth2AuthorizationModelImpl._originalOAuth2ApplicationId =
-			oAuth2AuthorizationModelImpl._oAuth2ApplicationId;
-
-		oAuth2AuthorizationModelImpl._setOriginalOAuth2ApplicationId = false;
-
-		oAuth2AuthorizationModelImpl._originalAccessTokenContentHash =
-			oAuth2AuthorizationModelImpl._accessTokenContentHash;
-
-		oAuth2AuthorizationModelImpl._setOriginalAccessTokenContentHash = false;
-
-		oAuth2AuthorizationModelImpl._originalRefreshTokenContentHash =
-			oAuth2AuthorizationModelImpl._refreshTokenContentHash;
-
-		oAuth2AuthorizationModelImpl._setOriginalRefreshTokenContentHash =
-			false;
-
-		oAuth2AuthorizationModelImpl._columnBitmask = 0;
+		oAuth2AuthorizationModelImpl._oAuth2AuthorizationOriginalValues = null;
 	}
 
 	@Override
@@ -1066,37 +1067,52 @@ public class OAuth2AuthorizationModelImpl
 		return sb.toString();
 	}
 
+	private static class OAuth2AuthorizationOriginalValues {
+
+		private OAuth2AuthorizationOriginalValues(
+			OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl) {
+
+			_originalUserId = oAuth2AuthorizationModelImpl._userId;
+			_originalOAuth2ApplicationId =
+				oAuth2AuthorizationModelImpl._oAuth2ApplicationId;
+			_originalAccessTokenContentHash =
+				oAuth2AuthorizationModelImpl._accessTokenContentHash;
+			_originalRefreshTokenContentHash =
+				oAuth2AuthorizationModelImpl._refreshTokenContentHash;
+		}
+
+		private final long _originalUserId;
+		private final long _originalOAuth2ApplicationId;
+		private final long _originalAccessTokenContentHash;
+		private final long _originalRefreshTokenContentHash;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, OAuth2Authorization>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private OAuth2AuthorizationOriginalValues
+		_oAuth2AuthorizationOriginalValues;
 	private long _oAuth2AuthorizationId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private long _oAuth2ApplicationId;
-	private long _originalOAuth2ApplicationId;
-	private boolean _setOriginalOAuth2ApplicationId;
 	private long _oAuth2ApplicationScopeAliasesId;
 	private String _accessTokenContent;
 	private long _accessTokenContentHash;
-	private long _originalAccessTokenContentHash;
-	private boolean _setOriginalAccessTokenContentHash;
 	private Date _accessTokenCreateDate;
 	private Date _accessTokenExpirationDate;
 	private String _remoteHostInfo;
 	private String _remoteIPInfo;
 	private String _refreshTokenContent;
 	private long _refreshTokenContentHash;
-	private long _originalRefreshTokenContentHash;
-	private boolean _setOriginalRefreshTokenContentHash;
 	private Date _refreshTokenCreateDate;
 	private Date _refreshTokenExpirationDate;
-	private long _columnBitmask;
 	private OAuth2Authorization _escapedModel;
 
 }

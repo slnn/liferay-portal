@@ -507,17 +507,21 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_blogsEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_blogsEntryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -539,19 +543,21 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_blogsEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _blogsEntryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -562,19 +568,21 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_blogsEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _blogsEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -585,13 +593,11 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -613,7 +619,11 @@ public class BlogsEntryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_blogsEntryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _blogsEntryOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -640,7 +650,11 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
+		}
+
+		_blogsEntryOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -707,17 +721,22 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
-
-		if (_originalUrlTitle == null) {
-			_originalUrlTitle = _urlTitle;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask |= URLTITLE_COLUMN_BITMASK;
 
 		_urlTitle = urlTitle;
 	}
 
 	public String getOriginalUrlTitle() {
-		return GetterUtil.getString(_originalUrlTitle);
+		if (_blogsEntryOriginalValues == null) {
+			return GetterUtil.getString(_urlTitle);
+		}
+
+		return GetterUtil.getString(
+			_blogsEntryOriginalValues._originalUrlTitle);
 	}
 
 	@JSON
@@ -760,17 +779,21 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_columnBitmask = -1L;
-
-		if (_originalDisplayDate == null) {
-			_originalDisplayDate = _displayDate;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask = -1L;
 
 		_displayDate = displayDate;
 	}
 
 	public Date getOriginalDisplayDate() {
-		return _originalDisplayDate;
+		if (_blogsEntryOriginalValues == null) {
+			return _displayDate;
+		}
+
+		return _blogsEntryOriginalValues._originalDisplayDate;
 	}
 
 	@JSON
@@ -940,19 +963,21 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_blogsEntryOriginalValues == null) {
+			_blogsEntryOriginalValues = new BlogsEntryOriginalValues(this);
 		}
+
+		_blogsEntryOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_blogsEntryOriginalValues == null) {
+			return _status;
+		}
+
+		return _blogsEntryOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1241,7 +1266,11 @@ public class BlogsEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_blogsEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _blogsEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1371,32 +1400,9 @@ public class BlogsEntryModelImpl
 	public void resetOriginalValues() {
 		BlogsEntryModelImpl blogsEntryModelImpl = this;
 
-		blogsEntryModelImpl._originalUuid = blogsEntryModelImpl._uuid;
-
-		blogsEntryModelImpl._originalGroupId = blogsEntryModelImpl._groupId;
-
-		blogsEntryModelImpl._setOriginalGroupId = false;
-
-		blogsEntryModelImpl._originalCompanyId = blogsEntryModelImpl._companyId;
-
-		blogsEntryModelImpl._setOriginalCompanyId = false;
-
-		blogsEntryModelImpl._originalUserId = blogsEntryModelImpl._userId;
-
-		blogsEntryModelImpl._setOriginalUserId = false;
+		blogsEntryModelImpl._blogsEntryOriginalValues = null;
 
 		blogsEntryModelImpl._setModifiedDate = false;
-
-		blogsEntryModelImpl._originalUrlTitle = blogsEntryModelImpl._urlTitle;
-
-		blogsEntryModelImpl._originalDisplayDate =
-			blogsEntryModelImpl._displayDate;
-
-		blogsEntryModelImpl._originalStatus = blogsEntryModelImpl._status;
-
-		blogsEntryModelImpl._setOriginalStatus = false;
-
-		blogsEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1634,23 +1640,42 @@ public class BlogsEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class BlogsEntryOriginalValues {
+
+		private BlogsEntryOriginalValues(
+			BlogsEntryModelImpl blogsEntryModelImpl) {
+
+			_originalUuid = blogsEntryModelImpl._uuid;
+			_originalGroupId = blogsEntryModelImpl._groupId;
+			_originalCompanyId = blogsEntryModelImpl._companyId;
+			_originalUserId = blogsEntryModelImpl._userId;
+			_originalUrlTitle = blogsEntryModelImpl._urlTitle;
+			_originalDisplayDate = blogsEntryModelImpl._displayDate;
+			_originalStatus = blogsEntryModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final String _originalUrlTitle;
+		private final Date _originalDisplayDate;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, BlogsEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private BlogsEntryOriginalValues _blogsEntryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _entryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -1658,11 +1683,9 @@ public class BlogsEntryModelImpl
 	private String _title;
 	private String _subtitle;
 	private String _urlTitle;
-	private String _originalUrlTitle;
 	private String _description;
 	private String _content;
 	private Date _displayDate;
-	private Date _originalDisplayDate;
 	private boolean _allowPingbacks;
 	private boolean _allowTrackbacks;
 	private String _trackbacks;
@@ -1675,12 +1698,9 @@ public class BlogsEntryModelImpl
 	private String _smallImageURL;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private BlogsEntry _escapedModel;
 
 }

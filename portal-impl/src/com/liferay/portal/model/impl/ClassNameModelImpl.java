@@ -363,21 +363,29 @@ public class ClassNameModelImpl
 
 	@Override
 	public void setValue(String value) {
-		_columnBitmask |= VALUE_COLUMN_BITMASK;
-
-		if (_originalValue == null) {
-			_originalValue = _value;
+		if (_classNameOriginalValues == null) {
+			_classNameOriginalValues = new ClassNameOriginalValues(this);
 		}
+
+		_classNameOriginalValues._columnBitmask |= VALUE_COLUMN_BITMASK;
 
 		_value = value;
 	}
 
 	public String getOriginalValue() {
-		return GetterUtil.getString(_originalValue);
+		if (_classNameOriginalValues == null) {
+			return GetterUtil.getString(_value);
+		}
+
+		return GetterUtil.getString(_classNameOriginalValues._originalValue);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_classNameOriginalValues == null) {
+			return 0;
+		}
+
+		return _classNameOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -472,9 +480,7 @@ public class ClassNameModelImpl
 	public void resetOriginalValues() {
 		ClassNameModelImpl classNameModelImpl = this;
 
-		classNameModelImpl._originalValue = classNameModelImpl._value;
-
-		classNameModelImpl._columnBitmask = 0;
+		classNameModelImpl._classNameOriginalValues = null;
 	}
 
 	@Override
@@ -559,14 +565,24 @@ public class ClassNameModelImpl
 		return sb.toString();
 	}
 
+	private static class ClassNameOriginalValues {
+
+		private ClassNameOriginalValues(ClassNameModelImpl classNameModelImpl) {
+			_originalValue = classNameModelImpl._value;
+		}
+
+		private final String _originalValue;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ClassName>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ClassNameOriginalValues _classNameOriginalValues;
 	private long _mvccVersion;
 	private long _classNameId;
 	private String _value;
-	private String _originalValue;
-	private long _columnBitmask;
 	private ClassName _escapedModel;
 
 }

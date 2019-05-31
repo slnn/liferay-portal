@@ -431,17 +431,24 @@ public class DDMDataProviderInstanceModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			_ddmDataProviderInstanceOriginalValues =
+				new DDMDataProviderInstanceOriginalValues(this);
 		}
+
+		_ddmDataProviderInstanceOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_ddmDataProviderInstanceOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -463,19 +470,23 @@ public class DDMDataProviderInstanceModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			_ddmDataProviderInstanceOriginalValues =
+				new DDMDataProviderInstanceOriginalValues(this);
 		}
+
+		_ddmDataProviderInstanceOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _ddmDataProviderInstanceOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -486,19 +497,23 @@ public class DDMDataProviderInstanceModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			_ddmDataProviderInstanceOriginalValues =
+				new DDMDataProviderInstanceOriginalValues(this);
 		}
+
+		_ddmDataProviderInstanceOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ddmDataProviderInstanceOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -822,7 +837,11 @@ public class DDMDataProviderInstanceModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmDataProviderInstanceOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmDataProviderInstanceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1019,22 +1038,10 @@ public class DDMDataProviderInstanceModelImpl
 		DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl =
 			this;
 
-		ddmDataProviderInstanceModelImpl._originalUuid =
-			ddmDataProviderInstanceModelImpl._uuid;
-
-		ddmDataProviderInstanceModelImpl._originalGroupId =
-			ddmDataProviderInstanceModelImpl._groupId;
-
-		ddmDataProviderInstanceModelImpl._setOriginalGroupId = false;
-
-		ddmDataProviderInstanceModelImpl._originalCompanyId =
-			ddmDataProviderInstanceModelImpl._companyId;
-
-		ddmDataProviderInstanceModelImpl._setOriginalCompanyId = false;
+		ddmDataProviderInstanceModelImpl.
+			_ddmDataProviderInstanceOriginalValues = null;
 
 		ddmDataProviderInstanceModelImpl._setModifiedDate = false;
-
-		ddmDataProviderInstanceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1186,18 +1193,32 @@ public class DDMDataProviderInstanceModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMDataProviderInstanceOriginalValues {
+
+		private DDMDataProviderInstanceOriginalValues(
+			DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl) {
+
+			_originalUuid = ddmDataProviderInstanceModelImpl._uuid;
+			_originalGroupId = ddmDataProviderInstanceModelImpl._groupId;
+			_originalCompanyId = ddmDataProviderInstanceModelImpl._companyId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMDataProviderInstance>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMDataProviderInstanceOriginalValues
+		_ddmDataProviderInstanceOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _dataProviderInstanceId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1209,7 +1230,6 @@ public class DDMDataProviderInstanceModelImpl
 	private String _descriptionCurrentLanguageId;
 	private String _definition;
 	private String _type;
-	private long _columnBitmask;
 	private DDMDataProviderInstance _escapedModel;
 
 }

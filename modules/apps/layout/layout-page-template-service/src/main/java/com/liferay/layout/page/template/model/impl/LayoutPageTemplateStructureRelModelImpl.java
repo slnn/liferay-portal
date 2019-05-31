@@ -373,17 +373,24 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			_layoutPageTemplateStructureRelOriginalValues =
+				new LayoutPageTemplateStructureRelOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureRelOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutPageTemplateStructureRelOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -405,19 +412,23 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			_layoutPageTemplateStructureRelOriginalValues =
+				new LayoutPageTemplateStructureRelOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureRelOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _layoutPageTemplateStructureRelOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -427,19 +438,23 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			_layoutPageTemplateStructureRelOriginalValues =
+				new LayoutPageTemplateStructureRelOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureRelOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _layoutPageTemplateStructureRelOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -518,20 +533,24 @@ public class LayoutPageTemplateStructureRelModelImpl
 	public void setLayoutPageTemplateStructureId(
 		long layoutPageTemplateStructureId) {
 
-		_columnBitmask |= LAYOUTPAGETEMPLATESTRUCTUREID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutPageTemplateStructureId) {
-			_setOriginalLayoutPageTemplateStructureId = true;
-
-			_originalLayoutPageTemplateStructureId =
-				_layoutPageTemplateStructureId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			_layoutPageTemplateStructureRelOriginalValues =
+				new LayoutPageTemplateStructureRelOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureRelOriginalValues._columnBitmask |=
+			LAYOUTPAGETEMPLATESTRUCTUREID_COLUMN_BITMASK;
 
 		_layoutPageTemplateStructureId = layoutPageTemplateStructureId;
 	}
 
 	public long getOriginalLayoutPageTemplateStructureId() {
-		return _originalLayoutPageTemplateStructureId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			return _layoutPageTemplateStructureId;
+		}
+
+		return _layoutPageTemplateStructureRelOriginalValues.
+			_originalLayoutPageTemplateStructureId;
 	}
 
 	@Override
@@ -541,19 +560,24 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	@Override
 	public void setSegmentsExperienceId(long segmentsExperienceId) {
-		_columnBitmask |= SEGMENTSEXPERIENCEID_COLUMN_BITMASK;
-
-		if (!_setOriginalSegmentsExperienceId) {
-			_setOriginalSegmentsExperienceId = true;
-
-			_originalSegmentsExperienceId = _segmentsExperienceId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			_layoutPageTemplateStructureRelOriginalValues =
+				new LayoutPageTemplateStructureRelOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureRelOriginalValues._columnBitmask |=
+			SEGMENTSEXPERIENCEID_COLUMN_BITMASK;
 
 		_segmentsExperienceId = segmentsExperienceId;
 	}
 
 	public long getOriginalSegmentsExperienceId() {
-		return _originalSegmentsExperienceId;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			return _segmentsExperienceId;
+		}
+
+		return _layoutPageTemplateStructureRelOriginalValues.
+			_originalSegmentsExperienceId;
 	}
 
 	@Override
@@ -579,7 +603,11 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutPageTemplateStructureRelOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutPageTemplateStructureRelOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -691,36 +719,10 @@ public class LayoutPageTemplateStructureRelModelImpl
 		LayoutPageTemplateStructureRelModelImpl
 			layoutPageTemplateStructureRelModelImpl = this;
 
-		layoutPageTemplateStructureRelModelImpl._originalUuid =
-			layoutPageTemplateStructureRelModelImpl._uuid;
-
-		layoutPageTemplateStructureRelModelImpl._originalGroupId =
-			layoutPageTemplateStructureRelModelImpl._groupId;
-
-		layoutPageTemplateStructureRelModelImpl._setOriginalGroupId = false;
-
-		layoutPageTemplateStructureRelModelImpl._originalCompanyId =
-			layoutPageTemplateStructureRelModelImpl._companyId;
-
-		layoutPageTemplateStructureRelModelImpl._setOriginalCompanyId = false;
+		layoutPageTemplateStructureRelModelImpl.
+			_layoutPageTemplateStructureRelOriginalValues = null;
 
 		layoutPageTemplateStructureRelModelImpl._setModifiedDate = false;
-
-		layoutPageTemplateStructureRelModelImpl.
-			_originalLayoutPageTemplateStructureId =
-				layoutPageTemplateStructureRelModelImpl.
-					_layoutPageTemplateStructureId;
-
-		layoutPageTemplateStructureRelModelImpl.
-			_setOriginalLayoutPageTemplateStructureId = false;
-
-		layoutPageTemplateStructureRelModelImpl._originalSegmentsExperienceId =
-			layoutPageTemplateStructureRelModelImpl._segmentsExperienceId;
-
-		layoutPageTemplateStructureRelModelImpl.
-			_setOriginalSegmentsExperienceId = false;
-
-		layoutPageTemplateStructureRelModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -861,32 +863,50 @@ public class LayoutPageTemplateStructureRelModelImpl
 		return sb.toString();
 	}
 
+	private static class LayoutPageTemplateStructureRelOriginalValues {
+
+		private LayoutPageTemplateStructureRelOriginalValues(
+			LayoutPageTemplateStructureRelModelImpl
+				layoutPageTemplateStructureRelModelImpl) {
+
+			_originalUuid = layoutPageTemplateStructureRelModelImpl._uuid;
+			_originalGroupId = layoutPageTemplateStructureRelModelImpl._groupId;
+			_originalCompanyId =
+				layoutPageTemplateStructureRelModelImpl._companyId;
+			_originalLayoutPageTemplateStructureId =
+				layoutPageTemplateStructureRelModelImpl.
+					_layoutPageTemplateStructureId;
+			_originalSegmentsExperienceId =
+				layoutPageTemplateStructureRelModelImpl._segmentsExperienceId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalLayoutPageTemplateStructureId;
+		private final long _originalSegmentsExperienceId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function
 		<InvocationHandler, LayoutPageTemplateStructureRel>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutPageTemplateStructureRelOriginalValues
+		_layoutPageTemplateStructureRelOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _layoutPageTemplateStructureRelId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _layoutPageTemplateStructureId;
-	private long _originalLayoutPageTemplateStructureId;
-	private boolean _setOriginalLayoutPageTemplateStructureId;
 	private long _segmentsExperienceId;
-	private long _originalSegmentsExperienceId;
-	private boolean _setOriginalSegmentsExperienceId;
 	private String _data;
-	private long _columnBitmask;
 	private LayoutPageTemplateStructureRel _escapedModel;
 
 }

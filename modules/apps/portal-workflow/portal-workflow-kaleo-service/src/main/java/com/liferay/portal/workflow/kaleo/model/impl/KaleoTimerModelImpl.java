@@ -374,7 +374,11 @@ public class KaleoTimerModelImpl
 
 	@Override
 	public void setKaleoTimerId(long kaleoTimerId) {
-		_columnBitmask = -1L;
+		if (_kaleoTimerOriginalValues == null) {
+			_kaleoTimerOriginalValues = new KaleoTimerOriginalValues(this);
+		}
+
+		_kaleoTimerOriginalValues._columnBitmask = -1L;
 
 		_kaleoTimerId = kaleoTimerId;
 	}
@@ -478,17 +482,23 @@ public class KaleoTimerModelImpl
 
 	@Override
 	public void setKaleoClassName(String kaleoClassName) {
-		_columnBitmask |= KALEOCLASSNAME_COLUMN_BITMASK;
-
-		if (_originalKaleoClassName == null) {
-			_originalKaleoClassName = _kaleoClassName;
+		if (_kaleoTimerOriginalValues == null) {
+			_kaleoTimerOriginalValues = new KaleoTimerOriginalValues(this);
 		}
+
+		_kaleoTimerOriginalValues._columnBitmask |=
+			KALEOCLASSNAME_COLUMN_BITMASK;
 
 		_kaleoClassName = kaleoClassName;
 	}
 
 	public String getOriginalKaleoClassName() {
-		return GetterUtil.getString(_originalKaleoClassName);
+		if (_kaleoTimerOriginalValues == null) {
+			return GetterUtil.getString(_kaleoClassName);
+		}
+
+		return GetterUtil.getString(
+			_kaleoTimerOriginalValues._originalKaleoClassName);
 	}
 
 	@Override
@@ -498,19 +508,21 @@ public class KaleoTimerModelImpl
 
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {
-		_columnBitmask |= KALEOCLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoClassPK) {
-			_setOriginalKaleoClassPK = true;
-
-			_originalKaleoClassPK = _kaleoClassPK;
+		if (_kaleoTimerOriginalValues == null) {
+			_kaleoTimerOriginalValues = new KaleoTimerOriginalValues(this);
 		}
+
+		_kaleoTimerOriginalValues._columnBitmask |= KALEOCLASSPK_COLUMN_BITMASK;
 
 		_kaleoClassPK = kaleoClassPK;
 	}
 
 	public long getOriginalKaleoClassPK() {
-		return _originalKaleoClassPK;
+		if (_kaleoTimerOriginalValues == null) {
+			return _kaleoClassPK;
+		}
+
+		return _kaleoTimerOriginalValues._originalKaleoClassPK;
 	}
 
 	@Override
@@ -550,19 +562,21 @@ public class KaleoTimerModelImpl
 
 	@Override
 	public void setBlocking(boolean blocking) {
-		_columnBitmask |= BLOCKING_COLUMN_BITMASK;
-
-		if (!_setOriginalBlocking) {
-			_setOriginalBlocking = true;
-
-			_originalBlocking = _blocking;
+		if (_kaleoTimerOriginalValues == null) {
+			_kaleoTimerOriginalValues = new KaleoTimerOriginalValues(this);
 		}
+
+		_kaleoTimerOriginalValues._columnBitmask |= BLOCKING_COLUMN_BITMASK;
 
 		_blocking = blocking;
 	}
 
 	public boolean getOriginalBlocking() {
-		return _originalBlocking;
+		if (_kaleoTimerOriginalValues == null) {
+			return _blocking;
+		}
+
+		return _kaleoTimerOriginalValues._originalBlocking;
 	}
 
 	@Override
@@ -631,7 +645,11 @@ public class KaleoTimerModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kaleoTimerOriginalValues == null) {
+			return 0;
+		}
+
+		return _kaleoTimerOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -748,21 +766,9 @@ public class KaleoTimerModelImpl
 	public void resetOriginalValues() {
 		KaleoTimerModelImpl kaleoTimerModelImpl = this;
 
+		kaleoTimerModelImpl._kaleoTimerOriginalValues = null;
+
 		kaleoTimerModelImpl._setModifiedDate = false;
-
-		kaleoTimerModelImpl._originalKaleoClassName =
-			kaleoTimerModelImpl._kaleoClassName;
-
-		kaleoTimerModelImpl._originalKaleoClassPK =
-			kaleoTimerModelImpl._kaleoClassPK;
-
-		kaleoTimerModelImpl._setOriginalKaleoClassPK = false;
-
-		kaleoTimerModelImpl._originalBlocking = kaleoTimerModelImpl._blocking;
-
-		kaleoTimerModelImpl._setOriginalBlocking = false;
-
-		kaleoTimerModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -922,9 +928,27 @@ public class KaleoTimerModelImpl
 		return sb.toString();
 	}
 
+	private static class KaleoTimerOriginalValues {
+
+		private KaleoTimerOriginalValues(
+			KaleoTimerModelImpl kaleoTimerModelImpl) {
+
+			_originalKaleoClassName = kaleoTimerModelImpl._kaleoClassName;
+			_originalKaleoClassPK = kaleoTimerModelImpl._kaleoClassPK;
+			_originalBlocking = kaleoTimerModelImpl._blocking;
+		}
+
+		private final String _originalKaleoClassName;
+		private final long _originalKaleoClassPK;
+		private final boolean _originalBlocking;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KaleoTimer>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KaleoTimerOriginalValues _kaleoTimerOriginalValues;
 	private long _mvccVersion;
 	private long _kaleoTimerId;
 	private long _groupId;
@@ -935,21 +959,15 @@ public class KaleoTimerModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _kaleoClassName;
-	private String _originalKaleoClassName;
 	private long _kaleoClassPK;
-	private long _originalKaleoClassPK;
-	private boolean _setOriginalKaleoClassPK;
 	private long _kaleoDefinitionVersionId;
 	private String _name;
 	private boolean _blocking;
-	private boolean _originalBlocking;
-	private boolean _setOriginalBlocking;
 	private String _description;
 	private double _duration;
 	private String _scale;
 	private double _recurrenceDuration;
 	private String _recurrenceScale;
-	private long _columnBitmask;
 	private KaleoTimer _escapedModel;
 
 }

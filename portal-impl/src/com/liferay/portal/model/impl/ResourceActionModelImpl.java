@@ -312,17 +312,23 @@ public class ResourceActionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_resourceActionOriginalValues == null) {
+			_resourceActionOriginalValues = new ResourceActionOriginalValues(
+				this);
 		}
+
+		_resourceActionOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_resourceActionOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_resourceActionOriginalValues._originalName);
 	}
 
 	@Override
@@ -337,17 +343,23 @@ public class ResourceActionModelImpl
 
 	@Override
 	public void setActionId(String actionId) {
-		_columnBitmask |= ACTIONID_COLUMN_BITMASK;
-
-		if (_originalActionId == null) {
-			_originalActionId = _actionId;
+		if (_resourceActionOriginalValues == null) {
+			_resourceActionOriginalValues = new ResourceActionOriginalValues(
+				this);
 		}
+
+		_resourceActionOriginalValues._columnBitmask |= ACTIONID_COLUMN_BITMASK;
 
 		_actionId = actionId;
 	}
 
 	public String getOriginalActionId() {
-		return GetterUtil.getString(_originalActionId);
+		if (_resourceActionOriginalValues == null) {
+			return GetterUtil.getString(_actionId);
+		}
+
+		return GetterUtil.getString(
+			_resourceActionOriginalValues._originalActionId);
 	}
 
 	@Override
@@ -357,13 +369,22 @@ public class ResourceActionModelImpl
 
 	@Override
 	public void setBitwiseValue(long bitwiseValue) {
-		_columnBitmask = -1L;
+		if (_resourceActionOriginalValues == null) {
+			_resourceActionOriginalValues = new ResourceActionOriginalValues(
+				this);
+		}
+
+		_resourceActionOriginalValues._columnBitmask = -1L;
 
 		_bitwiseValue = bitwiseValue;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_resourceActionOriginalValues == null) {
+			return 0;
+		}
+
+		return _resourceActionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -472,12 +493,7 @@ public class ResourceActionModelImpl
 	public void resetOriginalValues() {
 		ResourceActionModelImpl resourceActionModelImpl = this;
 
-		resourceActionModelImpl._originalName = resourceActionModelImpl._name;
-
-		resourceActionModelImpl._originalActionId =
-			resourceActionModelImpl._actionId;
-
-		resourceActionModelImpl._columnBitmask = 0;
+		resourceActionModelImpl._resourceActionOriginalValues = null;
 	}
 
 	@Override
@@ -573,17 +589,30 @@ public class ResourceActionModelImpl
 		return sb.toString();
 	}
 
+	private static class ResourceActionOriginalValues {
+
+		private ResourceActionOriginalValues(
+			ResourceActionModelImpl resourceActionModelImpl) {
+
+			_originalName = resourceActionModelImpl._name;
+			_originalActionId = resourceActionModelImpl._actionId;
+		}
+
+		private final String _originalName;
+		private final String _originalActionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ResourceAction>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ResourceActionOriginalValues _resourceActionOriginalValues;
 	private long _mvccVersion;
 	private long _resourceActionId;
 	private String _name;
-	private String _originalName;
 	private String _actionId;
-	private String _originalActionId;
 	private long _bitwiseValue;
-	private long _columnBitmask;
 	private ResourceAction _escapedModel;
 
 }

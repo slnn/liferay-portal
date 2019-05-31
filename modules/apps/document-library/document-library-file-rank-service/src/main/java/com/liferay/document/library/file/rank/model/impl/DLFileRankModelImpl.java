@@ -299,19 +299,21 @@ public class DLFileRankModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_dlFileRankOriginalValues == null) {
+			_dlFileRankOriginalValues = new DLFileRankOriginalValues(this);
 		}
+
+		_dlFileRankOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_dlFileRankOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _dlFileRankOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -321,19 +323,21 @@ public class DLFileRankModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_dlFileRankOriginalValues == null) {
+			_dlFileRankOriginalValues = new DLFileRankOriginalValues(this);
 		}
+
+		_dlFileRankOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_dlFileRankOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _dlFileRankOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -343,13 +347,11 @@ public class DLFileRankModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_dlFileRankOriginalValues == null) {
+			_dlFileRankOriginalValues = new DLFileRankOriginalValues(this);
 		}
+
+		_dlFileRankOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -371,7 +373,11 @@ public class DLFileRankModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_dlFileRankOriginalValues == null) {
+			return _userId;
+		}
+
+		return _dlFileRankOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -381,7 +387,11 @@ public class DLFileRankModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_dlFileRankOriginalValues == null) {
+			_dlFileRankOriginalValues = new DLFileRankOriginalValues(this);
+		}
+
+		_dlFileRankOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -393,19 +403,21 @@ public class DLFileRankModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_columnBitmask |= FILEENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalFileEntryId) {
-			_setOriginalFileEntryId = true;
-
-			_originalFileEntryId = _fileEntryId;
+		if (_dlFileRankOriginalValues == null) {
+			_dlFileRankOriginalValues = new DLFileRankOriginalValues(this);
 		}
+
+		_dlFileRankOriginalValues._columnBitmask |= FILEENTRYID_COLUMN_BITMASK;
 
 		_fileEntryId = fileEntryId;
 	}
 
 	public long getOriginalFileEntryId() {
-		return _originalFileEntryId;
+		if (_dlFileRankOriginalValues == null) {
+			return _fileEntryId;
+		}
+
+		return _dlFileRankOriginalValues._originalFileEntryId;
 	}
 
 	@Override
@@ -420,23 +432,29 @@ public class DLFileRankModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_dlFileRankOriginalValues == null) {
+			_dlFileRankOriginalValues = new DLFileRankOriginalValues(this);
 		}
+
+		_dlFileRankOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_dlFileRankOriginalValues == null) {
+			return _active;
+		}
+
+		return _dlFileRankOriginalValues._originalActive;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_dlFileRankOriginalValues == null) {
+			return 0;
+		}
+
+		return _dlFileRankOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -535,28 +553,7 @@ public class DLFileRankModelImpl
 	public void resetOriginalValues() {
 		DLFileRankModelImpl dlFileRankModelImpl = this;
 
-		dlFileRankModelImpl._originalGroupId = dlFileRankModelImpl._groupId;
-
-		dlFileRankModelImpl._setOriginalGroupId = false;
-
-		dlFileRankModelImpl._originalCompanyId = dlFileRankModelImpl._companyId;
-
-		dlFileRankModelImpl._setOriginalCompanyId = false;
-
-		dlFileRankModelImpl._originalUserId = dlFileRankModelImpl._userId;
-
-		dlFileRankModelImpl._setOriginalUserId = false;
-
-		dlFileRankModelImpl._originalFileEntryId =
-			dlFileRankModelImpl._fileEntryId;
-
-		dlFileRankModelImpl._setOriginalFileEntryId = false;
-
-		dlFileRankModelImpl._originalActive = dlFileRankModelImpl._active;
-
-		dlFileRankModelImpl._setOriginalActive = false;
-
-		dlFileRankModelImpl._columnBitmask = 0;
+		dlFileRankModelImpl._dlFileRankOriginalValues = null;
 	}
 
 	@Override
@@ -650,29 +647,40 @@ public class DLFileRankModelImpl
 		return sb.toString();
 	}
 
+	private static class DLFileRankOriginalValues {
+
+		private DLFileRankOriginalValues(
+			DLFileRankModelImpl dlFileRankModelImpl) {
+
+			_originalGroupId = dlFileRankModelImpl._groupId;
+			_originalCompanyId = dlFileRankModelImpl._companyId;
+			_originalUserId = dlFileRankModelImpl._userId;
+			_originalFileEntryId = dlFileRankModelImpl._fileEntryId;
+			_originalActive = dlFileRankModelImpl._active;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalFileEntryId;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DLFileRank>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private DLFileRankOriginalValues _dlFileRankOriginalValues;
 	private long _fileRankId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private long _fileEntryId;
-	private long _originalFileEntryId;
-	private boolean _setOriginalFileEntryId;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private DLFileRank _escapedModel;
 
 }

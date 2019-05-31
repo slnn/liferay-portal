@@ -318,13 +318,12 @@ public class BrowserTrackerModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_browserTrackerOriginalValues == null) {
+			_browserTrackerOriginalValues = new BrowserTrackerOriginalValues(
+				this);
 		}
+
+		_browserTrackerOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -346,7 +345,11 @@ public class BrowserTrackerModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_browserTrackerOriginalValues == null) {
+			return _userId;
+		}
+
+		return _browserTrackerOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -360,7 +363,11 @@ public class BrowserTrackerModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_browserTrackerOriginalValues == null) {
+			return 0;
+		}
+
+		return _browserTrackerOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -457,12 +464,7 @@ public class BrowserTrackerModelImpl
 	public void resetOriginalValues() {
 		BrowserTrackerModelImpl browserTrackerModelImpl = this;
 
-		browserTrackerModelImpl._originalUserId =
-			browserTrackerModelImpl._userId;
-
-		browserTrackerModelImpl._setOriginalUserId = false;
-
-		browserTrackerModelImpl._columnBitmask = 0;
+		browserTrackerModelImpl._browserTrackerOriginalValues = null;
 	}
 
 	@Override
@@ -546,17 +548,28 @@ public class BrowserTrackerModelImpl
 		return sb.toString();
 	}
 
+	private static class BrowserTrackerOriginalValues {
+
+		private BrowserTrackerOriginalValues(
+			BrowserTrackerModelImpl browserTrackerModelImpl) {
+
+			_originalUserId = browserTrackerModelImpl._userId;
+		}
+
+		private final long _originalUserId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, BrowserTracker>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private BrowserTrackerOriginalValues _browserTrackerOriginalValues;
 	private long _mvccVersion;
 	private long _browserTrackerId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _browserKey;
-	private long _columnBitmask;
 	private BrowserTracker _escapedModel;
 
 }

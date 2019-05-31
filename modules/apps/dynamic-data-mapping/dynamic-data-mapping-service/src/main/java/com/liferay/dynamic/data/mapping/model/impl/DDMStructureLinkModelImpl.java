@@ -336,19 +336,23 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_ddmStructureLinkOriginalValues == null) {
+			_ddmStructureLinkOriginalValues =
+				new DDMStructureLinkOriginalValues(this);
 		}
+
+		_ddmStructureLinkOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_ddmStructureLinkOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _ddmStructureLinkOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -358,19 +362,23 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_ddmStructureLinkOriginalValues == null) {
+			_ddmStructureLinkOriginalValues =
+				new DDMStructureLinkOriginalValues(this);
 		}
+
+		_ddmStructureLinkOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_ddmStructureLinkOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _ddmStructureLinkOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -380,23 +388,31 @@ public class DDMStructureLinkModelImpl
 
 	@Override
 	public void setStructureId(long structureId) {
-		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
-
-		if (!_setOriginalStructureId) {
-			_setOriginalStructureId = true;
-
-			_originalStructureId = _structureId;
+		if (_ddmStructureLinkOriginalValues == null) {
+			_ddmStructureLinkOriginalValues =
+				new DDMStructureLinkOriginalValues(this);
 		}
+
+		_ddmStructureLinkOriginalValues._columnBitmask |=
+			STRUCTUREID_COLUMN_BITMASK;
 
 		_structureId = structureId;
 	}
 
 	public long getOriginalStructureId() {
-		return _originalStructureId;
+		if (_ddmStructureLinkOriginalValues == null) {
+			return _structureId;
+		}
+
+		return _ddmStructureLinkOriginalValues._originalStructureId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmStructureLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmStructureLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -493,22 +509,7 @@ public class DDMStructureLinkModelImpl
 	public void resetOriginalValues() {
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = this;
 
-		ddmStructureLinkModelImpl._originalClassNameId =
-			ddmStructureLinkModelImpl._classNameId;
-
-		ddmStructureLinkModelImpl._setOriginalClassNameId = false;
-
-		ddmStructureLinkModelImpl._originalClassPK =
-			ddmStructureLinkModelImpl._classPK;
-
-		ddmStructureLinkModelImpl._setOriginalClassPK = false;
-
-		ddmStructureLinkModelImpl._originalStructureId =
-			ddmStructureLinkModelImpl._structureId;
-
-		ddmStructureLinkModelImpl._setOriginalStructureId = false;
-
-		ddmStructureLinkModelImpl._columnBitmask = 0;
+		ddmStructureLinkModelImpl._ddmStructureLinkOriginalValues = null;
 	}
 
 	@Override
@@ -592,21 +593,32 @@ public class DDMStructureLinkModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMStructureLinkOriginalValues {
+
+		private DDMStructureLinkOriginalValues(
+			DDMStructureLinkModelImpl ddmStructureLinkModelImpl) {
+
+			_originalClassNameId = ddmStructureLinkModelImpl._classNameId;
+			_originalClassPK = ddmStructureLinkModelImpl._classPK;
+			_originalStructureId = ddmStructureLinkModelImpl._structureId;
+		}
+
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final long _originalStructureId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMStructureLink>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMStructureLinkOriginalValues _ddmStructureLinkOriginalValues;
 	private long _structureLinkId;
 	private long _companyId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _structureId;
-	private long _originalStructureId;
-	private boolean _setOriginalStructureId;
-	private long _columnBitmask;
 	private DDMStructureLink _escapedModel;
 
 }

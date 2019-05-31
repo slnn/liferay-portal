@@ -446,19 +446,23 @@ public class DLOpenerFileEntryReferenceModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_columnBitmask |= FILEENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalFileEntryId) {
-			_setOriginalFileEntryId = true;
-
-			_originalFileEntryId = _fileEntryId;
+		if (_dlOpenerFileEntryReferenceOriginalValues == null) {
+			_dlOpenerFileEntryReferenceOriginalValues =
+				new DLOpenerFileEntryReferenceOriginalValues(this);
 		}
+
+		_dlOpenerFileEntryReferenceOriginalValues._columnBitmask |=
+			FILEENTRYID_COLUMN_BITMASK;
 
 		_fileEntryId = fileEntryId;
 	}
 
 	public long getOriginalFileEntryId() {
-		return _originalFileEntryId;
+		if (_dlOpenerFileEntryReferenceOriginalValues == null) {
+			return _fileEntryId;
+		}
+
+		return _dlOpenerFileEntryReferenceOriginalValues._originalFileEntryId;
 	}
 
 	@Override
@@ -472,7 +476,11 @@ public class DLOpenerFileEntryReferenceModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_dlOpenerFileEntryReferenceOriginalValues == null) {
+			return 0;
+		}
+
+		return _dlOpenerFileEntryReferenceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -581,14 +589,10 @@ public class DLOpenerFileEntryReferenceModelImpl
 		DLOpenerFileEntryReferenceModelImpl
 			dlOpenerFileEntryReferenceModelImpl = this;
 
+		dlOpenerFileEntryReferenceModelImpl.
+			_dlOpenerFileEntryReferenceOriginalValues = null;
+
 		dlOpenerFileEntryReferenceModelImpl._setModifiedDate = false;
-
-		dlOpenerFileEntryReferenceModelImpl._originalFileEntryId =
-			dlOpenerFileEntryReferenceModelImpl._fileEntryId;
-
-		dlOpenerFileEntryReferenceModelImpl._setOriginalFileEntryId = false;
-
-		dlOpenerFileEntryReferenceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -716,11 +720,28 @@ public class DLOpenerFileEntryReferenceModelImpl
 		return sb.toString();
 	}
 
+	private static class DLOpenerFileEntryReferenceOriginalValues {
+
+		private DLOpenerFileEntryReferenceOriginalValues(
+			DLOpenerFileEntryReferenceModelImpl
+				dlOpenerFileEntryReferenceModelImpl) {
+
+			_originalFileEntryId =
+				dlOpenerFileEntryReferenceModelImpl._fileEntryId;
+		}
+
+		private final long _originalFileEntryId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DLOpenerFileEntryReference>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private DLOpenerFileEntryReferenceOriginalValues
+		_dlOpenerFileEntryReferenceOriginalValues;
 	private long _dlOpenerFileEntryReferenceId;
 	private long _groupId;
 	private long _companyId;
@@ -731,10 +752,7 @@ public class DLOpenerFileEntryReferenceModelImpl
 	private boolean _setModifiedDate;
 	private String _referenceKey;
 	private long _fileEntryId;
-	private long _originalFileEntryId;
-	private boolean _setOriginalFileEntryId;
 	private int _type;
-	private long _columnBitmask;
 	private DLOpenerFileEntryReference _escapedModel;
 
 }

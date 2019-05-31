@@ -372,21 +372,30 @@ public class BigDecimalEntryModelImpl
 
 	@Override
 	public void setBigDecimalValue(BigDecimal bigDecimalValue) {
-		_columnBitmask = -1L;
-
-		if (_originalBigDecimalValue == null) {
-			_originalBigDecimalValue = _bigDecimalValue;
+		if (_bigDecimalEntryOriginalValues == null) {
+			_bigDecimalEntryOriginalValues = new BigDecimalEntryOriginalValues(
+				this);
 		}
+
+		_bigDecimalEntryOriginalValues._columnBitmask = -1L;
 
 		_bigDecimalValue = bigDecimalValue;
 	}
 
 	public BigDecimal getOriginalBigDecimalValue() {
-		return _originalBigDecimalValue;
+		if (_bigDecimalEntryOriginalValues == null) {
+			return _bigDecimalValue;
+		}
+
+		return _bigDecimalEntryOriginalValues._originalBigDecimalValue;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_bigDecimalEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _bigDecimalEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -480,10 +489,7 @@ public class BigDecimalEntryModelImpl
 	public void resetOriginalValues() {
 		BigDecimalEntryModelImpl bigDecimalEntryModelImpl = this;
 
-		bigDecimalEntryModelImpl._originalBigDecimalValue =
-			bigDecimalEntryModelImpl._bigDecimalValue;
-
-		bigDecimalEntryModelImpl._columnBitmask = 0;
+		bigDecimalEntryModelImpl._bigDecimalEntryOriginalValues = null;
 	}
 
 	@Override
@@ -563,14 +569,27 @@ public class BigDecimalEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class BigDecimalEntryOriginalValues {
+
+		private BigDecimalEntryOriginalValues(
+			BigDecimalEntryModelImpl bigDecimalEntryModelImpl) {
+
+			_originalBigDecimalValue =
+				bigDecimalEntryModelImpl._bigDecimalValue;
+		}
+
+		private final BigDecimal _originalBigDecimalValue;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, BigDecimalEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private BigDecimalEntryOriginalValues _bigDecimalEntryOriginalValues;
 	private long _bigDecimalEntryId;
 	private long _companyId;
 	private BigDecimal _bigDecimalValue;
-	private BigDecimal _originalBigDecimalValue;
-	private long _columnBitmask;
 	private BigDecimalEntry _escapedModel;
 
 }

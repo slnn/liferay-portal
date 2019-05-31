@@ -349,19 +349,21 @@ public class PortletModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_portletOriginalValues == null) {
+			_portletOriginalValues = new PortletOriginalValues(this);
 		}
+
+		_portletOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_portletOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _portletOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -377,17 +379,21 @@ public class PortletModelImpl
 
 	@Override
 	public void setPortletId(String portletId) {
-		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
-
-		if (_originalPortletId == null) {
-			_originalPortletId = _portletId;
+		if (_portletOriginalValues == null) {
+			_portletOriginalValues = new PortletOriginalValues(this);
 		}
+
+		_portletOriginalValues._columnBitmask |= PORTLETID_COLUMN_BITMASK;
 
 		_portletId = portletId;
 	}
 
 	public String getOriginalPortletId() {
-		return GetterUtil.getString(_originalPortletId);
+		if (_portletOriginalValues == null) {
+			return GetterUtil.getString(_portletId);
+		}
+
+		return GetterUtil.getString(_portletOriginalValues._originalPortletId);
 	}
 
 	@JSON
@@ -424,7 +430,11 @@ public class PortletModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_portletOriginalValues == null) {
+			return 0;
+		}
+
+		return _portletOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -522,13 +532,7 @@ public class PortletModelImpl
 	public void resetOriginalValues() {
 		PortletModelImpl portletModelImpl = this;
 
-		portletModelImpl._originalCompanyId = portletModelImpl._companyId;
-
-		portletModelImpl._setOriginalCompanyId = false;
-
-		portletModelImpl._originalPortletId = portletModelImpl._portletId;
-
-		portletModelImpl._columnBitmask = 0;
+		portletModelImpl._portletOriginalValues = null;
 	}
 
 	@Override
@@ -625,19 +629,29 @@ public class PortletModelImpl
 		return sb.toString();
 	}
 
+	private static class PortletOriginalValues {
+
+		private PortletOriginalValues(PortletModelImpl portletModelImpl) {
+			_originalCompanyId = portletModelImpl._companyId;
+			_originalPortletId = portletModelImpl._portletId;
+		}
+
+		private final long _originalCompanyId;
+		private final String _originalPortletId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Portlet>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PortletOriginalValues _portletOriginalValues;
 	private long _mvccVersion;
 	private long _id;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private String _portletId;
-	private String _originalPortletId;
 	private String _roles;
 	private boolean _active;
-	private long _columnBitmask;
 	private Portlet _escapedModel;
 
 }

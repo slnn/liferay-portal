@@ -448,19 +448,23 @@ public class KaleoDefinitionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kaleoDefinitionOriginalValues == null) {
+			_kaleoDefinitionOriginalValues = new KaleoDefinitionOriginalValues(
+				this);
 		}
+
+		_kaleoDefinitionOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kaleoDefinitionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kaleoDefinitionOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -547,17 +551,23 @@ public class KaleoDefinitionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_kaleoDefinitionOriginalValues == null) {
+			_kaleoDefinitionOriginalValues = new KaleoDefinitionOriginalValues(
+				this);
 		}
+
+		_kaleoDefinitionOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_kaleoDefinitionOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_kaleoDefinitionOriginalValues._originalName);
 	}
 
 	@JSON
@@ -705,19 +715,22 @@ public class KaleoDefinitionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_kaleoDefinitionOriginalValues == null) {
+			_kaleoDefinitionOriginalValues = new KaleoDefinitionOriginalValues(
+				this);
 		}
+
+		_kaleoDefinitionOriginalValues._columnBitmask = -1L;
 
 		_version = version;
 	}
 
 	public int getOriginalVersion() {
-		return _originalVersion;
+		if (_kaleoDefinitionOriginalValues == null) {
+			return _version;
+		}
+
+		return _kaleoDefinitionOriginalValues._originalVersion;
 	}
 
 	@JSON
@@ -734,23 +747,30 @@ public class KaleoDefinitionModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_kaleoDefinitionOriginalValues == null) {
+			_kaleoDefinitionOriginalValues = new KaleoDefinitionOriginalValues(
+				this);
 		}
+
+		_kaleoDefinitionOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_kaleoDefinitionOriginalValues == null) {
+			return _active;
+		}
+
+		return _kaleoDefinitionOriginalValues._originalActive;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kaleoDefinitionOriginalValues == null) {
+			return 0;
+		}
+
+		return _kaleoDefinitionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -930,26 +950,9 @@ public class KaleoDefinitionModelImpl
 	public void resetOriginalValues() {
 		KaleoDefinitionModelImpl kaleoDefinitionModelImpl = this;
 
-		kaleoDefinitionModelImpl._originalCompanyId =
-			kaleoDefinitionModelImpl._companyId;
-
-		kaleoDefinitionModelImpl._setOriginalCompanyId = false;
+		kaleoDefinitionModelImpl._kaleoDefinitionOriginalValues = null;
 
 		kaleoDefinitionModelImpl._setModifiedDate = false;
-
-		kaleoDefinitionModelImpl._originalName = kaleoDefinitionModelImpl._name;
-
-		kaleoDefinitionModelImpl._originalVersion =
-			kaleoDefinitionModelImpl._version;
-
-		kaleoDefinitionModelImpl._setOriginalVersion = false;
-
-		kaleoDefinitionModelImpl._originalActive =
-			kaleoDefinitionModelImpl._active;
-
-		kaleoDefinitionModelImpl._setOriginalActive = false;
-
-		kaleoDefinitionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1095,33 +1098,45 @@ public class KaleoDefinitionModelImpl
 		return sb.toString();
 	}
 
+	private static class KaleoDefinitionOriginalValues {
+
+		private KaleoDefinitionOriginalValues(
+			KaleoDefinitionModelImpl kaleoDefinitionModelImpl) {
+
+			_originalCompanyId = kaleoDefinitionModelImpl._companyId;
+			_originalName = kaleoDefinitionModelImpl._name;
+			_originalVersion = kaleoDefinitionModelImpl._version;
+			_originalActive = kaleoDefinitionModelImpl._active;
+		}
+
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private final int _originalVersion;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KaleoDefinition>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KaleoDefinitionOriginalValues _kaleoDefinitionOriginalValues;
 	private long _mvccVersion;
 	private long _kaleoDefinitionId;
 	private long _groupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private String _originalName;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;
 	private String _content;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private KaleoDefinition _escapedModel;
 
 }

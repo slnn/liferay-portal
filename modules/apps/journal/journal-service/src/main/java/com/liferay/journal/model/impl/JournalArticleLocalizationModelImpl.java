@@ -320,19 +320,23 @@ public class JournalArticleLocalizationModelImpl
 
 	@Override
 	public void setArticlePK(long articlePK) {
-		_columnBitmask |= ARTICLEPK_COLUMN_BITMASK;
-
-		if (!_setOriginalArticlePK) {
-			_setOriginalArticlePK = true;
-
-			_originalArticlePK = _articlePK;
+		if (_journalArticleLocalizationOriginalValues == null) {
+			_journalArticleLocalizationOriginalValues =
+				new JournalArticleLocalizationOriginalValues(this);
 		}
+
+		_journalArticleLocalizationOriginalValues._columnBitmask |=
+			ARTICLEPK_COLUMN_BITMASK;
 
 		_articlePK = articlePK;
 	}
 
 	public long getOriginalArticlePK() {
-		return _originalArticlePK;
+		if (_journalArticleLocalizationOriginalValues == null) {
+			return _articlePK;
+		}
+
+		return _journalArticleLocalizationOriginalValues._originalArticlePK;
 	}
 
 	@Override
@@ -377,21 +381,32 @@ public class JournalArticleLocalizationModelImpl
 
 	@Override
 	public void setLanguageId(String languageId) {
-		_columnBitmask |= LANGUAGEID_COLUMN_BITMASK;
-
-		if (_originalLanguageId == null) {
-			_originalLanguageId = _languageId;
+		if (_journalArticleLocalizationOriginalValues == null) {
+			_journalArticleLocalizationOriginalValues =
+				new JournalArticleLocalizationOriginalValues(this);
 		}
+
+		_journalArticleLocalizationOriginalValues._columnBitmask |=
+			LANGUAGEID_COLUMN_BITMASK;
 
 		_languageId = languageId;
 	}
 
 	public String getOriginalLanguageId() {
-		return GetterUtil.getString(_originalLanguageId);
+		if (_journalArticleLocalizationOriginalValues == null) {
+			return GetterUtil.getString(_languageId);
+		}
+
+		return GetterUtil.getString(
+			_journalArticleLocalizationOriginalValues._originalLanguageId);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_journalArticleLocalizationOriginalValues == null) {
+			return 0;
+		}
+
+		return _journalArticleLocalizationOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -496,15 +511,8 @@ public class JournalArticleLocalizationModelImpl
 		JournalArticleLocalizationModelImpl
 			journalArticleLocalizationModelImpl = this;
 
-		journalArticleLocalizationModelImpl._originalArticlePK =
-			journalArticleLocalizationModelImpl._articlePK;
-
-		journalArticleLocalizationModelImpl._setOriginalArticlePK = false;
-
-		journalArticleLocalizationModelImpl._originalLanguageId =
-			journalArticleLocalizationModelImpl._languageId;
-
-		journalArticleLocalizationModelImpl._columnBitmask = 0;
+		journalArticleLocalizationModelImpl.
+			_journalArticleLocalizationOriginalValues = null;
 	}
 
 	@Override
@@ -614,21 +622,36 @@ public class JournalArticleLocalizationModelImpl
 		return sb.toString();
 	}
 
+	private static class JournalArticleLocalizationOriginalValues {
+
+		private JournalArticleLocalizationOriginalValues(
+			JournalArticleLocalizationModelImpl
+				journalArticleLocalizationModelImpl) {
+
+			_originalArticlePK = journalArticleLocalizationModelImpl._articlePK;
+			_originalLanguageId =
+				journalArticleLocalizationModelImpl._languageId;
+		}
+
+		private final long _originalArticlePK;
+		private final String _originalLanguageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, JournalArticleLocalization>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private JournalArticleLocalizationOriginalValues
+		_journalArticleLocalizationOriginalValues;
 	private long _articleLocalizationId;
 	private long _companyId;
 	private long _articlePK;
-	private long _originalArticlePK;
-	private boolean _setOriginalArticlePK;
 	private String _title;
 	private String _description;
 	private String _languageId;
-	private String _originalLanguageId;
-	private long _columnBitmask;
 	private JournalArticleLocalization _escapedModel;
 
 }

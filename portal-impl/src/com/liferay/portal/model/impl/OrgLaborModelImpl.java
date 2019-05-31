@@ -436,19 +436,21 @@ public class OrgLaborModelImpl
 
 	@Override
 	public void setOrganizationId(long organizationId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalOrganizationId) {
-			_setOriginalOrganizationId = true;
-
-			_originalOrganizationId = _organizationId;
+		if (_orgLaborOriginalValues == null) {
+			_orgLaborOriginalValues = new OrgLaborOriginalValues(this);
 		}
+
+		_orgLaborOriginalValues._columnBitmask = -1L;
 
 		_organizationId = organizationId;
 	}
 
 	public long getOriginalOrganizationId() {
-		return _originalOrganizationId;
+		if (_orgLaborOriginalValues == null) {
+			return _organizationId;
+		}
+
+		return _orgLaborOriginalValues._originalOrganizationId;
 	}
 
 	@JSON
@@ -459,7 +461,11 @@ public class OrgLaborModelImpl
 
 	@Override
 	public void setTypeId(long typeId) {
-		_columnBitmask = -1L;
+		if (_orgLaborOriginalValues == null) {
+			_orgLaborOriginalValues = new OrgLaborOriginalValues(this);
+		}
+
+		_orgLaborOriginalValues._columnBitmask = -1L;
 
 		_typeId = typeId;
 	}
@@ -619,7 +625,11 @@ public class OrgLaborModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_orgLaborOriginalValues == null) {
+			return 0;
+		}
+
+		return _orgLaborOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -750,12 +760,7 @@ public class OrgLaborModelImpl
 	public void resetOriginalValues() {
 		OrgLaborModelImpl orgLaborModelImpl = this;
 
-		orgLaborModelImpl._originalOrganizationId =
-			orgLaborModelImpl._organizationId;
-
-		orgLaborModelImpl._setOriginalOrganizationId = false;
-
-		orgLaborModelImpl._columnBitmask = 0;
+		orgLaborModelImpl._orgLaborOriginalValues = null;
 	}
 
 	@Override
@@ -866,15 +871,25 @@ public class OrgLaborModelImpl
 		return sb.toString();
 	}
 
+	private static class OrgLaborOriginalValues {
+
+		private OrgLaborOriginalValues(OrgLaborModelImpl orgLaborModelImpl) {
+			_originalOrganizationId = orgLaborModelImpl._organizationId;
+		}
+
+		private final long _originalOrganizationId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, OrgLabor>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private OrgLaborOriginalValues _orgLaborOriginalValues;
 	private long _mvccVersion;
 	private long _orgLaborId;
 	private long _companyId;
 	private long _organizationId;
-	private long _originalOrganizationId;
-	private boolean _setOriginalOrganizationId;
 	private long _typeId;
 	private int _sunOpen;
 	private int _sunClose;
@@ -890,7 +905,6 @@ public class OrgLaborModelImpl
 	private int _friClose;
 	private int _satOpen;
 	private int _satClose;
-	private long _columnBitmask;
 	private OrgLabor _escapedModel;
 
 }

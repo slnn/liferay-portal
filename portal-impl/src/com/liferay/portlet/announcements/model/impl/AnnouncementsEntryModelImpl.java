@@ -463,17 +463,23 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
 		}
+
+		_announcementsEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_announcementsEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_announcementsEntryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -495,19 +501,23 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
 		}
+
+		_announcementsEntryOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_announcementsEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _announcementsEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -518,13 +528,13 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
 		}
+
+		_announcementsEntryOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -546,7 +556,11 @@ public class AnnouncementsEntryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_announcementsEntryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _announcementsEntryOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -590,7 +604,12 @@ public class AnnouncementsEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
+		}
+
+		_announcementsEntryOriginalValues._columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -623,19 +642,23 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
 		}
+
+		_announcementsEntryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_announcementsEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _announcementsEntryOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -646,19 +669,23 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
 		}
+
+		_announcementsEntryOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_announcementsEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _announcementsEntryOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -755,7 +782,12 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setPriority(int priority) {
-		_columnBitmask = -1L;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
+		}
+
+		_announcementsEntryOriginalValues._columnBitmask = -1L;
 
 		_priority = priority;
 	}
@@ -774,19 +806,23 @@ public class AnnouncementsEntryModelImpl
 
 	@Override
 	public void setAlert(boolean alert) {
-		_columnBitmask |= ALERT_COLUMN_BITMASK;
-
-		if (!_setOriginalAlert) {
-			_setOriginalAlert = true;
-
-			_originalAlert = _alert;
+		if (_announcementsEntryOriginalValues == null) {
+			_announcementsEntryOriginalValues =
+				new AnnouncementsEntryOriginalValues(this);
 		}
+
+		_announcementsEntryOriginalValues._columnBitmask |=
+			ALERT_COLUMN_BITMASK;
 
 		_alert = alert;
 	}
 
 	public boolean getOriginalAlert() {
-		return _originalAlert;
+		if (_announcementsEntryOriginalValues == null) {
+			return _alert;
+		}
+
+		return _announcementsEntryOriginalValues._originalAlert;
 	}
 
 	@Override
@@ -797,7 +833,11 @@ public class AnnouncementsEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_announcementsEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _announcementsEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -921,37 +961,9 @@ public class AnnouncementsEntryModelImpl
 	public void resetOriginalValues() {
 		AnnouncementsEntryModelImpl announcementsEntryModelImpl = this;
 
-		announcementsEntryModelImpl._originalUuid =
-			announcementsEntryModelImpl._uuid;
-
-		announcementsEntryModelImpl._originalCompanyId =
-			announcementsEntryModelImpl._companyId;
-
-		announcementsEntryModelImpl._setOriginalCompanyId = false;
-
-		announcementsEntryModelImpl._originalUserId =
-			announcementsEntryModelImpl._userId;
-
-		announcementsEntryModelImpl._setOriginalUserId = false;
+		announcementsEntryModelImpl._announcementsEntryOriginalValues = null;
 
 		announcementsEntryModelImpl._setModifiedDate = false;
-
-		announcementsEntryModelImpl._originalClassNameId =
-			announcementsEntryModelImpl._classNameId;
-
-		announcementsEntryModelImpl._setOriginalClassNameId = false;
-
-		announcementsEntryModelImpl._originalClassPK =
-			announcementsEntryModelImpl._classPK;
-
-		announcementsEntryModelImpl._setOriginalClassPK = false;
-
-		announcementsEntryModelImpl._originalAlert =
-			announcementsEntryModelImpl._alert;
-
-		announcementsEntryModelImpl._setOriginalAlert = false;
-
-		announcementsEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1124,28 +1136,43 @@ public class AnnouncementsEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class AnnouncementsEntryOriginalValues {
+
+		private AnnouncementsEntryOriginalValues(
+			AnnouncementsEntryModelImpl announcementsEntryModelImpl) {
+
+			_originalUuid = announcementsEntryModelImpl._uuid;
+			_originalCompanyId = announcementsEntryModelImpl._companyId;
+			_originalUserId = announcementsEntryModelImpl._userId;
+			_originalClassNameId = announcementsEntryModelImpl._classNameId;
+			_originalClassPK = announcementsEntryModelImpl._classPK;
+			_originalAlert = announcementsEntryModelImpl._alert;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final boolean _originalAlert;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AnnouncementsEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AnnouncementsEntryOriginalValues _announcementsEntryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _entryId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _title;
 	private String _content;
 	private String _url;
@@ -1154,9 +1181,6 @@ public class AnnouncementsEntryModelImpl
 	private Date _expirationDate;
 	private int _priority;
 	private boolean _alert;
-	private boolean _originalAlert;
-	private boolean _setOriginalAlert;
-	private long _columnBitmask;
 	private AnnouncementsEntry _escapedModel;
 
 }

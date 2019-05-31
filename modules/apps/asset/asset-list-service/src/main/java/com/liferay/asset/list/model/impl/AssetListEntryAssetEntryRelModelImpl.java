@@ -372,17 +372,24 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			_assetListEntryAssetEntryRelOriginalValues =
+				new AssetListEntryAssetEntryRelOriginalValues(this);
 		}
+
+		_assetListEntryAssetEntryRelOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_assetListEntryAssetEntryRelOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -404,19 +411,23 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			_assetListEntryAssetEntryRelOriginalValues =
+				new AssetListEntryAssetEntryRelOriginalValues(this);
 		}
+
+		_assetListEntryAssetEntryRelOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _assetListEntryAssetEntryRelOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -426,19 +437,23 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			_assetListEntryAssetEntryRelOriginalValues =
+				new AssetListEntryAssetEntryRelOriginalValues(this);
 		}
+
+		_assetListEntryAssetEntryRelOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _assetListEntryAssetEntryRelOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -515,19 +530,24 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setAssetListEntryId(long assetListEntryId) {
-		_columnBitmask |= ASSETLISTENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssetListEntryId) {
-			_setOriginalAssetListEntryId = true;
-
-			_originalAssetListEntryId = _assetListEntryId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			_assetListEntryAssetEntryRelOriginalValues =
+				new AssetListEntryAssetEntryRelOriginalValues(this);
 		}
+
+		_assetListEntryAssetEntryRelOriginalValues._columnBitmask |=
+			ASSETLISTENTRYID_COLUMN_BITMASK;
 
 		_assetListEntryId = assetListEntryId;
 	}
 
 	public long getOriginalAssetListEntryId() {
-		return _originalAssetListEntryId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return _assetListEntryId;
+		}
+
+		return _assetListEntryAssetEntryRelOriginalValues.
+			_originalAssetListEntryId;
 	}
 
 	@Override
@@ -547,19 +567,24 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
-		_columnBitmask |= SEGMENTSENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalSegmentsEntryId) {
-			_setOriginalSegmentsEntryId = true;
-
-			_originalSegmentsEntryId = _segmentsEntryId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			_assetListEntryAssetEntryRelOriginalValues =
+				new AssetListEntryAssetEntryRelOriginalValues(this);
 		}
+
+		_assetListEntryAssetEntryRelOriginalValues._columnBitmask |=
+			SEGMENTSENTRYID_COLUMN_BITMASK;
 
 		_segmentsEntryId = segmentsEntryId;
 	}
 
 	public long getOriginalSegmentsEntryId() {
-		return _originalSegmentsEntryId;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return _segmentsEntryId;
+		}
+
+		return _assetListEntryAssetEntryRelOriginalValues.
+			_originalSegmentsEntryId;
 	}
 
 	@Override
@@ -569,19 +594,22 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setPosition(int position) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalPosition) {
-			_setOriginalPosition = true;
-
-			_originalPosition = _position;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			_assetListEntryAssetEntryRelOriginalValues =
+				new AssetListEntryAssetEntryRelOriginalValues(this);
 		}
+
+		_assetListEntryAssetEntryRelOriginalValues._columnBitmask = -1L;
 
 		_position = position;
 	}
 
 	public int getOriginalPosition() {
-		return _originalPosition;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return _position;
+		}
+
+		return _assetListEntryAssetEntryRelOriginalValues._originalPosition;
 	}
 
 	@Override
@@ -602,7 +630,11 @@ public class AssetListEntryAssetEntryRelModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetListEntryAssetEntryRelOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetListEntryAssetEntryRelOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -723,39 +755,10 @@ public class AssetListEntryAssetEntryRelModelImpl
 		AssetListEntryAssetEntryRelModelImpl
 			assetListEntryAssetEntryRelModelImpl = this;
 
-		assetListEntryAssetEntryRelModelImpl._originalUuid =
-			assetListEntryAssetEntryRelModelImpl._uuid;
-
-		assetListEntryAssetEntryRelModelImpl._originalGroupId =
-			assetListEntryAssetEntryRelModelImpl._groupId;
-
-		assetListEntryAssetEntryRelModelImpl._setOriginalGroupId = false;
-
-		assetListEntryAssetEntryRelModelImpl._originalCompanyId =
-			assetListEntryAssetEntryRelModelImpl._companyId;
-
-		assetListEntryAssetEntryRelModelImpl._setOriginalCompanyId = false;
+		assetListEntryAssetEntryRelModelImpl.
+			_assetListEntryAssetEntryRelOriginalValues = null;
 
 		assetListEntryAssetEntryRelModelImpl._setModifiedDate = false;
-
-		assetListEntryAssetEntryRelModelImpl._originalAssetListEntryId =
-			assetListEntryAssetEntryRelModelImpl._assetListEntryId;
-
-		assetListEntryAssetEntryRelModelImpl._setOriginalAssetListEntryId =
-			false;
-
-		assetListEntryAssetEntryRelModelImpl._originalSegmentsEntryId =
-			assetListEntryAssetEntryRelModelImpl._segmentsEntryId;
-
-		assetListEntryAssetEntryRelModelImpl._setOriginalSegmentsEntryId =
-			false;
-
-		assetListEntryAssetEntryRelModelImpl._originalPosition =
-			assetListEntryAssetEntryRelModelImpl._position;
-
-		assetListEntryAssetEntryRelModelImpl._setOriginalPosition = false;
-
-		assetListEntryAssetEntryRelModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -900,38 +903,55 @@ public class AssetListEntryAssetEntryRelModelImpl
 		return sb.toString();
 	}
 
+	private static class AssetListEntryAssetEntryRelOriginalValues {
+
+		private AssetListEntryAssetEntryRelOriginalValues(
+			AssetListEntryAssetEntryRelModelImpl
+				assetListEntryAssetEntryRelModelImpl) {
+
+			_originalUuid = assetListEntryAssetEntryRelModelImpl._uuid;
+			_originalGroupId = assetListEntryAssetEntryRelModelImpl._groupId;
+			_originalCompanyId =
+				assetListEntryAssetEntryRelModelImpl._companyId;
+			_originalAssetListEntryId =
+				assetListEntryAssetEntryRelModelImpl._assetListEntryId;
+			_originalSegmentsEntryId =
+				assetListEntryAssetEntryRelModelImpl._segmentsEntryId;
+			_originalPosition = assetListEntryAssetEntryRelModelImpl._position;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalAssetListEntryId;
+		private final long _originalSegmentsEntryId;
+		private final int _originalPosition;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function
 		<InvocationHandler, AssetListEntryAssetEntryRel>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AssetListEntryAssetEntryRelOriginalValues
+		_assetListEntryAssetEntryRelOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _assetListEntryAssetEntryRelId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _assetListEntryId;
-	private long _originalAssetListEntryId;
-	private boolean _setOriginalAssetListEntryId;
 	private long _assetEntryId;
 	private long _segmentsEntryId;
-	private long _originalSegmentsEntryId;
-	private boolean _setOriginalSegmentsEntryId;
 	private int _position;
-	private int _originalPosition;
-	private boolean _setOriginalPosition;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private AssetListEntryAssetEntryRel _escapedModel;
 
 }

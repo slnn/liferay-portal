@@ -377,19 +377,22 @@ public class ResourceBlockModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_resourceBlockOriginalValues == null) {
+			_resourceBlockOriginalValues = new ResourceBlockOriginalValues(
+				this);
 		}
+
+		_resourceBlockOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_resourceBlockOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _resourceBlockOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -400,19 +403,22 @@ public class ResourceBlockModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_resourceBlockOriginalValues == null) {
+			_resourceBlockOriginalValues = new ResourceBlockOriginalValues(
+				this);
 		}
+
+		_resourceBlockOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_resourceBlockOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _resourceBlockOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -428,17 +434,22 @@ public class ResourceBlockModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_resourceBlockOriginalValues == null) {
+			_resourceBlockOriginalValues = new ResourceBlockOriginalValues(
+				this);
 		}
+
+		_resourceBlockOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_resourceBlockOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_resourceBlockOriginalValues._originalName);
 	}
 
 	@JSON
@@ -454,17 +465,24 @@ public class ResourceBlockModelImpl
 
 	@Override
 	public void setPermissionsHash(String permissionsHash) {
-		_columnBitmask |= PERMISSIONSHASH_COLUMN_BITMASK;
-
-		if (_originalPermissionsHash == null) {
-			_originalPermissionsHash = _permissionsHash;
+		if (_resourceBlockOriginalValues == null) {
+			_resourceBlockOriginalValues = new ResourceBlockOriginalValues(
+				this);
 		}
+
+		_resourceBlockOriginalValues._columnBitmask |=
+			PERMISSIONSHASH_COLUMN_BITMASK;
 
 		_permissionsHash = permissionsHash;
 	}
 
 	public String getOriginalPermissionsHash() {
-		return GetterUtil.getString(_originalPermissionsHash);
+		if (_resourceBlockOriginalValues == null) {
+			return GetterUtil.getString(_permissionsHash);
+		}
+
+		return GetterUtil.getString(
+			_resourceBlockOriginalValues._originalPermissionsHash);
 	}
 
 	@JSON
@@ -479,7 +497,11 @@ public class ResourceBlockModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_resourceBlockOriginalValues == null) {
+			return 0;
+		}
+
+		return _resourceBlockOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -578,22 +600,7 @@ public class ResourceBlockModelImpl
 	public void resetOriginalValues() {
 		ResourceBlockModelImpl resourceBlockModelImpl = this;
 
-		resourceBlockModelImpl._originalCompanyId =
-			resourceBlockModelImpl._companyId;
-
-		resourceBlockModelImpl._setOriginalCompanyId = false;
-
-		resourceBlockModelImpl._originalGroupId =
-			resourceBlockModelImpl._groupId;
-
-		resourceBlockModelImpl._setOriginalGroupId = false;
-
-		resourceBlockModelImpl._originalName = resourceBlockModelImpl._name;
-
-		resourceBlockModelImpl._originalPermissionsHash =
-			resourceBlockModelImpl._permissionsHash;
-
-		resourceBlockModelImpl._columnBitmask = 0;
+		resourceBlockModelImpl._resourceBlockOriginalValues = null;
 	}
 
 	@Override
@@ -693,23 +700,36 @@ public class ResourceBlockModelImpl
 		return sb.toString();
 	}
 
+	private static class ResourceBlockOriginalValues {
+
+		private ResourceBlockOriginalValues(
+			ResourceBlockModelImpl resourceBlockModelImpl) {
+
+			_originalCompanyId = resourceBlockModelImpl._companyId;
+			_originalGroupId = resourceBlockModelImpl._groupId;
+			_originalName = resourceBlockModelImpl._name;
+			_originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalGroupId;
+		private final String _originalName;
+		private final String _originalPermissionsHash;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ResourceBlock>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ResourceBlockOriginalValues _resourceBlockOriginalValues;
 	private long _mvccVersion;
 	private long _resourceBlockId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private String _name;
-	private String _originalName;
 	private String _permissionsHash;
-	private String _originalPermissionsHash;
 	private long _referenceCount;
-	private long _columnBitmask;
 	private ResourceBlock _escapedModel;
 
 }

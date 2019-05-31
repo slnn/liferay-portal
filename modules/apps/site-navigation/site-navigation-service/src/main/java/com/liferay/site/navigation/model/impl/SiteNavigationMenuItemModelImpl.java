@@ -459,17 +459,24 @@ public class SiteNavigationMenuItemModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			_siteNavigationMenuItemOriginalValues =
+				new SiteNavigationMenuItemOriginalValues(this);
 		}
+
+		_siteNavigationMenuItemOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_siteNavigationMenuItemOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -491,19 +498,23 @@ public class SiteNavigationMenuItemModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			_siteNavigationMenuItemOriginalValues =
+				new SiteNavigationMenuItemOriginalValues(this);
 		}
+
+		_siteNavigationMenuItemOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _siteNavigationMenuItemOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -514,19 +525,23 @@ public class SiteNavigationMenuItemModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			_siteNavigationMenuItemOriginalValues =
+				new SiteNavigationMenuItemOriginalValues(this);
 		}
+
+		_siteNavigationMenuItemOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _siteNavigationMenuItemOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -608,19 +623,24 @@ public class SiteNavigationMenuItemModelImpl
 
 	@Override
 	public void setSiteNavigationMenuId(long siteNavigationMenuId) {
-		_columnBitmask |= SITENAVIGATIONMENUID_COLUMN_BITMASK;
-
-		if (!_setOriginalSiteNavigationMenuId) {
-			_setOriginalSiteNavigationMenuId = true;
-
-			_originalSiteNavigationMenuId = _siteNavigationMenuId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			_siteNavigationMenuItemOriginalValues =
+				new SiteNavigationMenuItemOriginalValues(this);
 		}
+
+		_siteNavigationMenuItemOriginalValues._columnBitmask |=
+			SITENAVIGATIONMENUID_COLUMN_BITMASK;
 
 		_siteNavigationMenuId = siteNavigationMenuId;
 	}
 
 	public long getOriginalSiteNavigationMenuId() {
-		return _originalSiteNavigationMenuId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return _siteNavigationMenuId;
+		}
+
+		return _siteNavigationMenuItemOriginalValues.
+			_originalSiteNavigationMenuId;
 	}
 
 	@JSON
@@ -633,20 +653,24 @@ public class SiteNavigationMenuItemModelImpl
 	public void setParentSiteNavigationMenuItemId(
 		long parentSiteNavigationMenuItemId) {
 
-		_columnBitmask |= PARENTSITENAVIGATIONMENUITEMID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentSiteNavigationMenuItemId) {
-			_setOriginalParentSiteNavigationMenuItemId = true;
-
-			_originalParentSiteNavigationMenuItemId =
-				_parentSiteNavigationMenuItemId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			_siteNavigationMenuItemOriginalValues =
+				new SiteNavigationMenuItemOriginalValues(this);
 		}
+
+		_siteNavigationMenuItemOriginalValues._columnBitmask |=
+			PARENTSITENAVIGATIONMENUITEMID_COLUMN_BITMASK;
 
 		_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
 	}
 
 	public long getOriginalParentSiteNavigationMenuItemId() {
-		return _originalParentSiteNavigationMenuItemId;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return _parentSiteNavigationMenuItemId;
+		}
+
+		return _siteNavigationMenuItemOriginalValues.
+			_originalParentSiteNavigationMenuItemId;
 	}
 
 	@JSON
@@ -662,17 +686,24 @@ public class SiteNavigationMenuItemModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			_siteNavigationMenuItemOriginalValues =
+				new SiteNavigationMenuItemOriginalValues(this);
 		}
+
+		_siteNavigationMenuItemOriginalValues._columnBitmask |=
+			NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_siteNavigationMenuItemOriginalValues._originalName);
 	}
 
 	@JSON
@@ -736,7 +767,11 @@ public class SiteNavigationMenuItemModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_siteNavigationMenuItemOriginalValues == null) {
+			return 0;
+		}
+
+		return _siteNavigationMenuItemOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -849,38 +884,10 @@ public class SiteNavigationMenuItemModelImpl
 	public void resetOriginalValues() {
 		SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl = this;
 
-		siteNavigationMenuItemModelImpl._originalUuid =
-			siteNavigationMenuItemModelImpl._uuid;
-
-		siteNavigationMenuItemModelImpl._originalGroupId =
-			siteNavigationMenuItemModelImpl._groupId;
-
-		siteNavigationMenuItemModelImpl._setOriginalGroupId = false;
-
-		siteNavigationMenuItemModelImpl._originalCompanyId =
-			siteNavigationMenuItemModelImpl._companyId;
-
-		siteNavigationMenuItemModelImpl._setOriginalCompanyId = false;
+		siteNavigationMenuItemModelImpl._siteNavigationMenuItemOriginalValues =
+			null;
 
 		siteNavigationMenuItemModelImpl._setModifiedDate = false;
-
-		siteNavigationMenuItemModelImpl._originalSiteNavigationMenuId =
-			siteNavigationMenuItemModelImpl._siteNavigationMenuId;
-
-		siteNavigationMenuItemModelImpl._setOriginalSiteNavigationMenuId =
-			false;
-
-		siteNavigationMenuItemModelImpl.
-			_originalParentSiteNavigationMenuItemId =
-				siteNavigationMenuItemModelImpl._parentSiteNavigationMenuItemId;
-
-		siteNavigationMenuItemModelImpl.
-			_setOriginalParentSiteNavigationMenuItemId = false;
-
-		siteNavigationMenuItemModelImpl._originalName =
-			siteNavigationMenuItemModelImpl._name;
-
-		siteNavigationMenuItemModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1042,36 +1049,52 @@ public class SiteNavigationMenuItemModelImpl
 		return sb.toString();
 	}
 
+	private static class SiteNavigationMenuItemOriginalValues {
+
+		private SiteNavigationMenuItemOriginalValues(
+			SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl) {
+
+			_originalUuid = siteNavigationMenuItemModelImpl._uuid;
+			_originalGroupId = siteNavigationMenuItemModelImpl._groupId;
+			_originalCompanyId = siteNavigationMenuItemModelImpl._companyId;
+			_originalSiteNavigationMenuId =
+				siteNavigationMenuItemModelImpl._siteNavigationMenuId;
+			_originalParentSiteNavigationMenuItemId =
+				siteNavigationMenuItemModelImpl._parentSiteNavigationMenuItemId;
+			_originalName = siteNavigationMenuItemModelImpl._name;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalSiteNavigationMenuId;
+		private final long _originalParentSiteNavigationMenuItemId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SiteNavigationMenuItem>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SiteNavigationMenuItemOriginalValues
+		_siteNavigationMenuItemOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _siteNavigationMenuItemId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _siteNavigationMenuId;
-	private long _originalSiteNavigationMenuId;
-	private boolean _setOriginalSiteNavigationMenuId;
 	private long _parentSiteNavigationMenuItemId;
-	private long _originalParentSiteNavigationMenuItemId;
-	private boolean _setOriginalParentSiteNavigationMenuItemId;
 	private String _name;
-	private String _originalName;
 	private String _type;
 	private String _typeSettings;
 	private int _order;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private SiteNavigationMenuItem _escapedModel;
 
 }

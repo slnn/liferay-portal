@@ -394,17 +394,23 @@ public class ReadingTimeEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_readingTimeEntryOriginalValues == null) {
+			_readingTimeEntryOriginalValues =
+				new ReadingTimeEntryOriginalValues(this);
 		}
+
+		_readingTimeEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_readingTimeEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_readingTimeEntryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -426,19 +432,23 @@ public class ReadingTimeEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_readingTimeEntryOriginalValues == null) {
+			_readingTimeEntryOriginalValues =
+				new ReadingTimeEntryOriginalValues(this);
 		}
+
+		_readingTimeEntryOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_readingTimeEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _readingTimeEntryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -449,19 +459,23 @@ public class ReadingTimeEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_readingTimeEntryOriginalValues == null) {
+			_readingTimeEntryOriginalValues =
+				new ReadingTimeEntryOriginalValues(this);
 		}
+
+		_readingTimeEntryOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_readingTimeEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _readingTimeEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -472,7 +486,12 @@ public class ReadingTimeEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_readingTimeEntryOriginalValues == null) {
+			_readingTimeEntryOriginalValues =
+				new ReadingTimeEntryOriginalValues(this);
+		}
+
+		_readingTimeEntryOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -522,19 +541,23 @@ public class ReadingTimeEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_readingTimeEntryOriginalValues == null) {
+			_readingTimeEntryOriginalValues =
+				new ReadingTimeEntryOriginalValues(this);
 		}
+
+		_readingTimeEntryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_readingTimeEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _readingTimeEntryOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -545,19 +568,23 @@ public class ReadingTimeEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_readingTimeEntryOriginalValues == null) {
+			_readingTimeEntryOriginalValues =
+				new ReadingTimeEntryOriginalValues(this);
 		}
+
+		_readingTimeEntryOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_readingTimeEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _readingTimeEntryOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -729,7 +756,11 @@ public class ReadingTimeEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_readingTimeEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _readingTimeEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -831,32 +862,9 @@ public class ReadingTimeEntryModelImpl
 	public void resetOriginalValues() {
 		ReadingTimeEntryModelImpl readingTimeEntryModelImpl = this;
 
-		readingTimeEntryModelImpl._originalUuid =
-			readingTimeEntryModelImpl._uuid;
-
-		readingTimeEntryModelImpl._originalGroupId =
-			readingTimeEntryModelImpl._groupId;
-
-		readingTimeEntryModelImpl._setOriginalGroupId = false;
-
-		readingTimeEntryModelImpl._originalCompanyId =
-			readingTimeEntryModelImpl._companyId;
-
-		readingTimeEntryModelImpl._setOriginalCompanyId = false;
+		readingTimeEntryModelImpl._readingTimeEntryOriginalValues = null;
 
 		readingTimeEntryModelImpl._setModifiedDate = false;
-
-		readingTimeEntryModelImpl._originalClassNameId =
-			readingTimeEntryModelImpl._classNameId;
-
-		readingTimeEntryModelImpl._setOriginalClassNameId = false;
-
-		readingTimeEntryModelImpl._originalClassPK =
-			readingTimeEntryModelImpl._classPK;
-
-		readingTimeEntryModelImpl._setOriginalClassPK = false;
-
-		readingTimeEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -968,29 +976,41 @@ public class ReadingTimeEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class ReadingTimeEntryOriginalValues {
+
+		private ReadingTimeEntryOriginalValues(
+			ReadingTimeEntryModelImpl readingTimeEntryModelImpl) {
+
+			_originalUuid = readingTimeEntryModelImpl._uuid;
+			_originalGroupId = readingTimeEntryModelImpl._groupId;
+			_originalCompanyId = readingTimeEntryModelImpl._companyId;
+			_originalClassNameId = readingTimeEntryModelImpl._classNameId;
+			_originalClassPK = readingTimeEntryModelImpl._classPK;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ReadingTimeEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ReadingTimeEntryOriginalValues _readingTimeEntryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _readingTimeEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _readingTime;
-	private long _columnBitmask;
 	private ReadingTimeEntry _escapedModel;
 
 }

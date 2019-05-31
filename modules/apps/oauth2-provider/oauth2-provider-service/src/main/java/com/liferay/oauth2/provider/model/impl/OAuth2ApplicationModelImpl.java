@@ -481,19 +481,23 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_oAuth2ApplicationOriginalValues == null) {
+			_oAuth2ApplicationOriginalValues =
+				new OAuth2ApplicationOriginalValues(this);
 		}
+
+		_oAuth2ApplicationOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_oAuth2ApplicationOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _oAuth2ApplicationOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -653,17 +657,24 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setClientId(String clientId) {
-		_columnBitmask |= CLIENTID_COLUMN_BITMASK;
-
-		if (_originalClientId == null) {
-			_originalClientId = _clientId;
+		if (_oAuth2ApplicationOriginalValues == null) {
+			_oAuth2ApplicationOriginalValues =
+				new OAuth2ApplicationOriginalValues(this);
 		}
+
+		_oAuth2ApplicationOriginalValues._columnBitmask |=
+			CLIENTID_COLUMN_BITMASK;
 
 		_clientId = clientId;
 	}
 
 	public String getOriginalClientId() {
-		return GetterUtil.getString(_originalClientId);
+		if (_oAuth2ApplicationOriginalValues == null) {
+			return GetterUtil.getString(_clientId);
+		}
+
+		return GetterUtil.getString(
+			_oAuth2ApplicationOriginalValues._originalClientId);
 	}
 
 	@JSON
@@ -801,7 +812,11 @@ public class OAuth2ApplicationModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_oAuth2ApplicationOriginalValues == null) {
+			return 0;
+		}
+
+		return _oAuth2ApplicationOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -917,17 +932,9 @@ public class OAuth2ApplicationModelImpl
 	public void resetOriginalValues() {
 		OAuth2ApplicationModelImpl oAuth2ApplicationModelImpl = this;
 
-		oAuth2ApplicationModelImpl._originalCompanyId =
-			oAuth2ApplicationModelImpl._companyId;
-
-		oAuth2ApplicationModelImpl._setOriginalCompanyId = false;
+		oAuth2ApplicationModelImpl._oAuth2ApplicationOriginalValues = null;
 
 		oAuth2ApplicationModelImpl._setModifiedDate = false;
-
-		oAuth2ApplicationModelImpl._originalClientId =
-			oAuth2ApplicationModelImpl._clientId;
-
-		oAuth2ApplicationModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1129,15 +1136,29 @@ public class OAuth2ApplicationModelImpl
 		return sb.toString();
 	}
 
+	private static class OAuth2ApplicationOriginalValues {
+
+		private OAuth2ApplicationOriginalValues(
+			OAuth2ApplicationModelImpl oAuth2ApplicationModelImpl) {
+
+			_originalCompanyId = oAuth2ApplicationModelImpl._companyId;
+			_originalClientId = oAuth2ApplicationModelImpl._clientId;
+		}
+
+		private final long _originalCompanyId;
+		private final String _originalClientId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, OAuth2Application>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private OAuth2ApplicationOriginalValues _oAuth2ApplicationOriginalValues;
 	private long _oAuth2ApplicationId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1148,7 +1169,6 @@ public class OAuth2ApplicationModelImpl
 	private long _clientCredentialUserId;
 	private String _clientCredentialUserName;
 	private String _clientId;
-	private String _originalClientId;
 	private int _clientProfile;
 	private String _clientSecret;
 	private String _description;
@@ -1158,7 +1178,6 @@ public class OAuth2ApplicationModelImpl
 	private String _name;
 	private String _privacyPolicyURL;
 	private String _redirectURIs;
-	private long _columnBitmask;
 	private OAuth2Application _escapedModel;
 
 }

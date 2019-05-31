@@ -388,17 +388,21 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_syncDeviceOriginalValues == null) {
+			_syncDeviceOriginalValues = new SyncDeviceOriginalValues(this);
 		}
+
+		_syncDeviceOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_syncDeviceOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_syncDeviceOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -420,19 +424,21 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_syncDeviceOriginalValues == null) {
+			_syncDeviceOriginalValues = new SyncDeviceOriginalValues(this);
 		}
+
+		_syncDeviceOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_syncDeviceOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _syncDeviceOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -443,13 +449,11 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_syncDeviceOriginalValues == null) {
+			_syncDeviceOriginalValues = new SyncDeviceOriginalValues(this);
 		}
+
+		_syncDeviceOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -471,7 +475,11 @@ public class SyncDeviceModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_syncDeviceOriginalValues == null) {
+			return _userId;
+		}
+
+		return _syncDeviceOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -487,17 +495,22 @@ public class SyncDeviceModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		_columnBitmask |= USERNAME_COLUMN_BITMASK;
-
-		if (_originalUserName == null) {
-			_originalUserName = _userName;
+		if (_syncDeviceOriginalValues == null) {
+			_syncDeviceOriginalValues = new SyncDeviceOriginalValues(this);
 		}
+
+		_syncDeviceOriginalValues._columnBitmask |= USERNAME_COLUMN_BITMASK;
 
 		_userName = userName;
 	}
 
 	public String getOriginalUserName() {
-		return GetterUtil.getString(_originalUserName);
+		if (_syncDeviceOriginalValues == null) {
+			return GetterUtil.getString(_userName);
+		}
+
+		return GetterUtil.getString(
+			_syncDeviceOriginalValues._originalUserName);
 	}
 
 	@JSON
@@ -600,7 +613,11 @@ public class SyncDeviceModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_syncDeviceOriginalValues == null) {
+			return 0;
+		}
+
+		return _syncDeviceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -704,21 +721,9 @@ public class SyncDeviceModelImpl
 	public void resetOriginalValues() {
 		SyncDeviceModelImpl syncDeviceModelImpl = this;
 
-		syncDeviceModelImpl._originalUuid = syncDeviceModelImpl._uuid;
-
-		syncDeviceModelImpl._originalCompanyId = syncDeviceModelImpl._companyId;
-
-		syncDeviceModelImpl._setOriginalCompanyId = false;
-
-		syncDeviceModelImpl._originalUserId = syncDeviceModelImpl._userId;
-
-		syncDeviceModelImpl._setOriginalUserId = false;
-
-		syncDeviceModelImpl._originalUserName = syncDeviceModelImpl._userName;
+		syncDeviceModelImpl._syncDeviceOriginalValues = null;
 
 		syncDeviceModelImpl._setModifiedDate = false;
-
-		syncDeviceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -853,20 +858,34 @@ public class SyncDeviceModelImpl
 		return sb.toString();
 	}
 
+	private static class SyncDeviceOriginalValues {
+
+		private SyncDeviceOriginalValues(
+			SyncDeviceModelImpl syncDeviceModelImpl) {
+
+			_originalUuid = syncDeviceModelImpl._uuid;
+			_originalCompanyId = syncDeviceModelImpl._companyId;
+			_originalUserId = syncDeviceModelImpl._userId;
+			_originalUserName = syncDeviceModelImpl._userName;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final String _originalUserName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SyncDevice>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SyncDeviceOriginalValues _syncDeviceOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _syncDeviceId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
-	private String _originalUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
@@ -875,7 +894,6 @@ public class SyncDeviceModelImpl
 	private int _featureSet;
 	private String _hostname;
 	private int _status;
-	private long _columnBitmask;
 	private SyncDevice _escapedModel;
 
 }

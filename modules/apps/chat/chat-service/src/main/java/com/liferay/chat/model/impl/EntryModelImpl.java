@@ -279,19 +279,21 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setCreateDate(long createDate) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalCreateDate) {
-			_setOriginalCreateDate = true;
-
-			_originalCreateDate = _createDate;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
 		}
+
+		_entryOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
 
 	public long getOriginalCreateDate() {
-		return _originalCreateDate;
+		if (_entryOriginalValues == null) {
+			return _createDate;
+		}
+
+		return _entryOriginalValues._originalCreateDate;
 	}
 
 	@Override
@@ -301,13 +303,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setFromUserId(long fromUserId) {
-		_columnBitmask |= FROMUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalFromUserId) {
-			_setOriginalFromUserId = true;
-
-			_originalFromUserId = _fromUserId;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
 		}
+
+		_entryOriginalValues._columnBitmask |= FROMUSERID_COLUMN_BITMASK;
 
 		_fromUserId = fromUserId;
 	}
@@ -329,7 +329,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	public long getOriginalFromUserId() {
-		return _originalFromUserId;
+		if (_entryOriginalValues == null) {
+			return _fromUserId;
+		}
+
+		return _entryOriginalValues._originalFromUserId;
 	}
 
 	@Override
@@ -339,13 +343,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setToUserId(long toUserId) {
-		_columnBitmask |= TOUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalToUserId) {
-			_setOriginalToUserId = true;
-
-			_originalToUserId = _toUserId;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
 		}
+
+		_entryOriginalValues._columnBitmask |= TOUSERID_COLUMN_BITMASK;
 
 		_toUserId = toUserId;
 	}
@@ -367,7 +369,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	public long getOriginalToUserId() {
-		return _originalToUserId;
+		if (_entryOriginalValues == null) {
+			return _toUserId;
+		}
+
+		return _entryOriginalValues._originalToUserId;
 	}
 
 	@Override
@@ -382,17 +388,21 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setContent(String content) {
-		_columnBitmask |= CONTENT_COLUMN_BITMASK;
-
-		if (_originalContent == null) {
-			_originalContent = _content;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
 		}
+
+		_entryOriginalValues._columnBitmask |= CONTENT_COLUMN_BITMASK;
 
 		_content = content;
 	}
 
 	public String getOriginalContent() {
-		return GetterUtil.getString(_originalContent);
+		if (_entryOriginalValues == null) {
+			return GetterUtil.getString(_content);
+		}
+
+		return GetterUtil.getString(_entryOriginalValues._originalContent);
 	}
 
 	@Override
@@ -406,7 +416,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_entryOriginalValues == null) {
+			return 0;
+		}
+
+		return _entryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -512,21 +526,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	public void resetOriginalValues() {
 		EntryModelImpl entryModelImpl = this;
 
-		entryModelImpl._originalCreateDate = entryModelImpl._createDate;
-
-		entryModelImpl._setOriginalCreateDate = false;
-
-		entryModelImpl._originalFromUserId = entryModelImpl._fromUserId;
-
-		entryModelImpl._setOriginalFromUserId = false;
-
-		entryModelImpl._originalToUserId = entryModelImpl._toUserId;
-
-		entryModelImpl._setOriginalToUserId = false;
-
-		entryModelImpl._originalContent = entryModelImpl._content;
-
-		entryModelImpl._columnBitmask = 0;
+		entryModelImpl._entryOriginalValues = null;
 	}
 
 	@Override
@@ -615,25 +615,35 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return sb.toString();
 	}
 
+	private static class EntryOriginalValues {
+
+		private EntryOriginalValues(EntryModelImpl entryModelImpl) {
+			_originalCreateDate = entryModelImpl._createDate;
+			_originalFromUserId = entryModelImpl._fromUserId;
+			_originalToUserId = entryModelImpl._toUserId;
+			_originalContent = entryModelImpl._content;
+		}
+
+		private final long _originalCreateDate;
+		private final long _originalFromUserId;
+		private final long _originalToUserId;
+		private final String _originalContent;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Entry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private EntryOriginalValues _entryOriginalValues;
 	private long _entryId;
 	private long _createDate;
-	private long _originalCreateDate;
-	private boolean _setOriginalCreateDate;
 	private long _fromUserId;
-	private long _originalFromUserId;
-	private boolean _setOriginalFromUserId;
 	private long _toUserId;
-	private long _originalToUserId;
-	private boolean _setOriginalToUserId;
 	private String _content;
-	private String _originalContent;
 	private int _flag;
-	private long _columnBitmask;
 	private Entry _escapedModel;
 
 }

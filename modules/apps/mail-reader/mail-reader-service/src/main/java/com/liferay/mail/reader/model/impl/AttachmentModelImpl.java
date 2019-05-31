@@ -369,19 +369,21 @@ public class AttachmentModelImpl
 
 	@Override
 	public void setMessageId(long messageId) {
-		_columnBitmask |= MESSAGEID_COLUMN_BITMASK;
-
-		if (!_setOriginalMessageId) {
-			_setOriginalMessageId = true;
-
-			_originalMessageId = _messageId;
+		if (_attachmentOriginalValues == null) {
+			_attachmentOriginalValues = new AttachmentOriginalValues(this);
 		}
+
+		_attachmentOriginalValues._columnBitmask |= MESSAGEID_COLUMN_BITMASK;
 
 		_messageId = messageId;
 	}
 
 	public long getOriginalMessageId() {
-		return _originalMessageId;
+		if (_attachmentOriginalValues == null) {
+			return _messageId;
+		}
+
+		return _attachmentOriginalValues._originalMessageId;
 	}
 
 	@Override
@@ -425,7 +427,11 @@ public class AttachmentModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_attachmentOriginalValues == null) {
+			return 0;
+		}
+
+		return _attachmentOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -526,11 +532,7 @@ public class AttachmentModelImpl
 	public void resetOriginalValues() {
 		AttachmentModelImpl attachmentModelImpl = this;
 
-		attachmentModelImpl._originalMessageId = attachmentModelImpl._messageId;
-
-		attachmentModelImpl._setOriginalMessageId = false;
-
-		attachmentModelImpl._columnBitmask = 0;
+		attachmentModelImpl._attachmentOriginalValues = null;
 	}
 
 	@Override
@@ -633,21 +635,32 @@ public class AttachmentModelImpl
 		return sb.toString();
 	}
 
+	private static class AttachmentOriginalValues {
+
+		private AttachmentOriginalValues(
+			AttachmentModelImpl attachmentModelImpl) {
+
+			_originalMessageId = attachmentModelImpl._messageId;
+		}
+
+		private final long _originalMessageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Attachment>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AttachmentOriginalValues _attachmentOriginalValues;
 	private long _attachmentId;
 	private long _companyId;
 	private long _userId;
 	private long _accountId;
 	private long _folderId;
 	private long _messageId;
-	private long _originalMessageId;
-	private boolean _setOriginalMessageId;
 	private String _contentPath;
 	private String _fileName;
 	private long _size;
-	private long _columnBitmask;
 	private Attachment _escapedModel;
 
 }

@@ -290,13 +290,11 @@ public class StatusModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_statusOriginalValues == null) {
+			_statusOriginalValues = new StatusOriginalValues(this);
 		}
+
+		_statusOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -318,7 +316,11 @@ public class StatusModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_statusOriginalValues == null) {
+			return _userId;
+		}
+
+		return _statusOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -328,19 +330,21 @@ public class StatusModelImpl
 
 	@Override
 	public void setModifiedDate(long modifiedDate) {
-		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
-
-		if (!_setOriginalModifiedDate) {
-			_setOriginalModifiedDate = true;
-
-			_originalModifiedDate = _modifiedDate;
+		if (_statusOriginalValues == null) {
+			_statusOriginalValues = new StatusOriginalValues(this);
 		}
+
+		_statusOriginalValues._columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
 
 		_modifiedDate = modifiedDate;
 	}
 
 	public long getOriginalModifiedDate() {
-		return _originalModifiedDate;
+		if (_statusOriginalValues == null) {
+			return _modifiedDate;
+		}
+
+		return _statusOriginalValues._originalModifiedDate;
 	}
 
 	@Override
@@ -355,19 +359,21 @@ public class StatusModelImpl
 
 	@Override
 	public void setOnline(boolean online) {
-		_columnBitmask |= ONLINE_COLUMN_BITMASK;
-
-		if (!_setOriginalOnline) {
-			_setOriginalOnline = true;
-
-			_originalOnline = _online;
+		if (_statusOriginalValues == null) {
+			_statusOriginalValues = new StatusOriginalValues(this);
 		}
+
+		_statusOriginalValues._columnBitmask |= ONLINE_COLUMN_BITMASK;
 
 		_online = online;
 	}
 
 	public boolean getOriginalOnline() {
-		return _originalOnline;
+		if (_statusOriginalValues == null) {
+			return _online;
+		}
+
+		return _statusOriginalValues._originalOnline;
 	}
 
 	@Override
@@ -431,7 +437,11 @@ public class StatusModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_statusOriginalValues == null) {
+			return 0;
+		}
+
+		return _statusOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -531,19 +541,7 @@ public class StatusModelImpl
 	public void resetOriginalValues() {
 		StatusModelImpl statusModelImpl = this;
 
-		statusModelImpl._originalUserId = statusModelImpl._userId;
-
-		statusModelImpl._setOriginalUserId = false;
-
-		statusModelImpl._originalModifiedDate = statusModelImpl._modifiedDate;
-
-		statusModelImpl._setOriginalModifiedDate = false;
-
-		statusModelImpl._originalOnline = statusModelImpl._online;
-
-		statusModelImpl._setOriginalOnline = false;
-
-		statusModelImpl._columnBitmask = 0;
+		statusModelImpl._statusOriginalValues = null;
 	}
 
 	@Override
@@ -642,26 +640,35 @@ public class StatusModelImpl
 		return sb.toString();
 	}
 
+	private static class StatusOriginalValues {
+
+		private StatusOriginalValues(StatusModelImpl statusModelImpl) {
+			_originalUserId = statusModelImpl._userId;
+			_originalModifiedDate = statusModelImpl._modifiedDate;
+			_originalOnline = statusModelImpl._online;
+		}
+
+		private final long _originalUserId;
+		private final long _originalModifiedDate;
+		private final boolean _originalOnline;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Status>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private StatusOriginalValues _statusOriginalValues;
 	private long _statusId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _modifiedDate;
-	private long _originalModifiedDate;
-	private boolean _setOriginalModifiedDate;
 	private boolean _online;
-	private boolean _originalOnline;
-	private boolean _setOriginalOnline;
 	private boolean _awake;
 	private String _activePanelIds;
 	private String _message;
 	private boolean _playSound;
-	private long _columnBitmask;
 	private Status _escapedModel;
 
 }

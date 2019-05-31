@@ -343,17 +343,21 @@ public class ListTypeModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_listTypeOriginalValues == null) {
+			_listTypeOriginalValues = new ListTypeOriginalValues(this);
 		}
+
+		_listTypeOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_listTypeOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_listTypeOriginalValues._originalName);
 	}
 
 	@JSON
@@ -369,21 +373,29 @@ public class ListTypeModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_listTypeOriginalValues == null) {
+			_listTypeOriginalValues = new ListTypeOriginalValues(this);
 		}
+
+		_listTypeOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		if (_listTypeOriginalValues == null) {
+			return GetterUtil.getString(_type);
+		}
+
+		return GetterUtil.getString(_listTypeOriginalValues._originalType);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_listTypeOriginalValues == null) {
+			return 0;
+		}
+
+		return _listTypeOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -477,11 +489,7 @@ public class ListTypeModelImpl
 	public void resetOriginalValues() {
 		ListTypeModelImpl listTypeModelImpl = this;
 
-		listTypeModelImpl._originalName = listTypeModelImpl._name;
-
-		listTypeModelImpl._originalType = listTypeModelImpl._type;
-
-		listTypeModelImpl._columnBitmask = 0;
+		listTypeModelImpl._listTypeOriginalValues = null;
 	}
 
 	@Override
@@ -574,16 +582,27 @@ public class ListTypeModelImpl
 		return sb.toString();
 	}
 
+	private static class ListTypeOriginalValues {
+
+		private ListTypeOriginalValues(ListTypeModelImpl listTypeModelImpl) {
+			_originalName = listTypeModelImpl._name;
+			_originalType = listTypeModelImpl._type;
+		}
+
+		private final String _originalName;
+		private final String _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ListType>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ListTypeOriginalValues _listTypeOriginalValues;
 	private long _mvccVersion;
 	private long _listTypeId;
 	private String _name;
-	private String _originalName;
 	private String _type;
-	private String _originalType;
-	private long _columnBitmask;
 	private ListType _escapedModel;
 
 }

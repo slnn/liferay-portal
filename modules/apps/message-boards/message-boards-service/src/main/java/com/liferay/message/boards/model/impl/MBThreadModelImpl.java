@@ -466,17 +466,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mbThreadOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mbThreadOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -498,19 +502,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbThreadOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbThreadOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -521,19 +527,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mbThreadOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mbThreadOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -615,19 +623,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setCategoryId(long categoryId) {
-		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCategoryId) {
-			_setOriginalCategoryId = true;
-
-			_originalCategoryId = _categoryId;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask |= CATEGORYID_COLUMN_BITMASK;
 
 		_categoryId = categoryId;
 	}
 
 	public long getOriginalCategoryId() {
-		return _originalCategoryId;
+		if (_mbThreadOriginalValues == null) {
+			return _categoryId;
+		}
+
+		return _mbThreadOriginalValues._originalCategoryId;
 	}
 
 	@JSON
@@ -638,19 +648,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setRootMessageId(long rootMessageId) {
-		_columnBitmask |= ROOTMESSAGEID_COLUMN_BITMASK;
-
-		if (!_setOriginalRootMessageId) {
-			_setOriginalRootMessageId = true;
-
-			_originalRootMessageId = _rootMessageId;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask |= ROOTMESSAGEID_COLUMN_BITMASK;
 
 		_rootMessageId = rootMessageId;
 	}
 
 	public long getOriginalRootMessageId() {
-		return _originalRootMessageId;
+		if (_mbThreadOriginalValues == null) {
+			return _rootMessageId;
+		}
+
+		return _mbThreadOriginalValues._originalRootMessageId;
 	}
 
 	@JSON
@@ -754,17 +766,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_columnBitmask = -1L;
-
-		if (_originalLastPostDate == null) {
-			_originalLastPostDate = _lastPostDate;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask = -1L;
 
 		_lastPostDate = lastPostDate;
 	}
 
 	public Date getOriginalLastPostDate() {
-		return _originalLastPostDate;
+		if (_mbThreadOriginalValues == null) {
+			return _lastPostDate;
+		}
+
+		return _mbThreadOriginalValues._originalLastPostDate;
 	}
 
 	@JSON
@@ -775,19 +791,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setPriority(double priority) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalPriority) {
-			_setOriginalPriority = true;
-
-			_originalPriority = _priority;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask = -1L;
 
 		_priority = priority;
 	}
 
 	public double getOriginalPriority() {
-		return _originalPriority;
+		if (_mbThreadOriginalValues == null) {
+			return _priority;
+		}
+
+		return _mbThreadOriginalValues._originalPriority;
 	}
 
 	@JSON
@@ -826,19 +844,21 @@ public class MBThreadModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_mbThreadOriginalValues == null) {
+			_mbThreadOriginalValues = new MBThreadOriginalValues(this);
 		}
+
+		_mbThreadOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_mbThreadOriginalValues == null) {
+			return _status;
+		}
+
+		return _mbThreadOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1152,7 +1172,11 @@ public class MBThreadModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbThreadOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbThreadOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1284,39 +1308,9 @@ public class MBThreadModelImpl
 	public void resetOriginalValues() {
 		MBThreadModelImpl mbThreadModelImpl = this;
 
-		mbThreadModelImpl._originalUuid = mbThreadModelImpl._uuid;
-
-		mbThreadModelImpl._originalGroupId = mbThreadModelImpl._groupId;
-
-		mbThreadModelImpl._setOriginalGroupId = false;
-
-		mbThreadModelImpl._originalCompanyId = mbThreadModelImpl._companyId;
-
-		mbThreadModelImpl._setOriginalCompanyId = false;
+		mbThreadModelImpl._mbThreadOriginalValues = null;
 
 		mbThreadModelImpl._setModifiedDate = false;
-
-		mbThreadModelImpl._originalCategoryId = mbThreadModelImpl._categoryId;
-
-		mbThreadModelImpl._setOriginalCategoryId = false;
-
-		mbThreadModelImpl._originalRootMessageId =
-			mbThreadModelImpl._rootMessageId;
-
-		mbThreadModelImpl._setOriginalRootMessageId = false;
-
-		mbThreadModelImpl._originalLastPostDate =
-			mbThreadModelImpl._lastPostDate;
-
-		mbThreadModelImpl._originalPriority = mbThreadModelImpl._priority;
-
-		mbThreadModelImpl._setOriginalPriority = false;
-
-		mbThreadModelImpl._originalStatus = mbThreadModelImpl._status;
-
-		mbThreadModelImpl._setOriginalStatus = false;
-
-		mbThreadModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1494,48 +1488,59 @@ public class MBThreadModelImpl
 		return sb.toString();
 	}
 
+	private static class MBThreadOriginalValues {
+
+		private MBThreadOriginalValues(MBThreadModelImpl mbThreadModelImpl) {
+			_originalUuid = mbThreadModelImpl._uuid;
+			_originalGroupId = mbThreadModelImpl._groupId;
+			_originalCompanyId = mbThreadModelImpl._companyId;
+			_originalCategoryId = mbThreadModelImpl._categoryId;
+			_originalRootMessageId = mbThreadModelImpl._rootMessageId;
+			_originalLastPostDate = mbThreadModelImpl._lastPostDate;
+			_originalPriority = mbThreadModelImpl._priority;
+			_originalStatus = mbThreadModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalCategoryId;
+		private final long _originalRootMessageId;
+		private final Date _originalLastPostDate;
+		private final double _originalPriority;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBThread>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBThreadOriginalValues _mbThreadOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _threadId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _categoryId;
-	private long _originalCategoryId;
-	private boolean _setOriginalCategoryId;
 	private long _rootMessageId;
-	private long _originalRootMessageId;
-	private boolean _setOriginalRootMessageId;
 	private long _rootMessageUserId;
 	private String _title;
 	private int _messageCount;
 	private int _viewCount;
 	private long _lastPostByUserId;
 	private Date _lastPostDate;
-	private Date _originalLastPostDate;
 	private double _priority;
-	private double _originalPriority;
-	private boolean _setOriginalPriority;
 	private boolean _question;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private MBThread _escapedModel;
 
 }

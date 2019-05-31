@@ -415,17 +415,21 @@ public class CalendarModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_calendarOriginalValues == null) {
+			_calendarOriginalValues = new CalendarOriginalValues(this);
 		}
+
+		_calendarOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_calendarOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_calendarOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -447,19 +451,21 @@ public class CalendarModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_calendarOriginalValues == null) {
+			_calendarOriginalValues = new CalendarOriginalValues(this);
 		}
+
+		_calendarOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_calendarOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _calendarOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -470,19 +476,21 @@ public class CalendarModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_calendarOriginalValues == null) {
+			_calendarOriginalValues = new CalendarOriginalValues(this);
 		}
+
+		_calendarOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_calendarOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _calendarOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -564,19 +572,22 @@ public class CalendarModelImpl
 
 	@Override
 	public void setCalendarResourceId(long calendarResourceId) {
-		_columnBitmask |= CALENDARRESOURCEID_COLUMN_BITMASK;
-
-		if (!_setOriginalCalendarResourceId) {
-			_setOriginalCalendarResourceId = true;
-
-			_originalCalendarResourceId = _calendarResourceId;
+		if (_calendarOriginalValues == null) {
+			_calendarOriginalValues = new CalendarOriginalValues(this);
 		}
+
+		_calendarOriginalValues._columnBitmask |=
+			CALENDARRESOURCEID_COLUMN_BITMASK;
 
 		_calendarResourceId = calendarResourceId;
 	}
 
 	public long getOriginalCalendarResourceId() {
-		return _originalCalendarResourceId;
+		if (_calendarOriginalValues == null) {
+			return _calendarResourceId;
+		}
+
+		return _calendarOriginalValues._originalCalendarResourceId;
 	}
 
 	@JSON
@@ -635,7 +646,11 @@ public class CalendarModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		if (_calendarOriginalValues == null) {
+			_calendarOriginalValues = new CalendarOriginalValues(this);
+		}
+
+		_calendarOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
@@ -833,19 +848,22 @@ public class CalendarModelImpl
 
 	@Override
 	public void setDefaultCalendar(boolean defaultCalendar) {
-		_columnBitmask |= DEFAULTCALENDAR_COLUMN_BITMASK;
-
-		if (!_setOriginalDefaultCalendar) {
-			_setOriginalDefaultCalendar = true;
-
-			_originalDefaultCalendar = _defaultCalendar;
+		if (_calendarOriginalValues == null) {
+			_calendarOriginalValues = new CalendarOriginalValues(this);
 		}
+
+		_calendarOriginalValues._columnBitmask |=
+			DEFAULTCALENDAR_COLUMN_BITMASK;
 
 		_defaultCalendar = defaultCalendar;
 	}
 
 	public boolean getOriginalDefaultCalendar() {
-		return _originalDefaultCalendar;
+		if (_calendarOriginalValues == null) {
+			return _defaultCalendar;
+		}
+
+		return _calendarOriginalValues._originalDefaultCalendar;
 	}
 
 	@JSON
@@ -900,7 +918,11 @@ public class CalendarModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_calendarOriginalValues == null) {
+			return 0;
+		}
+
+		return _calendarOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1095,29 +1117,9 @@ public class CalendarModelImpl
 	public void resetOriginalValues() {
 		CalendarModelImpl calendarModelImpl = this;
 
-		calendarModelImpl._originalUuid = calendarModelImpl._uuid;
-
-		calendarModelImpl._originalGroupId = calendarModelImpl._groupId;
-
-		calendarModelImpl._setOriginalGroupId = false;
-
-		calendarModelImpl._originalCompanyId = calendarModelImpl._companyId;
-
-		calendarModelImpl._setOriginalCompanyId = false;
+		calendarModelImpl._calendarOriginalValues = null;
 
 		calendarModelImpl._setModifiedDate = false;
-
-		calendarModelImpl._originalCalendarResourceId =
-			calendarModelImpl._calendarResourceId;
-
-		calendarModelImpl._setOriginalCalendarResourceId = false;
-
-		calendarModelImpl._originalDefaultCalendar =
-			calendarModelImpl._defaultCalendar;
-
-		calendarModelImpl._setOriginalDefaultCalendar = false;
-
-		calendarModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1275,28 +1277,41 @@ public class CalendarModelImpl
 		return sb.toString();
 	}
 
+	private static class CalendarOriginalValues {
+
+		private CalendarOriginalValues(CalendarModelImpl calendarModelImpl) {
+			_originalUuid = calendarModelImpl._uuid;
+			_originalGroupId = calendarModelImpl._groupId;
+			_originalCompanyId = calendarModelImpl._companyId;
+			_originalCalendarResourceId = calendarModelImpl._calendarResourceId;
+			_originalDefaultCalendar = calendarModelImpl._defaultCalendar;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalCalendarResourceId;
+		private final boolean _originalDefaultCalendar;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Calendar>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CalendarOriginalValues _calendarOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _calendarId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _calendarResourceId;
-	private long _originalCalendarResourceId;
-	private boolean _setOriginalCalendarResourceId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;
@@ -1304,12 +1319,9 @@ public class CalendarModelImpl
 	private String _timeZoneId;
 	private int _color;
 	private boolean _defaultCalendar;
-	private boolean _originalDefaultCalendar;
-	private boolean _setOriginalDefaultCalendar;
 	private boolean _enableComments;
 	private boolean _enableRatings;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private Calendar _escapedModel;
 
 }

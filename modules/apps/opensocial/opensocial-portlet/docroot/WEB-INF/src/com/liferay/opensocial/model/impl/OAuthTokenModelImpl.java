@@ -363,13 +363,11 @@ public class OAuthTokenModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_oAuthTokenOriginalValues == null) {
+			_oAuthTokenOriginalValues = new OAuthTokenOriginalValues(this);
 		}
+
+		_oAuthTokenOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -391,7 +389,11 @@ public class OAuthTokenModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_oAuthTokenOriginalValues == null) {
+			return _userId;
+		}
+
+		return _oAuthTokenOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -447,17 +449,22 @@ public class OAuthTokenModelImpl
 
 	@Override
 	public void setGadgetKey(String gadgetKey) {
-		_columnBitmask |= GADGETKEY_COLUMN_BITMASK;
-
-		if (_originalGadgetKey == null) {
-			_originalGadgetKey = _gadgetKey;
+		if (_oAuthTokenOriginalValues == null) {
+			_oAuthTokenOriginalValues = new OAuthTokenOriginalValues(this);
 		}
+
+		_oAuthTokenOriginalValues._columnBitmask |= GADGETKEY_COLUMN_BITMASK;
 
 		_gadgetKey = gadgetKey;
 	}
 
 	public String getOriginalGadgetKey() {
-		return GetterUtil.getString(_originalGadgetKey);
+		if (_oAuthTokenOriginalValues == null) {
+			return GetterUtil.getString(_gadgetKey);
+		}
+
+		return GetterUtil.getString(
+			_oAuthTokenOriginalValues._originalGadgetKey);
 	}
 
 	@Override
@@ -472,17 +479,22 @@ public class OAuthTokenModelImpl
 
 	@Override
 	public void setServiceName(String serviceName) {
-		_columnBitmask |= SERVICENAME_COLUMN_BITMASK;
-
-		if (_originalServiceName == null) {
-			_originalServiceName = _serviceName;
+		if (_oAuthTokenOriginalValues == null) {
+			_oAuthTokenOriginalValues = new OAuthTokenOriginalValues(this);
 		}
+
+		_oAuthTokenOriginalValues._columnBitmask |= SERVICENAME_COLUMN_BITMASK;
 
 		_serviceName = serviceName;
 	}
 
 	public String getOriginalServiceName() {
-		return GetterUtil.getString(_originalServiceName);
+		if (_oAuthTokenOriginalValues == null) {
+			return GetterUtil.getString(_serviceName);
+		}
+
+		return GetterUtil.getString(
+			_oAuthTokenOriginalValues._originalServiceName);
 	}
 
 	@Override
@@ -492,19 +504,21 @@ public class OAuthTokenModelImpl
 
 	@Override
 	public void setModuleId(long moduleId) {
-		_columnBitmask |= MODULEID_COLUMN_BITMASK;
-
-		if (!_setOriginalModuleId) {
-			_setOriginalModuleId = true;
-
-			_originalModuleId = _moduleId;
+		if (_oAuthTokenOriginalValues == null) {
+			_oAuthTokenOriginalValues = new OAuthTokenOriginalValues(this);
 		}
+
+		_oAuthTokenOriginalValues._columnBitmask |= MODULEID_COLUMN_BITMASK;
 
 		_moduleId = moduleId;
 	}
 
 	public long getOriginalModuleId() {
-		return _originalModuleId;
+		if (_oAuthTokenOriginalValues == null) {
+			return _moduleId;
+		}
+
+		return _oAuthTokenOriginalValues._originalModuleId;
 	}
 
 	@Override
@@ -534,17 +548,22 @@ public class OAuthTokenModelImpl
 
 	@Override
 	public void setTokenName(String tokenName) {
-		_columnBitmask |= TOKENNAME_COLUMN_BITMASK;
-
-		if (_originalTokenName == null) {
-			_originalTokenName = _tokenName;
+		if (_oAuthTokenOriginalValues == null) {
+			_oAuthTokenOriginalValues = new OAuthTokenOriginalValues(this);
 		}
+
+		_oAuthTokenOriginalValues._columnBitmask |= TOKENNAME_COLUMN_BITMASK;
 
 		_tokenName = tokenName;
 	}
 
 	public String getOriginalTokenName() {
-		return GetterUtil.getString(_originalTokenName);
+		if (_oAuthTokenOriginalValues == null) {
+			return GetterUtil.getString(_tokenName);
+		}
+
+		return GetterUtil.getString(
+			_oAuthTokenOriginalValues._originalTokenName);
 	}
 
 	@Override
@@ -588,7 +607,11 @@ public class OAuthTokenModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_oAuthTokenOriginalValues == null) {
+			return 0;
+		}
+
+		return _oAuthTokenOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -694,24 +717,9 @@ public class OAuthTokenModelImpl
 	public void resetOriginalValues() {
 		OAuthTokenModelImpl oAuthTokenModelImpl = this;
 
-		oAuthTokenModelImpl._originalUserId = oAuthTokenModelImpl._userId;
-
-		oAuthTokenModelImpl._setOriginalUserId = false;
+		oAuthTokenModelImpl._oAuthTokenOriginalValues = null;
 
 		oAuthTokenModelImpl._setModifiedDate = false;
-
-		oAuthTokenModelImpl._originalGadgetKey = oAuthTokenModelImpl._gadgetKey;
-
-		oAuthTokenModelImpl._originalServiceName =
-			oAuthTokenModelImpl._serviceName;
-
-		oAuthTokenModelImpl._originalModuleId = oAuthTokenModelImpl._moduleId;
-
-		oAuthTokenModelImpl._setOriginalModuleId = false;
-
-		oAuthTokenModelImpl._originalTokenName = oAuthTokenModelImpl._tokenName;
-
-		oAuthTokenModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -868,32 +876,46 @@ public class OAuthTokenModelImpl
 		return sb.toString();
 	}
 
+	private static class OAuthTokenOriginalValues {
+
+		private OAuthTokenOriginalValues(
+			OAuthTokenModelImpl oAuthTokenModelImpl) {
+
+			_originalUserId = oAuthTokenModelImpl._userId;
+			_originalGadgetKey = oAuthTokenModelImpl._gadgetKey;
+			_originalServiceName = oAuthTokenModelImpl._serviceName;
+			_originalModuleId = oAuthTokenModelImpl._moduleId;
+			_originalTokenName = oAuthTokenModelImpl._tokenName;
+		}
+
+		private final long _originalUserId;
+		private final String _originalGadgetKey;
+		private final String _originalServiceName;
+		private final long _originalModuleId;
+		private final String _originalTokenName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, OAuthToken>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private OAuthTokenOriginalValues _oAuthTokenOriginalValues;
 	private long _oAuthTokenId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _gadgetKey;
-	private String _originalGadgetKey;
 	private String _serviceName;
-	private String _originalServiceName;
 	private long _moduleId;
-	private long _originalModuleId;
-	private boolean _setOriginalModuleId;
 	private String _accessToken;
 	private String _tokenName;
-	private String _originalTokenName;
 	private String _tokenSecret;
 	private String _sessionHandle;
 	private long _expiration;
-	private long _columnBitmask;
 	private OAuthToken _escapedModel;
 
 }

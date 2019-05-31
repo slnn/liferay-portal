@@ -438,17 +438,23 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_calendarResourceOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_calendarResourceOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -470,19 +476,23 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_calendarResourceOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _calendarResourceOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -493,19 +503,23 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_calendarResourceOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _calendarResourceOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -607,19 +621,23 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_calendarResourceOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _calendarResourceOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -630,19 +648,23 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_calendarResourceOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _calendarResourceOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -674,17 +696,23 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setCode(String code) {
-		_columnBitmask = -1L;
-
-		if (_originalCode == null) {
-			_originalCode = _code;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask = -1L;
 
 		_code = code;
 	}
 
 	public String getOriginalCode() {
-		return GetterUtil.getString(_originalCode);
+		if (_calendarResourceOriginalValues == null) {
+			return GetterUtil.getString(_code);
+		}
+
+		return GetterUtil.getString(
+			_calendarResourceOriginalValues._originalCode);
 	}
 
 	@JSON
@@ -912,19 +940,22 @@ public class CalendarResourceModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_calendarResourceOriginalValues == null) {
+			_calendarResourceOriginalValues =
+				new CalendarResourceOriginalValues(this);
 		}
+
+		_calendarResourceOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_calendarResourceOriginalValues == null) {
+			return _active;
+		}
+
+		return _calendarResourceOriginalValues._originalActive;
 	}
 
 	@JSON
@@ -946,7 +977,11 @@ public class CalendarResourceModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_calendarResourceOriginalValues == null) {
+			return 0;
+		}
+
+		return _calendarResourceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1140,40 +1175,9 @@ public class CalendarResourceModelImpl
 	public void resetOriginalValues() {
 		CalendarResourceModelImpl calendarResourceModelImpl = this;
 
-		calendarResourceModelImpl._originalUuid =
-			calendarResourceModelImpl._uuid;
-
-		calendarResourceModelImpl._originalGroupId =
-			calendarResourceModelImpl._groupId;
-
-		calendarResourceModelImpl._setOriginalGroupId = false;
-
-		calendarResourceModelImpl._originalCompanyId =
-			calendarResourceModelImpl._companyId;
-
-		calendarResourceModelImpl._setOriginalCompanyId = false;
+		calendarResourceModelImpl._calendarResourceOriginalValues = null;
 
 		calendarResourceModelImpl._setModifiedDate = false;
-
-		calendarResourceModelImpl._originalClassNameId =
-			calendarResourceModelImpl._classNameId;
-
-		calendarResourceModelImpl._setOriginalClassNameId = false;
-
-		calendarResourceModelImpl._originalClassPK =
-			calendarResourceModelImpl._classPK;
-
-		calendarResourceModelImpl._setOriginalClassPK = false;
-
-		calendarResourceModelImpl._originalCode =
-			calendarResourceModelImpl._code;
-
-		calendarResourceModelImpl._originalActive =
-			calendarResourceModelImpl._active;
-
-		calendarResourceModelImpl._setOriginalActive = false;
-
-		calendarResourceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1337,43 +1341,56 @@ public class CalendarResourceModelImpl
 		return sb.toString();
 	}
 
+	private static class CalendarResourceOriginalValues {
+
+		private CalendarResourceOriginalValues(
+			CalendarResourceModelImpl calendarResourceModelImpl) {
+
+			_originalUuid = calendarResourceModelImpl._uuid;
+			_originalGroupId = calendarResourceModelImpl._groupId;
+			_originalCompanyId = calendarResourceModelImpl._companyId;
+			_originalClassNameId = calendarResourceModelImpl._classNameId;
+			_originalClassPK = calendarResourceModelImpl._classPK;
+			_originalCode = calendarResourceModelImpl._code;
+			_originalActive = calendarResourceModelImpl._active;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final String _originalCode;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, CalendarResource>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CalendarResourceOriginalValues _calendarResourceOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _calendarResourceId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _classUuid;
 	private String _code;
-	private String _originalCode;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private CalendarResource _escapedModel;
 
 }

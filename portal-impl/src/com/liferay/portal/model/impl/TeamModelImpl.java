@@ -414,17 +414,21 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_teamOriginalValues == null) {
+			_teamOriginalValues = new TeamOriginalValues(this);
 		}
+
+		_teamOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_teamOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_teamOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -446,19 +450,21 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_teamOriginalValues == null) {
+			_teamOriginalValues = new TeamOriginalValues(this);
 		}
+
+		_teamOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_teamOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _teamOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -540,19 +546,21 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_teamOriginalValues == null) {
+			_teamOriginalValues = new TeamOriginalValues(this);
 		}
+
+		_teamOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_teamOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _teamOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -568,17 +576,21 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_teamOriginalValues == null) {
+			_teamOriginalValues = new TeamOriginalValues(this);
 		}
+
+		_teamOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_teamOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_teamOriginalValues._originalName);
 	}
 
 	@JSON
@@ -615,7 +627,11 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_teamOriginalValues == null) {
+			return 0;
+		}
+
+		return _teamOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -717,21 +733,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public void resetOriginalValues() {
 		TeamModelImpl teamModelImpl = this;
 
-		teamModelImpl._originalUuid = teamModelImpl._uuid;
-
-		teamModelImpl._originalCompanyId = teamModelImpl._companyId;
-
-		teamModelImpl._setOriginalCompanyId = false;
+		teamModelImpl._teamOriginalValues = null;
 
 		teamModelImpl._setModifiedDate = false;
-
-		teamModelImpl._originalGroupId = teamModelImpl._groupId;
-
-		teamModelImpl._setOriginalGroupId = false;
-
-		teamModelImpl._originalName = teamModelImpl._name;
-
-		teamModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -871,29 +875,40 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return sb.toString();
 	}
 
+	private static class TeamOriginalValues {
+
+		private TeamOriginalValues(TeamModelImpl teamModelImpl) {
+			_originalUuid = teamModelImpl._uuid;
+			_originalCompanyId = teamModelImpl._companyId;
+			_originalGroupId = teamModelImpl._groupId;
+			_originalName = teamModelImpl._name;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalGroupId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Team>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private TeamOriginalValues _teamOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _teamId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private Team _escapedModel;
 
 }

@@ -343,7 +343,11 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void setImageId(long imageId) {
-		_columnBitmask = -1L;
+		if (_imageOriginalValues == null) {
+			_imageOriginalValues = new ImageOriginalValues(this);
+		}
+
+		_imageOriginalValues._columnBitmask = -1L;
 
 		_imageId = imageId;
 	}
@@ -416,23 +420,29 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void setSize(int size) {
-		_columnBitmask |= SIZE_COLUMN_BITMASK;
-
-		if (!_setOriginalSize) {
-			_setOriginalSize = true;
-
-			_originalSize = _size;
+		if (_imageOriginalValues == null) {
+			_imageOriginalValues = new ImageOriginalValues(this);
 		}
+
+		_imageOriginalValues._columnBitmask |= SIZE_COLUMN_BITMASK;
 
 		_size = size;
 	}
 
 	public int getOriginalSize() {
-		return _originalSize;
+		if (_imageOriginalValues == null) {
+			return _size;
+		}
+
+		return _imageOriginalValues._originalSize;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_imageOriginalValues == null) {
+			return 0;
+		}
+
+		return _imageOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -538,11 +548,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public void resetOriginalValues() {
 		ImageModelImpl imageModelImpl = this;
 
-		imageModelImpl._originalSize = imageModelImpl._size;
-
-		imageModelImpl._setOriginalSize = false;
-
-		imageModelImpl._columnBitmask = 0;
+		imageModelImpl._imageOriginalValues = null;
 	}
 
 	@Override
@@ -642,9 +648,21 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return sb.toString();
 	}
 
+	private static class ImageOriginalValues {
+
+		private ImageOriginalValues(ImageModelImpl imageModelImpl) {
+			_originalSize = imageModelImpl._size;
+		}
+
+		private final int _originalSize;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Image>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ImageOriginalValues _imageOriginalValues;
 	private long _mvccVersion;
 	private long _imageId;
 	private long _companyId;
@@ -653,9 +671,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _height;
 	private int _width;
 	private int _size;
-	private int _originalSize;
-	private boolean _setOriginalSize;
-	private long _columnBitmask;
 	private Image _escapedModel;
 
 }

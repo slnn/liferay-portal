@@ -341,19 +341,23 @@ public class ResourceTypePermissionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_resourceTypePermissionOriginalValues == null) {
+			_resourceTypePermissionOriginalValues =
+				new ResourceTypePermissionOriginalValues(this);
 		}
+
+		_resourceTypePermissionOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_resourceTypePermissionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _resourceTypePermissionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -363,19 +367,23 @@ public class ResourceTypePermissionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_resourceTypePermissionOriginalValues == null) {
+			_resourceTypePermissionOriginalValues =
+				new ResourceTypePermissionOriginalValues(this);
 		}
+
+		_resourceTypePermissionOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_resourceTypePermissionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _resourceTypePermissionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -390,17 +398,24 @@ public class ResourceTypePermissionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_resourceTypePermissionOriginalValues == null) {
+			_resourceTypePermissionOriginalValues =
+				new ResourceTypePermissionOriginalValues(this);
 		}
+
+		_resourceTypePermissionOriginalValues._columnBitmask |=
+			NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_resourceTypePermissionOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_resourceTypePermissionOriginalValues._originalName);
 	}
 
 	@Override
@@ -410,19 +425,23 @@ public class ResourceTypePermissionModelImpl
 
 	@Override
 	public void setRoleId(long roleId) {
-		_columnBitmask |= ROLEID_COLUMN_BITMASK;
-
-		if (!_setOriginalRoleId) {
-			_setOriginalRoleId = true;
-
-			_originalRoleId = _roleId;
+		if (_resourceTypePermissionOriginalValues == null) {
+			_resourceTypePermissionOriginalValues =
+				new ResourceTypePermissionOriginalValues(this);
 		}
+
+		_resourceTypePermissionOriginalValues._columnBitmask |=
+			ROLEID_COLUMN_BITMASK;
 
 		_roleId = roleId;
 	}
 
 	public long getOriginalRoleId() {
-		return _originalRoleId;
+		if (_resourceTypePermissionOriginalValues == null) {
+			return _roleId;
+		}
+
+		return _resourceTypePermissionOriginalValues._originalRoleId;
 	}
 
 	@Override
@@ -436,7 +455,11 @@ public class ResourceTypePermissionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_resourceTypePermissionOriginalValues == null) {
+			return 0;
+		}
+
+		return _resourceTypePermissionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -539,25 +562,8 @@ public class ResourceTypePermissionModelImpl
 	public void resetOriginalValues() {
 		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = this;
 
-		resourceTypePermissionModelImpl._originalCompanyId =
-			resourceTypePermissionModelImpl._companyId;
-
-		resourceTypePermissionModelImpl._setOriginalCompanyId = false;
-
-		resourceTypePermissionModelImpl._originalGroupId =
-			resourceTypePermissionModelImpl._groupId;
-
-		resourceTypePermissionModelImpl._setOriginalGroupId = false;
-
-		resourceTypePermissionModelImpl._originalName =
-			resourceTypePermissionModelImpl._name;
-
-		resourceTypePermissionModelImpl._originalRoleId =
-			resourceTypePermissionModelImpl._roleId;
-
-		resourceTypePermissionModelImpl._setOriginalRoleId = false;
-
-		resourceTypePermissionModelImpl._columnBitmask = 0;
+		resourceTypePermissionModelImpl._resourceTypePermissionOriginalValues =
+			null;
 	}
 
 	@Override
@@ -654,24 +660,37 @@ public class ResourceTypePermissionModelImpl
 		return sb.toString();
 	}
 
+	private static class ResourceTypePermissionOriginalValues {
+
+		private ResourceTypePermissionOriginalValues(
+			ResourceTypePermissionModelImpl resourceTypePermissionModelImpl) {
+
+			_originalCompanyId = resourceTypePermissionModelImpl._companyId;
+			_originalGroupId = resourceTypePermissionModelImpl._groupId;
+			_originalName = resourceTypePermissionModelImpl._name;
+			_originalRoleId = resourceTypePermissionModelImpl._roleId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalGroupId;
+		private final String _originalName;
+		private final long _originalRoleId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ResourceTypePermission>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ResourceTypePermissionOriginalValues
+		_resourceTypePermissionOriginalValues;
 	private long _mvccVersion;
 	private long _resourceTypePermissionId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private String _name;
-	private String _originalName;
 	private long _roleId;
-	private long _originalRoleId;
-	private boolean _setOriginalRoleId;
 	private long _actionIds;
-	private long _columnBitmask;
 	private ResourceTypePermission _escapedModel;
 
 }

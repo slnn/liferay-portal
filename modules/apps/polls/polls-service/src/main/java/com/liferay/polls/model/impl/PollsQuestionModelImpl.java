@@ -411,17 +411,22 @@ public class PollsQuestionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_pollsQuestionOriginalValues == null) {
+			_pollsQuestionOriginalValues = new PollsQuestionOriginalValues(
+				this);
 		}
+
+		_pollsQuestionOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_pollsQuestionOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_pollsQuestionOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -443,19 +448,22 @@ public class PollsQuestionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_pollsQuestionOriginalValues == null) {
+			_pollsQuestionOriginalValues = new PollsQuestionOriginalValues(
+				this);
 		}
+
+		_pollsQuestionOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_pollsQuestionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _pollsQuestionOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -466,19 +474,22 @@ public class PollsQuestionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_pollsQuestionOriginalValues == null) {
+			_pollsQuestionOriginalValues = new PollsQuestionOriginalValues(
+				this);
 		}
+
+		_pollsQuestionOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_pollsQuestionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _pollsQuestionOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -532,7 +543,12 @@ public class PollsQuestionModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_pollsQuestionOriginalValues == null) {
+			_pollsQuestionOriginalValues = new PollsQuestionOriginalValues(
+				this);
+		}
+
+		_pollsQuestionOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -807,7 +823,11 @@ public class PollsQuestionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_pollsQuestionOriginalValues == null) {
+			return 0;
+		}
+
+		return _pollsQuestionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1001,21 +1021,9 @@ public class PollsQuestionModelImpl
 	public void resetOriginalValues() {
 		PollsQuestionModelImpl pollsQuestionModelImpl = this;
 
-		pollsQuestionModelImpl._originalUuid = pollsQuestionModelImpl._uuid;
-
-		pollsQuestionModelImpl._originalGroupId =
-			pollsQuestionModelImpl._groupId;
-
-		pollsQuestionModelImpl._setOriginalGroupId = false;
-
-		pollsQuestionModelImpl._originalCompanyId =
-			pollsQuestionModelImpl._companyId;
-
-		pollsQuestionModelImpl._setOriginalCompanyId = false;
+		pollsQuestionModelImpl._pollsQuestionOriginalValues = null;
 
 		pollsQuestionModelImpl._setModifiedDate = false;
-
-		pollsQuestionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1174,18 +1182,31 @@ public class PollsQuestionModelImpl
 		return sb.toString();
 	}
 
+	private static class PollsQuestionOriginalValues {
+
+		private PollsQuestionOriginalValues(
+			PollsQuestionModelImpl pollsQuestionModelImpl) {
+
+			_originalUuid = pollsQuestionModelImpl._uuid;
+			_originalGroupId = pollsQuestionModelImpl._groupId;
+			_originalCompanyId = pollsQuestionModelImpl._companyId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PollsQuestion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PollsQuestionOriginalValues _pollsQuestionOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _questionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1198,7 +1219,6 @@ public class PollsQuestionModelImpl
 	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private Date _lastVoteDate;
-	private long _columnBitmask;
 	private PollsQuestion _escapedModel;
 
 }

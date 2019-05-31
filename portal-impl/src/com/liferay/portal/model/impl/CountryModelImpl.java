@@ -373,17 +373,21 @@ public class CountryModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_countryOriginalValues == null) {
+			_countryOriginalValues = new CountryOriginalValues(this);
 		}
+
+		_countryOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_countryOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_countryOriginalValues._originalName);
 	}
 
 	@JSON
@@ -399,17 +403,21 @@ public class CountryModelImpl
 
 	@Override
 	public void setA2(String a2) {
-		_columnBitmask |= A2_COLUMN_BITMASK;
-
-		if (_originalA2 == null) {
-			_originalA2 = _a2;
+		if (_countryOriginalValues == null) {
+			_countryOriginalValues = new CountryOriginalValues(this);
 		}
+
+		_countryOriginalValues._columnBitmask |= A2_COLUMN_BITMASK;
 
 		_a2 = a2;
 	}
 
 	public String getOriginalA2() {
-		return GetterUtil.getString(_originalA2);
+		if (_countryOriginalValues == null) {
+			return GetterUtil.getString(_a2);
+		}
+
+		return GetterUtil.getString(_countryOriginalValues._originalA2);
 	}
 
 	@JSON
@@ -425,17 +433,21 @@ public class CountryModelImpl
 
 	@Override
 	public void setA3(String a3) {
-		_columnBitmask |= A3_COLUMN_BITMASK;
-
-		if (_originalA3 == null) {
-			_originalA3 = _a3;
+		if (_countryOriginalValues == null) {
+			_countryOriginalValues = new CountryOriginalValues(this);
 		}
+
+		_countryOriginalValues._columnBitmask |= A3_COLUMN_BITMASK;
 
 		_a3 = a3;
 	}
 
 	public String getOriginalA3() {
-		return GetterUtil.getString(_originalA3);
+		if (_countryOriginalValues == null) {
+			return GetterUtil.getString(_a3);
+		}
+
+		return GetterUtil.getString(_countryOriginalValues._originalA3);
 	}
 
 	@JSON
@@ -501,23 +513,29 @@ public class CountryModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_countryOriginalValues == null) {
+			_countryOriginalValues = new CountryOriginalValues(this);
 		}
+
+		_countryOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_countryOriginalValues == null) {
+			return _active;
+		}
+
+		return _countryOriginalValues._originalActive;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_countryOriginalValues == null) {
+			return 0;
+		}
+
+		return _countryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -616,17 +634,7 @@ public class CountryModelImpl
 	public void resetOriginalValues() {
 		CountryModelImpl countryModelImpl = this;
 
-		countryModelImpl._originalName = countryModelImpl._name;
-
-		countryModelImpl._originalA2 = countryModelImpl._a2;
-
-		countryModelImpl._originalA3 = countryModelImpl._a3;
-
-		countryModelImpl._originalActive = countryModelImpl._active;
-
-		countryModelImpl._setOriginalActive = false;
-
-		countryModelImpl._columnBitmask = 0;
+		countryModelImpl._countryOriginalValues = null;
 	}
 
 	@Override
@@ -747,24 +755,36 @@ public class CountryModelImpl
 		return sb.toString();
 	}
 
+	private static class CountryOriginalValues {
+
+		private CountryOriginalValues(CountryModelImpl countryModelImpl) {
+			_originalName = countryModelImpl._name;
+			_originalA2 = countryModelImpl._a2;
+			_originalA3 = countryModelImpl._a3;
+			_originalActive = countryModelImpl._active;
+		}
+
+		private final String _originalName;
+		private final String _originalA2;
+		private final String _originalA3;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Country>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private CountryOriginalValues _countryOriginalValues;
 	private long _mvccVersion;
 	private long _countryId;
 	private String _name;
-	private String _originalName;
 	private String _a2;
-	private String _originalA2;
 	private String _a3;
-	private String _originalA3;
 	private String _number;
 	private String _idd;
 	private boolean _zipRequired;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private Country _escapedModel;
 
 }

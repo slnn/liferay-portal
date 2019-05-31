@@ -295,19 +295,22 @@ public class AssetTagStatsModelImpl
 
 	@Override
 	public void setTagId(long tagId) {
-		_columnBitmask |= TAGID_COLUMN_BITMASK;
-
-		if (!_setOriginalTagId) {
-			_setOriginalTagId = true;
-
-			_originalTagId = _tagId;
+		if (_assetTagStatsOriginalValues == null) {
+			_assetTagStatsOriginalValues = new AssetTagStatsOriginalValues(
+				this);
 		}
+
+		_assetTagStatsOriginalValues._columnBitmask |= TAGID_COLUMN_BITMASK;
 
 		_tagId = tagId;
 	}
 
 	public long getOriginalTagId() {
-		return _originalTagId;
+		if (_assetTagStatsOriginalValues == null) {
+			return _tagId;
+		}
+
+		return _assetTagStatsOriginalValues._originalTagId;
 	}
 
 	@Override
@@ -337,19 +340,23 @@ public class AssetTagStatsModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_assetTagStatsOriginalValues == null) {
+			_assetTagStatsOriginalValues = new AssetTagStatsOriginalValues(
+				this);
 		}
+
+		_assetTagStatsOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_assetTagStatsOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _assetTagStatsOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -359,13 +366,22 @@ public class AssetTagStatsModelImpl
 
 	@Override
 	public void setAssetCount(int assetCount) {
-		_columnBitmask = -1L;
+		if (_assetTagStatsOriginalValues == null) {
+			_assetTagStatsOriginalValues = new AssetTagStatsOriginalValues(
+				this);
+		}
+
+		_assetTagStatsOriginalValues._columnBitmask = -1L;
 
 		_assetCount = assetCount;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetTagStatsOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetTagStatsOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -470,16 +486,7 @@ public class AssetTagStatsModelImpl
 	public void resetOriginalValues() {
 		AssetTagStatsModelImpl assetTagStatsModelImpl = this;
 
-		assetTagStatsModelImpl._originalTagId = assetTagStatsModelImpl._tagId;
-
-		assetTagStatsModelImpl._setOriginalTagId = false;
-
-		assetTagStatsModelImpl._originalClassNameId =
-			assetTagStatsModelImpl._classNameId;
-
-		assetTagStatsModelImpl._setOriginalClassNameId = false;
-
-		assetTagStatsModelImpl._columnBitmask = 0;
+		assetTagStatsModelImpl._assetTagStatsOriginalValues = null;
 	}
 
 	@Override
@@ -563,21 +570,32 @@ public class AssetTagStatsModelImpl
 		return sb.toString();
 	}
 
+	private static class AssetTagStatsOriginalValues {
+
+		private AssetTagStatsOriginalValues(
+			AssetTagStatsModelImpl assetTagStatsModelImpl) {
+
+			_originalTagId = assetTagStatsModelImpl._tagId;
+			_originalClassNameId = assetTagStatsModelImpl._classNameId;
+		}
+
+		private final long _originalTagId;
+		private final long _originalClassNameId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetTagStats>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AssetTagStatsOriginalValues _assetTagStatsOriginalValues;
 	private long _tagStatsId;
 	private long _companyId;
 	private long _tagId;
-	private long _originalTagId;
-	private boolean _setOriginalTagId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private int _assetCount;
-	private long _columnBitmask;
 	private AssetTagStats _escapedModel;
 
 }

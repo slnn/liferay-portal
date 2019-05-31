@@ -458,17 +458,21 @@ public class UserGroupModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_userGroupOriginalValues == null) {
+			_userGroupOriginalValues = new UserGroupOriginalValues(this);
 		}
+
+		_userGroupOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_userGroupOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_userGroupOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -484,17 +488,23 @@ public class UserGroupModelImpl
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
-
-		if (_originalExternalReferenceCode == null) {
-			_originalExternalReferenceCode = _externalReferenceCode;
+		if (_userGroupOriginalValues == null) {
+			_userGroupOriginalValues = new UserGroupOriginalValues(this);
 		}
+
+		_userGroupOriginalValues._columnBitmask |=
+			EXTERNALREFERENCECODE_COLUMN_BITMASK;
 
 		_externalReferenceCode = externalReferenceCode;
 	}
 
 	public String getOriginalExternalReferenceCode() {
-		return GetterUtil.getString(_originalExternalReferenceCode);
+		if (_userGroupOriginalValues == null) {
+			return GetterUtil.getString(_externalReferenceCode);
+		}
+
+		return GetterUtil.getString(
+			_userGroupOriginalValues._originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -505,19 +515,21 @@ public class UserGroupModelImpl
 
 	@Override
 	public void setUserGroupId(long userGroupId) {
-		_columnBitmask |= USERGROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserGroupId) {
-			_setOriginalUserGroupId = true;
-
-			_originalUserGroupId = _userGroupId;
+		if (_userGroupOriginalValues == null) {
+			_userGroupOriginalValues = new UserGroupOriginalValues(this);
 		}
+
+		_userGroupOriginalValues._columnBitmask |= USERGROUPID_COLUMN_BITMASK;
 
 		_userGroupId = userGroupId;
 	}
 
 	public long getOriginalUserGroupId() {
-		return _originalUserGroupId;
+		if (_userGroupOriginalValues == null) {
+			return _userGroupId;
+		}
+
+		return _userGroupOriginalValues._originalUserGroupId;
 	}
 
 	@JSON
@@ -528,19 +540,21 @@ public class UserGroupModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_userGroupOriginalValues == null) {
+			_userGroupOriginalValues = new UserGroupOriginalValues(this);
 		}
+
+		_userGroupOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_userGroupOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _userGroupOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -622,19 +636,22 @@ public class UserGroupModelImpl
 
 	@Override
 	public void setParentUserGroupId(long parentUserGroupId) {
-		_columnBitmask |= PARENTUSERGROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentUserGroupId) {
-			_setOriginalParentUserGroupId = true;
-
-			_originalParentUserGroupId = _parentUserGroupId;
+		if (_userGroupOriginalValues == null) {
+			_userGroupOriginalValues = new UserGroupOriginalValues(this);
 		}
+
+		_userGroupOriginalValues._columnBitmask |=
+			PARENTUSERGROUPID_COLUMN_BITMASK;
 
 		_parentUserGroupId = parentUserGroupId;
 	}
 
 	public long getOriginalParentUserGroupId() {
-		return _originalParentUserGroupId;
+		if (_userGroupOriginalValues == null) {
+			return _parentUserGroupId;
+		}
+
+		return _userGroupOriginalValues._originalParentUserGroupId;
 	}
 
 	@JSON
@@ -650,17 +667,21 @@ public class UserGroupModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_userGroupOriginalValues == null) {
+			_userGroupOriginalValues = new UserGroupOriginalValues(this);
 		}
+
+		_userGroupOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_userGroupOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_userGroupOriginalValues._originalName);
 	}
 
 	@JSON
@@ -703,7 +724,11 @@ public class UserGroupModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_userGroupOriginalValues == null) {
+			return 0;
+		}
+
+		return _userGroupOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -806,30 +831,9 @@ public class UserGroupModelImpl
 	public void resetOriginalValues() {
 		UserGroupModelImpl userGroupModelImpl = this;
 
-		userGroupModelImpl._originalUuid = userGroupModelImpl._uuid;
-
-		userGroupModelImpl._originalExternalReferenceCode =
-			userGroupModelImpl._externalReferenceCode;
-
-		userGroupModelImpl._originalUserGroupId =
-			userGroupModelImpl._userGroupId;
-
-		userGroupModelImpl._setOriginalUserGroupId = false;
-
-		userGroupModelImpl._originalCompanyId = userGroupModelImpl._companyId;
-
-		userGroupModelImpl._setOriginalCompanyId = false;
+		userGroupModelImpl._userGroupOriginalValues = null;
 
 		userGroupModelImpl._setModifiedDate = false;
-
-		userGroupModelImpl._originalParentUserGroupId =
-			userGroupModelImpl._parentUserGroupId;
-
-		userGroupModelImpl._setOriginalParentUserGroupId = false;
-
-		userGroupModelImpl._originalName = userGroupModelImpl._name;
-
-		userGroupModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -975,33 +979,46 @@ public class UserGroupModelImpl
 		return sb.toString();
 	}
 
+	private static class UserGroupOriginalValues {
+
+		private UserGroupOriginalValues(UserGroupModelImpl userGroupModelImpl) {
+			_originalUuid = userGroupModelImpl._uuid;
+			_originalExternalReferenceCode =
+				userGroupModelImpl._externalReferenceCode;
+			_originalUserGroupId = userGroupModelImpl._userGroupId;
+			_originalCompanyId = userGroupModelImpl._companyId;
+			_originalParentUserGroupId = userGroupModelImpl._parentUserGroupId;
+			_originalName = userGroupModelImpl._name;
+		}
+
+		private final String _originalUuid;
+		private final String _originalExternalReferenceCode;
+		private final long _originalUserGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentUserGroupId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, UserGroup>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private UserGroupOriginalValues _userGroupOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private String _externalReferenceCode;
-	private String _originalExternalReferenceCode;
 	private long _userGroupId;
-	private long _originalUserGroupId;
-	private boolean _setOriginalUserGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentUserGroupId;
-	private long _originalParentUserGroupId;
-	private boolean _setOriginalParentUserGroupId;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private boolean _addedByLDAPImport;
-	private long _columnBitmask;
 	private UserGroup _escapedModel;
 
 }

@@ -349,19 +349,23 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			_recentLayoutRevisionOriginalValues =
+				new RecentLayoutRevisionOriginalValues(this);
 		}
+
+		_recentLayoutRevisionOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _recentLayoutRevisionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -381,13 +385,13 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			_recentLayoutRevisionOriginalValues =
+				new RecentLayoutRevisionOriginalValues(this);
 		}
+
+		_recentLayoutRevisionOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -409,7 +413,11 @@ public class RecentLayoutRevisionModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			return _userId;
+		}
+
+		return _recentLayoutRevisionOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -419,19 +427,23 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setLayoutRevisionId(long layoutRevisionId) {
-		_columnBitmask |= LAYOUTREVISIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutRevisionId) {
-			_setOriginalLayoutRevisionId = true;
-
-			_originalLayoutRevisionId = _layoutRevisionId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			_recentLayoutRevisionOriginalValues =
+				new RecentLayoutRevisionOriginalValues(this);
 		}
+
+		_recentLayoutRevisionOriginalValues._columnBitmask |=
+			LAYOUTREVISIONID_COLUMN_BITMASK;
 
 		_layoutRevisionId = layoutRevisionId;
 	}
 
 	public long getOriginalLayoutRevisionId() {
-		return _originalLayoutRevisionId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			return _layoutRevisionId;
+		}
+
+		return _recentLayoutRevisionOriginalValues._originalLayoutRevisionId;
 	}
 
 	@Override
@@ -441,19 +453,23 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		_columnBitmask |= LAYOUTSETBRANCHID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutSetBranchId) {
-			_setOriginalLayoutSetBranchId = true;
-
-			_originalLayoutSetBranchId = _layoutSetBranchId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			_recentLayoutRevisionOriginalValues =
+				new RecentLayoutRevisionOriginalValues(this);
 		}
+
+		_recentLayoutRevisionOriginalValues._columnBitmask |=
+			LAYOUTSETBRANCHID_COLUMN_BITMASK;
 
 		_layoutSetBranchId = layoutSetBranchId;
 	}
 
 	public long getOriginalLayoutSetBranchId() {
-		return _originalLayoutSetBranchId;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			return _layoutSetBranchId;
+		}
+
+		return _recentLayoutRevisionOriginalValues._originalLayoutSetBranchId;
 	}
 
 	@Override
@@ -463,23 +479,31 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			_recentLayoutRevisionOriginalValues =
+				new RecentLayoutRevisionOriginalValues(this);
 		}
+
+		_recentLayoutRevisionOriginalValues._columnBitmask |=
+			PLID_COLUMN_BITMASK;
 
 		_plid = plid;
 	}
 
 	public long getOriginalPlid() {
-		return _originalPlid;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			return _plid;
+		}
+
+		return _recentLayoutRevisionOriginalValues._originalPlid;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_recentLayoutRevisionOriginalValues == null) {
+			return 0;
+		}
+
+		return _recentLayoutRevisionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -582,32 +606,8 @@ public class RecentLayoutRevisionModelImpl
 	public void resetOriginalValues() {
 		RecentLayoutRevisionModelImpl recentLayoutRevisionModelImpl = this;
 
-		recentLayoutRevisionModelImpl._originalGroupId =
-			recentLayoutRevisionModelImpl._groupId;
-
-		recentLayoutRevisionModelImpl._setOriginalGroupId = false;
-
-		recentLayoutRevisionModelImpl._originalUserId =
-			recentLayoutRevisionModelImpl._userId;
-
-		recentLayoutRevisionModelImpl._setOriginalUserId = false;
-
-		recentLayoutRevisionModelImpl._originalLayoutRevisionId =
-			recentLayoutRevisionModelImpl._layoutRevisionId;
-
-		recentLayoutRevisionModelImpl._setOriginalLayoutRevisionId = false;
-
-		recentLayoutRevisionModelImpl._originalLayoutSetBranchId =
-			recentLayoutRevisionModelImpl._layoutSetBranchId;
-
-		recentLayoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
-
-		recentLayoutRevisionModelImpl._originalPlid =
-			recentLayoutRevisionModelImpl._plid;
-
-		recentLayoutRevisionModelImpl._setOriginalPlid = false;
-
-		recentLayoutRevisionModelImpl._columnBitmask = 0;
+		recentLayoutRevisionModelImpl._recentLayoutRevisionOriginalValues =
+			null;
 	}
 
 	@Override
@@ -701,28 +701,42 @@ public class RecentLayoutRevisionModelImpl
 		return sb.toString();
 	}
 
+	private static class RecentLayoutRevisionOriginalValues {
+
+		private RecentLayoutRevisionOriginalValues(
+			RecentLayoutRevisionModelImpl recentLayoutRevisionModelImpl) {
+
+			_originalGroupId = recentLayoutRevisionModelImpl._groupId;
+			_originalUserId = recentLayoutRevisionModelImpl._userId;
+			_originalLayoutRevisionId =
+				recentLayoutRevisionModelImpl._layoutRevisionId;
+			_originalLayoutSetBranchId =
+				recentLayoutRevisionModelImpl._layoutSetBranchId;
+			_originalPlid = recentLayoutRevisionModelImpl._plid;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final long _originalLayoutRevisionId;
+		private final long _originalLayoutSetBranchId;
+		private final long _originalPlid;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, RecentLayoutRevision>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RecentLayoutRevisionOriginalValues
+		_recentLayoutRevisionOriginalValues;
 	private long _mvccVersion;
 	private long _recentLayoutRevisionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _layoutRevisionId;
-	private long _originalLayoutRevisionId;
-	private boolean _setOriginalLayoutRevisionId;
 	private long _layoutSetBranchId;
-	private long _originalLayoutSetBranchId;
-	private boolean _setOriginalLayoutSetBranchId;
 	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
-	private long _columnBitmask;
 	private RecentLayoutRevision _escapedModel;
 
 }

@@ -393,13 +393,13 @@ public class PushNotificationsDeviceModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			_pushNotificationsDeviceOriginalValues =
+				new PushNotificationsDeviceOriginalValues(this);
 		}
+
+		_pushNotificationsDeviceOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -421,7 +421,11 @@ public class PushNotificationsDeviceModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			return _userId;
+		}
+
+		return _pushNotificationsDeviceOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -448,17 +452,24 @@ public class PushNotificationsDeviceModelImpl
 
 	@Override
 	public void setPlatform(String platform) {
-		_columnBitmask |= PLATFORM_COLUMN_BITMASK;
-
-		if (_originalPlatform == null) {
-			_originalPlatform = _platform;
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			_pushNotificationsDeviceOriginalValues =
+				new PushNotificationsDeviceOriginalValues(this);
 		}
+
+		_pushNotificationsDeviceOriginalValues._columnBitmask |=
+			PLATFORM_COLUMN_BITMASK;
 
 		_platform = platform;
 	}
 
 	public String getOriginalPlatform() {
-		return GetterUtil.getString(_originalPlatform);
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			return GetterUtil.getString(_platform);
+		}
+
+		return GetterUtil.getString(
+			_pushNotificationsDeviceOriginalValues._originalPlatform);
 	}
 
 	@JSON
@@ -474,21 +485,32 @@ public class PushNotificationsDeviceModelImpl
 
 	@Override
 	public void setToken(String token) {
-		_columnBitmask |= TOKEN_COLUMN_BITMASK;
-
-		if (_originalToken == null) {
-			_originalToken = _token;
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			_pushNotificationsDeviceOriginalValues =
+				new PushNotificationsDeviceOriginalValues(this);
 		}
+
+		_pushNotificationsDeviceOriginalValues._columnBitmask |=
+			TOKEN_COLUMN_BITMASK;
 
 		_token = token;
 	}
 
 	public String getOriginalToken() {
-		return GetterUtil.getString(_originalToken);
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			return GetterUtil.getString(_token);
+		}
+
+		return GetterUtil.getString(
+			_pushNotificationsDeviceOriginalValues._originalToken);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_pushNotificationsDeviceOriginalValues == null) {
+			return 0;
+		}
+
+		return _pushNotificationsDeviceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -591,18 +613,8 @@ public class PushNotificationsDeviceModelImpl
 		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl =
 			this;
 
-		pushNotificationsDeviceModelImpl._originalUserId =
-			pushNotificationsDeviceModelImpl._userId;
-
-		pushNotificationsDeviceModelImpl._setOriginalUserId = false;
-
-		pushNotificationsDeviceModelImpl._originalPlatform =
-			pushNotificationsDeviceModelImpl._platform;
-
-		pushNotificationsDeviceModelImpl._originalToken =
-			pushNotificationsDeviceModelImpl._token;
-
-		pushNotificationsDeviceModelImpl._columnBitmask = 0;
+		pushNotificationsDeviceModelImpl.
+			_pushNotificationsDeviceOriginalValues = null;
 	}
 
 	@Override
@@ -710,20 +722,34 @@ public class PushNotificationsDeviceModelImpl
 		return sb.toString();
 	}
 
+	private static class PushNotificationsDeviceOriginalValues {
+
+		private PushNotificationsDeviceOriginalValues(
+			PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl) {
+
+			_originalUserId = pushNotificationsDeviceModelImpl._userId;
+			_originalPlatform = pushNotificationsDeviceModelImpl._platform;
+			_originalToken = pushNotificationsDeviceModelImpl._token;
+		}
+
+		private final long _originalUserId;
+		private final String _originalPlatform;
+		private final String _originalToken;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PushNotificationsDevice>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PushNotificationsDeviceOriginalValues
+		_pushNotificationsDeviceOriginalValues;
 	private long _pushNotificationsDeviceId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _platform;
-	private String _originalPlatform;
 	private String _token;
-	private String _originalToken;
-	private long _columnBitmask;
 	private PushNotificationsDevice _escapedModel;
 
 }

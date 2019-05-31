@@ -517,17 +517,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_kbArticleOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_kbArticleOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -549,13 +553,12 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		_columnBitmask |= RESOURCEPRIMKEY_COLUMN_BITMASK;
-
-		if (!_setOriginalResourcePrimKey) {
-			_setOriginalResourcePrimKey = true;
-
-			_originalResourcePrimKey = _resourcePrimKey;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |=
+			RESOURCEPRIMKEY_COLUMN_BITMASK;
 
 		_resourcePrimKey = resourcePrimKey;
 	}
@@ -566,7 +569,11 @@ public class KBArticleModelImpl
 	}
 
 	public long getOriginalResourcePrimKey() {
-		return _originalResourcePrimKey;
+		if (_kbArticleOriginalValues == null) {
+			return _resourcePrimKey;
+		}
+
+		return _kbArticleOriginalValues._originalResourcePrimKey;
 	}
 
 	@JSON
@@ -577,19 +584,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_kbArticleOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _kbArticleOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -600,19 +609,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kbArticleOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kbArticleOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -683,7 +694,11 @@ public class KBArticleModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
+		}
+
+		_kbArticleOriginalValues._columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -718,19 +733,22 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setParentResourcePrimKey(long parentResourcePrimKey) {
-		_columnBitmask |= PARENTRESOURCEPRIMKEY_COLUMN_BITMASK;
-
-		if (!_setOriginalParentResourcePrimKey) {
-			_setOriginalParentResourcePrimKey = true;
-
-			_originalParentResourcePrimKey = _parentResourcePrimKey;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |=
+			PARENTRESOURCEPRIMKEY_COLUMN_BITMASK;
 
 		_parentResourcePrimKey = parentResourcePrimKey;
 	}
 
 	public long getOriginalParentResourcePrimKey() {
-		return _originalParentResourcePrimKey;
+		if (_kbArticleOriginalValues == null) {
+			return _parentResourcePrimKey;
+		}
+
+		return _kbArticleOriginalValues._originalParentResourcePrimKey;
 	}
 
 	@JSON
@@ -741,19 +759,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setKbFolderId(long kbFolderId) {
-		_columnBitmask |= KBFOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalKbFolderId) {
-			_setOriginalKbFolderId = true;
-
-			_originalKbFolderId = _kbFolderId;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= KBFOLDERID_COLUMN_BITMASK;
 
 		_kbFolderId = kbFolderId;
 	}
 
 	public long getOriginalKbFolderId() {
-		return _originalKbFolderId;
+		if (_kbArticleOriginalValues == null) {
+			return _kbFolderId;
+		}
+
+		return _kbArticleOriginalValues._originalKbFolderId;
 	}
 
 	@JSON
@@ -764,19 +784,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= VERSION_COLUMN_BITMASK;
 
 		_version = version;
 	}
 
 	public int getOriginalVersion() {
-		return _originalVersion;
+		if (_kbArticleOriginalValues == null) {
+			return _version;
+		}
+
+		return _kbArticleOriginalValues._originalVersion;
 	}
 
 	@JSON
@@ -808,17 +830,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
-
-		if (_originalUrlTitle == null) {
-			_originalUrlTitle = _urlTitle;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= URLTITLE_COLUMN_BITMASK;
 
 		_urlTitle = urlTitle;
 	}
 
 	public String getOriginalUrlTitle() {
-		return GetterUtil.getString(_originalUrlTitle);
+		if (_kbArticleOriginalValues == null) {
+			return GetterUtil.getString(_urlTitle);
+		}
+
+		return GetterUtil.getString(_kbArticleOriginalValues._originalUrlTitle);
 	}
 
 	@JSON
@@ -877,17 +903,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setSections(String sections) {
-		_columnBitmask |= SECTIONS_COLUMN_BITMASK;
-
-		if (_originalSections == null) {
-			_originalSections = _sections;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= SECTIONS_COLUMN_BITMASK;
 
 		_sections = sections;
 	}
 
 	public String getOriginalSections() {
-		return GetterUtil.getString(_originalSections);
+		if (_kbArticleOriginalValues == null) {
+			return GetterUtil.getString(_sections);
+		}
+
+		return GetterUtil.getString(_kbArticleOriginalValues._originalSections);
 	}
 
 	@JSON
@@ -915,19 +945,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setLatest(boolean latest) {
-		_columnBitmask |= LATEST_COLUMN_BITMASK;
-
-		if (!_setOriginalLatest) {
-			_setOriginalLatest = true;
-
-			_originalLatest = _latest;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= LATEST_COLUMN_BITMASK;
 
 		_latest = latest;
 	}
 
 	public boolean getOriginalLatest() {
-		return _originalLatest;
+		if (_kbArticleOriginalValues == null) {
+			return _latest;
+		}
+
+		return _kbArticleOriginalValues._originalLatest;
 	}
 
 	@JSON
@@ -944,19 +976,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setMain(boolean main) {
-		_columnBitmask |= MAIN_COLUMN_BITMASK;
-
-		if (!_setOriginalMain) {
-			_setOriginalMain = true;
-
-			_originalMain = _main;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= MAIN_COLUMN_BITMASK;
 
 		_main = main;
 	}
 
 	public boolean getOriginalMain() {
-		return _originalMain;
+		if (_kbArticleOriginalValues == null) {
+			return _main;
+		}
+
+		return _kbArticleOriginalValues._originalMain;
 	}
 
 	@JSON
@@ -994,19 +1028,21 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_kbArticleOriginalValues == null) {
+			_kbArticleOriginalValues = new KBArticleOriginalValues(this);
 		}
+
+		_kbArticleOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_kbArticleOriginalValues == null) {
+			return _status;
+		}
+
+		return _kbArticleOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1150,7 +1186,11 @@ public class KBArticleModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kbArticleOriginalValues == null) {
+			return 0;
+		}
+
+		return _kbArticleOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1273,53 +1313,9 @@ public class KBArticleModelImpl
 	public void resetOriginalValues() {
 		KBArticleModelImpl kbArticleModelImpl = this;
 
-		kbArticleModelImpl._originalUuid = kbArticleModelImpl._uuid;
-
-		kbArticleModelImpl._originalResourcePrimKey =
-			kbArticleModelImpl._resourcePrimKey;
-
-		kbArticleModelImpl._setOriginalResourcePrimKey = false;
-
-		kbArticleModelImpl._originalGroupId = kbArticleModelImpl._groupId;
-
-		kbArticleModelImpl._setOriginalGroupId = false;
-
-		kbArticleModelImpl._originalCompanyId = kbArticleModelImpl._companyId;
-
-		kbArticleModelImpl._setOriginalCompanyId = false;
+		kbArticleModelImpl._kbArticleOriginalValues = null;
 
 		kbArticleModelImpl._setModifiedDate = false;
-
-		kbArticleModelImpl._originalParentResourcePrimKey =
-			kbArticleModelImpl._parentResourcePrimKey;
-
-		kbArticleModelImpl._setOriginalParentResourcePrimKey = false;
-
-		kbArticleModelImpl._originalKbFolderId = kbArticleModelImpl._kbFolderId;
-
-		kbArticleModelImpl._setOriginalKbFolderId = false;
-
-		kbArticleModelImpl._originalVersion = kbArticleModelImpl._version;
-
-		kbArticleModelImpl._setOriginalVersion = false;
-
-		kbArticleModelImpl._originalUrlTitle = kbArticleModelImpl._urlTitle;
-
-		kbArticleModelImpl._originalSections = kbArticleModelImpl._sections;
-
-		kbArticleModelImpl._originalLatest = kbArticleModelImpl._latest;
-
-		kbArticleModelImpl._setOriginalLatest = false;
-
-		kbArticleModelImpl._originalMain = kbArticleModelImpl._main;
-
-		kbArticleModelImpl._setOriginalMain = false;
-
-		kbArticleModelImpl._originalStatus = kbArticleModelImpl._status;
-
-		kbArticleModelImpl._setOriginalStatus = false;
-
-		kbArticleModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1533,21 +1529,49 @@ public class KBArticleModelImpl
 		return sb.toString();
 	}
 
+	private static class KBArticleOriginalValues {
+
+		private KBArticleOriginalValues(KBArticleModelImpl kbArticleModelImpl) {
+			_originalUuid = kbArticleModelImpl._uuid;
+			_originalResourcePrimKey = kbArticleModelImpl._resourcePrimKey;
+			_originalGroupId = kbArticleModelImpl._groupId;
+			_originalCompanyId = kbArticleModelImpl._companyId;
+			_originalParentResourcePrimKey =
+				kbArticleModelImpl._parentResourcePrimKey;
+			_originalKbFolderId = kbArticleModelImpl._kbFolderId;
+			_originalVersion = kbArticleModelImpl._version;
+			_originalUrlTitle = kbArticleModelImpl._urlTitle;
+			_originalSections = kbArticleModelImpl._sections;
+			_originalLatest = kbArticleModelImpl._latest;
+			_originalMain = kbArticleModelImpl._main;
+			_originalStatus = kbArticleModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalResourcePrimKey;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentResourcePrimKey;
+		private final long _originalKbFolderId;
+		private final int _originalVersion;
+		private final String _originalUrlTitle;
+		private final String _originalSections;
+		private final boolean _originalLatest;
+		private final boolean _originalMain;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KBArticle>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KBArticleOriginalValues _kbArticleOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _kbArticleId;
 	private long _resourcePrimKey;
-	private long _originalResourcePrimKey;
-	private boolean _setOriginalResourcePrimKey;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1556,38 +1580,23 @@ public class KBArticleModelImpl
 	private long _rootResourcePrimKey;
 	private long _parentResourceClassNameId;
 	private long _parentResourcePrimKey;
-	private long _originalParentResourcePrimKey;
-	private boolean _setOriginalParentResourcePrimKey;
 	private long _kbFolderId;
-	private long _originalKbFolderId;
-	private boolean _setOriginalKbFolderId;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private String _title;
 	private String _urlTitle;
-	private String _originalUrlTitle;
 	private String _content;
 	private String _description;
 	private double _priority;
 	private String _sections;
-	private String _originalSections;
 	private int _viewCount;
 	private boolean _latest;
-	private boolean _originalLatest;
-	private boolean _setOriginalLatest;
 	private boolean _main;
-	private boolean _originalMain;
-	private boolean _setOriginalMain;
 	private String _sourceURL;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private KBArticle _escapedModel;
 
 }

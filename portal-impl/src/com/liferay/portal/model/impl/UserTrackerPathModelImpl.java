@@ -324,19 +324,23 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setUserTrackerId(long userTrackerId) {
-		_columnBitmask |= USERTRACKERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserTrackerId) {
-			_setOriginalUserTrackerId = true;
-
-			_originalUserTrackerId = _userTrackerId;
+		if (_userTrackerPathOriginalValues == null) {
+			_userTrackerPathOriginalValues = new UserTrackerPathOriginalValues(
+				this);
 		}
+
+		_userTrackerPathOriginalValues._columnBitmask |=
+			USERTRACKERID_COLUMN_BITMASK;
 
 		_userTrackerId = userTrackerId;
 	}
 
 	public long getOriginalUserTrackerId() {
-		return _originalUserTrackerId;
+		if (_userTrackerPathOriginalValues == null) {
+			return _userTrackerId;
+		}
+
+		return _userTrackerPathOriginalValues._originalUserTrackerId;
 	}
 
 	@Override
@@ -365,7 +369,11 @@ public class UserTrackerPathModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_userTrackerPathOriginalValues == null) {
+			return 0;
+		}
+
+		return _userTrackerPathOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -463,12 +471,7 @@ public class UserTrackerPathModelImpl
 	public void resetOriginalValues() {
 		UserTrackerPathModelImpl userTrackerPathModelImpl = this;
 
-		userTrackerPathModelImpl._originalUserTrackerId =
-			userTrackerPathModelImpl._userTrackerId;
-
-		userTrackerPathModelImpl._setOriginalUserTrackerId = false;
-
-		userTrackerPathModelImpl._columnBitmask = 0;
+		userTrackerPathModelImpl._userTrackerPathOriginalValues = null;
 	}
 
 	@Override
@@ -567,18 +570,29 @@ public class UserTrackerPathModelImpl
 		return sb.toString();
 	}
 
+	private static class UserTrackerPathOriginalValues {
+
+		private UserTrackerPathOriginalValues(
+			UserTrackerPathModelImpl userTrackerPathModelImpl) {
+
+			_originalUserTrackerId = userTrackerPathModelImpl._userTrackerId;
+		}
+
+		private final long _originalUserTrackerId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, UserTrackerPath>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private UserTrackerPathOriginalValues _userTrackerPathOriginalValues;
 	private long _mvccVersion;
 	private long _userTrackerPathId;
 	private long _companyId;
 	private long _userTrackerId;
-	private long _originalUserTrackerId;
-	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
-	private long _columnBitmask;
 	private UserTrackerPath _escapedModel;
 
 }

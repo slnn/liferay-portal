@@ -304,17 +304,23 @@ public class WikiPageResourceModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_wikiPageResourceOriginalValues == null) {
+			_wikiPageResourceOriginalValues =
+				new WikiPageResourceOriginalValues(this);
 		}
+
+		_wikiPageResourceOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_wikiPageResourceOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_wikiPageResourceOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -334,19 +340,23 @@ public class WikiPageResourceModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_wikiPageResourceOriginalValues == null) {
+			_wikiPageResourceOriginalValues =
+				new WikiPageResourceOriginalValues(this);
 		}
+
+		_wikiPageResourceOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_wikiPageResourceOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _wikiPageResourceOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -356,19 +366,23 @@ public class WikiPageResourceModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_wikiPageResourceOriginalValues == null) {
+			_wikiPageResourceOriginalValues =
+				new WikiPageResourceOriginalValues(this);
 		}
+
+		_wikiPageResourceOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_wikiPageResourceOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _wikiPageResourceOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -378,19 +392,22 @@ public class WikiPageResourceModelImpl
 
 	@Override
 	public void setNodeId(long nodeId) {
-		_columnBitmask |= NODEID_COLUMN_BITMASK;
-
-		if (!_setOriginalNodeId) {
-			_setOriginalNodeId = true;
-
-			_originalNodeId = _nodeId;
+		if (_wikiPageResourceOriginalValues == null) {
+			_wikiPageResourceOriginalValues =
+				new WikiPageResourceOriginalValues(this);
 		}
+
+		_wikiPageResourceOriginalValues._columnBitmask |= NODEID_COLUMN_BITMASK;
 
 		_nodeId = nodeId;
 	}
 
 	public long getOriginalNodeId() {
-		return _originalNodeId;
+		if (_wikiPageResourceOriginalValues == null) {
+			return _nodeId;
+		}
+
+		return _wikiPageResourceOriginalValues._originalNodeId;
 	}
 
 	@Override
@@ -405,21 +422,31 @@ public class WikiPageResourceModelImpl
 
 	@Override
 	public void setTitle(String title) {
-		_columnBitmask |= TITLE_COLUMN_BITMASK;
-
-		if (_originalTitle == null) {
-			_originalTitle = _title;
+		if (_wikiPageResourceOriginalValues == null) {
+			_wikiPageResourceOriginalValues =
+				new WikiPageResourceOriginalValues(this);
 		}
+
+		_wikiPageResourceOriginalValues._columnBitmask |= TITLE_COLUMN_BITMASK;
 
 		_title = title;
 	}
 
 	public String getOriginalTitle() {
-		return GetterUtil.getString(_originalTitle);
+		if (_wikiPageResourceOriginalValues == null) {
+			return GetterUtil.getString(_title);
+		}
+
+		return GetterUtil.getString(
+			_wikiPageResourceOriginalValues._originalTitle);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_wikiPageResourceOriginalValues == null) {
+			return 0;
+		}
+
+		return _wikiPageResourceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -517,28 +544,7 @@ public class WikiPageResourceModelImpl
 	public void resetOriginalValues() {
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = this;
 
-		wikiPageResourceModelImpl._originalUuid =
-			wikiPageResourceModelImpl._uuid;
-
-		wikiPageResourceModelImpl._originalGroupId =
-			wikiPageResourceModelImpl._groupId;
-
-		wikiPageResourceModelImpl._setOriginalGroupId = false;
-
-		wikiPageResourceModelImpl._originalCompanyId =
-			wikiPageResourceModelImpl._companyId;
-
-		wikiPageResourceModelImpl._setOriginalCompanyId = false;
-
-		wikiPageResourceModelImpl._originalNodeId =
-			wikiPageResourceModelImpl._nodeId;
-
-		wikiPageResourceModelImpl._setOriginalNodeId = false;
-
-		wikiPageResourceModelImpl._originalTitle =
-			wikiPageResourceModelImpl._title;
-
-		wikiPageResourceModelImpl._columnBitmask = 0;
+		wikiPageResourceModelImpl._wikiPageResourceOriginalValues = null;
 	}
 
 	@Override
@@ -636,24 +642,37 @@ public class WikiPageResourceModelImpl
 		return sb.toString();
 	}
 
+	private static class WikiPageResourceOriginalValues {
+
+		private WikiPageResourceOriginalValues(
+			WikiPageResourceModelImpl wikiPageResourceModelImpl) {
+
+			_originalUuid = wikiPageResourceModelImpl._uuid;
+			_originalGroupId = wikiPageResourceModelImpl._groupId;
+			_originalCompanyId = wikiPageResourceModelImpl._companyId;
+			_originalNodeId = wikiPageResourceModelImpl._nodeId;
+			_originalTitle = wikiPageResourceModelImpl._title;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalNodeId;
+		private final String _originalTitle;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, WikiPageResource>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WikiPageResourceOriginalValues _wikiPageResourceOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _resourcePrimKey;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _nodeId;
-	private long _originalNodeId;
-	private boolean _setOriginalNodeId;
 	private String _title;
-	private String _originalTitle;
-	private long _columnBitmask;
 	private WikiPageResource _escapedModel;
 
 }

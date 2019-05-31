@@ -335,7 +335,12 @@ public class AssetAutoTaggerEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_assetAutoTaggerEntryOriginalValues == null) {
+			_assetAutoTaggerEntryOriginalValues =
+				new AssetAutoTaggerEntryOriginalValues(this);
+		}
+
+		_assetAutoTaggerEntryOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -363,19 +368,23 @@ public class AssetAutoTaggerEntryModelImpl
 
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
-		_columnBitmask |= ASSETENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssetEntryId) {
-			_setOriginalAssetEntryId = true;
-
-			_originalAssetEntryId = _assetEntryId;
+		if (_assetAutoTaggerEntryOriginalValues == null) {
+			_assetAutoTaggerEntryOriginalValues =
+				new AssetAutoTaggerEntryOriginalValues(this);
 		}
+
+		_assetAutoTaggerEntryOriginalValues._columnBitmask |=
+			ASSETENTRYID_COLUMN_BITMASK;
 
 		_assetEntryId = assetEntryId;
 	}
 
 	public long getOriginalAssetEntryId() {
-		return _originalAssetEntryId;
+		if (_assetAutoTaggerEntryOriginalValues == null) {
+			return _assetEntryId;
+		}
+
+		return _assetAutoTaggerEntryOriginalValues._originalAssetEntryId;
 	}
 
 	@Override
@@ -385,23 +394,31 @@ public class AssetAutoTaggerEntryModelImpl
 
 	@Override
 	public void setAssetTagId(long assetTagId) {
-		_columnBitmask |= ASSETTAGID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssetTagId) {
-			_setOriginalAssetTagId = true;
-
-			_originalAssetTagId = _assetTagId;
+		if (_assetAutoTaggerEntryOriginalValues == null) {
+			_assetAutoTaggerEntryOriginalValues =
+				new AssetAutoTaggerEntryOriginalValues(this);
 		}
+
+		_assetAutoTaggerEntryOriginalValues._columnBitmask |=
+			ASSETTAGID_COLUMN_BITMASK;
 
 		_assetTagId = assetTagId;
 	}
 
 	public long getOriginalAssetTagId() {
-		return _originalAssetTagId;
+		if (_assetAutoTaggerEntryOriginalValues == null) {
+			return _assetTagId;
+		}
+
+		return _assetAutoTaggerEntryOriginalValues._originalAssetTagId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetAutoTaggerEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetAutoTaggerEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -504,19 +521,10 @@ public class AssetAutoTaggerEntryModelImpl
 	public void resetOriginalValues() {
 		AssetAutoTaggerEntryModelImpl assetAutoTaggerEntryModelImpl = this;
 
+		assetAutoTaggerEntryModelImpl._assetAutoTaggerEntryOriginalValues =
+			null;
+
 		assetAutoTaggerEntryModelImpl._setModifiedDate = false;
-
-		assetAutoTaggerEntryModelImpl._originalAssetEntryId =
-			assetAutoTaggerEntryModelImpl._assetEntryId;
-
-		assetAutoTaggerEntryModelImpl._setOriginalAssetEntryId = false;
-
-		assetAutoTaggerEntryModelImpl._originalAssetTagId =
-			assetAutoTaggerEntryModelImpl._assetTagId;
-
-		assetAutoTaggerEntryModelImpl._setOriginalAssetTagId = false;
-
-		assetAutoTaggerEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -622,11 +630,28 @@ public class AssetAutoTaggerEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class AssetAutoTaggerEntryOriginalValues {
+
+		private AssetAutoTaggerEntryOriginalValues(
+			AssetAutoTaggerEntryModelImpl assetAutoTaggerEntryModelImpl) {
+
+			_originalAssetEntryId = assetAutoTaggerEntryModelImpl._assetEntryId;
+			_originalAssetTagId = assetAutoTaggerEntryModelImpl._assetTagId;
+		}
+
+		private final long _originalAssetEntryId;
+		private final long _originalAssetTagId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetAutoTaggerEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AssetAutoTaggerEntryOriginalValues
+		_assetAutoTaggerEntryOriginalValues;
 	private long _assetAutoTaggerEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -634,12 +659,7 @@ public class AssetAutoTaggerEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _assetEntryId;
-	private long _originalAssetEntryId;
-	private boolean _setOriginalAssetEntryId;
 	private long _assetTagId;
-	private long _originalAssetTagId;
-	private boolean _setOriginalAssetTagId;
-	private long _columnBitmask;
 	private AssetAutoTaggerEntry _escapedModel;
 
 }

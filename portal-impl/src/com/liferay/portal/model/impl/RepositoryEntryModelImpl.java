@@ -368,17 +368,23 @@ public class RepositoryEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_repositoryEntryOriginalValues == null) {
+			_repositoryEntryOriginalValues = new RepositoryEntryOriginalValues(
+				this);
 		}
+
+		_repositoryEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_repositoryEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_repositoryEntryOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -398,19 +404,22 @@ public class RepositoryEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_repositoryEntryOriginalValues == null) {
+			_repositoryEntryOriginalValues = new RepositoryEntryOriginalValues(
+				this);
 		}
+
+		_repositoryEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_repositoryEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _repositoryEntryOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -420,19 +429,23 @@ public class RepositoryEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_repositoryEntryOriginalValues == null) {
+			_repositoryEntryOriginalValues = new RepositoryEntryOriginalValues(
+				this);
 		}
+
+		_repositoryEntryOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_repositoryEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _repositoryEntryOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -509,19 +522,23 @@ public class RepositoryEntryModelImpl
 
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalRepositoryId) {
-			_setOriginalRepositoryId = true;
-
-			_originalRepositoryId = _repositoryId;
+		if (_repositoryEntryOriginalValues == null) {
+			_repositoryEntryOriginalValues = new RepositoryEntryOriginalValues(
+				this);
 		}
+
+		_repositoryEntryOriginalValues._columnBitmask |=
+			REPOSITORYID_COLUMN_BITMASK;
 
 		_repositoryId = repositoryId;
 	}
 
 	public long getOriginalRepositoryId() {
-		return _originalRepositoryId;
+		if (_repositoryEntryOriginalValues == null) {
+			return _repositoryId;
+		}
+
+		return _repositoryEntryOriginalValues._originalRepositoryId;
 	}
 
 	@Override
@@ -536,17 +553,24 @@ public class RepositoryEntryModelImpl
 
 	@Override
 	public void setMappedId(String mappedId) {
-		_columnBitmask |= MAPPEDID_COLUMN_BITMASK;
-
-		if (_originalMappedId == null) {
-			_originalMappedId = _mappedId;
+		if (_repositoryEntryOriginalValues == null) {
+			_repositoryEntryOriginalValues = new RepositoryEntryOriginalValues(
+				this);
 		}
+
+		_repositoryEntryOriginalValues._columnBitmask |=
+			MAPPEDID_COLUMN_BITMASK;
 
 		_mappedId = mappedId;
 	}
 
 	public String getOriginalMappedId() {
-		return GetterUtil.getString(_originalMappedId);
+		if (_repositoryEntryOriginalValues == null) {
+			return GetterUtil.getString(_mappedId);
+		}
+
+		return GetterUtil.getString(
+			_repositoryEntryOriginalValues._originalMappedId);
 	}
 
 	@Override
@@ -581,7 +605,11 @@ public class RepositoryEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_repositoryEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _repositoryEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -686,29 +714,9 @@ public class RepositoryEntryModelImpl
 	public void resetOriginalValues() {
 		RepositoryEntryModelImpl repositoryEntryModelImpl = this;
 
-		repositoryEntryModelImpl._originalUuid = repositoryEntryModelImpl._uuid;
-
-		repositoryEntryModelImpl._originalGroupId =
-			repositoryEntryModelImpl._groupId;
-
-		repositoryEntryModelImpl._setOriginalGroupId = false;
-
-		repositoryEntryModelImpl._originalCompanyId =
-			repositoryEntryModelImpl._companyId;
-
-		repositoryEntryModelImpl._setOriginalCompanyId = false;
+		repositoryEntryModelImpl._repositoryEntryOriginalValues = null;
 
 		repositoryEntryModelImpl._setModifiedDate = false;
-
-		repositoryEntryModelImpl._originalRepositoryId =
-			repositoryEntryModelImpl._repositoryId;
-
-		repositoryEntryModelImpl._setOriginalRepositoryId = false;
-
-		repositoryEntryModelImpl._originalMappedId =
-			repositoryEntryModelImpl._mappedId;
-
-		repositoryEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -849,32 +857,45 @@ public class RepositoryEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class RepositoryEntryOriginalValues {
+
+		private RepositoryEntryOriginalValues(
+			RepositoryEntryModelImpl repositoryEntryModelImpl) {
+
+			_originalUuid = repositoryEntryModelImpl._uuid;
+			_originalGroupId = repositoryEntryModelImpl._groupId;
+			_originalCompanyId = repositoryEntryModelImpl._companyId;
+			_originalRepositoryId = repositoryEntryModelImpl._repositoryId;
+			_originalMappedId = repositoryEntryModelImpl._mappedId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalRepositoryId;
+		private final String _originalMappedId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, RepositoryEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RepositoryEntryOriginalValues _repositoryEntryOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _repositoryEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _repositoryId;
-	private long _originalRepositoryId;
-	private boolean _setOriginalRepositoryId;
 	private String _mappedId;
-	private String _originalMappedId;
 	private boolean _manualCheckInRequired;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private RepositoryEntry _escapedModel;
 
 }

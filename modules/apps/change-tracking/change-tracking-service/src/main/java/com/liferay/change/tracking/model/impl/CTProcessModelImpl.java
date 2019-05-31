@@ -291,19 +291,21 @@ public class CTProcessModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ctProcessOriginalValues == null) {
+			_ctProcessOriginalValues = new CTProcessOriginalValues(this);
 		}
+
+		_ctProcessOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ctProcessOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ctProcessOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -313,13 +315,11 @@ public class CTProcessModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_ctProcessOriginalValues == null) {
+			_ctProcessOriginalValues = new CTProcessOriginalValues(this);
 		}
+
+		_ctProcessOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -341,7 +341,11 @@ public class CTProcessModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_ctProcessOriginalValues == null) {
+			return _userId;
+		}
+
+		return _ctProcessOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -361,19 +365,22 @@ public class CTProcessModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
+		if (_ctProcessOriginalValues == null) {
+			_ctProcessOriginalValues = new CTProcessOriginalValues(this);
 		}
+
+		_ctProcessOriginalValues._columnBitmask |=
+			CTCOLLECTIONID_COLUMN_BITMASK;
 
 		_ctCollectionId = ctCollectionId;
 	}
 
 	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
+		if (_ctProcessOriginalValues == null) {
+			return _ctCollectionId;
+		}
+
+		return _ctProcessOriginalValues._originalCtCollectionId;
 	}
 
 	@Override
@@ -387,7 +394,11 @@ public class CTProcessModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ctProcessOriginalValues == null) {
+			return 0;
+		}
+
+		return _ctProcessOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -485,20 +496,7 @@ public class CTProcessModelImpl
 	public void resetOriginalValues() {
 		CTProcessModelImpl ctProcessModelImpl = this;
 
-		ctProcessModelImpl._originalCompanyId = ctProcessModelImpl._companyId;
-
-		ctProcessModelImpl._setOriginalCompanyId = false;
-
-		ctProcessModelImpl._originalUserId = ctProcessModelImpl._userId;
-
-		ctProcessModelImpl._setOriginalUserId = false;
-
-		ctProcessModelImpl._originalCtCollectionId =
-			ctProcessModelImpl._ctCollectionId;
-
-		ctProcessModelImpl._setOriginalCtCollectionId = false;
-
-		ctProcessModelImpl._columnBitmask = 0;
+		ctProcessModelImpl._ctProcessOriginalValues = null;
 	}
 
 	@Override
@@ -590,24 +588,33 @@ public class CTProcessModelImpl
 		return sb.toString();
 	}
 
+	private static class CTProcessOriginalValues {
+
+		private CTProcessOriginalValues(CTProcessModelImpl ctProcessModelImpl) {
+			_originalCompanyId = ctProcessModelImpl._companyId;
+			_originalUserId = ctProcessModelImpl._userId;
+			_originalCtCollectionId = ctProcessModelImpl._ctCollectionId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalCtCollectionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, CTProcess>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CTProcessOriginalValues _ctProcessOriginalValues;
 	private long _ctProcessId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _backgroundTaskId;
-	private long _columnBitmask;
 	private CTProcess _escapedModel;
 
 }

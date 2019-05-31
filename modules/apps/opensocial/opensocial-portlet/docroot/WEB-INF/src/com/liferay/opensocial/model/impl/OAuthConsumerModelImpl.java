@@ -363,17 +363,23 @@ public class OAuthConsumerModelImpl
 
 	@Override
 	public void setGadgetKey(String gadgetKey) {
-		_columnBitmask |= GADGETKEY_COLUMN_BITMASK;
-
-		if (_originalGadgetKey == null) {
-			_originalGadgetKey = _gadgetKey;
+		if (_oAuthConsumerOriginalValues == null) {
+			_oAuthConsumerOriginalValues = new OAuthConsumerOriginalValues(
+				this);
 		}
+
+		_oAuthConsumerOriginalValues._columnBitmask |= GADGETKEY_COLUMN_BITMASK;
 
 		_gadgetKey = gadgetKey;
 	}
 
 	public String getOriginalGadgetKey() {
-		return GetterUtil.getString(_originalGadgetKey);
+		if (_oAuthConsumerOriginalValues == null) {
+			return GetterUtil.getString(_gadgetKey);
+		}
+
+		return GetterUtil.getString(
+			_oAuthConsumerOriginalValues._originalGadgetKey);
 	}
 
 	@Override
@@ -388,17 +394,23 @@ public class OAuthConsumerModelImpl
 
 	@Override
 	public void setServiceName(String serviceName) {
-		_columnBitmask = -1L;
-
-		if (_originalServiceName == null) {
-			_originalServiceName = _serviceName;
+		if (_oAuthConsumerOriginalValues == null) {
+			_oAuthConsumerOriginalValues = new OAuthConsumerOriginalValues(
+				this);
 		}
+
+		_oAuthConsumerOriginalValues._columnBitmask = -1L;
 
 		_serviceName = serviceName;
 	}
 
 	public String getOriginalServiceName() {
-		return GetterUtil.getString(_originalServiceName);
+		if (_oAuthConsumerOriginalValues == null) {
+			return GetterUtil.getString(_serviceName);
+		}
+
+		return GetterUtil.getString(
+			_oAuthConsumerOriginalValues._originalServiceName);
 	}
 
 	@Override
@@ -447,7 +459,11 @@ public class OAuthConsumerModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_oAuthConsumerOriginalValues == null) {
+			return 0;
+		}
+
+		return _oAuthConsumerOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -546,15 +562,9 @@ public class OAuthConsumerModelImpl
 	public void resetOriginalValues() {
 		OAuthConsumerModelImpl oAuthConsumerModelImpl = this;
 
+		oAuthConsumerModelImpl._oAuthConsumerOriginalValues = null;
+
 		oAuthConsumerModelImpl._setModifiedDate = false;
-
-		oAuthConsumerModelImpl._originalGadgetKey =
-			oAuthConsumerModelImpl._gadgetKey;
-
-		oAuthConsumerModelImpl._originalServiceName =
-			oAuthConsumerModelImpl._serviceName;
-
-		oAuthConsumerModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -690,22 +700,35 @@ public class OAuthConsumerModelImpl
 		return sb.toString();
 	}
 
+	private static class OAuthConsumerOriginalValues {
+
+		private OAuthConsumerOriginalValues(
+			OAuthConsumerModelImpl oAuthConsumerModelImpl) {
+
+			_originalGadgetKey = oAuthConsumerModelImpl._gadgetKey;
+			_originalServiceName = oAuthConsumerModelImpl._serviceName;
+		}
+
+		private final String _originalGadgetKey;
+		private final String _originalServiceName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, OAuthConsumer>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private OAuthConsumerOriginalValues _oAuthConsumerOriginalValues;
 	private long _oAuthConsumerId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _gadgetKey;
-	private String _originalGadgetKey;
 	private String _serviceName;
-	private String _originalServiceName;
 	private String _consumerKey;
 	private String _consumerSecret;
 	private String _keyType;
-	private long _columnBitmask;
 	private OAuthConsumer _escapedModel;
 
 }

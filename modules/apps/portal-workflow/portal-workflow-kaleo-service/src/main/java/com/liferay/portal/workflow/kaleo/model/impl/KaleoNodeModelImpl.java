@@ -345,7 +345,11 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
-		_columnBitmask = -1L;
+		if (_kaleoNodeOriginalValues == null) {
+			_kaleoNodeOriginalValues = new KaleoNodeOriginalValues(this);
+		}
+
+		_kaleoNodeOriginalValues._columnBitmask = -1L;
 
 		_kaleoNodeId = kaleoNodeId;
 	}
@@ -367,19 +371,21 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kaleoNodeOriginalValues == null) {
+			_kaleoNodeOriginalValues = new KaleoNodeOriginalValues(this);
 		}
+
+		_kaleoNodeOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kaleoNodeOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kaleoNodeOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -456,19 +462,22 @@ public class KaleoNodeModelImpl
 
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_columnBitmask |= KALEODEFINITIONVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoDefinitionVersionId) {
-			_setOriginalKaleoDefinitionVersionId = true;
-
-			_originalKaleoDefinitionVersionId = _kaleoDefinitionVersionId;
+		if (_kaleoNodeOriginalValues == null) {
+			_kaleoNodeOriginalValues = new KaleoNodeOriginalValues(this);
 		}
+
+		_kaleoNodeOriginalValues._columnBitmask |=
+			KALEODEFINITIONVERSIONID_COLUMN_BITMASK;
 
 		_kaleoDefinitionVersionId = kaleoDefinitionVersionId;
 	}
 
 	public long getOriginalKaleoDefinitionVersionId() {
-		return _originalKaleoDefinitionVersionId;
+		if (_kaleoNodeOriginalValues == null) {
+			return _kaleoDefinitionVersionId;
+		}
+
+		return _kaleoNodeOriginalValues._originalKaleoDefinitionVersionId;
 	}
 
 	@Override
@@ -562,7 +571,11 @@ public class KaleoNodeModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kaleoNodeOriginalValues == null) {
+			return 0;
+		}
+
+		return _kaleoNodeOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -676,18 +689,9 @@ public class KaleoNodeModelImpl
 	public void resetOriginalValues() {
 		KaleoNodeModelImpl kaleoNodeModelImpl = this;
 
-		kaleoNodeModelImpl._originalCompanyId = kaleoNodeModelImpl._companyId;
-
-		kaleoNodeModelImpl._setOriginalCompanyId = false;
+		kaleoNodeModelImpl._kaleoNodeOriginalValues = null;
 
 		kaleoNodeModelImpl._setModifiedDate = false;
-
-		kaleoNodeModelImpl._originalKaleoDefinitionVersionId =
-			kaleoNodeModelImpl._kaleoDefinitionVersionId;
-
-		kaleoNodeModelImpl._setOriginalKaleoDefinitionVersionId = false;
-
-		kaleoNodeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -835,30 +839,40 @@ public class KaleoNodeModelImpl
 		return sb.toString();
 	}
 
+	private static class KaleoNodeOriginalValues {
+
+		private KaleoNodeOriginalValues(KaleoNodeModelImpl kaleoNodeModelImpl) {
+			_originalCompanyId = kaleoNodeModelImpl._companyId;
+			_originalKaleoDefinitionVersionId =
+				kaleoNodeModelImpl._kaleoDefinitionVersionId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalKaleoDefinitionVersionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KaleoNode>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KaleoNodeOriginalValues _kaleoNodeOriginalValues;
 	private long _mvccVersion;
 	private long _kaleoNodeId;
 	private long _groupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _kaleoDefinitionVersionId;
-	private long _originalKaleoDefinitionVersionId;
-	private boolean _setOriginalKaleoDefinitionVersionId;
 	private String _name;
 	private String _metadata;
 	private String _description;
 	private String _type;
 	private boolean _initial;
 	private boolean _terminal;
-	private long _columnBitmask;
 	private KaleoNode _escapedModel;
 
 }

@@ -558,19 +558,23 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public void setStructureId(long structureId) {
-		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
-
-		if (!_setOriginalStructureId) {
-			_setOriginalStructureId = true;
-
-			_originalStructureId = _structureId;
+		if (_ddmStructureVersionOriginalValues == null) {
+			_ddmStructureVersionOriginalValues =
+				new DDMStructureVersionOriginalValues(this);
 		}
+
+		_ddmStructureVersionOriginalValues._columnBitmask |=
+			STRUCTUREID_COLUMN_BITMASK;
 
 		_structureId = structureId;
 	}
 
 	public long getOriginalStructureId() {
-		return _originalStructureId;
+		if (_ddmStructureVersionOriginalValues == null) {
+			return _structureId;
+		}
+
+		return _ddmStructureVersionOriginalValues._originalStructureId;
 	}
 
 	@JSON
@@ -586,17 +590,24 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (_originalVersion == null) {
-			_originalVersion = _version;
+		if (_ddmStructureVersionOriginalValues == null) {
+			_ddmStructureVersionOriginalValues =
+				new DDMStructureVersionOriginalValues(this);
 		}
+
+		_ddmStructureVersionOriginalValues._columnBitmask |=
+			VERSION_COLUMN_BITMASK;
 
 		_version = version;
 	}
 
 	public String getOriginalVersion() {
-		return GetterUtil.getString(_originalVersion);
+		if (_ddmStructureVersionOriginalValues == null) {
+			return GetterUtil.getString(_version);
+		}
+
+		return GetterUtil.getString(
+			_ddmStructureVersionOriginalValues._originalVersion);
 	}
 
 	@JSON
@@ -872,19 +883,23 @@ public class DDMStructureVersionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_ddmStructureVersionOriginalValues == null) {
+			_ddmStructureVersionOriginalValues =
+				new DDMStructureVersionOriginalValues(this);
 		}
+
+		_ddmStructureVersionOriginalValues._columnBitmask |=
+			STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_ddmStructureVersionOriginalValues == null) {
+			return _status;
+		}
+
+		return _ddmStructureVersionOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1030,7 +1045,11 @@ public class DDMStructureVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmStructureVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmStructureVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1230,22 +1249,9 @@ public class DDMStructureVersionModelImpl
 	public void resetOriginalValues() {
 		DDMStructureVersionModelImpl ddmStructureVersionModelImpl = this;
 
-		ddmStructureVersionModelImpl._originalStructureId =
-			ddmStructureVersionModelImpl._structureId;
-
-		ddmStructureVersionModelImpl._setOriginalStructureId = false;
-
-		ddmStructureVersionModelImpl._originalVersion =
-			ddmStructureVersionModelImpl._version;
-
-		ddmStructureVersionModelImpl._originalStatus =
-			ddmStructureVersionModelImpl._status;
-
-		ddmStructureVersionModelImpl._setOriginalStatus = false;
+		ddmStructureVersionModelImpl._ddmStructureVersionOriginalValues = null;
 
 		setDDMForm(null);
-
-		ddmStructureVersionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1416,9 +1422,28 @@ public class DDMStructureVersionModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMStructureVersionOriginalValues {
+
+		private DDMStructureVersionOriginalValues(
+			DDMStructureVersionModelImpl ddmStructureVersionModelImpl) {
+
+			_originalStructureId = ddmStructureVersionModelImpl._structureId;
+			_originalVersion = ddmStructureVersionModelImpl._version;
+			_originalStatus = ddmStructureVersionModelImpl._status;
+		}
+
+		private final long _originalStructureId;
+		private final String _originalVersion;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMStructureVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMStructureVersionOriginalValues
+		_ddmStructureVersionOriginalValues;
 	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -1426,10 +1451,7 @@ public class DDMStructureVersionModelImpl
 	private String _userName;
 	private Date _createDate;
 	private long _structureId;
-	private long _originalStructureId;
-	private boolean _setOriginalStructureId;
 	private String _version;
-	private String _originalVersion;
 	private long _parentStructureId;
 	private String _name;
 	private String _nameCurrentLanguageId;
@@ -1439,12 +1461,9 @@ public class DDMStructureVersionModelImpl
 	private String _storageType;
 	private int _type;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private DDMStructureVersion _escapedModel;
 
 }

@@ -425,17 +425,23 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			_ddmStructureLayoutOriginalValues =
+				new DDMStructureLayoutOriginalValues(this);
 		}
+
+		_ddmStructureLayoutOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ddmStructureLayoutOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_ddmStructureLayoutOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -457,19 +463,23 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			_ddmStructureLayoutOriginalValues =
+				new DDMStructureLayoutOriginalValues(this);
 		}
+
+		_ddmStructureLayoutOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _ddmStructureLayoutOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -480,19 +490,23 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			_ddmStructureLayoutOriginalValues =
+				new DDMStructureLayoutOriginalValues(this);
 		}
+
+		_ddmStructureLayoutOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ddmStructureLayoutOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -574,19 +588,23 @@ public class DDMStructureLayoutModelImpl
 
 	@Override
 	public void setStructureVersionId(long structureVersionId) {
-		_columnBitmask |= STRUCTUREVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalStructureVersionId) {
-			_setOriginalStructureVersionId = true;
-
-			_originalStructureVersionId = _structureVersionId;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			_ddmStructureLayoutOriginalValues =
+				new DDMStructureLayoutOriginalValues(this);
 		}
+
+		_ddmStructureLayoutOriginalValues._columnBitmask |=
+			STRUCTUREVERSIONID_COLUMN_BITMASK;
 
 		_structureVersionId = structureVersionId;
 	}
 
 	public long getOriginalStructureVersionId() {
-		return _originalStructureVersionId;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			return _structureVersionId;
+		}
+
+		return _ddmStructureLayoutOriginalValues._originalStructureVersionId;
 	}
 
 	@JSON
@@ -833,7 +851,11 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmStructureLayoutOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmStructureLayoutOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1027,29 +1049,11 @@ public class DDMStructureLayoutModelImpl
 	public void resetOriginalValues() {
 		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl = this;
 
-		ddmStructureLayoutModelImpl._originalUuid =
-			ddmStructureLayoutModelImpl._uuid;
-
-		ddmStructureLayoutModelImpl._originalGroupId =
-			ddmStructureLayoutModelImpl._groupId;
-
-		ddmStructureLayoutModelImpl._setOriginalGroupId = false;
-
-		ddmStructureLayoutModelImpl._originalCompanyId =
-			ddmStructureLayoutModelImpl._companyId;
-
-		ddmStructureLayoutModelImpl._setOriginalCompanyId = false;
+		ddmStructureLayoutModelImpl._ddmStructureLayoutOriginalValues = null;
 
 		ddmStructureLayoutModelImpl._setModifiedDate = false;
 
-		ddmStructureLayoutModelImpl._originalStructureVersionId =
-			ddmStructureLayoutModelImpl._structureVersionId;
-
-		ddmStructureLayoutModelImpl._setOriginalStructureVersionId = false;
-
 		setDDMFormLayout(null);
-
-		ddmStructureLayoutModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1194,32 +1198,45 @@ public class DDMStructureLayoutModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMStructureLayoutOriginalValues {
+
+		private DDMStructureLayoutOriginalValues(
+			DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl) {
+
+			_originalUuid = ddmStructureLayoutModelImpl._uuid;
+			_originalGroupId = ddmStructureLayoutModelImpl._groupId;
+			_originalCompanyId = ddmStructureLayoutModelImpl._companyId;
+			_originalStructureVersionId =
+				ddmStructureLayoutModelImpl._structureVersionId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalStructureVersionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMStructureLayout>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMStructureLayoutOriginalValues _ddmStructureLayoutOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _structureLayoutId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _structureVersionId;
-	private long _originalStructureVersionId;
-	private boolean _setOriginalStructureVersionId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _definition;
-	private long _columnBitmask;
 	private DDMStructureLayout _escapedModel;
 
 }

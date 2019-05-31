@@ -292,19 +292,21 @@ public class ExpandoTableModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_expandoTableOriginalValues == null) {
+			_expandoTableOriginalValues = new ExpandoTableOriginalValues(this);
 		}
+
+		_expandoTableOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_expandoTableOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _expandoTableOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -335,19 +337,22 @@ public class ExpandoTableModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_expandoTableOriginalValues == null) {
+			_expandoTableOriginalValues = new ExpandoTableOriginalValues(this);
 		}
+
+		_expandoTableOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_expandoTableOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _expandoTableOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -363,21 +368,29 @@ public class ExpandoTableModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_expandoTableOriginalValues == null) {
+			_expandoTableOriginalValues = new ExpandoTableOriginalValues(this);
 		}
+
+		_expandoTableOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_expandoTableOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_expandoTableOriginalValues._originalName);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_expandoTableOriginalValues == null) {
+			return 0;
+		}
+
+		return _expandoTableOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -460,19 +473,7 @@ public class ExpandoTableModelImpl
 	public void resetOriginalValues() {
 		ExpandoTableModelImpl expandoTableModelImpl = this;
 
-		expandoTableModelImpl._originalCompanyId =
-			expandoTableModelImpl._companyId;
-
-		expandoTableModelImpl._setOriginalCompanyId = false;
-
-		expandoTableModelImpl._originalClassNameId =
-			expandoTableModelImpl._classNameId;
-
-		expandoTableModelImpl._setOriginalClassNameId = false;
-
-		expandoTableModelImpl._originalName = expandoTableModelImpl._name;
-
-		expandoTableModelImpl._columnBitmask = 0;
+		expandoTableModelImpl._expandoTableOriginalValues = null;
 	}
 
 	@Override
@@ -560,19 +561,31 @@ public class ExpandoTableModelImpl
 		return sb.toString();
 	}
 
+	private static class ExpandoTableOriginalValues {
+
+		private ExpandoTableOriginalValues(
+			ExpandoTableModelImpl expandoTableModelImpl) {
+
+			_originalCompanyId = expandoTableModelImpl._companyId;
+			_originalClassNameId = expandoTableModelImpl._classNameId;
+			_originalName = expandoTableModelImpl._name;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ExpandoTable>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ExpandoTableOriginalValues _expandoTableOriginalValues;
 	private long _tableId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private String _name;
-	private String _originalName;
-	private long _columnBitmask;
 	private ExpandoTable _escapedModel;
 
 }

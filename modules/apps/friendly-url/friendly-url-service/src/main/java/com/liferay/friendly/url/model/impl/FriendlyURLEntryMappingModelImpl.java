@@ -346,19 +346,23 @@ public class FriendlyURLEntryMappingModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_friendlyURLEntryMappingOriginalValues == null) {
+			_friendlyURLEntryMappingOriginalValues =
+				new FriendlyURLEntryMappingOriginalValues(this);
 		}
+
+		_friendlyURLEntryMappingOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_friendlyURLEntryMappingOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _friendlyURLEntryMappingOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -368,19 +372,23 @@ public class FriendlyURLEntryMappingModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_friendlyURLEntryMappingOriginalValues == null) {
+			_friendlyURLEntryMappingOriginalValues =
+				new FriendlyURLEntryMappingOriginalValues(this);
 		}
+
+		_friendlyURLEntryMappingOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_friendlyURLEntryMappingOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _friendlyURLEntryMappingOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -394,7 +402,11 @@ public class FriendlyURLEntryMappingModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_friendlyURLEntryMappingOriginalValues == null) {
+			return 0;
+		}
+
+		return _friendlyURLEntryMappingOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -496,17 +508,8 @@ public class FriendlyURLEntryMappingModelImpl
 		FriendlyURLEntryMappingModelImpl friendlyURLEntryMappingModelImpl =
 			this;
 
-		friendlyURLEntryMappingModelImpl._originalClassNameId =
-			friendlyURLEntryMappingModelImpl._classNameId;
-
-		friendlyURLEntryMappingModelImpl._setOriginalClassNameId = false;
-
-		friendlyURLEntryMappingModelImpl._originalClassPK =
-			friendlyURLEntryMappingModelImpl._classPK;
-
-		friendlyURLEntryMappingModelImpl._setOriginalClassPK = false;
-
-		friendlyURLEntryMappingModelImpl._columnBitmask = 0;
+		friendlyURLEntryMappingModelImpl.
+			_friendlyURLEntryMappingOriginalValues = null;
 	}
 
 	@Override
@@ -594,19 +597,32 @@ public class FriendlyURLEntryMappingModelImpl
 		return sb.toString();
 	}
 
+	private static class FriendlyURLEntryMappingOriginalValues {
+
+		private FriendlyURLEntryMappingOriginalValues(
+			FriendlyURLEntryMappingModelImpl friendlyURLEntryMappingModelImpl) {
+
+			_originalClassNameId =
+				friendlyURLEntryMappingModelImpl._classNameId;
+			_originalClassPK = friendlyURLEntryMappingModelImpl._classPK;
+		}
+
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, FriendlyURLEntryMapping>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private FriendlyURLEntryMappingOriginalValues
+		_friendlyURLEntryMappingOriginalValues;
 	private long _mvccVersion;
 	private long _friendlyURLEntryMappingId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _friendlyURLEntryId;
-	private long _columnBitmask;
 	private FriendlyURLEntryMapping _escapedModel;
 
 }

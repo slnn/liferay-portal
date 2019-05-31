@@ -487,7 +487,11 @@ public class ContactModelImpl
 
 	@Override
 	public void setContactId(long contactId) {
-		_columnBitmask = -1L;
+		if (_contactOriginalValues == null) {
+			_contactOriginalValues = new ContactOriginalValues(this);
+		}
+
+		_contactOriginalValues._columnBitmask = -1L;
 
 		_contactId = contactId;
 	}
@@ -500,19 +504,21 @@ public class ContactModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_contactOriginalValues == null) {
+			_contactOriginalValues = new ContactOriginalValues(this);
 		}
+
+		_contactOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_contactOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _contactOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -614,19 +620,21 @@ public class ContactModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_contactOriginalValues == null) {
+			_contactOriginalValues = new ContactOriginalValues(this);
 		}
+
+		_contactOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_contactOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _contactOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -637,19 +645,21 @@ public class ContactModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_contactOriginalValues == null) {
+			_contactOriginalValues = new ContactOriginalValues(this);
 		}
+
+		_contactOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_contactOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _contactOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -660,19 +670,21 @@ public class ContactModelImpl
 
 	@Override
 	public void setAccountId(long accountId) {
-		_columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
-
-		if (!_setOriginalAccountId) {
-			_setOriginalAccountId = true;
-
-			_originalAccountId = _accountId;
+		if (_contactOriginalValues == null) {
+			_contactOriginalValues = new ContactOriginalValues(this);
 		}
+
+		_contactOriginalValues._columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
 
 		_accountId = accountId;
 	}
 
 	public long getOriginalAccountId() {
-		return _originalAccountId;
+		if (_contactOriginalValues == null) {
+			return _accountId;
+		}
+
+		return _contactOriginalValues._originalAccountId;
 	}
 
 	@JSON
@@ -961,7 +973,11 @@ public class ContactModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_contactOriginalValues == null) {
+			return 0;
+		}
+
+		return _contactOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1088,25 +1104,9 @@ public class ContactModelImpl
 	public void resetOriginalValues() {
 		ContactModelImpl contactModelImpl = this;
 
-		contactModelImpl._originalCompanyId = contactModelImpl._companyId;
-
-		contactModelImpl._setOriginalCompanyId = false;
+		contactModelImpl._contactOriginalValues = null;
 
 		contactModelImpl._setModifiedDate = false;
-
-		contactModelImpl._originalClassNameId = contactModelImpl._classNameId;
-
-		contactModelImpl._setOriginalClassNameId = false;
-
-		contactModelImpl._originalClassPK = contactModelImpl._classPK;
-
-		contactModelImpl._setOriginalClassPK = false;
-
-		contactModelImpl._originalAccountId = contactModelImpl._accountId;
-
-		contactModelImpl._setOriginalAccountId = false;
-
-		contactModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1348,28 +1348,38 @@ public class ContactModelImpl
 		return sb.toString();
 	}
 
+	private static class ContactOriginalValues {
+
+		private ContactOriginalValues(ContactModelImpl contactModelImpl) {
+			_originalCompanyId = contactModelImpl._companyId;
+			_originalClassNameId = contactModelImpl._classNameId;
+			_originalClassPK = contactModelImpl._classPK;
+			_originalAccountId = contactModelImpl._accountId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final long _originalAccountId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Contact>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ContactOriginalValues _contactOriginalValues;
 	private long _mvccVersion;
 	private long _contactId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _accountId;
-	private long _originalAccountId;
-	private boolean _setOriginalAccountId;
 	private long _parentContactId;
 	private String _emailAddress;
 	private String _firstName;
@@ -1389,7 +1399,6 @@ public class ContactModelImpl
 	private String _jobTitle;
 	private String _jobClass;
 	private String _hoursOfOperation;
-	private long _columnBitmask;
 	private Contact _escapedModel;
 
 }

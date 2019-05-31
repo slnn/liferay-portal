@@ -312,17 +312,23 @@ public class DDMStorageLinkModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ddmStorageLinkOriginalValues == null) {
+			_ddmStorageLinkOriginalValues = new DDMStorageLinkOriginalValues(
+				this);
 		}
+
+		_ddmStorageLinkOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ddmStorageLinkOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_ddmStorageLinkOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -342,19 +348,23 @@ public class DDMStorageLinkModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ddmStorageLinkOriginalValues == null) {
+			_ddmStorageLinkOriginalValues = new DDMStorageLinkOriginalValues(
+				this);
 		}
+
+		_ddmStorageLinkOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ddmStorageLinkOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ddmStorageLinkOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -394,19 +404,22 @@ public class DDMStorageLinkModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_ddmStorageLinkOriginalValues == null) {
+			_ddmStorageLinkOriginalValues = new DDMStorageLinkOriginalValues(
+				this);
 		}
+
+		_ddmStorageLinkOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_ddmStorageLinkOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _ddmStorageLinkOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -416,19 +429,23 @@ public class DDMStorageLinkModelImpl
 
 	@Override
 	public void setStructureId(long structureId) {
-		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
-
-		if (!_setOriginalStructureId) {
-			_setOriginalStructureId = true;
-
-			_originalStructureId = _structureId;
+		if (_ddmStorageLinkOriginalValues == null) {
+			_ddmStorageLinkOriginalValues = new DDMStorageLinkOriginalValues(
+				this);
 		}
+
+		_ddmStorageLinkOriginalValues._columnBitmask |=
+			STRUCTUREID_COLUMN_BITMASK;
 
 		_structureId = structureId;
 	}
 
 	public long getOriginalStructureId() {
-		return _originalStructureId;
+		if (_ddmStorageLinkOriginalValues == null) {
+			return _structureId;
+		}
+
+		return _ddmStorageLinkOriginalValues._originalStructureId;
 	}
 
 	@Override
@@ -438,23 +455,31 @@ public class DDMStorageLinkModelImpl
 
 	@Override
 	public void setStructureVersionId(long structureVersionId) {
-		_columnBitmask |= STRUCTUREVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalStructureVersionId) {
-			_setOriginalStructureVersionId = true;
-
-			_originalStructureVersionId = _structureVersionId;
+		if (_ddmStorageLinkOriginalValues == null) {
+			_ddmStorageLinkOriginalValues = new DDMStorageLinkOriginalValues(
+				this);
 		}
+
+		_ddmStorageLinkOriginalValues._columnBitmask |=
+			STRUCTUREVERSIONID_COLUMN_BITMASK;
 
 		_structureVersionId = structureVersionId;
 	}
 
 	public long getOriginalStructureVersionId() {
-		return _originalStructureVersionId;
+		if (_ddmStorageLinkOriginalValues == null) {
+			return _structureVersionId;
+		}
+
+		return _ddmStorageLinkOriginalValues._originalStructureVersionId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmStorageLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmStorageLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -553,29 +578,7 @@ public class DDMStorageLinkModelImpl
 	public void resetOriginalValues() {
 		DDMStorageLinkModelImpl ddmStorageLinkModelImpl = this;
 
-		ddmStorageLinkModelImpl._originalUuid = ddmStorageLinkModelImpl._uuid;
-
-		ddmStorageLinkModelImpl._originalCompanyId =
-			ddmStorageLinkModelImpl._companyId;
-
-		ddmStorageLinkModelImpl._setOriginalCompanyId = false;
-
-		ddmStorageLinkModelImpl._originalClassPK =
-			ddmStorageLinkModelImpl._classPK;
-
-		ddmStorageLinkModelImpl._setOriginalClassPK = false;
-
-		ddmStorageLinkModelImpl._originalStructureId =
-			ddmStorageLinkModelImpl._structureId;
-
-		ddmStorageLinkModelImpl._setOriginalStructureId = false;
-
-		ddmStorageLinkModelImpl._originalStructureVersionId =
-			ddmStorageLinkModelImpl._structureVersionId;
-
-		ddmStorageLinkModelImpl._setOriginalStructureVersionId = false;
-
-		ddmStorageLinkModelImpl._columnBitmask = 0;
+		ddmStorageLinkModelImpl._ddmStorageLinkOriginalValues = null;
 	}
 
 	@Override
@@ -669,26 +672,39 @@ public class DDMStorageLinkModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMStorageLinkOriginalValues {
+
+		private DDMStorageLinkOriginalValues(
+			DDMStorageLinkModelImpl ddmStorageLinkModelImpl) {
+
+			_originalUuid = ddmStorageLinkModelImpl._uuid;
+			_originalCompanyId = ddmStorageLinkModelImpl._companyId;
+			_originalClassPK = ddmStorageLinkModelImpl._classPK;
+			_originalStructureId = ddmStorageLinkModelImpl._structureId;
+			_originalStructureVersionId =
+				ddmStorageLinkModelImpl._structureVersionId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalClassPK;
+		private final long _originalStructureId;
+		private final long _originalStructureVersionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMStorageLink>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMStorageLinkOriginalValues _ddmStorageLinkOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _storageLinkId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _classNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _structureId;
-	private long _originalStructureId;
-	private boolean _setOriginalStructureId;
 	private long _structureVersionId;
-	private long _originalStructureVersionId;
-	private boolean _setOriginalStructureVersionId;
-	private long _columnBitmask;
 	private DDMStorageLink _escapedModel;
 
 }

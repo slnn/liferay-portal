@@ -638,7 +638,12 @@ public class LayoutRevisionModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
+		}
+
+		_layoutRevisionOriginalValues._columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -651,19 +656,23 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		_columnBitmask |= LAYOUTSETBRANCHID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutSetBranchId) {
-			_setOriginalLayoutSetBranchId = true;
-
-			_originalLayoutSetBranchId = _layoutSetBranchId;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
 		}
+
+		_layoutRevisionOriginalValues._columnBitmask |=
+			LAYOUTSETBRANCHID_COLUMN_BITMASK;
 
 		_layoutSetBranchId = layoutSetBranchId;
 	}
 
 	public long getOriginalLayoutSetBranchId() {
-		return _originalLayoutSetBranchId;
+		if (_layoutRevisionOriginalValues == null) {
+			return _layoutSetBranchId;
+		}
+
+		return _layoutRevisionOriginalValues._originalLayoutSetBranchId;
 	}
 
 	@JSON
@@ -674,19 +683,23 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setLayoutBranchId(long layoutBranchId) {
-		_columnBitmask |= LAYOUTBRANCHID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutBranchId) {
-			_setOriginalLayoutBranchId = true;
-
-			_originalLayoutBranchId = _layoutBranchId;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
 		}
+
+		_layoutRevisionOriginalValues._columnBitmask |=
+			LAYOUTBRANCHID_COLUMN_BITMASK;
 
 		_layoutBranchId = layoutBranchId;
 	}
 
 	public long getOriginalLayoutBranchId() {
-		return _originalLayoutBranchId;
+		if (_layoutRevisionOriginalValues == null) {
+			return _layoutBranchId;
+		}
+
+		return _layoutRevisionOriginalValues._originalLayoutBranchId;
 	}
 
 	@JSON
@@ -697,19 +710,23 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setParentLayoutRevisionId(long parentLayoutRevisionId) {
-		_columnBitmask |= PARENTLAYOUTREVISIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentLayoutRevisionId) {
-			_setOriginalParentLayoutRevisionId = true;
-
-			_originalParentLayoutRevisionId = _parentLayoutRevisionId;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
 		}
+
+		_layoutRevisionOriginalValues._columnBitmask |=
+			PARENTLAYOUTREVISIONID_COLUMN_BITMASK;
 
 		_parentLayoutRevisionId = parentLayoutRevisionId;
 	}
 
 	public long getOriginalParentLayoutRevisionId() {
-		return _originalParentLayoutRevisionId;
+		if (_layoutRevisionOriginalValues == null) {
+			return _parentLayoutRevisionId;
+		}
+
+		return _layoutRevisionOriginalValues._originalParentLayoutRevisionId;
 	}
 
 	@JSON
@@ -726,19 +743,22 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setHead(boolean head) {
-		_columnBitmask |= HEAD_COLUMN_BITMASK;
-
-		if (!_setOriginalHead) {
-			_setOriginalHead = true;
-
-			_originalHead = _head;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
 		}
+
+		_layoutRevisionOriginalValues._columnBitmask |= HEAD_COLUMN_BITMASK;
 
 		_head = head;
 	}
 
 	public boolean getOriginalHead() {
-		return _originalHead;
+		if (_layoutRevisionOriginalValues == null) {
+			return _head;
+		}
+
+		return _layoutRevisionOriginalValues._originalHead;
 	}
 
 	@JSON
@@ -766,19 +786,22 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
 		}
+
+		_layoutRevisionOriginalValues._columnBitmask |= PLID_COLUMN_BITMASK;
 
 		_plid = plid;
 	}
 
 	public long getOriginalPlid() {
-		return _originalPlid;
+		if (_layoutRevisionOriginalValues == null) {
+			return _plid;
+		}
+
+		return _layoutRevisionOriginalValues._originalPlid;
 	}
 
 	@JSON
@@ -1411,19 +1434,22 @@ public class LayoutRevisionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_layoutRevisionOriginalValues == null) {
+			_layoutRevisionOriginalValues = new LayoutRevisionOriginalValues(
+				this);
 		}
+
+		_layoutRevisionOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_layoutRevisionOriginalValues == null) {
+			return _status;
+		}
+
+		return _layoutRevisionOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1561,7 +1587,11 @@ public class LayoutRevisionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutRevisionOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutRevisionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1833,37 +1863,9 @@ public class LayoutRevisionModelImpl
 	public void resetOriginalValues() {
 		LayoutRevisionModelImpl layoutRevisionModelImpl = this;
 
+		layoutRevisionModelImpl._layoutRevisionOriginalValues = null;
+
 		layoutRevisionModelImpl._setModifiedDate = false;
-
-		layoutRevisionModelImpl._originalLayoutSetBranchId =
-			layoutRevisionModelImpl._layoutSetBranchId;
-
-		layoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
-
-		layoutRevisionModelImpl._originalLayoutBranchId =
-			layoutRevisionModelImpl._layoutBranchId;
-
-		layoutRevisionModelImpl._setOriginalLayoutBranchId = false;
-
-		layoutRevisionModelImpl._originalParentLayoutRevisionId =
-			layoutRevisionModelImpl._parentLayoutRevisionId;
-
-		layoutRevisionModelImpl._setOriginalParentLayoutRevisionId = false;
-
-		layoutRevisionModelImpl._originalHead = layoutRevisionModelImpl._head;
-
-		layoutRevisionModelImpl._setOriginalHead = false;
-
-		layoutRevisionModelImpl._originalPlid = layoutRevisionModelImpl._plid;
-
-		layoutRevisionModelImpl._setOriginalPlid = false;
-
-		layoutRevisionModelImpl._originalStatus =
-			layoutRevisionModelImpl._status;
-
-		layoutRevisionModelImpl._setOriginalStatus = false;
-
-		layoutRevisionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -2083,9 +2085,35 @@ public class LayoutRevisionModelImpl
 		return sb.toString();
 	}
 
+	private static class LayoutRevisionOriginalValues {
+
+		private LayoutRevisionOriginalValues(
+			LayoutRevisionModelImpl layoutRevisionModelImpl) {
+
+			_originalLayoutSetBranchId =
+				layoutRevisionModelImpl._layoutSetBranchId;
+			_originalLayoutBranchId = layoutRevisionModelImpl._layoutBranchId;
+			_originalParentLayoutRevisionId =
+				layoutRevisionModelImpl._parentLayoutRevisionId;
+			_originalHead = layoutRevisionModelImpl._head;
+			_originalPlid = layoutRevisionModelImpl._plid;
+			_originalStatus = layoutRevisionModelImpl._status;
+		}
+
+		private final long _originalLayoutSetBranchId;
+		private final long _originalLayoutBranchId;
+		private final long _originalParentLayoutRevisionId;
+		private final boolean _originalHead;
+		private final long _originalPlid;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LayoutRevision>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutRevisionOriginalValues _layoutRevisionOriginalValues;
 	private long _mvccVersion;
 	private long _layoutRevisionId;
 	private long _groupId;
@@ -2096,21 +2124,11 @@ public class LayoutRevisionModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _layoutSetBranchId;
-	private long _originalLayoutSetBranchId;
-	private boolean _setOriginalLayoutSetBranchId;
 	private long _layoutBranchId;
-	private long _originalLayoutBranchId;
-	private boolean _setOriginalLayoutBranchId;
 	private long _parentLayoutRevisionId;
-	private long _originalParentLayoutRevisionId;
-	private boolean _setOriginalParentLayoutRevisionId;
 	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private boolean _major;
 	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
 	private boolean _privateLayout;
 	private String _name;
 	private String _nameCurrentLanguageId;
@@ -2128,12 +2146,9 @@ public class LayoutRevisionModelImpl
 	private String _colorSchemeId;
 	private String _css;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private LayoutRevision _escapedModel;
 
 }

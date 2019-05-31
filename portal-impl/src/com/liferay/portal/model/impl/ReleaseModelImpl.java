@@ -359,17 +359,23 @@ public class ReleaseModelImpl
 
 	@Override
 	public void setServletContextName(String servletContextName) {
-		_columnBitmask |= SERVLETCONTEXTNAME_COLUMN_BITMASK;
-
-		if (_originalServletContextName == null) {
-			_originalServletContextName = _servletContextName;
+		if (_releaseOriginalValues == null) {
+			_releaseOriginalValues = new ReleaseOriginalValues(this);
 		}
+
+		_releaseOriginalValues._columnBitmask |=
+			SERVLETCONTEXTNAME_COLUMN_BITMASK;
 
 		_servletContextName = servletContextName;
 	}
 
 	public String getOriginalServletContextName() {
-		return GetterUtil.getString(_originalServletContextName);
+		if (_releaseOriginalValues == null) {
+			return GetterUtil.getString(_servletContextName);
+		}
+
+		return GetterUtil.getString(
+			_releaseOriginalValues._originalServletContextName);
 	}
 
 	@Override
@@ -448,7 +454,11 @@ public class ReleaseModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_releaseOriginalValues == null) {
+			return 0;
+		}
+
+		return _releaseOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -551,12 +561,9 @@ public class ReleaseModelImpl
 	public void resetOriginalValues() {
 		ReleaseModelImpl releaseModelImpl = this;
 
+		releaseModelImpl._releaseOriginalValues = null;
+
 		releaseModelImpl._setModifiedDate = false;
-
-		releaseModelImpl._originalServletContextName =
-			releaseModelImpl._servletContextName;
-
-		releaseModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -692,23 +699,33 @@ public class ReleaseModelImpl
 		return sb.toString();
 	}
 
+	private static class ReleaseOriginalValues {
+
+		private ReleaseOriginalValues(ReleaseModelImpl releaseModelImpl) {
+			_originalServletContextName = releaseModelImpl._servletContextName;
+		}
+
+		private final String _originalServletContextName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Release>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ReleaseOriginalValues _releaseOriginalValues;
 	private long _mvccVersion;
 	private long _releaseId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _servletContextName;
-	private String _originalServletContextName;
 	private String _schemaVersion;
 	private int _buildNumber;
 	private Date _buildDate;
 	private boolean _verified;
 	private int _state;
 	private String _testString;
-	private long _columnBitmask;
 	private Release _escapedModel;
 
 }

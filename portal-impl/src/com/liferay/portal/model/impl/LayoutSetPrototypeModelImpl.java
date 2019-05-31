@@ -435,17 +435,23 @@ public class LayoutSetPrototypeModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_layoutSetPrototypeOriginalValues == null) {
+			_layoutSetPrototypeOriginalValues =
+				new LayoutSetPrototypeOriginalValues(this);
 		}
+
+		_layoutSetPrototypeOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_layoutSetPrototypeOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutSetPrototypeOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -467,19 +473,23 @@ public class LayoutSetPrototypeModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_layoutSetPrototypeOriginalValues == null) {
+			_layoutSetPrototypeOriginalValues =
+				new LayoutSetPrototypeOriginalValues(this);
 		}
+
+		_layoutSetPrototypeOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_layoutSetPrototypeOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _layoutSetPrototypeOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -794,19 +804,23 @@ public class LayoutSetPrototypeModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_layoutSetPrototypeOriginalValues == null) {
+			_layoutSetPrototypeOriginalValues =
+				new LayoutSetPrototypeOriginalValues(this);
 		}
+
+		_layoutSetPrototypeOriginalValues._columnBitmask |=
+			ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_layoutSetPrototypeOriginalValues == null) {
+			return _active;
+		}
+
+		return _layoutSetPrototypeOriginalValues._originalActive;
 	}
 
 	@Override
@@ -816,7 +830,11 @@ public class LayoutSetPrototypeModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutSetPrototypeOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutSetPrototypeOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1011,22 +1029,9 @@ public class LayoutSetPrototypeModelImpl
 	public void resetOriginalValues() {
 		LayoutSetPrototypeModelImpl layoutSetPrototypeModelImpl = this;
 
-		layoutSetPrototypeModelImpl._originalUuid =
-			layoutSetPrototypeModelImpl._uuid;
-
-		layoutSetPrototypeModelImpl._originalCompanyId =
-			layoutSetPrototypeModelImpl._companyId;
-
-		layoutSetPrototypeModelImpl._setOriginalCompanyId = false;
+		layoutSetPrototypeModelImpl._layoutSetPrototypeOriginalValues = null;
 
 		layoutSetPrototypeModelImpl._setModifiedDate = false;
-
-		layoutSetPrototypeModelImpl._originalActive =
-			layoutSetPrototypeModelImpl._active;
-
-		layoutSetPrototypeModelImpl._setOriginalActive = false;
-
-		layoutSetPrototypeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1169,16 +1174,31 @@ public class LayoutSetPrototypeModelImpl
 		return sb.toString();
 	}
 
+	private static class LayoutSetPrototypeOriginalValues {
+
+		private LayoutSetPrototypeOriginalValues(
+			LayoutSetPrototypeModelImpl layoutSetPrototypeModelImpl) {
+
+			_originalUuid = layoutSetPrototypeModelImpl._uuid;
+			_originalCompanyId = layoutSetPrototypeModelImpl._companyId;
+			_originalActive = layoutSetPrototypeModelImpl._active;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LayoutSetPrototype>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutSetPrototypeOriginalValues _layoutSetPrototypeOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _layoutSetPrototypeId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1190,9 +1210,6 @@ public class LayoutSetPrototypeModelImpl
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private LayoutSetPrototype _escapedModel;
 
 }

@@ -320,19 +320,21 @@ public class TrashVersionModelImpl
 
 	@Override
 	public void setEntryId(long entryId) {
-		_columnBitmask |= ENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalEntryId) {
-			_setOriginalEntryId = true;
-
-			_originalEntryId = _entryId;
+		if (_trashVersionOriginalValues == null) {
+			_trashVersionOriginalValues = new TrashVersionOriginalValues(this);
 		}
+
+		_trashVersionOriginalValues._columnBitmask |= ENTRYID_COLUMN_BITMASK;
 
 		_entryId = entryId;
 	}
 
 	public long getOriginalEntryId() {
-		return _originalEntryId;
+		if (_trashVersionOriginalValues == null) {
+			return _entryId;
+		}
+
+		return _trashVersionOriginalValues._originalEntryId;
 	}
 
 	@Override
@@ -362,19 +364,22 @@ public class TrashVersionModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_trashVersionOriginalValues == null) {
+			_trashVersionOriginalValues = new TrashVersionOriginalValues(this);
 		}
+
+		_trashVersionOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_trashVersionOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _trashVersionOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -384,19 +389,21 @@ public class TrashVersionModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_trashVersionOriginalValues == null) {
+			_trashVersionOriginalValues = new TrashVersionOriginalValues(this);
 		}
+
+		_trashVersionOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_trashVersionOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _trashVersionOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -425,7 +432,11 @@ public class TrashVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_trashVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _trashVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -524,20 +535,7 @@ public class TrashVersionModelImpl
 	public void resetOriginalValues() {
 		TrashVersionModelImpl trashVersionModelImpl = this;
 
-		trashVersionModelImpl._originalEntryId = trashVersionModelImpl._entryId;
-
-		trashVersionModelImpl._setOriginalEntryId = false;
-
-		trashVersionModelImpl._originalClassNameId =
-			trashVersionModelImpl._classNameId;
-
-		trashVersionModelImpl._setOriginalClassNameId = false;
-
-		trashVersionModelImpl._originalClassPK = trashVersionModelImpl._classPK;
-
-		trashVersionModelImpl._setOriginalClassPK = false;
-
-		trashVersionModelImpl._columnBitmask = 0;
+		trashVersionModelImpl._trashVersionOriginalValues = null;
 	}
 
 	@Override
@@ -631,23 +629,34 @@ public class TrashVersionModelImpl
 		return sb.toString();
 	}
 
+	private static class TrashVersionOriginalValues {
+
+		private TrashVersionOriginalValues(
+			TrashVersionModelImpl trashVersionModelImpl) {
+
+			_originalEntryId = trashVersionModelImpl._entryId;
+			_originalClassNameId = trashVersionModelImpl._classNameId;
+			_originalClassPK = trashVersionModelImpl._classPK;
+		}
+
+		private final long _originalEntryId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, TrashVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private TrashVersionOriginalValues _trashVersionOriginalValues;
 	private long _versionId;
 	private long _companyId;
 	private long _entryId;
-	private long _originalEntryId;
-	private boolean _setOriginalEntryId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _typeSettings;
 	private int _status;
-	private long _columnBitmask;
 	private TrashVersion _escapedModel;
 
 }

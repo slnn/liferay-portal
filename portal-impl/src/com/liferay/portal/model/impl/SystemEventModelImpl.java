@@ -374,19 +374,21 @@ public class SystemEventModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_systemEventOriginalValues == null) {
+			_systemEventOriginalValues = new SystemEventOriginalValues(this);
 		}
+
+		_systemEventOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_systemEventOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _systemEventOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -447,7 +449,11 @@ public class SystemEventModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_systemEventOriginalValues == null) {
+			_systemEventOriginalValues = new SystemEventOriginalValues(this);
+		}
+
+		_systemEventOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -479,19 +485,21 @@ public class SystemEventModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_systemEventOriginalValues == null) {
+			_systemEventOriginalValues = new SystemEventOriginalValues(this);
 		}
+
+		_systemEventOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_systemEventOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _systemEventOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -501,19 +509,21 @@ public class SystemEventModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_systemEventOriginalValues == null) {
+			_systemEventOriginalValues = new SystemEventOriginalValues(this);
 		}
+
+		_systemEventOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_systemEventOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _systemEventOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -558,19 +568,22 @@ public class SystemEventModelImpl
 
 	@Override
 	public void setSystemEventSetKey(long systemEventSetKey) {
-		_columnBitmask |= SYSTEMEVENTSETKEY_COLUMN_BITMASK;
-
-		if (!_setOriginalSystemEventSetKey) {
-			_setOriginalSystemEventSetKey = true;
-
-			_originalSystemEventSetKey = _systemEventSetKey;
+		if (_systemEventOriginalValues == null) {
+			_systemEventOriginalValues = new SystemEventOriginalValues(this);
 		}
+
+		_systemEventOriginalValues._columnBitmask |=
+			SYSTEMEVENTSETKEY_COLUMN_BITMASK;
 
 		_systemEventSetKey = systemEventSetKey;
 	}
 
 	public long getOriginalSystemEventSetKey() {
-		return _originalSystemEventSetKey;
+		if (_systemEventOriginalValues == null) {
+			return _systemEventSetKey;
+		}
+
+		return _systemEventOriginalValues._originalSystemEventSetKey;
 	}
 
 	@Override
@@ -580,19 +593,21 @@ public class SystemEventModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_systemEventOriginalValues == null) {
+			_systemEventOriginalValues = new SystemEventOriginalValues(this);
 		}
+
+		_systemEventOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_systemEventOriginalValues == null) {
+			return _type;
+		}
+
+		return _systemEventOriginalValues._originalType;
 	}
 
 	@Override
@@ -611,7 +626,11 @@ public class SystemEventModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_systemEventOriginalValues == null) {
+			return 0;
+		}
+
+		return _systemEventOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -719,29 +738,7 @@ public class SystemEventModelImpl
 	public void resetOriginalValues() {
 		SystemEventModelImpl systemEventModelImpl = this;
 
-		systemEventModelImpl._originalGroupId = systemEventModelImpl._groupId;
-
-		systemEventModelImpl._setOriginalGroupId = false;
-
-		systemEventModelImpl._originalClassNameId =
-			systemEventModelImpl._classNameId;
-
-		systemEventModelImpl._setOriginalClassNameId = false;
-
-		systemEventModelImpl._originalClassPK = systemEventModelImpl._classPK;
-
-		systemEventModelImpl._setOriginalClassPK = false;
-
-		systemEventModelImpl._originalSystemEventSetKey =
-			systemEventModelImpl._systemEventSetKey;
-
-		systemEventModelImpl._setOriginalSystemEventSetKey = false;
-
-		systemEventModelImpl._originalType = systemEventModelImpl._type;
-
-		systemEventModelImpl._setOriginalType = false;
-
-		systemEventModelImpl._columnBitmask = 0;
+		systemEventModelImpl._systemEventOriginalValues = null;
 	}
 
 	@Override
@@ -870,35 +867,47 @@ public class SystemEventModelImpl
 		return sb.toString();
 	}
 
+	private static class SystemEventOriginalValues {
+
+		private SystemEventOriginalValues(
+			SystemEventModelImpl systemEventModelImpl) {
+
+			_originalGroupId = systemEventModelImpl._groupId;
+			_originalClassNameId = systemEventModelImpl._classNameId;
+			_originalClassPK = systemEventModelImpl._classPK;
+			_originalSystemEventSetKey =
+				systemEventModelImpl._systemEventSetKey;
+			_originalType = systemEventModelImpl._type;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final long _originalSystemEventSetKey;
+		private final int _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SystemEvent>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SystemEventOriginalValues _systemEventOriginalValues;
 	private long _mvccVersion;
 	private long _systemEventId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _classUuid;
 	private long _referrerClassNameId;
 	private long _parentSystemEventId;
 	private long _systemEventSetKey;
-	private long _originalSystemEventSetKey;
-	private boolean _setOriginalSystemEventSetKey;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private String _extraData;
-	private long _columnBitmask;
 	private SystemEvent _escapedModel;
 
 }

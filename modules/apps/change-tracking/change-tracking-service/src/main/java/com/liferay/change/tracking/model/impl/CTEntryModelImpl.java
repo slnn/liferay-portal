@@ -434,19 +434,22 @@ public class CTEntryModelImpl
 
 	@Override
 	public void setModelClassNameId(long modelClassNameId) {
-		_columnBitmask |= MODELCLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalModelClassNameId) {
-			_setOriginalModelClassNameId = true;
-
-			_originalModelClassNameId = _modelClassNameId;
+		if (_ctEntryOriginalValues == null) {
+			_ctEntryOriginalValues = new CTEntryOriginalValues(this);
 		}
+
+		_ctEntryOriginalValues._columnBitmask |=
+			MODELCLASSNAMEID_COLUMN_BITMASK;
 
 		_modelClassNameId = modelClassNameId;
 	}
 
 	public long getOriginalModelClassNameId() {
-		return _originalModelClassNameId;
+		if (_ctEntryOriginalValues == null) {
+			return _modelClassNameId;
+		}
+
+		return _ctEntryOriginalValues._originalModelClassNameId;
 	}
 
 	@Override
@@ -456,19 +459,21 @@ public class CTEntryModelImpl
 
 	@Override
 	public void setModelClassPK(long modelClassPK) {
-		_columnBitmask |= MODELCLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalModelClassPK) {
-			_setOriginalModelClassPK = true;
-
-			_originalModelClassPK = _modelClassPK;
+		if (_ctEntryOriginalValues == null) {
+			_ctEntryOriginalValues = new CTEntryOriginalValues(this);
 		}
+
+		_ctEntryOriginalValues._columnBitmask |= MODELCLASSPK_COLUMN_BITMASK;
 
 		_modelClassPK = modelClassPK;
 	}
 
 	public long getOriginalModelClassPK() {
-		return _originalModelClassPK;
+		if (_ctEntryOriginalValues == null) {
+			return _modelClassPK;
+		}
+
+		return _ctEntryOriginalValues._originalModelClassPK;
 	}
 
 	@Override
@@ -517,7 +522,11 @@ public class CTEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ctEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _ctEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -622,18 +631,9 @@ public class CTEntryModelImpl
 	public void resetOriginalValues() {
 		CTEntryModelImpl ctEntryModelImpl = this;
 
+		ctEntryModelImpl._ctEntryOriginalValues = null;
+
 		ctEntryModelImpl._setModifiedDate = false;
-
-		ctEntryModelImpl._originalModelClassNameId =
-			ctEntryModelImpl._modelClassNameId;
-
-		ctEntryModelImpl._setOriginalModelClassNameId = false;
-
-		ctEntryModelImpl._originalModelClassPK = ctEntryModelImpl._modelClassPK;
-
-		ctEntryModelImpl._setOriginalModelClassPK = false;
-
-		ctEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -752,11 +752,25 @@ public class CTEntryModelImpl
 		return sb.toString();
 	}
 
+	private static class CTEntryOriginalValues {
+
+		private CTEntryOriginalValues(CTEntryModelImpl ctEntryModelImpl) {
+			_originalModelClassNameId = ctEntryModelImpl._modelClassNameId;
+			_originalModelClassPK = ctEntryModelImpl._modelClassPK;
+		}
+
+		private final long _originalModelClassNameId;
+		private final long _originalModelClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, CTEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CTEntryOriginalValues _ctEntryOriginalValues;
 	private long _ctEntryId;
 	private long _companyId;
 	private long _userId;
@@ -766,16 +780,11 @@ public class CTEntryModelImpl
 	private boolean _setModifiedDate;
 	private long _originalCTCollectionId;
 	private long _modelClassNameId;
-	private long _originalModelClassNameId;
-	private boolean _setOriginalModelClassNameId;
 	private long _modelClassPK;
-	private long _originalModelClassPK;
-	private boolean _setOriginalModelClassPK;
 	private long _modelResourcePrimKey;
 	private int _changeType;
 	private boolean _collision;
 	private int _status;
-	private long _columnBitmask;
 	private CTEntry _escapedModel;
 
 }

@@ -412,19 +412,22 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_versionedEntryVersionOriginalValues == null) {
+			_versionedEntryVersionOriginalValues =
+				new VersionedEntryVersionOriginalValues(this);
 		}
+
+		_versionedEntryVersionOriginalValues._columnBitmask = -1L;
 
 		_version = version;
 	}
 
 	public int getOriginalVersion() {
-		return _originalVersion;
+		if (_versionedEntryVersionOriginalValues == null) {
+			return _version;
+		}
+
+		return _versionedEntryVersionOriginalValues._originalVersion;
 	}
 
 	@Override
@@ -434,19 +437,23 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setVersionedEntryId(long versionedEntryId) {
-		_columnBitmask |= VERSIONEDENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalVersionedEntryId) {
-			_setOriginalVersionedEntryId = true;
-
-			_originalVersionedEntryId = _versionedEntryId;
+		if (_versionedEntryVersionOriginalValues == null) {
+			_versionedEntryVersionOriginalValues =
+				new VersionedEntryVersionOriginalValues(this);
 		}
+
+		_versionedEntryVersionOriginalValues._columnBitmask |=
+			VERSIONEDENTRYID_COLUMN_BITMASK;
 
 		_versionedEntryId = versionedEntryId;
 	}
 
 	public long getOriginalVersionedEntryId() {
-		return _originalVersionedEntryId;
+		if (_versionedEntryVersionOriginalValues == null) {
+			return _versionedEntryId;
+		}
+
+		return _versionedEntryVersionOriginalValues._originalVersionedEntryId;
 	}
 
 	@Override
@@ -456,23 +463,31 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_versionedEntryVersionOriginalValues == null) {
+			_versionedEntryVersionOriginalValues =
+				new VersionedEntryVersionOriginalValues(this);
 		}
+
+		_versionedEntryVersionOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_versionedEntryVersionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _versionedEntryVersionOriginalValues._originalGroupId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_versionedEntryVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _versionedEntryVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -579,22 +594,8 @@ public class VersionedEntryVersionModelImpl
 	public void resetOriginalValues() {
 		VersionedEntryVersionModelImpl versionedEntryVersionModelImpl = this;
 
-		versionedEntryVersionModelImpl._originalVersion =
-			versionedEntryVersionModelImpl._version;
-
-		versionedEntryVersionModelImpl._setOriginalVersion = false;
-
-		versionedEntryVersionModelImpl._originalVersionedEntryId =
-			versionedEntryVersionModelImpl._versionedEntryId;
-
-		versionedEntryVersionModelImpl._setOriginalVersionedEntryId = false;
-
-		versionedEntryVersionModelImpl._originalGroupId =
-			versionedEntryVersionModelImpl._groupId;
-
-		versionedEntryVersionModelImpl._setOriginalGroupId = false;
-
-		versionedEntryVersionModelImpl._columnBitmask = 0;
+		versionedEntryVersionModelImpl._versionedEntryVersionOriginalValues =
+			null;
 	}
 
 	@Override
@@ -680,20 +681,33 @@ public class VersionedEntryVersionModelImpl
 		return sb.toString();
 	}
 
+	private static class VersionedEntryVersionOriginalValues {
+
+		private VersionedEntryVersionOriginalValues(
+			VersionedEntryVersionModelImpl versionedEntryVersionModelImpl) {
+
+			_originalVersion = versionedEntryVersionModelImpl._version;
+			_originalVersionedEntryId =
+				versionedEntryVersionModelImpl._versionedEntryId;
+			_originalGroupId = versionedEntryVersionModelImpl._groupId;
+		}
+
+		private final int _originalVersion;
+		private final long _originalVersionedEntryId;
+		private final long _originalGroupId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, VersionedEntryVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private VersionedEntryVersionOriginalValues
+		_versionedEntryVersionOriginalValues;
 	private long _versionedEntryVersionId;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private long _versionedEntryId;
-	private long _originalVersionedEntryId;
-	private boolean _setOriginalVersionedEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
-	private long _columnBitmask;
 	private VersionedEntryVersion _escapedModel;
 
 }

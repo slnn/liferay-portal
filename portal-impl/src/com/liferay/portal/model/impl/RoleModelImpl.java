@@ -441,17 +441,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_roleOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_roleOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -473,19 +477,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_roleOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _roleOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -587,19 +593,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_roleOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _roleOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -610,19 +618,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_roleOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _roleOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -638,17 +648,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_roleOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_roleOriginalValues._originalName);
 	}
 
 	@JSON
@@ -872,19 +886,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_roleOriginalValues == null) {
+			return _type;
+		}
+
+		return _roleOriginalValues._originalType;
 	}
 
 	@JSON
@@ -900,17 +916,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setSubtype(String subtype) {
-		_columnBitmask |= SUBTYPE_COLUMN_BITMASK;
-
-		if (_originalSubtype == null) {
-			_originalSubtype = _subtype;
+		if (_roleOriginalValues == null) {
+			_roleOriginalValues = new RoleOriginalValues(this);
 		}
+
+		_roleOriginalValues._columnBitmask |= SUBTYPE_COLUMN_BITMASK;
 
 		_subtype = subtype;
 	}
 
 	public String getOriginalSubtype() {
-		return GetterUtil.getString(_originalSubtype);
+		if (_roleOriginalValues == null) {
+			return GetterUtil.getString(_subtype);
+		}
+
+		return GetterUtil.getString(_roleOriginalValues._originalSubtype);
 	}
 
 	@Override
@@ -920,7 +940,11 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_roleOriginalValues == null) {
+			return 0;
+		}
+
+		return _roleOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1113,31 +1137,9 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public void resetOriginalValues() {
 		RoleModelImpl roleModelImpl = this;
 
-		roleModelImpl._originalUuid = roleModelImpl._uuid;
-
-		roleModelImpl._originalCompanyId = roleModelImpl._companyId;
-
-		roleModelImpl._setOriginalCompanyId = false;
+		roleModelImpl._roleOriginalValues = null;
 
 		roleModelImpl._setModifiedDate = false;
-
-		roleModelImpl._originalClassNameId = roleModelImpl._classNameId;
-
-		roleModelImpl._setOriginalClassNameId = false;
-
-		roleModelImpl._originalClassPK = roleModelImpl._classPK;
-
-		roleModelImpl._setOriginalClassPK = false;
-
-		roleModelImpl._originalName = roleModelImpl._name;
-
-		roleModelImpl._originalType = roleModelImpl._type;
-
-		roleModelImpl._setOriginalType = false;
-
-		roleModelImpl._originalSubtype = roleModelImpl._subtype;
-
-		roleModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1288,39 +1290,51 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return sb.toString();
 	}
 
+	private static class RoleOriginalValues {
+
+		private RoleOriginalValues(RoleModelImpl roleModelImpl) {
+			_originalUuid = roleModelImpl._uuid;
+			_originalCompanyId = roleModelImpl._companyId;
+			_originalClassNameId = roleModelImpl._classNameId;
+			_originalClassPK = roleModelImpl._classPK;
+			_originalName = roleModelImpl._name;
+			_originalType = roleModelImpl._type;
+			_originalSubtype = roleModelImpl._subtype;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final String _originalName;
+		private final int _originalType;
+		private final String _originalSubtype;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Role>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RoleOriginalValues _roleOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _roleId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _name;
-	private String _originalName;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private String _subtype;
-	private String _originalSubtype;
-	private long _columnBitmask;
 	private Role _escapedModel;
 
 }

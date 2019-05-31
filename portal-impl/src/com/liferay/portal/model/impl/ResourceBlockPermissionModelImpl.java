@@ -342,19 +342,23 @@ public class ResourceBlockPermissionModelImpl
 
 	@Override
 	public void setResourceBlockId(long resourceBlockId) {
-		_columnBitmask |= RESOURCEBLOCKID_COLUMN_BITMASK;
-
-		if (!_setOriginalResourceBlockId) {
-			_setOriginalResourceBlockId = true;
-
-			_originalResourceBlockId = _resourceBlockId;
+		if (_resourceBlockPermissionOriginalValues == null) {
+			_resourceBlockPermissionOriginalValues =
+				new ResourceBlockPermissionOriginalValues(this);
 		}
+
+		_resourceBlockPermissionOriginalValues._columnBitmask |=
+			RESOURCEBLOCKID_COLUMN_BITMASK;
 
 		_resourceBlockId = resourceBlockId;
 	}
 
 	public long getOriginalResourceBlockId() {
-		return _originalResourceBlockId;
+		if (_resourceBlockPermissionOriginalValues == null) {
+			return _resourceBlockId;
+		}
+
+		return _resourceBlockPermissionOriginalValues._originalResourceBlockId;
 	}
 
 	@Override
@@ -364,19 +368,23 @@ public class ResourceBlockPermissionModelImpl
 
 	@Override
 	public void setRoleId(long roleId) {
-		_columnBitmask |= ROLEID_COLUMN_BITMASK;
-
-		if (!_setOriginalRoleId) {
-			_setOriginalRoleId = true;
-
-			_originalRoleId = _roleId;
+		if (_resourceBlockPermissionOriginalValues == null) {
+			_resourceBlockPermissionOriginalValues =
+				new ResourceBlockPermissionOriginalValues(this);
 		}
+
+		_resourceBlockPermissionOriginalValues._columnBitmask |=
+			ROLEID_COLUMN_BITMASK;
 
 		_roleId = roleId;
 	}
 
 	public long getOriginalRoleId() {
-		return _originalRoleId;
+		if (_resourceBlockPermissionOriginalValues == null) {
+			return _roleId;
+		}
+
+		return _resourceBlockPermissionOriginalValues._originalRoleId;
 	}
 
 	@Override
@@ -390,7 +398,11 @@ public class ResourceBlockPermissionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_resourceBlockPermissionOriginalValues == null) {
+			return 0;
+		}
+
+		return _resourceBlockPermissionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -493,17 +505,8 @@ public class ResourceBlockPermissionModelImpl
 		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl =
 			this;
 
-		resourceBlockPermissionModelImpl._originalResourceBlockId =
-			resourceBlockPermissionModelImpl._resourceBlockId;
-
-		resourceBlockPermissionModelImpl._setOriginalResourceBlockId = false;
-
-		resourceBlockPermissionModelImpl._originalRoleId =
-			resourceBlockPermissionModelImpl._roleId;
-
-		resourceBlockPermissionModelImpl._setOriginalRoleId = false;
-
-		resourceBlockPermissionModelImpl._columnBitmask = 0;
+		resourceBlockPermissionModelImpl.
+			_resourceBlockPermissionOriginalValues = null;
 	}
 
 	@Override
@@ -593,20 +596,33 @@ public class ResourceBlockPermissionModelImpl
 		return sb.toString();
 	}
 
+	private static class ResourceBlockPermissionOriginalValues {
+
+		private ResourceBlockPermissionOriginalValues(
+			ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl) {
+
+			_originalResourceBlockId =
+				resourceBlockPermissionModelImpl._resourceBlockId;
+			_originalRoleId = resourceBlockPermissionModelImpl._roleId;
+		}
+
+		private final long _originalResourceBlockId;
+		private final long _originalRoleId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ResourceBlockPermission>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ResourceBlockPermissionOriginalValues
+		_resourceBlockPermissionOriginalValues;
 	private long _mvccVersion;
 	private long _resourceBlockPermissionId;
 	private long _companyId;
 	private long _resourceBlockId;
-	private long _originalResourceBlockId;
-	private boolean _setOriginalResourceBlockId;
 	private long _roleId;
-	private long _originalRoleId;
-	private boolean _setOriginalRoleId;
 	private long _actionIds;
-	private long _columnBitmask;
 	private ResourceBlockPermission _escapedModel;
 
 }

@@ -354,19 +354,23 @@ public class SocialActivitySetModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_socialActivitySetOriginalValues == null) {
+			_socialActivitySetOriginalValues =
+				new SocialActivitySetOriginalValues(this);
 		}
+
+		_socialActivitySetOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_socialActivitySetOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _socialActivitySetOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -386,13 +390,13 @@ public class SocialActivitySetModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_socialActivitySetOriginalValues == null) {
+			_socialActivitySetOriginalValues =
+				new SocialActivitySetOriginalValues(this);
 		}
+
+		_socialActivitySetOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -414,7 +418,11 @@ public class SocialActivitySetModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_socialActivitySetOriginalValues == null) {
+			return _userId;
+		}
+
+		return _socialActivitySetOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -434,7 +442,12 @@ public class SocialActivitySetModelImpl
 
 	@Override
 	public void setModifiedDate(long modifiedDate) {
-		_columnBitmask = -1L;
+		if (_socialActivitySetOriginalValues == null) {
+			_socialActivitySetOriginalValues =
+				new SocialActivitySetOriginalValues(this);
+		}
+
+		_socialActivitySetOriginalValues._columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -466,19 +479,23 @@ public class SocialActivitySetModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_socialActivitySetOriginalValues == null) {
+			_socialActivitySetOriginalValues =
+				new SocialActivitySetOriginalValues(this);
 		}
+
+		_socialActivitySetOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_socialActivitySetOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _socialActivitySetOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -488,19 +505,23 @@ public class SocialActivitySetModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_socialActivitySetOriginalValues == null) {
+			_socialActivitySetOriginalValues =
+				new SocialActivitySetOriginalValues(this);
 		}
+
+		_socialActivitySetOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_socialActivitySetOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _socialActivitySetOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -510,19 +531,22 @@ public class SocialActivitySetModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_socialActivitySetOriginalValues == null) {
+			_socialActivitySetOriginalValues =
+				new SocialActivitySetOriginalValues(this);
 		}
+
+		_socialActivitySetOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_socialActivitySetOriginalValues == null) {
+			return _type;
+		}
+
+		return _socialActivitySetOriginalValues._originalType;
 	}
 
 	@Override
@@ -551,7 +575,11 @@ public class SocialActivitySetModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_socialActivitySetOriginalValues == null) {
+			return 0;
+		}
+
+		return _socialActivitySetOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -663,32 +691,7 @@ public class SocialActivitySetModelImpl
 	public void resetOriginalValues() {
 		SocialActivitySetModelImpl socialActivitySetModelImpl = this;
 
-		socialActivitySetModelImpl._originalGroupId =
-			socialActivitySetModelImpl._groupId;
-
-		socialActivitySetModelImpl._setOriginalGroupId = false;
-
-		socialActivitySetModelImpl._originalUserId =
-			socialActivitySetModelImpl._userId;
-
-		socialActivitySetModelImpl._setOriginalUserId = false;
-
-		socialActivitySetModelImpl._originalClassNameId =
-			socialActivitySetModelImpl._classNameId;
-
-		socialActivitySetModelImpl._setOriginalClassNameId = false;
-
-		socialActivitySetModelImpl._originalClassPK =
-			socialActivitySetModelImpl._classPK;
-
-		socialActivitySetModelImpl._setOriginalClassPK = false;
-
-		socialActivitySetModelImpl._originalType =
-			socialActivitySetModelImpl._type;
-
-		socialActivitySetModelImpl._setOriginalType = false;
-
-		socialActivitySetModelImpl._columnBitmask = 0;
+		socialActivitySetModelImpl._socialActivitySetOriginalValues = null;
 	}
 
 	@Override
@@ -790,31 +793,42 @@ public class SocialActivitySetModelImpl
 		return sb.toString();
 	}
 
+	private static class SocialActivitySetOriginalValues {
+
+		private SocialActivitySetOriginalValues(
+			SocialActivitySetModelImpl socialActivitySetModelImpl) {
+
+			_originalGroupId = socialActivitySetModelImpl._groupId;
+			_originalUserId = socialActivitySetModelImpl._userId;
+			_originalClassNameId = socialActivitySetModelImpl._classNameId;
+			_originalClassPK = socialActivitySetModelImpl._classPK;
+			_originalType = socialActivitySetModelImpl._type;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final int _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SocialActivitySet>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SocialActivitySetOriginalValues _socialActivitySetOriginalValues;
 	private long _activitySetId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _createDate;
 	private long _modifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private String _extraData;
 	private int _activityCount;
-	private long _columnBitmask;
 	private SocialActivitySet _escapedModel;
 
 }

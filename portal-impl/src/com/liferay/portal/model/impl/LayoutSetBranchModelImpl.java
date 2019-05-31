@@ -474,19 +474,22 @@ public class LayoutSetBranchModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_layoutSetBranchOriginalValues == null) {
+			_layoutSetBranchOriginalValues = new LayoutSetBranchOriginalValues(
+				this);
 		}
+
+		_layoutSetBranchOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_layoutSetBranchOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _layoutSetBranchOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -585,19 +588,23 @@ public class LayoutSetBranchModelImpl
 
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
+		if (_layoutSetBranchOriginalValues == null) {
+			_layoutSetBranchOriginalValues = new LayoutSetBranchOriginalValues(
+				this);
 		}
+
+		_layoutSetBranchOriginalValues._columnBitmask |=
+			PRIVATELAYOUT_COLUMN_BITMASK;
 
 		_privateLayout = privateLayout;
 	}
 
 	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
+		if (_layoutSetBranchOriginalValues == null) {
+			return _privateLayout;
+		}
+
+		return _layoutSetBranchOriginalValues._originalPrivateLayout;
 	}
 
 	@JSON
@@ -613,17 +620,23 @@ public class LayoutSetBranchModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_layoutSetBranchOriginalValues == null) {
+			_layoutSetBranchOriginalValues = new LayoutSetBranchOriginalValues(
+				this);
 		}
+
+		_layoutSetBranchOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_layoutSetBranchOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_layoutSetBranchOriginalValues._originalName);
 	}
 
 	@JSON
@@ -656,19 +669,22 @@ public class LayoutSetBranchModelImpl
 
 	@Override
 	public void setMaster(boolean master) {
-		_columnBitmask |= MASTER_COLUMN_BITMASK;
-
-		if (!_setOriginalMaster) {
-			_setOriginalMaster = true;
-
-			_originalMaster = _master;
+		if (_layoutSetBranchOriginalValues == null) {
+			_layoutSetBranchOriginalValues = new LayoutSetBranchOriginalValues(
+				this);
 		}
+
+		_layoutSetBranchOriginalValues._columnBitmask |= MASTER_COLUMN_BITMASK;
 
 		_master = master;
 	}
 
 	public boolean getOriginalMaster() {
-		return _originalMaster;
+		if (_layoutSetBranchOriginalValues == null) {
+			return _master;
+		}
+
+		return _layoutSetBranchOriginalValues._originalMaster;
 	}
 
 	@JSON
@@ -782,7 +798,11 @@ public class LayoutSetBranchModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutSetBranchOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutSetBranchOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -893,26 +913,9 @@ public class LayoutSetBranchModelImpl
 	public void resetOriginalValues() {
 		LayoutSetBranchModelImpl layoutSetBranchModelImpl = this;
 
-		layoutSetBranchModelImpl._originalGroupId =
-			layoutSetBranchModelImpl._groupId;
-
-		layoutSetBranchModelImpl._setOriginalGroupId = false;
+		layoutSetBranchModelImpl._layoutSetBranchOriginalValues = null;
 
 		layoutSetBranchModelImpl._setModifiedDate = false;
-
-		layoutSetBranchModelImpl._originalPrivateLayout =
-			layoutSetBranchModelImpl._privateLayout;
-
-		layoutSetBranchModelImpl._setOriginalPrivateLayout = false;
-
-		layoutSetBranchModelImpl._originalName = layoutSetBranchModelImpl._name;
-
-		layoutSetBranchModelImpl._originalMaster =
-			layoutSetBranchModelImpl._master;
-
-		layoutSetBranchModelImpl._setOriginalMaster = false;
-
-		layoutSetBranchModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1091,14 +1094,32 @@ public class LayoutSetBranchModelImpl
 		return sb.toString();
 	}
 
+	private static class LayoutSetBranchOriginalValues {
+
+		private LayoutSetBranchOriginalValues(
+			LayoutSetBranchModelImpl layoutSetBranchModelImpl) {
+
+			_originalGroupId = layoutSetBranchModelImpl._groupId;
+			_originalPrivateLayout = layoutSetBranchModelImpl._privateLayout;
+			_originalName = layoutSetBranchModelImpl._name;
+			_originalMaster = layoutSetBranchModelImpl._master;
+		}
+
+		private final long _originalGroupId;
+		private final boolean _originalPrivateLayout;
+		private final String _originalName;
+		private final boolean _originalMaster;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LayoutSetBranch>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutSetBranchOriginalValues _layoutSetBranchOriginalValues;
 	private long _mvccVersion;
 	private long _layoutSetBranchId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -1106,14 +1127,9 @@ public class LayoutSetBranchModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private boolean _master;
-	private boolean _originalMaster;
-	private boolean _setOriginalMaster;
 	private long _logoId;
 	private String _themeId;
 	private String _colorSchemeId;
@@ -1121,7 +1137,6 @@ public class LayoutSetBranchModelImpl
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
-	private long _columnBitmask;
 	private LayoutSetBranch _escapedModel;
 
 }

@@ -297,17 +297,24 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_journalArticleResourceOriginalValues == null) {
+			_journalArticleResourceOriginalValues =
+				new JournalArticleResourceOriginalValues(this);
 		}
+
+		_journalArticleResourceOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_journalArticleResourceOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_journalArticleResourceOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -327,19 +334,23 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_journalArticleResourceOriginalValues == null) {
+			_journalArticleResourceOriginalValues =
+				new JournalArticleResourceOriginalValues(this);
 		}
+
+		_journalArticleResourceOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_journalArticleResourceOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _journalArticleResourceOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -349,19 +360,23 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_journalArticleResourceOriginalValues == null) {
+			_journalArticleResourceOriginalValues =
+				new JournalArticleResourceOriginalValues(this);
 		}
+
+		_journalArticleResourceOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_journalArticleResourceOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _journalArticleResourceOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -376,21 +391,32 @@ public class JournalArticleResourceModelImpl
 
 	@Override
 	public void setArticleId(String articleId) {
-		_columnBitmask |= ARTICLEID_COLUMN_BITMASK;
-
-		if (_originalArticleId == null) {
-			_originalArticleId = _articleId;
+		if (_journalArticleResourceOriginalValues == null) {
+			_journalArticleResourceOriginalValues =
+				new JournalArticleResourceOriginalValues(this);
 		}
+
+		_journalArticleResourceOriginalValues._columnBitmask |=
+			ARTICLEID_COLUMN_BITMASK;
 
 		_articleId = articleId;
 	}
 
 	public String getOriginalArticleId() {
-		return GetterUtil.getString(_originalArticleId);
+		if (_journalArticleResourceOriginalValues == null) {
+			return GetterUtil.getString(_articleId);
+		}
+
+		return GetterUtil.getString(
+			_journalArticleResourceOriginalValues._originalArticleId);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_journalArticleResourceOriginalValues == null) {
+			return 0;
+		}
+
+		return _journalArticleResourceOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -490,23 +516,8 @@ public class JournalArticleResourceModelImpl
 	public void resetOriginalValues() {
 		JournalArticleResourceModelImpl journalArticleResourceModelImpl = this;
 
-		journalArticleResourceModelImpl._originalUuid =
-			journalArticleResourceModelImpl._uuid;
-
-		journalArticleResourceModelImpl._originalGroupId =
-			journalArticleResourceModelImpl._groupId;
-
-		journalArticleResourceModelImpl._setOriginalGroupId = false;
-
-		journalArticleResourceModelImpl._originalCompanyId =
-			journalArticleResourceModelImpl._companyId;
-
-		journalArticleResourceModelImpl._setOriginalCompanyId = false;
-
-		journalArticleResourceModelImpl._originalArticleId =
-			journalArticleResourceModelImpl._articleId;
-
-		journalArticleResourceModelImpl._columnBitmask = 0;
+		journalArticleResourceModelImpl._journalArticleResourceOriginalValues =
+			null;
 	}
 
 	@Override
@@ -604,23 +615,37 @@ public class JournalArticleResourceModelImpl
 		return sb.toString();
 	}
 
+	private static class JournalArticleResourceOriginalValues {
+
+		private JournalArticleResourceOriginalValues(
+			JournalArticleResourceModelImpl journalArticleResourceModelImpl) {
+
+			_originalUuid = journalArticleResourceModelImpl._uuid;
+			_originalGroupId = journalArticleResourceModelImpl._groupId;
+			_originalCompanyId = journalArticleResourceModelImpl._companyId;
+			_originalArticleId = journalArticleResourceModelImpl._articleId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalArticleId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, JournalArticleResource>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private JournalArticleResourceOriginalValues
+		_journalArticleResourceOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _resourcePrimKey;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private String _articleId;
-	private String _originalArticleId;
-	private long _columnBitmask;
 	private JournalArticleResource _escapedModel;
 
 }

@@ -322,17 +322,23 @@ public class ServiceComponentModelImpl
 
 	@Override
 	public void setBuildNamespace(String buildNamespace) {
-		_columnBitmask = -1L;
-
-		if (_originalBuildNamespace == null) {
-			_originalBuildNamespace = _buildNamespace;
+		if (_serviceComponentOriginalValues == null) {
+			_serviceComponentOriginalValues =
+				new ServiceComponentOriginalValues(this);
 		}
+
+		_serviceComponentOriginalValues._columnBitmask = -1L;
 
 		_buildNamespace = buildNamespace;
 	}
 
 	public String getOriginalBuildNamespace() {
-		return GetterUtil.getString(_originalBuildNamespace);
+		if (_serviceComponentOriginalValues == null) {
+			return GetterUtil.getString(_buildNamespace);
+		}
+
+		return GetterUtil.getString(
+			_serviceComponentOriginalValues._originalBuildNamespace);
 	}
 
 	@Override
@@ -342,19 +348,22 @@ public class ServiceComponentModelImpl
 
 	@Override
 	public void setBuildNumber(long buildNumber) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalBuildNumber) {
-			_setOriginalBuildNumber = true;
-
-			_originalBuildNumber = _buildNumber;
+		if (_serviceComponentOriginalValues == null) {
+			_serviceComponentOriginalValues =
+				new ServiceComponentOriginalValues(this);
 		}
+
+		_serviceComponentOriginalValues._columnBitmask = -1L;
 
 		_buildNumber = buildNumber;
 	}
 
 	public long getOriginalBuildNumber() {
-		return _originalBuildNumber;
+		if (_serviceComponentOriginalValues == null) {
+			return _buildNumber;
+		}
+
+		return _serviceComponentOriginalValues._originalBuildNumber;
 	}
 
 	@Override
@@ -383,7 +392,11 @@ public class ServiceComponentModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_serviceComponentOriginalValues == null) {
+			return 0;
+		}
+
+		return _serviceComponentOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -498,15 +511,7 @@ public class ServiceComponentModelImpl
 	public void resetOriginalValues() {
 		ServiceComponentModelImpl serviceComponentModelImpl = this;
 
-		serviceComponentModelImpl._originalBuildNamespace =
-			serviceComponentModelImpl._buildNamespace;
-
-		serviceComponentModelImpl._originalBuildNumber =
-			serviceComponentModelImpl._buildNumber;
-
-		serviceComponentModelImpl._setOriginalBuildNumber = false;
-
-		serviceComponentModelImpl._columnBitmask = 0;
+		serviceComponentModelImpl._serviceComponentOriginalValues = null;
 	}
 
 	@Override
@@ -604,19 +609,31 @@ public class ServiceComponentModelImpl
 		return sb.toString();
 	}
 
+	private static class ServiceComponentOriginalValues {
+
+		private ServiceComponentOriginalValues(
+			ServiceComponentModelImpl serviceComponentModelImpl) {
+
+			_originalBuildNamespace = serviceComponentModelImpl._buildNamespace;
+			_originalBuildNumber = serviceComponentModelImpl._buildNumber;
+		}
+
+		private final String _originalBuildNamespace;
+		private final long _originalBuildNumber;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ServiceComponent>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ServiceComponentOriginalValues _serviceComponentOriginalValues;
 	private long _mvccVersion;
 	private long _serviceComponentId;
 	private String _buildNamespace;
-	private String _originalBuildNamespace;
 	private long _buildNumber;
-	private long _originalBuildNumber;
-	private boolean _setOriginalBuildNumber;
 	private long _buildDate;
 	private String _data;
-	private long _columnBitmask;
 	private ServiceComponent _escapedModel;
 
 }

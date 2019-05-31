@@ -318,19 +318,24 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 	@Override
 	public void setDataProviderInstanceId(long dataProviderInstanceId) {
-		_columnBitmask |= DATAPROVIDERINSTANCEID_COLUMN_BITMASK;
-
-		if (!_setOriginalDataProviderInstanceId) {
-			_setOriginalDataProviderInstanceId = true;
-
-			_originalDataProviderInstanceId = _dataProviderInstanceId;
+		if (_ddmDataProviderInstanceLinkOriginalValues == null) {
+			_ddmDataProviderInstanceLinkOriginalValues =
+				new DDMDataProviderInstanceLinkOriginalValues(this);
 		}
+
+		_ddmDataProviderInstanceLinkOriginalValues._columnBitmask |=
+			DATAPROVIDERINSTANCEID_COLUMN_BITMASK;
 
 		_dataProviderInstanceId = dataProviderInstanceId;
 	}
 
 	public long getOriginalDataProviderInstanceId() {
-		return _originalDataProviderInstanceId;
+		if (_ddmDataProviderInstanceLinkOriginalValues == null) {
+			return _dataProviderInstanceId;
+		}
+
+		return _ddmDataProviderInstanceLinkOriginalValues.
+			_originalDataProviderInstanceId;
 	}
 
 	@Override
@@ -340,23 +345,31 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 	@Override
 	public void setStructureId(long structureId) {
-		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
-
-		if (!_setOriginalStructureId) {
-			_setOriginalStructureId = true;
-
-			_originalStructureId = _structureId;
+		if (_ddmDataProviderInstanceLinkOriginalValues == null) {
+			_ddmDataProviderInstanceLinkOriginalValues =
+				new DDMDataProviderInstanceLinkOriginalValues(this);
 		}
+
+		_ddmDataProviderInstanceLinkOriginalValues._columnBitmask |=
+			STRUCTUREID_COLUMN_BITMASK;
 
 		_structureId = structureId;
 	}
 
 	public long getOriginalStructureId() {
-		return _originalStructureId;
+		if (_ddmDataProviderInstanceLinkOriginalValues == null) {
+			return _structureId;
+		}
+
+		return _ddmDataProviderInstanceLinkOriginalValues._originalStructureId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmDataProviderInstanceLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmDataProviderInstanceLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -460,18 +473,8 @@ public class DDMDataProviderInstanceLinkModelImpl
 		DDMDataProviderInstanceLinkModelImpl
 			ddmDataProviderInstanceLinkModelImpl = this;
 
-		ddmDataProviderInstanceLinkModelImpl._originalDataProviderInstanceId =
-			ddmDataProviderInstanceLinkModelImpl._dataProviderInstanceId;
-
 		ddmDataProviderInstanceLinkModelImpl.
-			_setOriginalDataProviderInstanceId = false;
-
-		ddmDataProviderInstanceLinkModelImpl._originalStructureId =
-			ddmDataProviderInstanceLinkModelImpl._structureId;
-
-		ddmDataProviderInstanceLinkModelImpl._setOriginalStructureId = false;
-
-		ddmDataProviderInstanceLinkModelImpl._columnBitmask = 0;
+			_ddmDataProviderInstanceLinkOriginalValues = null;
 	}
 
 	@Override
@@ -560,19 +563,34 @@ public class DDMDataProviderInstanceLinkModelImpl
 		return sb.toString();
 	}
 
+	private static class DDMDataProviderInstanceLinkOriginalValues {
+
+		private DDMDataProviderInstanceLinkOriginalValues(
+			DDMDataProviderInstanceLinkModelImpl
+				ddmDataProviderInstanceLinkModelImpl) {
+
+			_originalDataProviderInstanceId =
+				ddmDataProviderInstanceLinkModelImpl._dataProviderInstanceId;
+			_originalStructureId =
+				ddmDataProviderInstanceLinkModelImpl._structureId;
+		}
+
+		private final long _originalDataProviderInstanceId;
+		private final long _originalStructureId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function
 		<InvocationHandler, DDMDataProviderInstanceLink>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMDataProviderInstanceLinkOriginalValues
+		_ddmDataProviderInstanceLinkOriginalValues;
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;
 	private long _dataProviderInstanceId;
-	private long _originalDataProviderInstanceId;
-	private boolean _setOriginalDataProviderInstanceId;
 	private long _structureId;
-	private long _originalStructureId;
-	private boolean _setOriginalStructureId;
-	private long _columnBitmask;
 	private DDMDataProviderInstanceLink _escapedModel;
 
 }

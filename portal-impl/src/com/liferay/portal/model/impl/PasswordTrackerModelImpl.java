@@ -327,13 +327,12 @@ public class PasswordTrackerModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_passwordTrackerOriginalValues == null) {
+			_passwordTrackerOriginalValues = new PasswordTrackerOriginalValues(
+				this);
 		}
+
+		_passwordTrackerOriginalValues._columnBitmask = -1L;
 
 		_userId = userId;
 	}
@@ -355,7 +354,11 @@ public class PasswordTrackerModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_passwordTrackerOriginalValues == null) {
+			return _userId;
+		}
+
+		return _passwordTrackerOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -365,7 +368,12 @@ public class PasswordTrackerModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_passwordTrackerOriginalValues == null) {
+			_passwordTrackerOriginalValues = new PasswordTrackerOriginalValues(
+				this);
+		}
+
+		_passwordTrackerOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -386,7 +394,11 @@ public class PasswordTrackerModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_passwordTrackerOriginalValues == null) {
+			return 0;
+		}
+
+		return _passwordTrackerOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -501,12 +513,7 @@ public class PasswordTrackerModelImpl
 	public void resetOriginalValues() {
 		PasswordTrackerModelImpl passwordTrackerModelImpl = this;
 
-		passwordTrackerModelImpl._originalUserId =
-			passwordTrackerModelImpl._userId;
-
-		passwordTrackerModelImpl._setOriginalUserId = false;
-
-		passwordTrackerModelImpl._columnBitmask = 0;
+		passwordTrackerModelImpl._passwordTrackerOriginalValues = null;
 	}
 
 	@Override
@@ -605,18 +612,29 @@ public class PasswordTrackerModelImpl
 		return sb.toString();
 	}
 
+	private static class PasswordTrackerOriginalValues {
+
+		private PasswordTrackerOriginalValues(
+			PasswordTrackerModelImpl passwordTrackerModelImpl) {
+
+			_originalUserId = passwordTrackerModelImpl._userId;
+		}
+
+		private final long _originalUserId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PasswordTracker>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PasswordTrackerOriginalValues _passwordTrackerOriginalValues;
 	private long _mvccVersion;
 	private long _passwordTrackerId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _password;
-	private long _columnBitmask;
 	private PasswordTracker _escapedModel;
 
 }

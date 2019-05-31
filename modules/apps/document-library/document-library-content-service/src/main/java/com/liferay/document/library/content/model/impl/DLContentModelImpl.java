@@ -306,19 +306,21 @@ public class DLContentModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_dlContentOriginalValues == null) {
+			_dlContentOriginalValues = new DLContentOriginalValues(this);
 		}
+
+		_dlContentOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_dlContentOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _dlContentOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -328,19 +330,21 @@ public class DLContentModelImpl
 
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalRepositoryId) {
-			_setOriginalRepositoryId = true;
-
-			_originalRepositoryId = _repositoryId;
+		if (_dlContentOriginalValues == null) {
+			_dlContentOriginalValues = new DLContentOriginalValues(this);
 		}
+
+		_dlContentOriginalValues._columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
 
 		_repositoryId = repositoryId;
 	}
 
 	public long getOriginalRepositoryId() {
-		return _originalRepositoryId;
+		if (_dlContentOriginalValues == null) {
+			return _repositoryId;
+		}
+
+		return _dlContentOriginalValues._originalRepositoryId;
 	}
 
 	@Override
@@ -355,17 +359,21 @@ public class DLContentModelImpl
 
 	@Override
 	public void setPath(String path) {
-		_columnBitmask |= PATH_COLUMN_BITMASK;
-
-		if (_originalPath == null) {
-			_originalPath = _path;
+		if (_dlContentOriginalValues == null) {
+			_dlContentOriginalValues = new DLContentOriginalValues(this);
 		}
+
+		_dlContentOriginalValues._columnBitmask |= PATH_COLUMN_BITMASK;
 
 		_path = path;
 	}
 
 	public String getOriginalPath() {
-		return GetterUtil.getString(_originalPath);
+		if (_dlContentOriginalValues == null) {
+			return GetterUtil.getString(_path);
+		}
+
+		return GetterUtil.getString(_dlContentOriginalValues._originalPath);
 	}
 
 	@Override
@@ -380,17 +388,21 @@ public class DLContentModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		_columnBitmask = -1L;
-
-		if (_originalVersion == null) {
-			_originalVersion = _version;
+		if (_dlContentOriginalValues == null) {
+			_dlContentOriginalValues = new DLContentOriginalValues(this);
 		}
+
+		_dlContentOriginalValues._columnBitmask = -1L;
 
 		_version = version;
 	}
 
 	public String getOriginalVersion() {
-		return GetterUtil.getString(_originalVersion);
+		if (_dlContentOriginalValues == null) {
+			return GetterUtil.getString(_version);
+		}
+
+		return GetterUtil.getString(_dlContentOriginalValues._originalVersion);
 	}
 
 	@Override
@@ -434,7 +446,11 @@ public class DLContentModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_dlContentOriginalValues == null) {
+			return 0;
+		}
+
+		return _dlContentOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -533,22 +549,9 @@ public class DLContentModelImpl
 	public void resetOriginalValues() {
 		DLContentModelImpl dlContentModelImpl = this;
 
-		dlContentModelImpl._originalCompanyId = dlContentModelImpl._companyId;
-
-		dlContentModelImpl._setOriginalCompanyId = false;
-
-		dlContentModelImpl._originalRepositoryId =
-			dlContentModelImpl._repositoryId;
-
-		dlContentModelImpl._setOriginalRepositoryId = false;
-
-		dlContentModelImpl._originalPath = dlContentModelImpl._path;
-
-		dlContentModelImpl._originalVersion = dlContentModelImpl._version;
+		dlContentModelImpl._dlContentOriginalValues = null;
 
 		dlContentModelImpl._dataBlobModel = null;
-
-		dlContentModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -649,26 +652,37 @@ public class DLContentModelImpl
 		return sb.toString();
 	}
 
+	private static class DLContentOriginalValues {
+
+		private DLContentOriginalValues(DLContentModelImpl dlContentModelImpl) {
+			_originalCompanyId = dlContentModelImpl._companyId;
+			_originalRepositoryId = dlContentModelImpl._repositoryId;
+			_originalPath = dlContentModelImpl._path;
+			_originalVersion = dlContentModelImpl._version;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalRepositoryId;
+		private final String _originalPath;
+		private final String _originalVersion;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DLContent>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private DLContentOriginalValues _dlContentOriginalValues;
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _repositoryId;
-	private long _originalRepositoryId;
-	private boolean _setOriginalRepositoryId;
 	private String _path;
-	private String _originalPath;
 	private String _version;
-	private String _originalVersion;
 	private DLContentDataBlobModel _dataBlobModel;
 	private long _size;
-	private long _columnBitmask;
 	private DLContent _escapedModel;
 
 }

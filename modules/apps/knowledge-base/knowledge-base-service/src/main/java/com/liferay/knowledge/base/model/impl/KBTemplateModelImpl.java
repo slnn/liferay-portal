@@ -381,17 +381,21 @@ public class KBTemplateModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_kbTemplateOriginalValues == null) {
+			_kbTemplateOriginalValues = new KBTemplateOriginalValues(this);
 		}
+
+		_kbTemplateOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_kbTemplateOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_kbTemplateOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -413,19 +417,21 @@ public class KBTemplateModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_kbTemplateOriginalValues == null) {
+			_kbTemplateOriginalValues = new KBTemplateOriginalValues(this);
 		}
+
+		_kbTemplateOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_kbTemplateOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _kbTemplateOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -436,19 +442,21 @@ public class KBTemplateModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kbTemplateOriginalValues == null) {
+			_kbTemplateOriginalValues = new KBTemplateOriginalValues(this);
 		}
+
+		_kbTemplateOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kbTemplateOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kbTemplateOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -519,7 +527,11 @@ public class KBTemplateModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_kbTemplateOriginalValues == null) {
+			_kbTemplateOriginalValues = new KBTemplateOriginalValues(this);
+		}
+
+		_kbTemplateOriginalValues._columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -574,7 +586,11 @@ public class KBTemplateModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kbTemplateOriginalValues == null) {
+			return 0;
+		}
+
+		return _kbTemplateOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -678,19 +694,9 @@ public class KBTemplateModelImpl
 	public void resetOriginalValues() {
 		KBTemplateModelImpl kbTemplateModelImpl = this;
 
-		kbTemplateModelImpl._originalUuid = kbTemplateModelImpl._uuid;
-
-		kbTemplateModelImpl._originalGroupId = kbTemplateModelImpl._groupId;
-
-		kbTemplateModelImpl._setOriginalGroupId = false;
-
-		kbTemplateModelImpl._originalCompanyId = kbTemplateModelImpl._companyId;
-
-		kbTemplateModelImpl._setOriginalCompanyId = false;
+		kbTemplateModelImpl._kbTemplateOriginalValues = null;
 
 		kbTemplateModelImpl._setModifiedDate = false;
-
-		kbTemplateModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -830,18 +836,31 @@ public class KBTemplateModelImpl
 		return sb.toString();
 	}
 
+	private static class KBTemplateOriginalValues {
+
+		private KBTemplateOriginalValues(
+			KBTemplateModelImpl kbTemplateModelImpl) {
+
+			_originalUuid = kbTemplateModelImpl._uuid;
+			_originalGroupId = kbTemplateModelImpl._groupId;
+			_originalCompanyId = kbTemplateModelImpl._companyId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KBTemplate>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KBTemplateOriginalValues _kbTemplateOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _kbTemplateId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -850,7 +869,6 @@ public class KBTemplateModelImpl
 	private String _title;
 	private String _content;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private KBTemplate _escapedModel;
 
 }

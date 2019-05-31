@@ -456,19 +456,24 @@ public class LocalizedEntryLocalizationModelImpl
 
 	@Override
 	public void setLocalizedEntryId(long localizedEntryId) {
-		_columnBitmask |= LOCALIZEDENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalLocalizedEntryId) {
-			_setOriginalLocalizedEntryId = true;
-
-			_originalLocalizedEntryId = _localizedEntryId;
+		if (_localizedEntryLocalizationOriginalValues == null) {
+			_localizedEntryLocalizationOriginalValues =
+				new LocalizedEntryLocalizationOriginalValues(this);
 		}
+
+		_localizedEntryLocalizationOriginalValues._columnBitmask |=
+			LOCALIZEDENTRYID_COLUMN_BITMASK;
 
 		_localizedEntryId = localizedEntryId;
 	}
 
 	public long getOriginalLocalizedEntryId() {
-		return _originalLocalizedEntryId;
+		if (_localizedEntryLocalizationOriginalValues == null) {
+			return _localizedEntryId;
+		}
+
+		return _localizedEntryLocalizationOriginalValues.
+			_originalLocalizedEntryId;
 	}
 
 	@Override
@@ -483,17 +488,24 @@ public class LocalizedEntryLocalizationModelImpl
 
 	@Override
 	public void setLanguageId(String languageId) {
-		_columnBitmask |= LANGUAGEID_COLUMN_BITMASK;
-
-		if (_originalLanguageId == null) {
-			_originalLanguageId = _languageId;
+		if (_localizedEntryLocalizationOriginalValues == null) {
+			_localizedEntryLocalizationOriginalValues =
+				new LocalizedEntryLocalizationOriginalValues(this);
 		}
+
+		_localizedEntryLocalizationOriginalValues._columnBitmask |=
+			LANGUAGEID_COLUMN_BITMASK;
 
 		_languageId = languageId;
 	}
 
 	public String getOriginalLanguageId() {
-		return GetterUtil.getString(_originalLanguageId);
+		if (_localizedEntryLocalizationOriginalValues == null) {
+			return GetterUtil.getString(_languageId);
+		}
+
+		return GetterUtil.getString(
+			_localizedEntryLocalizationOriginalValues._originalLanguageId);
 	}
 
 	@Override
@@ -527,7 +539,11 @@ public class LocalizedEntryLocalizationModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_localizedEntryLocalizationOriginalValues == null) {
+			return 0;
+		}
+
+		return _localizedEntryLocalizationOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -632,16 +648,8 @@ public class LocalizedEntryLocalizationModelImpl
 		LocalizedEntryLocalizationModelImpl
 			localizedEntryLocalizationModelImpl = this;
 
-		localizedEntryLocalizationModelImpl._originalLocalizedEntryId =
-			localizedEntryLocalizationModelImpl._localizedEntryId;
-
-		localizedEntryLocalizationModelImpl._setOriginalLocalizedEntryId =
-			false;
-
-		localizedEntryLocalizationModelImpl._originalLanguageId =
-			localizedEntryLocalizationModelImpl._languageId;
-
-		localizedEntryLocalizationModelImpl._columnBitmask = 0;
+		localizedEntryLocalizationModelImpl.
+			_localizedEntryLocalizationOriginalValues = null;
 	}
 
 	@Override
@@ -752,19 +760,35 @@ public class LocalizedEntryLocalizationModelImpl
 		return sb.toString();
 	}
 
+	private static class LocalizedEntryLocalizationOriginalValues {
+
+		private LocalizedEntryLocalizationOriginalValues(
+			LocalizedEntryLocalizationModelImpl
+				localizedEntryLocalizationModelImpl) {
+
+			_originalLocalizedEntryId =
+				localizedEntryLocalizationModelImpl._localizedEntryId;
+			_originalLanguageId =
+				localizedEntryLocalizationModelImpl._languageId;
+		}
+
+		private final long _originalLocalizedEntryId;
+		private final String _originalLanguageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LocalizedEntryLocalization>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LocalizedEntryLocalizationOriginalValues
+		_localizedEntryLocalizationOriginalValues;
 	private long _mvccVersion;
 	private long _localizedEntryLocalizationId;
 	private long _localizedEntryId;
-	private long _originalLocalizedEntryId;
-	private boolean _setOriginalLocalizedEntryId;
 	private String _languageId;
-	private String _originalLanguageId;
 	private String _title;
 	private String _content;
-	private long _columnBitmask;
 	private LocalizedEntryLocalization _escapedModel;
 
 }

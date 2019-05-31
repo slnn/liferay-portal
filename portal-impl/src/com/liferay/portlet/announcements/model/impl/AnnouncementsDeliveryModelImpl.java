@@ -392,13 +392,13 @@ public class AnnouncementsDeliveryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_announcementsDeliveryOriginalValues == null) {
+			_announcementsDeliveryOriginalValues =
+				new AnnouncementsDeliveryOriginalValues(this);
 		}
+
+		_announcementsDeliveryOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -420,7 +420,11 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_announcementsDeliveryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _announcementsDeliveryOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -436,17 +440,24 @@ public class AnnouncementsDeliveryModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_announcementsDeliveryOriginalValues == null) {
+			_announcementsDeliveryOriginalValues =
+				new AnnouncementsDeliveryOriginalValues(this);
 		}
+
+		_announcementsDeliveryOriginalValues._columnBitmask |=
+			TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		if (_announcementsDeliveryOriginalValues == null) {
+			return GetterUtil.getString(_type);
+		}
+
+		return GetterUtil.getString(
+			_announcementsDeliveryOriginalValues._originalType);
 	}
 
 	@JSON
@@ -501,7 +512,11 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_announcementsDeliveryOriginalValues == null) {
+			return 0;
+		}
+
+		return _announcementsDeliveryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -603,15 +618,8 @@ public class AnnouncementsDeliveryModelImpl
 	public void resetOriginalValues() {
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = this;
 
-		announcementsDeliveryModelImpl._originalUserId =
-			announcementsDeliveryModelImpl._userId;
-
-		announcementsDeliveryModelImpl._setOriginalUserId = false;
-
-		announcementsDeliveryModelImpl._originalType =
-			announcementsDeliveryModelImpl._type;
-
-		announcementsDeliveryModelImpl._columnBitmask = 0;
+		announcementsDeliveryModelImpl._announcementsDeliveryOriginalValues =
+			null;
 	}
 
 	@Override
@@ -707,20 +715,33 @@ public class AnnouncementsDeliveryModelImpl
 		return sb.toString();
 	}
 
+	private static class AnnouncementsDeliveryOriginalValues {
+
+		private AnnouncementsDeliveryOriginalValues(
+			AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl) {
+
+			_originalUserId = announcementsDeliveryModelImpl._userId;
+			_originalType = announcementsDeliveryModelImpl._type;
+		}
+
+		private final long _originalUserId;
+		private final String _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AnnouncementsDelivery>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AnnouncementsDeliveryOriginalValues
+		_announcementsDeliveryOriginalValues;
 	private long _deliveryId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _type;
-	private String _originalType;
 	private boolean _email;
 	private boolean _sms;
 	private boolean _website;
-	private long _columnBitmask;
 	private AnnouncementsDelivery _escapedModel;
 
 }

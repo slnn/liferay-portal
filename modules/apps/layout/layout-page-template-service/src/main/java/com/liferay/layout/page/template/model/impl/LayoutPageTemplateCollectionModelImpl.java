@@ -426,17 +426,24 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			_layoutPageTemplateCollectionOriginalValues =
+				new LayoutPageTemplateCollectionOriginalValues(this);
 		}
+
+		_layoutPageTemplateCollectionOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutPageTemplateCollectionOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -460,19 +467,23 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			_layoutPageTemplateCollectionOriginalValues =
+				new LayoutPageTemplateCollectionOriginalValues(this);
 		}
+
+		_layoutPageTemplateCollectionOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _layoutPageTemplateCollectionOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -483,19 +494,23 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			_layoutPageTemplateCollectionOriginalValues =
+				new LayoutPageTemplateCollectionOriginalValues(this);
 		}
+
+		_layoutPageTemplateCollectionOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _layoutPageTemplateCollectionOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -582,17 +597,23 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			_layoutPageTemplateCollectionOriginalValues =
+				new LayoutPageTemplateCollectionOriginalValues(this);
 		}
+
+		_layoutPageTemplateCollectionOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_layoutPageTemplateCollectionOriginalValues._originalName);
 	}
 
 	@JSON
@@ -630,7 +651,11 @@ public class LayoutPageTemplateCollectionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutPageTemplateCollectionOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutPageTemplateCollectionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -739,25 +764,10 @@ public class LayoutPageTemplateCollectionModelImpl
 		LayoutPageTemplateCollectionModelImpl
 			layoutPageTemplateCollectionModelImpl = this;
 
-		layoutPageTemplateCollectionModelImpl._originalUuid =
-			layoutPageTemplateCollectionModelImpl._uuid;
-
-		layoutPageTemplateCollectionModelImpl._originalGroupId =
-			layoutPageTemplateCollectionModelImpl._groupId;
-
-		layoutPageTemplateCollectionModelImpl._setOriginalGroupId = false;
-
-		layoutPageTemplateCollectionModelImpl._originalCompanyId =
-			layoutPageTemplateCollectionModelImpl._companyId;
-
-		layoutPageTemplateCollectionModelImpl._setOriginalCompanyId = false;
+		layoutPageTemplateCollectionModelImpl.
+			_layoutPageTemplateCollectionOriginalValues = null;
 
 		layoutPageTemplateCollectionModelImpl._setModifiedDate = false;
-
-		layoutPageTemplateCollectionModelImpl._originalName =
-			layoutPageTemplateCollectionModelImpl._name;
-
-		layoutPageTemplateCollectionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -909,29 +919,45 @@ public class LayoutPageTemplateCollectionModelImpl
 		return sb.toString();
 	}
 
+	private static class LayoutPageTemplateCollectionOriginalValues {
+
+		private LayoutPageTemplateCollectionOriginalValues(
+			LayoutPageTemplateCollectionModelImpl
+				layoutPageTemplateCollectionModelImpl) {
+
+			_originalUuid = layoutPageTemplateCollectionModelImpl._uuid;
+			_originalGroupId = layoutPageTemplateCollectionModelImpl._groupId;
+			_originalCompanyId =
+				layoutPageTemplateCollectionModelImpl._companyId;
+			_originalName = layoutPageTemplateCollectionModelImpl._name;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function
 		<InvocationHandler, LayoutPageTemplateCollection>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutPageTemplateCollectionOriginalValues
+		_layoutPageTemplateCollectionOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _layoutPageTemplateCollectionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private LayoutPageTemplateCollection _escapedModel;
 
 }
