@@ -1758,6 +1758,35 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
+	void set${entity.name}CacheModel(${entity.name}CacheModel ${entity.varName}CacheModel) {
+		<#list entity.databaseRegularEntityColumns as entityColumn>
+			<#if !stringUtil.equals(entityColumn.type, "Blob")>
+				<#if stringUtil.equals(entityColumn.type, "Date")>
+					if (${entity.varName}CacheModel.${entityColumn.name} != Long.MIN_VALUE) {
+						_${entityColumn.name} = new Date(${entity.varName}CacheModel.${entityColumn.name});
+					}
+				<#else>
+					<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+						if (${entity.varName}CacheModel.${entityColumn.name} == null) {
+							_${entityColumn.name} = "";
+						}
+						else {
+							_${entityColumn.name} = ${entity.varName}CacheModel.${entityColumn.name};
+						}
+					<#else>
+						_${entityColumn.name} = ${entity.varName}CacheModel.${entityColumn.name};
+					</#if>
+				</#if>
+			</#if>
+		</#list>
+
+		<#list cacheFields as cacheField>
+			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+
+			set${methodName}(${entity.varName}CacheModel.${cacheField.name});
+		</#list>
+	}
+
 	<#if hasOriginalValues>
 		private static class ${entity.name}OriginalValues {
 
