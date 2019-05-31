@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -121,49 +119,7 @@ public class SystemEventCacheModel
 	public SystemEvent toEntityModel() {
 		SystemEventImpl systemEventImpl = new SystemEventImpl();
 
-		systemEventImpl.setMvccVersion(mvccVersion);
-		systemEventImpl.setSystemEventId(systemEventId);
-		systemEventImpl.setGroupId(groupId);
-		systemEventImpl.setCompanyId(companyId);
-		systemEventImpl.setUserId(userId);
-
-		if (userName == null) {
-			systemEventImpl.setUserName("");
-		}
-		else {
-			systemEventImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			systemEventImpl.setCreateDate(null);
-		}
-		else {
-			systemEventImpl.setCreateDate(new Date(createDate));
-		}
-
-		systemEventImpl.setClassNameId(classNameId);
-		systemEventImpl.setClassPK(classPK);
-
-		if (classUuid == null) {
-			systemEventImpl.setClassUuid("");
-		}
-		else {
-			systemEventImpl.setClassUuid(classUuid);
-		}
-
-		systemEventImpl.setReferrerClassNameId(referrerClassNameId);
-		systemEventImpl.setParentSystemEventId(parentSystemEventId);
-		systemEventImpl.setSystemEventSetKey(systemEventSetKey);
-		systemEventImpl.setType(type);
-
-		if (extraData == null) {
-			systemEventImpl.setExtraData("");
-		}
-		else {
-			systemEventImpl.setExtraData(extraData);
-		}
-
-		systemEventImpl.resetOriginalValues();
+		systemEventImpl.setSystemEventCacheModel(this);
 
 		return systemEventImpl;
 	}

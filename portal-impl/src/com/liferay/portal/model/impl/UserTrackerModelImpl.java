@@ -333,19 +333,21 @@ public class UserTrackerModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_userTrackerOriginalValues == null) {
+			_userTrackerOriginalValues = new UserTrackerOriginalValues(this);
 		}
+
+		_userTrackerOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_userTrackerOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _userTrackerOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -355,13 +357,11 @@ public class UserTrackerModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_userTrackerOriginalValues == null) {
+			_userTrackerOriginalValues = new UserTrackerOriginalValues(this);
 		}
+
+		_userTrackerOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -383,7 +383,11 @@ public class UserTrackerModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_userTrackerOriginalValues == null) {
+			return _userId;
+		}
+
+		return _userTrackerOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -408,17 +412,22 @@ public class UserTrackerModelImpl
 
 	@Override
 	public void setSessionId(String sessionId) {
-		_columnBitmask |= SESSIONID_COLUMN_BITMASK;
-
-		if (_originalSessionId == null) {
-			_originalSessionId = _sessionId;
+		if (_userTrackerOriginalValues == null) {
+			_userTrackerOriginalValues = new UserTrackerOriginalValues(this);
 		}
+
+		_userTrackerOriginalValues._columnBitmask |= SESSIONID_COLUMN_BITMASK;
 
 		_sessionId = sessionId;
 	}
 
 	public String getOriginalSessionId() {
-		return GetterUtil.getString(_originalSessionId);
+		if (_userTrackerOriginalValues == null) {
+			return GetterUtil.getString(_sessionId);
+		}
+
+		return GetterUtil.getString(
+			_userTrackerOriginalValues._originalSessionId);
 	}
 
 	@Override
@@ -467,7 +476,11 @@ public class UserTrackerModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_userTrackerOriginalValues == null) {
+			return 0;
+		}
+
+		return _userTrackerOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -568,19 +581,7 @@ public class UserTrackerModelImpl
 	public void resetOriginalValues() {
 		UserTrackerModelImpl userTrackerModelImpl = this;
 
-		userTrackerModelImpl._originalCompanyId =
-			userTrackerModelImpl._companyId;
-
-		userTrackerModelImpl._setOriginalCompanyId = false;
-
-		userTrackerModelImpl._originalUserId = userTrackerModelImpl._userId;
-
-		userTrackerModelImpl._setOriginalUserId = false;
-
-		userTrackerModelImpl._originalSessionId =
-			userTrackerModelImpl._sessionId;
-
-		userTrackerModelImpl._columnBitmask = 0;
+		userTrackerModelImpl._userTrackerOriginalValues = null;
 	}
 
 	@Override
@@ -703,24 +704,75 @@ public class UserTrackerModelImpl
 		return sb.toString();
 	}
 
+	void setUserTrackerCacheModel(UserTrackerCacheModel userTrackerCacheModel) {
+		_mvccVersion = userTrackerCacheModel.mvccVersion;
+		_userTrackerId = userTrackerCacheModel.userTrackerId;
+		_companyId = userTrackerCacheModel.companyId;
+		_userId = userTrackerCacheModel.userId;
+
+		if (userTrackerCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(userTrackerCacheModel.modifiedDate);
+		}
+
+		if (userTrackerCacheModel.sessionId == null) {
+			_sessionId = "";
+		}
+		else {
+			_sessionId = userTrackerCacheModel.sessionId;
+		}
+
+		if (userTrackerCacheModel.remoteAddr == null) {
+			_remoteAddr = "";
+		}
+		else {
+			_remoteAddr = userTrackerCacheModel.remoteAddr;
+		}
+
+		if (userTrackerCacheModel.remoteHost == null) {
+			_remoteHost = "";
+		}
+		else {
+			_remoteHost = userTrackerCacheModel.remoteHost;
+		}
+
+		if (userTrackerCacheModel.userAgent == null) {
+			_userAgent = "";
+		}
+		else {
+			_userAgent = userTrackerCacheModel.userAgent;
+		}
+	}
+
+	private static class UserTrackerOriginalValues {
+
+		private UserTrackerOriginalValues(
+			UserTrackerModelImpl userTrackerModelImpl) {
+
+			_originalCompanyId = userTrackerModelImpl._companyId;
+			_originalUserId = userTrackerModelImpl._userId;
+			_originalSessionId = userTrackerModelImpl._sessionId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final String _originalSessionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, UserTracker>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private UserTrackerOriginalValues _userTrackerOriginalValues;
 	private long _mvccVersion;
 	private long _userTrackerId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _modifiedDate;
 	private String _sessionId;
-	private String _originalSessionId;
 	private String _remoteAddr;
 	private String _remoteHost;
 	private String _userAgent;
-	private long _columnBitmask;
 	private UserTracker _escapedModel;
 
 }

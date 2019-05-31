@@ -427,19 +427,22 @@ public class PowwowMeetingModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_powwowMeetingOriginalValues == null) {
+			_powwowMeetingOriginalValues = new PowwowMeetingOriginalValues(
+				this);
 		}
+
+		_powwowMeetingOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_powwowMeetingOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _powwowMeetingOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -461,13 +464,12 @@ public class PowwowMeetingModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_powwowMeetingOriginalValues == null) {
+			_powwowMeetingOriginalValues = new PowwowMeetingOriginalValues(
+				this);
 		}
+
+		_powwowMeetingOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -489,7 +491,11 @@ public class PowwowMeetingModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_powwowMeetingOriginalValues == null) {
+			return _userId;
+		}
+
+		return _powwowMeetingOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -516,7 +522,12 @@ public class PowwowMeetingModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_powwowMeetingOriginalValues == null) {
+			_powwowMeetingOriginalValues = new PowwowMeetingOriginalValues(
+				this);
+		}
+
+		_powwowMeetingOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -546,19 +557,23 @@ public class PowwowMeetingModelImpl
 
 	@Override
 	public void setPowwowServerId(long powwowServerId) {
-		_columnBitmask |= POWWOWSERVERID_COLUMN_BITMASK;
-
-		if (!_setOriginalPowwowServerId) {
-			_setOriginalPowwowServerId = true;
-
-			_originalPowwowServerId = _powwowServerId;
+		if (_powwowMeetingOriginalValues == null) {
+			_powwowMeetingOriginalValues = new PowwowMeetingOriginalValues(
+				this);
 		}
+
+		_powwowMeetingOriginalValues._columnBitmask |=
+			POWWOWSERVERID_COLUMN_BITMASK;
 
 		_powwowServerId = powwowServerId;
 	}
 
 	public long getOriginalPowwowServerId() {
-		return _originalPowwowServerId;
+		if (_powwowMeetingOriginalValues == null) {
+			return _powwowServerId;
+		}
+
+		return _powwowMeetingOriginalValues._originalPowwowServerId;
 	}
 
 	@JSON
@@ -660,23 +675,30 @@ public class PowwowMeetingModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_powwowMeetingOriginalValues == null) {
+			_powwowMeetingOriginalValues = new PowwowMeetingOriginalValues(
+				this);
 		}
+
+		_powwowMeetingOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_powwowMeetingOriginalValues == null) {
+			return _status;
+		}
+
+		return _powwowMeetingOriginalValues._originalStatus;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_powwowMeetingOriginalValues == null) {
+			return 0;
+		}
+
+		return _powwowMeetingOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -784,27 +806,9 @@ public class PowwowMeetingModelImpl
 	public void resetOriginalValues() {
 		PowwowMeetingModelImpl powwowMeetingModelImpl = this;
 
-		powwowMeetingModelImpl._originalGroupId =
-			powwowMeetingModelImpl._groupId;
-
-		powwowMeetingModelImpl._setOriginalGroupId = false;
-
-		powwowMeetingModelImpl._originalUserId = powwowMeetingModelImpl._userId;
-
-		powwowMeetingModelImpl._setOriginalUserId = false;
+		powwowMeetingModelImpl._powwowMeetingOriginalValues = null;
 
 		powwowMeetingModelImpl._setModifiedDate = false;
-
-		powwowMeetingModelImpl._originalPowwowServerId =
-			powwowMeetingModelImpl._powwowServerId;
-
-		powwowMeetingModelImpl._setOriginalPowwowServerId = false;
-
-		powwowMeetingModelImpl._originalStatus = powwowMeetingModelImpl._status;
-
-		powwowMeetingModelImpl._setOriginalStatus = false;
-
-		powwowMeetingModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -962,24 +966,103 @@ public class PowwowMeetingModelImpl
 		return sb.toString();
 	}
 
+	void setPowwowMeetingCacheModel(
+		PowwowMeetingCacheModel powwowMeetingCacheModel) {
+
+		_powwowMeetingId = powwowMeetingCacheModel.powwowMeetingId;
+		_groupId = powwowMeetingCacheModel.groupId;
+		_companyId = powwowMeetingCacheModel.companyId;
+		_userId = powwowMeetingCacheModel.userId;
+
+		if (powwowMeetingCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = powwowMeetingCacheModel.userName;
+		}
+
+		if (powwowMeetingCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(powwowMeetingCacheModel.createDate);
+		}
+
+		if (powwowMeetingCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(powwowMeetingCacheModel.modifiedDate);
+		}
+
+		_powwowServerId = powwowMeetingCacheModel.powwowServerId;
+
+		if (powwowMeetingCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = powwowMeetingCacheModel.name;
+		}
+
+		if (powwowMeetingCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = powwowMeetingCacheModel.description;
+		}
+
+		if (powwowMeetingCacheModel.providerType == null) {
+			_providerType = "";
+		}
+		else {
+			_providerType = powwowMeetingCacheModel.providerType;
+		}
+
+		if (powwowMeetingCacheModel.providerTypeMetadata == null) {
+			_providerTypeMetadata = "";
+		}
+		else {
+			_providerTypeMetadata =
+				powwowMeetingCacheModel.providerTypeMetadata;
+		}
+
+		if (powwowMeetingCacheModel.languageId == null) {
+			_languageId = "";
+		}
+		else {
+			_languageId = powwowMeetingCacheModel.languageId;
+		}
+
+		_calendarBookingId = powwowMeetingCacheModel.calendarBookingId;
+		_status = powwowMeetingCacheModel.status;
+	}
+
+	private static class PowwowMeetingOriginalValues {
+
+		private PowwowMeetingOriginalValues(
+			PowwowMeetingModelImpl powwowMeetingModelImpl) {
+
+			_originalGroupId = powwowMeetingModelImpl._groupId;
+			_originalUserId = powwowMeetingModelImpl._userId;
+			_originalPowwowServerId = powwowMeetingModelImpl._powwowServerId;
+			_originalStatus = powwowMeetingModelImpl._status;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final long _originalPowwowServerId;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PowwowMeeting>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PowwowMeetingOriginalValues _powwowMeetingOriginalValues;
 	private long _powwowMeetingId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _powwowServerId;
-	private long _originalPowwowServerId;
-	private boolean _setOriginalPowwowServerId;
 	private String _name;
 	private String _description;
 	private String _providerType;
@@ -987,9 +1070,6 @@ public class PowwowMeetingModelImpl
 	private String _languageId;
 	private long _calendarBookingId;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
-	private long _columnBitmask;
 	private PowwowMeeting _escapedModel;
 
 }

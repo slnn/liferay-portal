@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -93,30 +91,8 @@ public class OAuth2ApplicationScopeAliasesCacheModel
 		OAuth2ApplicationScopeAliasesImpl oAuth2ApplicationScopeAliasesImpl =
 			new OAuth2ApplicationScopeAliasesImpl();
 
-		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId);
-		oAuth2ApplicationScopeAliasesImpl.setCompanyId(companyId);
-		oAuth2ApplicationScopeAliasesImpl.setUserId(userId);
-
-		if (userName == null) {
-			oAuth2ApplicationScopeAliasesImpl.setUserName("");
-		}
-		else {
-			oAuth2ApplicationScopeAliasesImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			oAuth2ApplicationScopeAliasesImpl.setCreateDate(null);
-		}
-		else {
-			oAuth2ApplicationScopeAliasesImpl.setCreateDate(
-				new Date(createDate));
-		}
-
-		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationId(
-			oAuth2ApplicationId);
-
-		oAuth2ApplicationScopeAliasesImpl.resetOriginalValues();
+		oAuth2ApplicationScopeAliasesImpl.
+			setOAuth2ApplicationScopeAliasesCacheModel(this);
 
 		return oAuth2ApplicationScopeAliasesImpl;
 	}

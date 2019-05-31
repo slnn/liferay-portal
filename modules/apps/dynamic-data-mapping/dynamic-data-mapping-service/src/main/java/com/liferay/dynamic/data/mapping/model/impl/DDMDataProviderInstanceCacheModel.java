@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,69 +101,7 @@ public class DDMDataProviderInstanceCacheModel
 		DDMDataProviderInstanceImpl ddmDataProviderInstanceImpl =
 			new DDMDataProviderInstanceImpl();
 
-		if (uuid == null) {
-			ddmDataProviderInstanceImpl.setUuid("");
-		}
-		else {
-			ddmDataProviderInstanceImpl.setUuid(uuid);
-		}
-
-		ddmDataProviderInstanceImpl.setDataProviderInstanceId(
-			dataProviderInstanceId);
-		ddmDataProviderInstanceImpl.setGroupId(groupId);
-		ddmDataProviderInstanceImpl.setCompanyId(companyId);
-		ddmDataProviderInstanceImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmDataProviderInstanceImpl.setUserName("");
-		}
-		else {
-			ddmDataProviderInstanceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmDataProviderInstanceImpl.setCreateDate(null);
-		}
-		else {
-			ddmDataProviderInstanceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmDataProviderInstanceImpl.setModifiedDate(null);
-		}
-		else {
-			ddmDataProviderInstanceImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			ddmDataProviderInstanceImpl.setName("");
-		}
-		else {
-			ddmDataProviderInstanceImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmDataProviderInstanceImpl.setDescription("");
-		}
-		else {
-			ddmDataProviderInstanceImpl.setDescription(description);
-		}
-
-		if (definition == null) {
-			ddmDataProviderInstanceImpl.setDefinition("");
-		}
-		else {
-			ddmDataProviderInstanceImpl.setDefinition(definition);
-		}
-
-		if (type == null) {
-			ddmDataProviderInstanceImpl.setType("");
-		}
-		else {
-			ddmDataProviderInstanceImpl.setType(type);
-		}
-
-		ddmDataProviderInstanceImpl.resetOriginalValues();
+		ddmDataProviderInstanceImpl.setDDMDataProviderInstanceCacheModel(this);
 
 		return ddmDataProviderInstanceImpl;
 	}

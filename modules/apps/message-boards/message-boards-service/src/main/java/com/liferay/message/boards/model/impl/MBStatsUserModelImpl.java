@@ -319,19 +319,21 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbStatsUserOriginalValues == null) {
+			_mbStatsUserOriginalValues = new MBStatsUserOriginalValues(this);
 		}
+
+		_mbStatsUserOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbStatsUserOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbStatsUserOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -351,13 +353,11 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_mbStatsUserOriginalValues == null) {
+			_mbStatsUserOriginalValues = new MBStatsUserOriginalValues(this);
 		}
+
+		_mbStatsUserOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -379,7 +379,11 @@ public class MBStatsUserModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_mbStatsUserOriginalValues == null) {
+			return _userId;
+		}
+
+		return _mbStatsUserOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -389,19 +393,21 @@ public class MBStatsUserModelImpl
 
 	@Override
 	public void setMessageCount(int messageCount) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalMessageCount) {
-			_setOriginalMessageCount = true;
-
-			_originalMessageCount = _messageCount;
+		if (_mbStatsUserOriginalValues == null) {
+			_mbStatsUserOriginalValues = new MBStatsUserOriginalValues(this);
 		}
+
+		_mbStatsUserOriginalValues._columnBitmask = -1L;
 
 		_messageCount = messageCount;
 	}
 
 	public int getOriginalMessageCount() {
-		return _originalMessageCount;
+		if (_mbStatsUserOriginalValues == null) {
+			return _messageCount;
+		}
+
+		return _mbStatsUserOriginalValues._originalMessageCount;
 	}
 
 	@Override
@@ -415,7 +421,11 @@ public class MBStatsUserModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbStatsUserOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbStatsUserOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -521,20 +531,7 @@ public class MBStatsUserModelImpl
 	public void resetOriginalValues() {
 		MBStatsUserModelImpl mbStatsUserModelImpl = this;
 
-		mbStatsUserModelImpl._originalGroupId = mbStatsUserModelImpl._groupId;
-
-		mbStatsUserModelImpl._setOriginalGroupId = false;
-
-		mbStatsUserModelImpl._originalUserId = mbStatsUserModelImpl._userId;
-
-		mbStatsUserModelImpl._setOriginalUserId = false;
-
-		mbStatsUserModelImpl._originalMessageCount =
-			mbStatsUserModelImpl._messageCount;
-
-		mbStatsUserModelImpl._setOriginalMessageCount = false;
-
-		mbStatsUserModelImpl._columnBitmask = 0;
+		mbStatsUserModelImpl._mbStatsUserOriginalValues = null;
 	}
 
 	@Override
@@ -627,22 +624,45 @@ public class MBStatsUserModelImpl
 		return sb.toString();
 	}
 
+	void setMBStatsUserCacheModel(MBStatsUserCacheModel mbStatsUserCacheModel) {
+		_statsUserId = mbStatsUserCacheModel.statsUserId;
+		_groupId = mbStatsUserCacheModel.groupId;
+		_companyId = mbStatsUserCacheModel.companyId;
+		_userId = mbStatsUserCacheModel.userId;
+		_messageCount = mbStatsUserCacheModel.messageCount;
+
+		if (mbStatsUserCacheModel.lastPostDate != Long.MIN_VALUE) {
+			_lastPostDate = new Date(mbStatsUserCacheModel.lastPostDate);
+		}
+	}
+
+	private static class MBStatsUserOriginalValues {
+
+		private MBStatsUserOriginalValues(
+			MBStatsUserModelImpl mbStatsUserModelImpl) {
+
+			_originalGroupId = mbStatsUserModelImpl._groupId;
+			_originalUserId = mbStatsUserModelImpl._userId;
+			_originalMessageCount = mbStatsUserModelImpl._messageCount;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final int _originalMessageCount;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBStatsUser>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBStatsUserOriginalValues _mbStatsUserOriginalValues;
 	private long _statsUserId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private int _messageCount;
-	private int _originalMessageCount;
-	private boolean _setOriginalMessageCount;
 	private Date _lastPostDate;
-	private long _columnBitmask;
 	private MBStatsUser _escapedModel;
 
 }

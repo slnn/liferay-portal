@@ -88,22 +88,7 @@ public class TrashVersionCacheModel
 	public TrashVersion toEntityModel() {
 		TrashVersionImpl trashVersionImpl = new TrashVersionImpl();
 
-		trashVersionImpl.setVersionId(versionId);
-		trashVersionImpl.setCompanyId(companyId);
-		trashVersionImpl.setEntryId(entryId);
-		trashVersionImpl.setClassNameId(classNameId);
-		trashVersionImpl.setClassPK(classPK);
-
-		if (typeSettings == null) {
-			trashVersionImpl.setTypeSettings("");
-		}
-		else {
-			trashVersionImpl.setTypeSettings(typeSettings);
-		}
-
-		trashVersionImpl.setStatus(status);
-
-		trashVersionImpl.resetOriginalValues();
+		trashVersionImpl.setTrashVersionCacheModel(this);
 
 		return trashVersionImpl;
 	}

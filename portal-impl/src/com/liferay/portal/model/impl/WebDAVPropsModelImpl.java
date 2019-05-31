@@ -380,19 +380,21 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_webDAVPropsOriginalValues == null) {
+			_webDAVPropsOriginalValues = new WebDAVPropsOriginalValues(this);
 		}
+
+		_webDAVPropsOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_webDAVPropsOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _webDAVPropsOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -402,19 +404,21 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_webDAVPropsOriginalValues == null) {
+			_webDAVPropsOriginalValues = new WebDAVPropsOriginalValues(this);
 		}
+
+		_webDAVPropsOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_webDAVPropsOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _webDAVPropsOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -433,7 +437,11 @@ public class WebDAVPropsModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_webDAVPropsOriginalValues == null) {
+			return 0;
+		}
+
+		return _webDAVPropsOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -533,18 +541,9 @@ public class WebDAVPropsModelImpl
 	public void resetOriginalValues() {
 		WebDAVPropsModelImpl webDAVPropsModelImpl = this;
 
+		webDAVPropsModelImpl._webDAVPropsOriginalValues = null;
+
 		webDAVPropsModelImpl._setModifiedDate = false;
-
-		webDAVPropsModelImpl._originalClassNameId =
-			webDAVPropsModelImpl._classNameId;
-
-		webDAVPropsModelImpl._setOriginalClassNameId = false;
-
-		webDAVPropsModelImpl._originalClassPK = webDAVPropsModelImpl._classPK;
-
-		webDAVPropsModelImpl._setOriginalClassPK = false;
-
-		webDAVPropsModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -654,9 +653,49 @@ public class WebDAVPropsModelImpl
 		return sb.toString();
 	}
 
+	void setWebDAVPropsCacheModel(WebDAVPropsCacheModel webDAVPropsCacheModel) {
+		_mvccVersion = webDAVPropsCacheModel.mvccVersion;
+		_webDavPropsId = webDAVPropsCacheModel.webDavPropsId;
+		_companyId = webDAVPropsCacheModel.companyId;
+
+		if (webDAVPropsCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(webDAVPropsCacheModel.createDate);
+		}
+
+		if (webDAVPropsCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(webDAVPropsCacheModel.modifiedDate);
+		}
+
+		_classNameId = webDAVPropsCacheModel.classNameId;
+		_classPK = webDAVPropsCacheModel.classPK;
+
+		if (webDAVPropsCacheModel.props == null) {
+			_props = "";
+		}
+		else {
+			_props = webDAVPropsCacheModel.props;
+		}
+	}
+
+	private static class WebDAVPropsOriginalValues {
+
+		private WebDAVPropsOriginalValues(
+			WebDAVPropsModelImpl webDAVPropsModelImpl) {
+
+			_originalClassNameId = webDAVPropsModelImpl._classNameId;
+			_originalClassPK = webDAVPropsModelImpl._classPK;
+		}
+
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, WebDAVProps>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WebDAVPropsOriginalValues _webDAVPropsOriginalValues;
 	private long _mvccVersion;
 	private long _webDavPropsId;
 	private long _companyId;
@@ -664,13 +703,8 @@ public class WebDAVPropsModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _props;
-	private long _columnBitmask;
 	private WebDAVProps _escapedModel;
 
 }

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,69 +98,7 @@ public class PowwowServerCacheModel
 	public PowwowServer toEntityModel() {
 		PowwowServerImpl powwowServerImpl = new PowwowServerImpl();
 
-		powwowServerImpl.setPowwowServerId(powwowServerId);
-		powwowServerImpl.setCompanyId(companyId);
-		powwowServerImpl.setUserId(userId);
-
-		if (userName == null) {
-			powwowServerImpl.setUserName("");
-		}
-		else {
-			powwowServerImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			powwowServerImpl.setCreateDate(null);
-		}
-		else {
-			powwowServerImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			powwowServerImpl.setModifiedDate(null);
-		}
-		else {
-			powwowServerImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			powwowServerImpl.setName("");
-		}
-		else {
-			powwowServerImpl.setName(name);
-		}
-
-		if (providerType == null) {
-			powwowServerImpl.setProviderType("");
-		}
-		else {
-			powwowServerImpl.setProviderType(providerType);
-		}
-
-		if (url == null) {
-			powwowServerImpl.setUrl("");
-		}
-		else {
-			powwowServerImpl.setUrl(url);
-		}
-
-		if (apiKey == null) {
-			powwowServerImpl.setApiKey("");
-		}
-		else {
-			powwowServerImpl.setApiKey(apiKey);
-		}
-
-		if (secret == null) {
-			powwowServerImpl.setSecret("");
-		}
-		else {
-			powwowServerImpl.setSecret(secret);
-		}
-
-		powwowServerImpl.setActive(active);
-
-		powwowServerImpl.resetOriginalValues();
+		powwowServerImpl.setPowwowServerCacheModel(this);
 
 		return powwowServerImpl;
 	}

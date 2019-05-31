@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -96,49 +94,7 @@ public class MBThreadFlagCacheModel
 	public MBThreadFlag toEntityModel() {
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
-		if (uuid == null) {
-			mbThreadFlagImpl.setUuid("");
-		}
-		else {
-			mbThreadFlagImpl.setUuid(uuid);
-		}
-
-		mbThreadFlagImpl.setThreadFlagId(threadFlagId);
-		mbThreadFlagImpl.setGroupId(groupId);
-		mbThreadFlagImpl.setCompanyId(companyId);
-		mbThreadFlagImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbThreadFlagImpl.setUserName("");
-		}
-		else {
-			mbThreadFlagImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbThreadFlagImpl.setCreateDate(null);
-		}
-		else {
-			mbThreadFlagImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbThreadFlagImpl.setModifiedDate(null);
-		}
-		else {
-			mbThreadFlagImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbThreadFlagImpl.setThreadId(threadId);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mbThreadFlagImpl.setLastPublishDate(null);
-		}
-		else {
-			mbThreadFlagImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mbThreadFlagImpl.resetOriginalValues();
+		mbThreadFlagImpl.setMBThreadFlagCacheModel(this);
 
 		return mbThreadFlagImpl;
 	}

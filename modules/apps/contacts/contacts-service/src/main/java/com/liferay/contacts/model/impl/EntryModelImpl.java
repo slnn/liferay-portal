@@ -315,13 +315,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
 		}
+
+		_entryOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -343,7 +341,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_entryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _entryOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -399,7 +401,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setFullName(String fullName) {
-		_columnBitmask = -1L;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
+		}
+
+		_entryOriginalValues._columnBitmask = -1L;
 
 		_fullName = fullName;
 	}
@@ -416,17 +422,21 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setEmailAddress(String emailAddress) {
-		_columnBitmask |= EMAILADDRESS_COLUMN_BITMASK;
-
-		if (_originalEmailAddress == null) {
-			_originalEmailAddress = _emailAddress;
+		if (_entryOriginalValues == null) {
+			_entryOriginalValues = new EntryOriginalValues(this);
 		}
+
+		_entryOriginalValues._columnBitmask |= EMAILADDRESS_COLUMN_BITMASK;
 
 		_emailAddress = emailAddress;
 	}
 
 	public String getOriginalEmailAddress() {
-		return GetterUtil.getString(_originalEmailAddress);
+		if (_entryOriginalValues == null) {
+			return GetterUtil.getString(_emailAddress);
+		}
+
+		return GetterUtil.getString(_entryOriginalValues._originalEmailAddress);
 	}
 
 	@Override
@@ -445,7 +455,11 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_entryOriginalValues == null) {
+			return 0;
+		}
+
+		return _entryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -545,15 +559,9 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	public void resetOriginalValues() {
 		EntryModelImpl entryModelImpl = this;
 
-		entryModelImpl._originalUserId = entryModelImpl._userId;
-
-		entryModelImpl._setOriginalUserId = false;
+		entryModelImpl._entryOriginalValues = null;
 
 		entryModelImpl._setModifiedDate = false;
-
-		entryModelImpl._originalEmailAddress = entryModelImpl._emailAddress;
-
-		entryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -682,26 +690,79 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return sb.toString();
 	}
 
+	void setEntryCacheModel(EntryCacheModel entryCacheModel) {
+		_entryId = entryCacheModel.entryId;
+		_groupId = entryCacheModel.groupId;
+		_companyId = entryCacheModel.companyId;
+		_userId = entryCacheModel.userId;
+
+		if (entryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = entryCacheModel.userName;
+		}
+
+		if (entryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(entryCacheModel.createDate);
+		}
+
+		if (entryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(entryCacheModel.modifiedDate);
+		}
+
+		if (entryCacheModel.fullName == null) {
+			_fullName = "";
+		}
+		else {
+			_fullName = entryCacheModel.fullName;
+		}
+
+		if (entryCacheModel.emailAddress == null) {
+			_emailAddress = "";
+		}
+		else {
+			_emailAddress = entryCacheModel.emailAddress;
+		}
+
+		if (entryCacheModel.comments == null) {
+			_comments = "";
+		}
+		else {
+			_comments = entryCacheModel.comments;
+		}
+	}
+
+	private static class EntryOriginalValues {
+
+		private EntryOriginalValues(EntryModelImpl entryModelImpl) {
+			_originalUserId = entryModelImpl._userId;
+			_originalEmailAddress = entryModelImpl._emailAddress;
+		}
+
+		private final long _originalUserId;
+		private final String _originalEmailAddress;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Entry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private EntryOriginalValues _entryOriginalValues;
 	private long _entryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _fullName;
 	private String _emailAddress;
-	private String _originalEmailAddress;
 	private String _comments;
-	private long _columnBitmask;
 	private Entry _escapedModel;
 
 }

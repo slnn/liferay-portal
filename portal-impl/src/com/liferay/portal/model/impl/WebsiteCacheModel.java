@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -118,61 +116,7 @@ public class WebsiteCacheModel
 	public Website toEntityModel() {
 		WebsiteImpl websiteImpl = new WebsiteImpl();
 
-		websiteImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			websiteImpl.setUuid("");
-		}
-		else {
-			websiteImpl.setUuid(uuid);
-		}
-
-		websiteImpl.setWebsiteId(websiteId);
-		websiteImpl.setCompanyId(companyId);
-		websiteImpl.setUserId(userId);
-
-		if (userName == null) {
-			websiteImpl.setUserName("");
-		}
-		else {
-			websiteImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			websiteImpl.setCreateDate(null);
-		}
-		else {
-			websiteImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			websiteImpl.setModifiedDate(null);
-		}
-		else {
-			websiteImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		websiteImpl.setClassNameId(classNameId);
-		websiteImpl.setClassPK(classPK);
-
-		if (url == null) {
-			websiteImpl.setUrl("");
-		}
-		else {
-			websiteImpl.setUrl(url);
-		}
-
-		websiteImpl.setTypeId(typeId);
-		websiteImpl.setPrimary(primary);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			websiteImpl.setLastPublishDate(null);
-		}
-		else {
-			websiteImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		websiteImpl.resetOriginalValues();
+		websiteImpl.setWebsiteCacheModel(this);
 
 		return websiteImpl;
 	}

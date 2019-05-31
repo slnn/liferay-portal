@@ -94,17 +94,7 @@ public class ClassNameCacheModel
 	public ClassName toEntityModel() {
 		ClassNameImpl classNameImpl = new ClassNameImpl();
 
-		classNameImpl.setMvccVersion(mvccVersion);
-		classNameImpl.setClassNameId(classNameId);
-
-		if (value == null) {
-			classNameImpl.setValue("");
-		}
-		else {
-			classNameImpl.setValue(value);
-		}
-
-		classNameImpl.resetOriginalValues();
+		classNameImpl.setClassNameCacheModel(this);
 
 		return classNameImpl;
 	}

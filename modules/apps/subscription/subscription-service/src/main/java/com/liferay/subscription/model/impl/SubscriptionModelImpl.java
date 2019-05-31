@@ -351,19 +351,21 @@ public class SubscriptionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_subscriptionOriginalValues == null) {
+			_subscriptionOriginalValues = new SubscriptionOriginalValues(this);
 		}
+
+		_subscriptionOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_subscriptionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _subscriptionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -373,19 +375,21 @@ public class SubscriptionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_subscriptionOriginalValues == null) {
+			_subscriptionOriginalValues = new SubscriptionOriginalValues(this);
 		}
+
+		_subscriptionOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_subscriptionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _subscriptionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -395,13 +399,11 @@ public class SubscriptionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_subscriptionOriginalValues == null) {
+			_subscriptionOriginalValues = new SubscriptionOriginalValues(this);
 		}
+
+		_subscriptionOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -423,7 +425,11 @@ public class SubscriptionModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_subscriptionOriginalValues == null) {
+			return _userId;
+		}
+
+		return _subscriptionOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -494,19 +500,22 @@ public class SubscriptionModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_subscriptionOriginalValues == null) {
+			_subscriptionOriginalValues = new SubscriptionOriginalValues(this);
 		}
+
+		_subscriptionOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_subscriptionOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _subscriptionOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -516,19 +525,21 @@ public class SubscriptionModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_subscriptionOriginalValues == null) {
+			_subscriptionOriginalValues = new SubscriptionOriginalValues(this);
 		}
+
+		_subscriptionOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_subscriptionOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _subscriptionOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -547,7 +558,11 @@ public class SubscriptionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_subscriptionOriginalValues == null) {
+			return 0;
+		}
+
+		return _subscriptionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -650,31 +665,9 @@ public class SubscriptionModelImpl
 	public void resetOriginalValues() {
 		SubscriptionModelImpl subscriptionModelImpl = this;
 
-		subscriptionModelImpl._originalGroupId = subscriptionModelImpl._groupId;
-
-		subscriptionModelImpl._setOriginalGroupId = false;
-
-		subscriptionModelImpl._originalCompanyId =
-			subscriptionModelImpl._companyId;
-
-		subscriptionModelImpl._setOriginalCompanyId = false;
-
-		subscriptionModelImpl._originalUserId = subscriptionModelImpl._userId;
-
-		subscriptionModelImpl._setOriginalUserId = false;
+		subscriptionModelImpl._subscriptionOriginalValues = null;
 
 		subscriptionModelImpl._setModifiedDate = false;
-
-		subscriptionModelImpl._originalClassNameId =
-			subscriptionModelImpl._classNameId;
-
-		subscriptionModelImpl._setOriginalClassNameId = false;
-
-		subscriptionModelImpl._originalClassPK = subscriptionModelImpl._classPK;
-
-		subscriptionModelImpl._setOriginalClassPK = false;
-
-		subscriptionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -796,32 +789,78 @@ public class SubscriptionModelImpl
 		return sb.toString();
 	}
 
+	void setSubscriptionCacheModel(
+		SubscriptionCacheModel subscriptionCacheModel) {
+
+		_mvccVersion = subscriptionCacheModel.mvccVersion;
+		_subscriptionId = subscriptionCacheModel.subscriptionId;
+		_groupId = subscriptionCacheModel.groupId;
+		_companyId = subscriptionCacheModel.companyId;
+		_userId = subscriptionCacheModel.userId;
+
+		if (subscriptionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = subscriptionCacheModel.userName;
+		}
+
+		if (subscriptionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(subscriptionCacheModel.createDate);
+		}
+
+		if (subscriptionCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(subscriptionCacheModel.modifiedDate);
+		}
+
+		_classNameId = subscriptionCacheModel.classNameId;
+		_classPK = subscriptionCacheModel.classPK;
+
+		if (subscriptionCacheModel.frequency == null) {
+			_frequency = "";
+		}
+		else {
+			_frequency = subscriptionCacheModel.frequency;
+		}
+	}
+
+	private static class SubscriptionOriginalValues {
+
+		private SubscriptionOriginalValues(
+			SubscriptionModelImpl subscriptionModelImpl) {
+
+			_originalGroupId = subscriptionModelImpl._groupId;
+			_originalCompanyId = subscriptionModelImpl._companyId;
+			_originalUserId = subscriptionModelImpl._userId;
+			_originalClassNameId = subscriptionModelImpl._classNameId;
+			_originalClassPK = subscriptionModelImpl._classPK;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Subscription>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SubscriptionOriginalValues _subscriptionOriginalValues;
 	private long _mvccVersion;
 	private long _subscriptionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _frequency;
-	private long _columnBitmask;
 	private Subscription _escapedModel;
 
 }

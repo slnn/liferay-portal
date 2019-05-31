@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -105,90 +103,7 @@ public class AuditEventCacheModel
 	public AuditEvent toEntityModel() {
 		AuditEventImpl auditEventImpl = new AuditEventImpl();
 
-		auditEventImpl.setAuditEventId(auditEventId);
-		auditEventImpl.setCompanyId(companyId);
-		auditEventImpl.setUserId(userId);
-
-		if (userName == null) {
-			auditEventImpl.setUserName("");
-		}
-		else {
-			auditEventImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			auditEventImpl.setCreateDate(null);
-		}
-		else {
-			auditEventImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (eventType == null) {
-			auditEventImpl.setEventType("");
-		}
-		else {
-			auditEventImpl.setEventType(eventType);
-		}
-
-		if (className == null) {
-			auditEventImpl.setClassName("");
-		}
-		else {
-			auditEventImpl.setClassName(className);
-		}
-
-		if (classPK == null) {
-			auditEventImpl.setClassPK("");
-		}
-		else {
-			auditEventImpl.setClassPK(classPK);
-		}
-
-		if (message == null) {
-			auditEventImpl.setMessage("");
-		}
-		else {
-			auditEventImpl.setMessage(message);
-		}
-
-		if (clientHost == null) {
-			auditEventImpl.setClientHost("");
-		}
-		else {
-			auditEventImpl.setClientHost(clientHost);
-		}
-
-		if (clientIP == null) {
-			auditEventImpl.setClientIP("");
-		}
-		else {
-			auditEventImpl.setClientIP(clientIP);
-		}
-
-		if (serverName == null) {
-			auditEventImpl.setServerName("");
-		}
-		else {
-			auditEventImpl.setServerName(serverName);
-		}
-
-		auditEventImpl.setServerPort(serverPort);
-
-		if (sessionID == null) {
-			auditEventImpl.setSessionID("");
-		}
-		else {
-			auditEventImpl.setSessionID(sessionID);
-		}
-
-		if (additionalInfo == null) {
-			auditEventImpl.setAdditionalInfo("");
-		}
-		else {
-			auditEventImpl.setAdditionalInfo(additionalInfo);
-		}
-
-		auditEventImpl.resetOriginalValues();
+		auditEventImpl.setAuditEventCacheModel(this);
 
 		return auditEventImpl;
 	}

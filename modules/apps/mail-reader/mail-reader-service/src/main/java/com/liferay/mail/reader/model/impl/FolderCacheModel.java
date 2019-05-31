@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -94,50 +92,7 @@ public class FolderCacheModel implements CacheModel<Folder>, Externalizable {
 	public Folder toEntityModel() {
 		FolderImpl folderImpl = new FolderImpl();
 
-		folderImpl.setFolderId(folderId);
-		folderImpl.setCompanyId(companyId);
-		folderImpl.setUserId(userId);
-
-		if (userName == null) {
-			folderImpl.setUserName("");
-		}
-		else {
-			folderImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			folderImpl.setCreateDate(null);
-		}
-		else {
-			folderImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			folderImpl.setModifiedDate(null);
-		}
-		else {
-			folderImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		folderImpl.setAccountId(accountId);
-
-		if (fullName == null) {
-			folderImpl.setFullName("");
-		}
-		else {
-			folderImpl.setFullName(fullName);
-		}
-
-		if (displayName == null) {
-			folderImpl.setDisplayName("");
-		}
-		else {
-			folderImpl.setDisplayName(displayName);
-		}
-
-		folderImpl.setRemoteMessageCount(remoteMessageCount);
-
-		folderImpl.resetOriginalValues();
+		folderImpl.setFolderCacheModel(this);
 
 		return folderImpl;
 	}

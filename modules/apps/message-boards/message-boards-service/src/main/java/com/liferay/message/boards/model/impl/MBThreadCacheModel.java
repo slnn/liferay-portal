@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -121,89 +119,7 @@ public class MBThreadCacheModel
 	public MBThread toEntityModel() {
 		MBThreadImpl mbThreadImpl = new MBThreadImpl();
 
-		if (uuid == null) {
-			mbThreadImpl.setUuid("");
-		}
-		else {
-			mbThreadImpl.setUuid(uuid);
-		}
-
-		mbThreadImpl.setThreadId(threadId);
-		mbThreadImpl.setGroupId(groupId);
-		mbThreadImpl.setCompanyId(companyId);
-		mbThreadImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbThreadImpl.setUserName("");
-		}
-		else {
-			mbThreadImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbThreadImpl.setCreateDate(null);
-		}
-		else {
-			mbThreadImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbThreadImpl.setModifiedDate(null);
-		}
-		else {
-			mbThreadImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbThreadImpl.setCategoryId(categoryId);
-		mbThreadImpl.setRootMessageId(rootMessageId);
-		mbThreadImpl.setRootMessageUserId(rootMessageUserId);
-
-		if (title == null) {
-			mbThreadImpl.setTitle("");
-		}
-		else {
-			mbThreadImpl.setTitle(title);
-		}
-
-		mbThreadImpl.setMessageCount(messageCount);
-		mbThreadImpl.setViewCount(viewCount);
-		mbThreadImpl.setLastPostByUserId(lastPostByUserId);
-
-		if (lastPostDate == Long.MIN_VALUE) {
-			mbThreadImpl.setLastPostDate(null);
-		}
-		else {
-			mbThreadImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
-		mbThreadImpl.setPriority(priority);
-		mbThreadImpl.setQuestion(question);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mbThreadImpl.setLastPublishDate(null);
-		}
-		else {
-			mbThreadImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mbThreadImpl.setStatus(status);
-		mbThreadImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			mbThreadImpl.setStatusByUserName("");
-		}
-		else {
-			mbThreadImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			mbThreadImpl.setStatusDate(null);
-		}
-		else {
-			mbThreadImpl.setStatusDate(new Date(statusDate));
-		}
-
-		mbThreadImpl.resetOriginalValues();
+		mbThreadImpl.setMBThreadCacheModel(this);
 
 		return mbThreadImpl;
 	}

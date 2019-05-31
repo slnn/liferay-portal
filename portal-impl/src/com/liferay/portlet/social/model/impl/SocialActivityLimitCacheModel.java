@@ -93,29 +93,7 @@ public class SocialActivityLimitCacheModel
 		SocialActivityLimitImpl socialActivityLimitImpl =
 			new SocialActivityLimitImpl();
 
-		socialActivityLimitImpl.setActivityLimitId(activityLimitId);
-		socialActivityLimitImpl.setGroupId(groupId);
-		socialActivityLimitImpl.setCompanyId(companyId);
-		socialActivityLimitImpl.setUserId(userId);
-		socialActivityLimitImpl.setClassNameId(classNameId);
-		socialActivityLimitImpl.setClassPK(classPK);
-		socialActivityLimitImpl.setActivityType(activityType);
-
-		if (activityCounterName == null) {
-			socialActivityLimitImpl.setActivityCounterName("");
-		}
-		else {
-			socialActivityLimitImpl.setActivityCounterName(activityCounterName);
-		}
-
-		if (value == null) {
-			socialActivityLimitImpl.setValue("");
-		}
-		else {
-			socialActivityLimitImpl.setValue(value);
-		}
-
-		socialActivityLimitImpl.resetOriginalValues();
+		socialActivityLimitImpl.setSocialActivityLimitCacheModel(this);
 
 		return socialActivityLimitImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -110,87 +108,7 @@ public class BookmarksFolderCacheModel
 	public BookmarksFolder toEntityModel() {
 		BookmarksFolderImpl bookmarksFolderImpl = new BookmarksFolderImpl();
 
-		if (uuid == null) {
-			bookmarksFolderImpl.setUuid("");
-		}
-		else {
-			bookmarksFolderImpl.setUuid(uuid);
-		}
-
-		bookmarksFolderImpl.setFolderId(folderId);
-		bookmarksFolderImpl.setGroupId(groupId);
-		bookmarksFolderImpl.setCompanyId(companyId);
-		bookmarksFolderImpl.setUserId(userId);
-
-		if (userName == null) {
-			bookmarksFolderImpl.setUserName("");
-		}
-		else {
-			bookmarksFolderImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			bookmarksFolderImpl.setCreateDate(null);
-		}
-		else {
-			bookmarksFolderImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			bookmarksFolderImpl.setModifiedDate(null);
-		}
-		else {
-			bookmarksFolderImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		bookmarksFolderImpl.setParentFolderId(parentFolderId);
-
-		if (treePath == null) {
-			bookmarksFolderImpl.setTreePath("");
-		}
-		else {
-			bookmarksFolderImpl.setTreePath(treePath);
-		}
-
-		if (name == null) {
-			bookmarksFolderImpl.setName("");
-		}
-		else {
-			bookmarksFolderImpl.setName(name);
-		}
-
-		if (description == null) {
-			bookmarksFolderImpl.setDescription("");
-		}
-		else {
-			bookmarksFolderImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			bookmarksFolderImpl.setLastPublishDate(null);
-		}
-		else {
-			bookmarksFolderImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		bookmarksFolderImpl.setStatus(status);
-		bookmarksFolderImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			bookmarksFolderImpl.setStatusByUserName("");
-		}
-		else {
-			bookmarksFolderImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			bookmarksFolderImpl.setStatusDate(null);
-		}
-		else {
-			bookmarksFolderImpl.setStatusDate(new Date(statusDate));
-		}
-
-		bookmarksFolderImpl.resetOriginalValues();
+		bookmarksFolderImpl.setBookmarksFolderCacheModel(this);
 
 		return bookmarksFolderImpl;
 	}

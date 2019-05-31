@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -125,64 +123,7 @@ public class DDLRecordVersionCacheModel
 	public DDLRecordVersion toEntityModel() {
 		DDLRecordVersionImpl ddlRecordVersionImpl = new DDLRecordVersionImpl();
 
-		ddlRecordVersionImpl.setMvccVersion(mvccVersion);
-		ddlRecordVersionImpl.setRecordVersionId(recordVersionId);
-		ddlRecordVersionImpl.setGroupId(groupId);
-		ddlRecordVersionImpl.setCompanyId(companyId);
-		ddlRecordVersionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddlRecordVersionImpl.setUserName("");
-		}
-		else {
-			ddlRecordVersionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddlRecordVersionImpl.setCreateDate(null);
-		}
-		else {
-			ddlRecordVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		ddlRecordVersionImpl.setDDMStorageId(DDMStorageId);
-		ddlRecordVersionImpl.setRecordSetId(recordSetId);
-
-		if (recordSetVersion == null) {
-			ddlRecordVersionImpl.setRecordSetVersion("");
-		}
-		else {
-			ddlRecordVersionImpl.setRecordSetVersion(recordSetVersion);
-		}
-
-		ddlRecordVersionImpl.setRecordId(recordId);
-
-		if (version == null) {
-			ddlRecordVersionImpl.setVersion("");
-		}
-		else {
-			ddlRecordVersionImpl.setVersion(version);
-		}
-
-		ddlRecordVersionImpl.setDisplayIndex(displayIndex);
-		ddlRecordVersionImpl.setStatus(status);
-		ddlRecordVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			ddlRecordVersionImpl.setStatusByUserName("");
-		}
-		else {
-			ddlRecordVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			ddlRecordVersionImpl.setStatusDate(null);
-		}
-		else {
-			ddlRecordVersionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		ddlRecordVersionImpl.resetOriginalValues();
+		ddlRecordVersionImpl.setDDLRecordVersionCacheModel(this);
 
 		return ddlRecordVersionImpl;
 	}

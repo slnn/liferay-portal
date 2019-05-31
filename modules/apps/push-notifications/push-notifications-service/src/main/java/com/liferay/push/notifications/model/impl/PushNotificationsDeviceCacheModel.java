@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -91,33 +89,7 @@ public class PushNotificationsDeviceCacheModel
 		PushNotificationsDeviceImpl pushNotificationsDeviceImpl =
 			new PushNotificationsDeviceImpl();
 
-		pushNotificationsDeviceImpl.setPushNotificationsDeviceId(
-			pushNotificationsDeviceId);
-		pushNotificationsDeviceImpl.setCompanyId(companyId);
-		pushNotificationsDeviceImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			pushNotificationsDeviceImpl.setCreateDate(null);
-		}
-		else {
-			pushNotificationsDeviceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (platform == null) {
-			pushNotificationsDeviceImpl.setPlatform("");
-		}
-		else {
-			pushNotificationsDeviceImpl.setPlatform(platform);
-		}
-
-		if (token == null) {
-			pushNotificationsDeviceImpl.setToken("");
-		}
-		else {
-			pushNotificationsDeviceImpl.setToken(token);
-		}
-
-		pushNotificationsDeviceImpl.resetOriginalValues();
+		pushNotificationsDeviceImpl.setPushNotificationsDeviceCacheModel(this);
 
 		return pushNotificationsDeviceImpl;
 	}

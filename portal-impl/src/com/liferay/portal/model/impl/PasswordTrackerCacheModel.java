@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -104,26 +102,7 @@ public class PasswordTrackerCacheModel
 	public PasswordTracker toEntityModel() {
 		PasswordTrackerImpl passwordTrackerImpl = new PasswordTrackerImpl();
 
-		passwordTrackerImpl.setMvccVersion(mvccVersion);
-		passwordTrackerImpl.setPasswordTrackerId(passwordTrackerId);
-		passwordTrackerImpl.setCompanyId(companyId);
-		passwordTrackerImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			passwordTrackerImpl.setCreateDate(null);
-		}
-		else {
-			passwordTrackerImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (password == null) {
-			passwordTrackerImpl.setPassword("");
-		}
-		else {
-			passwordTrackerImpl.setPassword(password);
-		}
-
-		passwordTrackerImpl.resetOriginalValues();
+		passwordTrackerImpl.setPasswordTrackerCacheModel(this);
 
 		return passwordTrackerImpl;
 	}

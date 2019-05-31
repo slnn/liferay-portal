@@ -361,17 +361,20 @@ public class VersionedEntryModelImpl
 	}
 
 	public boolean getOriginalHead() {
-		return _originalHead;
+		if (_versionedEntryOriginalValues == null) {
+			return _head;
+		}
+
+		return _versionedEntryOriginalValues._originalHead;
 	}
 
 	public void setHead(boolean head) {
-		_columnBitmask |= HEAD_COLUMN_BITMASK;
-
-		if (!_setOriginalHead) {
-			_setOriginalHead = true;
-
-			_originalHead = _head;
+		if (_versionedEntryOriginalValues == null) {
+			_versionedEntryOriginalValues = new VersionedEntryOriginalValues(
+				this);
 		}
+
+		_versionedEntryOriginalValues._columnBitmask |= HEAD_COLUMN_BITMASK;
 
 		_head = head;
 	}
@@ -400,13 +403,12 @@ public class VersionedEntryModelImpl
 
 	@Override
 	public void setHeadId(long headId) {
-		_columnBitmask |= HEADID_COLUMN_BITMASK;
-
-		if (!_setOriginalHeadId) {
-			_setOriginalHeadId = true;
-
-			_originalHeadId = _headId;
+		if (_versionedEntryOriginalValues == null) {
+			_versionedEntryOriginalValues = new VersionedEntryOriginalValues(
+				this);
 		}
+
+		_versionedEntryOriginalValues._columnBitmask |= HEADID_COLUMN_BITMASK;
 
 		if (headId >= 0) {
 			setHead(false);
@@ -419,7 +421,11 @@ public class VersionedEntryModelImpl
 	}
 
 	public long getOriginalHeadId() {
-		return _originalHeadId;
+		if (_versionedEntryOriginalValues == null) {
+			return _headId;
+		}
+
+		return _versionedEntryOriginalValues._originalHeadId;
 	}
 
 	@Override
@@ -439,23 +445,30 @@ public class VersionedEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_versionedEntryOriginalValues == null) {
+			_versionedEntryOriginalValues = new VersionedEntryOriginalValues(
+				this);
 		}
+
+		_versionedEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_versionedEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _versionedEntryOriginalValues._originalGroupId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_versionedEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _versionedEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -551,21 +564,7 @@ public class VersionedEntryModelImpl
 	public void resetOriginalValues() {
 		VersionedEntryModelImpl versionedEntryModelImpl = this;
 
-		versionedEntryModelImpl._originalHeadId =
-			versionedEntryModelImpl._headId;
-
-		versionedEntryModelImpl._setOriginalHeadId = false;
-
-		versionedEntryModelImpl._originalHead = versionedEntryModelImpl._head;
-
-		versionedEntryModelImpl._setOriginalHead = false;
-
-		versionedEntryModelImpl._originalGroupId =
-			versionedEntryModelImpl._groupId;
-
-		versionedEntryModelImpl._setOriginalGroupId = false;
-
-		versionedEntryModelImpl._columnBitmask = 0;
+		versionedEntryModelImpl._versionedEntryOriginalValues = null;
 	}
 
 	@Override
@@ -649,21 +648,42 @@ public class VersionedEntryModelImpl
 		return sb.toString();
 	}
 
+	void setVersionedEntryCacheModel(
+		VersionedEntryCacheModel versionedEntryCacheModel) {
+
+		_mvccVersion = versionedEntryCacheModel.mvccVersion;
+		_headId = versionedEntryCacheModel.headId;
+		_head = versionedEntryCacheModel.head;
+		_versionedEntryId = versionedEntryCacheModel.versionedEntryId;
+		_groupId = versionedEntryCacheModel.groupId;
+	}
+
+	private static class VersionedEntryOriginalValues {
+
+		private VersionedEntryOriginalValues(
+			VersionedEntryModelImpl versionedEntryModelImpl) {
+
+			_originalHeadId = versionedEntryModelImpl._headId;
+			_originalHead = versionedEntryModelImpl._head;
+			_originalGroupId = versionedEntryModelImpl._groupId;
+		}
+
+		private final long _originalHeadId;
+		private final boolean _originalHead;
+		private final long _originalGroupId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, VersionedEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private VersionedEntryOriginalValues _versionedEntryOriginalValues;
 	private long _mvccVersion;
 	private long _headId;
-	private long _originalHeadId;
-	private boolean _setOriginalHeadId;
 	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private long _versionedEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
-	private long _columnBitmask;
 	private VersionedEntry _escapedModel;
 
 }

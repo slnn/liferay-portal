@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -129,95 +127,7 @@ public class KaleoActionCacheModel
 	public KaleoAction toEntityModel() {
 		KaleoActionImpl kaleoActionImpl = new KaleoActionImpl();
 
-		kaleoActionImpl.setMvccVersion(mvccVersion);
-		kaleoActionImpl.setKaleoActionId(kaleoActionId);
-		kaleoActionImpl.setGroupId(groupId);
-		kaleoActionImpl.setCompanyId(companyId);
-		kaleoActionImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoActionImpl.setUserName("");
-		}
-		else {
-			kaleoActionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoActionImpl.setCreateDate(null);
-		}
-		else {
-			kaleoActionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoActionImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoActionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (kaleoClassName == null) {
-			kaleoActionImpl.setKaleoClassName("");
-		}
-		else {
-			kaleoActionImpl.setKaleoClassName(kaleoClassName);
-		}
-
-		kaleoActionImpl.setKaleoClassPK(kaleoClassPK);
-		kaleoActionImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (kaleoNodeName == null) {
-			kaleoActionImpl.setKaleoNodeName("");
-		}
-		else {
-			kaleoActionImpl.setKaleoNodeName(kaleoNodeName);
-		}
-
-		if (name == null) {
-			kaleoActionImpl.setName("");
-		}
-		else {
-			kaleoActionImpl.setName(name);
-		}
-
-		if (description == null) {
-			kaleoActionImpl.setDescription("");
-		}
-		else {
-			kaleoActionImpl.setDescription(description);
-		}
-
-		if (executionType == null) {
-			kaleoActionImpl.setExecutionType("");
-		}
-		else {
-			kaleoActionImpl.setExecutionType(executionType);
-		}
-
-		if (script == null) {
-			kaleoActionImpl.setScript("");
-		}
-		else {
-			kaleoActionImpl.setScript(script);
-		}
-
-		if (scriptLanguage == null) {
-			kaleoActionImpl.setScriptLanguage("");
-		}
-		else {
-			kaleoActionImpl.setScriptLanguage(scriptLanguage);
-		}
-
-		if (scriptRequiredContexts == null) {
-			kaleoActionImpl.setScriptRequiredContexts("");
-		}
-		else {
-			kaleoActionImpl.setScriptRequiredContexts(scriptRequiredContexts);
-		}
-
-		kaleoActionImpl.setPriority(priority);
-
-		kaleoActionImpl.resetOriginalValues();
+		kaleoActionImpl.setKaleoActionCacheModel(this);
 
 		return kaleoActionImpl;
 	}

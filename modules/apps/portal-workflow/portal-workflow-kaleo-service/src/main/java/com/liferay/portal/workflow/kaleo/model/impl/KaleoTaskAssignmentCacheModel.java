@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -129,85 +127,7 @@ public class KaleoTaskAssignmentCacheModel
 		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl =
 			new KaleoTaskAssignmentImpl();
 
-		kaleoTaskAssignmentImpl.setMvccVersion(mvccVersion);
-		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(kaleoTaskAssignmentId);
-		kaleoTaskAssignmentImpl.setGroupId(groupId);
-		kaleoTaskAssignmentImpl.setCompanyId(companyId);
-		kaleoTaskAssignmentImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTaskAssignmentImpl.setUserName("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTaskAssignmentImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTaskAssignmentImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTaskAssignmentImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTaskAssignmentImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (kaleoClassName == null) {
-			kaleoTaskAssignmentImpl.setKaleoClassName("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setKaleoClassName(kaleoClassName);
-		}
-
-		kaleoTaskAssignmentImpl.setKaleoClassPK(kaleoClassPK);
-		kaleoTaskAssignmentImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoTaskAssignmentImpl.setKaleoNodeId(kaleoNodeId);
-
-		if (assigneeClassName == null) {
-			kaleoTaskAssignmentImpl.setAssigneeClassName("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setAssigneeClassName(assigneeClassName);
-		}
-
-		kaleoTaskAssignmentImpl.setAssigneeClassPK(assigneeClassPK);
-
-		if (assigneeActionId == null) {
-			kaleoTaskAssignmentImpl.setAssigneeActionId("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setAssigneeActionId(assigneeActionId);
-		}
-
-		if (assigneeScript == null) {
-			kaleoTaskAssignmentImpl.setAssigneeScript("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setAssigneeScript(assigneeScript);
-		}
-
-		if (assigneeScriptLanguage == null) {
-			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(
-				assigneeScriptLanguage);
-		}
-
-		if (assigneeScriptRequiredContexts == null) {
-			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts("");
-		}
-		else {
-			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(
-				assigneeScriptRequiredContexts);
-		}
-
-		kaleoTaskAssignmentImpl.resetOriginalValues();
+		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentCacheModel(this);
 
 		return kaleoTaskAssignmentImpl;
 	}

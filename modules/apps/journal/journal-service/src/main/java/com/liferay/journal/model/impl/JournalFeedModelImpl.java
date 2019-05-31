@@ -459,17 +459,21 @@ public class JournalFeedModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_journalFeedOriginalValues == null) {
+			_journalFeedOriginalValues = new JournalFeedOriginalValues(this);
 		}
+
+		_journalFeedOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_journalFeedOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_journalFeedOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -491,19 +495,21 @@ public class JournalFeedModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_journalFeedOriginalValues == null) {
+			_journalFeedOriginalValues = new JournalFeedOriginalValues(this);
 		}
+
+		_journalFeedOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_journalFeedOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _journalFeedOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -514,19 +520,21 @@ public class JournalFeedModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_journalFeedOriginalValues == null) {
+			_journalFeedOriginalValues = new JournalFeedOriginalValues(this);
 		}
+
+		_journalFeedOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_journalFeedOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _journalFeedOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -613,17 +621,21 @@ public class JournalFeedModelImpl
 
 	@Override
 	public void setFeedId(String feedId) {
-		_columnBitmask = -1L;
-
-		if (_originalFeedId == null) {
-			_originalFeedId = _feedId;
+		if (_journalFeedOriginalValues == null) {
+			_journalFeedOriginalValues = new JournalFeedOriginalValues(this);
 		}
+
+		_journalFeedOriginalValues._columnBitmask = -1L;
 
 		_feedId = feedId;
 	}
 
 	public String getOriginalFeedId() {
-		return GetterUtil.getString(_originalFeedId);
+		if (_journalFeedOriginalValues == null) {
+			return GetterUtil.getString(_feedId);
+		}
+
+		return GetterUtil.getString(_journalFeedOriginalValues._originalFeedId);
 	}
 
 	@JSON
@@ -842,7 +854,11 @@ public class JournalFeedModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_journalFeedOriginalValues == null) {
+			return 0;
+		}
+
+		return _journalFeedOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -956,22 +972,9 @@ public class JournalFeedModelImpl
 	public void resetOriginalValues() {
 		JournalFeedModelImpl journalFeedModelImpl = this;
 
-		journalFeedModelImpl._originalUuid = journalFeedModelImpl._uuid;
-
-		journalFeedModelImpl._originalGroupId = journalFeedModelImpl._groupId;
-
-		journalFeedModelImpl._setOriginalGroupId = false;
-
-		journalFeedModelImpl._originalCompanyId =
-			journalFeedModelImpl._companyId;
-
-		journalFeedModelImpl._setOriginalCompanyId = false;
+		journalFeedModelImpl._journalFeedOriginalValues = null;
 
 		journalFeedModelImpl._setModifiedDate = false;
-
-		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
-
-		journalFeedModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1204,27 +1207,164 @@ public class JournalFeedModelImpl
 		return sb.toString();
 	}
 
+	void setJournalFeedCacheModel(JournalFeedCacheModel journalFeedCacheModel) {
+		if (journalFeedCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = journalFeedCacheModel.uuid;
+		}
+
+		_id = journalFeedCacheModel.id;
+		_groupId = journalFeedCacheModel.groupId;
+		_companyId = journalFeedCacheModel.companyId;
+		_userId = journalFeedCacheModel.userId;
+
+		if (journalFeedCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = journalFeedCacheModel.userName;
+		}
+
+		if (journalFeedCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(journalFeedCacheModel.createDate);
+		}
+
+		if (journalFeedCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(journalFeedCacheModel.modifiedDate);
+		}
+
+		if (journalFeedCacheModel.feedId == null) {
+			_feedId = "";
+		}
+		else {
+			_feedId = journalFeedCacheModel.feedId;
+		}
+
+		if (journalFeedCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = journalFeedCacheModel.name;
+		}
+
+		if (journalFeedCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = journalFeedCacheModel.description;
+		}
+
+		if (journalFeedCacheModel.DDMStructureKey == null) {
+			_DDMStructureKey = "";
+		}
+		else {
+			_DDMStructureKey = journalFeedCacheModel.DDMStructureKey;
+		}
+
+		if (journalFeedCacheModel.DDMTemplateKey == null) {
+			_DDMTemplateKey = "";
+		}
+		else {
+			_DDMTemplateKey = journalFeedCacheModel.DDMTemplateKey;
+		}
+
+		if (journalFeedCacheModel.DDMRendererTemplateKey == null) {
+			_DDMRendererTemplateKey = "";
+		}
+		else {
+			_DDMRendererTemplateKey =
+				journalFeedCacheModel.DDMRendererTemplateKey;
+		}
+
+		_delta = journalFeedCacheModel.delta;
+
+		if (journalFeedCacheModel.orderByCol == null) {
+			_orderByCol = "";
+		}
+		else {
+			_orderByCol = journalFeedCacheModel.orderByCol;
+		}
+
+		if (journalFeedCacheModel.orderByType == null) {
+			_orderByType = "";
+		}
+		else {
+			_orderByType = journalFeedCacheModel.orderByType;
+		}
+
+		if (journalFeedCacheModel.targetLayoutFriendlyUrl == null) {
+			_targetLayoutFriendlyUrl = "";
+		}
+		else {
+			_targetLayoutFriendlyUrl =
+				journalFeedCacheModel.targetLayoutFriendlyUrl;
+		}
+
+		if (journalFeedCacheModel.targetPortletId == null) {
+			_targetPortletId = "";
+		}
+		else {
+			_targetPortletId = journalFeedCacheModel.targetPortletId;
+		}
+
+		if (journalFeedCacheModel.contentField == null) {
+			_contentField = "";
+		}
+		else {
+			_contentField = journalFeedCacheModel.contentField;
+		}
+
+		if (journalFeedCacheModel.feedFormat == null) {
+			_feedFormat = "";
+		}
+		else {
+			_feedFormat = journalFeedCacheModel.feedFormat;
+		}
+
+		_feedVersion = journalFeedCacheModel.feedVersion;
+
+		if (journalFeedCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(journalFeedCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class JournalFeedOriginalValues {
+
+		private JournalFeedOriginalValues(
+			JournalFeedModelImpl journalFeedModelImpl) {
+
+			_originalUuid = journalFeedModelImpl._uuid;
+			_originalGroupId = journalFeedModelImpl._groupId;
+			_originalCompanyId = journalFeedModelImpl._companyId;
+			_originalFeedId = journalFeedModelImpl._feedId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalFeedId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, JournalFeed>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private JournalFeedOriginalValues _journalFeedOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _id;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _feedId;
-	private String _originalFeedId;
 	private String _name;
 	private String _description;
 	private String _DDMStructureKey;
@@ -1239,7 +1379,6 @@ public class JournalFeedModelImpl
 	private String _feedFormat;
 	private double _feedVersion;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private JournalFeed _escapedModel;
 
 }

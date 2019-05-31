@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -120,67 +118,7 @@ public class KaleoNodeCacheModel
 	public KaleoNode toEntityModel() {
 		KaleoNodeImpl kaleoNodeImpl = new KaleoNodeImpl();
 
-		kaleoNodeImpl.setMvccVersion(mvccVersion);
-		kaleoNodeImpl.setKaleoNodeId(kaleoNodeId);
-		kaleoNodeImpl.setGroupId(groupId);
-		kaleoNodeImpl.setCompanyId(companyId);
-		kaleoNodeImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoNodeImpl.setUserName("");
-		}
-		else {
-			kaleoNodeImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoNodeImpl.setCreateDate(null);
-		}
-		else {
-			kaleoNodeImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoNodeImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoNodeImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kaleoNodeImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (name == null) {
-			kaleoNodeImpl.setName("");
-		}
-		else {
-			kaleoNodeImpl.setName(name);
-		}
-
-		if (metadata == null) {
-			kaleoNodeImpl.setMetadata("");
-		}
-		else {
-			kaleoNodeImpl.setMetadata(metadata);
-		}
-
-		if (description == null) {
-			kaleoNodeImpl.setDescription("");
-		}
-		else {
-			kaleoNodeImpl.setDescription(description);
-		}
-
-		if (type == null) {
-			kaleoNodeImpl.setType("");
-		}
-		else {
-			kaleoNodeImpl.setType(type);
-		}
-
-		kaleoNodeImpl.setInitial(initial);
-		kaleoNodeImpl.setTerminal(terminal);
-
-		kaleoNodeImpl.resetOriginalValues();
+		kaleoNodeImpl.setKaleoNodeCacheModel(this);
 
 		return kaleoNodeImpl;
 	}

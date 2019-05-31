@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -133,87 +131,7 @@ public class KaleoTaskFormCacheModel
 	public KaleoTaskForm toEntityModel() {
 		KaleoTaskFormImpl kaleoTaskFormImpl = new KaleoTaskFormImpl();
 
-		kaleoTaskFormImpl.setMvccVersion(mvccVersion);
-		kaleoTaskFormImpl.setKaleoTaskFormId(kaleoTaskFormId);
-		kaleoTaskFormImpl.setGroupId(groupId);
-		kaleoTaskFormImpl.setCompanyId(companyId);
-		kaleoTaskFormImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTaskFormImpl.setUserName("");
-		}
-		else {
-			kaleoTaskFormImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTaskFormImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTaskFormImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTaskFormImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTaskFormImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kaleoTaskFormImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-		kaleoTaskFormImpl.setKaleoNodeId(kaleoNodeId);
-		kaleoTaskFormImpl.setKaleoTaskId(kaleoTaskId);
-
-		if (kaleoTaskName == null) {
-			kaleoTaskFormImpl.setKaleoTaskName("");
-		}
-		else {
-			kaleoTaskFormImpl.setKaleoTaskName(kaleoTaskName);
-		}
-
-		if (name == null) {
-			kaleoTaskFormImpl.setName("");
-		}
-		else {
-			kaleoTaskFormImpl.setName(name);
-		}
-
-		if (description == null) {
-			kaleoTaskFormImpl.setDescription("");
-		}
-		else {
-			kaleoTaskFormImpl.setDescription(description);
-		}
-
-		kaleoTaskFormImpl.setFormCompanyId(formCompanyId);
-
-		if (formDefinition == null) {
-			kaleoTaskFormImpl.setFormDefinition("");
-		}
-		else {
-			kaleoTaskFormImpl.setFormDefinition(formDefinition);
-		}
-
-		kaleoTaskFormImpl.setFormGroupId(formGroupId);
-		kaleoTaskFormImpl.setFormId(formId);
-
-		if (formUuid == null) {
-			kaleoTaskFormImpl.setFormUuid("");
-		}
-		else {
-			kaleoTaskFormImpl.setFormUuid(formUuid);
-		}
-
-		if (metadata == null) {
-			kaleoTaskFormImpl.setMetadata("");
-		}
-		else {
-			kaleoTaskFormImpl.setMetadata(metadata);
-		}
-
-		kaleoTaskFormImpl.setPriority(priority);
-
-		kaleoTaskFormImpl.resetOriginalValues();
+		kaleoTaskFormImpl.setKaleoTaskFormCacheModel(this);
 
 		return kaleoTaskFormImpl;
 	}

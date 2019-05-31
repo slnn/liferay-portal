@@ -110,50 +110,7 @@ public class CompanyCacheModel
 	public Company toEntityModel() {
 		CompanyImpl companyImpl = new CompanyImpl();
 
-		companyImpl.setMvccVersion(mvccVersion);
-		companyImpl.setCompanyId(companyId);
-		companyImpl.setAccountId(accountId);
-
-		if (webId == null) {
-			companyImpl.setWebId("");
-		}
-		else {
-			companyImpl.setWebId(webId);
-		}
-
-		if (key == null) {
-			companyImpl.setKey("");
-		}
-		else {
-			companyImpl.setKey(key);
-		}
-
-		if (mx == null) {
-			companyImpl.setMx("");
-		}
-		else {
-			companyImpl.setMx(mx);
-		}
-
-		if (homeURL == null) {
-			companyImpl.setHomeURL("");
-		}
-		else {
-			companyImpl.setHomeURL(homeURL);
-		}
-
-		companyImpl.setLogoId(logoId);
-		companyImpl.setSystem(system);
-		companyImpl.setMaxUsers(maxUsers);
-		companyImpl.setActive(active);
-
-		companyImpl.resetOriginalValues();
-
-		companyImpl.setCompanySecurityBag(_companySecurityBag);
-
-		companyImpl.setKeyObj(_keyObj);
-
-		companyImpl.setVirtualHostname(_virtualHostname);
+		companyImpl.setCompanyCacheModel(this);
 
 		return companyImpl;
 	}

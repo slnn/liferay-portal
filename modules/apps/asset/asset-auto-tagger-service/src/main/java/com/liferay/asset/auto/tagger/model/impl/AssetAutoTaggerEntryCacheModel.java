@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -93,29 +91,7 @@ public class AssetAutoTaggerEntryCacheModel
 		AssetAutoTaggerEntryImpl assetAutoTaggerEntryImpl =
 			new AssetAutoTaggerEntryImpl();
 
-		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(
-			assetAutoTaggerEntryId);
-		assetAutoTaggerEntryImpl.setGroupId(groupId);
-		assetAutoTaggerEntryImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			assetAutoTaggerEntryImpl.setCreateDate(null);
-		}
-		else {
-			assetAutoTaggerEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetAutoTaggerEntryImpl.setModifiedDate(null);
-		}
-		else {
-			assetAutoTaggerEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetAutoTaggerEntryImpl.setAssetEntryId(assetEntryId);
-		assetAutoTaggerEntryImpl.setAssetTagId(assetTagId);
-
-		assetAutoTaggerEntryImpl.resetOriginalValues();
+		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryCacheModel(this);
 
 		return assetAutoTaggerEntryImpl;
 	}

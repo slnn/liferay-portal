@@ -102,29 +102,7 @@ public class SocialActivityCacheModel
 	public SocialActivity toEntityModel() {
 		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
 
-		socialActivityImpl.setActivityId(activityId);
-		socialActivityImpl.setGroupId(groupId);
-		socialActivityImpl.setCompanyId(companyId);
-		socialActivityImpl.setUserId(userId);
-		socialActivityImpl.setCreateDate(createDate);
-		socialActivityImpl.setActivitySetId(activitySetId);
-		socialActivityImpl.setMirrorActivityId(mirrorActivityId);
-		socialActivityImpl.setClassNameId(classNameId);
-		socialActivityImpl.setClassPK(classPK);
-		socialActivityImpl.setParentClassNameId(parentClassNameId);
-		socialActivityImpl.setParentClassPK(parentClassPK);
-		socialActivityImpl.setType(type);
-
-		if (extraData == null) {
-			socialActivityImpl.setExtraData("");
-		}
-		else {
-			socialActivityImpl.setExtraData(extraData);
-		}
-
-		socialActivityImpl.setReceiverUserId(receiverUserId);
-
-		socialActivityImpl.resetOriginalValues();
+		socialActivityImpl.setSocialActivityCacheModel(this);
 
 		return socialActivityImpl;
 	}

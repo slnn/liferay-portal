@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -114,64 +112,7 @@ public class TeamCacheModel
 	public Team toEntityModel() {
 		TeamImpl teamImpl = new TeamImpl();
 
-		teamImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			teamImpl.setUuid("");
-		}
-		else {
-			teamImpl.setUuid(uuid);
-		}
-
-		teamImpl.setTeamId(teamId);
-		teamImpl.setCompanyId(companyId);
-		teamImpl.setUserId(userId);
-
-		if (userName == null) {
-			teamImpl.setUserName("");
-		}
-		else {
-			teamImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			teamImpl.setCreateDate(null);
-		}
-		else {
-			teamImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			teamImpl.setModifiedDate(null);
-		}
-		else {
-			teamImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		teamImpl.setGroupId(groupId);
-
-		if (name == null) {
-			teamImpl.setName("");
-		}
-		else {
-			teamImpl.setName(name);
-		}
-
-		if (description == null) {
-			teamImpl.setDescription("");
-		}
-		else {
-			teamImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			teamImpl.setLastPublishDate(null);
-		}
-		else {
-			teamImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		teamImpl.resetOriginalValues();
+		teamImpl.setTeamCacheModel(this);
 
 		return teamImpl;
 	}

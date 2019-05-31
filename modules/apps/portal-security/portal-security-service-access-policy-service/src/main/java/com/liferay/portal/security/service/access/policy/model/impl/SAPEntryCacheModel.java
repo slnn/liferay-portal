@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -99,63 +97,7 @@ public class SAPEntryCacheModel
 	public SAPEntry toEntityModel() {
 		SAPEntryImpl sapEntryImpl = new SAPEntryImpl();
 
-		if (uuid == null) {
-			sapEntryImpl.setUuid("");
-		}
-		else {
-			sapEntryImpl.setUuid(uuid);
-		}
-
-		sapEntryImpl.setSapEntryId(sapEntryId);
-		sapEntryImpl.setCompanyId(companyId);
-		sapEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			sapEntryImpl.setUserName("");
-		}
-		else {
-			sapEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			sapEntryImpl.setCreateDate(null);
-		}
-		else {
-			sapEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			sapEntryImpl.setModifiedDate(null);
-		}
-		else {
-			sapEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (allowedServiceSignatures == null) {
-			sapEntryImpl.setAllowedServiceSignatures("");
-		}
-		else {
-			sapEntryImpl.setAllowedServiceSignatures(allowedServiceSignatures);
-		}
-
-		sapEntryImpl.setDefaultSAPEntry(defaultSAPEntry);
-		sapEntryImpl.setEnabled(enabled);
-
-		if (name == null) {
-			sapEntryImpl.setName("");
-		}
-		else {
-			sapEntryImpl.setName(name);
-		}
-
-		if (title == null) {
-			sapEntryImpl.setTitle("");
-		}
-		else {
-			sapEntryImpl.setTitle(title);
-		}
-
-		sapEntryImpl.resetOriginalValues();
+		sapEntryImpl.setSAPEntryCacheModel(this);
 
 		return sapEntryImpl;
 	}

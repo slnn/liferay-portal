@@ -90,35 +90,7 @@ public class LVEntryVersionCacheModel
 	public LVEntryVersion toEntityModel() {
 		LVEntryVersionImpl lvEntryVersionImpl = new LVEntryVersionImpl();
 
-		lvEntryVersionImpl.setLvEntryVersionId(lvEntryVersionId);
-		lvEntryVersionImpl.setVersion(version);
-
-		if (uuid == null) {
-			lvEntryVersionImpl.setUuid("");
-		}
-		else {
-			lvEntryVersionImpl.setUuid(uuid);
-		}
-
-		if (defaultLanguageId == null) {
-			lvEntryVersionImpl.setDefaultLanguageId("");
-		}
-		else {
-			lvEntryVersionImpl.setDefaultLanguageId(defaultLanguageId);
-		}
-
-		lvEntryVersionImpl.setLvEntryId(lvEntryId);
-		lvEntryVersionImpl.setCompanyId(companyId);
-		lvEntryVersionImpl.setGroupId(groupId);
-
-		if (uniqueGroupKey == null) {
-			lvEntryVersionImpl.setUniqueGroupKey("");
-		}
-		else {
-			lvEntryVersionImpl.setUniqueGroupKey(uniqueGroupKey);
-		}
-
-		lvEntryVersionImpl.resetOriginalValues();
+		lvEntryVersionImpl.setLVEntryVersionCacheModel(this);
 
 		return lvEntryVersionImpl;
 	}

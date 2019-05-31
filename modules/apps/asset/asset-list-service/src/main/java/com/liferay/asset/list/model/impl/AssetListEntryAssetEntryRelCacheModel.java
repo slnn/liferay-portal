@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -107,55 +105,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 		AssetListEntryAssetEntryRelImpl assetListEntryAssetEntryRelImpl =
 			new AssetListEntryAssetEntryRelImpl();
 
-		if (uuid == null) {
-			assetListEntryAssetEntryRelImpl.setUuid("");
-		}
-		else {
-			assetListEntryAssetEntryRelImpl.setUuid(uuid);
-		}
-
-		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(
-			assetListEntryAssetEntryRelId);
-		assetListEntryAssetEntryRelImpl.setGroupId(groupId);
-		assetListEntryAssetEntryRelImpl.setCompanyId(companyId);
-		assetListEntryAssetEntryRelImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetListEntryAssetEntryRelImpl.setUserName("");
-		}
-		else {
-			assetListEntryAssetEntryRelImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetListEntryAssetEntryRelImpl.setCreateDate(null);
-		}
-		else {
-			assetListEntryAssetEntryRelImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetListEntryAssetEntryRelImpl.setModifiedDate(null);
-		}
-		else {
-			assetListEntryAssetEntryRelImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		assetListEntryAssetEntryRelImpl.setAssetListEntryId(assetListEntryId);
-		assetListEntryAssetEntryRelImpl.setAssetEntryId(assetEntryId);
-		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
-		assetListEntryAssetEntryRelImpl.setPosition(position);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetListEntryAssetEntryRelImpl.setLastPublishDate(null);
-		}
-		else {
-			assetListEntryAssetEntryRelImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		assetListEntryAssetEntryRelImpl.resetOriginalValues();
+		assetListEntryAssetEntryRelImpl.
+			setAssetListEntryAssetEntryRelCacheModel(this);
 
 		return assetListEntryAssetEntryRelImpl;
 	}

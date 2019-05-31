@@ -335,19 +335,23 @@ public class SocialActivityAchievementModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_socialActivityAchievementOriginalValues == null) {
+			_socialActivityAchievementOriginalValues =
+				new SocialActivityAchievementOriginalValues(this);
 		}
+
+		_socialActivityAchievementOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_socialActivityAchievementOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _socialActivityAchievementOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -367,13 +371,13 @@ public class SocialActivityAchievementModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_socialActivityAchievementOriginalValues == null) {
+			_socialActivityAchievementOriginalValues =
+				new SocialActivityAchievementOriginalValues(this);
 		}
+
+		_socialActivityAchievementOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -395,7 +399,11 @@ public class SocialActivityAchievementModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_socialActivityAchievementOriginalValues == null) {
+			return _userId;
+		}
+
+		return _socialActivityAchievementOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -420,17 +428,24 @@ public class SocialActivityAchievementModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_socialActivityAchievementOriginalValues == null) {
+			_socialActivityAchievementOriginalValues =
+				new SocialActivityAchievementOriginalValues(this);
 		}
+
+		_socialActivityAchievementOriginalValues._columnBitmask |=
+			NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_socialActivityAchievementOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_socialActivityAchievementOriginalValues._originalName);
 	}
 
 	@Override
@@ -445,23 +460,31 @@ public class SocialActivityAchievementModelImpl
 
 	@Override
 	public void setFirstInGroup(boolean firstInGroup) {
-		_columnBitmask |= FIRSTINGROUP_COLUMN_BITMASK;
-
-		if (!_setOriginalFirstInGroup) {
-			_setOriginalFirstInGroup = true;
-
-			_originalFirstInGroup = _firstInGroup;
+		if (_socialActivityAchievementOriginalValues == null) {
+			_socialActivityAchievementOriginalValues =
+				new SocialActivityAchievementOriginalValues(this);
 		}
+
+		_socialActivityAchievementOriginalValues._columnBitmask |=
+			FIRSTINGROUP_COLUMN_BITMASK;
 
 		_firstInGroup = firstInGroup;
 	}
 
 	public boolean getOriginalFirstInGroup() {
-		return _originalFirstInGroup;
+		if (_socialActivityAchievementOriginalValues == null) {
+			return _firstInGroup;
+		}
+
+		return _socialActivityAchievementOriginalValues._originalFirstInGroup;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_socialActivityAchievementOriginalValues == null) {
+			return 0;
+		}
+
+		return _socialActivityAchievementOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -565,25 +588,8 @@ public class SocialActivityAchievementModelImpl
 		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl =
 			this;
 
-		socialActivityAchievementModelImpl._originalGroupId =
-			socialActivityAchievementModelImpl._groupId;
-
-		socialActivityAchievementModelImpl._setOriginalGroupId = false;
-
-		socialActivityAchievementModelImpl._originalUserId =
-			socialActivityAchievementModelImpl._userId;
-
-		socialActivityAchievementModelImpl._setOriginalUserId = false;
-
-		socialActivityAchievementModelImpl._originalName =
-			socialActivityAchievementModelImpl._name;
-
-		socialActivityAchievementModelImpl._originalFirstInGroup =
-			socialActivityAchievementModelImpl._firstInGroup;
-
-		socialActivityAchievementModelImpl._setOriginalFirstInGroup = false;
-
-		socialActivityAchievementModelImpl._columnBitmask = 0;
+		socialActivityAchievementModelImpl.
+			_socialActivityAchievementOriginalValues = null;
 	}
 
 	@Override
@@ -681,24 +687,60 @@ public class SocialActivityAchievementModelImpl
 		return sb.toString();
 	}
 
+	void setSocialActivityAchievementCacheModel(
+		SocialActivityAchievementCacheModel
+			socialActivityAchievementCacheModel) {
+
+		_activityAchievementId =
+			socialActivityAchievementCacheModel.activityAchievementId;
+		_groupId = socialActivityAchievementCacheModel.groupId;
+		_companyId = socialActivityAchievementCacheModel.companyId;
+		_userId = socialActivityAchievementCacheModel.userId;
+		_createDate = socialActivityAchievementCacheModel.createDate;
+
+		if (socialActivityAchievementCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = socialActivityAchievementCacheModel.name;
+		}
+
+		_firstInGroup = socialActivityAchievementCacheModel.firstInGroup;
+	}
+
+	private static class SocialActivityAchievementOriginalValues {
+
+		private SocialActivityAchievementOriginalValues(
+			SocialActivityAchievementModelImpl
+				socialActivityAchievementModelImpl) {
+
+			_originalGroupId = socialActivityAchievementModelImpl._groupId;
+			_originalUserId = socialActivityAchievementModelImpl._userId;
+			_originalName = socialActivityAchievementModelImpl._name;
+			_originalFirstInGroup =
+				socialActivityAchievementModelImpl._firstInGroup;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final String _originalName;
+		private final boolean _originalFirstInGroup;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SocialActivityAchievement>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SocialActivityAchievementOriginalValues
+		_socialActivityAchievementOriginalValues;
 	private long _activityAchievementId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _createDate;
 	private String _name;
-	private String _originalName;
 	private boolean _firstInGroup;
-	private boolean _originalFirstInGroup;
-	private boolean _setOriginalFirstInGroup;
-	private long _columnBitmask;
 	private SocialActivityAchievement _escapedModel;
 
 }

@@ -87,25 +87,7 @@ public class JournalArticleResourceCacheModel
 		JournalArticleResourceImpl journalArticleResourceImpl =
 			new JournalArticleResourceImpl();
 
-		if (uuid == null) {
-			journalArticleResourceImpl.setUuid("");
-		}
-		else {
-			journalArticleResourceImpl.setUuid(uuid);
-		}
-
-		journalArticleResourceImpl.setResourcePrimKey(resourcePrimKey);
-		journalArticleResourceImpl.setGroupId(groupId);
-		journalArticleResourceImpl.setCompanyId(companyId);
-
-		if (articleId == null) {
-			journalArticleResourceImpl.setArticleId("");
-		}
-		else {
-			journalArticleResourceImpl.setArticleId(articleId);
-		}
-
-		journalArticleResourceImpl.resetOriginalValues();
+		journalArticleResourceImpl.setJournalArticleResourceCacheModel(this);
 
 		return journalArticleResourceImpl;
 	}

@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -104,26 +102,7 @@ public class UserTrackerPathCacheModel
 	public UserTrackerPath toEntityModel() {
 		UserTrackerPathImpl userTrackerPathImpl = new UserTrackerPathImpl();
 
-		userTrackerPathImpl.setMvccVersion(mvccVersion);
-		userTrackerPathImpl.setUserTrackerPathId(userTrackerPathId);
-		userTrackerPathImpl.setCompanyId(companyId);
-		userTrackerPathImpl.setUserTrackerId(userTrackerId);
-
-		if (path == null) {
-			userTrackerPathImpl.setPath("");
-		}
-		else {
-			userTrackerPathImpl.setPath(path);
-		}
-
-		if (pathDate == Long.MIN_VALUE) {
-			userTrackerPathImpl.setPathDate(null);
-		}
-		else {
-			userTrackerPathImpl.setPathDate(new Date(pathDate));
-		}
-
-		userTrackerPathImpl.resetOriginalValues();
+		userTrackerPathImpl.setUserTrackerPathCacheModel(this);
 
 		return userTrackerPathImpl;
 	}

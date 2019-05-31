@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -112,44 +110,7 @@ public class FriendlyURLEntryCacheModel
 	public FriendlyURLEntry toEntityModel() {
 		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
 
-		friendlyURLEntryImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			friendlyURLEntryImpl.setUuid("");
-		}
-		else {
-			friendlyURLEntryImpl.setUuid(uuid);
-		}
-
-		if (defaultLanguageId == null) {
-			friendlyURLEntryImpl.setDefaultLanguageId("");
-		}
-		else {
-			friendlyURLEntryImpl.setDefaultLanguageId(defaultLanguageId);
-		}
-
-		friendlyURLEntryImpl.setFriendlyURLEntryId(friendlyURLEntryId);
-		friendlyURLEntryImpl.setGroupId(groupId);
-		friendlyURLEntryImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			friendlyURLEntryImpl.setCreateDate(null);
-		}
-		else {
-			friendlyURLEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			friendlyURLEntryImpl.setModifiedDate(null);
-		}
-		else {
-			friendlyURLEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		friendlyURLEntryImpl.setClassNameId(classNameId);
-		friendlyURLEntryImpl.setClassPK(classPK);
-
-		friendlyURLEntryImpl.resetOriginalValues();
+		friendlyURLEntryImpl.setFriendlyURLEntryCacheModel(this);
 
 		return friendlyURLEntryImpl;
 	}

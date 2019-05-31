@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,56 +95,7 @@ public class AssetTagCacheModel
 	public AssetTag toEntityModel() {
 		AssetTagImpl assetTagImpl = new AssetTagImpl();
 
-		if (uuid == null) {
-			assetTagImpl.setUuid("");
-		}
-		else {
-			assetTagImpl.setUuid(uuid);
-		}
-
-		assetTagImpl.setTagId(tagId);
-		assetTagImpl.setGroupId(groupId);
-		assetTagImpl.setCompanyId(companyId);
-		assetTagImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetTagImpl.setUserName("");
-		}
-		else {
-			assetTagImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetTagImpl.setCreateDate(null);
-		}
-		else {
-			assetTagImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetTagImpl.setModifiedDate(null);
-		}
-		else {
-			assetTagImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			assetTagImpl.setName("");
-		}
-		else {
-			assetTagImpl.setName(name);
-		}
-
-		assetTagImpl.setAssetCount(assetCount);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetTagImpl.setLastPublishDate(null);
-		}
-		else {
-			assetTagImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		assetTagImpl.resetOriginalValues();
+		assetTagImpl.setAssetTagCacheModel(this);
 
 		return assetTagImpl;
 	}

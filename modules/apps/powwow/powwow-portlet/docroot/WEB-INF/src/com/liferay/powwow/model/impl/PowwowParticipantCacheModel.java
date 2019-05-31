@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -105,54 +103,7 @@ public class PowwowParticipantCacheModel
 		PowwowParticipantImpl powwowParticipantImpl =
 			new PowwowParticipantImpl();
 
-		powwowParticipantImpl.setPowwowParticipantId(powwowParticipantId);
-		powwowParticipantImpl.setGroupId(groupId);
-		powwowParticipantImpl.setCompanyId(companyId);
-		powwowParticipantImpl.setUserId(userId);
-
-		if (userName == null) {
-			powwowParticipantImpl.setUserName("");
-		}
-		else {
-			powwowParticipantImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			powwowParticipantImpl.setCreateDate(null);
-		}
-		else {
-			powwowParticipantImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			powwowParticipantImpl.setModifiedDate(null);
-		}
-		else {
-			powwowParticipantImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		powwowParticipantImpl.setPowwowMeetingId(powwowMeetingId);
-
-		if (name == null) {
-			powwowParticipantImpl.setName("");
-		}
-		else {
-			powwowParticipantImpl.setName(name);
-		}
-
-		powwowParticipantImpl.setParticipantUserId(participantUserId);
-
-		if (emailAddress == null) {
-			powwowParticipantImpl.setEmailAddress("");
-		}
-		else {
-			powwowParticipantImpl.setEmailAddress(emailAddress);
-		}
-
-		powwowParticipantImpl.setType(type);
-		powwowParticipantImpl.setStatus(status);
-
-		powwowParticipantImpl.resetOriginalValues();
+		powwowParticipantImpl.setPowwowParticipantCacheModel(this);
 
 		return powwowParticipantImpl;
 	}

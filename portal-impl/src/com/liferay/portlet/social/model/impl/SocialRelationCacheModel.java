@@ -88,21 +88,7 @@ public class SocialRelationCacheModel
 	public SocialRelation toEntityModel() {
 		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
 
-		if (uuid == null) {
-			socialRelationImpl.setUuid("");
-		}
-		else {
-			socialRelationImpl.setUuid(uuid);
-		}
-
-		socialRelationImpl.setRelationId(relationId);
-		socialRelationImpl.setCompanyId(companyId);
-		socialRelationImpl.setCreateDate(createDate);
-		socialRelationImpl.setUserId1(userId1);
-		socialRelationImpl.setUserId2(userId2);
-		socialRelationImpl.setType(type);
-
-		socialRelationImpl.resetOriginalValues();
+		socialRelationImpl.setSocialRelationCacheModel(this);
 
 		return socialRelationImpl;
 	}

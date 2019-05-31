@@ -91,30 +91,7 @@ public class AttachmentCacheModel
 	public Attachment toEntityModel() {
 		AttachmentImpl attachmentImpl = new AttachmentImpl();
 
-		attachmentImpl.setAttachmentId(attachmentId);
-		attachmentImpl.setCompanyId(companyId);
-		attachmentImpl.setUserId(userId);
-		attachmentImpl.setAccountId(accountId);
-		attachmentImpl.setFolderId(folderId);
-		attachmentImpl.setMessageId(messageId);
-
-		if (contentPath == null) {
-			attachmentImpl.setContentPath("");
-		}
-		else {
-			attachmentImpl.setContentPath(contentPath);
-		}
-
-		if (fileName == null) {
-			attachmentImpl.setFileName("");
-		}
-		else {
-			attachmentImpl.setFileName(fileName);
-		}
-
-		attachmentImpl.setSize(size);
-
-		attachmentImpl.resetOriginalValues();
+		attachmentImpl.setAttachmentCacheModel(this);
 
 		return attachmentImpl;
 	}

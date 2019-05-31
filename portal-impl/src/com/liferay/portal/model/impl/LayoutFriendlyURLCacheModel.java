@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -121,66 +119,7 @@ public class LayoutFriendlyURLCacheModel
 		LayoutFriendlyURLImpl layoutFriendlyURLImpl =
 			new LayoutFriendlyURLImpl();
 
-		layoutFriendlyURLImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			layoutFriendlyURLImpl.setUuid("");
-		}
-		else {
-			layoutFriendlyURLImpl.setUuid(uuid);
-		}
-
-		layoutFriendlyURLImpl.setLayoutFriendlyURLId(layoutFriendlyURLId);
-		layoutFriendlyURLImpl.setGroupId(groupId);
-		layoutFriendlyURLImpl.setCompanyId(companyId);
-		layoutFriendlyURLImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutFriendlyURLImpl.setUserName("");
-		}
-		else {
-			layoutFriendlyURLImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutFriendlyURLImpl.setCreateDate(null);
-		}
-		else {
-			layoutFriendlyURLImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutFriendlyURLImpl.setModifiedDate(null);
-		}
-		else {
-			layoutFriendlyURLImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		layoutFriendlyURLImpl.setPlid(plid);
-		layoutFriendlyURLImpl.setPrivateLayout(privateLayout);
-
-		if (friendlyURL == null) {
-			layoutFriendlyURLImpl.setFriendlyURL("");
-		}
-		else {
-			layoutFriendlyURLImpl.setFriendlyURL(friendlyURL);
-		}
-
-		if (languageId == null) {
-			layoutFriendlyURLImpl.setLanguageId("");
-		}
-		else {
-			layoutFriendlyURLImpl.setLanguageId(languageId);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			layoutFriendlyURLImpl.setLastPublishDate(null);
-		}
-		else {
-			layoutFriendlyURLImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		layoutFriendlyURLImpl.resetOriginalValues();
+		layoutFriendlyURLImpl.setLayoutFriendlyURLCacheModel(this);
 
 		return layoutFriendlyURLImpl;
 	}

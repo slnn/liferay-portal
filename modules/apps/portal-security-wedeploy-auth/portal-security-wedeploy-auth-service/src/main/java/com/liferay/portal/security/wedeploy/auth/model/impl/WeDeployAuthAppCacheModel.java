@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -96,60 +94,7 @@ public class WeDeployAuthAppCacheModel
 	public WeDeployAuthApp toEntityModel() {
 		WeDeployAuthAppImpl weDeployAuthAppImpl = new WeDeployAuthAppImpl();
 
-		weDeployAuthAppImpl.setWeDeployAuthAppId(weDeployAuthAppId);
-		weDeployAuthAppImpl.setCompanyId(companyId);
-		weDeployAuthAppImpl.setUserId(userId);
-
-		if (userName == null) {
-			weDeployAuthAppImpl.setUserName("");
-		}
-		else {
-			weDeployAuthAppImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			weDeployAuthAppImpl.setCreateDate(null);
-		}
-		else {
-			weDeployAuthAppImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			weDeployAuthAppImpl.setModifiedDate(null);
-		}
-		else {
-			weDeployAuthAppImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			weDeployAuthAppImpl.setName("");
-		}
-		else {
-			weDeployAuthAppImpl.setName(name);
-		}
-
-		if (redirectURI == null) {
-			weDeployAuthAppImpl.setRedirectURI("");
-		}
-		else {
-			weDeployAuthAppImpl.setRedirectURI(redirectURI);
-		}
-
-		if (clientId == null) {
-			weDeployAuthAppImpl.setClientId("");
-		}
-		else {
-			weDeployAuthAppImpl.setClientId(clientId);
-		}
-
-		if (clientSecret == null) {
-			weDeployAuthAppImpl.setClientSecret("");
-		}
-		else {
-			weDeployAuthAppImpl.setClientSecret(clientSecret);
-		}
-
-		weDeployAuthAppImpl.resetOriginalValues();
+		weDeployAuthAppImpl.setWeDeployAuthAppCacheModel(this);
 
 		return weDeployAuthAppImpl;
 	}

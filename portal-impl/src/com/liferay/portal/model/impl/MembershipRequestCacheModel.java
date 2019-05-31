@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -115,44 +113,7 @@ public class MembershipRequestCacheModel
 		MembershipRequestImpl membershipRequestImpl =
 			new MembershipRequestImpl();
 
-		membershipRequestImpl.setMvccVersion(mvccVersion);
-		membershipRequestImpl.setMembershipRequestId(membershipRequestId);
-		membershipRequestImpl.setGroupId(groupId);
-		membershipRequestImpl.setCompanyId(companyId);
-		membershipRequestImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			membershipRequestImpl.setCreateDate(null);
-		}
-		else {
-			membershipRequestImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (comments == null) {
-			membershipRequestImpl.setComments("");
-		}
-		else {
-			membershipRequestImpl.setComments(comments);
-		}
-
-		if (replyComments == null) {
-			membershipRequestImpl.setReplyComments("");
-		}
-		else {
-			membershipRequestImpl.setReplyComments(replyComments);
-		}
-
-		if (replyDate == Long.MIN_VALUE) {
-			membershipRequestImpl.setReplyDate(null);
-		}
-		else {
-			membershipRequestImpl.setReplyDate(new Date(replyDate));
-		}
-
-		membershipRequestImpl.setReplierUserId(replierUserId);
-		membershipRequestImpl.setStatusId(statusId);
-
-		membershipRequestImpl.resetOriginalValues();
+		membershipRequestImpl.setMembershipRequestCacheModel(this);
 
 		return membershipRequestImpl;
 	}

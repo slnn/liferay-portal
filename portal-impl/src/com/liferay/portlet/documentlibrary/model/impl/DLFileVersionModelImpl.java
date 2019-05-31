@@ -519,17 +519,22 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_dlFileVersionOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_dlFileVersionOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -551,19 +556,22 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_dlFileVersionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _dlFileVersionOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -574,19 +582,22 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_dlFileVersionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _dlFileVersionOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -640,7 +651,12 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
+		}
+
+		_dlFileVersionOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -681,19 +697,22 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setFolderId(long folderId) {
-		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalFolderId) {
-			_setOriginalFolderId = true;
-
-			_originalFolderId = _folderId;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= FOLDERID_COLUMN_BITMASK;
 
 		_folderId = folderId;
 	}
 
 	public long getOriginalFolderId() {
-		return _originalFolderId;
+		if (_dlFileVersionOriginalValues == null) {
+			return _folderId;
+		}
+
+		return _dlFileVersionOriginalValues._originalFolderId;
 	}
 
 	@JSON
@@ -704,19 +723,22 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalFileEntryId) {
-			_setOriginalFileEntryId = true;
-
-			_originalFileEntryId = _fileEntryId;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask = -1L;
 
 		_fileEntryId = fileEntryId;
 	}
 
 	public long getOriginalFileEntryId() {
-		return _originalFileEntryId;
+		if (_dlFileVersionOriginalValues == null) {
+			return _fileEntryId;
+		}
+
+		return _dlFileVersionOriginalValues._originalFileEntryId;
 	}
 
 	@JSON
@@ -780,17 +802,23 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setMimeType(String mimeType) {
-		_columnBitmask |= MIMETYPE_COLUMN_BITMASK;
-
-		if (_originalMimeType == null) {
-			_originalMimeType = _mimeType;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= MIMETYPE_COLUMN_BITMASK;
 
 		_mimeType = mimeType;
 	}
 
 	public String getOriginalMimeType() {
-		return GetterUtil.getString(_originalMimeType);
+		if (_dlFileVersionOriginalValues == null) {
+			return GetterUtil.getString(_mimeType);
+		}
+
+		return GetterUtil.getString(
+			_dlFileVersionOriginalValues._originalMimeType);
 	}
 
 	@JSON
@@ -806,17 +834,23 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setTitle(String title) {
-		_columnBitmask |= TITLE_COLUMN_BITMASK;
-
-		if (_originalTitle == null) {
-			_originalTitle = _title;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= TITLE_COLUMN_BITMASK;
 
 		_title = title;
 	}
 
 	public String getOriginalTitle() {
-		return GetterUtil.getString(_originalTitle);
+		if (_dlFileVersionOriginalValues == null) {
+			return GetterUtil.getString(_title);
+		}
+
+		return GetterUtil.getString(
+			_dlFileVersionOriginalValues._originalTitle);
 	}
 
 	@JSON
@@ -891,17 +925,23 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (_originalVersion == null) {
-			_originalVersion = _version;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= VERSION_COLUMN_BITMASK;
 
 		_version = version;
 	}
 
 	public String getOriginalVersion() {
-		return GetterUtil.getString(_originalVersion);
+		if (_dlFileVersionOriginalValues == null) {
+			return GetterUtil.getString(_version);
+		}
+
+		return GetterUtil.getString(
+			_dlFileVersionOriginalValues._originalVersion);
 	}
 
 	@JSON
@@ -950,19 +990,22 @@ public class DLFileVersionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_dlFileVersionOriginalValues == null) {
+			_dlFileVersionOriginalValues = new DLFileVersionOriginalValues(
+				this);
 		}
+
+		_dlFileVersionOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_dlFileVersionOriginalValues == null) {
+			return _status;
+		}
+
+		return _dlFileVersionOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1106,7 +1149,11 @@ public class DLFileVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_dlFileVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _dlFileVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1243,43 +1290,9 @@ public class DLFileVersionModelImpl
 	public void resetOriginalValues() {
 		DLFileVersionModelImpl dlFileVersionModelImpl = this;
 
-		dlFileVersionModelImpl._originalUuid = dlFileVersionModelImpl._uuid;
-
-		dlFileVersionModelImpl._originalGroupId =
-			dlFileVersionModelImpl._groupId;
-
-		dlFileVersionModelImpl._setOriginalGroupId = false;
-
-		dlFileVersionModelImpl._originalCompanyId =
-			dlFileVersionModelImpl._companyId;
-
-		dlFileVersionModelImpl._setOriginalCompanyId = false;
+		dlFileVersionModelImpl._dlFileVersionOriginalValues = null;
 
 		dlFileVersionModelImpl._setModifiedDate = false;
-
-		dlFileVersionModelImpl._originalFolderId =
-			dlFileVersionModelImpl._folderId;
-
-		dlFileVersionModelImpl._setOriginalFolderId = false;
-
-		dlFileVersionModelImpl._originalFileEntryId =
-			dlFileVersionModelImpl._fileEntryId;
-
-		dlFileVersionModelImpl._setOriginalFileEntryId = false;
-
-		dlFileVersionModelImpl._originalMimeType =
-			dlFileVersionModelImpl._mimeType;
-
-		dlFileVersionModelImpl._originalTitle = dlFileVersionModelImpl._title;
-
-		dlFileVersionModelImpl._originalVersion =
-			dlFileVersionModelImpl._version;
-
-		dlFileVersionModelImpl._originalStatus = dlFileVersionModelImpl._status;
-
-		dlFileVersionModelImpl._setOriginalStatus = false;
-
-		dlFileVersionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1515,18 +1528,171 @@ public class DLFileVersionModelImpl
 		return sb.toString();
 	}
 
+	void setDLFileVersionCacheModel(
+		DLFileVersionCacheModel dlFileVersionCacheModel) {
+
+		if (dlFileVersionCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = dlFileVersionCacheModel.uuid;
+		}
+
+		_fileVersionId = dlFileVersionCacheModel.fileVersionId;
+		_groupId = dlFileVersionCacheModel.groupId;
+		_companyId = dlFileVersionCacheModel.companyId;
+		_userId = dlFileVersionCacheModel.userId;
+
+		if (dlFileVersionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = dlFileVersionCacheModel.userName;
+		}
+
+		if (dlFileVersionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(dlFileVersionCacheModel.createDate);
+		}
+
+		if (dlFileVersionCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(dlFileVersionCacheModel.modifiedDate);
+		}
+
+		_repositoryId = dlFileVersionCacheModel.repositoryId;
+		_folderId = dlFileVersionCacheModel.folderId;
+		_fileEntryId = dlFileVersionCacheModel.fileEntryId;
+
+		if (dlFileVersionCacheModel.treePath == null) {
+			_treePath = "";
+		}
+		else {
+			_treePath = dlFileVersionCacheModel.treePath;
+		}
+
+		if (dlFileVersionCacheModel.fileName == null) {
+			_fileName = "";
+		}
+		else {
+			_fileName = dlFileVersionCacheModel.fileName;
+		}
+
+		if (dlFileVersionCacheModel.extension == null) {
+			_extension = "";
+		}
+		else {
+			_extension = dlFileVersionCacheModel.extension;
+		}
+
+		if (dlFileVersionCacheModel.mimeType == null) {
+			_mimeType = "";
+		}
+		else {
+			_mimeType = dlFileVersionCacheModel.mimeType;
+		}
+
+		if (dlFileVersionCacheModel.title == null) {
+			_title = "";
+		}
+		else {
+			_title = dlFileVersionCacheModel.title;
+		}
+
+		if (dlFileVersionCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = dlFileVersionCacheModel.description;
+		}
+
+		if (dlFileVersionCacheModel.changeLog == null) {
+			_changeLog = "";
+		}
+		else {
+			_changeLog = dlFileVersionCacheModel.changeLog;
+		}
+
+		if (dlFileVersionCacheModel.extraSettings == null) {
+			_extraSettings = "";
+		}
+		else {
+			_extraSettings = dlFileVersionCacheModel.extraSettings;
+		}
+
+		_fileEntryTypeId = dlFileVersionCacheModel.fileEntryTypeId;
+
+		if (dlFileVersionCacheModel.version == null) {
+			_version = "";
+		}
+		else {
+			_version = dlFileVersionCacheModel.version;
+		}
+
+		_size = dlFileVersionCacheModel.size;
+
+		if (dlFileVersionCacheModel.checksum == null) {
+			_checksum = "";
+		}
+		else {
+			_checksum = dlFileVersionCacheModel.checksum;
+		}
+
+		if (dlFileVersionCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				dlFileVersionCacheModel.lastPublishDate);
+		}
+
+		_status = dlFileVersionCacheModel.status;
+		_statusByUserId = dlFileVersionCacheModel.statusByUserId;
+
+		if (dlFileVersionCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = dlFileVersionCacheModel.statusByUserName;
+		}
+
+		if (dlFileVersionCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(dlFileVersionCacheModel.statusDate);
+		}
+	}
+
+	private static class DLFileVersionOriginalValues {
+
+		private DLFileVersionOriginalValues(
+			DLFileVersionModelImpl dlFileVersionModelImpl) {
+
+			_originalUuid = dlFileVersionModelImpl._uuid;
+			_originalGroupId = dlFileVersionModelImpl._groupId;
+			_originalCompanyId = dlFileVersionModelImpl._companyId;
+			_originalFolderId = dlFileVersionModelImpl._folderId;
+			_originalFileEntryId = dlFileVersionModelImpl._fileEntryId;
+			_originalMimeType = dlFileVersionModelImpl._mimeType;
+			_originalTitle = dlFileVersionModelImpl._title;
+			_originalVersion = dlFileVersionModelImpl._version;
+			_originalStatus = dlFileVersionModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalFolderId;
+		private final long _originalFileEntryId;
+		private final String _originalMimeType;
+		private final String _originalTitle;
+		private final String _originalVersion;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DLFileVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DLFileVersionOriginalValues _dlFileVersionOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _fileVersionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1534,34 +1700,24 @@ public class DLFileVersionModelImpl
 	private boolean _setModifiedDate;
 	private long _repositoryId;
 	private long _folderId;
-	private long _originalFolderId;
-	private boolean _setOriginalFolderId;
 	private long _fileEntryId;
-	private long _originalFileEntryId;
-	private boolean _setOriginalFileEntryId;
 	private String _treePath;
 	private String _fileName;
 	private String _extension;
 	private String _mimeType;
-	private String _originalMimeType;
 	private String _title;
-	private String _originalTitle;
 	private String _description;
 	private String _changeLog;
 	private String _extraSettings;
 	private long _fileEntryTypeId;
 	private String _version;
-	private String _originalVersion;
 	private long _size;
 	private String _checksum;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private DLFileVersion _escapedModel;
 
 }

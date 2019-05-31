@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -115,44 +113,7 @@ public class SubscriptionCacheModel
 	public Subscription toEntityModel() {
 		SubscriptionImpl subscriptionImpl = new SubscriptionImpl();
 
-		subscriptionImpl.setMvccVersion(mvccVersion);
-		subscriptionImpl.setSubscriptionId(subscriptionId);
-		subscriptionImpl.setGroupId(groupId);
-		subscriptionImpl.setCompanyId(companyId);
-		subscriptionImpl.setUserId(userId);
-
-		if (userName == null) {
-			subscriptionImpl.setUserName("");
-		}
-		else {
-			subscriptionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			subscriptionImpl.setCreateDate(null);
-		}
-		else {
-			subscriptionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			subscriptionImpl.setModifiedDate(null);
-		}
-		else {
-			subscriptionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		subscriptionImpl.setClassNameId(classNameId);
-		subscriptionImpl.setClassPK(classPK);
-
-		if (frequency == null) {
-			subscriptionImpl.setFrequency("");
-		}
-		else {
-			subscriptionImpl.setFrequency(frequency);
-		}
-
-		subscriptionImpl.resetOriginalValues();
+		subscriptionImpl.setSubscriptionCacheModel(this);
 
 		return subscriptionImpl;
 	}

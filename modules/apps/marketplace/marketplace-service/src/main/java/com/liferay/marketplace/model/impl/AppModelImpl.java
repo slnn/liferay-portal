@@ -371,17 +371,21 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_appOriginalValues == null) {
+			_appOriginalValues = new AppOriginalValues(this);
 		}
+
+		_appOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_appOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_appOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -403,19 +407,21 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_appOriginalValues == null) {
+			_appOriginalValues = new AppOriginalValues(this);
 		}
+
+		_appOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_appOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _appOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -497,19 +503,21 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public void setRemoteAppId(long remoteAppId) {
-		_columnBitmask |= REMOTEAPPID_COLUMN_BITMASK;
-
-		if (!_setOriginalRemoteAppId) {
-			_setOriginalRemoteAppId = true;
-
-			_originalRemoteAppId = _remoteAppId;
+		if (_appOriginalValues == null) {
+			_appOriginalValues = new AppOriginalValues(this);
 		}
+
+		_appOriginalValues._columnBitmask |= REMOTEAPPID_COLUMN_BITMASK;
 
 		_remoteAppId = remoteAppId;
 	}
 
 	public long getOriginalRemoteAppId() {
-		return _originalRemoteAppId;
+		if (_appOriginalValues == null) {
+			return _remoteAppId;
+		}
+
+		return _appOriginalValues._originalRemoteAppId;
 	}
 
 	@JSON
@@ -557,17 +565,21 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public void setCategory(String category) {
-		_columnBitmask |= CATEGORY_COLUMN_BITMASK;
-
-		if (_originalCategory == null) {
-			_originalCategory = _category;
+		if (_appOriginalValues == null) {
+			_appOriginalValues = new AppOriginalValues(this);
 		}
+
+		_appOriginalValues._columnBitmask |= CATEGORY_COLUMN_BITMASK;
 
 		_category = category;
 	}
 
 	public String getOriginalCategory() {
-		return GetterUtil.getString(_originalCategory);
+		if (_appOriginalValues == null) {
+			return GetterUtil.getString(_category);
+		}
+
+		return GetterUtil.getString(_appOriginalValues._originalCategory);
 	}
 
 	@JSON
@@ -626,7 +638,11 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_appOriginalValues == null) {
+			return 0;
+		}
+
+		return _appOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -732,21 +748,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public void resetOriginalValues() {
 		AppModelImpl appModelImpl = this;
 
-		appModelImpl._originalUuid = appModelImpl._uuid;
-
-		appModelImpl._originalCompanyId = appModelImpl._companyId;
-
-		appModelImpl._setOriginalCompanyId = false;
+		appModelImpl._appOriginalValues = null;
 
 		appModelImpl._setModifiedDate = false;
-
-		appModelImpl._originalRemoteAppId = appModelImpl._remoteAppId;
-
-		appModelImpl._setOriginalRemoteAppId = false;
-
-		appModelImpl._originalCategory = appModelImpl._category;
-
-		appModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -901,33 +905,111 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return sb.toString();
 	}
 
+	void setAppCacheModel(AppCacheModel appCacheModel) {
+		if (appCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = appCacheModel.uuid;
+		}
+
+		_appId = appCacheModel.appId;
+		_companyId = appCacheModel.companyId;
+		_userId = appCacheModel.userId;
+
+		if (appCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = appCacheModel.userName;
+		}
+
+		if (appCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(appCacheModel.createDate);
+		}
+
+		if (appCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(appCacheModel.modifiedDate);
+		}
+
+		_remoteAppId = appCacheModel.remoteAppId;
+
+		if (appCacheModel.title == null) {
+			_title = "";
+		}
+		else {
+			_title = appCacheModel.title;
+		}
+
+		if (appCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = appCacheModel.description;
+		}
+
+		if (appCacheModel.category == null) {
+			_category = "";
+		}
+		else {
+			_category = appCacheModel.category;
+		}
+
+		if (appCacheModel.iconURL == null) {
+			_iconURL = "";
+		}
+		else {
+			_iconURL = appCacheModel.iconURL;
+		}
+
+		if (appCacheModel.version == null) {
+			_version = "";
+		}
+		else {
+			_version = appCacheModel.version;
+		}
+
+		_required = appCacheModel.required;
+	}
+
+	private static class AppOriginalValues {
+
+		private AppOriginalValues(AppModelImpl appModelImpl) {
+			_originalUuid = appModelImpl._uuid;
+			_originalCompanyId = appModelImpl._companyId;
+			_originalRemoteAppId = appModelImpl._remoteAppId;
+			_originalCategory = appModelImpl._category;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalRemoteAppId;
+		private final String _originalCategory;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, App>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AppOriginalValues _appOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _appId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _remoteAppId;
-	private long _originalRemoteAppId;
-	private boolean _setOriginalRemoteAppId;
 	private String _title;
 	private String _description;
 	private String _category;
-	private String _originalCategory;
 	private String _iconURL;
 	private String _version;
 	private boolean _required;
-	private long _columnBitmask;
 	private App _escapedModel;
 
 }

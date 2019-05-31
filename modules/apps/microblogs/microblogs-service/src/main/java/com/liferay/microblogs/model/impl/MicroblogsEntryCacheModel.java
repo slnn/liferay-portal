@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,46 +98,7 @@ public class MicroblogsEntryCacheModel
 	public MicroblogsEntry toEntityModel() {
 		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
 
-		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntryId);
-		microblogsEntryImpl.setCompanyId(companyId);
-		microblogsEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			microblogsEntryImpl.setUserName("");
-		}
-		else {
-			microblogsEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			microblogsEntryImpl.setCreateDate(null);
-		}
-		else {
-			microblogsEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			microblogsEntryImpl.setModifiedDate(null);
-		}
-		else {
-			microblogsEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		microblogsEntryImpl.setCreatorClassNameId(creatorClassNameId);
-		microblogsEntryImpl.setCreatorClassPK(creatorClassPK);
-
-		if (content == null) {
-			microblogsEntryImpl.setContent("");
-		}
-		else {
-			microblogsEntryImpl.setContent(content);
-		}
-
-		microblogsEntryImpl.setType(type);
-		microblogsEntryImpl.setParentMicroblogsEntryId(parentMicroblogsEntryId);
-		microblogsEntryImpl.setSocialRelationType(socialRelationType);
-
-		microblogsEntryImpl.resetOriginalValues();
+		microblogsEntryImpl.setMicroblogsEntryCacheModel(this);
 
 		return microblogsEntryImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -89,22 +87,7 @@ public class DLFileRankCacheModel
 	public DLFileRank toEntityModel() {
 		DLFileRankImpl dlFileRankImpl = new DLFileRankImpl();
 
-		dlFileRankImpl.setFileRankId(fileRankId);
-		dlFileRankImpl.setGroupId(groupId);
-		dlFileRankImpl.setCompanyId(companyId);
-		dlFileRankImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			dlFileRankImpl.setCreateDate(null);
-		}
-		else {
-			dlFileRankImpl.setCreateDate(new Date(createDate));
-		}
-
-		dlFileRankImpl.setFileEntryId(fileEntryId);
-		dlFileRankImpl.setActive(active);
-
-		dlFileRankImpl.resetOriginalValues();
+		dlFileRankImpl.setDLFileRankCacheModel(this);
 
 		return dlFileRankImpl;
 	}

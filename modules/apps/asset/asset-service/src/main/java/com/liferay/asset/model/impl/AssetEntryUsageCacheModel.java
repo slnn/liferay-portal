@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -98,51 +96,7 @@ public class AssetEntryUsageCacheModel
 	public AssetEntryUsage toEntityModel() {
 		AssetEntryUsageImpl assetEntryUsageImpl = new AssetEntryUsageImpl();
 
-		if (uuid == null) {
-			assetEntryUsageImpl.setUuid("");
-		}
-		else {
-			assetEntryUsageImpl.setUuid(uuid);
-		}
-
-		assetEntryUsageImpl.setAssetEntryUsageId(assetEntryUsageId);
-		assetEntryUsageImpl.setGroupId(groupId);
-
-		if (createDate == Long.MIN_VALUE) {
-			assetEntryUsageImpl.setCreateDate(null);
-		}
-		else {
-			assetEntryUsageImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetEntryUsageImpl.setModifiedDate(null);
-		}
-		else {
-			assetEntryUsageImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetEntryUsageImpl.setAssetEntryId(assetEntryId);
-		assetEntryUsageImpl.setContainerType(containerType);
-
-		if (containerKey == null) {
-			assetEntryUsageImpl.setContainerKey("");
-		}
-		else {
-			assetEntryUsageImpl.setContainerKey(containerKey);
-		}
-
-		assetEntryUsageImpl.setPlid(plid);
-		assetEntryUsageImpl.setType(type);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetEntryUsageImpl.setLastPublishDate(null);
-		}
-		else {
-			assetEntryUsageImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		assetEntryUsageImpl.resetOriginalValues();
+		assetEntryUsageImpl.setAssetEntryUsageCacheModel(this);
 
 		return assetEntryUsageImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -92,59 +90,7 @@ public class GadgetCacheModel implements CacheModel<Gadget>, Externalizable {
 	public Gadget toEntityModel() {
 		GadgetImpl gadgetImpl = new GadgetImpl();
 
-		if (uuid == null) {
-			gadgetImpl.setUuid("");
-		}
-		else {
-			gadgetImpl.setUuid(uuid);
-		}
-
-		gadgetImpl.setGadgetId(gadgetId);
-		gadgetImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			gadgetImpl.setCreateDate(null);
-		}
-		else {
-			gadgetImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			gadgetImpl.setModifiedDate(null);
-		}
-		else {
-			gadgetImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			gadgetImpl.setName("");
-		}
-		else {
-			gadgetImpl.setName(name);
-		}
-
-		if (url == null) {
-			gadgetImpl.setUrl("");
-		}
-		else {
-			gadgetImpl.setUrl(url);
-		}
-
-		if (portletCategoryNames == null) {
-			gadgetImpl.setPortletCategoryNames("");
-		}
-		else {
-			gadgetImpl.setPortletCategoryNames(portletCategoryNames);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			gadgetImpl.setLastPublishDate(null);
-		}
-		else {
-			gadgetImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		gadgetImpl.resetOriginalValues();
+		gadgetImpl.setGadgetCacheModel(this);
 
 		return gadgetImpl;
 	}

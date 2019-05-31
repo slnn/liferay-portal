@@ -441,17 +441,23 @@ public class FriendlyURLEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_friendlyURLEntryOriginalValues == null) {
+			_friendlyURLEntryOriginalValues =
+				new FriendlyURLEntryOriginalValues(this);
 		}
+
+		_friendlyURLEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_friendlyURLEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_friendlyURLEntryOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -486,19 +492,23 @@ public class FriendlyURLEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_friendlyURLEntryOriginalValues == null) {
+			_friendlyURLEntryOriginalValues =
+				new FriendlyURLEntryOriginalValues(this);
 		}
+
+		_friendlyURLEntryOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_friendlyURLEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _friendlyURLEntryOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -508,19 +518,23 @@ public class FriendlyURLEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_friendlyURLEntryOriginalValues == null) {
+			_friendlyURLEntryOriginalValues =
+				new FriendlyURLEntryOriginalValues(this);
 		}
+
+		_friendlyURLEntryOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_friendlyURLEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _friendlyURLEntryOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -576,19 +590,23 @@ public class FriendlyURLEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_friendlyURLEntryOriginalValues == null) {
+			_friendlyURLEntryOriginalValues =
+				new FriendlyURLEntryOriginalValues(this);
 		}
+
+		_friendlyURLEntryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_friendlyURLEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _friendlyURLEntryOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -598,19 +616,23 @@ public class FriendlyURLEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_friendlyURLEntryOriginalValues == null) {
+			_friendlyURLEntryOriginalValues =
+				new FriendlyURLEntryOriginalValues(this);
 		}
+
+		_friendlyURLEntryOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_friendlyURLEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _friendlyURLEntryOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -621,7 +643,11 @@ public class FriendlyURLEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_friendlyURLEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _friendlyURLEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -723,32 +749,9 @@ public class FriendlyURLEntryModelImpl
 	public void resetOriginalValues() {
 		FriendlyURLEntryModelImpl friendlyURLEntryModelImpl = this;
 
-		friendlyURLEntryModelImpl._originalUuid =
-			friendlyURLEntryModelImpl._uuid;
-
-		friendlyURLEntryModelImpl._originalGroupId =
-			friendlyURLEntryModelImpl._groupId;
-
-		friendlyURLEntryModelImpl._setOriginalGroupId = false;
-
-		friendlyURLEntryModelImpl._originalCompanyId =
-			friendlyURLEntryModelImpl._companyId;
-
-		friendlyURLEntryModelImpl._setOriginalCompanyId = false;
+		friendlyURLEntryModelImpl._friendlyURLEntryOriginalValues = null;
 
 		friendlyURLEntryModelImpl._setModifiedDate = false;
-
-		friendlyURLEntryModelImpl._originalClassNameId =
-			friendlyURLEntryModelImpl._classNameId;
-
-		friendlyURLEntryModelImpl._setOriginalClassNameId = false;
-
-		friendlyURLEntryModelImpl._originalClassPK =
-			friendlyURLEntryModelImpl._classPK;
-
-		friendlyURLEntryModelImpl._setOriginalClassPK = false;
-
-		friendlyURLEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -868,30 +871,77 @@ public class FriendlyURLEntryModelImpl
 		return sb.toString();
 	}
 
+	void setFriendlyURLEntryCacheModel(
+		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel) {
+
+		_mvccVersion = friendlyURLEntryCacheModel.mvccVersion;
+
+		if (friendlyURLEntryCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = friendlyURLEntryCacheModel.uuid;
+		}
+
+		if (friendlyURLEntryCacheModel.defaultLanguageId == null) {
+			_defaultLanguageId = "";
+		}
+		else {
+			_defaultLanguageId = friendlyURLEntryCacheModel.defaultLanguageId;
+		}
+
+		_friendlyURLEntryId = friendlyURLEntryCacheModel.friendlyURLEntryId;
+		_groupId = friendlyURLEntryCacheModel.groupId;
+		_companyId = friendlyURLEntryCacheModel.companyId;
+
+		if (friendlyURLEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(friendlyURLEntryCacheModel.createDate);
+		}
+
+		if (friendlyURLEntryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(friendlyURLEntryCacheModel.modifiedDate);
+		}
+
+		_classNameId = friendlyURLEntryCacheModel.classNameId;
+		_classPK = friendlyURLEntryCacheModel.classPK;
+	}
+
+	private static class FriendlyURLEntryOriginalValues {
+
+		private FriendlyURLEntryOriginalValues(
+			FriendlyURLEntryModelImpl friendlyURLEntryModelImpl) {
+
+			_originalUuid = friendlyURLEntryModelImpl._uuid;
+			_originalGroupId = friendlyURLEntryModelImpl._groupId;
+			_originalCompanyId = friendlyURLEntryModelImpl._companyId;
+			_originalClassNameId = friendlyURLEntryModelImpl._classNameId;
+			_originalClassPK = friendlyURLEntryModelImpl._classPK;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, FriendlyURLEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private FriendlyURLEntryOriginalValues _friendlyURLEntryOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private String _defaultLanguageId;
 	private long _friendlyURLEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
-	private long _columnBitmask;
 	private FriendlyURLEntry _escapedModel;
 
 }

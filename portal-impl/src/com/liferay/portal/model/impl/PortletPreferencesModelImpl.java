@@ -399,19 +399,23 @@ public class PortletPreferencesModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_portletPreferencesOriginalValues == null) {
+			_portletPreferencesOriginalValues =
+				new PortletPreferencesOriginalValues(this);
 		}
+
+		_portletPreferencesOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_portletPreferencesOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _portletPreferencesOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -422,19 +426,23 @@ public class PortletPreferencesModelImpl
 
 	@Override
 	public void setOwnerId(long ownerId) {
-		_columnBitmask |= OWNERID_COLUMN_BITMASK;
-
-		if (!_setOriginalOwnerId) {
-			_setOriginalOwnerId = true;
-
-			_originalOwnerId = _ownerId;
+		if (_portletPreferencesOriginalValues == null) {
+			_portletPreferencesOriginalValues =
+				new PortletPreferencesOriginalValues(this);
 		}
+
+		_portletPreferencesOriginalValues._columnBitmask |=
+			OWNERID_COLUMN_BITMASK;
 
 		_ownerId = ownerId;
 	}
 
 	public long getOriginalOwnerId() {
-		return _originalOwnerId;
+		if (_portletPreferencesOriginalValues == null) {
+			return _ownerId;
+		}
+
+		return _portletPreferencesOriginalValues._originalOwnerId;
 	}
 
 	@JSON
@@ -445,19 +453,23 @@ public class PortletPreferencesModelImpl
 
 	@Override
 	public void setOwnerType(int ownerType) {
-		_columnBitmask |= OWNERTYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalOwnerType) {
-			_setOriginalOwnerType = true;
-
-			_originalOwnerType = _ownerType;
+		if (_portletPreferencesOriginalValues == null) {
+			_portletPreferencesOriginalValues =
+				new PortletPreferencesOriginalValues(this);
 		}
+
+		_portletPreferencesOriginalValues._columnBitmask |=
+			OWNERTYPE_COLUMN_BITMASK;
 
 		_ownerType = ownerType;
 	}
 
 	public int getOriginalOwnerType() {
-		return _originalOwnerType;
+		if (_portletPreferencesOriginalValues == null) {
+			return _ownerType;
+		}
+
+		return _portletPreferencesOriginalValues._originalOwnerType;
 	}
 
 	@JSON
@@ -468,19 +480,22 @@ public class PortletPreferencesModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
+		if (_portletPreferencesOriginalValues == null) {
+			_portletPreferencesOriginalValues =
+				new PortletPreferencesOriginalValues(this);
 		}
+
+		_portletPreferencesOriginalValues._columnBitmask |= PLID_COLUMN_BITMASK;
 
 		_plid = plid;
 	}
 
 	public long getOriginalPlid() {
-		return _originalPlid;
+		if (_portletPreferencesOriginalValues == null) {
+			return _plid;
+		}
+
+		return _portletPreferencesOriginalValues._originalPlid;
 	}
 
 	@JSON
@@ -496,17 +511,24 @@ public class PortletPreferencesModelImpl
 
 	@Override
 	public void setPortletId(String portletId) {
-		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
-
-		if (_originalPortletId == null) {
-			_originalPortletId = _portletId;
+		if (_portletPreferencesOriginalValues == null) {
+			_portletPreferencesOriginalValues =
+				new PortletPreferencesOriginalValues(this);
 		}
+
+		_portletPreferencesOriginalValues._columnBitmask |=
+			PORTLETID_COLUMN_BITMASK;
 
 		_portletId = portletId;
 	}
 
 	public String getOriginalPortletId() {
-		return GetterUtil.getString(_originalPortletId);
+		if (_portletPreferencesOriginalValues == null) {
+			return GetterUtil.getString(_portletId);
+		}
+
+		return GetterUtil.getString(
+			_portletPreferencesOriginalValues._originalPortletId);
 	}
 
 	@JSON
@@ -526,7 +548,11 @@ public class PortletPreferencesModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_portletPreferencesOriginalValues == null) {
+			return 0;
+		}
+
+		return _portletPreferencesOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -629,30 +655,7 @@ public class PortletPreferencesModelImpl
 	public void resetOriginalValues() {
 		PortletPreferencesModelImpl portletPreferencesModelImpl = this;
 
-		portletPreferencesModelImpl._originalCompanyId =
-			portletPreferencesModelImpl._companyId;
-
-		portletPreferencesModelImpl._setOriginalCompanyId = false;
-
-		portletPreferencesModelImpl._originalOwnerId =
-			portletPreferencesModelImpl._ownerId;
-
-		portletPreferencesModelImpl._setOriginalOwnerId = false;
-
-		portletPreferencesModelImpl._originalOwnerType =
-			portletPreferencesModelImpl._ownerType;
-
-		portletPreferencesModelImpl._setOriginalOwnerType = false;
-
-		portletPreferencesModelImpl._originalPlid =
-			portletPreferencesModelImpl._plid;
-
-		portletPreferencesModelImpl._setOriginalPlid = false;
-
-		portletPreferencesModelImpl._originalPortletId =
-			portletPreferencesModelImpl._portletId;
-
-		portletPreferencesModelImpl._columnBitmask = 0;
+		portletPreferencesModelImpl._portletPreferencesOriginalValues = null;
 	}
 
 	@Override
@@ -755,27 +758,65 @@ public class PortletPreferencesModelImpl
 		return sb.toString();
 	}
 
+	void setPortletPreferencesCacheModel(
+		PortletPreferencesCacheModel portletPreferencesCacheModel) {
+
+		_mvccVersion = portletPreferencesCacheModel.mvccVersion;
+		_portletPreferencesId =
+			portletPreferencesCacheModel.portletPreferencesId;
+		_companyId = portletPreferencesCacheModel.companyId;
+		_ownerId = portletPreferencesCacheModel.ownerId;
+		_ownerType = portletPreferencesCacheModel.ownerType;
+		_plid = portletPreferencesCacheModel.plid;
+
+		if (portletPreferencesCacheModel.portletId == null) {
+			_portletId = "";
+		}
+		else {
+			_portletId = portletPreferencesCacheModel.portletId;
+		}
+
+		if (portletPreferencesCacheModel.preferences == null) {
+			_preferences = "";
+		}
+		else {
+			_preferences = portletPreferencesCacheModel.preferences;
+		}
+	}
+
+	private static class PortletPreferencesOriginalValues {
+
+		private PortletPreferencesOriginalValues(
+			PortletPreferencesModelImpl portletPreferencesModelImpl) {
+
+			_originalCompanyId = portletPreferencesModelImpl._companyId;
+			_originalOwnerId = portletPreferencesModelImpl._ownerId;
+			_originalOwnerType = portletPreferencesModelImpl._ownerType;
+			_originalPlid = portletPreferencesModelImpl._plid;
+			_originalPortletId = portletPreferencesModelImpl._portletId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalOwnerId;
+		private final int _originalOwnerType;
+		private final long _originalPlid;
+		private final String _originalPortletId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PortletPreferences>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PortletPreferencesOriginalValues _portletPreferencesOriginalValues;
 	private long _mvccVersion;
 	private long _portletPreferencesId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _ownerId;
-	private long _originalOwnerId;
-	private boolean _setOriginalOwnerId;
 	private int _ownerType;
-	private int _originalOwnerType;
-	private boolean _setOriginalOwnerType;
 	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
 	private String _portletId;
-	private String _originalPortletId;
 	private String _preferences;
-	private long _columnBitmask;
 	private PortletPreferences _escapedModel;
 
 }

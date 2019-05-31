@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -122,81 +120,7 @@ public class RepositoryCacheModel
 	public Repository toEntityModel() {
 		RepositoryImpl repositoryImpl = new RepositoryImpl();
 
-		repositoryImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			repositoryImpl.setUuid("");
-		}
-		else {
-			repositoryImpl.setUuid(uuid);
-		}
-
-		repositoryImpl.setRepositoryId(repositoryId);
-		repositoryImpl.setGroupId(groupId);
-		repositoryImpl.setCompanyId(companyId);
-		repositoryImpl.setUserId(userId);
-
-		if (userName == null) {
-			repositoryImpl.setUserName("");
-		}
-		else {
-			repositoryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			repositoryImpl.setCreateDate(null);
-		}
-		else {
-			repositoryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			repositoryImpl.setModifiedDate(null);
-		}
-		else {
-			repositoryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		repositoryImpl.setClassNameId(classNameId);
-
-		if (name == null) {
-			repositoryImpl.setName("");
-		}
-		else {
-			repositoryImpl.setName(name);
-		}
-
-		if (description == null) {
-			repositoryImpl.setDescription("");
-		}
-		else {
-			repositoryImpl.setDescription(description);
-		}
-
-		if (portletId == null) {
-			repositoryImpl.setPortletId("");
-		}
-		else {
-			repositoryImpl.setPortletId(portletId);
-		}
-
-		if (typeSettings == null) {
-			repositoryImpl.setTypeSettings("");
-		}
-		else {
-			repositoryImpl.setTypeSettings(typeSettings);
-		}
-
-		repositoryImpl.setDlFolderId(dlFolderId);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			repositoryImpl.setLastPublishDate(null);
-		}
-		else {
-			repositoryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		repositoryImpl.resetOriginalValues();
+		repositoryImpl.setRepositoryCacheModel(this);
 
 		return repositoryImpl;
 	}

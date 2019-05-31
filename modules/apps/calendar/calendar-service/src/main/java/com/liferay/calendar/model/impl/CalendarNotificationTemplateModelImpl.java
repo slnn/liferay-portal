@@ -461,17 +461,24 @@ public class CalendarNotificationTemplateModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			_calendarNotificationTemplateOriginalValues =
+				new CalendarNotificationTemplateOriginalValues(this);
 		}
+
+		_calendarNotificationTemplateOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_calendarNotificationTemplateOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -495,19 +502,23 @@ public class CalendarNotificationTemplateModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			_calendarNotificationTemplateOriginalValues =
+				new CalendarNotificationTemplateOriginalValues(this);
 		}
+
+		_calendarNotificationTemplateOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _calendarNotificationTemplateOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -518,19 +529,23 @@ public class CalendarNotificationTemplateModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			_calendarNotificationTemplateOriginalValues =
+				new CalendarNotificationTemplateOriginalValues(this);
 		}
+
+		_calendarNotificationTemplateOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _calendarNotificationTemplateOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -612,19 +627,23 @@ public class CalendarNotificationTemplateModelImpl
 
 	@Override
 	public void setCalendarId(long calendarId) {
-		_columnBitmask |= CALENDARID_COLUMN_BITMASK;
-
-		if (!_setOriginalCalendarId) {
-			_setOriginalCalendarId = true;
-
-			_originalCalendarId = _calendarId;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			_calendarNotificationTemplateOriginalValues =
+				new CalendarNotificationTemplateOriginalValues(this);
 		}
+
+		_calendarNotificationTemplateOriginalValues._columnBitmask |=
+			CALENDARID_COLUMN_BITMASK;
 
 		_calendarId = calendarId;
 	}
 
 	public long getOriginalCalendarId() {
-		return _originalCalendarId;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return _calendarId;
+		}
+
+		return _calendarNotificationTemplateOriginalValues._originalCalendarId;
 	}
 
 	@JSON
@@ -640,17 +659,25 @@ public class CalendarNotificationTemplateModelImpl
 
 	@Override
 	public void setNotificationType(String notificationType) {
-		_columnBitmask |= NOTIFICATIONTYPE_COLUMN_BITMASK;
-
-		if (_originalNotificationType == null) {
-			_originalNotificationType = _notificationType;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			_calendarNotificationTemplateOriginalValues =
+				new CalendarNotificationTemplateOriginalValues(this);
 		}
+
+		_calendarNotificationTemplateOriginalValues._columnBitmask |=
+			NOTIFICATIONTYPE_COLUMN_BITMASK;
 
 		_notificationType = notificationType;
 	}
 
 	public String getOriginalNotificationType() {
-		return GetterUtil.getString(_originalNotificationType);
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return GetterUtil.getString(_notificationType);
+		}
+
+		return GetterUtil.getString(
+			_calendarNotificationTemplateOriginalValues.
+				_originalNotificationType);
 	}
 
 	@JSON
@@ -682,17 +709,25 @@ public class CalendarNotificationTemplateModelImpl
 
 	@Override
 	public void setNotificationTemplateType(String notificationTemplateType) {
-		_columnBitmask |= NOTIFICATIONTEMPLATETYPE_COLUMN_BITMASK;
-
-		if (_originalNotificationTemplateType == null) {
-			_originalNotificationTemplateType = _notificationTemplateType;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			_calendarNotificationTemplateOriginalValues =
+				new CalendarNotificationTemplateOriginalValues(this);
 		}
+
+		_calendarNotificationTemplateOriginalValues._columnBitmask |=
+			NOTIFICATIONTEMPLATETYPE_COLUMN_BITMASK;
 
 		_notificationTemplateType = notificationTemplateType;
 	}
 
 	public String getOriginalNotificationTemplateType() {
-		return GetterUtil.getString(_originalNotificationTemplateType);
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return GetterUtil.getString(_notificationTemplateType);
+		}
+
+		return GetterUtil.getString(
+			_calendarNotificationTemplateOriginalValues.
+				_originalNotificationTemplateType);
 	}
 
 	@JSON
@@ -746,7 +781,11 @@ public class CalendarNotificationTemplateModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_calendarNotificationTemplateOriginalValues == null) {
+			return 0;
+		}
+
+		return _calendarNotificationTemplateOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -864,34 +903,10 @@ public class CalendarNotificationTemplateModelImpl
 		CalendarNotificationTemplateModelImpl
 			calendarNotificationTemplateModelImpl = this;
 
-		calendarNotificationTemplateModelImpl._originalUuid =
-			calendarNotificationTemplateModelImpl._uuid;
-
-		calendarNotificationTemplateModelImpl._originalGroupId =
-			calendarNotificationTemplateModelImpl._groupId;
-
-		calendarNotificationTemplateModelImpl._setOriginalGroupId = false;
-
-		calendarNotificationTemplateModelImpl._originalCompanyId =
-			calendarNotificationTemplateModelImpl._companyId;
-
-		calendarNotificationTemplateModelImpl._setOriginalCompanyId = false;
+		calendarNotificationTemplateModelImpl.
+			_calendarNotificationTemplateOriginalValues = null;
 
 		calendarNotificationTemplateModelImpl._setModifiedDate = false;
-
-		calendarNotificationTemplateModelImpl._originalCalendarId =
-			calendarNotificationTemplateModelImpl._calendarId;
-
-		calendarNotificationTemplateModelImpl._setOriginalCalendarId = false;
-
-		calendarNotificationTemplateModelImpl._originalNotificationType =
-			calendarNotificationTemplateModelImpl._notificationType;
-
-		calendarNotificationTemplateModelImpl.
-			_originalNotificationTemplateType =
-				calendarNotificationTemplateModelImpl._notificationTemplateType;
-
-		calendarNotificationTemplateModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1081,38 +1096,149 @@ public class CalendarNotificationTemplateModelImpl
 		return sb.toString();
 	}
 
+	void setCalendarNotificationTemplateCacheModel(
+		CalendarNotificationTemplateCacheModel
+			calendarNotificationTemplateCacheModel) {
+
+		if (calendarNotificationTemplateCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = calendarNotificationTemplateCacheModel.uuid;
+		}
+
+		_calendarNotificationTemplateId =
+			calendarNotificationTemplateCacheModel.
+				calendarNotificationTemplateId;
+		_groupId = calendarNotificationTemplateCacheModel.groupId;
+		_companyId = calendarNotificationTemplateCacheModel.companyId;
+		_userId = calendarNotificationTemplateCacheModel.userId;
+
+		if (calendarNotificationTemplateCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = calendarNotificationTemplateCacheModel.userName;
+		}
+
+		if (calendarNotificationTemplateCacheModel.createDate !=
+				Long.MIN_VALUE) {
+
+			_createDate = new Date(
+				calendarNotificationTemplateCacheModel.createDate);
+		}
+
+		if (calendarNotificationTemplateCacheModel.modifiedDate !=
+				Long.MIN_VALUE) {
+
+			_modifiedDate = new Date(
+				calendarNotificationTemplateCacheModel.modifiedDate);
+		}
+
+		_calendarId = calendarNotificationTemplateCacheModel.calendarId;
+
+		if (calendarNotificationTemplateCacheModel.notificationType == null) {
+			_notificationType = "";
+		}
+		else {
+			_notificationType =
+				calendarNotificationTemplateCacheModel.notificationType;
+		}
+
+		if (calendarNotificationTemplateCacheModel.notificationTypeSettings ==
+				null) {
+
+			_notificationTypeSettings = "";
+		}
+		else {
+			_notificationTypeSettings =
+				calendarNotificationTemplateCacheModel.notificationTypeSettings;
+		}
+
+		if (calendarNotificationTemplateCacheModel.notificationTemplateType ==
+				null) {
+
+			_notificationTemplateType = "";
+		}
+		else {
+			_notificationTemplateType =
+				calendarNotificationTemplateCacheModel.notificationTemplateType;
+		}
+
+		if (calendarNotificationTemplateCacheModel.subject == null) {
+			_subject = "";
+		}
+		else {
+			_subject = calendarNotificationTemplateCacheModel.subject;
+		}
+
+		if (calendarNotificationTemplateCacheModel.body == null) {
+			_body = "";
+		}
+		else {
+			_body = calendarNotificationTemplateCacheModel.body;
+		}
+
+		if (calendarNotificationTemplateCacheModel.lastPublishDate !=
+				Long.MIN_VALUE) {
+
+			_lastPublishDate = new Date(
+				calendarNotificationTemplateCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class CalendarNotificationTemplateOriginalValues {
+
+		private CalendarNotificationTemplateOriginalValues(
+			CalendarNotificationTemplateModelImpl
+				calendarNotificationTemplateModelImpl) {
+
+			_originalUuid = calendarNotificationTemplateModelImpl._uuid;
+			_originalGroupId = calendarNotificationTemplateModelImpl._groupId;
+			_originalCompanyId =
+				calendarNotificationTemplateModelImpl._companyId;
+			_originalCalendarId =
+				calendarNotificationTemplateModelImpl._calendarId;
+			_originalNotificationType =
+				calendarNotificationTemplateModelImpl._notificationType;
+			_originalNotificationTemplateType =
+				calendarNotificationTemplateModelImpl._notificationTemplateType;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalCalendarId;
+		private final String _originalNotificationType;
+		private final String _originalNotificationTemplateType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function
 		<InvocationHandler, CalendarNotificationTemplate>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CalendarNotificationTemplateOriginalValues
+		_calendarNotificationTemplateOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _calendarNotificationTemplateId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _calendarId;
-	private long _originalCalendarId;
-	private boolean _setOriginalCalendarId;
 	private String _notificationType;
-	private String _originalNotificationType;
 	private String _notificationTypeSettings;
 	private String _notificationTemplateType;
-	private String _originalNotificationTemplateType;
 	private String _subject;
 	private String _body;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private CalendarNotificationTemplate _escapedModel;
 
 }

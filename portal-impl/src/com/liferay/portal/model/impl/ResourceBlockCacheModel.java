@@ -105,28 +105,7 @@ public class ResourceBlockCacheModel
 	public ResourceBlock toEntityModel() {
 		ResourceBlockImpl resourceBlockImpl = new ResourceBlockImpl();
 
-		resourceBlockImpl.setMvccVersion(mvccVersion);
-		resourceBlockImpl.setResourceBlockId(resourceBlockId);
-		resourceBlockImpl.setCompanyId(companyId);
-		resourceBlockImpl.setGroupId(groupId);
-
-		if (name == null) {
-			resourceBlockImpl.setName("");
-		}
-		else {
-			resourceBlockImpl.setName(name);
-		}
-
-		if (permissionsHash == null) {
-			resourceBlockImpl.setPermissionsHash("");
-		}
-		else {
-			resourceBlockImpl.setPermissionsHash(permissionsHash);
-		}
-
-		resourceBlockImpl.setReferenceCount(referenceCount);
-
-		resourceBlockImpl.resetOriginalValues();
+		resourceBlockImpl.setResourceBlockCacheModel(this);
 
 		return resourceBlockImpl;
 	}

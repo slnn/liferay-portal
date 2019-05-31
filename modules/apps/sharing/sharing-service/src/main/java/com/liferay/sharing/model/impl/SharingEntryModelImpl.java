@@ -416,17 +416,21 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_sharingEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_sharingEntryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -448,19 +452,21 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_sharingEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _sharingEntryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -471,19 +477,21 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_sharingEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _sharingEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -494,13 +502,11 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -522,7 +528,11 @@ public class SharingEntryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_sharingEntryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _sharingEntryOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -577,13 +587,11 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setToUserId(long toUserId) {
-		_columnBitmask |= TOUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalToUserId) {
-			_setOriginalToUserId = true;
-
-			_originalToUserId = _toUserId;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |= TOUSERID_COLUMN_BITMASK;
 
 		_toUserId = toUserId;
 	}
@@ -605,7 +613,11 @@ public class SharingEntryModelImpl
 	}
 
 	public long getOriginalToUserId() {
-		return _originalToUserId;
+		if (_sharingEntryOriginalValues == null) {
+			return _toUserId;
+		}
+
+		return _sharingEntryOriginalValues._originalToUserId;
 	}
 
 	@Override
@@ -636,19 +648,22 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_sharingEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _sharingEntryOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -659,19 +674,21 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_sharingEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _sharingEntryOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -710,17 +727,22 @@ public class SharingEntryModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
-
-		if (_originalExpirationDate == null) {
-			_originalExpirationDate = _expirationDate;
+		if (_sharingEntryOriginalValues == null) {
+			_sharingEntryOriginalValues = new SharingEntryOriginalValues(this);
 		}
+
+		_sharingEntryOriginalValues._columnBitmask |=
+			EXPIRATIONDATE_COLUMN_BITMASK;
 
 		_expirationDate = expirationDate;
 	}
 
 	public Date getOriginalExpirationDate() {
-		return _originalExpirationDate;
+		if (_sharingEntryOriginalValues == null) {
+			return _expirationDate;
+		}
+
+		return _sharingEntryOriginalValues._originalExpirationDate;
 	}
 
 	@Override
@@ -731,7 +753,11 @@ public class SharingEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_sharingEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _sharingEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -837,41 +863,9 @@ public class SharingEntryModelImpl
 	public void resetOriginalValues() {
 		SharingEntryModelImpl sharingEntryModelImpl = this;
 
-		sharingEntryModelImpl._originalUuid = sharingEntryModelImpl._uuid;
-
-		sharingEntryModelImpl._originalGroupId = sharingEntryModelImpl._groupId;
-
-		sharingEntryModelImpl._setOriginalGroupId = false;
-
-		sharingEntryModelImpl._originalCompanyId =
-			sharingEntryModelImpl._companyId;
-
-		sharingEntryModelImpl._setOriginalCompanyId = false;
-
-		sharingEntryModelImpl._originalUserId = sharingEntryModelImpl._userId;
-
-		sharingEntryModelImpl._setOriginalUserId = false;
+		sharingEntryModelImpl._sharingEntryOriginalValues = null;
 
 		sharingEntryModelImpl._setModifiedDate = false;
-
-		sharingEntryModelImpl._originalToUserId =
-			sharingEntryModelImpl._toUserId;
-
-		sharingEntryModelImpl._setOriginalToUserId = false;
-
-		sharingEntryModelImpl._originalClassNameId =
-			sharingEntryModelImpl._classNameId;
-
-		sharingEntryModelImpl._setOriginalClassNameId = false;
-
-		sharingEntryModelImpl._originalClassPK = sharingEntryModelImpl._classPK;
-
-		sharingEntryModelImpl._setOriginalClassPK = false;
-
-		sharingEntryModelImpl._originalExpirationDate =
-			sharingEntryModelImpl._expirationDate;
-
-		sharingEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1006,39 +1000,93 @@ public class SharingEntryModelImpl
 		return sb.toString();
 	}
 
+	void setSharingEntryCacheModel(
+		SharingEntryCacheModel sharingEntryCacheModel) {
+
+		if (sharingEntryCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = sharingEntryCacheModel.uuid;
+		}
+
+		_sharingEntryId = sharingEntryCacheModel.sharingEntryId;
+		_groupId = sharingEntryCacheModel.groupId;
+		_companyId = sharingEntryCacheModel.companyId;
+		_userId = sharingEntryCacheModel.userId;
+
+		if (sharingEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = sharingEntryCacheModel.userName;
+		}
+
+		if (sharingEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(sharingEntryCacheModel.createDate);
+		}
+
+		if (sharingEntryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(sharingEntryCacheModel.modifiedDate);
+		}
+
+		_toUserId = sharingEntryCacheModel.toUserId;
+		_classNameId = sharingEntryCacheModel.classNameId;
+		_classPK = sharingEntryCacheModel.classPK;
+		_shareable = sharingEntryCacheModel.shareable;
+		_actionIds = sharingEntryCacheModel.actionIds;
+
+		if (sharingEntryCacheModel.expirationDate != Long.MIN_VALUE) {
+			_expirationDate = new Date(sharingEntryCacheModel.expirationDate);
+		}
+	}
+
+	private static class SharingEntryOriginalValues {
+
+		private SharingEntryOriginalValues(
+			SharingEntryModelImpl sharingEntryModelImpl) {
+
+			_originalUuid = sharingEntryModelImpl._uuid;
+			_originalGroupId = sharingEntryModelImpl._groupId;
+			_originalCompanyId = sharingEntryModelImpl._companyId;
+			_originalUserId = sharingEntryModelImpl._userId;
+			_originalToUserId = sharingEntryModelImpl._toUserId;
+			_originalClassNameId = sharingEntryModelImpl._classNameId;
+			_originalClassPK = sharingEntryModelImpl._classPK;
+			_originalExpirationDate = sharingEntryModelImpl._expirationDate;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalToUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final Date _originalExpirationDate;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SharingEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SharingEntryOriginalValues _sharingEntryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _sharingEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _toUserId;
-	private long _originalToUserId;
-	private boolean _setOriginalToUserId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private boolean _shareable;
 	private long _actionIds;
 	private Date _expirationDate;
-	private Date _originalExpirationDate;
-	private long _columnBitmask;
 	private SharingEntry _escapedModel;
 
 }

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -104,82 +102,7 @@ public class AssetVocabularyCacheModel
 	public AssetVocabulary toEntityModel() {
 		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
 
-		if (uuid == null) {
-			assetVocabularyImpl.setUuid("");
-		}
-		else {
-			assetVocabularyImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			assetVocabularyImpl.setExternalReferenceCode("");
-		}
-		else {
-			assetVocabularyImpl.setExternalReferenceCode(externalReferenceCode);
-		}
-
-		assetVocabularyImpl.setVocabularyId(vocabularyId);
-		assetVocabularyImpl.setGroupId(groupId);
-		assetVocabularyImpl.setCompanyId(companyId);
-		assetVocabularyImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetVocabularyImpl.setUserName("");
-		}
-		else {
-			assetVocabularyImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetVocabularyImpl.setCreateDate(null);
-		}
-		else {
-			assetVocabularyImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetVocabularyImpl.setModifiedDate(null);
-		}
-		else {
-			assetVocabularyImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			assetVocabularyImpl.setName("");
-		}
-		else {
-			assetVocabularyImpl.setName(name);
-		}
-
-		if (title == null) {
-			assetVocabularyImpl.setTitle("");
-		}
-		else {
-			assetVocabularyImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			assetVocabularyImpl.setDescription("");
-		}
-		else {
-			assetVocabularyImpl.setDescription(description);
-		}
-
-		if (settings == null) {
-			assetVocabularyImpl.setSettings("");
-		}
-		else {
-			assetVocabularyImpl.setSettings(settings);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetVocabularyImpl.setLastPublishDate(null);
-		}
-		else {
-			assetVocabularyImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		assetVocabularyImpl.resetOriginalValues();
+		assetVocabularyImpl.setAssetVocabularyCacheModel(this);
 
 		return assetVocabularyImpl;
 	}

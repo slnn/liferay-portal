@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -119,50 +117,7 @@ public class WorkflowDefinitionLinkCacheModel
 		WorkflowDefinitionLinkImpl workflowDefinitionLinkImpl =
 			new WorkflowDefinitionLinkImpl();
 
-		workflowDefinitionLinkImpl.setMvccVersion(mvccVersion);
-		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(
-			workflowDefinitionLinkId);
-		workflowDefinitionLinkImpl.setGroupId(groupId);
-		workflowDefinitionLinkImpl.setCompanyId(companyId);
-		workflowDefinitionLinkImpl.setUserId(userId);
-
-		if (userName == null) {
-			workflowDefinitionLinkImpl.setUserName("");
-		}
-		else {
-			workflowDefinitionLinkImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			workflowDefinitionLinkImpl.setCreateDate(null);
-		}
-		else {
-			workflowDefinitionLinkImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			workflowDefinitionLinkImpl.setModifiedDate(null);
-		}
-		else {
-			workflowDefinitionLinkImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		workflowDefinitionLinkImpl.setClassNameId(classNameId);
-		workflowDefinitionLinkImpl.setClassPK(classPK);
-		workflowDefinitionLinkImpl.setTypePK(typePK);
-
-		if (workflowDefinitionName == null) {
-			workflowDefinitionLinkImpl.setWorkflowDefinitionName("");
-		}
-		else {
-			workflowDefinitionLinkImpl.setWorkflowDefinitionName(
-				workflowDefinitionName);
-		}
-
-		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(
-			workflowDefinitionVersion);
-
-		workflowDefinitionLinkImpl.resetOriginalValues();
+		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkCacheModel(this);
 
 		return workflowDefinitionLinkImpl;
 	}

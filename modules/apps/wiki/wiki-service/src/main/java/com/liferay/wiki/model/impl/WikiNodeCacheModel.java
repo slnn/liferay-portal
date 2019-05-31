@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -107,85 +105,7 @@ public class WikiNodeCacheModel
 	public WikiNode toEntityModel() {
 		WikiNodeImpl wikiNodeImpl = new WikiNodeImpl();
 
-		if (uuid == null) {
-			wikiNodeImpl.setUuid("");
-		}
-		else {
-			wikiNodeImpl.setUuid(uuid);
-		}
-
-		wikiNodeImpl.setNodeId(nodeId);
-		wikiNodeImpl.setGroupId(groupId);
-		wikiNodeImpl.setCompanyId(companyId);
-		wikiNodeImpl.setUserId(userId);
-
-		if (userName == null) {
-			wikiNodeImpl.setUserName("");
-		}
-		else {
-			wikiNodeImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			wikiNodeImpl.setCreateDate(null);
-		}
-		else {
-			wikiNodeImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			wikiNodeImpl.setModifiedDate(null);
-		}
-		else {
-			wikiNodeImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			wikiNodeImpl.setName("");
-		}
-		else {
-			wikiNodeImpl.setName(name);
-		}
-
-		if (description == null) {
-			wikiNodeImpl.setDescription("");
-		}
-		else {
-			wikiNodeImpl.setDescription(description);
-		}
-
-		if (lastPostDate == Long.MIN_VALUE) {
-			wikiNodeImpl.setLastPostDate(null);
-		}
-		else {
-			wikiNodeImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			wikiNodeImpl.setLastPublishDate(null);
-		}
-		else {
-			wikiNodeImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		wikiNodeImpl.setStatus(status);
-		wikiNodeImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			wikiNodeImpl.setStatusByUserName("");
-		}
-		else {
-			wikiNodeImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			wikiNodeImpl.setStatusDate(null);
-		}
-		else {
-			wikiNodeImpl.setStatusDate(new Date(statusDate));
-		}
-
-		wikiNodeImpl.resetOriginalValues();
+		wikiNodeImpl.setWikiNodeCacheModel(this);
 
 		return wikiNodeImpl;
 	}

@@ -113,33 +113,7 @@ public class ResourcePermissionCacheModel
 		ResourcePermissionImpl resourcePermissionImpl =
 			new ResourcePermissionImpl();
 
-		resourcePermissionImpl.setMvccVersion(mvccVersion);
-		resourcePermissionImpl.setResourcePermissionId(resourcePermissionId);
-		resourcePermissionImpl.setCompanyId(companyId);
-
-		if (name == null) {
-			resourcePermissionImpl.setName("");
-		}
-		else {
-			resourcePermissionImpl.setName(name);
-		}
-
-		resourcePermissionImpl.setScope(scope);
-
-		if (primKey == null) {
-			resourcePermissionImpl.setPrimKey("");
-		}
-		else {
-			resourcePermissionImpl.setPrimKey(primKey);
-		}
-
-		resourcePermissionImpl.setPrimKeyId(primKeyId);
-		resourcePermissionImpl.setRoleId(roleId);
-		resourcePermissionImpl.setOwnerId(ownerId);
-		resourcePermissionImpl.setActionIds(actionIds);
-		resourcePermissionImpl.setViewActionId(viewActionId);
-
-		resourcePermissionImpl.resetOriginalValues();
+		resourcePermissionImpl.setResourcePermissionCacheModel(this);
 
 		return resourcePermissionImpl;
 	}

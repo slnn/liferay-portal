@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -107,35 +105,7 @@ public class WebDAVPropsCacheModel
 	public WebDAVProps toEntityModel() {
 		WebDAVPropsImpl webDAVPropsImpl = new WebDAVPropsImpl();
 
-		webDAVPropsImpl.setMvccVersion(mvccVersion);
-		webDAVPropsImpl.setWebDavPropsId(webDavPropsId);
-		webDAVPropsImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			webDAVPropsImpl.setCreateDate(null);
-		}
-		else {
-			webDAVPropsImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			webDAVPropsImpl.setModifiedDate(null);
-		}
-		else {
-			webDAVPropsImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		webDAVPropsImpl.setClassNameId(classNameId);
-		webDAVPropsImpl.setClassPK(classPK);
-
-		if (props == null) {
-			webDAVPropsImpl.setProps("");
-		}
-		else {
-			webDAVPropsImpl.setProps(props);
-		}
-
-		webDAVPropsImpl.resetOriginalValues();
+		webDAVPropsImpl.setWebDAVPropsCacheModel(this);
 
 		return webDAVPropsImpl;
 	}

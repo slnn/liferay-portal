@@ -334,19 +334,23 @@ public class ChangesetCollectionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_changesetCollectionOriginalValues == null) {
+			_changesetCollectionOriginalValues =
+				new ChangesetCollectionOriginalValues(this);
 		}
+
+		_changesetCollectionOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_changesetCollectionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _changesetCollectionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -356,19 +360,23 @@ public class ChangesetCollectionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_changesetCollectionOriginalValues == null) {
+			_changesetCollectionOriginalValues =
+				new ChangesetCollectionOriginalValues(this);
 		}
+
+		_changesetCollectionOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_changesetCollectionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _changesetCollectionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -378,13 +386,13 @@ public class ChangesetCollectionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_changesetCollectionOriginalValues == null) {
+			_changesetCollectionOriginalValues =
+				new ChangesetCollectionOriginalValues(this);
 		}
+
+		_changesetCollectionOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -406,7 +414,11 @@ public class ChangesetCollectionModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_changesetCollectionOriginalValues == null) {
+			return _userId;
+		}
+
+		return _changesetCollectionOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -462,17 +474,24 @@ public class ChangesetCollectionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_changesetCollectionOriginalValues == null) {
+			_changesetCollectionOriginalValues =
+				new ChangesetCollectionOriginalValues(this);
 		}
+
+		_changesetCollectionOriginalValues._columnBitmask |=
+			NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_changesetCollectionOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_changesetCollectionOriginalValues._originalName);
 	}
 
 	@Override
@@ -491,7 +510,11 @@ public class ChangesetCollectionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_changesetCollectionOriginalValues == null) {
+			return 0;
+		}
+
+		return _changesetCollectionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -595,27 +618,9 @@ public class ChangesetCollectionModelImpl
 	public void resetOriginalValues() {
 		ChangesetCollectionModelImpl changesetCollectionModelImpl = this;
 
-		changesetCollectionModelImpl._originalGroupId =
-			changesetCollectionModelImpl._groupId;
-
-		changesetCollectionModelImpl._setOriginalGroupId = false;
-
-		changesetCollectionModelImpl._originalCompanyId =
-			changesetCollectionModelImpl._companyId;
-
-		changesetCollectionModelImpl._setOriginalCompanyId = false;
-
-		changesetCollectionModelImpl._originalUserId =
-			changesetCollectionModelImpl._userId;
-
-		changesetCollectionModelImpl._setOriginalUserId = false;
+		changesetCollectionModelImpl._changesetCollectionOriginalValues = null;
 
 		changesetCollectionModelImpl._setModifiedDate = false;
-
-		changesetCollectionModelImpl._originalName =
-			changesetCollectionModelImpl._name;
-
-		changesetCollectionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -740,29 +745,82 @@ public class ChangesetCollectionModelImpl
 		return sb.toString();
 	}
 
+	void setChangesetCollectionCacheModel(
+		ChangesetCollectionCacheModel changesetCollectionCacheModel) {
+
+		_changesetCollectionId =
+			changesetCollectionCacheModel.changesetCollectionId;
+		_groupId = changesetCollectionCacheModel.groupId;
+		_companyId = changesetCollectionCacheModel.companyId;
+		_userId = changesetCollectionCacheModel.userId;
+
+		if (changesetCollectionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = changesetCollectionCacheModel.userName;
+		}
+
+		if (changesetCollectionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(changesetCollectionCacheModel.createDate);
+		}
+
+		if (changesetCollectionCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(
+				changesetCollectionCacheModel.modifiedDate);
+		}
+
+		if (changesetCollectionCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = changesetCollectionCacheModel.name;
+		}
+
+		if (changesetCollectionCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = changesetCollectionCacheModel.description;
+		}
+	}
+
+	private static class ChangesetCollectionOriginalValues {
+
+		private ChangesetCollectionOriginalValues(
+			ChangesetCollectionModelImpl changesetCollectionModelImpl) {
+
+			_originalGroupId = changesetCollectionModelImpl._groupId;
+			_originalCompanyId = changesetCollectionModelImpl._companyId;
+			_originalUserId = changesetCollectionModelImpl._userId;
+			_originalName = changesetCollectionModelImpl._name;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ChangesetCollection>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private ChangesetCollectionOriginalValues
+		_changesetCollectionOriginalValues;
 	private long _changesetCollectionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private String _originalName;
 	private String _description;
-	private long _columnBitmask;
 	private ChangesetCollection _escapedModel;
 
 }

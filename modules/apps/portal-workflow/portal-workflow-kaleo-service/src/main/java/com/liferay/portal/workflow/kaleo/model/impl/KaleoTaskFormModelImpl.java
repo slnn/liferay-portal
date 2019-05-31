@@ -425,19 +425,22 @@ public class KaleoTaskFormModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			_kaleoTaskFormOriginalValues = new KaleoTaskFormOriginalValues(
+				this);
 		}
+
+		_kaleoTaskFormOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kaleoTaskFormOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -514,19 +517,23 @@ public class KaleoTaskFormModelImpl
 
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_columnBitmask |= KALEODEFINITIONVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoDefinitionVersionId) {
-			_setOriginalKaleoDefinitionVersionId = true;
-
-			_originalKaleoDefinitionVersionId = _kaleoDefinitionVersionId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			_kaleoTaskFormOriginalValues = new KaleoTaskFormOriginalValues(
+				this);
 		}
+
+		_kaleoTaskFormOriginalValues._columnBitmask |=
+			KALEODEFINITIONVERSIONID_COLUMN_BITMASK;
 
 		_kaleoDefinitionVersionId = kaleoDefinitionVersionId;
 	}
 
 	public long getOriginalKaleoDefinitionVersionId() {
-		return _originalKaleoDefinitionVersionId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			return _kaleoDefinitionVersionId;
+		}
+
+		return _kaleoTaskFormOriginalValues._originalKaleoDefinitionVersionId;
 	}
 
 	@Override
@@ -536,19 +543,23 @@ public class KaleoTaskFormModelImpl
 
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
-		_columnBitmask |= KALEONODEID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoNodeId) {
-			_setOriginalKaleoNodeId = true;
-
-			_originalKaleoNodeId = _kaleoNodeId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			_kaleoTaskFormOriginalValues = new KaleoTaskFormOriginalValues(
+				this);
 		}
+
+		_kaleoTaskFormOriginalValues._columnBitmask |=
+			KALEONODEID_COLUMN_BITMASK;
 
 		_kaleoNodeId = kaleoNodeId;
 	}
 
 	public long getOriginalKaleoNodeId() {
-		return _originalKaleoNodeId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			return _kaleoNodeId;
+		}
+
+		return _kaleoTaskFormOriginalValues._originalKaleoNodeId;
 	}
 
 	@Override
@@ -558,19 +569,23 @@ public class KaleoTaskFormModelImpl
 
 	@Override
 	public void setKaleoTaskId(long kaleoTaskId) {
-		_columnBitmask |= KALEOTASKID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoTaskId) {
-			_setOriginalKaleoTaskId = true;
-
-			_originalKaleoTaskId = _kaleoTaskId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			_kaleoTaskFormOriginalValues = new KaleoTaskFormOriginalValues(
+				this);
 		}
+
+		_kaleoTaskFormOriginalValues._columnBitmask |=
+			KALEOTASKID_COLUMN_BITMASK;
 
 		_kaleoTaskId = kaleoTaskId;
 	}
 
 	public long getOriginalKaleoTaskId() {
-		return _originalKaleoTaskId;
+		if (_kaleoTaskFormOriginalValues == null) {
+			return _kaleoTaskId;
+		}
+
+		return _kaleoTaskFormOriginalValues._originalKaleoTaskId;
 	}
 
 	@Override
@@ -675,17 +690,23 @@ public class KaleoTaskFormModelImpl
 
 	@Override
 	public void setFormUuid(String formUuid) {
-		_columnBitmask |= FORMUUID_COLUMN_BITMASK;
-
-		if (_originalFormUuid == null) {
-			_originalFormUuid = _formUuid;
+		if (_kaleoTaskFormOriginalValues == null) {
+			_kaleoTaskFormOriginalValues = new KaleoTaskFormOriginalValues(
+				this);
 		}
+
+		_kaleoTaskFormOriginalValues._columnBitmask |= FORMUUID_COLUMN_BITMASK;
 
 		_formUuid = formUuid;
 	}
 
 	public String getOriginalFormUuid() {
-		return GetterUtil.getString(_originalFormUuid);
+		if (_kaleoTaskFormOriginalValues == null) {
+			return GetterUtil.getString(_formUuid);
+		}
+
+		return GetterUtil.getString(
+			_kaleoTaskFormOriginalValues._originalFormUuid);
 	}
 
 	@Override
@@ -710,13 +731,22 @@ public class KaleoTaskFormModelImpl
 
 	@Override
 	public void setPriority(int priority) {
-		_columnBitmask = -1L;
+		if (_kaleoTaskFormOriginalValues == null) {
+			_kaleoTaskFormOriginalValues = new KaleoTaskFormOriginalValues(
+				this);
+		}
+
+		_kaleoTaskFormOriginalValues._columnBitmask = -1L;
 
 		_priority = priority;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kaleoTaskFormOriginalValues == null) {
+			return 0;
+		}
+
+		return _kaleoTaskFormOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -836,32 +866,9 @@ public class KaleoTaskFormModelImpl
 	public void resetOriginalValues() {
 		KaleoTaskFormModelImpl kaleoTaskFormModelImpl = this;
 
-		kaleoTaskFormModelImpl._originalCompanyId =
-			kaleoTaskFormModelImpl._companyId;
-
-		kaleoTaskFormModelImpl._setOriginalCompanyId = false;
+		kaleoTaskFormModelImpl._kaleoTaskFormOriginalValues = null;
 
 		kaleoTaskFormModelImpl._setModifiedDate = false;
-
-		kaleoTaskFormModelImpl._originalKaleoDefinitionVersionId =
-			kaleoTaskFormModelImpl._kaleoDefinitionVersionId;
-
-		kaleoTaskFormModelImpl._setOriginalKaleoDefinitionVersionId = false;
-
-		kaleoTaskFormModelImpl._originalKaleoNodeId =
-			kaleoTaskFormModelImpl._kaleoNodeId;
-
-		kaleoTaskFormModelImpl._setOriginalKaleoNodeId = false;
-
-		kaleoTaskFormModelImpl._originalKaleoTaskId =
-			kaleoTaskFormModelImpl._kaleoTaskId;
-
-		kaleoTaskFormModelImpl._setOriginalKaleoTaskId = false;
-
-		kaleoTaskFormModelImpl._originalFormUuid =
-			kaleoTaskFormModelImpl._formUuid;
-
-		kaleoTaskFormModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1034,29 +1041,123 @@ public class KaleoTaskFormModelImpl
 		return sb.toString();
 	}
 
+	void setKaleoTaskFormCacheModel(
+		KaleoTaskFormCacheModel kaleoTaskFormCacheModel) {
+
+		_mvccVersion = kaleoTaskFormCacheModel.mvccVersion;
+		_kaleoTaskFormId = kaleoTaskFormCacheModel.kaleoTaskFormId;
+		_groupId = kaleoTaskFormCacheModel.groupId;
+		_companyId = kaleoTaskFormCacheModel.companyId;
+		_userId = kaleoTaskFormCacheModel.userId;
+
+		if (kaleoTaskFormCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = kaleoTaskFormCacheModel.userName;
+		}
+
+		if (kaleoTaskFormCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(kaleoTaskFormCacheModel.createDate);
+		}
+
+		if (kaleoTaskFormCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(kaleoTaskFormCacheModel.modifiedDate);
+		}
+
+		_kaleoDefinitionVersionId =
+			kaleoTaskFormCacheModel.kaleoDefinitionVersionId;
+		_kaleoNodeId = kaleoTaskFormCacheModel.kaleoNodeId;
+		_kaleoTaskId = kaleoTaskFormCacheModel.kaleoTaskId;
+
+		if (kaleoTaskFormCacheModel.kaleoTaskName == null) {
+			_kaleoTaskName = "";
+		}
+		else {
+			_kaleoTaskName = kaleoTaskFormCacheModel.kaleoTaskName;
+		}
+
+		if (kaleoTaskFormCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = kaleoTaskFormCacheModel.name;
+		}
+
+		if (kaleoTaskFormCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = kaleoTaskFormCacheModel.description;
+		}
+
+		_formCompanyId = kaleoTaskFormCacheModel.formCompanyId;
+
+		if (kaleoTaskFormCacheModel.formDefinition == null) {
+			_formDefinition = "";
+		}
+		else {
+			_formDefinition = kaleoTaskFormCacheModel.formDefinition;
+		}
+
+		_formGroupId = kaleoTaskFormCacheModel.formGroupId;
+		_formId = kaleoTaskFormCacheModel.formId;
+
+		if (kaleoTaskFormCacheModel.formUuid == null) {
+			_formUuid = "";
+		}
+		else {
+			_formUuid = kaleoTaskFormCacheModel.formUuid;
+		}
+
+		if (kaleoTaskFormCacheModel.metadata == null) {
+			_metadata = "";
+		}
+		else {
+			_metadata = kaleoTaskFormCacheModel.metadata;
+		}
+
+		_priority = kaleoTaskFormCacheModel.priority;
+	}
+
+	private static class KaleoTaskFormOriginalValues {
+
+		private KaleoTaskFormOriginalValues(
+			KaleoTaskFormModelImpl kaleoTaskFormModelImpl) {
+
+			_originalCompanyId = kaleoTaskFormModelImpl._companyId;
+			_originalKaleoDefinitionVersionId =
+				kaleoTaskFormModelImpl._kaleoDefinitionVersionId;
+			_originalKaleoNodeId = kaleoTaskFormModelImpl._kaleoNodeId;
+			_originalKaleoTaskId = kaleoTaskFormModelImpl._kaleoTaskId;
+			_originalFormUuid = kaleoTaskFormModelImpl._formUuid;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalKaleoDefinitionVersionId;
+		private final long _originalKaleoNodeId;
+		private final long _originalKaleoTaskId;
+		private final String _originalFormUuid;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KaleoTaskForm>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KaleoTaskFormOriginalValues _kaleoTaskFormOriginalValues;
 	private long _mvccVersion;
 	private long _kaleoTaskFormId;
 	private long _groupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _kaleoDefinitionVersionId;
-	private long _originalKaleoDefinitionVersionId;
-	private boolean _setOriginalKaleoDefinitionVersionId;
 	private long _kaleoNodeId;
-	private long _originalKaleoNodeId;
-	private boolean _setOriginalKaleoNodeId;
 	private long _kaleoTaskId;
-	private long _originalKaleoTaskId;
-	private boolean _setOriginalKaleoTaskId;
 	private String _kaleoTaskName;
 	private String _name;
 	private String _description;
@@ -1065,10 +1166,8 @@ public class KaleoTaskFormModelImpl
 	private long _formGroupId;
 	private long _formId;
 	private String _formUuid;
-	private String _originalFormUuid;
 	private String _metadata;
 	private int _priority;
-	private long _columnBitmask;
 	private KaleoTaskForm _escapedModel;
 
 }

@@ -374,13 +374,13 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			_userNotificationDeliveryOriginalValues =
+				new UserNotificationDeliveryOriginalValues(this);
 		}
+
+		_userNotificationDeliveryOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -402,7 +402,11 @@ public class UserNotificationDeliveryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _userNotificationDeliveryOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -417,17 +421,24 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setPortletId(String portletId) {
-		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
-
-		if (_originalPortletId == null) {
-			_originalPortletId = _portletId;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			_userNotificationDeliveryOriginalValues =
+				new UserNotificationDeliveryOriginalValues(this);
 		}
+
+		_userNotificationDeliveryOriginalValues._columnBitmask |=
+			PORTLETID_COLUMN_BITMASK;
 
 		_portletId = portletId;
 	}
 
 	public String getOriginalPortletId() {
-		return GetterUtil.getString(_originalPortletId);
+		if (_userNotificationDeliveryOriginalValues == null) {
+			return GetterUtil.getString(_portletId);
+		}
+
+		return GetterUtil.getString(
+			_userNotificationDeliveryOriginalValues._originalPortletId);
 	}
 
 	@Override
@@ -457,19 +468,23 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			_userNotificationDeliveryOriginalValues =
+				new UserNotificationDeliveryOriginalValues(this);
 		}
+
+		_userNotificationDeliveryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _userNotificationDeliveryOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -479,19 +494,24 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setNotificationType(int notificationType) {
-		_columnBitmask |= NOTIFICATIONTYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalNotificationType) {
-			_setOriginalNotificationType = true;
-
-			_originalNotificationType = _notificationType;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			_userNotificationDeliveryOriginalValues =
+				new UserNotificationDeliveryOriginalValues(this);
 		}
+
+		_userNotificationDeliveryOriginalValues._columnBitmask |=
+			NOTIFICATIONTYPE_COLUMN_BITMASK;
 
 		_notificationType = notificationType;
 	}
 
 	public int getOriginalNotificationType() {
-		return _originalNotificationType;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			return _notificationType;
+		}
+
+		return _userNotificationDeliveryOriginalValues.
+			_originalNotificationType;
 	}
 
 	@Override
@@ -501,19 +521,23 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setDeliveryType(int deliveryType) {
-		_columnBitmask |= DELIVERYTYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalDeliveryType) {
-			_setOriginalDeliveryType = true;
-
-			_originalDeliveryType = _deliveryType;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			_userNotificationDeliveryOriginalValues =
+				new UserNotificationDeliveryOriginalValues(this);
 		}
+
+		_userNotificationDeliveryOriginalValues._columnBitmask |=
+			DELIVERYTYPE_COLUMN_BITMASK;
 
 		_deliveryType = deliveryType;
 	}
 
 	public int getOriginalDeliveryType() {
-		return _originalDeliveryType;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			return _deliveryType;
+		}
+
+		return _userNotificationDeliveryOriginalValues._originalDeliveryType;
 	}
 
 	@Override
@@ -532,7 +556,11 @@ public class UserNotificationDeliveryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_userNotificationDeliveryOriginalValues == null) {
+			return 0;
+		}
+
+		return _userNotificationDeliveryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -638,30 +666,8 @@ public class UserNotificationDeliveryModelImpl
 		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl =
 			this;
 
-		userNotificationDeliveryModelImpl._originalUserId =
-			userNotificationDeliveryModelImpl._userId;
-
-		userNotificationDeliveryModelImpl._setOriginalUserId = false;
-
-		userNotificationDeliveryModelImpl._originalPortletId =
-			userNotificationDeliveryModelImpl._portletId;
-
-		userNotificationDeliveryModelImpl._originalClassNameId =
-			userNotificationDeliveryModelImpl._classNameId;
-
-		userNotificationDeliveryModelImpl._setOriginalClassNameId = false;
-
-		userNotificationDeliveryModelImpl._originalNotificationType =
-			userNotificationDeliveryModelImpl._notificationType;
-
-		userNotificationDeliveryModelImpl._setOriginalNotificationType = false;
-
-		userNotificationDeliveryModelImpl._originalDeliveryType =
-			userNotificationDeliveryModelImpl._deliveryType;
-
-		userNotificationDeliveryModelImpl._setOriginalDeliveryType = false;
-
-		userNotificationDeliveryModelImpl._columnBitmask = 0;
+		userNotificationDeliveryModelImpl.
+			_userNotificationDeliveryOriginalValues = null;
 	}
 
 	@Override
@@ -763,28 +769,67 @@ public class UserNotificationDeliveryModelImpl
 		return sb.toString();
 	}
 
+	void setUserNotificationDeliveryCacheModel(
+		UserNotificationDeliveryCacheModel userNotificationDeliveryCacheModel) {
+
+		_mvccVersion = userNotificationDeliveryCacheModel.mvccVersion;
+		_userNotificationDeliveryId =
+			userNotificationDeliveryCacheModel.userNotificationDeliveryId;
+		_companyId = userNotificationDeliveryCacheModel.companyId;
+		_userId = userNotificationDeliveryCacheModel.userId;
+
+		if (userNotificationDeliveryCacheModel.portletId == null) {
+			_portletId = "";
+		}
+		else {
+			_portletId = userNotificationDeliveryCacheModel.portletId;
+		}
+
+		_classNameId = userNotificationDeliveryCacheModel.classNameId;
+		_notificationType = userNotificationDeliveryCacheModel.notificationType;
+		_deliveryType = userNotificationDeliveryCacheModel.deliveryType;
+		_deliver = userNotificationDeliveryCacheModel.deliver;
+	}
+
+	private static class UserNotificationDeliveryOriginalValues {
+
+		private UserNotificationDeliveryOriginalValues(
+			UserNotificationDeliveryModelImpl
+				userNotificationDeliveryModelImpl) {
+
+			_originalUserId = userNotificationDeliveryModelImpl._userId;
+			_originalPortletId = userNotificationDeliveryModelImpl._portletId;
+			_originalClassNameId =
+				userNotificationDeliveryModelImpl._classNameId;
+			_originalNotificationType =
+				userNotificationDeliveryModelImpl._notificationType;
+			_originalDeliveryType =
+				userNotificationDeliveryModelImpl._deliveryType;
+		}
+
+		private final long _originalUserId;
+		private final String _originalPortletId;
+		private final long _originalClassNameId;
+		private final int _originalNotificationType;
+		private final int _originalDeliveryType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, UserNotificationDelivery>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private UserNotificationDeliveryOriginalValues
+		_userNotificationDeliveryOriginalValues;
 	private long _mvccVersion;
 	private long _userNotificationDeliveryId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _portletId;
-	private String _originalPortletId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private int _notificationType;
-	private int _originalNotificationType;
-	private boolean _setOriginalNotificationType;
 	private int _deliveryType;
-	private int _originalDeliveryType;
-	private boolean _setOriginalDeliveryType;
 	private boolean _deliver;
-	private long _columnBitmask;
 	private UserNotificationDelivery _escapedModel;
 
 }

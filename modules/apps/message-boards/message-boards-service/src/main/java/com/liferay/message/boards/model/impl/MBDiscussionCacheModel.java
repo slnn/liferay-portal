@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,51 +98,7 @@ public class MBDiscussionCacheModel
 	public MBDiscussion toEntityModel() {
 		MBDiscussionImpl mbDiscussionImpl = new MBDiscussionImpl();
 
-		if (uuid == null) {
-			mbDiscussionImpl.setUuid("");
-		}
-		else {
-			mbDiscussionImpl.setUuid(uuid);
-		}
-
-		mbDiscussionImpl.setDiscussionId(discussionId);
-		mbDiscussionImpl.setGroupId(groupId);
-		mbDiscussionImpl.setCompanyId(companyId);
-		mbDiscussionImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbDiscussionImpl.setUserName("");
-		}
-		else {
-			mbDiscussionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbDiscussionImpl.setCreateDate(null);
-		}
-		else {
-			mbDiscussionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbDiscussionImpl.setModifiedDate(null);
-		}
-		else {
-			mbDiscussionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbDiscussionImpl.setClassNameId(classNameId);
-		mbDiscussionImpl.setClassPK(classPK);
-		mbDiscussionImpl.setThreadId(threadId);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mbDiscussionImpl.setLastPublishDate(null);
-		}
-		else {
-			mbDiscussionImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mbDiscussionImpl.resetOriginalValues();
+		mbDiscussionImpl.setMBDiscussionCacheModel(this);
 
 		return mbDiscussionImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -127,97 +125,7 @@ public class MBMessageCacheModel
 	public MBMessage toEntityModel() {
 		MBMessageImpl mbMessageImpl = new MBMessageImpl();
 
-		if (uuid == null) {
-			mbMessageImpl.setUuid("");
-		}
-		else {
-			mbMessageImpl.setUuid(uuid);
-		}
-
-		mbMessageImpl.setMessageId(messageId);
-		mbMessageImpl.setGroupId(groupId);
-		mbMessageImpl.setCompanyId(companyId);
-		mbMessageImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbMessageImpl.setUserName("");
-		}
-		else {
-			mbMessageImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbMessageImpl.setCreateDate(null);
-		}
-		else {
-			mbMessageImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbMessageImpl.setModifiedDate(null);
-		}
-		else {
-			mbMessageImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbMessageImpl.setClassNameId(classNameId);
-		mbMessageImpl.setClassPK(classPK);
-		mbMessageImpl.setCategoryId(categoryId);
-		mbMessageImpl.setThreadId(threadId);
-		mbMessageImpl.setRootMessageId(rootMessageId);
-		mbMessageImpl.setParentMessageId(parentMessageId);
-
-		if (subject == null) {
-			mbMessageImpl.setSubject("");
-		}
-		else {
-			mbMessageImpl.setSubject(subject);
-		}
-
-		if (body == null) {
-			mbMessageImpl.setBody("");
-		}
-		else {
-			mbMessageImpl.setBody(body);
-		}
-
-		if (format == null) {
-			mbMessageImpl.setFormat("");
-		}
-		else {
-			mbMessageImpl.setFormat(format);
-		}
-
-		mbMessageImpl.setAnonymous(anonymous);
-		mbMessageImpl.setPriority(priority);
-		mbMessageImpl.setAllowPingbacks(allowPingbacks);
-		mbMessageImpl.setAnswer(answer);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mbMessageImpl.setLastPublishDate(null);
-		}
-		else {
-			mbMessageImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mbMessageImpl.setStatus(status);
-		mbMessageImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			mbMessageImpl.setStatusByUserName("");
-		}
-		else {
-			mbMessageImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			mbMessageImpl.setStatusDate(null);
-		}
-		else {
-			mbMessageImpl.setStatusDate(new Date(statusDate));
-		}
-
-		mbMessageImpl.resetOriginalValues();
+		mbMessageImpl.setMBMessageCacheModel(this);
 
 		return mbMessageImpl;
 	}

@@ -76,16 +76,7 @@ public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 	public Counter toEntityModel() {
 		CounterImpl counterImpl = new CounterImpl();
 
-		if (name == null) {
-			counterImpl.setName("");
-		}
-		else {
-			counterImpl.setName(name);
-		}
-
-		counterImpl.setCurrentId(currentId);
-
-		counterImpl.resetOriginalValues();
+		counterImpl.setCounterCacheModel(this);
 
 		return counterImpl;
 	}

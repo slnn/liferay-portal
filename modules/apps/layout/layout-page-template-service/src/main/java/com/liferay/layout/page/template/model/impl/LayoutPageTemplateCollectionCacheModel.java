@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,65 +101,8 @@ public class LayoutPageTemplateCollectionCacheModel
 		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl =
 			new LayoutPageTemplateCollectionImpl();
 
-		if (uuid == null) {
-			layoutPageTemplateCollectionImpl.setUuid("");
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setUuid(uuid);
-		}
-
-		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(
-			layoutPageTemplateCollectionId);
-		layoutPageTemplateCollectionImpl.setGroupId(groupId);
-		layoutPageTemplateCollectionImpl.setCompanyId(companyId);
-		layoutPageTemplateCollectionImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutPageTemplateCollectionImpl.setUserName("");
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutPageTemplateCollectionImpl.setCreateDate(null);
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setCreateDate(
-				new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutPageTemplateCollectionImpl.setModifiedDate(null);
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			layoutPageTemplateCollectionImpl.setName("");
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setName(name);
-		}
-
-		if (description == null) {
-			layoutPageTemplateCollectionImpl.setDescription("");
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			layoutPageTemplateCollectionImpl.setLastPublishDate(null);
-		}
-		else {
-			layoutPageTemplateCollectionImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		layoutPageTemplateCollectionImpl.resetOriginalValues();
+		layoutPageTemplateCollectionImpl.
+			setLayoutPageTemplateCollectionCacheModel(this);
 
 		return layoutPageTemplateCollectionImpl;
 	}

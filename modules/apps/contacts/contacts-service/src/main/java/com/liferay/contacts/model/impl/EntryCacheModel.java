@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -94,54 +92,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public Entry toEntityModel() {
 		EntryImpl entryImpl = new EntryImpl();
 
-		entryImpl.setEntryId(entryId);
-		entryImpl.setGroupId(groupId);
-		entryImpl.setCompanyId(companyId);
-		entryImpl.setUserId(userId);
-
-		if (userName == null) {
-			entryImpl.setUserName("");
-		}
-		else {
-			entryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			entryImpl.setCreateDate(null);
-		}
-		else {
-			entryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			entryImpl.setModifiedDate(null);
-		}
-		else {
-			entryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (fullName == null) {
-			entryImpl.setFullName("");
-		}
-		else {
-			entryImpl.setFullName(fullName);
-		}
-
-		if (emailAddress == null) {
-			entryImpl.setEmailAddress("");
-		}
-		else {
-			entryImpl.setEmailAddress(emailAddress);
-		}
-
-		if (comments == null) {
-			entryImpl.setComments("");
-		}
-		else {
-			entryImpl.setComments(comments);
-		}
-
-		entryImpl.resetOriginalValues();
+		entryImpl.setEntryCacheModel(this);
 
 		return entryImpl;
 	}

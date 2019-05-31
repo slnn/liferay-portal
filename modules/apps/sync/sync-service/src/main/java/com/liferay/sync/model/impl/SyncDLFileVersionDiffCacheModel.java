@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -93,23 +91,7 @@ public class SyncDLFileVersionDiffCacheModel
 		SyncDLFileVersionDiffImpl syncDLFileVersionDiffImpl =
 			new SyncDLFileVersionDiffImpl();
 
-		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(
-			syncDLFileVersionDiffId);
-		syncDLFileVersionDiffImpl.setFileEntryId(fileEntryId);
-		syncDLFileVersionDiffImpl.setSourceFileVersionId(sourceFileVersionId);
-		syncDLFileVersionDiffImpl.setTargetFileVersionId(targetFileVersionId);
-		syncDLFileVersionDiffImpl.setDataFileEntryId(dataFileEntryId);
-		syncDLFileVersionDiffImpl.setSize(size);
-
-		if (expirationDate == Long.MIN_VALUE) {
-			syncDLFileVersionDiffImpl.setExpirationDate(null);
-		}
-		else {
-			syncDLFileVersionDiffImpl.setExpirationDate(
-				new Date(expirationDate));
-		}
-
-		syncDLFileVersionDiffImpl.resetOriginalValues();
+		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffCacheModel(this);
 
 		return syncDLFileVersionDiffImpl;
 	}

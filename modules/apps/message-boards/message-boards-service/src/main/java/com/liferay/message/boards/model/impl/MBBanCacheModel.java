@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -94,49 +92,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	public MBBan toEntityModel() {
 		MBBanImpl mbBanImpl = new MBBanImpl();
 
-		if (uuid == null) {
-			mbBanImpl.setUuid("");
-		}
-		else {
-			mbBanImpl.setUuid(uuid);
-		}
-
-		mbBanImpl.setBanId(banId);
-		mbBanImpl.setGroupId(groupId);
-		mbBanImpl.setCompanyId(companyId);
-		mbBanImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbBanImpl.setUserName("");
-		}
-		else {
-			mbBanImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbBanImpl.setCreateDate(null);
-		}
-		else {
-			mbBanImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbBanImpl.setModifiedDate(null);
-		}
-		else {
-			mbBanImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbBanImpl.setBanUserId(banUserId);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mbBanImpl.setLastPublishDate(null);
-		}
-		else {
-			mbBanImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mbBanImpl.resetOriginalValues();
+		mbBanImpl.setMBBanCacheModel(this);
 
 		return mbBanImpl;
 	}

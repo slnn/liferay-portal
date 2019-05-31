@@ -332,17 +332,21 @@ public class DDMContentModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ddmContentOriginalValues == null) {
+			_ddmContentOriginalValues = new DDMContentOriginalValues(this);
 		}
+
+		_ddmContentOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ddmContentOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_ddmContentOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -362,19 +366,21 @@ public class DDMContentModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_ddmContentOriginalValues == null) {
+			_ddmContentOriginalValues = new DDMContentOriginalValues(this);
 		}
+
+		_ddmContentOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_ddmContentOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _ddmContentOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -384,19 +390,21 @@ public class DDMContentModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ddmContentOriginalValues == null) {
+			_ddmContentOriginalValues = new DDMContentOriginalValues(this);
 		}
+
+		_ddmContentOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ddmContentOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ddmContentOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -605,7 +613,11 @@ public class DDMContentModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmContentOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmContentOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -774,19 +786,9 @@ public class DDMContentModelImpl
 	public void resetOriginalValues() {
 		DDMContentModelImpl ddmContentModelImpl = this;
 
-		ddmContentModelImpl._originalUuid = ddmContentModelImpl._uuid;
-
-		ddmContentModelImpl._originalGroupId = ddmContentModelImpl._groupId;
-
-		ddmContentModelImpl._setOriginalGroupId = false;
-
-		ddmContentModelImpl._originalCompanyId = ddmContentModelImpl._companyId;
-
-		ddmContentModelImpl._setOriginalCompanyId = false;
+		ddmContentModelImpl._ddmContentOriginalValues = null;
 
 		ddmContentModelImpl._setModifiedDate = false;
-
-		ddmContentModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -925,18 +927,81 @@ public class DDMContentModelImpl
 		return sb.toString();
 	}
 
+	void setDDMContentCacheModel(DDMContentCacheModel ddmContentCacheModel) {
+		if (ddmContentCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = ddmContentCacheModel.uuid;
+		}
+
+		_contentId = ddmContentCacheModel.contentId;
+		_groupId = ddmContentCacheModel.groupId;
+		_companyId = ddmContentCacheModel.companyId;
+		_userId = ddmContentCacheModel.userId;
+
+		if (ddmContentCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ddmContentCacheModel.userName;
+		}
+
+		if (ddmContentCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ddmContentCacheModel.createDate);
+		}
+
+		if (ddmContentCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(ddmContentCacheModel.modifiedDate);
+		}
+
+		if (ddmContentCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = ddmContentCacheModel.name;
+		}
+
+		if (ddmContentCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = ddmContentCacheModel.description;
+		}
+
+		if (ddmContentCacheModel.data == null) {
+			_data = "";
+		}
+		else {
+			_data = ddmContentCacheModel.data;
+		}
+	}
+
+	private static class DDMContentOriginalValues {
+
+		private DDMContentOriginalValues(
+			DDMContentModelImpl ddmContentModelImpl) {
+
+			_originalUuid = ddmContentModelImpl._uuid;
+			_originalGroupId = ddmContentModelImpl._groupId;
+			_originalCompanyId = ddmContentModelImpl._companyId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMContent>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMContentOriginalValues _ddmContentOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _contentId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -946,7 +1011,6 @@ public class DDMContentModelImpl
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _data;
-	private long _columnBitmask;
 	private DDMContent _escapedModel;
 
 }

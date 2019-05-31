@@ -348,19 +348,21 @@ public class RegionModelImpl
 
 	@Override
 	public void setCountryId(long countryId) {
-		_columnBitmask |= COUNTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCountryId) {
-			_setOriginalCountryId = true;
-
-			_originalCountryId = _countryId;
+		if (_regionOriginalValues == null) {
+			_regionOriginalValues = new RegionOriginalValues(this);
 		}
+
+		_regionOriginalValues._columnBitmask |= COUNTRYID_COLUMN_BITMASK;
 
 		_countryId = countryId;
 	}
 
 	public long getOriginalCountryId() {
-		return _originalCountryId;
+		if (_regionOriginalValues == null) {
+			return _countryId;
+		}
+
+		return _regionOriginalValues._originalCountryId;
 	}
 
 	@JSON
@@ -376,17 +378,21 @@ public class RegionModelImpl
 
 	@Override
 	public void setRegionCode(String regionCode) {
-		_columnBitmask |= REGIONCODE_COLUMN_BITMASK;
-
-		if (_originalRegionCode == null) {
-			_originalRegionCode = _regionCode;
+		if (_regionOriginalValues == null) {
+			_regionOriginalValues = new RegionOriginalValues(this);
 		}
+
+		_regionOriginalValues._columnBitmask |= REGIONCODE_COLUMN_BITMASK;
 
 		_regionCode = regionCode;
 	}
 
 	public String getOriginalRegionCode() {
-		return GetterUtil.getString(_originalRegionCode);
+		if (_regionOriginalValues == null) {
+			return GetterUtil.getString(_regionCode);
+		}
+
+		return GetterUtil.getString(_regionOriginalValues._originalRegionCode);
 	}
 
 	@JSON
@@ -402,7 +408,11 @@ public class RegionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		if (_regionOriginalValues == null) {
+			_regionOriginalValues = new RegionOriginalValues(this);
+		}
+
+		_regionOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
@@ -421,23 +431,29 @@ public class RegionModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_regionOriginalValues == null) {
+			_regionOriginalValues = new RegionOriginalValues(this);
 		}
+
+		_regionOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_regionOriginalValues == null) {
+			return _active;
+		}
+
+		return _regionOriginalValues._originalActive;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_regionOriginalValues == null) {
+			return 0;
+		}
+
+		return _regionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -533,17 +549,7 @@ public class RegionModelImpl
 	public void resetOriginalValues() {
 		RegionModelImpl regionModelImpl = this;
 
-		regionModelImpl._originalCountryId = regionModelImpl._countryId;
-
-		regionModelImpl._setOriginalCountryId = false;
-
-		regionModelImpl._originalRegionCode = regionModelImpl._regionCode;
-
-		regionModelImpl._originalActive = regionModelImpl._active;
-
-		regionModelImpl._setOriginalActive = false;
-
-		regionModelImpl._columnBitmask = 0;
+		regionModelImpl._regionOriginalValues = null;
 	}
 
 	@Override
@@ -638,21 +644,53 @@ public class RegionModelImpl
 		return sb.toString();
 	}
 
+	void setRegionCacheModel(RegionCacheModel regionCacheModel) {
+		_mvccVersion = regionCacheModel.mvccVersion;
+		_regionId = regionCacheModel.regionId;
+		_countryId = regionCacheModel.countryId;
+
+		if (regionCacheModel.regionCode == null) {
+			_regionCode = "";
+		}
+		else {
+			_regionCode = regionCacheModel.regionCode;
+		}
+
+		if (regionCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = regionCacheModel.name;
+		}
+
+		_active = regionCacheModel.active;
+	}
+
+	private static class RegionOriginalValues {
+
+		private RegionOriginalValues(RegionModelImpl regionModelImpl) {
+			_originalCountryId = regionModelImpl._countryId;
+			_originalRegionCode = regionModelImpl._regionCode;
+			_originalActive = regionModelImpl._active;
+		}
+
+		private final long _originalCountryId;
+		private final String _originalRegionCode;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Region>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RegionOriginalValues _regionOriginalValues;
 	private long _mvccVersion;
 	private long _regionId;
 	private long _countryId;
-	private long _originalCountryId;
-	private boolean _setOriginalCountryId;
 	private String _regionCode;
-	private String _originalRegionCode;
 	private String _name;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private Region _escapedModel;
 
 }

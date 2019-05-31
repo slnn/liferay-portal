@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -134,127 +132,7 @@ public class CalendarBookingCacheModel
 	public CalendarBooking toEntityModel() {
 		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
 
-		if (uuid == null) {
-			calendarBookingImpl.setUuid("");
-		}
-		else {
-			calendarBookingImpl.setUuid(uuid);
-		}
-
-		calendarBookingImpl.setCalendarBookingId(calendarBookingId);
-		calendarBookingImpl.setGroupId(groupId);
-		calendarBookingImpl.setCompanyId(companyId);
-		calendarBookingImpl.setUserId(userId);
-
-		if (userName == null) {
-			calendarBookingImpl.setUserName("");
-		}
-		else {
-			calendarBookingImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			calendarBookingImpl.setCreateDate(null);
-		}
-		else {
-			calendarBookingImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			calendarBookingImpl.setModifiedDate(null);
-		}
-		else {
-			calendarBookingImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		calendarBookingImpl.setCalendarId(calendarId);
-		calendarBookingImpl.setCalendarResourceId(calendarResourceId);
-		calendarBookingImpl.setParentCalendarBookingId(parentCalendarBookingId);
-		calendarBookingImpl.setRecurringCalendarBookingId(
-			recurringCalendarBookingId);
-
-		if (vEventUid == null) {
-			calendarBookingImpl.setVEventUid("");
-		}
-		else {
-			calendarBookingImpl.setVEventUid(vEventUid);
-		}
-
-		if (title == null) {
-			calendarBookingImpl.setTitle("");
-		}
-		else {
-			calendarBookingImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			calendarBookingImpl.setDescription("");
-		}
-		else {
-			calendarBookingImpl.setDescription(description);
-		}
-
-		if (location == null) {
-			calendarBookingImpl.setLocation("");
-		}
-		else {
-			calendarBookingImpl.setLocation(location);
-		}
-
-		calendarBookingImpl.setStartTime(startTime);
-		calendarBookingImpl.setEndTime(endTime);
-		calendarBookingImpl.setAllDay(allDay);
-
-		if (recurrence == null) {
-			calendarBookingImpl.setRecurrence("");
-		}
-		else {
-			calendarBookingImpl.setRecurrence(recurrence);
-		}
-
-		calendarBookingImpl.setFirstReminder(firstReminder);
-
-		if (firstReminderType == null) {
-			calendarBookingImpl.setFirstReminderType("");
-		}
-		else {
-			calendarBookingImpl.setFirstReminderType(firstReminderType);
-		}
-
-		calendarBookingImpl.setSecondReminder(secondReminder);
-
-		if (secondReminderType == null) {
-			calendarBookingImpl.setSecondReminderType("");
-		}
-		else {
-			calendarBookingImpl.setSecondReminderType(secondReminderType);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			calendarBookingImpl.setLastPublishDate(null);
-		}
-		else {
-			calendarBookingImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		calendarBookingImpl.setStatus(status);
-		calendarBookingImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			calendarBookingImpl.setStatusByUserName("");
-		}
-		else {
-			calendarBookingImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			calendarBookingImpl.setStatusDate(null);
-		}
-		else {
-			calendarBookingImpl.setStatusDate(new Date(statusDate));
-		}
-
-		calendarBookingImpl.resetOriginalValues();
+		calendarBookingImpl.setCalendarBookingCacheModel(this);
 
 		return calendarBookingImpl;
 	}

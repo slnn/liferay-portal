@@ -548,19 +548,23 @@ public class DDMFormInstanceVersionModelImpl
 
 	@Override
 	public void setFormInstanceId(long formInstanceId) {
-		_columnBitmask |= FORMINSTANCEID_COLUMN_BITMASK;
-
-		if (!_setOriginalFormInstanceId) {
-			_setOriginalFormInstanceId = true;
-
-			_originalFormInstanceId = _formInstanceId;
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			_ddmFormInstanceVersionOriginalValues =
+				new DDMFormInstanceVersionOriginalValues(this);
 		}
+
+		_ddmFormInstanceVersionOriginalValues._columnBitmask |=
+			FORMINSTANCEID_COLUMN_BITMASK;
 
 		_formInstanceId = formInstanceId;
 	}
 
 	public long getOriginalFormInstanceId() {
-		return _originalFormInstanceId;
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			return _formInstanceId;
+		}
+
+		return _ddmFormInstanceVersionOriginalValues._originalFormInstanceId;
 	}
 
 	@JSON
@@ -814,17 +818,24 @@ public class DDMFormInstanceVersionModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (_originalVersion == null) {
-			_originalVersion = _version;
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			_ddmFormInstanceVersionOriginalValues =
+				new DDMFormInstanceVersionOriginalValues(this);
 		}
+
+		_ddmFormInstanceVersionOriginalValues._columnBitmask |=
+			VERSION_COLUMN_BITMASK;
 
 		_version = version;
 	}
 
 	public String getOriginalVersion() {
-		return GetterUtil.getString(_originalVersion);
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			return GetterUtil.getString(_version);
+		}
+
+		return GetterUtil.getString(
+			_ddmFormInstanceVersionOriginalValues._originalVersion);
 	}
 
 	@JSON
@@ -835,19 +846,23 @@ public class DDMFormInstanceVersionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			_ddmFormInstanceVersionOriginalValues =
+				new DDMFormInstanceVersionOriginalValues(this);
 		}
+
+		_ddmFormInstanceVersionOriginalValues._columnBitmask |=
+			STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			return _status;
+		}
+
+		return _ddmFormInstanceVersionOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -985,7 +1000,11 @@ public class DDMFormInstanceVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmFormInstanceVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmFormInstanceVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1186,20 +1205,8 @@ public class DDMFormInstanceVersionModelImpl
 	public void resetOriginalValues() {
 		DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl = this;
 
-		ddmFormInstanceVersionModelImpl._originalFormInstanceId =
-			ddmFormInstanceVersionModelImpl._formInstanceId;
-
-		ddmFormInstanceVersionModelImpl._setOriginalFormInstanceId = false;
-
-		ddmFormInstanceVersionModelImpl._originalVersion =
-			ddmFormInstanceVersionModelImpl._version;
-
-		ddmFormInstanceVersionModelImpl._originalStatus =
-			ddmFormInstanceVersionModelImpl._status;
-
-		ddmFormInstanceVersionModelImpl._setOriginalStatus = false;
-
-		ddmFormInstanceVersionModelImpl._columnBitmask = 0;
+		ddmFormInstanceVersionModelImpl._ddmFormInstanceVersionOriginalValues =
+			null;
 	}
 
 	@Override
@@ -1361,9 +1368,97 @@ public class DDMFormInstanceVersionModelImpl
 		return sb.toString();
 	}
 
+	void setDDMFormInstanceVersionCacheModel(
+		DDMFormInstanceVersionCacheModel ddmFormInstanceVersionCacheModel) {
+
+		_formInstanceVersionId =
+			ddmFormInstanceVersionCacheModel.formInstanceVersionId;
+		_groupId = ddmFormInstanceVersionCacheModel.groupId;
+		_companyId = ddmFormInstanceVersionCacheModel.companyId;
+		_userId = ddmFormInstanceVersionCacheModel.userId;
+
+		if (ddmFormInstanceVersionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ddmFormInstanceVersionCacheModel.userName;
+		}
+
+		if (ddmFormInstanceVersionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ddmFormInstanceVersionCacheModel.createDate);
+		}
+
+		_formInstanceId = ddmFormInstanceVersionCacheModel.formInstanceId;
+		_structureVersionId =
+			ddmFormInstanceVersionCacheModel.structureVersionId;
+
+		if (ddmFormInstanceVersionCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = ddmFormInstanceVersionCacheModel.name;
+		}
+
+		if (ddmFormInstanceVersionCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = ddmFormInstanceVersionCacheModel.description;
+		}
+
+		if (ddmFormInstanceVersionCacheModel.settings == null) {
+			_settings = "";
+		}
+		else {
+			_settings = ddmFormInstanceVersionCacheModel.settings;
+		}
+
+		if (ddmFormInstanceVersionCacheModel.version == null) {
+			_version = "";
+		}
+		else {
+			_version = ddmFormInstanceVersionCacheModel.version;
+		}
+
+		_status = ddmFormInstanceVersionCacheModel.status;
+		_statusByUserId = ddmFormInstanceVersionCacheModel.statusByUserId;
+
+		if (ddmFormInstanceVersionCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName =
+				ddmFormInstanceVersionCacheModel.statusByUserName;
+		}
+
+		if (ddmFormInstanceVersionCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(ddmFormInstanceVersionCacheModel.statusDate);
+		}
+	}
+
+	private static class DDMFormInstanceVersionOriginalValues {
+
+		private DDMFormInstanceVersionOriginalValues(
+			DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl) {
+
+			_originalFormInstanceId =
+				ddmFormInstanceVersionModelImpl._formInstanceId;
+			_originalVersion = ddmFormInstanceVersionModelImpl._version;
+			_originalStatus = ddmFormInstanceVersionModelImpl._status;
+		}
+
+		private final long _originalFormInstanceId;
+		private final String _originalVersion;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMFormInstanceVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMFormInstanceVersionOriginalValues
+		_ddmFormInstanceVersionOriginalValues;
 	private long _formInstanceVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -1371,8 +1466,6 @@ public class DDMFormInstanceVersionModelImpl
 	private String _userName;
 	private Date _createDate;
 	private long _formInstanceId;
-	private long _originalFormInstanceId;
-	private boolean _setOriginalFormInstanceId;
 	private long _structureVersionId;
 	private String _name;
 	private String _nameCurrentLanguageId;
@@ -1380,14 +1473,10 @@ public class DDMFormInstanceVersionModelImpl
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
 	private String _version;
-	private String _originalVersion;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private DDMFormInstanceVersion _escapedModel;
 
 }

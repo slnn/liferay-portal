@@ -307,17 +307,23 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_socialRelationOriginalValues == null) {
+			_socialRelationOriginalValues = new SocialRelationOriginalValues(
+				this);
 		}
+
+		_socialRelationOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_socialRelationOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_socialRelationOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -337,19 +343,23 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_socialRelationOriginalValues == null) {
+			_socialRelationOriginalValues = new SocialRelationOriginalValues(
+				this);
 		}
+
+		_socialRelationOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_socialRelationOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _socialRelationOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -369,19 +379,22 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setUserId1(long userId1) {
-		_columnBitmask |= USERID1_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId1) {
-			_setOriginalUserId1 = true;
-
-			_originalUserId1 = _userId1;
+		if (_socialRelationOriginalValues == null) {
+			_socialRelationOriginalValues = new SocialRelationOriginalValues(
+				this);
 		}
+
+		_socialRelationOriginalValues._columnBitmask |= USERID1_COLUMN_BITMASK;
 
 		_userId1 = userId1;
 	}
 
 	public long getOriginalUserId1() {
-		return _originalUserId1;
+		if (_socialRelationOriginalValues == null) {
+			return _userId1;
+		}
+
+		return _socialRelationOriginalValues._originalUserId1;
 	}
 
 	@Override
@@ -391,19 +404,22 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setUserId2(long userId2) {
-		_columnBitmask |= USERID2_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId2) {
-			_setOriginalUserId2 = true;
-
-			_originalUserId2 = _userId2;
+		if (_socialRelationOriginalValues == null) {
+			_socialRelationOriginalValues = new SocialRelationOriginalValues(
+				this);
 		}
+
+		_socialRelationOriginalValues._columnBitmask |= USERID2_COLUMN_BITMASK;
 
 		_userId2 = userId2;
 	}
 
 	public long getOriginalUserId2() {
-		return _originalUserId2;
+		if (_socialRelationOriginalValues == null) {
+			return _userId2;
+		}
+
+		return _socialRelationOriginalValues._originalUserId2;
 	}
 
 	@Override
@@ -413,23 +429,30 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_socialRelationOriginalValues == null) {
+			_socialRelationOriginalValues = new SocialRelationOriginalValues(
+				this);
 		}
+
+		_socialRelationOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_socialRelationOriginalValues == null) {
+			return _type;
+		}
+
+		return _socialRelationOriginalValues._originalType;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_socialRelationOriginalValues == null) {
+			return 0;
+		}
+
+		return _socialRelationOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -528,28 +551,7 @@ public class SocialRelationModelImpl
 	public void resetOriginalValues() {
 		SocialRelationModelImpl socialRelationModelImpl = this;
 
-		socialRelationModelImpl._originalUuid = socialRelationModelImpl._uuid;
-
-		socialRelationModelImpl._originalCompanyId =
-			socialRelationModelImpl._companyId;
-
-		socialRelationModelImpl._setOriginalCompanyId = false;
-
-		socialRelationModelImpl._originalUserId1 =
-			socialRelationModelImpl._userId1;
-
-		socialRelationModelImpl._setOriginalUserId1 = false;
-
-		socialRelationModelImpl._originalUserId2 =
-			socialRelationModelImpl._userId2;
-
-		socialRelationModelImpl._setOriginalUserId2 = false;
-
-		socialRelationModelImpl._originalType = socialRelationModelImpl._type;
-
-		socialRelationModelImpl._setOriginalType = false;
-
-		socialRelationModelImpl._columnBitmask = 0;
+		socialRelationModelImpl._socialRelationOriginalValues = null;
 	}
 
 	@Override
@@ -643,26 +645,56 @@ public class SocialRelationModelImpl
 		return sb.toString();
 	}
 
+	void setSocialRelationCacheModel(
+		SocialRelationCacheModel socialRelationCacheModel) {
+
+		if (socialRelationCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = socialRelationCacheModel.uuid;
+		}
+
+		_relationId = socialRelationCacheModel.relationId;
+		_companyId = socialRelationCacheModel.companyId;
+		_createDate = socialRelationCacheModel.createDate;
+		_userId1 = socialRelationCacheModel.userId1;
+		_userId2 = socialRelationCacheModel.userId2;
+		_type = socialRelationCacheModel.type;
+	}
+
+	private static class SocialRelationOriginalValues {
+
+		private SocialRelationOriginalValues(
+			SocialRelationModelImpl socialRelationModelImpl) {
+
+			_originalUuid = socialRelationModelImpl._uuid;
+			_originalCompanyId = socialRelationModelImpl._companyId;
+			_originalUserId1 = socialRelationModelImpl._userId1;
+			_originalUserId2 = socialRelationModelImpl._userId2;
+			_originalType = socialRelationModelImpl._type;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalUserId1;
+		private final long _originalUserId2;
+		private final int _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SocialRelation>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SocialRelationOriginalValues _socialRelationOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _relationId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _createDate;
 	private long _userId1;
-	private long _originalUserId1;
-	private boolean _setOriginalUserId1;
 	private long _userId2;
-	private long _originalUserId2;
-	private boolean _setOriginalUserId2;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
-	private long _columnBitmask;
 	private SocialRelation _escapedModel;
 
 }

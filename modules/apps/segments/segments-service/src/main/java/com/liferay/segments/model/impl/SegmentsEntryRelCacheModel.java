@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -98,37 +96,7 @@ public class SegmentsEntryRelCacheModel
 	public SegmentsEntryRel toEntityModel() {
 		SegmentsEntryRelImpl segmentsEntryRelImpl = new SegmentsEntryRelImpl();
 
-		segmentsEntryRelImpl.setSegmentsEntryRelId(segmentsEntryRelId);
-		segmentsEntryRelImpl.setGroupId(groupId);
-		segmentsEntryRelImpl.setCompanyId(companyId);
-		segmentsEntryRelImpl.setUserId(userId);
-
-		if (userName == null) {
-			segmentsEntryRelImpl.setUserName("");
-		}
-		else {
-			segmentsEntryRelImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			segmentsEntryRelImpl.setCreateDate(null);
-		}
-		else {
-			segmentsEntryRelImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			segmentsEntryRelImpl.setModifiedDate(null);
-		}
-		else {
-			segmentsEntryRelImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		segmentsEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
-		segmentsEntryRelImpl.setClassNameId(classNameId);
-		segmentsEntryRelImpl.setClassPK(classPK);
-
-		segmentsEntryRelImpl.resetOriginalValues();
+		segmentsEntryRelImpl.setSegmentsEntryRelCacheModel(this);
 
 		return segmentsEntryRelImpl;
 	}

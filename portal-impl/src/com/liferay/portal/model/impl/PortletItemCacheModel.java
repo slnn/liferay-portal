@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -113,50 +111,7 @@ public class PortletItemCacheModel
 	public PortletItem toEntityModel() {
 		PortletItemImpl portletItemImpl = new PortletItemImpl();
 
-		portletItemImpl.setMvccVersion(mvccVersion);
-		portletItemImpl.setPortletItemId(portletItemId);
-		portletItemImpl.setGroupId(groupId);
-		portletItemImpl.setCompanyId(companyId);
-		portletItemImpl.setUserId(userId);
-
-		if (userName == null) {
-			portletItemImpl.setUserName("");
-		}
-		else {
-			portletItemImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			portletItemImpl.setCreateDate(null);
-		}
-		else {
-			portletItemImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			portletItemImpl.setModifiedDate(null);
-		}
-		else {
-			portletItemImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			portletItemImpl.setName("");
-		}
-		else {
-			portletItemImpl.setName(name);
-		}
-
-		if (portletId == null) {
-			portletItemImpl.setPortletId("");
-		}
-		else {
-			portletItemImpl.setPortletId(portletId);
-		}
-
-		portletItemImpl.setClassNameId(classNameId);
-
-		portletItemImpl.resetOriginalValues();
+		portletItemImpl.setPortletItemCacheModel(this);
 
 		return portletItemImpl;
 	}

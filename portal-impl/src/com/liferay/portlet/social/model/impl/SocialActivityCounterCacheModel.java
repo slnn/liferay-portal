@@ -103,28 +103,7 @@ public class SocialActivityCounterCacheModel
 		SocialActivityCounterImpl socialActivityCounterImpl =
 			new SocialActivityCounterImpl();
 
-		socialActivityCounterImpl.setActivityCounterId(activityCounterId);
-		socialActivityCounterImpl.setGroupId(groupId);
-		socialActivityCounterImpl.setCompanyId(companyId);
-		socialActivityCounterImpl.setClassNameId(classNameId);
-		socialActivityCounterImpl.setClassPK(classPK);
-
-		if (name == null) {
-			socialActivityCounterImpl.setName("");
-		}
-		else {
-			socialActivityCounterImpl.setName(name);
-		}
-
-		socialActivityCounterImpl.setOwnerType(ownerType);
-		socialActivityCounterImpl.setCurrentValue(currentValue);
-		socialActivityCounterImpl.setTotalValue(totalValue);
-		socialActivityCounterImpl.setGraceValue(graceValue);
-		socialActivityCounterImpl.setStartPeriod(startPeriod);
-		socialActivityCounterImpl.setEndPeriod(endPeriod);
-		socialActivityCounterImpl.setActive(active);
-
-		socialActivityCounterImpl.resetOriginalValues();
+		socialActivityCounterImpl.setSocialActivityCounterCacheModel(this);
 
 		return socialActivityCounterImpl;
 	}

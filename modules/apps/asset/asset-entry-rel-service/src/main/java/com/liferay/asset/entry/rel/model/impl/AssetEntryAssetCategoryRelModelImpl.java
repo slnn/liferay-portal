@@ -297,19 +297,23 @@ public class AssetEntryAssetCategoryRelModelImpl
 
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
-		_columnBitmask |= ASSETENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssetEntryId) {
-			_setOriginalAssetEntryId = true;
-
-			_originalAssetEntryId = _assetEntryId;
+		if (_assetEntryAssetCategoryRelOriginalValues == null) {
+			_assetEntryAssetCategoryRelOriginalValues =
+				new AssetEntryAssetCategoryRelOriginalValues(this);
 		}
+
+		_assetEntryAssetCategoryRelOriginalValues._columnBitmask |=
+			ASSETENTRYID_COLUMN_BITMASK;
 
 		_assetEntryId = assetEntryId;
 	}
 
 	public long getOriginalAssetEntryId() {
-		return _originalAssetEntryId;
+		if (_assetEntryAssetCategoryRelOriginalValues == null) {
+			return _assetEntryId;
+		}
+
+		return _assetEntryAssetCategoryRelOriginalValues._originalAssetEntryId;
 	}
 
 	@Override
@@ -319,19 +323,24 @@ public class AssetEntryAssetCategoryRelModelImpl
 
 	@Override
 	public void setAssetCategoryId(long assetCategoryId) {
-		_columnBitmask |= ASSETCATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssetCategoryId) {
-			_setOriginalAssetCategoryId = true;
-
-			_originalAssetCategoryId = _assetCategoryId;
+		if (_assetEntryAssetCategoryRelOriginalValues == null) {
+			_assetEntryAssetCategoryRelOriginalValues =
+				new AssetEntryAssetCategoryRelOriginalValues(this);
 		}
+
+		_assetEntryAssetCategoryRelOriginalValues._columnBitmask |=
+			ASSETCATEGORYID_COLUMN_BITMASK;
 
 		_assetCategoryId = assetCategoryId;
 	}
 
 	public long getOriginalAssetCategoryId() {
-		return _originalAssetCategoryId;
+		if (_assetEntryAssetCategoryRelOriginalValues == null) {
+			return _assetCategoryId;
+		}
+
+		return _assetEntryAssetCategoryRelOriginalValues.
+			_originalAssetCategoryId;
 	}
 
 	@Override
@@ -345,7 +354,11 @@ public class AssetEntryAssetCategoryRelModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetEntryAssetCategoryRelOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetEntryAssetCategoryRelOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -447,17 +460,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 		AssetEntryAssetCategoryRelModelImpl
 			assetEntryAssetCategoryRelModelImpl = this;
 
-		assetEntryAssetCategoryRelModelImpl._originalAssetEntryId =
-			assetEntryAssetCategoryRelModelImpl._assetEntryId;
-
-		assetEntryAssetCategoryRelModelImpl._setOriginalAssetEntryId = false;
-
-		assetEntryAssetCategoryRelModelImpl._originalAssetCategoryId =
-			assetEntryAssetCategoryRelModelImpl._assetCategoryId;
-
-		assetEntryAssetCategoryRelModelImpl._setOriginalAssetCategoryId = false;
-
-		assetEntryAssetCategoryRelModelImpl._columnBitmask = 0;
+		assetEntryAssetCategoryRelModelImpl.
+			_assetEntryAssetCategoryRelOriginalValues = null;
 	}
 
 	@Override
@@ -546,20 +550,46 @@ public class AssetEntryAssetCategoryRelModelImpl
 		return sb.toString();
 	}
 
+	void setAssetEntryAssetCategoryRelCacheModel(
+		AssetEntryAssetCategoryRelCacheModel
+			assetEntryAssetCategoryRelCacheModel) {
+
+		_assetEntryAssetCategoryRelId =
+			assetEntryAssetCategoryRelCacheModel.assetEntryAssetCategoryRelId;
+		_assetEntryId = assetEntryAssetCategoryRelCacheModel.assetEntryId;
+		_assetCategoryId = assetEntryAssetCategoryRelCacheModel.assetCategoryId;
+		_priority = assetEntryAssetCategoryRelCacheModel.priority;
+	}
+
+	private static class AssetEntryAssetCategoryRelOriginalValues {
+
+		private AssetEntryAssetCategoryRelOriginalValues(
+			AssetEntryAssetCategoryRelModelImpl
+				assetEntryAssetCategoryRelModelImpl) {
+
+			_originalAssetEntryId =
+				assetEntryAssetCategoryRelModelImpl._assetEntryId;
+			_originalAssetCategoryId =
+				assetEntryAssetCategoryRelModelImpl._assetCategoryId;
+		}
+
+		private final long _originalAssetEntryId;
+		private final long _originalAssetCategoryId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetEntryAssetCategoryRel>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AssetEntryAssetCategoryRelOriginalValues
+		_assetEntryAssetCategoryRelOriginalValues;
 	private long _assetEntryAssetCategoryRelId;
 	private long _assetEntryId;
-	private long _originalAssetEntryId;
-	private boolean _setOriginalAssetEntryId;
 	private long _assetCategoryId;
-	private long _originalAssetCategoryId;
-	private boolean _setOriginalAssetCategoryId;
 	private int _priority;
-	private long _columnBitmask;
 	private AssetEntryAssetCategoryRel _escapedModel;
 
 }

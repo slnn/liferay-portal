@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -89,21 +87,7 @@ public class AnnouncementsFlagCacheModel
 		AnnouncementsFlagImpl announcementsFlagImpl =
 			new AnnouncementsFlagImpl();
 
-		announcementsFlagImpl.setFlagId(flagId);
-		announcementsFlagImpl.setCompanyId(companyId);
-		announcementsFlagImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			announcementsFlagImpl.setCreateDate(null);
-		}
-		else {
-			announcementsFlagImpl.setCreateDate(new Date(createDate));
-		}
-
-		announcementsFlagImpl.setEntryId(entryId);
-		announcementsFlagImpl.setValue(value);
-
-		announcementsFlagImpl.resetOriginalValues();
+		announcementsFlagImpl.setAnnouncementsFlagCacheModel(this);
 
 		return announcementsFlagImpl;
 	}

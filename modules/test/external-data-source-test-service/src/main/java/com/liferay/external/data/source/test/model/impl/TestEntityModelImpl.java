@@ -475,6 +475,17 @@ public class TestEntityModelImpl
 		return sb.toString();
 	}
 
+	void setTestEntityCacheModel(TestEntityCacheModel testEntityCacheModel) {
+		_id = testEntityCacheModel.id;
+
+		if (testEntityCacheModel.data == null) {
+			_data = "";
+		}
+		else {
+			_data = testEntityCacheModel.data;
+		}
+	}
+
 	private static final Function<InvocationHandler, TestEntity>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 

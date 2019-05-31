@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,65 +101,7 @@ public class DDMStructureLayoutCacheModel
 		DDMStructureLayoutImpl ddmStructureLayoutImpl =
 			new DDMStructureLayoutImpl();
 
-		if (uuid == null) {
-			ddmStructureLayoutImpl.setUuid("");
-		}
-		else {
-			ddmStructureLayoutImpl.setUuid(uuid);
-		}
-
-		ddmStructureLayoutImpl.setStructureLayoutId(structureLayoutId);
-		ddmStructureLayoutImpl.setGroupId(groupId);
-		ddmStructureLayoutImpl.setCompanyId(companyId);
-		ddmStructureLayoutImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmStructureLayoutImpl.setUserName("");
-		}
-		else {
-			ddmStructureLayoutImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmStructureLayoutImpl.setCreateDate(null);
-		}
-		else {
-			ddmStructureLayoutImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmStructureLayoutImpl.setModifiedDate(null);
-		}
-		else {
-			ddmStructureLayoutImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ddmStructureLayoutImpl.setStructureVersionId(structureVersionId);
-
-		if (name == null) {
-			ddmStructureLayoutImpl.setName("");
-		}
-		else {
-			ddmStructureLayoutImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmStructureLayoutImpl.setDescription("");
-		}
-		else {
-			ddmStructureLayoutImpl.setDescription(description);
-		}
-
-		if (definition == null) {
-			ddmStructureLayoutImpl.setDefinition("");
-		}
-		else {
-			ddmStructureLayoutImpl.setDefinition(definition);
-		}
-
-		ddmStructureLayoutImpl.resetOriginalValues();
-
-		ddmStructureLayoutImpl.setDDMFormLayout(_ddmFormLayout);
+		ddmStructureLayoutImpl.setDDMStructureLayoutCacheModel(this);
 
 		return ddmStructureLayoutImpl;
 	}

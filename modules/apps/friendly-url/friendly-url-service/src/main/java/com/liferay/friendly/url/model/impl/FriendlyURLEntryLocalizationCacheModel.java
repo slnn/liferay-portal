@@ -113,32 +113,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 		FriendlyURLEntryLocalizationImpl friendlyURLEntryLocalizationImpl =
 			new FriendlyURLEntryLocalizationImpl();
 
-		friendlyURLEntryLocalizationImpl.setMvccVersion(mvccVersion);
-		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(
-			friendlyURLEntryLocalizationId);
-		friendlyURLEntryLocalizationImpl.setCompanyId(companyId);
-		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(
-			friendlyURLEntryId);
-
-		if (languageId == null) {
-			friendlyURLEntryLocalizationImpl.setLanguageId("");
-		}
-		else {
-			friendlyURLEntryLocalizationImpl.setLanguageId(languageId);
-		}
-
-		if (urlTitle == null) {
-			friendlyURLEntryLocalizationImpl.setUrlTitle("");
-		}
-		else {
-			friendlyURLEntryLocalizationImpl.setUrlTitle(urlTitle);
-		}
-
-		friendlyURLEntryLocalizationImpl.setGroupId(groupId);
-		friendlyURLEntryLocalizationImpl.setClassNameId(classNameId);
-		friendlyURLEntryLocalizationImpl.setClassPK(classPK);
-
-		friendlyURLEntryLocalizationImpl.resetOriginalValues();
+		friendlyURLEntryLocalizationImpl.
+			setFriendlyURLEntryLocalizationCacheModel(this);
 
 		return friendlyURLEntryLocalizationImpl;
 	}

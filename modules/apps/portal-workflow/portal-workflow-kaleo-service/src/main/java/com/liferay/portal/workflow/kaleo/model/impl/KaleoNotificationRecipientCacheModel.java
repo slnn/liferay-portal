@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -132,90 +130,8 @@ public class KaleoNotificationRecipientCacheModel
 		KaleoNotificationRecipientImpl kaleoNotificationRecipientImpl =
 			new KaleoNotificationRecipientImpl();
 
-		kaleoNotificationRecipientImpl.setMvccVersion(mvccVersion);
-		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(
-			kaleoNotificationRecipientId);
-		kaleoNotificationRecipientImpl.setGroupId(groupId);
-		kaleoNotificationRecipientImpl.setCompanyId(companyId);
-		kaleoNotificationRecipientImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoNotificationRecipientImpl.setUserName("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoNotificationRecipientImpl.setCreateDate(null);
-		}
-		else {
-			kaleoNotificationRecipientImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoNotificationRecipientImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoNotificationRecipientImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		kaleoNotificationRecipientImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoNotificationRecipientImpl.setKaleoNotificationId(
-			kaleoNotificationId);
-
-		if (recipientClassName == null) {
-			kaleoNotificationRecipientImpl.setRecipientClassName("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setRecipientClassName(
-				recipientClassName);
-		}
-
-		kaleoNotificationRecipientImpl.setRecipientClassPK(recipientClassPK);
-		kaleoNotificationRecipientImpl.setRecipientRoleType(recipientRoleType);
-
-		if (recipientScript == null) {
-			kaleoNotificationRecipientImpl.setRecipientScript("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setRecipientScript(recipientScript);
-		}
-
-		if (recipientScriptLanguage == null) {
-			kaleoNotificationRecipientImpl.setRecipientScriptLanguage("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setRecipientScriptLanguage(
-				recipientScriptLanguage);
-		}
-
-		if (recipientScriptContexts == null) {
-			kaleoNotificationRecipientImpl.setRecipientScriptContexts("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setRecipientScriptContexts(
-				recipientScriptContexts);
-		}
-
-		if (address == null) {
-			kaleoNotificationRecipientImpl.setAddress("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setAddress(address);
-		}
-
-		if (notificationReceptionType == null) {
-			kaleoNotificationRecipientImpl.setNotificationReceptionType("");
-		}
-		else {
-			kaleoNotificationRecipientImpl.setNotificationReceptionType(
-				notificationReceptionType);
-		}
-
-		kaleoNotificationRecipientImpl.resetOriginalValues();
+		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientCacheModel(
+			this);
 
 		return kaleoNotificationRecipientImpl;
 	}

@@ -386,17 +386,23 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutFriendlyURLOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -416,19 +422,23 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _layoutFriendlyURLOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -438,19 +448,23 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _layoutFriendlyURLOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -527,19 +541,22 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |= PLID_COLUMN_BITMASK;
 
 		_plid = plid;
 	}
 
 	public long getOriginalPlid() {
-		return _originalPlid;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return _plid;
+		}
+
+		return _layoutFriendlyURLOriginalValues._originalPlid;
 	}
 
 	@Override
@@ -554,19 +571,23 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |=
+			PRIVATELAYOUT_COLUMN_BITMASK;
 
 		_privateLayout = privateLayout;
 	}
 
 	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return _privateLayout;
+		}
+
+		return _layoutFriendlyURLOriginalValues._originalPrivateLayout;
 	}
 
 	@Override
@@ -581,17 +602,24 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setFriendlyURL(String friendlyURL) {
-		_columnBitmask |= FRIENDLYURL_COLUMN_BITMASK;
-
-		if (_originalFriendlyURL == null) {
-			_originalFriendlyURL = _friendlyURL;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |=
+			FRIENDLYURL_COLUMN_BITMASK;
 
 		_friendlyURL = friendlyURL;
 	}
 
 	public String getOriginalFriendlyURL() {
-		return GetterUtil.getString(_originalFriendlyURL);
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return GetterUtil.getString(_friendlyURL);
+		}
+
+		return GetterUtil.getString(
+			_layoutFriendlyURLOriginalValues._originalFriendlyURL);
 	}
 
 	@Override
@@ -606,17 +634,24 @@ public class LayoutFriendlyURLModelImpl
 
 	@Override
 	public void setLanguageId(String languageId) {
-		_columnBitmask |= LANGUAGEID_COLUMN_BITMASK;
-
-		if (_originalLanguageId == null) {
-			_originalLanguageId = _languageId;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			_layoutFriendlyURLOriginalValues =
+				new LayoutFriendlyURLOriginalValues(this);
 		}
+
+		_layoutFriendlyURLOriginalValues._columnBitmask |=
+			LANGUAGEID_COLUMN_BITMASK;
 
 		_languageId = languageId;
 	}
 
 	public String getOriginalLanguageId() {
-		return GetterUtil.getString(_originalLanguageId);
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return GetterUtil.getString(_languageId);
+		}
+
+		return GetterUtil.getString(
+			_layoutFriendlyURLOriginalValues._originalLanguageId);
 	}
 
 	@Override
@@ -636,7 +671,11 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutFriendlyURLOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutFriendlyURLOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -743,38 +782,9 @@ public class LayoutFriendlyURLModelImpl
 	public void resetOriginalValues() {
 		LayoutFriendlyURLModelImpl layoutFriendlyURLModelImpl = this;
 
-		layoutFriendlyURLModelImpl._originalUuid =
-			layoutFriendlyURLModelImpl._uuid;
-
-		layoutFriendlyURLModelImpl._originalGroupId =
-			layoutFriendlyURLModelImpl._groupId;
-
-		layoutFriendlyURLModelImpl._setOriginalGroupId = false;
-
-		layoutFriendlyURLModelImpl._originalCompanyId =
-			layoutFriendlyURLModelImpl._companyId;
-
-		layoutFriendlyURLModelImpl._setOriginalCompanyId = false;
+		layoutFriendlyURLModelImpl._layoutFriendlyURLOriginalValues = null;
 
 		layoutFriendlyURLModelImpl._setModifiedDate = false;
-
-		layoutFriendlyURLModelImpl._originalPlid =
-			layoutFriendlyURLModelImpl._plid;
-
-		layoutFriendlyURLModelImpl._setOriginalPlid = false;
-
-		layoutFriendlyURLModelImpl._originalPrivateLayout =
-			layoutFriendlyURLModelImpl._privateLayout;
-
-		layoutFriendlyURLModelImpl._setOriginalPrivateLayout = false;
-
-		layoutFriendlyURLModelImpl._originalFriendlyURL =
-			layoutFriendlyURLModelImpl._friendlyURL;
-
-		layoutFriendlyURLModelImpl._originalLanguageId =
-			layoutFriendlyURLModelImpl._languageId;
-
-		layoutFriendlyURLModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -923,36 +933,105 @@ public class LayoutFriendlyURLModelImpl
 		return sb.toString();
 	}
 
+	void setLayoutFriendlyURLCacheModel(
+		LayoutFriendlyURLCacheModel layoutFriendlyURLCacheModel) {
+
+		_mvccVersion = layoutFriendlyURLCacheModel.mvccVersion;
+
+		if (layoutFriendlyURLCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = layoutFriendlyURLCacheModel.uuid;
+		}
+
+		_layoutFriendlyURLId = layoutFriendlyURLCacheModel.layoutFriendlyURLId;
+		_groupId = layoutFriendlyURLCacheModel.groupId;
+		_companyId = layoutFriendlyURLCacheModel.companyId;
+		_userId = layoutFriendlyURLCacheModel.userId;
+
+		if (layoutFriendlyURLCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = layoutFriendlyURLCacheModel.userName;
+		}
+
+		if (layoutFriendlyURLCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(layoutFriendlyURLCacheModel.createDate);
+		}
+
+		if (layoutFriendlyURLCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(layoutFriendlyURLCacheModel.modifiedDate);
+		}
+
+		_plid = layoutFriendlyURLCacheModel.plid;
+		_privateLayout = layoutFriendlyURLCacheModel.privateLayout;
+
+		if (layoutFriendlyURLCacheModel.friendlyURL == null) {
+			_friendlyURL = "";
+		}
+		else {
+			_friendlyURL = layoutFriendlyURLCacheModel.friendlyURL;
+		}
+
+		if (layoutFriendlyURLCacheModel.languageId == null) {
+			_languageId = "";
+		}
+		else {
+			_languageId = layoutFriendlyURLCacheModel.languageId;
+		}
+
+		if (layoutFriendlyURLCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				layoutFriendlyURLCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class LayoutFriendlyURLOriginalValues {
+
+		private LayoutFriendlyURLOriginalValues(
+			LayoutFriendlyURLModelImpl layoutFriendlyURLModelImpl) {
+
+			_originalUuid = layoutFriendlyURLModelImpl._uuid;
+			_originalGroupId = layoutFriendlyURLModelImpl._groupId;
+			_originalCompanyId = layoutFriendlyURLModelImpl._companyId;
+			_originalPlid = layoutFriendlyURLModelImpl._plid;
+			_originalPrivateLayout = layoutFriendlyURLModelImpl._privateLayout;
+			_originalFriendlyURL = layoutFriendlyURLModelImpl._friendlyURL;
+			_originalLanguageId = layoutFriendlyURLModelImpl._languageId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalPlid;
+		private final boolean _originalPrivateLayout;
+		private final String _originalFriendlyURL;
+		private final String _originalLanguageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LayoutFriendlyURL>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutFriendlyURLOriginalValues _layoutFriendlyURLOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _layoutFriendlyURLId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
 	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private String _friendlyURL;
-	private String _originalFriendlyURL;
 	private String _languageId;
-	private String _originalLanguageId;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private LayoutFriendlyURL _escapedModel;
 
 }

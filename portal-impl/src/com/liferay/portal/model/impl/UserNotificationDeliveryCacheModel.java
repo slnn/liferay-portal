@@ -110,25 +110,8 @@ public class UserNotificationDeliveryCacheModel
 		UserNotificationDeliveryImpl userNotificationDeliveryImpl =
 			new UserNotificationDeliveryImpl();
 
-		userNotificationDeliveryImpl.setMvccVersion(mvccVersion);
-		userNotificationDeliveryImpl.setUserNotificationDeliveryId(
-			userNotificationDeliveryId);
-		userNotificationDeliveryImpl.setCompanyId(companyId);
-		userNotificationDeliveryImpl.setUserId(userId);
-
-		if (portletId == null) {
-			userNotificationDeliveryImpl.setPortletId("");
-		}
-		else {
-			userNotificationDeliveryImpl.setPortletId(portletId);
-		}
-
-		userNotificationDeliveryImpl.setClassNameId(classNameId);
-		userNotificationDeliveryImpl.setNotificationType(notificationType);
-		userNotificationDeliveryImpl.setDeliveryType(deliveryType);
-		userNotificationDeliveryImpl.setDeliver(deliver);
-
-		userNotificationDeliveryImpl.resetOriginalValues();
+		userNotificationDeliveryImpl.setUserNotificationDeliveryCacheModel(
+			this);
 
 		return userNotificationDeliveryImpl;
 	}

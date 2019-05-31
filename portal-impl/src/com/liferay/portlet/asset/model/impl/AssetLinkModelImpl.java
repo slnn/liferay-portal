@@ -371,19 +371,21 @@ public class AssetLinkModelImpl
 
 	@Override
 	public void setEntryId1(long entryId1) {
-		_columnBitmask |= ENTRYID1_COLUMN_BITMASK;
-
-		if (!_setOriginalEntryId1) {
-			_setOriginalEntryId1 = true;
-
-			_originalEntryId1 = _entryId1;
+		if (_assetLinkOriginalValues == null) {
+			_assetLinkOriginalValues = new AssetLinkOriginalValues(this);
 		}
+
+		_assetLinkOriginalValues._columnBitmask |= ENTRYID1_COLUMN_BITMASK;
 
 		_entryId1 = entryId1;
 	}
 
 	public long getOriginalEntryId1() {
-		return _originalEntryId1;
+		if (_assetLinkOriginalValues == null) {
+			return _entryId1;
+		}
+
+		return _assetLinkOriginalValues._originalEntryId1;
 	}
 
 	@Override
@@ -393,19 +395,21 @@ public class AssetLinkModelImpl
 
 	@Override
 	public void setEntryId2(long entryId2) {
-		_columnBitmask |= ENTRYID2_COLUMN_BITMASK;
-
-		if (!_setOriginalEntryId2) {
-			_setOriginalEntryId2 = true;
-
-			_originalEntryId2 = _entryId2;
+		if (_assetLinkOriginalValues == null) {
+			_assetLinkOriginalValues = new AssetLinkOriginalValues(this);
 		}
+
+		_assetLinkOriginalValues._columnBitmask |= ENTRYID2_COLUMN_BITMASK;
 
 		_entryId2 = entryId2;
 	}
 
 	public long getOriginalEntryId2() {
-		return _originalEntryId2;
+		if (_assetLinkOriginalValues == null) {
+			return _entryId2;
+		}
+
+		return _assetLinkOriginalValues._originalEntryId2;
 	}
 
 	@Override
@@ -415,19 +419,21 @@ public class AssetLinkModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_assetLinkOriginalValues == null) {
+			_assetLinkOriginalValues = new AssetLinkOriginalValues(this);
 		}
+
+		_assetLinkOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_assetLinkOriginalValues == null) {
+			return _type;
+		}
+
+		return _assetLinkOriginalValues._originalType;
 	}
 
 	@Override
@@ -437,13 +443,21 @@ public class AssetLinkModelImpl
 
 	@Override
 	public void setWeight(int weight) {
-		_columnBitmask = -1L;
+		if (_assetLinkOriginalValues == null) {
+			_assetLinkOriginalValues = new AssetLinkOriginalValues(this);
+		}
+
+		_assetLinkOriginalValues._columnBitmask = -1L;
 
 		_weight = weight;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -550,19 +564,7 @@ public class AssetLinkModelImpl
 	public void resetOriginalValues() {
 		AssetLinkModelImpl assetLinkModelImpl = this;
 
-		assetLinkModelImpl._originalEntryId1 = assetLinkModelImpl._entryId1;
-
-		assetLinkModelImpl._setOriginalEntryId1 = false;
-
-		assetLinkModelImpl._originalEntryId2 = assetLinkModelImpl._entryId2;
-
-		assetLinkModelImpl._setOriginalEntryId2 = false;
-
-		assetLinkModelImpl._originalType = assetLinkModelImpl._type;
-
-		assetLinkModelImpl._setOriginalType = false;
-
-		assetLinkModelImpl._columnBitmask = 0;
+		assetLinkModelImpl._assetLinkOriginalValues = null;
 	}
 
 	@Override
@@ -666,25 +668,56 @@ public class AssetLinkModelImpl
 		return sb.toString();
 	}
 
+	void setAssetLinkCacheModel(AssetLinkCacheModel assetLinkCacheModel) {
+		_linkId = assetLinkCacheModel.linkId;
+		_companyId = assetLinkCacheModel.companyId;
+		_userId = assetLinkCacheModel.userId;
+
+		if (assetLinkCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = assetLinkCacheModel.userName;
+		}
+
+		if (assetLinkCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(assetLinkCacheModel.createDate);
+		}
+
+		_entryId1 = assetLinkCacheModel.entryId1;
+		_entryId2 = assetLinkCacheModel.entryId2;
+		_type = assetLinkCacheModel.type;
+		_weight = assetLinkCacheModel.weight;
+	}
+
+	private static class AssetLinkOriginalValues {
+
+		private AssetLinkOriginalValues(AssetLinkModelImpl assetLinkModelImpl) {
+			_originalEntryId1 = assetLinkModelImpl._entryId1;
+			_originalEntryId2 = assetLinkModelImpl._entryId2;
+			_originalType = assetLinkModelImpl._type;
+		}
+
+		private final long _originalEntryId1;
+		private final long _originalEntryId2;
+		private final int _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetLink>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AssetLinkOriginalValues _assetLinkOriginalValues;
 	private long _linkId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private long _entryId1;
-	private long _originalEntryId1;
-	private boolean _setOriginalEntryId1;
 	private long _entryId2;
-	private long _originalEntryId2;
-	private boolean _setOriginalEntryId2;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private int _weight;
-	private long _columnBitmask;
 	private AssetLink _escapedModel;
 
 }

@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -130,92 +128,7 @@ public class LayoutSetBranchCacheModel
 	public LayoutSetBranch toEntityModel() {
 		LayoutSetBranchImpl layoutSetBranchImpl = new LayoutSetBranchImpl();
 
-		layoutSetBranchImpl.setMvccVersion(mvccVersion);
-		layoutSetBranchImpl.setLayoutSetBranchId(layoutSetBranchId);
-		layoutSetBranchImpl.setGroupId(groupId);
-		layoutSetBranchImpl.setCompanyId(companyId);
-		layoutSetBranchImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutSetBranchImpl.setUserName("");
-		}
-		else {
-			layoutSetBranchImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutSetBranchImpl.setCreateDate(null);
-		}
-		else {
-			layoutSetBranchImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutSetBranchImpl.setModifiedDate(null);
-		}
-		else {
-			layoutSetBranchImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		layoutSetBranchImpl.setPrivateLayout(privateLayout);
-
-		if (name == null) {
-			layoutSetBranchImpl.setName("");
-		}
-		else {
-			layoutSetBranchImpl.setName(name);
-		}
-
-		if (description == null) {
-			layoutSetBranchImpl.setDescription("");
-		}
-		else {
-			layoutSetBranchImpl.setDescription(description);
-		}
-
-		layoutSetBranchImpl.setMaster(master);
-		layoutSetBranchImpl.setLogoId(logoId);
-
-		if (themeId == null) {
-			layoutSetBranchImpl.setThemeId("");
-		}
-		else {
-			layoutSetBranchImpl.setThemeId(themeId);
-		}
-
-		if (colorSchemeId == null) {
-			layoutSetBranchImpl.setColorSchemeId("");
-		}
-		else {
-			layoutSetBranchImpl.setColorSchemeId(colorSchemeId);
-		}
-
-		if (css == null) {
-			layoutSetBranchImpl.setCss("");
-		}
-		else {
-			layoutSetBranchImpl.setCss(css);
-		}
-
-		if (settings == null) {
-			layoutSetBranchImpl.setSettings("");
-		}
-		else {
-			layoutSetBranchImpl.setSettings(settings);
-		}
-
-		if (layoutSetPrototypeUuid == null) {
-			layoutSetBranchImpl.setLayoutSetPrototypeUuid("");
-		}
-		else {
-			layoutSetBranchImpl.setLayoutSetPrototypeUuid(
-				layoutSetPrototypeUuid);
-		}
-
-		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(
-			layoutSetPrototypeLinkEnabled);
-
-		layoutSetBranchImpl.resetOriginalValues();
+		layoutSetBranchImpl.setLayoutSetBranchCacheModel(this);
 
 		return layoutSetBranchImpl;
 	}

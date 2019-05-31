@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -119,112 +117,7 @@ public class OAuth2ApplicationCacheModel
 		OAuth2ApplicationImpl oAuth2ApplicationImpl =
 			new OAuth2ApplicationImpl();
 
-		oAuth2ApplicationImpl.setOAuth2ApplicationId(oAuth2ApplicationId);
-		oAuth2ApplicationImpl.setCompanyId(companyId);
-		oAuth2ApplicationImpl.setUserId(userId);
-
-		if (userName == null) {
-			oAuth2ApplicationImpl.setUserName("");
-		}
-		else {
-			oAuth2ApplicationImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			oAuth2ApplicationImpl.setCreateDate(null);
-		}
-		else {
-			oAuth2ApplicationImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			oAuth2ApplicationImpl.setModifiedDate(null);
-		}
-		else {
-			oAuth2ApplicationImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		oAuth2ApplicationImpl.setOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId);
-
-		if (allowedGrantTypes == null) {
-			oAuth2ApplicationImpl.setAllowedGrantTypes("");
-		}
-		else {
-			oAuth2ApplicationImpl.setAllowedGrantTypes(allowedGrantTypes);
-		}
-
-		oAuth2ApplicationImpl.setClientCredentialUserId(clientCredentialUserId);
-
-		if (clientCredentialUserName == null) {
-			oAuth2ApplicationImpl.setClientCredentialUserName("");
-		}
-		else {
-			oAuth2ApplicationImpl.setClientCredentialUserName(
-				clientCredentialUserName);
-		}
-
-		if (clientId == null) {
-			oAuth2ApplicationImpl.setClientId("");
-		}
-		else {
-			oAuth2ApplicationImpl.setClientId(clientId);
-		}
-
-		oAuth2ApplicationImpl.setClientProfile(clientProfile);
-
-		if (clientSecret == null) {
-			oAuth2ApplicationImpl.setClientSecret("");
-		}
-		else {
-			oAuth2ApplicationImpl.setClientSecret(clientSecret);
-		}
-
-		if (description == null) {
-			oAuth2ApplicationImpl.setDescription("");
-		}
-		else {
-			oAuth2ApplicationImpl.setDescription(description);
-		}
-
-		if (features == null) {
-			oAuth2ApplicationImpl.setFeatures("");
-		}
-		else {
-			oAuth2ApplicationImpl.setFeatures(features);
-		}
-
-		if (homePageURL == null) {
-			oAuth2ApplicationImpl.setHomePageURL("");
-		}
-		else {
-			oAuth2ApplicationImpl.setHomePageURL(homePageURL);
-		}
-
-		oAuth2ApplicationImpl.setIconFileEntryId(iconFileEntryId);
-
-		if (name == null) {
-			oAuth2ApplicationImpl.setName("");
-		}
-		else {
-			oAuth2ApplicationImpl.setName(name);
-		}
-
-		if (privacyPolicyURL == null) {
-			oAuth2ApplicationImpl.setPrivacyPolicyURL("");
-		}
-		else {
-			oAuth2ApplicationImpl.setPrivacyPolicyURL(privacyPolicyURL);
-		}
-
-		if (redirectURIs == null) {
-			oAuth2ApplicationImpl.setRedirectURIs("");
-		}
-		else {
-			oAuth2ApplicationImpl.setRedirectURIs(redirectURIs);
-		}
-
-		oAuth2ApplicationImpl.resetOriginalValues();
+		oAuth2ApplicationImpl.setOAuth2ApplicationCacheModel(this);
 
 		return oAuth2ApplicationImpl;
 	}

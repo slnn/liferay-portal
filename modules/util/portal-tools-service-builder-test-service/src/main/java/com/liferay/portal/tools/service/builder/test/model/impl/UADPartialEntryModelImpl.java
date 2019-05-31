@@ -644,6 +644,27 @@ public class UADPartialEntryModelImpl
 		return sb.toString();
 	}
 
+	void setUADPartialEntryCacheModel(
+		UADPartialEntryCacheModel uadPartialEntryCacheModel) {
+
+		_uadPartialEntryId = uadPartialEntryCacheModel.uadPartialEntryId;
+		_userId = uadPartialEntryCacheModel.userId;
+
+		if (uadPartialEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = uadPartialEntryCacheModel.userName;
+		}
+
+		if (uadPartialEntryCacheModel.message == null) {
+			_message = "";
+		}
+		else {
+			_message = uadPartialEntryCacheModel.message;
+		}
+	}
+
 	private static final Function<InvocationHandler, UADPartialEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 

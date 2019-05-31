@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -109,47 +107,7 @@ public class UserTrackerCacheModel
 	public UserTracker toEntityModel() {
 		UserTrackerImpl userTrackerImpl = new UserTrackerImpl();
 
-		userTrackerImpl.setMvccVersion(mvccVersion);
-		userTrackerImpl.setUserTrackerId(userTrackerId);
-		userTrackerImpl.setCompanyId(companyId);
-		userTrackerImpl.setUserId(userId);
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			userTrackerImpl.setModifiedDate(null);
-		}
-		else {
-			userTrackerImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (sessionId == null) {
-			userTrackerImpl.setSessionId("");
-		}
-		else {
-			userTrackerImpl.setSessionId(sessionId);
-		}
-
-		if (remoteAddr == null) {
-			userTrackerImpl.setRemoteAddr("");
-		}
-		else {
-			userTrackerImpl.setRemoteAddr(remoteAddr);
-		}
-
-		if (remoteHost == null) {
-			userTrackerImpl.setRemoteHost("");
-		}
-		else {
-			userTrackerImpl.setRemoteHost(remoteHost);
-		}
-
-		if (userAgent == null) {
-			userTrackerImpl.setUserAgent("");
-		}
-		else {
-			userTrackerImpl.setUserAgent(userAgent);
-		}
-
-		userTrackerImpl.resetOriginalValues();
+		userTrackerImpl.setUserTrackerCacheModel(this);
 
 		return userTrackerImpl;
 	}

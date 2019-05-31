@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -116,64 +114,7 @@ public class LayoutPrototypeCacheModel
 	public LayoutPrototype toEntityModel() {
 		LayoutPrototypeImpl layoutPrototypeImpl = new LayoutPrototypeImpl();
 
-		layoutPrototypeImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			layoutPrototypeImpl.setUuid("");
-		}
-		else {
-			layoutPrototypeImpl.setUuid(uuid);
-		}
-
-		layoutPrototypeImpl.setLayoutPrototypeId(layoutPrototypeId);
-		layoutPrototypeImpl.setCompanyId(companyId);
-		layoutPrototypeImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutPrototypeImpl.setUserName("");
-		}
-		else {
-			layoutPrototypeImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutPrototypeImpl.setCreateDate(null);
-		}
-		else {
-			layoutPrototypeImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutPrototypeImpl.setModifiedDate(null);
-		}
-		else {
-			layoutPrototypeImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			layoutPrototypeImpl.setName("");
-		}
-		else {
-			layoutPrototypeImpl.setName(name);
-		}
-
-		if (description == null) {
-			layoutPrototypeImpl.setDescription("");
-		}
-		else {
-			layoutPrototypeImpl.setDescription(description);
-		}
-
-		if (settings == null) {
-			layoutPrototypeImpl.setSettings("");
-		}
-		else {
-			layoutPrototypeImpl.setSettings(settings);
-		}
-
-		layoutPrototypeImpl.setActive(active);
-
-		layoutPrototypeImpl.resetOriginalValues();
+		layoutPrototypeImpl.setLayoutPrototypeCacheModel(this);
 
 		return layoutPrototypeImpl;
 	}

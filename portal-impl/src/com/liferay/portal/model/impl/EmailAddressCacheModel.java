@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -117,54 +115,7 @@ public class EmailAddressCacheModel
 	public EmailAddress toEntityModel() {
 		EmailAddressImpl emailAddressImpl = new EmailAddressImpl();
 
-		emailAddressImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			emailAddressImpl.setUuid("");
-		}
-		else {
-			emailAddressImpl.setUuid(uuid);
-		}
-
-		emailAddressImpl.setEmailAddressId(emailAddressId);
-		emailAddressImpl.setCompanyId(companyId);
-		emailAddressImpl.setUserId(userId);
-
-		if (userName == null) {
-			emailAddressImpl.setUserName("");
-		}
-		else {
-			emailAddressImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			emailAddressImpl.setCreateDate(null);
-		}
-		else {
-			emailAddressImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			emailAddressImpl.setModifiedDate(null);
-		}
-		else {
-			emailAddressImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		emailAddressImpl.setClassNameId(classNameId);
-		emailAddressImpl.setClassPK(classPK);
-
-		if (address == null) {
-			emailAddressImpl.setAddress("");
-		}
-		else {
-			emailAddressImpl.setAddress(address);
-		}
-
-		emailAddressImpl.setTypeId(typeId);
-		emailAddressImpl.setPrimary(primary);
-
-		emailAddressImpl.resetOriginalValues();
+		emailAddressImpl.setEmailAddressCacheModel(this);
 
 		return emailAddressImpl;
 	}

@@ -333,19 +333,23 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			_ddmTemplateLinkOriginalValues = new DDMTemplateLinkOriginalValues(
+				this);
 		}
+
+		_ddmTemplateLinkOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _ddmTemplateLinkOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -355,19 +359,22 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			_ddmTemplateLinkOriginalValues = new DDMTemplateLinkOriginalValues(
+				this);
 		}
+
+		_ddmTemplateLinkOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _ddmTemplateLinkOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -377,23 +384,31 @@ public class DDMTemplateLinkModelImpl
 
 	@Override
 	public void setTemplateId(long templateId) {
-		_columnBitmask |= TEMPLATEID_COLUMN_BITMASK;
-
-		if (!_setOriginalTemplateId) {
-			_setOriginalTemplateId = true;
-
-			_originalTemplateId = _templateId;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			_ddmTemplateLinkOriginalValues = new DDMTemplateLinkOriginalValues(
+				this);
 		}
+
+		_ddmTemplateLinkOriginalValues._columnBitmask |=
+			TEMPLATEID_COLUMN_BITMASK;
 
 		_templateId = templateId;
 	}
 
 	public long getOriginalTemplateId() {
-		return _originalTemplateId;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			return _templateId;
+		}
+
+		return _ddmTemplateLinkOriginalValues._originalTemplateId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmTemplateLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmTemplateLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -490,22 +505,7 @@ public class DDMTemplateLinkModelImpl
 	public void resetOriginalValues() {
 		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl = this;
 
-		ddmTemplateLinkModelImpl._originalClassNameId =
-			ddmTemplateLinkModelImpl._classNameId;
-
-		ddmTemplateLinkModelImpl._setOriginalClassNameId = false;
-
-		ddmTemplateLinkModelImpl._originalClassPK =
-			ddmTemplateLinkModelImpl._classPK;
-
-		ddmTemplateLinkModelImpl._setOriginalClassPK = false;
-
-		ddmTemplateLinkModelImpl._originalTemplateId =
-			ddmTemplateLinkModelImpl._templateId;
-
-		ddmTemplateLinkModelImpl._setOriginalTemplateId = false;
-
-		ddmTemplateLinkModelImpl._columnBitmask = 0;
+		ddmTemplateLinkModelImpl._ddmTemplateLinkOriginalValues = null;
 	}
 
 	@Override
@@ -589,21 +589,42 @@ public class DDMTemplateLinkModelImpl
 		return sb.toString();
 	}
 
+	void setDDMTemplateLinkCacheModel(
+		DDMTemplateLinkCacheModel ddmTemplateLinkCacheModel) {
+
+		_templateLinkId = ddmTemplateLinkCacheModel.templateLinkId;
+		_companyId = ddmTemplateLinkCacheModel.companyId;
+		_classNameId = ddmTemplateLinkCacheModel.classNameId;
+		_classPK = ddmTemplateLinkCacheModel.classPK;
+		_templateId = ddmTemplateLinkCacheModel.templateId;
+	}
+
+	private static class DDMTemplateLinkOriginalValues {
+
+		private DDMTemplateLinkOriginalValues(
+			DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl) {
+
+			_originalClassNameId = ddmTemplateLinkModelImpl._classNameId;
+			_originalClassPK = ddmTemplateLinkModelImpl._classPK;
+			_originalTemplateId = ddmTemplateLinkModelImpl._templateId;
+		}
+
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final long _originalTemplateId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMTemplateLink>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMTemplateLinkOriginalValues _ddmTemplateLinkOriginalValues;
 	private long _templateLinkId;
 	private long _companyId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _templateId;
-	private long _originalTemplateId;
-	private boolean _setOriginalTemplateId;
-	private long _columnBitmask;
 	private DDMTemplateLink _escapedModel;
 
 }

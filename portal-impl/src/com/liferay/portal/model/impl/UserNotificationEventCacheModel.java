@@ -117,43 +117,7 @@ public class UserNotificationEventCacheModel
 		UserNotificationEventImpl userNotificationEventImpl =
 			new UserNotificationEventImpl();
 
-		userNotificationEventImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			userNotificationEventImpl.setUuid("");
-		}
-		else {
-			userNotificationEventImpl.setUuid(uuid);
-		}
-
-		userNotificationEventImpl.setUserNotificationEventId(
-			userNotificationEventId);
-		userNotificationEventImpl.setCompanyId(companyId);
-		userNotificationEventImpl.setUserId(userId);
-
-		if (type == null) {
-			userNotificationEventImpl.setType("");
-		}
-		else {
-			userNotificationEventImpl.setType(type);
-		}
-
-		userNotificationEventImpl.setTimestamp(timestamp);
-		userNotificationEventImpl.setDeliveryType(deliveryType);
-		userNotificationEventImpl.setDeliverBy(deliverBy);
-		userNotificationEventImpl.setDelivered(delivered);
-
-		if (payload == null) {
-			userNotificationEventImpl.setPayload("");
-		}
-		else {
-			userNotificationEventImpl.setPayload(payload);
-		}
-
-		userNotificationEventImpl.setActionRequired(actionRequired);
-		userNotificationEventImpl.setArchived(archived);
-
-		userNotificationEventImpl.resetOriginalValues();
+		userNotificationEventImpl.setUserNotificationEventCacheModel(this);
 
 		return userNotificationEventImpl;
 	}

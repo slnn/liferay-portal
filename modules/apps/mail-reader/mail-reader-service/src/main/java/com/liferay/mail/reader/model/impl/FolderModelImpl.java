@@ -385,19 +385,21 @@ public class FolderModelImpl
 
 	@Override
 	public void setAccountId(long accountId) {
-		_columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
-
-		if (!_setOriginalAccountId) {
-			_setOriginalAccountId = true;
-
-			_originalAccountId = _accountId;
+		if (_folderOriginalValues == null) {
+			_folderOriginalValues = new FolderOriginalValues(this);
 		}
+
+		_folderOriginalValues._columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
 
 		_accountId = accountId;
 	}
 
 	public long getOriginalAccountId() {
-		return _originalAccountId;
+		if (_folderOriginalValues == null) {
+			return _accountId;
+		}
+
+		return _folderOriginalValues._originalAccountId;
 	}
 
 	@Override
@@ -412,17 +414,21 @@ public class FolderModelImpl
 
 	@Override
 	public void setFullName(String fullName) {
-		_columnBitmask = -1L;
-
-		if (_originalFullName == null) {
-			_originalFullName = _fullName;
+		if (_folderOriginalValues == null) {
+			_folderOriginalValues = new FolderOriginalValues(this);
 		}
+
+		_folderOriginalValues._columnBitmask = -1L;
 
 		_fullName = fullName;
 	}
 
 	public String getOriginalFullName() {
-		return GetterUtil.getString(_originalFullName);
+		if (_folderOriginalValues == null) {
+			return GetterUtil.getString(_fullName);
+		}
+
+		return GetterUtil.getString(_folderOriginalValues._originalFullName);
 	}
 
 	@Override
@@ -451,7 +457,11 @@ public class FolderModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_folderOriginalValues == null) {
+			return 0;
+		}
+
+		return _folderOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -551,15 +561,9 @@ public class FolderModelImpl
 	public void resetOriginalValues() {
 		FolderModelImpl folderModelImpl = this;
 
+		folderModelImpl._folderOriginalValues = null;
+
 		folderModelImpl._setModifiedDate = false;
-
-		folderModelImpl._originalAccountId = folderModelImpl._accountId;
-
-		folderModelImpl._setOriginalAccountId = false;
-
-		folderModelImpl._originalFullName = folderModelImpl._fullName;
-
-		folderModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -682,9 +686,62 @@ public class FolderModelImpl
 		return sb.toString();
 	}
 
+	void setFolderCacheModel(FolderCacheModel folderCacheModel) {
+		_folderId = folderCacheModel.folderId;
+		_companyId = folderCacheModel.companyId;
+		_userId = folderCacheModel.userId;
+
+		if (folderCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = folderCacheModel.userName;
+		}
+
+		if (folderCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(folderCacheModel.createDate);
+		}
+
+		if (folderCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(folderCacheModel.modifiedDate);
+		}
+
+		_accountId = folderCacheModel.accountId;
+
+		if (folderCacheModel.fullName == null) {
+			_fullName = "";
+		}
+		else {
+			_fullName = folderCacheModel.fullName;
+		}
+
+		if (folderCacheModel.displayName == null) {
+			_displayName = "";
+		}
+		else {
+			_displayName = folderCacheModel.displayName;
+		}
+
+		_remoteMessageCount = folderCacheModel.remoteMessageCount;
+	}
+
+	private static class FolderOriginalValues {
+
+		private FolderOriginalValues(FolderModelImpl folderModelImpl) {
+			_originalAccountId = folderModelImpl._accountId;
+			_originalFullName = folderModelImpl._fullName;
+		}
+
+		private final long _originalAccountId;
+		private final String _originalFullName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Folder>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private FolderOriginalValues _folderOriginalValues;
 	private long _folderId;
 	private long _companyId;
 	private long _userId;
@@ -693,13 +750,9 @@ public class FolderModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _accountId;
-	private long _originalAccountId;
-	private boolean _setOriginalAccountId;
 	private String _fullName;
-	private String _originalFullName;
 	private String _displayName;
 	private int _remoteMessageCount;
-	private long _columnBitmask;
 	private Folder _escapedModel;
 
 }

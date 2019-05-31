@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -94,35 +92,7 @@ public class CTEntryAggregateCacheModel
 	public CTEntryAggregate toEntityModel() {
 		CTEntryAggregateImpl ctEntryAggregateImpl = new CTEntryAggregateImpl();
 
-		ctEntryAggregateImpl.setCtEntryAggregateId(ctEntryAggregateId);
-		ctEntryAggregateImpl.setCompanyId(companyId);
-		ctEntryAggregateImpl.setUserId(userId);
-
-		if (userName == null) {
-			ctEntryAggregateImpl.setUserName("");
-		}
-		else {
-			ctEntryAggregateImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ctEntryAggregateImpl.setCreateDate(null);
-		}
-		else {
-			ctEntryAggregateImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ctEntryAggregateImpl.setModifiedDate(null);
-		}
-		else {
-			ctEntryAggregateImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ctEntryAggregateImpl.setOwnerCTEntryId(ownerCTEntryId);
-		ctEntryAggregateImpl.setStatus(status);
-
-		ctEntryAggregateImpl.resetOriginalValues();
+		ctEntryAggregateImpl.setCTEntryAggregateCacheModel(this);
 
 		return ctEntryAggregateImpl;
 	}

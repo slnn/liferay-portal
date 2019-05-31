@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -135,78 +133,7 @@ public class KaleoTimerInstanceTokenCacheModel
 		KaleoTimerInstanceTokenImpl kaleoTimerInstanceTokenImpl =
 			new KaleoTimerInstanceTokenImpl();
 
-		kaleoTimerInstanceTokenImpl.setMvccVersion(mvccVersion);
-		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenId(
-			kaleoTimerInstanceTokenId);
-		kaleoTimerInstanceTokenImpl.setGroupId(groupId);
-		kaleoTimerInstanceTokenImpl.setCompanyId(companyId);
-		kaleoTimerInstanceTokenImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTimerInstanceTokenImpl.setUserName("");
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTimerInstanceTokenImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTimerInstanceTokenImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (kaleoClassName == null) {
-			kaleoTimerInstanceTokenImpl.setKaleoClassName("");
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setKaleoClassName(kaleoClassName);
-		}
-
-		kaleoTimerInstanceTokenImpl.setKaleoClassPK(kaleoClassPK);
-		kaleoTimerInstanceTokenImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoTimerInstanceTokenImpl.setKaleoInstanceId(kaleoInstanceId);
-		kaleoTimerInstanceTokenImpl.setKaleoInstanceTokenId(
-			kaleoInstanceTokenId);
-		kaleoTimerInstanceTokenImpl.setKaleoTaskInstanceTokenId(
-			kaleoTaskInstanceTokenId);
-		kaleoTimerInstanceTokenImpl.setKaleoTimerId(kaleoTimerId);
-
-		if (kaleoTimerName == null) {
-			kaleoTimerInstanceTokenImpl.setKaleoTimerName("");
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setKaleoTimerName(kaleoTimerName);
-		}
-
-		kaleoTimerInstanceTokenImpl.setBlocking(blocking);
-		kaleoTimerInstanceTokenImpl.setCompletionUserId(completionUserId);
-		kaleoTimerInstanceTokenImpl.setCompleted(completed);
-
-		if (completionDate == Long.MIN_VALUE) {
-			kaleoTimerInstanceTokenImpl.setCompletionDate(null);
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setCompletionDate(
-				new Date(completionDate));
-		}
-
-		if (workflowContext == null) {
-			kaleoTimerInstanceTokenImpl.setWorkflowContext("");
-		}
-		else {
-			kaleoTimerInstanceTokenImpl.setWorkflowContext(workflowContext);
-		}
-
-		kaleoTimerInstanceTokenImpl.resetOriginalValues();
+		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenCacheModel(this);
 
 		return kaleoTimerInstanceTokenImpl;
 	}

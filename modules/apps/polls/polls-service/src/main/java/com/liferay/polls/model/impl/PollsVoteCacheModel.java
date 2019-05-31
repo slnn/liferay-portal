@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -99,57 +97,7 @@ public class PollsVoteCacheModel
 	public PollsVote toEntityModel() {
 		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
 
-		if (uuid == null) {
-			pollsVoteImpl.setUuid("");
-		}
-		else {
-			pollsVoteImpl.setUuid(uuid);
-		}
-
-		pollsVoteImpl.setVoteId(voteId);
-		pollsVoteImpl.setGroupId(groupId);
-		pollsVoteImpl.setCompanyId(companyId);
-		pollsVoteImpl.setUserId(userId);
-
-		if (userName == null) {
-			pollsVoteImpl.setUserName("");
-		}
-		else {
-			pollsVoteImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			pollsVoteImpl.setCreateDate(null);
-		}
-		else {
-			pollsVoteImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			pollsVoteImpl.setModifiedDate(null);
-		}
-		else {
-			pollsVoteImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		pollsVoteImpl.setQuestionId(questionId);
-		pollsVoteImpl.setChoiceId(choiceId);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			pollsVoteImpl.setLastPublishDate(null);
-		}
-		else {
-			pollsVoteImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		if (voteDate == Long.MIN_VALUE) {
-			pollsVoteImpl.setVoteDate(null);
-		}
-		else {
-			pollsVoteImpl.setVoteDate(new Date(voteDate));
-		}
-
-		pollsVoteImpl.resetOriginalValues();
+		pollsVoteImpl.setPollsVoteCacheModel(this);
 
 		return pollsVoteImpl;
 	}

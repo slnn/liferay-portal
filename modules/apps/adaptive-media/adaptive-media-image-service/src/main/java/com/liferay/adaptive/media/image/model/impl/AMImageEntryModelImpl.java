@@ -318,17 +318,21 @@ public class AMImageEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_amImageEntryOriginalValues == null) {
+			_amImageEntryOriginalValues = new AMImageEntryOriginalValues(this);
 		}
+
+		_amImageEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_amImageEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_amImageEntryOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -348,19 +352,21 @@ public class AMImageEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_amImageEntryOriginalValues == null) {
+			_amImageEntryOriginalValues = new AMImageEntryOriginalValues(this);
 		}
+
+		_amImageEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_amImageEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _amImageEntryOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -370,19 +376,21 @@ public class AMImageEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_amImageEntryOriginalValues == null) {
+			_amImageEntryOriginalValues = new AMImageEntryOriginalValues(this);
 		}
+
+		_amImageEntryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_amImageEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _amImageEntryOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -407,17 +415,23 @@ public class AMImageEntryModelImpl
 
 	@Override
 	public void setConfigurationUuid(String configurationUuid) {
-		_columnBitmask |= CONFIGURATIONUUID_COLUMN_BITMASK;
-
-		if (_originalConfigurationUuid == null) {
-			_originalConfigurationUuid = _configurationUuid;
+		if (_amImageEntryOriginalValues == null) {
+			_amImageEntryOriginalValues = new AMImageEntryOriginalValues(this);
 		}
+
+		_amImageEntryOriginalValues._columnBitmask |=
+			CONFIGURATIONUUID_COLUMN_BITMASK;
 
 		_configurationUuid = configurationUuid;
 	}
 
 	public String getOriginalConfigurationUuid() {
-		return GetterUtil.getString(_originalConfigurationUuid);
+		if (_amImageEntryOriginalValues == null) {
+			return GetterUtil.getString(_configurationUuid);
+		}
+
+		return GetterUtil.getString(
+			_amImageEntryOriginalValues._originalConfigurationUuid);
 	}
 
 	@Override
@@ -427,19 +441,22 @@ public class AMImageEntryModelImpl
 
 	@Override
 	public void setFileVersionId(long fileVersionId) {
-		_columnBitmask |= FILEVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalFileVersionId) {
-			_setOriginalFileVersionId = true;
-
-			_originalFileVersionId = _fileVersionId;
+		if (_amImageEntryOriginalValues == null) {
+			_amImageEntryOriginalValues = new AMImageEntryOriginalValues(this);
 		}
+
+		_amImageEntryOriginalValues._columnBitmask |=
+			FILEVERSIONID_COLUMN_BITMASK;
 
 		_fileVersionId = fileVersionId;
 	}
 
 	public long getOriginalFileVersionId() {
-		return _originalFileVersionId;
+		if (_amImageEntryOriginalValues == null) {
+			return _fileVersionId;
+		}
+
+		return _amImageEntryOriginalValues._originalFileVersionId;
 	}
 
 	@Override
@@ -488,7 +505,11 @@ public class AMImageEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_amImageEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _amImageEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -591,26 +612,7 @@ public class AMImageEntryModelImpl
 	public void resetOriginalValues() {
 		AMImageEntryModelImpl amImageEntryModelImpl = this;
 
-		amImageEntryModelImpl._originalUuid = amImageEntryModelImpl._uuid;
-
-		amImageEntryModelImpl._originalGroupId = amImageEntryModelImpl._groupId;
-
-		amImageEntryModelImpl._setOriginalGroupId = false;
-
-		amImageEntryModelImpl._originalCompanyId =
-			amImageEntryModelImpl._companyId;
-
-		amImageEntryModelImpl._setOriginalCompanyId = false;
-
-		amImageEntryModelImpl._originalConfigurationUuid =
-			amImageEntryModelImpl._configurationUuid;
-
-		amImageEntryModelImpl._originalFileVersionId =
-			amImageEntryModelImpl._fileVersionId;
-
-		amImageEntryModelImpl._setOriginalFileVersionId = false;
-
-		amImageEntryModelImpl._columnBitmask = 0;
+		amImageEntryModelImpl._amImageEntryOriginalValues = null;
 	}
 
 	@Override
@@ -731,31 +733,84 @@ public class AMImageEntryModelImpl
 		return sb.toString();
 	}
 
+	void setAMImageEntryCacheModel(
+		AMImageEntryCacheModel amImageEntryCacheModel) {
+
+		if (amImageEntryCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = amImageEntryCacheModel.uuid;
+		}
+
+		_amImageEntryId = amImageEntryCacheModel.amImageEntryId;
+		_groupId = amImageEntryCacheModel.groupId;
+		_companyId = amImageEntryCacheModel.companyId;
+
+		if (amImageEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(amImageEntryCacheModel.createDate);
+		}
+
+		if (amImageEntryCacheModel.configurationUuid == null) {
+			_configurationUuid = "";
+		}
+		else {
+			_configurationUuid = amImageEntryCacheModel.configurationUuid;
+		}
+
+		_fileVersionId = amImageEntryCacheModel.fileVersionId;
+
+		if (amImageEntryCacheModel.mimeType == null) {
+			_mimeType = "";
+		}
+		else {
+			_mimeType = amImageEntryCacheModel.mimeType;
+		}
+
+		_height = amImageEntryCacheModel.height;
+		_width = amImageEntryCacheModel.width;
+		_size = amImageEntryCacheModel.size;
+	}
+
+	private static class AMImageEntryOriginalValues {
+
+		private AMImageEntryOriginalValues(
+			AMImageEntryModelImpl amImageEntryModelImpl) {
+
+			_originalUuid = amImageEntryModelImpl._uuid;
+			_originalGroupId = amImageEntryModelImpl._groupId;
+			_originalCompanyId = amImageEntryModelImpl._companyId;
+			_originalConfigurationUuid =
+				amImageEntryModelImpl._configurationUuid;
+			_originalFileVersionId = amImageEntryModelImpl._fileVersionId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalConfigurationUuid;
+		private final long _originalFileVersionId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AMImageEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AMImageEntryOriginalValues _amImageEntryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _amImageEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private String _configurationUuid;
-	private String _originalConfigurationUuid;
 	private long _fileVersionId;
-	private long _originalFileVersionId;
-	private boolean _setOriginalFileVersionId;
 	private String _mimeType;
 	private int _height;
 	private int _width;
 	private long _size;
-	private long _columnBitmask;
 	private AMImageEntry _escapedModel;
 
 }

@@ -87,13 +87,8 @@ public class AssetEntryAssetCategoryRelCacheModel
 		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl =
 			new AssetEntryAssetCategoryRelImpl();
 
-		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
-			assetEntryAssetCategoryRelId);
-		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryId);
-		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetCategoryId);
-		assetEntryAssetCategoryRelImpl.setPriority(priority);
-
-		assetEntryAssetCategoryRelImpl.resetOriginalValues();
+		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelCacheModel(
+			this);
 
 		return assetEntryAssetCategoryRelImpl;
 	}

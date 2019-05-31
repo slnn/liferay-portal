@@ -552,19 +552,23 @@ public class DDLRecordSetVersionModelImpl
 
 	@Override
 	public void setRecordSetId(long recordSetId) {
-		_columnBitmask |= RECORDSETID_COLUMN_BITMASK;
-
-		if (!_setOriginalRecordSetId) {
-			_setOriginalRecordSetId = true;
-
-			_originalRecordSetId = _recordSetId;
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			_ddlRecordSetVersionOriginalValues =
+				new DDLRecordSetVersionOriginalValues(this);
 		}
+
+		_ddlRecordSetVersionOriginalValues._columnBitmask |=
+			RECORDSETID_COLUMN_BITMASK;
 
 		_recordSetId = recordSetId;
 	}
 
 	public long getOriginalRecordSetId() {
-		return _originalRecordSetId;
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			return _recordSetId;
+		}
+
+		return _ddlRecordSetVersionOriginalValues._originalRecordSetId;
 	}
 
 	@JSON
@@ -818,17 +822,24 @@ public class DDLRecordSetVersionModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (_originalVersion == null) {
-			_originalVersion = _version;
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			_ddlRecordSetVersionOriginalValues =
+				new DDLRecordSetVersionOriginalValues(this);
 		}
+
+		_ddlRecordSetVersionOriginalValues._columnBitmask |=
+			VERSION_COLUMN_BITMASK;
 
 		_version = version;
 	}
 
 	public String getOriginalVersion() {
-		return GetterUtil.getString(_originalVersion);
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			return GetterUtil.getString(_version);
+		}
+
+		return GetterUtil.getString(
+			_ddlRecordSetVersionOriginalValues._originalVersion);
 	}
 
 	@JSON
@@ -839,19 +850,23 @@ public class DDLRecordSetVersionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			_ddlRecordSetVersionOriginalValues =
+				new DDLRecordSetVersionOriginalValues(this);
 		}
+
+		_ddlRecordSetVersionOriginalValues._columnBitmask |=
+			STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			return _status;
+		}
+
+		return _ddlRecordSetVersionOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -989,7 +1004,11 @@ public class DDLRecordSetVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddlRecordSetVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddlRecordSetVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1189,20 +1208,7 @@ public class DDLRecordSetVersionModelImpl
 	public void resetOriginalValues() {
 		DDLRecordSetVersionModelImpl ddlRecordSetVersionModelImpl = this;
 
-		ddlRecordSetVersionModelImpl._originalRecordSetId =
-			ddlRecordSetVersionModelImpl._recordSetId;
-
-		ddlRecordSetVersionModelImpl._setOriginalRecordSetId = false;
-
-		ddlRecordSetVersionModelImpl._originalVersion =
-			ddlRecordSetVersionModelImpl._version;
-
-		ddlRecordSetVersionModelImpl._originalStatus =
-			ddlRecordSetVersionModelImpl._status;
-
-		ddlRecordSetVersionModelImpl._setOriginalStatus = false;
-
-		ddlRecordSetVersionModelImpl._columnBitmask = 0;
+		ddlRecordSetVersionModelImpl._ddlRecordSetVersionOriginalValues = null;
 	}
 
 	@Override
@@ -1363,11 +1369,97 @@ public class DDLRecordSetVersionModelImpl
 		return sb.toString();
 	}
 
+	void setDDLRecordSetVersionCacheModel(
+		DDLRecordSetVersionCacheModel ddlRecordSetVersionCacheModel) {
+
+		_mvccVersion = ddlRecordSetVersionCacheModel.mvccVersion;
+		_recordSetVersionId = ddlRecordSetVersionCacheModel.recordSetVersionId;
+		_groupId = ddlRecordSetVersionCacheModel.groupId;
+		_companyId = ddlRecordSetVersionCacheModel.companyId;
+		_userId = ddlRecordSetVersionCacheModel.userId;
+
+		if (ddlRecordSetVersionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ddlRecordSetVersionCacheModel.userName;
+		}
+
+		if (ddlRecordSetVersionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ddlRecordSetVersionCacheModel.createDate);
+		}
+
+		_recordSetId = ddlRecordSetVersionCacheModel.recordSetId;
+		_DDMStructureVersionId =
+			ddlRecordSetVersionCacheModel.DDMStructureVersionId;
+
+		if (ddlRecordSetVersionCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = ddlRecordSetVersionCacheModel.name;
+		}
+
+		if (ddlRecordSetVersionCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = ddlRecordSetVersionCacheModel.description;
+		}
+
+		if (ddlRecordSetVersionCacheModel.settings == null) {
+			_settings = "";
+		}
+		else {
+			_settings = ddlRecordSetVersionCacheModel.settings;
+		}
+
+		if (ddlRecordSetVersionCacheModel.version == null) {
+			_version = "";
+		}
+		else {
+			_version = ddlRecordSetVersionCacheModel.version;
+		}
+
+		_status = ddlRecordSetVersionCacheModel.status;
+		_statusByUserId = ddlRecordSetVersionCacheModel.statusByUserId;
+
+		if (ddlRecordSetVersionCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = ddlRecordSetVersionCacheModel.statusByUserName;
+		}
+
+		if (ddlRecordSetVersionCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(ddlRecordSetVersionCacheModel.statusDate);
+		}
+	}
+
+	private static class DDLRecordSetVersionOriginalValues {
+
+		private DDLRecordSetVersionOriginalValues(
+			DDLRecordSetVersionModelImpl ddlRecordSetVersionModelImpl) {
+
+			_originalRecordSetId = ddlRecordSetVersionModelImpl._recordSetId;
+			_originalVersion = ddlRecordSetVersionModelImpl._version;
+			_originalStatus = ddlRecordSetVersionModelImpl._status;
+		}
+
+		private final long _originalRecordSetId;
+		private final String _originalVersion;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDLRecordSetVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private DDLRecordSetVersionOriginalValues
+		_ddlRecordSetVersionOriginalValues;
 	private long _mvccVersion;
 	private long _recordSetVersionId;
 	private long _groupId;
@@ -1376,8 +1468,6 @@ public class DDLRecordSetVersionModelImpl
 	private String _userName;
 	private Date _createDate;
 	private long _recordSetId;
-	private long _originalRecordSetId;
-	private boolean _setOriginalRecordSetId;
 	private long _DDMStructureVersionId;
 	private String _name;
 	private String _nameCurrentLanguageId;
@@ -1385,14 +1475,10 @@ public class DDLRecordSetVersionModelImpl
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
 	private String _version;
-	private String _originalVersion;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private DDLRecordSetVersion _escapedModel;
 
 }

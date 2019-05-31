@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -102,77 +100,7 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	public MDRRule toEntityModel() {
 		MDRRuleImpl mdrRuleImpl = new MDRRuleImpl();
 
-		if (uuid == null) {
-			mdrRuleImpl.setUuid("");
-		}
-		else {
-			mdrRuleImpl.setUuid(uuid);
-		}
-
-		mdrRuleImpl.setRuleId(ruleId);
-		mdrRuleImpl.setGroupId(groupId);
-		mdrRuleImpl.setCompanyId(companyId);
-		mdrRuleImpl.setUserId(userId);
-
-		if (userName == null) {
-			mdrRuleImpl.setUserName("");
-		}
-		else {
-			mdrRuleImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mdrRuleImpl.setCreateDate(null);
-		}
-		else {
-			mdrRuleImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mdrRuleImpl.setModifiedDate(null);
-		}
-		else {
-			mdrRuleImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mdrRuleImpl.setRuleGroupId(ruleGroupId);
-
-		if (name == null) {
-			mdrRuleImpl.setName("");
-		}
-		else {
-			mdrRuleImpl.setName(name);
-		}
-
-		if (description == null) {
-			mdrRuleImpl.setDescription("");
-		}
-		else {
-			mdrRuleImpl.setDescription(description);
-		}
-
-		if (type == null) {
-			mdrRuleImpl.setType("");
-		}
-		else {
-			mdrRuleImpl.setType(type);
-		}
-
-		if (typeSettings == null) {
-			mdrRuleImpl.setTypeSettings("");
-		}
-		else {
-			mdrRuleImpl.setTypeSettings(typeSettings);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mdrRuleImpl.setLastPublishDate(null);
-		}
-		else {
-			mdrRuleImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mdrRuleImpl.resetOriginalValues();
+		mdrRuleImpl.setMDRRuleCacheModel(this);
 
 		return mdrRuleImpl;
 	}

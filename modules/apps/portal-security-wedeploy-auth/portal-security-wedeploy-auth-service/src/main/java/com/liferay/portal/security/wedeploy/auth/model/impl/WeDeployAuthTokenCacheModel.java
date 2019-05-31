@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,48 +95,7 @@ public class WeDeployAuthTokenCacheModel
 		WeDeployAuthTokenImpl weDeployAuthTokenImpl =
 			new WeDeployAuthTokenImpl();
 
-		weDeployAuthTokenImpl.setWeDeployAuthTokenId(weDeployAuthTokenId);
-		weDeployAuthTokenImpl.setCompanyId(companyId);
-		weDeployAuthTokenImpl.setUserId(userId);
-
-		if (userName == null) {
-			weDeployAuthTokenImpl.setUserName("");
-		}
-		else {
-			weDeployAuthTokenImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			weDeployAuthTokenImpl.setCreateDate(null);
-		}
-		else {
-			weDeployAuthTokenImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			weDeployAuthTokenImpl.setModifiedDate(null);
-		}
-		else {
-			weDeployAuthTokenImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (clientId == null) {
-			weDeployAuthTokenImpl.setClientId("");
-		}
-		else {
-			weDeployAuthTokenImpl.setClientId(clientId);
-		}
-
-		if (token == null) {
-			weDeployAuthTokenImpl.setToken("");
-		}
-		else {
-			weDeployAuthTokenImpl.setToken(token);
-		}
-
-		weDeployAuthTokenImpl.setType(type);
-
-		weDeployAuthTokenImpl.resetOriginalValues();
+		weDeployAuthTokenImpl.setWeDeployAuthTokenCacheModel(this);
 
 		return weDeployAuthTokenImpl;
 	}

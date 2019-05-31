@@ -126,27 +126,7 @@ public class OrgLaborCacheModel
 	public OrgLabor toEntityModel() {
 		OrgLaborImpl orgLaborImpl = new OrgLaborImpl();
 
-		orgLaborImpl.setMvccVersion(mvccVersion);
-		orgLaborImpl.setOrgLaborId(orgLaborId);
-		orgLaborImpl.setCompanyId(companyId);
-		orgLaborImpl.setOrganizationId(organizationId);
-		orgLaborImpl.setTypeId(typeId);
-		orgLaborImpl.setSunOpen(sunOpen);
-		orgLaborImpl.setSunClose(sunClose);
-		orgLaborImpl.setMonOpen(monOpen);
-		orgLaborImpl.setMonClose(monClose);
-		orgLaborImpl.setTueOpen(tueOpen);
-		orgLaborImpl.setTueClose(tueClose);
-		orgLaborImpl.setWedOpen(wedOpen);
-		orgLaborImpl.setWedClose(wedClose);
-		orgLaborImpl.setThuOpen(thuOpen);
-		orgLaborImpl.setThuClose(thuClose);
-		orgLaborImpl.setFriOpen(friOpen);
-		orgLaborImpl.setFriClose(friClose);
-		orgLaborImpl.setSatOpen(satOpen);
-		orgLaborImpl.setSatClose(satClose);
-
-		orgLaborImpl.resetOriginalValues();
+		orgLaborImpl.setOrgLaborCacheModel(this);
 
 		return orgLaborImpl;
 	}

@@ -419,17 +419,24 @@ public class WeDeployAuthTokenModelImpl
 
 	@Override
 	public void setClientId(String clientId) {
-		_columnBitmask |= CLIENTID_COLUMN_BITMASK;
-
-		if (_originalClientId == null) {
-			_originalClientId = _clientId;
+		if (_weDeployAuthTokenOriginalValues == null) {
+			_weDeployAuthTokenOriginalValues =
+				new WeDeployAuthTokenOriginalValues(this);
 		}
+
+		_weDeployAuthTokenOriginalValues._columnBitmask |=
+			CLIENTID_COLUMN_BITMASK;
 
 		_clientId = clientId;
 	}
 
 	public String getOriginalClientId() {
-		return GetterUtil.getString(_originalClientId);
+		if (_weDeployAuthTokenOriginalValues == null) {
+			return GetterUtil.getString(_clientId);
+		}
+
+		return GetterUtil.getString(
+			_weDeployAuthTokenOriginalValues._originalClientId);
 	}
 
 	@Override
@@ -444,17 +451,23 @@ public class WeDeployAuthTokenModelImpl
 
 	@Override
 	public void setToken(String token) {
-		_columnBitmask |= TOKEN_COLUMN_BITMASK;
-
-		if (_originalToken == null) {
-			_originalToken = _token;
+		if (_weDeployAuthTokenOriginalValues == null) {
+			_weDeployAuthTokenOriginalValues =
+				new WeDeployAuthTokenOriginalValues(this);
 		}
+
+		_weDeployAuthTokenOriginalValues._columnBitmask |= TOKEN_COLUMN_BITMASK;
 
 		_token = token;
 	}
 
 	public String getOriginalToken() {
-		return GetterUtil.getString(_originalToken);
+		if (_weDeployAuthTokenOriginalValues == null) {
+			return GetterUtil.getString(_token);
+		}
+
+		return GetterUtil.getString(
+			_weDeployAuthTokenOriginalValues._originalToken);
 	}
 
 	@Override
@@ -464,23 +477,30 @@ public class WeDeployAuthTokenModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_weDeployAuthTokenOriginalValues == null) {
+			_weDeployAuthTokenOriginalValues =
+				new WeDeployAuthTokenOriginalValues(this);
 		}
+
+		_weDeployAuthTokenOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_weDeployAuthTokenOriginalValues == null) {
+			return _type;
+		}
+
+		return _weDeployAuthTokenOriginalValues._originalType;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_weDeployAuthTokenOriginalValues == null) {
+			return 0;
+		}
+
+		return _weDeployAuthTokenOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -582,20 +602,9 @@ public class WeDeployAuthTokenModelImpl
 	public void resetOriginalValues() {
 		WeDeployAuthTokenModelImpl weDeployAuthTokenModelImpl = this;
 
+		weDeployAuthTokenModelImpl._weDeployAuthTokenOriginalValues = null;
+
 		weDeployAuthTokenModelImpl._setModifiedDate = false;
-
-		weDeployAuthTokenModelImpl._originalClientId =
-			weDeployAuthTokenModelImpl._clientId;
-
-		weDeployAuthTokenModelImpl._originalToken =
-			weDeployAuthTokenModelImpl._token;
-
-		weDeployAuthTokenModelImpl._originalType =
-			weDeployAuthTokenModelImpl._type;
-
-		weDeployAuthTokenModelImpl._setOriginalType = false;
-
-		weDeployAuthTokenModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -720,9 +729,66 @@ public class WeDeployAuthTokenModelImpl
 		return sb.toString();
 	}
 
+	void setWeDeployAuthTokenCacheModel(
+		WeDeployAuthTokenCacheModel weDeployAuthTokenCacheModel) {
+
+		_weDeployAuthTokenId = weDeployAuthTokenCacheModel.weDeployAuthTokenId;
+		_companyId = weDeployAuthTokenCacheModel.companyId;
+		_userId = weDeployAuthTokenCacheModel.userId;
+
+		if (weDeployAuthTokenCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = weDeployAuthTokenCacheModel.userName;
+		}
+
+		if (weDeployAuthTokenCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(weDeployAuthTokenCacheModel.createDate);
+		}
+
+		if (weDeployAuthTokenCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(weDeployAuthTokenCacheModel.modifiedDate);
+		}
+
+		if (weDeployAuthTokenCacheModel.clientId == null) {
+			_clientId = "";
+		}
+		else {
+			_clientId = weDeployAuthTokenCacheModel.clientId;
+		}
+
+		if (weDeployAuthTokenCacheModel.token == null) {
+			_token = "";
+		}
+		else {
+			_token = weDeployAuthTokenCacheModel.token;
+		}
+
+		_type = weDeployAuthTokenCacheModel.type;
+	}
+
+	private static class WeDeployAuthTokenOriginalValues {
+
+		private WeDeployAuthTokenOriginalValues(
+			WeDeployAuthTokenModelImpl weDeployAuthTokenModelImpl) {
+
+			_originalClientId = weDeployAuthTokenModelImpl._clientId;
+			_originalToken = weDeployAuthTokenModelImpl._token;
+			_originalType = weDeployAuthTokenModelImpl._type;
+		}
+
+		private final String _originalClientId;
+		private final String _originalToken;
+		private final int _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, WeDeployAuthToken>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WeDeployAuthTokenOriginalValues _weDeployAuthTokenOriginalValues;
 	private long _weDeployAuthTokenId;
 	private long _companyId;
 	private long _userId;
@@ -731,13 +797,8 @@ public class WeDeployAuthTokenModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _clientId;
-	private String _originalClientId;
 	private String _token;
-	private String _originalToken;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
-	private long _columnBitmask;
 	private WeDeployAuthToken _escapedModel;
 
 }

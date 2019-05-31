@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,45 +98,7 @@ public class MemberRequestCacheModel
 	public MemberRequest toEntityModel() {
 		MemberRequestImpl memberRequestImpl = new MemberRequestImpl();
 
-		memberRequestImpl.setMemberRequestId(memberRequestId);
-		memberRequestImpl.setGroupId(groupId);
-		memberRequestImpl.setCompanyId(companyId);
-		memberRequestImpl.setUserId(userId);
-
-		if (userName == null) {
-			memberRequestImpl.setUserName("");
-		}
-		else {
-			memberRequestImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			memberRequestImpl.setCreateDate(null);
-		}
-		else {
-			memberRequestImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			memberRequestImpl.setModifiedDate(null);
-		}
-		else {
-			memberRequestImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (key == null) {
-			memberRequestImpl.setKey("");
-		}
-		else {
-			memberRequestImpl.setKey(key);
-		}
-
-		memberRequestImpl.setReceiverUserId(receiverUserId);
-		memberRequestImpl.setInvitedRoleId(invitedRoleId);
-		memberRequestImpl.setInvitedTeamId(invitedTeamId);
-		memberRequestImpl.setStatus(status);
-
-		memberRequestImpl.resetOriginalValues();
+		memberRequestImpl.setMemberRequestCacheModel(this);
 
 		return memberRequestImpl;
 	}

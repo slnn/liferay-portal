@@ -26,7 +26,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -125,74 +124,7 @@ public class BackgroundTaskCacheModel
 	public BackgroundTask toEntityModel() {
 		BackgroundTaskImpl backgroundTaskImpl = new BackgroundTaskImpl();
 
-		backgroundTaskImpl.setMvccVersion(mvccVersion);
-		backgroundTaskImpl.setBackgroundTaskId(backgroundTaskId);
-		backgroundTaskImpl.setGroupId(groupId);
-		backgroundTaskImpl.setCompanyId(companyId);
-		backgroundTaskImpl.setUserId(userId);
-
-		if (userName == null) {
-			backgroundTaskImpl.setUserName("");
-		}
-		else {
-			backgroundTaskImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			backgroundTaskImpl.setCreateDate(null);
-		}
-		else {
-			backgroundTaskImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			backgroundTaskImpl.setModifiedDate(null);
-		}
-		else {
-			backgroundTaskImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			backgroundTaskImpl.setName("");
-		}
-		else {
-			backgroundTaskImpl.setName(name);
-		}
-
-		if (servletContextNames == null) {
-			backgroundTaskImpl.setServletContextNames("");
-		}
-		else {
-			backgroundTaskImpl.setServletContextNames(servletContextNames);
-		}
-
-		if (taskExecutorClassName == null) {
-			backgroundTaskImpl.setTaskExecutorClassName("");
-		}
-		else {
-			backgroundTaskImpl.setTaskExecutorClassName(taskExecutorClassName);
-		}
-
-		backgroundTaskImpl.setTaskContextMap(taskContextMap);
-		backgroundTaskImpl.setCompleted(completed);
-
-		if (completionDate == Long.MIN_VALUE) {
-			backgroundTaskImpl.setCompletionDate(null);
-		}
-		else {
-			backgroundTaskImpl.setCompletionDate(new Date(completionDate));
-		}
-
-		backgroundTaskImpl.setStatus(status);
-
-		if (statusMessage == null) {
-			backgroundTaskImpl.setStatusMessage("");
-		}
-		else {
-			backgroundTaskImpl.setStatusMessage(statusMessage);
-		}
-
-		backgroundTaskImpl.resetOriginalValues();
+		backgroundTaskImpl.setBackgroundTaskCacheModel(this);
 
 		return backgroundTaskImpl;
 	}

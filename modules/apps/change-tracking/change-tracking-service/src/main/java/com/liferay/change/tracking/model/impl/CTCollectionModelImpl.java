@@ -357,19 +357,21 @@ public class CTCollectionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ctCollectionOriginalValues == null) {
+			_ctCollectionOriginalValues = new CTCollectionOriginalValues(this);
 		}
+
+		_ctCollectionOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ctCollectionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ctCollectionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -420,7 +422,11 @@ public class CTCollectionModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_ctCollectionOriginalValues == null) {
+			_ctCollectionOriginalValues = new CTCollectionOriginalValues(this);
+		}
+
+		_ctCollectionOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -453,17 +459,21 @@ public class CTCollectionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_ctCollectionOriginalValues == null) {
+			_ctCollectionOriginalValues = new CTCollectionOriginalValues(this);
 		}
+
+		_ctCollectionOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_ctCollectionOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_ctCollectionOriginalValues._originalName);
 	}
 
 	@Override
@@ -623,7 +633,11 @@ public class CTCollectionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ctCollectionOriginalValues == null) {
+			return 0;
+		}
+
+		return _ctCollectionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -726,16 +740,9 @@ public class CTCollectionModelImpl
 	public void resetOriginalValues() {
 		CTCollectionModelImpl ctCollectionModelImpl = this;
 
-		ctCollectionModelImpl._originalCompanyId =
-			ctCollectionModelImpl._companyId;
-
-		ctCollectionModelImpl._setOriginalCompanyId = false;
+		ctCollectionModelImpl._ctCollectionOriginalValues = null;
 
 		ctCollectionModelImpl._setModifiedDate = false;
-
-		ctCollectionModelImpl._originalName = ctCollectionModelImpl._name;
-
-		ctCollectionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -878,28 +885,91 @@ public class CTCollectionModelImpl
 		return sb.toString();
 	}
 
+	void setCTCollectionCacheModel(
+		CTCollectionCacheModel ctCollectionCacheModel) {
+
+		_ctCollectionId = ctCollectionCacheModel.ctCollectionId;
+		_companyId = ctCollectionCacheModel.companyId;
+		_userId = ctCollectionCacheModel.userId;
+
+		if (ctCollectionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ctCollectionCacheModel.userName;
+		}
+
+		if (ctCollectionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ctCollectionCacheModel.createDate);
+		}
+
+		if (ctCollectionCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(ctCollectionCacheModel.modifiedDate);
+		}
+
+		if (ctCollectionCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = ctCollectionCacheModel.name;
+		}
+
+		if (ctCollectionCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = ctCollectionCacheModel.description;
+		}
+
+		_status = ctCollectionCacheModel.status;
+		_statusByUserId = ctCollectionCacheModel.statusByUserId;
+
+		if (ctCollectionCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = ctCollectionCacheModel.statusByUserName;
+		}
+
+		if (ctCollectionCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(ctCollectionCacheModel.statusDate);
+		}
+	}
+
+	private static class CTCollectionOriginalValues {
+
+		private CTCollectionOriginalValues(
+			CTCollectionModelImpl ctCollectionModelImpl) {
+
+			_originalCompanyId = ctCollectionModelImpl._companyId;
+			_originalName = ctCollectionModelImpl._name;
+		}
+
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, CTCollection>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CTCollectionOriginalValues _ctCollectionOriginalValues;
 	private long _ctCollectionId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private CTCollection _escapedModel;
 
 }

@@ -328,17 +328,21 @@ public class MBThreadFlagModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mbThreadFlagOriginalValues == null) {
+			_mbThreadFlagOriginalValues = new MBThreadFlagOriginalValues(this);
 		}
+
+		_mbThreadFlagOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mbThreadFlagOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mbThreadFlagOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -358,19 +362,21 @@ public class MBThreadFlagModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbThreadFlagOriginalValues == null) {
+			_mbThreadFlagOriginalValues = new MBThreadFlagOriginalValues(this);
 		}
+
+		_mbThreadFlagOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbThreadFlagOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbThreadFlagOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -380,19 +386,21 @@ public class MBThreadFlagModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mbThreadFlagOriginalValues == null) {
+			_mbThreadFlagOriginalValues = new MBThreadFlagOriginalValues(this);
 		}
+
+		_mbThreadFlagOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mbThreadFlagOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mbThreadFlagOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -402,13 +410,11 @@ public class MBThreadFlagModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_mbThreadFlagOriginalValues == null) {
+			_mbThreadFlagOriginalValues = new MBThreadFlagOriginalValues(this);
 		}
+
+		_mbThreadFlagOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -430,7 +436,11 @@ public class MBThreadFlagModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_mbThreadFlagOriginalValues == null) {
+			return _userId;
+		}
+
+		return _mbThreadFlagOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -481,19 +491,21 @@ public class MBThreadFlagModelImpl
 
 	@Override
 	public void setThreadId(long threadId) {
-		_columnBitmask |= THREADID_COLUMN_BITMASK;
-
-		if (!_setOriginalThreadId) {
-			_setOriginalThreadId = true;
-
-			_originalThreadId = _threadId;
+		if (_mbThreadFlagOriginalValues == null) {
+			_mbThreadFlagOriginalValues = new MBThreadFlagOriginalValues(this);
 		}
+
+		_mbThreadFlagOriginalValues._columnBitmask |= THREADID_COLUMN_BITMASK;
 
 		_threadId = threadId;
 	}
 
 	public long getOriginalThreadId() {
-		return _originalThreadId;
+		if (_mbThreadFlagOriginalValues == null) {
+			return _threadId;
+		}
+
+		return _mbThreadFlagOriginalValues._originalThreadId;
 	}
 
 	@Override
@@ -513,7 +525,11 @@ public class MBThreadFlagModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbThreadFlagOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbThreadFlagOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -615,29 +631,9 @@ public class MBThreadFlagModelImpl
 	public void resetOriginalValues() {
 		MBThreadFlagModelImpl mbThreadFlagModelImpl = this;
 
-		mbThreadFlagModelImpl._originalUuid = mbThreadFlagModelImpl._uuid;
-
-		mbThreadFlagModelImpl._originalGroupId = mbThreadFlagModelImpl._groupId;
-
-		mbThreadFlagModelImpl._setOriginalGroupId = false;
-
-		mbThreadFlagModelImpl._originalCompanyId =
-			mbThreadFlagModelImpl._companyId;
-
-		mbThreadFlagModelImpl._setOriginalCompanyId = false;
-
-		mbThreadFlagModelImpl._originalUserId = mbThreadFlagModelImpl._userId;
-
-		mbThreadFlagModelImpl._setOriginalUserId = false;
+		mbThreadFlagModelImpl._mbThreadFlagOriginalValues = null;
 
 		mbThreadFlagModelImpl._setModifiedDate = false;
-
-		mbThreadFlagModelImpl._originalThreadId =
-			mbThreadFlagModelImpl._threadId;
-
-		mbThreadFlagModelImpl._setOriginalThreadId = false;
-
-		mbThreadFlagModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -764,30 +760,79 @@ public class MBThreadFlagModelImpl
 		return sb.toString();
 	}
 
+	void setMBThreadFlagCacheModel(
+		MBThreadFlagCacheModel mbThreadFlagCacheModel) {
+
+		if (mbThreadFlagCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = mbThreadFlagCacheModel.uuid;
+		}
+
+		_threadFlagId = mbThreadFlagCacheModel.threadFlagId;
+		_groupId = mbThreadFlagCacheModel.groupId;
+		_companyId = mbThreadFlagCacheModel.companyId;
+		_userId = mbThreadFlagCacheModel.userId;
+
+		if (mbThreadFlagCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = mbThreadFlagCacheModel.userName;
+		}
+
+		if (mbThreadFlagCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(mbThreadFlagCacheModel.createDate);
+		}
+
+		if (mbThreadFlagCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(mbThreadFlagCacheModel.modifiedDate);
+		}
+
+		_threadId = mbThreadFlagCacheModel.threadId;
+
+		if (mbThreadFlagCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(mbThreadFlagCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class MBThreadFlagOriginalValues {
+
+		private MBThreadFlagOriginalValues(
+			MBThreadFlagModelImpl mbThreadFlagModelImpl) {
+
+			_originalUuid = mbThreadFlagModelImpl._uuid;
+			_originalGroupId = mbThreadFlagModelImpl._groupId;
+			_originalCompanyId = mbThreadFlagModelImpl._companyId;
+			_originalUserId = mbThreadFlagModelImpl._userId;
+			_originalThreadId = mbThreadFlagModelImpl._threadId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalThreadId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBThreadFlag>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBThreadFlagOriginalValues _mbThreadFlagOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _threadFlagId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _threadId;
-	private long _originalThreadId;
-	private boolean _setOriginalThreadId;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private MBThreadFlag _escapedModel;
 
 }

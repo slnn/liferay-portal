@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -114,108 +112,7 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 	public Message toEntityModel() {
 		MessageImpl messageImpl = new MessageImpl();
 
-		messageImpl.setMessageId(messageId);
-		messageImpl.setCompanyId(companyId);
-		messageImpl.setUserId(userId);
-
-		if (userName == null) {
-			messageImpl.setUserName("");
-		}
-		else {
-			messageImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			messageImpl.setCreateDate(null);
-		}
-		else {
-			messageImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			messageImpl.setModifiedDate(null);
-		}
-		else {
-			messageImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		messageImpl.setAccountId(accountId);
-		messageImpl.setFolderId(folderId);
-
-		if (sender == null) {
-			messageImpl.setSender("");
-		}
-		else {
-			messageImpl.setSender(sender);
-		}
-
-		if (to == null) {
-			messageImpl.setTo("");
-		}
-		else {
-			messageImpl.setTo(to);
-		}
-
-		if (cc == null) {
-			messageImpl.setCc("");
-		}
-		else {
-			messageImpl.setCc(cc);
-		}
-
-		if (bcc == null) {
-			messageImpl.setBcc("");
-		}
-		else {
-			messageImpl.setBcc(bcc);
-		}
-
-		if (sentDate == Long.MIN_VALUE) {
-			messageImpl.setSentDate(null);
-		}
-		else {
-			messageImpl.setSentDate(new Date(sentDate));
-		}
-
-		if (subject == null) {
-			messageImpl.setSubject("");
-		}
-		else {
-			messageImpl.setSubject(subject);
-		}
-
-		if (preview == null) {
-			messageImpl.setPreview("");
-		}
-		else {
-			messageImpl.setPreview(preview);
-		}
-
-		if (body == null) {
-			messageImpl.setBody("");
-		}
-		else {
-			messageImpl.setBody(body);
-		}
-
-		if (flags == null) {
-			messageImpl.setFlags("");
-		}
-		else {
-			messageImpl.setFlags(flags);
-		}
-
-		messageImpl.setSize(size);
-		messageImpl.setRemoteMessageId(remoteMessageId);
-
-		if (contentType == null) {
-			messageImpl.setContentType("");
-		}
-		else {
-			messageImpl.setContentType(contentType);
-		}
-
-		messageImpl.resetOriginalValues();
+		messageImpl.setMessageCacheModel(this);
 
 		return messageImpl;
 	}

@@ -372,19 +372,22 @@ public class PluginSettingModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_pluginSettingOriginalValues == null) {
+			_pluginSettingOriginalValues = new PluginSettingOriginalValues(
+				this);
 		}
+
+		_pluginSettingOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_pluginSettingOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _pluginSettingOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -400,17 +403,23 @@ public class PluginSettingModelImpl
 
 	@Override
 	public void setPluginId(String pluginId) {
-		_columnBitmask |= PLUGINID_COLUMN_BITMASK;
-
-		if (_originalPluginId == null) {
-			_originalPluginId = _pluginId;
+		if (_pluginSettingOriginalValues == null) {
+			_pluginSettingOriginalValues = new PluginSettingOriginalValues(
+				this);
 		}
+
+		_pluginSettingOriginalValues._columnBitmask |= PLUGINID_COLUMN_BITMASK;
 
 		_pluginId = pluginId;
 	}
 
 	public String getOriginalPluginId() {
-		return GetterUtil.getString(_originalPluginId);
+		if (_pluginSettingOriginalValues == null) {
+			return GetterUtil.getString(_pluginId);
+		}
+
+		return GetterUtil.getString(
+			_pluginSettingOriginalValues._originalPluginId);
 	}
 
 	@JSON
@@ -426,17 +435,24 @@ public class PluginSettingModelImpl
 
 	@Override
 	public void setPluginType(String pluginType) {
-		_columnBitmask |= PLUGINTYPE_COLUMN_BITMASK;
-
-		if (_originalPluginType == null) {
-			_originalPluginType = _pluginType;
+		if (_pluginSettingOriginalValues == null) {
+			_pluginSettingOriginalValues = new PluginSettingOriginalValues(
+				this);
 		}
+
+		_pluginSettingOriginalValues._columnBitmask |=
+			PLUGINTYPE_COLUMN_BITMASK;
 
 		_pluginType = pluginType;
 	}
 
 	public String getOriginalPluginType() {
-		return GetterUtil.getString(_originalPluginType);
+		if (_pluginSettingOriginalValues == null) {
+			return GetterUtil.getString(_pluginType);
+		}
+
+		return GetterUtil.getString(
+			_pluginSettingOriginalValues._originalPluginType);
 	}
 
 	@JSON
@@ -473,7 +489,11 @@ public class PluginSettingModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_pluginSettingOriginalValues == null) {
+			return 0;
+		}
+
+		return _pluginSettingOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -572,18 +592,7 @@ public class PluginSettingModelImpl
 	public void resetOriginalValues() {
 		PluginSettingModelImpl pluginSettingModelImpl = this;
 
-		pluginSettingModelImpl._originalCompanyId =
-			pluginSettingModelImpl._companyId;
-
-		pluginSettingModelImpl._setOriginalCompanyId = false;
-
-		pluginSettingModelImpl._originalPluginId =
-			pluginSettingModelImpl._pluginId;
-
-		pluginSettingModelImpl._originalPluginType =
-			pluginSettingModelImpl._pluginType;
-
-		pluginSettingModelImpl._columnBitmask = 0;
+		pluginSettingModelImpl._pluginSettingOriginalValues = null;
 	}
 
 	@Override
@@ -689,21 +698,65 @@ public class PluginSettingModelImpl
 		return sb.toString();
 	}
 
+	void setPluginSettingCacheModel(
+		PluginSettingCacheModel pluginSettingCacheModel) {
+
+		_mvccVersion = pluginSettingCacheModel.mvccVersion;
+		_pluginSettingId = pluginSettingCacheModel.pluginSettingId;
+		_companyId = pluginSettingCacheModel.companyId;
+
+		if (pluginSettingCacheModel.pluginId == null) {
+			_pluginId = "";
+		}
+		else {
+			_pluginId = pluginSettingCacheModel.pluginId;
+		}
+
+		if (pluginSettingCacheModel.pluginType == null) {
+			_pluginType = "";
+		}
+		else {
+			_pluginType = pluginSettingCacheModel.pluginType;
+		}
+
+		if (pluginSettingCacheModel.roles == null) {
+			_roles = "";
+		}
+		else {
+			_roles = pluginSettingCacheModel.roles;
+		}
+
+		_active = pluginSettingCacheModel.active;
+	}
+
+	private static class PluginSettingOriginalValues {
+
+		private PluginSettingOriginalValues(
+			PluginSettingModelImpl pluginSettingModelImpl) {
+
+			_originalCompanyId = pluginSettingModelImpl._companyId;
+			_originalPluginId = pluginSettingModelImpl._pluginId;
+			_originalPluginType = pluginSettingModelImpl._pluginType;
+		}
+
+		private final long _originalCompanyId;
+		private final String _originalPluginId;
+		private final String _originalPluginType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PluginSetting>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PluginSettingOriginalValues _pluginSettingOriginalValues;
 	private long _mvccVersion;
 	private long _pluginSettingId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private String _pluginId;
-	private String _originalPluginId;
 	private String _pluginType;
-	private String _originalPluginType;
 	private String _roles;
 	private boolean _active;
-	private long _columnBitmask;
 	private PluginSetting _escapedModel;
 
 }

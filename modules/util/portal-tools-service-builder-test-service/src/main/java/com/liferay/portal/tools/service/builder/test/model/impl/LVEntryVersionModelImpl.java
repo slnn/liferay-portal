@@ -515,19 +515,22 @@ public class LVEntryVersionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_lvEntryVersionOriginalValues == null) {
+			_lvEntryVersionOriginalValues = new LVEntryVersionOriginalValues(
+				this);
 		}
+
+		_lvEntryVersionOriginalValues._columnBitmask = -1L;
 
 		_version = version;
 	}
 
 	public int getOriginalVersion() {
-		return _originalVersion;
+		if (_lvEntryVersionOriginalValues == null) {
+			return _version;
+		}
+
+		return _lvEntryVersionOriginalValues._originalVersion;
 	}
 
 	@Override
@@ -542,17 +545,23 @@ public class LVEntryVersionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_lvEntryVersionOriginalValues == null) {
+			_lvEntryVersionOriginalValues = new LVEntryVersionOriginalValues(
+				this);
 		}
+
+		_lvEntryVersionOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_lvEntryVersionOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_lvEntryVersionOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -577,19 +586,23 @@ public class LVEntryVersionModelImpl
 
 	@Override
 	public void setLvEntryId(long lvEntryId) {
-		_columnBitmask |= LVENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalLvEntryId) {
-			_setOriginalLvEntryId = true;
-
-			_originalLvEntryId = _lvEntryId;
+		if (_lvEntryVersionOriginalValues == null) {
+			_lvEntryVersionOriginalValues = new LVEntryVersionOriginalValues(
+				this);
 		}
+
+		_lvEntryVersionOriginalValues._columnBitmask |=
+			LVENTRYID_COLUMN_BITMASK;
 
 		_lvEntryId = lvEntryId;
 	}
 
 	public long getOriginalLvEntryId() {
-		return _originalLvEntryId;
+		if (_lvEntryVersionOriginalValues == null) {
+			return _lvEntryId;
+		}
+
+		return _lvEntryVersionOriginalValues._originalLvEntryId;
 	}
 
 	@Override
@@ -599,19 +612,23 @@ public class LVEntryVersionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_lvEntryVersionOriginalValues == null) {
+			_lvEntryVersionOriginalValues = new LVEntryVersionOriginalValues(
+				this);
 		}
+
+		_lvEntryVersionOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_lvEntryVersionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _lvEntryVersionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -621,19 +638,22 @@ public class LVEntryVersionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_lvEntryVersionOriginalValues == null) {
+			_lvEntryVersionOriginalValues = new LVEntryVersionOriginalValues(
+				this);
 		}
+
+		_lvEntryVersionOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_lvEntryVersionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _lvEntryVersionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -648,21 +668,32 @@ public class LVEntryVersionModelImpl
 
 	@Override
 	public void setUniqueGroupKey(String uniqueGroupKey) {
-		_columnBitmask |= UNIQUEGROUPKEY_COLUMN_BITMASK;
-
-		if (_originalUniqueGroupKey == null) {
-			_originalUniqueGroupKey = _uniqueGroupKey;
+		if (_lvEntryVersionOriginalValues == null) {
+			_lvEntryVersionOriginalValues = new LVEntryVersionOriginalValues(
+				this);
 		}
+
+		_lvEntryVersionOriginalValues._columnBitmask |=
+			UNIQUEGROUPKEY_COLUMN_BITMASK;
 
 		_uniqueGroupKey = uniqueGroupKey;
 	}
 
 	public String getOriginalUniqueGroupKey() {
-		return GetterUtil.getString(_originalUniqueGroupKey);
+		if (_lvEntryVersionOriginalValues == null) {
+			return GetterUtil.getString(_uniqueGroupKey);
+		}
+
+		return GetterUtil.getString(
+			_lvEntryVersionOriginalValues._originalUniqueGroupKey);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_lvEntryVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _lvEntryVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -770,32 +801,7 @@ public class LVEntryVersionModelImpl
 	public void resetOriginalValues() {
 		LVEntryVersionModelImpl lvEntryVersionModelImpl = this;
 
-		lvEntryVersionModelImpl._originalVersion =
-			lvEntryVersionModelImpl._version;
-
-		lvEntryVersionModelImpl._setOriginalVersion = false;
-
-		lvEntryVersionModelImpl._originalUuid = lvEntryVersionModelImpl._uuid;
-
-		lvEntryVersionModelImpl._originalLvEntryId =
-			lvEntryVersionModelImpl._lvEntryId;
-
-		lvEntryVersionModelImpl._setOriginalLvEntryId = false;
-
-		lvEntryVersionModelImpl._originalCompanyId =
-			lvEntryVersionModelImpl._companyId;
-
-		lvEntryVersionModelImpl._setOriginalCompanyId = false;
-
-		lvEntryVersionModelImpl._originalGroupId =
-			lvEntryVersionModelImpl._groupId;
-
-		lvEntryVersionModelImpl._setOriginalGroupId = false;
-
-		lvEntryVersionModelImpl._originalUniqueGroupKey =
-			lvEntryVersionModelImpl._uniqueGroupKey;
-
-		lvEntryVersionModelImpl._columnBitmask = 0;
+		lvEntryVersionModelImpl._lvEntryVersionOriginalValues = null;
 	}
 
 	@Override
@@ -903,28 +909,73 @@ public class LVEntryVersionModelImpl
 		return sb.toString();
 	}
 
+	void setLVEntryVersionCacheModel(
+		LVEntryVersionCacheModel lvEntryVersionCacheModel) {
+
+		_lvEntryVersionId = lvEntryVersionCacheModel.lvEntryVersionId;
+		_version = lvEntryVersionCacheModel.version;
+
+		if (lvEntryVersionCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = lvEntryVersionCacheModel.uuid;
+		}
+
+		if (lvEntryVersionCacheModel.defaultLanguageId == null) {
+			_defaultLanguageId = "";
+		}
+		else {
+			_defaultLanguageId = lvEntryVersionCacheModel.defaultLanguageId;
+		}
+
+		_lvEntryId = lvEntryVersionCacheModel.lvEntryId;
+		_companyId = lvEntryVersionCacheModel.companyId;
+		_groupId = lvEntryVersionCacheModel.groupId;
+
+		if (lvEntryVersionCacheModel.uniqueGroupKey == null) {
+			_uniqueGroupKey = "";
+		}
+		else {
+			_uniqueGroupKey = lvEntryVersionCacheModel.uniqueGroupKey;
+		}
+	}
+
+	private static class LVEntryVersionOriginalValues {
+
+		private LVEntryVersionOriginalValues(
+			LVEntryVersionModelImpl lvEntryVersionModelImpl) {
+
+			_originalVersion = lvEntryVersionModelImpl._version;
+			_originalUuid = lvEntryVersionModelImpl._uuid;
+			_originalLvEntryId = lvEntryVersionModelImpl._lvEntryId;
+			_originalCompanyId = lvEntryVersionModelImpl._companyId;
+			_originalGroupId = lvEntryVersionModelImpl._groupId;
+			_originalUniqueGroupKey = lvEntryVersionModelImpl._uniqueGroupKey;
+		}
+
+		private final int _originalVersion;
+		private final String _originalUuid;
+		private final long _originalLvEntryId;
+		private final long _originalCompanyId;
+		private final long _originalGroupId;
+		private final String _originalUniqueGroupKey;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LVEntryVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LVEntryVersionOriginalValues _lvEntryVersionOriginalValues;
 	private long _lvEntryVersionId;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
-	private long _originalLvEntryId;
-	private boolean _setOriginalLvEntryId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private String _uniqueGroupKey;
-	private String _originalUniqueGroupKey;
-	private long _columnBitmask;
 	private LVEntryVersion _escapedModel;
 
 }

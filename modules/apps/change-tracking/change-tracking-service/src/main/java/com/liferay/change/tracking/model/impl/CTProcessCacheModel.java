@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -87,21 +85,7 @@ public class CTProcessCacheModel
 	public CTProcess toEntityModel() {
 		CTProcessImpl ctProcessImpl = new CTProcessImpl();
 
-		ctProcessImpl.setCtProcessId(ctProcessId);
-		ctProcessImpl.setCompanyId(companyId);
-		ctProcessImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			ctProcessImpl.setCreateDate(null);
-		}
-		else {
-			ctProcessImpl.setCreateDate(new Date(createDate));
-		}
-
-		ctProcessImpl.setCtCollectionId(ctCollectionId);
-		ctProcessImpl.setBackgroundTaskId(backgroundTaskId);
-
-		ctProcessImpl.resetOriginalValues();
+		ctProcessImpl.setCTProcessCacheModel(this);
 
 		return ctProcessImpl;
 	}

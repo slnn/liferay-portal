@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -96,43 +94,7 @@ public class RatingsEntryCacheModel
 	public RatingsEntry toEntityModel() {
 		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
 
-		if (uuid == null) {
-			ratingsEntryImpl.setUuid("");
-		}
-		else {
-			ratingsEntryImpl.setUuid(uuid);
-		}
-
-		ratingsEntryImpl.setEntryId(entryId);
-		ratingsEntryImpl.setCompanyId(companyId);
-		ratingsEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			ratingsEntryImpl.setUserName("");
-		}
-		else {
-			ratingsEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ratingsEntryImpl.setCreateDate(null);
-		}
-		else {
-			ratingsEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ratingsEntryImpl.setModifiedDate(null);
-		}
-		else {
-			ratingsEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ratingsEntryImpl.setClassNameId(classNameId);
-		ratingsEntryImpl.setClassPK(classPK);
-		ratingsEntryImpl.setScore(score);
-
-		ratingsEntryImpl.resetOriginalValues();
+		ratingsEntryImpl.setRatingsEntryCacheModel(this);
 
 		return ratingsEntryImpl;
 	}

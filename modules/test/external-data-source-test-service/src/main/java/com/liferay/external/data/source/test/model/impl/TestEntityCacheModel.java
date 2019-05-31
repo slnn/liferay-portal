@@ -77,16 +77,7 @@ public class TestEntityCacheModel
 	public TestEntity toEntityModel() {
 		TestEntityImpl testEntityImpl = new TestEntityImpl();
 
-		testEntityImpl.setId(id);
-
-		if (data == null) {
-			testEntityImpl.setData("");
-		}
-		else {
-			testEntityImpl.setData(data);
-		}
-
-		testEntityImpl.resetOriginalValues();
+		testEntityImpl.setTestEntityCacheModel(this);
 
 		return testEntityImpl;
 	}

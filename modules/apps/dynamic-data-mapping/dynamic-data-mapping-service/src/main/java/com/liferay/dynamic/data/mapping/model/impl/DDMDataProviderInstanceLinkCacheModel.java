@@ -87,14 +87,8 @@ public class DDMDataProviderInstanceLinkCacheModel
 		DDMDataProviderInstanceLinkImpl ddmDataProviderInstanceLinkImpl =
 			new DDMDataProviderInstanceLinkImpl();
 
-		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
-			dataProviderInstanceLinkId);
-		ddmDataProviderInstanceLinkImpl.setCompanyId(companyId);
-		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceId(
-			dataProviderInstanceId);
-		ddmDataProviderInstanceLinkImpl.setStructureId(structureId);
-
-		ddmDataProviderInstanceLinkImpl.resetOriginalValues();
+		ddmDataProviderInstanceLinkImpl.
+			setDDMDataProviderInstanceLinkCacheModel(this);
 
 		return ddmDataProviderInstanceLinkImpl;
 	}

@@ -88,34 +88,7 @@ public class ExpandoColumnCacheModel
 	public ExpandoColumn toEntityModel() {
 		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
 
-		expandoColumnImpl.setColumnId(columnId);
-		expandoColumnImpl.setCompanyId(companyId);
-		expandoColumnImpl.setTableId(tableId);
-
-		if (name == null) {
-			expandoColumnImpl.setName("");
-		}
-		else {
-			expandoColumnImpl.setName(name);
-		}
-
-		expandoColumnImpl.setType(type);
-
-		if (defaultData == null) {
-			expandoColumnImpl.setDefaultData("");
-		}
-		else {
-			expandoColumnImpl.setDefaultData(defaultData);
-		}
-
-		if (typeSettings == null) {
-			expandoColumnImpl.setTypeSettings("");
-		}
-		else {
-			expandoColumnImpl.setTypeSettings(typeSettings);
-		}
-
-		expandoColumnImpl.resetOriginalValues();
+		expandoColumnImpl.setExpandoColumnCacheModel(this);
 
 		return expandoColumnImpl;
 	}

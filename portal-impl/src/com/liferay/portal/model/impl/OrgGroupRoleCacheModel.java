@@ -100,13 +100,7 @@ public class OrgGroupRoleCacheModel
 	public OrgGroupRole toEntityModel() {
 		OrgGroupRoleImpl orgGroupRoleImpl = new OrgGroupRoleImpl();
 
-		orgGroupRoleImpl.setMvccVersion(mvccVersion);
-		orgGroupRoleImpl.setOrganizationId(organizationId);
-		orgGroupRoleImpl.setGroupId(groupId);
-		orgGroupRoleImpl.setRoleId(roleId);
-		orgGroupRoleImpl.setCompanyId(companyId);
-
-		orgGroupRoleImpl.resetOriginalValues();
+		orgGroupRoleImpl.setOrgGroupRoleCacheModel(this);
 
 		return orgGroupRoleImpl;
 	}

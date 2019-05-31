@@ -420,17 +420,24 @@ public class LayoutPageTemplateStructureModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			_layoutPageTemplateStructureOriginalValues =
+				new LayoutPageTemplateStructureOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureOriginalValues._columnBitmask |=
+			UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutPageTemplateStructureOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -454,19 +461,23 @@ public class LayoutPageTemplateStructureModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			_layoutPageTemplateStructureOriginalValues =
+				new LayoutPageTemplateStructureOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _layoutPageTemplateStructureOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -477,19 +488,23 @@ public class LayoutPageTemplateStructureModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			_layoutPageTemplateStructureOriginalValues =
+				new LayoutPageTemplateStructureOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _layoutPageTemplateStructureOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -591,19 +606,23 @@ public class LayoutPageTemplateStructureModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			_layoutPageTemplateStructureOriginalValues =
+				new LayoutPageTemplateStructureOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _layoutPageTemplateStructureOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -614,19 +633,23 @@ public class LayoutPageTemplateStructureModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			_layoutPageTemplateStructureOriginalValues =
+				new LayoutPageTemplateStructureOriginalValues(this);
 		}
+
+		_layoutPageTemplateStructureOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _layoutPageTemplateStructureOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -638,7 +661,11 @@ public class LayoutPageTemplateStructureModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutPageTemplateStructureOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutPageTemplateStructureOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -747,32 +774,10 @@ public class LayoutPageTemplateStructureModelImpl
 		LayoutPageTemplateStructureModelImpl
 			layoutPageTemplateStructureModelImpl = this;
 
-		layoutPageTemplateStructureModelImpl._originalUuid =
-			layoutPageTemplateStructureModelImpl._uuid;
-
-		layoutPageTemplateStructureModelImpl._originalGroupId =
-			layoutPageTemplateStructureModelImpl._groupId;
-
-		layoutPageTemplateStructureModelImpl._setOriginalGroupId = false;
-
-		layoutPageTemplateStructureModelImpl._originalCompanyId =
-			layoutPageTemplateStructureModelImpl._companyId;
-
-		layoutPageTemplateStructureModelImpl._setOriginalCompanyId = false;
+		layoutPageTemplateStructureModelImpl.
+			_layoutPageTemplateStructureOriginalValues = null;
 
 		layoutPageTemplateStructureModelImpl._setModifiedDate = false;
-
-		layoutPageTemplateStructureModelImpl._originalClassNameId =
-			layoutPageTemplateStructureModelImpl._classNameId;
-
-		layoutPageTemplateStructureModelImpl._setOriginalClassNameId = false;
-
-		layoutPageTemplateStructureModelImpl._originalClassPK =
-			layoutPageTemplateStructureModelImpl._classPK;
-
-		layoutPageTemplateStructureModelImpl._setOriginalClassPK = false;
-
-		layoutPageTemplateStructureModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -900,31 +905,89 @@ public class LayoutPageTemplateStructureModelImpl
 		return sb.toString();
 	}
 
+	void setLayoutPageTemplateStructureCacheModel(
+		LayoutPageTemplateStructureCacheModel
+			layoutPageTemplateStructureCacheModel) {
+
+		if (layoutPageTemplateStructureCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = layoutPageTemplateStructureCacheModel.uuid;
+		}
+
+		_layoutPageTemplateStructureId =
+			layoutPageTemplateStructureCacheModel.layoutPageTemplateStructureId;
+		_groupId = layoutPageTemplateStructureCacheModel.groupId;
+		_companyId = layoutPageTemplateStructureCacheModel.companyId;
+		_userId = layoutPageTemplateStructureCacheModel.userId;
+
+		if (layoutPageTemplateStructureCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = layoutPageTemplateStructureCacheModel.userName;
+		}
+
+		if (layoutPageTemplateStructureCacheModel.createDate !=
+				Long.MIN_VALUE) {
+
+			_createDate = new Date(
+				layoutPageTemplateStructureCacheModel.createDate);
+		}
+
+		if (layoutPageTemplateStructureCacheModel.modifiedDate !=
+				Long.MIN_VALUE) {
+
+			_modifiedDate = new Date(
+				layoutPageTemplateStructureCacheModel.modifiedDate);
+		}
+
+		_classNameId = layoutPageTemplateStructureCacheModel.classNameId;
+		_classPK = layoutPageTemplateStructureCacheModel.classPK;
+	}
+
+	private static class LayoutPageTemplateStructureOriginalValues {
+
+		private LayoutPageTemplateStructureOriginalValues(
+			LayoutPageTemplateStructureModelImpl
+				layoutPageTemplateStructureModelImpl) {
+
+			_originalUuid = layoutPageTemplateStructureModelImpl._uuid;
+			_originalGroupId = layoutPageTemplateStructureModelImpl._groupId;
+			_originalCompanyId =
+				layoutPageTemplateStructureModelImpl._companyId;
+			_originalClassNameId =
+				layoutPageTemplateStructureModelImpl._classNameId;
+			_originalClassPK = layoutPageTemplateStructureModelImpl._classPK;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function
 		<InvocationHandler, LayoutPageTemplateStructure>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutPageTemplateStructureOriginalValues
+		_layoutPageTemplateStructureOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _layoutPageTemplateStructureId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
-	private long _columnBitmask;
 	private LayoutPageTemplateStructure _escapedModel;
 
 }

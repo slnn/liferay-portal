@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,55 +101,8 @@ public class LayoutPageTemplateStructureRelCacheModel
 		LayoutPageTemplateStructureRelImpl layoutPageTemplateStructureRelImpl =
 			new LayoutPageTemplateStructureRelImpl();
 
-		if (uuid == null) {
-			layoutPageTemplateStructureRelImpl.setUuid("");
-		}
-		else {
-			layoutPageTemplateStructureRelImpl.setUuid(uuid);
-		}
-
-		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureRelId(
-			layoutPageTemplateStructureRelId);
-		layoutPageTemplateStructureRelImpl.setGroupId(groupId);
-		layoutPageTemplateStructureRelImpl.setCompanyId(companyId);
-		layoutPageTemplateStructureRelImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutPageTemplateStructureRelImpl.setUserName("");
-		}
-		else {
-			layoutPageTemplateStructureRelImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutPageTemplateStructureRelImpl.setCreateDate(null);
-		}
-		else {
-			layoutPageTemplateStructureRelImpl.setCreateDate(
-				new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutPageTemplateStructureRelImpl.setModifiedDate(null);
-		}
-		else {
-			layoutPageTemplateStructureRelImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureId(
-			layoutPageTemplateStructureId);
-		layoutPageTemplateStructureRelImpl.setSegmentsExperienceId(
-			segmentsExperienceId);
-
-		if (data == null) {
-			layoutPageTemplateStructureRelImpl.setData("");
-		}
-		else {
-			layoutPageTemplateStructureRelImpl.setData(data);
-		}
-
-		layoutPageTemplateStructureRelImpl.resetOriginalValues();
+		layoutPageTemplateStructureRelImpl.
+			setLayoutPageTemplateStructureRelCacheModel(this);
 
 		return layoutPageTemplateStructureRelImpl;
 	}

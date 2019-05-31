@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -116,66 +114,7 @@ public class UserGroupCacheModel
 	public UserGroup toEntityModel() {
 		UserGroupImpl userGroupImpl = new UserGroupImpl();
 
-		userGroupImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			userGroupImpl.setUuid("");
-		}
-		else {
-			userGroupImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			userGroupImpl.setExternalReferenceCode("");
-		}
-		else {
-			userGroupImpl.setExternalReferenceCode(externalReferenceCode);
-		}
-
-		userGroupImpl.setUserGroupId(userGroupId);
-		userGroupImpl.setCompanyId(companyId);
-		userGroupImpl.setUserId(userId);
-
-		if (userName == null) {
-			userGroupImpl.setUserName("");
-		}
-		else {
-			userGroupImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			userGroupImpl.setCreateDate(null);
-		}
-		else {
-			userGroupImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			userGroupImpl.setModifiedDate(null);
-		}
-		else {
-			userGroupImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		userGroupImpl.setParentUserGroupId(parentUserGroupId);
-
-		if (name == null) {
-			userGroupImpl.setName("");
-		}
-		else {
-			userGroupImpl.setName(name);
-		}
-
-		if (description == null) {
-			userGroupImpl.setDescription("");
-		}
-		else {
-			userGroupImpl.setDescription(description);
-		}
-
-		userGroupImpl.setAddedByLDAPImport(addedByLDAPImport);
-
-		userGroupImpl.resetOriginalValues();
+		userGroupImpl.setUserGroupCacheModel(this);
 
 		return userGroupImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -118,104 +116,7 @@ public class FragmentEntryCacheModel
 	public FragmentEntry toEntityModel() {
 		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
 
-		if (uuid == null) {
-			fragmentEntryImpl.setUuid("");
-		}
-		else {
-			fragmentEntryImpl.setUuid(uuid);
-		}
-
-		fragmentEntryImpl.setFragmentEntryId(fragmentEntryId);
-		fragmentEntryImpl.setGroupId(groupId);
-		fragmentEntryImpl.setCompanyId(companyId);
-		fragmentEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			fragmentEntryImpl.setUserName("");
-		}
-		else {
-			fragmentEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setCreateDate(null);
-		}
-		else {
-			fragmentEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setModifiedDate(null);
-		}
-		else {
-			fragmentEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		fragmentEntryImpl.setFragmentCollectionId(fragmentCollectionId);
-
-		if (fragmentEntryKey == null) {
-			fragmentEntryImpl.setFragmentEntryKey("");
-		}
-		else {
-			fragmentEntryImpl.setFragmentEntryKey(fragmentEntryKey);
-		}
-
-		if (name == null) {
-			fragmentEntryImpl.setName("");
-		}
-		else {
-			fragmentEntryImpl.setName(name);
-		}
-
-		if (css == null) {
-			fragmentEntryImpl.setCss("");
-		}
-		else {
-			fragmentEntryImpl.setCss(css);
-		}
-
-		if (html == null) {
-			fragmentEntryImpl.setHtml("");
-		}
-		else {
-			fragmentEntryImpl.setHtml(html);
-		}
-
-		if (js == null) {
-			fragmentEntryImpl.setJs("");
-		}
-		else {
-			fragmentEntryImpl.setJs(js);
-		}
-
-		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntryImpl.setType(type);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			fragmentEntryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		fragmentEntryImpl.setStatus(status);
-		fragmentEntryImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			fragmentEntryImpl.setStatusByUserName("");
-		}
-		else {
-			fragmentEntryImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setStatusDate(null);
-		}
-		else {
-			fragmentEntryImpl.setStatusDate(new Date(statusDate));
-		}
-
-		fragmentEntryImpl.resetOriginalValues();
+		fragmentEntryImpl.setFragmentEntryCacheModel(this);
 
 		return fragmentEntryImpl;
 	}

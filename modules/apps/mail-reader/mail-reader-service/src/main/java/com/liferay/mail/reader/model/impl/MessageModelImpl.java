@@ -362,19 +362,21 @@ public class MessageModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_messageOriginalValues == null) {
+			_messageOriginalValues = new MessageOriginalValues(this);
 		}
+
+		_messageOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_messageOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _messageOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -461,19 +463,21 @@ public class MessageModelImpl
 
 	@Override
 	public void setFolderId(long folderId) {
-		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalFolderId) {
-			_setOriginalFolderId = true;
-
-			_originalFolderId = _folderId;
+		if (_messageOriginalValues == null) {
+			_messageOriginalValues = new MessageOriginalValues(this);
 		}
+
+		_messageOriginalValues._columnBitmask |= FOLDERID_COLUMN_BITMASK;
 
 		_folderId = folderId;
 	}
 
 	public long getOriginalFolderId() {
-		return _originalFolderId;
+		if (_messageOriginalValues == null) {
+			return _folderId;
+		}
+
+		return _messageOriginalValues._originalFolderId;
 	}
 
 	@Override
@@ -543,7 +547,11 @@ public class MessageModelImpl
 
 	@Override
 	public void setSentDate(Date sentDate) {
-		_columnBitmask = -1L;
+		if (_messageOriginalValues == null) {
+			_messageOriginalValues = new MessageOriginalValues(this);
+		}
+
+		_messageOriginalValues._columnBitmask = -1L;
 
 		_sentDate = sentDate;
 	}
@@ -625,19 +633,21 @@ public class MessageModelImpl
 
 	@Override
 	public void setRemoteMessageId(long remoteMessageId) {
-		_columnBitmask |= REMOTEMESSAGEID_COLUMN_BITMASK;
-
-		if (!_setOriginalRemoteMessageId) {
-			_setOriginalRemoteMessageId = true;
-
-			_originalRemoteMessageId = _remoteMessageId;
+		if (_messageOriginalValues == null) {
+			_messageOriginalValues = new MessageOriginalValues(this);
 		}
+
+		_messageOriginalValues._columnBitmask |= REMOTEMESSAGEID_COLUMN_BITMASK;
 
 		_remoteMessageId = remoteMessageId;
 	}
 
 	public long getOriginalRemoteMessageId() {
-		return _originalRemoteMessageId;
+		if (_messageOriginalValues == null) {
+			return _remoteMessageId;
+		}
+
+		return _messageOriginalValues._originalRemoteMessageId;
 	}
 
 	@Override
@@ -656,7 +666,11 @@ public class MessageModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_messageOriginalValues == null) {
+			return 0;
+		}
+
+		return _messageOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -766,22 +780,9 @@ public class MessageModelImpl
 	public void resetOriginalValues() {
 		MessageModelImpl messageModelImpl = this;
 
-		messageModelImpl._originalCompanyId = messageModelImpl._companyId;
-
-		messageModelImpl._setOriginalCompanyId = false;
+		messageModelImpl._messageOriginalValues = null;
 
 		messageModelImpl._setModifiedDate = false;
-
-		messageModelImpl._originalFolderId = messageModelImpl._folderId;
-
-		messageModelImpl._setOriginalFolderId = false;
-
-		messageModelImpl._originalRemoteMessageId =
-			messageModelImpl._remoteMessageId;
-
-		messageModelImpl._setOriginalRemoteMessageId = false;
-
-		messageModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -975,13 +976,121 @@ public class MessageModelImpl
 		return sb.toString();
 	}
 
+	void setMessageCacheModel(MessageCacheModel messageCacheModel) {
+		_messageId = messageCacheModel.messageId;
+		_companyId = messageCacheModel.companyId;
+		_userId = messageCacheModel.userId;
+
+		if (messageCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = messageCacheModel.userName;
+		}
+
+		if (messageCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(messageCacheModel.createDate);
+		}
+
+		if (messageCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(messageCacheModel.modifiedDate);
+		}
+
+		_accountId = messageCacheModel.accountId;
+		_folderId = messageCacheModel.folderId;
+
+		if (messageCacheModel.sender == null) {
+			_sender = "";
+		}
+		else {
+			_sender = messageCacheModel.sender;
+		}
+
+		if (messageCacheModel.to == null) {
+			_to = "";
+		}
+		else {
+			_to = messageCacheModel.to;
+		}
+
+		if (messageCacheModel.cc == null) {
+			_cc = "";
+		}
+		else {
+			_cc = messageCacheModel.cc;
+		}
+
+		if (messageCacheModel.bcc == null) {
+			_bcc = "";
+		}
+		else {
+			_bcc = messageCacheModel.bcc;
+		}
+
+		if (messageCacheModel.sentDate != Long.MIN_VALUE) {
+			_sentDate = new Date(messageCacheModel.sentDate);
+		}
+
+		if (messageCacheModel.subject == null) {
+			_subject = "";
+		}
+		else {
+			_subject = messageCacheModel.subject;
+		}
+
+		if (messageCacheModel.preview == null) {
+			_preview = "";
+		}
+		else {
+			_preview = messageCacheModel.preview;
+		}
+
+		if (messageCacheModel.body == null) {
+			_body = "";
+		}
+		else {
+			_body = messageCacheModel.body;
+		}
+
+		if (messageCacheModel.flags == null) {
+			_flags = "";
+		}
+		else {
+			_flags = messageCacheModel.flags;
+		}
+
+		_size = messageCacheModel.size;
+		_remoteMessageId = messageCacheModel.remoteMessageId;
+
+		if (messageCacheModel.contentType == null) {
+			_contentType = "";
+		}
+		else {
+			_contentType = messageCacheModel.contentType;
+		}
+	}
+
+	private static class MessageOriginalValues {
+
+		private MessageOriginalValues(MessageModelImpl messageModelImpl) {
+			_originalCompanyId = messageModelImpl._companyId;
+			_originalFolderId = messageModelImpl._folderId;
+			_originalRemoteMessageId = messageModelImpl._remoteMessageId;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalFolderId;
+		private final long _originalRemoteMessageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Message>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MessageOriginalValues _messageOriginalValues;
 	private long _messageId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -989,8 +1098,6 @@ public class MessageModelImpl
 	private boolean _setModifiedDate;
 	private long _accountId;
 	private long _folderId;
-	private long _originalFolderId;
-	private boolean _setOriginalFolderId;
 	private String _sender;
 	private String _to;
 	private String _cc;
@@ -1002,10 +1109,7 @@ public class MessageModelImpl
 	private String _flags;
 	private long _size;
 	private long _remoteMessageId;
-	private long _originalRemoteMessageId;
-	private boolean _setOriginalRemoteMessageId;
 	private String _contentType;
-	private long _columnBitmask;
 	private Message _escapedModel;
 
 }

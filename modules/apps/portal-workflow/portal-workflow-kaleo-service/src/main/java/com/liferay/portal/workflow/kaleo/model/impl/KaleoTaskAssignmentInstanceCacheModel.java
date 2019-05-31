@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -133,71 +131,8 @@ public class KaleoTaskAssignmentInstanceCacheModel
 		KaleoTaskAssignmentInstanceImpl kaleoTaskAssignmentInstanceImpl =
 			new KaleoTaskAssignmentInstanceImpl();
 
-		kaleoTaskAssignmentInstanceImpl.setMvccVersion(mvccVersion);
-		kaleoTaskAssignmentInstanceImpl.setKaleoTaskAssignmentInstanceId(
-			kaleoTaskAssignmentInstanceId);
-		kaleoTaskAssignmentInstanceImpl.setGroupId(groupId);
-		kaleoTaskAssignmentInstanceImpl.setCompanyId(companyId);
-		kaleoTaskAssignmentInstanceImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTaskAssignmentInstanceImpl.setUserName("");
-		}
-		else {
-			kaleoTaskAssignmentInstanceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTaskAssignmentInstanceImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTaskAssignmentInstanceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTaskAssignmentInstanceImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTaskAssignmentInstanceImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		kaleoTaskAssignmentInstanceImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoTaskAssignmentInstanceImpl.setKaleoInstanceId(kaleoInstanceId);
-		kaleoTaskAssignmentInstanceImpl.setKaleoInstanceTokenId(
-			kaleoInstanceTokenId);
-		kaleoTaskAssignmentInstanceImpl.setKaleoTaskInstanceTokenId(
-			kaleoTaskInstanceTokenId);
-		kaleoTaskAssignmentInstanceImpl.setKaleoTaskId(kaleoTaskId);
-
-		if (kaleoTaskName == null) {
-			kaleoTaskAssignmentInstanceImpl.setKaleoTaskName("");
-		}
-		else {
-			kaleoTaskAssignmentInstanceImpl.setKaleoTaskName(kaleoTaskName);
-		}
-
-		if (assigneeClassName == null) {
-			kaleoTaskAssignmentInstanceImpl.setAssigneeClassName("");
-		}
-		else {
-			kaleoTaskAssignmentInstanceImpl.setAssigneeClassName(
-				assigneeClassName);
-		}
-
-		kaleoTaskAssignmentInstanceImpl.setAssigneeClassPK(assigneeClassPK);
-		kaleoTaskAssignmentInstanceImpl.setCompleted(completed);
-
-		if (completionDate == Long.MIN_VALUE) {
-			kaleoTaskAssignmentInstanceImpl.setCompletionDate(null);
-		}
-		else {
-			kaleoTaskAssignmentInstanceImpl.setCompletionDate(
-				new Date(completionDate));
-		}
-
-		kaleoTaskAssignmentInstanceImpl.resetOriginalValues();
+		kaleoTaskAssignmentInstanceImpl.
+			setKaleoTaskAssignmentInstanceCacheModel(this);
 
 		return kaleoTaskAssignmentInstanceImpl;
 	}

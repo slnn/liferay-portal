@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -94,24 +92,7 @@ public class BlogsStatsUserCacheModel
 	public BlogsStatsUser toEntityModel() {
 		BlogsStatsUserImpl blogsStatsUserImpl = new BlogsStatsUserImpl();
 
-		blogsStatsUserImpl.setStatsUserId(statsUserId);
-		blogsStatsUserImpl.setGroupId(groupId);
-		blogsStatsUserImpl.setCompanyId(companyId);
-		blogsStatsUserImpl.setUserId(userId);
-		blogsStatsUserImpl.setEntryCount(entryCount);
-
-		if (lastPostDate == Long.MIN_VALUE) {
-			blogsStatsUserImpl.setLastPostDate(null);
-		}
-		else {
-			blogsStatsUserImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
-		blogsStatsUserImpl.setRatingsTotalEntries(ratingsTotalEntries);
-		blogsStatsUserImpl.setRatingsTotalScore(ratingsTotalScore);
-		blogsStatsUserImpl.setRatingsAverageScore(ratingsAverageScore);
-
-		blogsStatsUserImpl.resetOriginalValues();
+		blogsStatsUserImpl.setBlogsStatsUserCacheModel(this);
 
 		return blogsStatsUserImpl;
 	}

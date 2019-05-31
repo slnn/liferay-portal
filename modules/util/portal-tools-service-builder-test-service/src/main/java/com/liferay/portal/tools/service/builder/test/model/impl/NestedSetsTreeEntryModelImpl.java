@@ -403,17 +403,21 @@ public class NestedSetsTreeEntryModelImpl
 	public void setParentNestedSetsTreeEntryId(
 		long parentNestedSetsTreeEntryId) {
 
-		if (!_setOriginalParentNestedSetsTreeEntryId) {
-			_setOriginalParentNestedSetsTreeEntryId = true;
-
-			_originalParentNestedSetsTreeEntryId = _parentNestedSetsTreeEntryId;
+		if (_nestedSetsTreeEntryOriginalValues == null) {
+			_nestedSetsTreeEntryOriginalValues =
+				new NestedSetsTreeEntryOriginalValues(this);
 		}
 
 		_parentNestedSetsTreeEntryId = parentNestedSetsTreeEntryId;
 	}
 
 	public long getOriginalParentNestedSetsTreeEntryId() {
-		return _originalParentNestedSetsTreeEntryId;
+		if (_nestedSetsTreeEntryOriginalValues == null) {
+			return _parentNestedSetsTreeEntryId;
+		}
+
+		return _nestedSetsTreeEntryOriginalValues.
+			_originalParentNestedSetsTreeEntryId;
 	}
 
 	@Override
@@ -555,11 +559,7 @@ public class NestedSetsTreeEntryModelImpl
 	public void resetOriginalValues() {
 		NestedSetsTreeEntryModelImpl nestedSetsTreeEntryModelImpl = this;
 
-		nestedSetsTreeEntryModelImpl._originalParentNestedSetsTreeEntryId =
-			nestedSetsTreeEntryModelImpl._parentNestedSetsTreeEntryId;
-
-		nestedSetsTreeEntryModelImpl._setOriginalParentNestedSetsTreeEntryId =
-			false;
+		nestedSetsTreeEntryModelImpl._nestedSetsTreeEntryOriginalValues = null;
 	}
 
 	@Override
@@ -647,14 +647,41 @@ public class NestedSetsTreeEntryModelImpl
 		return sb.toString();
 	}
 
+	void setNestedSetsTreeEntryCacheModel(
+		NestedSetsTreeEntryCacheModel nestedSetsTreeEntryCacheModel) {
+
+		_nestedSetsTreeEntryId =
+			nestedSetsTreeEntryCacheModel.nestedSetsTreeEntryId;
+		_groupId = nestedSetsTreeEntryCacheModel.groupId;
+		_parentNestedSetsTreeEntryId =
+			nestedSetsTreeEntryCacheModel.parentNestedSetsTreeEntryId;
+		_leftNestedSetsTreeEntryId =
+			nestedSetsTreeEntryCacheModel.leftNestedSetsTreeEntryId;
+		_rightNestedSetsTreeEntryId =
+			nestedSetsTreeEntryCacheModel.rightNestedSetsTreeEntryId;
+	}
+
+	private static class NestedSetsTreeEntryOriginalValues {
+
+		private NestedSetsTreeEntryOriginalValues(
+			NestedSetsTreeEntryModelImpl nestedSetsTreeEntryModelImpl) {
+
+			_originalParentNestedSetsTreeEntryId =
+				nestedSetsTreeEntryModelImpl._parentNestedSetsTreeEntryId;
+		}
+
+		private final long _originalParentNestedSetsTreeEntryId;
+
+	}
+
 	private static final Function<InvocationHandler, NestedSetsTreeEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private NestedSetsTreeEntryOriginalValues
+		_nestedSetsTreeEntryOriginalValues;
 	private long _nestedSetsTreeEntryId;
 	private long _groupId;
 	private long _parentNestedSetsTreeEntryId;
-	private long _originalParentNestedSetsTreeEntryId;
-	private boolean _setOriginalParentNestedSetsTreeEntryId;
 	private long _leftNestedSetsTreeEntryId;
 	private long _rightNestedSetsTreeEntryId;
 	private NestedSetsTreeEntry _escapedModel;

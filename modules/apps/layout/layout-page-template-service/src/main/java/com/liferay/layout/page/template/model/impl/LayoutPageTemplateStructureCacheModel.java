@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -101,45 +99,8 @@ public class LayoutPageTemplateStructureCacheModel
 		LayoutPageTemplateStructureImpl layoutPageTemplateStructureImpl =
 			new LayoutPageTemplateStructureImpl();
 
-		if (uuid == null) {
-			layoutPageTemplateStructureImpl.setUuid("");
-		}
-		else {
-			layoutPageTemplateStructureImpl.setUuid(uuid);
-		}
-
-		layoutPageTemplateStructureImpl.setLayoutPageTemplateStructureId(
-			layoutPageTemplateStructureId);
-		layoutPageTemplateStructureImpl.setGroupId(groupId);
-		layoutPageTemplateStructureImpl.setCompanyId(companyId);
-		layoutPageTemplateStructureImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutPageTemplateStructureImpl.setUserName("");
-		}
-		else {
-			layoutPageTemplateStructureImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutPageTemplateStructureImpl.setCreateDate(null);
-		}
-		else {
-			layoutPageTemplateStructureImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutPageTemplateStructureImpl.setModifiedDate(null);
-		}
-		else {
-			layoutPageTemplateStructureImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		layoutPageTemplateStructureImpl.setClassNameId(classNameId);
-		layoutPageTemplateStructureImpl.setClassPK(classPK);
-
-		layoutPageTemplateStructureImpl.resetOriginalValues();
+		layoutPageTemplateStructureImpl.
+			setLayoutPageTemplateStructureCacheModel(this);
 
 		return layoutPageTemplateStructureImpl;
 	}

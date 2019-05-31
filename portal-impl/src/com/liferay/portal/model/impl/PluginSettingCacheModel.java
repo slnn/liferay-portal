@@ -103,34 +103,7 @@ public class PluginSettingCacheModel
 	public PluginSetting toEntityModel() {
 		PluginSettingImpl pluginSettingImpl = new PluginSettingImpl();
 
-		pluginSettingImpl.setMvccVersion(mvccVersion);
-		pluginSettingImpl.setPluginSettingId(pluginSettingId);
-		pluginSettingImpl.setCompanyId(companyId);
-
-		if (pluginId == null) {
-			pluginSettingImpl.setPluginId("");
-		}
-		else {
-			pluginSettingImpl.setPluginId(pluginId);
-		}
-
-		if (pluginType == null) {
-			pluginSettingImpl.setPluginType("");
-		}
-		else {
-			pluginSettingImpl.setPluginType(pluginType);
-		}
-
-		if (roles == null) {
-			pluginSettingImpl.setRoles("");
-		}
-		else {
-			pluginSettingImpl.setRoles(roles);
-		}
-
-		pluginSettingImpl.setActive(active);
-
-		pluginSettingImpl.resetOriginalValues();
+		pluginSettingImpl.setPluginSettingCacheModel(this);
 
 		return pluginSettingImpl;
 	}

@@ -439,17 +439,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_journalFolderOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_journalFolderOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -460,19 +465,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setFolderId(long folderId) {
-		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalFolderId) {
-			_setOriginalFolderId = true;
-
-			_originalFolderId = _folderId;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask |= FOLDERID_COLUMN_BITMASK;
 
 		_folderId = folderId;
 	}
 
 	public long getOriginalFolderId() {
-		return _originalFolderId;
+		if (_journalFolderOriginalValues == null) {
+			return _folderId;
+		}
+
+		return _journalFolderOriginalValues._originalFolderId;
 	}
 
 	@JSON
@@ -483,19 +491,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_journalFolderOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _journalFolderOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -506,19 +517,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_journalFolderOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _journalFolderOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -600,19 +614,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalParentFolderId) {
-			_setOriginalParentFolderId = true;
-
-			_originalParentFolderId = _parentFolderId;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask = -1L;
 
 		_parentFolderId = parentFolderId;
 	}
 
 	public long getOriginalParentFolderId() {
-		return _originalParentFolderId;
+		if (_journalFolderOriginalValues == null) {
+			return _parentFolderId;
+		}
+
+		return _journalFolderOriginalValues._originalParentFolderId;
 	}
 
 	@JSON
@@ -644,17 +661,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_journalFolderOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_journalFolderOriginalValues._originalName);
 	}
 
 	@JSON
@@ -703,19 +725,22 @@ public class JournalFolderModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_journalFolderOriginalValues == null) {
+			_journalFolderOriginalValues = new JournalFolderOriginalValues(
+				this);
 		}
+
+		_journalFolderOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_journalFolderOriginalValues == null) {
+			return _status;
+		}
+
+		return _journalFolderOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1029,7 +1054,11 @@ public class JournalFolderModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_journalFolderOriginalValues == null) {
+			return 0;
+		}
+
+		return _journalFolderOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1151,37 +1180,9 @@ public class JournalFolderModelImpl
 	public void resetOriginalValues() {
 		JournalFolderModelImpl journalFolderModelImpl = this;
 
-		journalFolderModelImpl._originalUuid = journalFolderModelImpl._uuid;
-
-		journalFolderModelImpl._originalFolderId =
-			journalFolderModelImpl._folderId;
-
-		journalFolderModelImpl._setOriginalFolderId = false;
-
-		journalFolderModelImpl._originalGroupId =
-			journalFolderModelImpl._groupId;
-
-		journalFolderModelImpl._setOriginalGroupId = false;
-
-		journalFolderModelImpl._originalCompanyId =
-			journalFolderModelImpl._companyId;
-
-		journalFolderModelImpl._setOriginalCompanyId = false;
+		journalFolderModelImpl._journalFolderOriginalValues = null;
 
 		journalFolderModelImpl._setModifiedDate = false;
-
-		journalFolderModelImpl._originalParentFolderId =
-			journalFolderModelImpl._parentFolderId;
-
-		journalFolderModelImpl._setOriginalParentFolderId = false;
-
-		journalFolderModelImpl._originalName = journalFolderModelImpl._name;
-
-		journalFolderModelImpl._originalStatus = journalFolderModelImpl._status;
-
-		journalFolderModelImpl._setOriginalStatus = false;
-
-		journalFolderModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1355,43 +1356,131 @@ public class JournalFolderModelImpl
 		return sb.toString();
 	}
 
+	void setJournalFolderCacheModel(
+		JournalFolderCacheModel journalFolderCacheModel) {
+
+		if (journalFolderCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = journalFolderCacheModel.uuid;
+		}
+
+		_folderId = journalFolderCacheModel.folderId;
+		_groupId = journalFolderCacheModel.groupId;
+		_companyId = journalFolderCacheModel.companyId;
+		_userId = journalFolderCacheModel.userId;
+
+		if (journalFolderCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = journalFolderCacheModel.userName;
+		}
+
+		if (journalFolderCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(journalFolderCacheModel.createDate);
+		}
+
+		if (journalFolderCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(journalFolderCacheModel.modifiedDate);
+		}
+
+		_parentFolderId = journalFolderCacheModel.parentFolderId;
+
+		if (journalFolderCacheModel.treePath == null) {
+			_treePath = "";
+		}
+		else {
+			_treePath = journalFolderCacheModel.treePath;
+		}
+
+		if (journalFolderCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = journalFolderCacheModel.name;
+		}
+
+		if (journalFolderCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = journalFolderCacheModel.description;
+		}
+
+		_restrictionType = journalFolderCacheModel.restrictionType;
+
+		if (journalFolderCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				journalFolderCacheModel.lastPublishDate);
+		}
+
+		_status = journalFolderCacheModel.status;
+		_statusByUserId = journalFolderCacheModel.statusByUserId;
+
+		if (journalFolderCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = journalFolderCacheModel.statusByUserName;
+		}
+
+		if (journalFolderCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(journalFolderCacheModel.statusDate);
+		}
+	}
+
+	private static class JournalFolderOriginalValues {
+
+		private JournalFolderOriginalValues(
+			JournalFolderModelImpl journalFolderModelImpl) {
+
+			_originalUuid = journalFolderModelImpl._uuid;
+			_originalFolderId = journalFolderModelImpl._folderId;
+			_originalGroupId = journalFolderModelImpl._groupId;
+			_originalCompanyId = journalFolderModelImpl._companyId;
+			_originalParentFolderId = journalFolderModelImpl._parentFolderId;
+			_originalName = journalFolderModelImpl._name;
+			_originalStatus = journalFolderModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalFolderId;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentFolderId;
+		private final String _originalName;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, JournalFolder>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private JournalFolderOriginalValues _journalFolderOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _folderId;
-	private long _originalFolderId;
-	private boolean _setOriginalFolderId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentFolderId;
-	private long _originalParentFolderId;
-	private boolean _setOriginalParentFolderId;
 	private String _treePath;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private int _restrictionType;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private JournalFolder _escapedModel;
 
 }

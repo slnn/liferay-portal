@@ -101,14 +101,7 @@ public class FriendlyURLEntryMappingCacheModel
 		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl =
 			new FriendlyURLEntryMappingImpl();
 
-		friendlyURLEntryMappingImpl.setMvccVersion(mvccVersion);
-		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(
-			friendlyURLEntryMappingId);
-		friendlyURLEntryMappingImpl.setClassNameId(classNameId);
-		friendlyURLEntryMappingImpl.setClassPK(classPK);
-		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryId);
-
-		friendlyURLEntryMappingImpl.resetOriginalValues();
+		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingCacheModel(this);
 
 		return friendlyURLEntryMappingImpl;
 	}

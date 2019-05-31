@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -98,37 +96,7 @@ public class HtmlPreviewEntryCacheModel
 	public HtmlPreviewEntry toEntityModel() {
 		HtmlPreviewEntryImpl htmlPreviewEntryImpl = new HtmlPreviewEntryImpl();
 
-		htmlPreviewEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
-		htmlPreviewEntryImpl.setGroupId(groupId);
-		htmlPreviewEntryImpl.setCompanyId(companyId);
-		htmlPreviewEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			htmlPreviewEntryImpl.setUserName("");
-		}
-		else {
-			htmlPreviewEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			htmlPreviewEntryImpl.setCreateDate(null);
-		}
-		else {
-			htmlPreviewEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			htmlPreviewEntryImpl.setModifiedDate(null);
-		}
-		else {
-			htmlPreviewEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		htmlPreviewEntryImpl.setClassNameId(classNameId);
-		htmlPreviewEntryImpl.setClassPK(classPK);
-		htmlPreviewEntryImpl.setFileEntryId(fileEntryId);
-
-		htmlPreviewEntryImpl.resetOriginalValues();
+		htmlPreviewEntryImpl.setHtmlPreviewEntryCacheModel(this);
 
 		return htmlPreviewEntryImpl;
 	}

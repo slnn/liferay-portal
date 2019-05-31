@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -121,105 +119,7 @@ public class FragmentEntryLinkCacheModel
 		FragmentEntryLinkImpl fragmentEntryLinkImpl =
 			new FragmentEntryLinkImpl();
 
-		if (uuid == null) {
-			fragmentEntryLinkImpl.setUuid("");
-		}
-		else {
-			fragmentEntryLinkImpl.setUuid(uuid);
-		}
-
-		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLinkId);
-		fragmentEntryLinkImpl.setGroupId(groupId);
-		fragmentEntryLinkImpl.setCompanyId(companyId);
-		fragmentEntryLinkImpl.setUserId(userId);
-
-		if (userName == null) {
-			fragmentEntryLinkImpl.setUserName("");
-		}
-		else {
-			fragmentEntryLinkImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			fragmentEntryLinkImpl.setCreateDate(null);
-		}
-		else {
-			fragmentEntryLinkImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			fragmentEntryLinkImpl.setModifiedDate(null);
-		}
-		else {
-			fragmentEntryLinkImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(
-			originalFragmentEntryLinkId);
-		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryId);
-		fragmentEntryLinkImpl.setClassNameId(classNameId);
-		fragmentEntryLinkImpl.setClassPK(classPK);
-
-		if (css == null) {
-			fragmentEntryLinkImpl.setCss("");
-		}
-		else {
-			fragmentEntryLinkImpl.setCss(css);
-		}
-
-		if (html == null) {
-			fragmentEntryLinkImpl.setHtml("");
-		}
-		else {
-			fragmentEntryLinkImpl.setHtml(html);
-		}
-
-		if (js == null) {
-			fragmentEntryLinkImpl.setJs("");
-		}
-		else {
-			fragmentEntryLinkImpl.setJs(js);
-		}
-
-		if (editableValues == null) {
-			fragmentEntryLinkImpl.setEditableValues("");
-		}
-		else {
-			fragmentEntryLinkImpl.setEditableValues(editableValues);
-		}
-
-		if (namespace == null) {
-			fragmentEntryLinkImpl.setNamespace("");
-		}
-		else {
-			fragmentEntryLinkImpl.setNamespace(namespace);
-		}
-
-		fragmentEntryLinkImpl.setPosition(position);
-
-		if (rendererKey == null) {
-			fragmentEntryLinkImpl.setRendererKey("");
-		}
-		else {
-			fragmentEntryLinkImpl.setRendererKey(rendererKey);
-		}
-
-		if (lastPropagationDate == Long.MIN_VALUE) {
-			fragmentEntryLinkImpl.setLastPropagationDate(null);
-		}
-		else {
-			fragmentEntryLinkImpl.setLastPropagationDate(
-				new Date(lastPropagationDate));
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			fragmentEntryLinkImpl.setLastPublishDate(null);
-		}
-		else {
-			fragmentEntryLinkImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		fragmentEntryLinkImpl.resetOriginalValues();
+		fragmentEntryLinkImpl.setFragmentEntryLinkCacheModel(this);
 
 		return fragmentEntryLinkImpl;
 	}

@@ -101,19 +101,7 @@ public class PortalPreferencesCacheModel
 		PortalPreferencesImpl portalPreferencesImpl =
 			new PortalPreferencesImpl();
 
-		portalPreferencesImpl.setMvccVersion(mvccVersion);
-		portalPreferencesImpl.setPortalPreferencesId(portalPreferencesId);
-		portalPreferencesImpl.setOwnerId(ownerId);
-		portalPreferencesImpl.setOwnerType(ownerType);
-
-		if (preferences == null) {
-			portalPreferencesImpl.setPreferences("");
-		}
-		else {
-			portalPreferencesImpl.setPreferences(preferences);
-		}
-
-		portalPreferencesImpl.resetOriginalValues();
+		portalPreferencesImpl.setPortalPreferencesCacheModel(this);
 
 		return portalPreferencesImpl;
 	}

@@ -927,6 +927,93 @@ public class AccountModelImpl
 		return sb.toString();
 	}
 
+	void setAccountCacheModel(AccountCacheModel accountCacheModel) {
+		_mvccVersion = accountCacheModel.mvccVersion;
+		_accountId = accountCacheModel.accountId;
+		_companyId = accountCacheModel.companyId;
+		_userId = accountCacheModel.userId;
+
+		if (accountCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = accountCacheModel.userName;
+		}
+
+		if (accountCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(accountCacheModel.createDate);
+		}
+
+		if (accountCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(accountCacheModel.modifiedDate);
+		}
+
+		_parentAccountId = accountCacheModel.parentAccountId;
+
+		if (accountCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = accountCacheModel.name;
+		}
+
+		if (accountCacheModel.legalName == null) {
+			_legalName = "";
+		}
+		else {
+			_legalName = accountCacheModel.legalName;
+		}
+
+		if (accountCacheModel.legalId == null) {
+			_legalId = "";
+		}
+		else {
+			_legalId = accountCacheModel.legalId;
+		}
+
+		if (accountCacheModel.legalType == null) {
+			_legalType = "";
+		}
+		else {
+			_legalType = accountCacheModel.legalType;
+		}
+
+		if (accountCacheModel.sicCode == null) {
+			_sicCode = "";
+		}
+		else {
+			_sicCode = accountCacheModel.sicCode;
+		}
+
+		if (accountCacheModel.tickerSymbol == null) {
+			_tickerSymbol = "";
+		}
+		else {
+			_tickerSymbol = accountCacheModel.tickerSymbol;
+		}
+
+		if (accountCacheModel.industry == null) {
+			_industry = "";
+		}
+		else {
+			_industry = accountCacheModel.industry;
+		}
+
+		if (accountCacheModel.type == null) {
+			_type = "";
+		}
+		else {
+			_type = accountCacheModel.type;
+		}
+
+		if (accountCacheModel.size == null) {
+			_size = "";
+		}
+		else {
+			_size = accountCacheModel.size;
+		}
+	}
+
 	private static final Function<InvocationHandler, Account>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 

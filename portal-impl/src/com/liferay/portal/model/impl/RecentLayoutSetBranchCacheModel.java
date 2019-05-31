@@ -105,16 +105,7 @@ public class RecentLayoutSetBranchCacheModel
 		RecentLayoutSetBranchImpl recentLayoutSetBranchImpl =
 			new RecentLayoutSetBranchImpl();
 
-		recentLayoutSetBranchImpl.setMvccVersion(mvccVersion);
-		recentLayoutSetBranchImpl.setRecentLayoutSetBranchId(
-			recentLayoutSetBranchId);
-		recentLayoutSetBranchImpl.setGroupId(groupId);
-		recentLayoutSetBranchImpl.setCompanyId(companyId);
-		recentLayoutSetBranchImpl.setUserId(userId);
-		recentLayoutSetBranchImpl.setLayoutSetBranchId(layoutSetBranchId);
-		recentLayoutSetBranchImpl.setLayoutSetId(layoutSetId);
-
-		recentLayoutSetBranchImpl.resetOriginalValues();
+		recentLayoutSetBranchImpl.setRecentLayoutSetBranchCacheModel(this);
 
 		return recentLayoutSetBranchImpl;
 	}

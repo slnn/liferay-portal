@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -112,57 +110,7 @@ public class ReleaseCacheModel
 	public Release toEntityModel() {
 		ReleaseImpl releaseImpl = new ReleaseImpl();
 
-		releaseImpl.setMvccVersion(mvccVersion);
-		releaseImpl.setReleaseId(releaseId);
-
-		if (createDate == Long.MIN_VALUE) {
-			releaseImpl.setCreateDate(null);
-		}
-		else {
-			releaseImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			releaseImpl.setModifiedDate(null);
-		}
-		else {
-			releaseImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (servletContextName == null) {
-			releaseImpl.setServletContextName("");
-		}
-		else {
-			releaseImpl.setServletContextName(servletContextName);
-		}
-
-		if (schemaVersion == null) {
-			releaseImpl.setSchemaVersion("");
-		}
-		else {
-			releaseImpl.setSchemaVersion(schemaVersion);
-		}
-
-		releaseImpl.setBuildNumber(buildNumber);
-
-		if (buildDate == Long.MIN_VALUE) {
-			releaseImpl.setBuildDate(null);
-		}
-		else {
-			releaseImpl.setBuildDate(new Date(buildDate));
-		}
-
-		releaseImpl.setVerified(verified);
-		releaseImpl.setState(state);
-
-		if (testString == null) {
-			releaseImpl.setTestString("");
-		}
-		else {
-			releaseImpl.setTestString(testString);
-		}
-
-		releaseImpl.resetOriginalValues();
+		releaseImpl.setReleaseCacheModel(this);
 
 		return releaseImpl;
 	}

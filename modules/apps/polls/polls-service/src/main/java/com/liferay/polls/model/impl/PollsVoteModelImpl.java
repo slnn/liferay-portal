@@ -386,17 +386,21 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_pollsVoteOriginalValues == null) {
+			_pollsVoteOriginalValues = new PollsVoteOriginalValues(this);
 		}
+
+		_pollsVoteOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_pollsVoteOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_pollsVoteOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -418,19 +422,21 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_pollsVoteOriginalValues == null) {
+			_pollsVoteOriginalValues = new PollsVoteOriginalValues(this);
 		}
+
+		_pollsVoteOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_pollsVoteOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _pollsVoteOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -441,19 +447,21 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_pollsVoteOriginalValues == null) {
+			_pollsVoteOriginalValues = new PollsVoteOriginalValues(this);
 		}
+
+		_pollsVoteOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_pollsVoteOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _pollsVoteOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -464,13 +472,11 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_pollsVoteOriginalValues == null) {
+			_pollsVoteOriginalValues = new PollsVoteOriginalValues(this);
 		}
+
+		_pollsVoteOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -492,7 +498,11 @@ public class PollsVoteModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_pollsVoteOriginalValues == null) {
+			return _userId;
+		}
+
+		return _pollsVoteOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -547,19 +557,21 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setQuestionId(long questionId) {
-		_columnBitmask |= QUESTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalQuestionId) {
-			_setOriginalQuestionId = true;
-
-			_originalQuestionId = _questionId;
+		if (_pollsVoteOriginalValues == null) {
+			_pollsVoteOriginalValues = new PollsVoteOriginalValues(this);
 		}
+
+		_pollsVoteOriginalValues._columnBitmask |= QUESTIONID_COLUMN_BITMASK;
 
 		_questionId = questionId;
 	}
 
 	public long getOriginalQuestionId() {
-		return _originalQuestionId;
+		if (_pollsVoteOriginalValues == null) {
+			return _questionId;
+		}
+
+		return _pollsVoteOriginalValues._originalQuestionId;
 	}
 
 	@JSON
@@ -570,19 +582,21 @@ public class PollsVoteModelImpl
 
 	@Override
 	public void setChoiceId(long choiceId) {
-		_columnBitmask |= CHOICEID_COLUMN_BITMASK;
-
-		if (!_setOriginalChoiceId) {
-			_setOriginalChoiceId = true;
-
-			_originalChoiceId = _choiceId;
+		if (_pollsVoteOriginalValues == null) {
+			_pollsVoteOriginalValues = new PollsVoteOriginalValues(this);
 		}
+
+		_pollsVoteOriginalValues._columnBitmask |= CHOICEID_COLUMN_BITMASK;
 
 		_choiceId = choiceId;
 	}
 
 	public long getOriginalChoiceId() {
-		return _originalChoiceId;
+		if (_pollsVoteOriginalValues == null) {
+			return _choiceId;
+		}
+
+		return _pollsVoteOriginalValues._originalChoiceId;
 	}
 
 	@JSON
@@ -614,7 +628,11 @@ public class PollsVoteModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_pollsVoteOriginalValues == null) {
+			return 0;
+		}
+
+		return _pollsVoteOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -718,31 +736,9 @@ public class PollsVoteModelImpl
 	public void resetOriginalValues() {
 		PollsVoteModelImpl pollsVoteModelImpl = this;
 
-		pollsVoteModelImpl._originalUuid = pollsVoteModelImpl._uuid;
-
-		pollsVoteModelImpl._originalGroupId = pollsVoteModelImpl._groupId;
-
-		pollsVoteModelImpl._setOriginalGroupId = false;
-
-		pollsVoteModelImpl._originalCompanyId = pollsVoteModelImpl._companyId;
-
-		pollsVoteModelImpl._setOriginalCompanyId = false;
-
-		pollsVoteModelImpl._originalUserId = pollsVoteModelImpl._userId;
-
-		pollsVoteModelImpl._setOriginalUserId = false;
+		pollsVoteModelImpl._pollsVoteOriginalValues = null;
 
 		pollsVoteModelImpl._setModifiedDate = false;
-
-		pollsVoteModelImpl._originalQuestionId = pollsVoteModelImpl._questionId;
-
-		pollsVoteModelImpl._setOriginalQuestionId = false;
-
-		pollsVoteModelImpl._originalChoiceId = pollsVoteModelImpl._choiceId;
-
-		pollsVoteModelImpl._setOriginalChoiceId = false;
-
-		pollsVoteModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -879,34 +875,84 @@ public class PollsVoteModelImpl
 		return sb.toString();
 	}
 
+	void setPollsVoteCacheModel(PollsVoteCacheModel pollsVoteCacheModel) {
+		if (pollsVoteCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = pollsVoteCacheModel.uuid;
+		}
+
+		_voteId = pollsVoteCacheModel.voteId;
+		_groupId = pollsVoteCacheModel.groupId;
+		_companyId = pollsVoteCacheModel.companyId;
+		_userId = pollsVoteCacheModel.userId;
+
+		if (pollsVoteCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = pollsVoteCacheModel.userName;
+		}
+
+		if (pollsVoteCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(pollsVoteCacheModel.createDate);
+		}
+
+		if (pollsVoteCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(pollsVoteCacheModel.modifiedDate);
+		}
+
+		_questionId = pollsVoteCacheModel.questionId;
+		_choiceId = pollsVoteCacheModel.choiceId;
+
+		if (pollsVoteCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(pollsVoteCacheModel.lastPublishDate);
+		}
+
+		if (pollsVoteCacheModel.voteDate != Long.MIN_VALUE) {
+			_voteDate = new Date(pollsVoteCacheModel.voteDate);
+		}
+	}
+
+	private static class PollsVoteOriginalValues {
+
+		private PollsVoteOriginalValues(PollsVoteModelImpl pollsVoteModelImpl) {
+			_originalUuid = pollsVoteModelImpl._uuid;
+			_originalGroupId = pollsVoteModelImpl._groupId;
+			_originalCompanyId = pollsVoteModelImpl._companyId;
+			_originalUserId = pollsVoteModelImpl._userId;
+			_originalQuestionId = pollsVoteModelImpl._questionId;
+			_originalChoiceId = pollsVoteModelImpl._choiceId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalQuestionId;
+		private final long _originalChoiceId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PollsVote>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PollsVoteOriginalValues _pollsVoteOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _voteId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _questionId;
-	private long _originalQuestionId;
-	private boolean _setOriginalQuestionId;
 	private long _choiceId;
-	private long _originalChoiceId;
-	private boolean _setOriginalChoiceId;
 	private Date _lastPublishDate;
 	private Date _voteDate;
-	private long _columnBitmask;
 	private PollsVote _escapedModel;
 
 }

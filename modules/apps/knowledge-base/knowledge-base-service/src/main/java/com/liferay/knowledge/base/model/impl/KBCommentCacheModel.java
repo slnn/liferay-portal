@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,61 +101,7 @@ public class KBCommentCacheModel
 	public KBComment toEntityModel() {
 		KBCommentImpl kbCommentImpl = new KBCommentImpl();
 
-		if (uuid == null) {
-			kbCommentImpl.setUuid("");
-		}
-		else {
-			kbCommentImpl.setUuid(uuid);
-		}
-
-		kbCommentImpl.setKbCommentId(kbCommentId);
-		kbCommentImpl.setGroupId(groupId);
-		kbCommentImpl.setCompanyId(companyId);
-		kbCommentImpl.setUserId(userId);
-
-		if (userName == null) {
-			kbCommentImpl.setUserName("");
-		}
-		else {
-			kbCommentImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kbCommentImpl.setCreateDate(null);
-		}
-		else {
-			kbCommentImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kbCommentImpl.setModifiedDate(null);
-		}
-		else {
-			kbCommentImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kbCommentImpl.setClassNameId(classNameId);
-		kbCommentImpl.setClassPK(classPK);
-
-		if (content == null) {
-			kbCommentImpl.setContent("");
-		}
-		else {
-			kbCommentImpl.setContent(content);
-		}
-
-		kbCommentImpl.setUserRating(userRating);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			kbCommentImpl.setLastPublishDate(null);
-		}
-		else {
-			kbCommentImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		kbCommentImpl.setStatus(status);
-
-		kbCommentImpl.resetOriginalValues();
+		kbCommentImpl.setKBCommentCacheModel(this);
 
 		return kbCommentImpl;
 	}

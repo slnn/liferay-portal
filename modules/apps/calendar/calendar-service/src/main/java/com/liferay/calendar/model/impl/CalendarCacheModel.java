@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -109,75 +107,7 @@ public class CalendarCacheModel
 	public Calendar toEntityModel() {
 		CalendarImpl calendarImpl = new CalendarImpl();
 
-		if (uuid == null) {
-			calendarImpl.setUuid("");
-		}
-		else {
-			calendarImpl.setUuid(uuid);
-		}
-
-		calendarImpl.setCalendarId(calendarId);
-		calendarImpl.setGroupId(groupId);
-		calendarImpl.setCompanyId(companyId);
-		calendarImpl.setUserId(userId);
-
-		if (userName == null) {
-			calendarImpl.setUserName("");
-		}
-		else {
-			calendarImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			calendarImpl.setCreateDate(null);
-		}
-		else {
-			calendarImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			calendarImpl.setModifiedDate(null);
-		}
-		else {
-			calendarImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		calendarImpl.setCalendarResourceId(calendarResourceId);
-
-		if (name == null) {
-			calendarImpl.setName("");
-		}
-		else {
-			calendarImpl.setName(name);
-		}
-
-		if (description == null) {
-			calendarImpl.setDescription("");
-		}
-		else {
-			calendarImpl.setDescription(description);
-		}
-
-		if (timeZoneId == null) {
-			calendarImpl.setTimeZoneId("");
-		}
-		else {
-			calendarImpl.setTimeZoneId(timeZoneId);
-		}
-
-		calendarImpl.setColor(color);
-		calendarImpl.setDefaultCalendar(defaultCalendar);
-		calendarImpl.setEnableComments(enableComments);
-		calendarImpl.setEnableRatings(enableRatings);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			calendarImpl.setLastPublishDate(null);
-		}
-		else {
-			calendarImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		calendarImpl.resetOriginalValues();
+		calendarImpl.setCalendarCacheModel(this);
 
 		return calendarImpl;
 	}

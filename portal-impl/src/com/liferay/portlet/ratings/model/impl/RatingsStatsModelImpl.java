@@ -339,19 +339,22 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_ratingsStatsOriginalValues == null) {
+			_ratingsStatsOriginalValues = new RatingsStatsOriginalValues(this);
 		}
+
+		_ratingsStatsOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_ratingsStatsOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _ratingsStatsOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -361,19 +364,21 @@ public class RatingsStatsModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_ratingsStatsOriginalValues == null) {
+			_ratingsStatsOriginalValues = new RatingsStatsOriginalValues(this);
 		}
+
+		_ratingsStatsOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_ratingsStatsOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _ratingsStatsOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -407,7 +412,11 @@ public class RatingsStatsModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ratingsStatsOriginalValues == null) {
+			return 0;
+		}
+
+		return _ratingsStatsOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -506,16 +515,7 @@ public class RatingsStatsModelImpl
 	public void resetOriginalValues() {
 		RatingsStatsModelImpl ratingsStatsModelImpl = this;
 
-		ratingsStatsModelImpl._originalClassNameId =
-			ratingsStatsModelImpl._classNameId;
-
-		ratingsStatsModelImpl._setOriginalClassNameId = false;
-
-		ratingsStatsModelImpl._originalClassPK = ratingsStatsModelImpl._classPK;
-
-		ratingsStatsModelImpl._setOriginalClassPK = false;
-
-		ratingsStatsModelImpl._columnBitmask = 0;
+		ratingsStatsModelImpl._ratingsStatsOriginalValues = null;
 	}
 
 	@Override
@@ -603,21 +603,44 @@ public class RatingsStatsModelImpl
 		return sb.toString();
 	}
 
+	void setRatingsStatsCacheModel(
+		RatingsStatsCacheModel ratingsStatsCacheModel) {
+
+		_statsId = ratingsStatsCacheModel.statsId;
+		_companyId = ratingsStatsCacheModel.companyId;
+		_classNameId = ratingsStatsCacheModel.classNameId;
+		_classPK = ratingsStatsCacheModel.classPK;
+		_totalEntries = ratingsStatsCacheModel.totalEntries;
+		_totalScore = ratingsStatsCacheModel.totalScore;
+		_averageScore = ratingsStatsCacheModel.averageScore;
+	}
+
+	private static class RatingsStatsOriginalValues {
+
+		private RatingsStatsOriginalValues(
+			RatingsStatsModelImpl ratingsStatsModelImpl) {
+
+			_originalClassNameId = ratingsStatsModelImpl._classNameId;
+			_originalClassPK = ratingsStatsModelImpl._classPK;
+		}
+
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, RatingsStats>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RatingsStatsOriginalValues _ratingsStatsOriginalValues;
 	private long _statsId;
 	private long _companyId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private int _totalEntries;
 	private double _totalScore;
 	private double _averageScore;
-	private long _columnBitmask;
 	private RatingsStats _escapedModel;
 
 }

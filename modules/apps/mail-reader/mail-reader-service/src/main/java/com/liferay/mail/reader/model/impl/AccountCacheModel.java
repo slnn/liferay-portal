@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -126,111 +124,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	public Account toEntityModel() {
 		AccountImpl accountImpl = new AccountImpl();
 
-		accountImpl.setAccountId(accountId);
-		accountImpl.setCompanyId(companyId);
-		accountImpl.setUserId(userId);
-
-		if (userName == null) {
-			accountImpl.setUserName("");
-		}
-		else {
-			accountImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			accountImpl.setCreateDate(null);
-		}
-		else {
-			accountImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			accountImpl.setModifiedDate(null);
-		}
-		else {
-			accountImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (address == null) {
-			accountImpl.setAddress("");
-		}
-		else {
-			accountImpl.setAddress(address);
-		}
-
-		if (personalName == null) {
-			accountImpl.setPersonalName("");
-		}
-		else {
-			accountImpl.setPersonalName(personalName);
-		}
-
-		if (protocol == null) {
-			accountImpl.setProtocol("");
-		}
-		else {
-			accountImpl.setProtocol(protocol);
-		}
-
-		if (incomingHostName == null) {
-			accountImpl.setIncomingHostName("");
-		}
-		else {
-			accountImpl.setIncomingHostName(incomingHostName);
-		}
-
-		accountImpl.setIncomingPort(incomingPort);
-		accountImpl.setIncomingSecure(incomingSecure);
-
-		if (outgoingHostName == null) {
-			accountImpl.setOutgoingHostName("");
-		}
-		else {
-			accountImpl.setOutgoingHostName(outgoingHostName);
-		}
-
-		accountImpl.setOutgoingPort(outgoingPort);
-		accountImpl.setOutgoingSecure(outgoingSecure);
-
-		if (login == null) {
-			accountImpl.setLogin("");
-		}
-		else {
-			accountImpl.setLogin(login);
-		}
-
-		if (password == null) {
-			accountImpl.setPassword("");
-		}
-		else {
-			accountImpl.setPassword(password);
-		}
-
-		accountImpl.setSavePassword(savePassword);
-
-		if (signature == null) {
-			accountImpl.setSignature("");
-		}
-		else {
-			accountImpl.setSignature(signature);
-		}
-
-		accountImpl.setUseSignature(useSignature);
-
-		if (folderPrefix == null) {
-			accountImpl.setFolderPrefix("");
-		}
-		else {
-			accountImpl.setFolderPrefix(folderPrefix);
-		}
-
-		accountImpl.setInboxFolderId(inboxFolderId);
-		accountImpl.setDraftFolderId(draftFolderId);
-		accountImpl.setSentFolderId(sentFolderId);
-		accountImpl.setTrashFolderId(trashFolderId);
-		accountImpl.setDefaultSender(defaultSender);
-
-		accountImpl.resetOriginalValues();
+		accountImpl.setAccountCacheModel(this);
 
 		return accountImpl;
 	}

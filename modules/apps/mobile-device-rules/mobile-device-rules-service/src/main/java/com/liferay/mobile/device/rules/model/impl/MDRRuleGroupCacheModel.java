@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -98,61 +96,7 @@ public class MDRRuleGroupCacheModel
 	public MDRRuleGroup toEntityModel() {
 		MDRRuleGroupImpl mdrRuleGroupImpl = new MDRRuleGroupImpl();
 
-		if (uuid == null) {
-			mdrRuleGroupImpl.setUuid("");
-		}
-		else {
-			mdrRuleGroupImpl.setUuid(uuid);
-		}
-
-		mdrRuleGroupImpl.setRuleGroupId(ruleGroupId);
-		mdrRuleGroupImpl.setGroupId(groupId);
-		mdrRuleGroupImpl.setCompanyId(companyId);
-		mdrRuleGroupImpl.setUserId(userId);
-
-		if (userName == null) {
-			mdrRuleGroupImpl.setUserName("");
-		}
-		else {
-			mdrRuleGroupImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mdrRuleGroupImpl.setCreateDate(null);
-		}
-		else {
-			mdrRuleGroupImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mdrRuleGroupImpl.setModifiedDate(null);
-		}
-		else {
-			mdrRuleGroupImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			mdrRuleGroupImpl.setName("");
-		}
-		else {
-			mdrRuleGroupImpl.setName(name);
-		}
-
-		if (description == null) {
-			mdrRuleGroupImpl.setDescription("");
-		}
-		else {
-			mdrRuleGroupImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mdrRuleGroupImpl.setLastPublishDate(null);
-		}
-		else {
-			mdrRuleGroupImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mdrRuleGroupImpl.resetOriginalValues();
+		mdrRuleGroupImpl.setMDRRuleGroupCacheModel(this);
 
 		return mdrRuleGroupImpl;
 	}

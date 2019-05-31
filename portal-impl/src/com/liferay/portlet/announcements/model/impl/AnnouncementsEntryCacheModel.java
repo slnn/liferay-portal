@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -111,87 +109,7 @@ public class AnnouncementsEntryCacheModel
 		AnnouncementsEntryImpl announcementsEntryImpl =
 			new AnnouncementsEntryImpl();
 
-		if (uuid == null) {
-			announcementsEntryImpl.setUuid("");
-		}
-		else {
-			announcementsEntryImpl.setUuid(uuid);
-		}
-
-		announcementsEntryImpl.setEntryId(entryId);
-		announcementsEntryImpl.setCompanyId(companyId);
-		announcementsEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			announcementsEntryImpl.setUserName("");
-		}
-		else {
-			announcementsEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			announcementsEntryImpl.setCreateDate(null);
-		}
-		else {
-			announcementsEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			announcementsEntryImpl.setModifiedDate(null);
-		}
-		else {
-			announcementsEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		announcementsEntryImpl.setClassNameId(classNameId);
-		announcementsEntryImpl.setClassPK(classPK);
-
-		if (title == null) {
-			announcementsEntryImpl.setTitle("");
-		}
-		else {
-			announcementsEntryImpl.setTitle(title);
-		}
-
-		if (content == null) {
-			announcementsEntryImpl.setContent("");
-		}
-		else {
-			announcementsEntryImpl.setContent(content);
-		}
-
-		if (url == null) {
-			announcementsEntryImpl.setUrl("");
-		}
-		else {
-			announcementsEntryImpl.setUrl(url);
-		}
-
-		if (type == null) {
-			announcementsEntryImpl.setType("");
-		}
-		else {
-			announcementsEntryImpl.setType(type);
-		}
-
-		if (displayDate == Long.MIN_VALUE) {
-			announcementsEntryImpl.setDisplayDate(null);
-		}
-		else {
-			announcementsEntryImpl.setDisplayDate(new Date(displayDate));
-		}
-
-		if (expirationDate == Long.MIN_VALUE) {
-			announcementsEntryImpl.setExpirationDate(null);
-		}
-		else {
-			announcementsEntryImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		announcementsEntryImpl.setPriority(priority);
-		announcementsEntryImpl.setAlert(alert);
-
-		announcementsEntryImpl.resetOriginalValues();
+		announcementsEntryImpl.setAnnouncementsEntryCacheModel(this);
 
 		return announcementsEntryImpl;
 	}

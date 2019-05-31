@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,47 +95,7 @@ public class ChangesetCollectionCacheModel
 		ChangesetCollectionImpl changesetCollectionImpl =
 			new ChangesetCollectionImpl();
 
-		changesetCollectionImpl.setChangesetCollectionId(changesetCollectionId);
-		changesetCollectionImpl.setGroupId(groupId);
-		changesetCollectionImpl.setCompanyId(companyId);
-		changesetCollectionImpl.setUserId(userId);
-
-		if (userName == null) {
-			changesetCollectionImpl.setUserName("");
-		}
-		else {
-			changesetCollectionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			changesetCollectionImpl.setCreateDate(null);
-		}
-		else {
-			changesetCollectionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			changesetCollectionImpl.setModifiedDate(null);
-		}
-		else {
-			changesetCollectionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			changesetCollectionImpl.setName("");
-		}
-		else {
-			changesetCollectionImpl.setName(name);
-		}
-
-		if (description == null) {
-			changesetCollectionImpl.setDescription("");
-		}
-		else {
-			changesetCollectionImpl.setDescription(description);
-		}
-
-		changesetCollectionImpl.resetOriginalValues();
+		changesetCollectionImpl.setChangesetCollectionCacheModel(this);
 
 		return changesetCollectionImpl;
 	}

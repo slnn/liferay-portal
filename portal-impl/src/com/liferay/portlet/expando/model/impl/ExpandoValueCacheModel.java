@@ -90,22 +90,7 @@ public class ExpandoValueCacheModel
 	public ExpandoValue toEntityModel() {
 		ExpandoValueImpl expandoValueImpl = new ExpandoValueImpl();
 
-		expandoValueImpl.setValueId(valueId);
-		expandoValueImpl.setCompanyId(companyId);
-		expandoValueImpl.setTableId(tableId);
-		expandoValueImpl.setColumnId(columnId);
-		expandoValueImpl.setRowId(rowId);
-		expandoValueImpl.setClassNameId(classNameId);
-		expandoValueImpl.setClassPK(classPK);
-
-		if (data == null) {
-			expandoValueImpl.setData("");
-		}
-		else {
-			expandoValueImpl.setData(data);
-		}
-
-		expandoValueImpl.resetOriginalValues();
+		expandoValueImpl.setExpandoValueCacheModel(this);
 
 		return expandoValueImpl;
 	}

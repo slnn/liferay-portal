@@ -100,34 +100,7 @@ public class SocialRequestCacheModel
 	public SocialRequest toEntityModel() {
 		SocialRequestImpl socialRequestImpl = new SocialRequestImpl();
 
-		if (uuid == null) {
-			socialRequestImpl.setUuid("");
-		}
-		else {
-			socialRequestImpl.setUuid(uuid);
-		}
-
-		socialRequestImpl.setRequestId(requestId);
-		socialRequestImpl.setGroupId(groupId);
-		socialRequestImpl.setCompanyId(companyId);
-		socialRequestImpl.setUserId(userId);
-		socialRequestImpl.setCreateDate(createDate);
-		socialRequestImpl.setModifiedDate(modifiedDate);
-		socialRequestImpl.setClassNameId(classNameId);
-		socialRequestImpl.setClassPK(classPK);
-		socialRequestImpl.setType(type);
-
-		if (extraData == null) {
-			socialRequestImpl.setExtraData("");
-		}
-		else {
-			socialRequestImpl.setExtraData(extraData);
-		}
-
-		socialRequestImpl.setReceiverUserId(receiverUserId);
-		socialRequestImpl.setStatus(status);
-
-		socialRequestImpl.resetOriginalValues();
+		socialRequestImpl.setSocialRequestCacheModel(this);
 
 		return socialRequestImpl;
 	}

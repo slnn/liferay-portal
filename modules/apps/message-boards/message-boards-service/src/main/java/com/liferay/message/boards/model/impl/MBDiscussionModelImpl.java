@@ -343,17 +343,21 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mbDiscussionOriginalValues == null) {
+			_mbDiscussionOriginalValues = new MBDiscussionOriginalValues(this);
 		}
+
+		_mbDiscussionOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mbDiscussionOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mbDiscussionOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -373,19 +377,21 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbDiscussionOriginalValues == null) {
+			_mbDiscussionOriginalValues = new MBDiscussionOriginalValues(this);
 		}
+
+		_mbDiscussionOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbDiscussionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbDiscussionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -395,19 +401,21 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mbDiscussionOriginalValues == null) {
+			_mbDiscussionOriginalValues = new MBDiscussionOriginalValues(this);
 		}
+
+		_mbDiscussionOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mbDiscussionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mbDiscussionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -504,19 +512,22 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_mbDiscussionOriginalValues == null) {
+			_mbDiscussionOriginalValues = new MBDiscussionOriginalValues(this);
 		}
+
+		_mbDiscussionOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_mbDiscussionOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _mbDiscussionOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -526,19 +537,21 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_mbDiscussionOriginalValues == null) {
+			_mbDiscussionOriginalValues = new MBDiscussionOriginalValues(this);
 		}
+
+		_mbDiscussionOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_mbDiscussionOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _mbDiscussionOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -548,19 +561,21 @@ public class MBDiscussionModelImpl
 
 	@Override
 	public void setThreadId(long threadId) {
-		_columnBitmask |= THREADID_COLUMN_BITMASK;
-
-		if (!_setOriginalThreadId) {
-			_setOriginalThreadId = true;
-
-			_originalThreadId = _threadId;
+		if (_mbDiscussionOriginalValues == null) {
+			_mbDiscussionOriginalValues = new MBDiscussionOriginalValues(this);
 		}
+
+		_mbDiscussionOriginalValues._columnBitmask |= THREADID_COLUMN_BITMASK;
 
 		_threadId = threadId;
 	}
 
 	public long getOriginalThreadId() {
-		return _originalThreadId;
+		if (_mbDiscussionOriginalValues == null) {
+			return _threadId;
+		}
+
+		return _mbDiscussionOriginalValues._originalThreadId;
 	}
 
 	@Override
@@ -581,7 +596,11 @@ public class MBDiscussionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbDiscussionOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbDiscussionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -685,34 +704,9 @@ public class MBDiscussionModelImpl
 	public void resetOriginalValues() {
 		MBDiscussionModelImpl mbDiscussionModelImpl = this;
 
-		mbDiscussionModelImpl._originalUuid = mbDiscussionModelImpl._uuid;
-
-		mbDiscussionModelImpl._originalGroupId = mbDiscussionModelImpl._groupId;
-
-		mbDiscussionModelImpl._setOriginalGroupId = false;
-
-		mbDiscussionModelImpl._originalCompanyId =
-			mbDiscussionModelImpl._companyId;
-
-		mbDiscussionModelImpl._setOriginalCompanyId = false;
+		mbDiscussionModelImpl._mbDiscussionOriginalValues = null;
 
 		mbDiscussionModelImpl._setModifiedDate = false;
-
-		mbDiscussionModelImpl._originalClassNameId =
-			mbDiscussionModelImpl._classNameId;
-
-		mbDiscussionModelImpl._setOriginalClassNameId = false;
-
-		mbDiscussionModelImpl._originalClassPK = mbDiscussionModelImpl._classPK;
-
-		mbDiscussionModelImpl._setOriginalClassPK = false;
-
-		mbDiscussionModelImpl._originalThreadId =
-			mbDiscussionModelImpl._threadId;
-
-		mbDiscussionModelImpl._setOriginalThreadId = false;
-
-		mbDiscussionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -843,34 +837,85 @@ public class MBDiscussionModelImpl
 		return sb.toString();
 	}
 
+	void setMBDiscussionCacheModel(
+		MBDiscussionCacheModel mbDiscussionCacheModel) {
+
+		if (mbDiscussionCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = mbDiscussionCacheModel.uuid;
+		}
+
+		_discussionId = mbDiscussionCacheModel.discussionId;
+		_groupId = mbDiscussionCacheModel.groupId;
+		_companyId = mbDiscussionCacheModel.companyId;
+		_userId = mbDiscussionCacheModel.userId;
+
+		if (mbDiscussionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = mbDiscussionCacheModel.userName;
+		}
+
+		if (mbDiscussionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(mbDiscussionCacheModel.createDate);
+		}
+
+		if (mbDiscussionCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(mbDiscussionCacheModel.modifiedDate);
+		}
+
+		_classNameId = mbDiscussionCacheModel.classNameId;
+		_classPK = mbDiscussionCacheModel.classPK;
+		_threadId = mbDiscussionCacheModel.threadId;
+
+		if (mbDiscussionCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(mbDiscussionCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class MBDiscussionOriginalValues {
+
+		private MBDiscussionOriginalValues(
+			MBDiscussionModelImpl mbDiscussionModelImpl) {
+
+			_originalUuid = mbDiscussionModelImpl._uuid;
+			_originalGroupId = mbDiscussionModelImpl._groupId;
+			_originalCompanyId = mbDiscussionModelImpl._companyId;
+			_originalClassNameId = mbDiscussionModelImpl._classNameId;
+			_originalClassPK = mbDiscussionModelImpl._classPK;
+			_originalThreadId = mbDiscussionModelImpl._threadId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final long _originalThreadId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBDiscussion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBDiscussionOriginalValues _mbDiscussionOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _discussionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _threadId;
-	private long _originalThreadId;
-	private boolean _setOriginalThreadId;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private MBDiscussion _escapedModel;
 
 }

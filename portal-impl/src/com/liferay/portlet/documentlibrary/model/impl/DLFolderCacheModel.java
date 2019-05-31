@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -121,100 +119,7 @@ public class DLFolderCacheModel
 	public DLFolder toEntityModel() {
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
 
-		if (uuid == null) {
-			dlFolderImpl.setUuid("");
-		}
-		else {
-			dlFolderImpl.setUuid(uuid);
-		}
-
-		dlFolderImpl.setFolderId(folderId);
-		dlFolderImpl.setGroupId(groupId);
-		dlFolderImpl.setCompanyId(companyId);
-		dlFolderImpl.setUserId(userId);
-
-		if (userName == null) {
-			dlFolderImpl.setUserName("");
-		}
-		else {
-			dlFolderImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			dlFolderImpl.setCreateDate(null);
-		}
-		else {
-			dlFolderImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			dlFolderImpl.setModifiedDate(null);
-		}
-		else {
-			dlFolderImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		dlFolderImpl.setRepositoryId(repositoryId);
-		dlFolderImpl.setMountPoint(mountPoint);
-		dlFolderImpl.setParentFolderId(parentFolderId);
-
-		if (treePath == null) {
-			dlFolderImpl.setTreePath("");
-		}
-		else {
-			dlFolderImpl.setTreePath(treePath);
-		}
-
-		if (name == null) {
-			dlFolderImpl.setName("");
-		}
-		else {
-			dlFolderImpl.setName(name);
-		}
-
-		if (description == null) {
-			dlFolderImpl.setDescription("");
-		}
-		else {
-			dlFolderImpl.setDescription(description);
-		}
-
-		if (lastPostDate == Long.MIN_VALUE) {
-			dlFolderImpl.setLastPostDate(null);
-		}
-		else {
-			dlFolderImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
-		dlFolderImpl.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
-		dlFolderImpl.setHidden(hidden);
-		dlFolderImpl.setRestrictionType(restrictionType);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			dlFolderImpl.setLastPublishDate(null);
-		}
-		else {
-			dlFolderImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		dlFolderImpl.setStatus(status);
-		dlFolderImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			dlFolderImpl.setStatusByUserName("");
-		}
-		else {
-			dlFolderImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			dlFolderImpl.setStatusDate(null);
-		}
-		else {
-			dlFolderImpl.setStatusDate(new Date(statusDate));
-		}
-
-		dlFolderImpl.resetOriginalValues();
+		dlFolderImpl.setDLFolderCacheModel(this);
 
 		return dlFolderImpl;
 	}

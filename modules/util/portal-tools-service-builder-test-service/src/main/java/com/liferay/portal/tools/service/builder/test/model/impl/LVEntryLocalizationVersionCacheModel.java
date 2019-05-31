@@ -95,36 +95,8 @@ public class LVEntryLocalizationVersionCacheModel
 		LVEntryLocalizationVersionImpl lvEntryLocalizationVersionImpl =
 			new LVEntryLocalizationVersionImpl();
 
-		lvEntryLocalizationVersionImpl.setLvEntryLocalizationVersionId(
-			lvEntryLocalizationVersionId);
-		lvEntryLocalizationVersionImpl.setVersion(version);
-		lvEntryLocalizationVersionImpl.setLvEntryLocalizationId(
-			lvEntryLocalizationId);
-		lvEntryLocalizationVersionImpl.setCompanyId(companyId);
-		lvEntryLocalizationVersionImpl.setLvEntryId(lvEntryId);
-
-		if (languageId == null) {
-			lvEntryLocalizationVersionImpl.setLanguageId("");
-		}
-		else {
-			lvEntryLocalizationVersionImpl.setLanguageId(languageId);
-		}
-
-		if (title == null) {
-			lvEntryLocalizationVersionImpl.setTitle("");
-		}
-		else {
-			lvEntryLocalizationVersionImpl.setTitle(title);
-		}
-
-		if (content == null) {
-			lvEntryLocalizationVersionImpl.setContent("");
-		}
-		else {
-			lvEntryLocalizationVersionImpl.setContent(content);
-		}
-
-		lvEntryLocalizationVersionImpl.resetOriginalValues();
+		lvEntryLocalizationVersionImpl.setLVEntryLocalizationVersionCacheModel(
+			this);
 
 		return lvEntryLocalizationVersionImpl;
 	}

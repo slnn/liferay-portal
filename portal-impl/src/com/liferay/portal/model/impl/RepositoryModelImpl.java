@@ -430,17 +430,21 @@ public class RepositoryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_repositoryOriginalValues == null) {
+			_repositoryOriginalValues = new RepositoryOriginalValues(this);
 		}
+
+		_repositoryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_repositoryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_repositoryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -462,19 +466,21 @@ public class RepositoryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_repositoryOriginalValues == null) {
+			_repositoryOriginalValues = new RepositoryOriginalValues(this);
 		}
+
+		_repositoryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_repositoryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _repositoryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -485,19 +491,21 @@ public class RepositoryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_repositoryOriginalValues == null) {
+			_repositoryOriginalValues = new RepositoryOriginalValues(this);
 		}
+
+		_repositoryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_repositoryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _repositoryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -615,17 +623,21 @@ public class RepositoryModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_repositoryOriginalValues == null) {
+			_repositoryOriginalValues = new RepositoryOriginalValues(this);
 		}
+
+		_repositoryOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_repositoryOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_repositoryOriginalValues._originalName);
 	}
 
 	@JSON
@@ -657,17 +669,22 @@ public class RepositoryModelImpl
 
 	@Override
 	public void setPortletId(String portletId) {
-		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
-
-		if (_originalPortletId == null) {
-			_originalPortletId = _portletId;
+		if (_repositoryOriginalValues == null) {
+			_repositoryOriginalValues = new RepositoryOriginalValues(this);
 		}
+
+		_repositoryOriginalValues._columnBitmask |= PORTLETID_COLUMN_BITMASK;
 
 		_portletId = portletId;
 	}
 
 	public String getOriginalPortletId() {
-		return GetterUtil.getString(_originalPortletId);
+		if (_repositoryOriginalValues == null) {
+			return GetterUtil.getString(_portletId);
+		}
+
+		return GetterUtil.getString(
+			_repositoryOriginalValues._originalPortletId);
 	}
 
 	@JSON
@@ -716,7 +733,11 @@ public class RepositoryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_repositoryOriginalValues == null) {
+			return 0;
+		}
+
+		return _repositoryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -824,23 +845,9 @@ public class RepositoryModelImpl
 	public void resetOriginalValues() {
 		RepositoryModelImpl repositoryModelImpl = this;
 
-		repositoryModelImpl._originalUuid = repositoryModelImpl._uuid;
-
-		repositoryModelImpl._originalGroupId = repositoryModelImpl._groupId;
-
-		repositoryModelImpl._setOriginalGroupId = false;
-
-		repositoryModelImpl._originalCompanyId = repositoryModelImpl._companyId;
-
-		repositoryModelImpl._setOriginalCompanyId = false;
+		repositoryModelImpl._repositoryOriginalValues = null;
 
 		repositoryModelImpl._setModifiedDate = false;
-
-		repositoryModelImpl._originalName = repositoryModelImpl._name;
-
-		repositoryModelImpl._originalPortletId = repositoryModelImpl._portletId;
-
-		repositoryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1002,19 +1009,103 @@ public class RepositoryModelImpl
 		return sb.toString();
 	}
 
+	void setRepositoryCacheModel(RepositoryCacheModel repositoryCacheModel) {
+		_mvccVersion = repositoryCacheModel.mvccVersion;
+
+		if (repositoryCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = repositoryCacheModel.uuid;
+		}
+
+		_repositoryId = repositoryCacheModel.repositoryId;
+		_groupId = repositoryCacheModel.groupId;
+		_companyId = repositoryCacheModel.companyId;
+		_userId = repositoryCacheModel.userId;
+
+		if (repositoryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = repositoryCacheModel.userName;
+		}
+
+		if (repositoryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(repositoryCacheModel.createDate);
+		}
+
+		if (repositoryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(repositoryCacheModel.modifiedDate);
+		}
+
+		_classNameId = repositoryCacheModel.classNameId;
+
+		if (repositoryCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = repositoryCacheModel.name;
+		}
+
+		if (repositoryCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = repositoryCacheModel.description;
+		}
+
+		if (repositoryCacheModel.portletId == null) {
+			_portletId = "";
+		}
+		else {
+			_portletId = repositoryCacheModel.portletId;
+		}
+
+		if (repositoryCacheModel.typeSettings == null) {
+			_typeSettings = "";
+		}
+		else {
+			_typeSettings = repositoryCacheModel.typeSettings;
+		}
+
+		_dlFolderId = repositoryCacheModel.dlFolderId;
+
+		if (repositoryCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(repositoryCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class RepositoryOriginalValues {
+
+		private RepositoryOriginalValues(
+			RepositoryModelImpl repositoryModelImpl) {
+
+			_originalUuid = repositoryModelImpl._uuid;
+			_originalGroupId = repositoryModelImpl._groupId;
+			_originalCompanyId = repositoryModelImpl._companyId;
+			_originalName = repositoryModelImpl._name;
+			_originalPortletId = repositoryModelImpl._portletId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private final String _originalPortletId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Repository>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RepositoryOriginalValues _repositoryOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _repositoryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1022,14 +1113,11 @@ public class RepositoryModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private String _portletId;
-	private String _originalPortletId;
 	private String _typeSettings;
 	private long _dlFolderId;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private Repository _escapedModel;
 
 }

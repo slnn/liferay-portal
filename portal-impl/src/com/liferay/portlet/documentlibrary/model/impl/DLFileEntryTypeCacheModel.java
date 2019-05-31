@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,68 +98,7 @@ public class DLFileEntryTypeCacheModel
 	public DLFileEntryType toEntityModel() {
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
 
-		if (uuid == null) {
-			dlFileEntryTypeImpl.setUuid("");
-		}
-		else {
-			dlFileEntryTypeImpl.setUuid(uuid);
-		}
-
-		dlFileEntryTypeImpl.setFileEntryTypeId(fileEntryTypeId);
-		dlFileEntryTypeImpl.setGroupId(groupId);
-		dlFileEntryTypeImpl.setCompanyId(companyId);
-		dlFileEntryTypeImpl.setUserId(userId);
-
-		if (userName == null) {
-			dlFileEntryTypeImpl.setUserName("");
-		}
-		else {
-			dlFileEntryTypeImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			dlFileEntryTypeImpl.setCreateDate(null);
-		}
-		else {
-			dlFileEntryTypeImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			dlFileEntryTypeImpl.setModifiedDate(null);
-		}
-		else {
-			dlFileEntryTypeImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (fileEntryTypeKey == null) {
-			dlFileEntryTypeImpl.setFileEntryTypeKey("");
-		}
-		else {
-			dlFileEntryTypeImpl.setFileEntryTypeKey(fileEntryTypeKey);
-		}
-
-		if (name == null) {
-			dlFileEntryTypeImpl.setName("");
-		}
-		else {
-			dlFileEntryTypeImpl.setName(name);
-		}
-
-		if (description == null) {
-			dlFileEntryTypeImpl.setDescription("");
-		}
-		else {
-			dlFileEntryTypeImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			dlFileEntryTypeImpl.setLastPublishDate(null);
-		}
-		else {
-			dlFileEntryTypeImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		dlFileEntryTypeImpl.resetOriginalValues();
+		dlFileEntryTypeImpl.setDLFileEntryTypeCacheModel(this);
 
 		return dlFileEntryTypeImpl;
 	}

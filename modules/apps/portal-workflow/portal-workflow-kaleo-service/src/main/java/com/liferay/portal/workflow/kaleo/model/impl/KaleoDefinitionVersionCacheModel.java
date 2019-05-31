@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -129,89 +127,7 @@ public class KaleoDefinitionVersionCacheModel
 		KaleoDefinitionVersionImpl kaleoDefinitionVersionImpl =
 			new KaleoDefinitionVersionImpl();
 
-		kaleoDefinitionVersionImpl.setMvccVersion(mvccVersion);
-		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoDefinitionVersionImpl.setGroupId(groupId);
-		kaleoDefinitionVersionImpl.setCompanyId(companyId);
-		kaleoDefinitionVersionImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoDefinitionVersionImpl.setUserName("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setUserName(userName);
-		}
-
-		kaleoDefinitionVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			kaleoDefinitionVersionImpl.setStatusByUserName("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			kaleoDefinitionVersionImpl.setStatusDate(null);
-		}
-		else {
-			kaleoDefinitionVersionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoDefinitionVersionImpl.setCreateDate(null);
-		}
-		else {
-			kaleoDefinitionVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoDefinitionVersionImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoDefinitionVersionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			kaleoDefinitionVersionImpl.setName("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setName(name);
-		}
-
-		if (title == null) {
-			kaleoDefinitionVersionImpl.setTitle("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			kaleoDefinitionVersionImpl.setDescription("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setDescription(description);
-		}
-
-		if (content == null) {
-			kaleoDefinitionVersionImpl.setContent("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setContent(content);
-		}
-
-		if (version == null) {
-			kaleoDefinitionVersionImpl.setVersion("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setVersion(version);
-		}
-
-		kaleoDefinitionVersionImpl.setStartKaleoNodeId(startKaleoNodeId);
-		kaleoDefinitionVersionImpl.setStatus(status);
-
-		kaleoDefinitionVersionImpl.resetOriginalValues();
+		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionCacheModel(this);
 
 		return kaleoDefinitionVersionImpl;
 	}

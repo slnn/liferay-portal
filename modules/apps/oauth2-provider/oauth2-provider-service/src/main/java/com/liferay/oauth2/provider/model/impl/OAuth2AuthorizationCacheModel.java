@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -113,95 +111,7 @@ public class OAuth2AuthorizationCacheModel
 		OAuth2AuthorizationImpl oAuth2AuthorizationImpl =
 			new OAuth2AuthorizationImpl();
 
-		oAuth2AuthorizationImpl.setOAuth2AuthorizationId(oAuth2AuthorizationId);
-		oAuth2AuthorizationImpl.setCompanyId(companyId);
-		oAuth2AuthorizationImpl.setUserId(userId);
-
-		if (userName == null) {
-			oAuth2AuthorizationImpl.setUserName("");
-		}
-		else {
-			oAuth2AuthorizationImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			oAuth2AuthorizationImpl.setCreateDate(null);
-		}
-		else {
-			oAuth2AuthorizationImpl.setCreateDate(new Date(createDate));
-		}
-
-		oAuth2AuthorizationImpl.setOAuth2ApplicationId(oAuth2ApplicationId);
-		oAuth2AuthorizationImpl.setOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId);
-
-		if (accessTokenContent == null) {
-			oAuth2AuthorizationImpl.setAccessTokenContent("");
-		}
-		else {
-			oAuth2AuthorizationImpl.setAccessTokenContent(accessTokenContent);
-		}
-
-		oAuth2AuthorizationImpl.setAccessTokenContentHash(
-			accessTokenContentHash);
-
-		if (accessTokenCreateDate == Long.MIN_VALUE) {
-			oAuth2AuthorizationImpl.setAccessTokenCreateDate(null);
-		}
-		else {
-			oAuth2AuthorizationImpl.setAccessTokenCreateDate(
-				new Date(accessTokenCreateDate));
-		}
-
-		if (accessTokenExpirationDate == Long.MIN_VALUE) {
-			oAuth2AuthorizationImpl.setAccessTokenExpirationDate(null);
-		}
-		else {
-			oAuth2AuthorizationImpl.setAccessTokenExpirationDate(
-				new Date(accessTokenExpirationDate));
-		}
-
-		if (remoteHostInfo == null) {
-			oAuth2AuthorizationImpl.setRemoteHostInfo("");
-		}
-		else {
-			oAuth2AuthorizationImpl.setRemoteHostInfo(remoteHostInfo);
-		}
-
-		if (remoteIPInfo == null) {
-			oAuth2AuthorizationImpl.setRemoteIPInfo("");
-		}
-		else {
-			oAuth2AuthorizationImpl.setRemoteIPInfo(remoteIPInfo);
-		}
-
-		if (refreshTokenContent == null) {
-			oAuth2AuthorizationImpl.setRefreshTokenContent("");
-		}
-		else {
-			oAuth2AuthorizationImpl.setRefreshTokenContent(refreshTokenContent);
-		}
-
-		oAuth2AuthorizationImpl.setRefreshTokenContentHash(
-			refreshTokenContentHash);
-
-		if (refreshTokenCreateDate == Long.MIN_VALUE) {
-			oAuth2AuthorizationImpl.setRefreshTokenCreateDate(null);
-		}
-		else {
-			oAuth2AuthorizationImpl.setRefreshTokenCreateDate(
-				new Date(refreshTokenCreateDate));
-		}
-
-		if (refreshTokenExpirationDate == Long.MIN_VALUE) {
-			oAuth2AuthorizationImpl.setRefreshTokenExpirationDate(null);
-		}
-		else {
-			oAuth2AuthorizationImpl.setRefreshTokenExpirationDate(
-				new Date(refreshTokenExpirationDate));
-		}
-
-		oAuth2AuthorizationImpl.resetOriginalValues();
+		oAuth2AuthorizationImpl.setOAuth2AuthorizationCacheModel(this);
 
 		return oAuth2AuthorizationImpl;
 	}

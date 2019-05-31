@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,48 +95,7 @@ public class AssetCategoryPropertyCacheModel
 		AssetCategoryPropertyImpl assetCategoryPropertyImpl =
 			new AssetCategoryPropertyImpl();
 
-		assetCategoryPropertyImpl.setCategoryPropertyId(categoryPropertyId);
-		assetCategoryPropertyImpl.setCompanyId(companyId);
-		assetCategoryPropertyImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetCategoryPropertyImpl.setUserName("");
-		}
-		else {
-			assetCategoryPropertyImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetCategoryPropertyImpl.setCreateDate(null);
-		}
-		else {
-			assetCategoryPropertyImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetCategoryPropertyImpl.setModifiedDate(null);
-		}
-		else {
-			assetCategoryPropertyImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetCategoryPropertyImpl.setCategoryId(categoryId);
-
-		if (key == null) {
-			assetCategoryPropertyImpl.setKey("");
-		}
-		else {
-			assetCategoryPropertyImpl.setKey(key);
-		}
-
-		if (value == null) {
-			assetCategoryPropertyImpl.setValue("");
-		}
-		else {
-			assetCategoryPropertyImpl.setValue(value);
-		}
-
-		assetCategoryPropertyImpl.resetOriginalValues();
+		assetCategoryPropertyImpl.setAssetCategoryPropertyCacheModel(this);
 
 		return assetCategoryPropertyImpl;
 	}

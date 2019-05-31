@@ -416,6 +416,17 @@ public class CounterModelImpl
 		return sb.toString();
 	}
 
+	void setCounterCacheModel(CounterCacheModel counterCacheModel) {
+		if (counterCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = counterCacheModel.name;
+		}
+
+		_currentId = counterCacheModel.currentId;
+	}
+
 	private static final Function<InvocationHandler, Counter>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 

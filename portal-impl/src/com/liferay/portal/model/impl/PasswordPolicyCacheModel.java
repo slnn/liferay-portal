@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -161,89 +159,7 @@ public class PasswordPolicyCacheModel
 	public PasswordPolicy toEntityModel() {
 		PasswordPolicyImpl passwordPolicyImpl = new PasswordPolicyImpl();
 
-		passwordPolicyImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			passwordPolicyImpl.setUuid("");
-		}
-		else {
-			passwordPolicyImpl.setUuid(uuid);
-		}
-
-		passwordPolicyImpl.setPasswordPolicyId(passwordPolicyId);
-		passwordPolicyImpl.setCompanyId(companyId);
-		passwordPolicyImpl.setUserId(userId);
-
-		if (userName == null) {
-			passwordPolicyImpl.setUserName("");
-		}
-		else {
-			passwordPolicyImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			passwordPolicyImpl.setCreateDate(null);
-		}
-		else {
-			passwordPolicyImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			passwordPolicyImpl.setModifiedDate(null);
-		}
-		else {
-			passwordPolicyImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		passwordPolicyImpl.setDefaultPolicy(defaultPolicy);
-
-		if (name == null) {
-			passwordPolicyImpl.setName("");
-		}
-		else {
-			passwordPolicyImpl.setName(name);
-		}
-
-		if (description == null) {
-			passwordPolicyImpl.setDescription("");
-		}
-		else {
-			passwordPolicyImpl.setDescription(description);
-		}
-
-		passwordPolicyImpl.setChangeable(changeable);
-		passwordPolicyImpl.setChangeRequired(changeRequired);
-		passwordPolicyImpl.setMinAge(minAge);
-		passwordPolicyImpl.setCheckSyntax(checkSyntax);
-		passwordPolicyImpl.setAllowDictionaryWords(allowDictionaryWords);
-		passwordPolicyImpl.setMinAlphanumeric(minAlphanumeric);
-		passwordPolicyImpl.setMinLength(minLength);
-		passwordPolicyImpl.setMinLowerCase(minLowerCase);
-		passwordPolicyImpl.setMinNumbers(minNumbers);
-		passwordPolicyImpl.setMinSymbols(minSymbols);
-		passwordPolicyImpl.setMinUpperCase(minUpperCase);
-
-		if (regex == null) {
-			passwordPolicyImpl.setRegex("");
-		}
-		else {
-			passwordPolicyImpl.setRegex(regex);
-		}
-
-		passwordPolicyImpl.setHistory(history);
-		passwordPolicyImpl.setHistoryCount(historyCount);
-		passwordPolicyImpl.setExpireable(expireable);
-		passwordPolicyImpl.setMaxAge(maxAge);
-		passwordPolicyImpl.setWarningTime(warningTime);
-		passwordPolicyImpl.setGraceLimit(graceLimit);
-		passwordPolicyImpl.setLockout(lockout);
-		passwordPolicyImpl.setMaxFailure(maxFailure);
-		passwordPolicyImpl.setLockoutDuration(lockoutDuration);
-		passwordPolicyImpl.setRequireUnlock(requireUnlock);
-		passwordPolicyImpl.setResetFailureCount(resetFailureCount);
-		passwordPolicyImpl.setResetTicketMaxAge(resetTicketMaxAge);
-
-		passwordPolicyImpl.resetOriginalValues();
+		passwordPolicyImpl.setPasswordPolicyCacheModel(this);
 
 		return passwordPolicyImpl;
 	}

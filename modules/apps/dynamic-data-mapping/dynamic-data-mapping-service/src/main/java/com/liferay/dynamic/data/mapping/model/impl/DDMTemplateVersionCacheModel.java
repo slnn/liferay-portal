@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -115,82 +113,7 @@ public class DDMTemplateVersionCacheModel
 		DDMTemplateVersionImpl ddmTemplateVersionImpl =
 			new DDMTemplateVersionImpl();
 
-		ddmTemplateVersionImpl.setTemplateVersionId(templateVersionId);
-		ddmTemplateVersionImpl.setGroupId(groupId);
-		ddmTemplateVersionImpl.setCompanyId(companyId);
-		ddmTemplateVersionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmTemplateVersionImpl.setUserName("");
-		}
-		else {
-			ddmTemplateVersionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmTemplateVersionImpl.setCreateDate(null);
-		}
-		else {
-			ddmTemplateVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		ddmTemplateVersionImpl.setClassNameId(classNameId);
-		ddmTemplateVersionImpl.setClassPK(classPK);
-		ddmTemplateVersionImpl.setTemplateId(templateId);
-
-		if (version == null) {
-			ddmTemplateVersionImpl.setVersion("");
-		}
-		else {
-			ddmTemplateVersionImpl.setVersion(version);
-		}
-
-		if (name == null) {
-			ddmTemplateVersionImpl.setName("");
-		}
-		else {
-			ddmTemplateVersionImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmTemplateVersionImpl.setDescription("");
-		}
-		else {
-			ddmTemplateVersionImpl.setDescription(description);
-		}
-
-		if (language == null) {
-			ddmTemplateVersionImpl.setLanguage("");
-		}
-		else {
-			ddmTemplateVersionImpl.setLanguage(language);
-		}
-
-		if (script == null) {
-			ddmTemplateVersionImpl.setScript("");
-		}
-		else {
-			ddmTemplateVersionImpl.setScript(script);
-		}
-
-		ddmTemplateVersionImpl.setStatus(status);
-		ddmTemplateVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			ddmTemplateVersionImpl.setStatusByUserName("");
-		}
-		else {
-			ddmTemplateVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			ddmTemplateVersionImpl.setStatusDate(null);
-		}
-		else {
-			ddmTemplateVersionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		ddmTemplateVersionImpl.resetOriginalValues();
+		ddmTemplateVersionImpl.setDDMTemplateVersionCacheModel(this);
 
 		return ddmTemplateVersionImpl;
 	}

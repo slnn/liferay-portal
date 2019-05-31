@@ -415,13 +415,11 @@ public class AccountModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_accountOriginalValues == null) {
+			_accountOriginalValues = new AccountOriginalValues(this);
 		}
+
+		_accountOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -443,7 +441,11 @@ public class AccountModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_accountOriginalValues == null) {
+			return _userId;
+		}
+
+		return _accountOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -499,17 +501,21 @@ public class AccountModelImpl
 
 	@Override
 	public void setAddress(String address) {
-		_columnBitmask = -1L;
-
-		if (_originalAddress == null) {
-			_originalAddress = _address;
+		if (_accountOriginalValues == null) {
+			_accountOriginalValues = new AccountOriginalValues(this);
 		}
+
+		_accountOriginalValues._columnBitmask = -1L;
 
 		_address = address;
 	}
 
 	public String getOriginalAddress() {
-		return GetterUtil.getString(_originalAddress);
+		if (_accountOriginalValues == null) {
+			return GetterUtil.getString(_address);
+		}
+
+		return GetterUtil.getString(_accountOriginalValues._originalAddress);
 	}
 
 	@Override
@@ -768,7 +774,11 @@ public class AccountModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_accountOriginalValues == null) {
+			return 0;
+		}
+
+		return _accountOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -884,15 +894,9 @@ public class AccountModelImpl
 	public void resetOriginalValues() {
 		AccountModelImpl accountModelImpl = this;
 
-		accountModelImpl._originalUserId = accountModelImpl._userId;
-
-		accountModelImpl._setOriginalUserId = false;
+		accountModelImpl._accountOriginalValues = null;
 
 		accountModelImpl._setModifiedDate = false;
-
-		accountModelImpl._originalAddress = accountModelImpl._address;
-
-		accountModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1091,20 +1095,131 @@ public class AccountModelImpl
 		return sb.toString();
 	}
 
+	void setAccountCacheModel(AccountCacheModel accountCacheModel) {
+		_accountId = accountCacheModel.accountId;
+		_companyId = accountCacheModel.companyId;
+		_userId = accountCacheModel.userId;
+
+		if (accountCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = accountCacheModel.userName;
+		}
+
+		if (accountCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(accountCacheModel.createDate);
+		}
+
+		if (accountCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(accountCacheModel.modifiedDate);
+		}
+
+		if (accountCacheModel.address == null) {
+			_address = "";
+		}
+		else {
+			_address = accountCacheModel.address;
+		}
+
+		if (accountCacheModel.personalName == null) {
+			_personalName = "";
+		}
+		else {
+			_personalName = accountCacheModel.personalName;
+		}
+
+		if (accountCacheModel.protocol == null) {
+			_protocol = "";
+		}
+		else {
+			_protocol = accountCacheModel.protocol;
+		}
+
+		if (accountCacheModel.incomingHostName == null) {
+			_incomingHostName = "";
+		}
+		else {
+			_incomingHostName = accountCacheModel.incomingHostName;
+		}
+
+		_incomingPort = accountCacheModel.incomingPort;
+		_incomingSecure = accountCacheModel.incomingSecure;
+
+		if (accountCacheModel.outgoingHostName == null) {
+			_outgoingHostName = "";
+		}
+		else {
+			_outgoingHostName = accountCacheModel.outgoingHostName;
+		}
+
+		_outgoingPort = accountCacheModel.outgoingPort;
+		_outgoingSecure = accountCacheModel.outgoingSecure;
+
+		if (accountCacheModel.login == null) {
+			_login = "";
+		}
+		else {
+			_login = accountCacheModel.login;
+		}
+
+		if (accountCacheModel.password == null) {
+			_password = "";
+		}
+		else {
+			_password = accountCacheModel.password;
+		}
+
+		_savePassword = accountCacheModel.savePassword;
+
+		if (accountCacheModel.signature == null) {
+			_signature = "";
+		}
+		else {
+			_signature = accountCacheModel.signature;
+		}
+
+		_useSignature = accountCacheModel.useSignature;
+
+		if (accountCacheModel.folderPrefix == null) {
+			_folderPrefix = "";
+		}
+		else {
+			_folderPrefix = accountCacheModel.folderPrefix;
+		}
+
+		_inboxFolderId = accountCacheModel.inboxFolderId;
+		_draftFolderId = accountCacheModel.draftFolderId;
+		_sentFolderId = accountCacheModel.sentFolderId;
+		_trashFolderId = accountCacheModel.trashFolderId;
+		_defaultSender = accountCacheModel.defaultSender;
+	}
+
+	private static class AccountOriginalValues {
+
+		private AccountOriginalValues(AccountModelImpl accountModelImpl) {
+			_originalUserId = accountModelImpl._userId;
+			_originalAddress = accountModelImpl._address;
+		}
+
+		private final long _originalUserId;
+		private final String _originalAddress;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Account>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AccountOriginalValues _accountOriginalValues;
 	private long _accountId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _address;
-	private String _originalAddress;
 	private String _personalName;
 	private String _protocol;
 	private String _incomingHostName;
@@ -1124,7 +1239,6 @@ public class AccountModelImpl
 	private long _sentFolderId;
 	private long _trashFolderId;
 	private boolean _defaultSender;
-	private long _columnBitmask;
 	private Account _escapedModel;
 
 }

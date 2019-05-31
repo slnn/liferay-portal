@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -118,60 +116,7 @@ public class RepositoryEntryCacheModel
 	public RepositoryEntry toEntityModel() {
 		RepositoryEntryImpl repositoryEntryImpl = new RepositoryEntryImpl();
 
-		repositoryEntryImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			repositoryEntryImpl.setUuid("");
-		}
-		else {
-			repositoryEntryImpl.setUuid(uuid);
-		}
-
-		repositoryEntryImpl.setRepositoryEntryId(repositoryEntryId);
-		repositoryEntryImpl.setGroupId(groupId);
-		repositoryEntryImpl.setCompanyId(companyId);
-		repositoryEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			repositoryEntryImpl.setUserName("");
-		}
-		else {
-			repositoryEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			repositoryEntryImpl.setCreateDate(null);
-		}
-		else {
-			repositoryEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			repositoryEntryImpl.setModifiedDate(null);
-		}
-		else {
-			repositoryEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		repositoryEntryImpl.setRepositoryId(repositoryId);
-
-		if (mappedId == null) {
-			repositoryEntryImpl.setMappedId("");
-		}
-		else {
-			repositoryEntryImpl.setMappedId(mappedId);
-		}
-
-		repositoryEntryImpl.setManualCheckInRequired(manualCheckInRequired);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			repositoryEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			repositoryEntryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		repositoryEntryImpl.resetOriginalValues();
+		repositoryEntryImpl.setRepositoryEntryCacheModel(this);
 
 		return repositoryEntryImpl;
 	}

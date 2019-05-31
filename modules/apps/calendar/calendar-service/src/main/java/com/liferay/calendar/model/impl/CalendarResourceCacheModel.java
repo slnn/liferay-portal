@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -110,80 +108,7 @@ public class CalendarResourceCacheModel
 	public CalendarResource toEntityModel() {
 		CalendarResourceImpl calendarResourceImpl = new CalendarResourceImpl();
 
-		if (uuid == null) {
-			calendarResourceImpl.setUuid("");
-		}
-		else {
-			calendarResourceImpl.setUuid(uuid);
-		}
-
-		calendarResourceImpl.setCalendarResourceId(calendarResourceId);
-		calendarResourceImpl.setGroupId(groupId);
-		calendarResourceImpl.setCompanyId(companyId);
-		calendarResourceImpl.setUserId(userId);
-
-		if (userName == null) {
-			calendarResourceImpl.setUserName("");
-		}
-		else {
-			calendarResourceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			calendarResourceImpl.setCreateDate(null);
-		}
-		else {
-			calendarResourceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			calendarResourceImpl.setModifiedDate(null);
-		}
-		else {
-			calendarResourceImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		calendarResourceImpl.setClassNameId(classNameId);
-		calendarResourceImpl.setClassPK(classPK);
-
-		if (classUuid == null) {
-			calendarResourceImpl.setClassUuid("");
-		}
-		else {
-			calendarResourceImpl.setClassUuid(classUuid);
-		}
-
-		if (code == null) {
-			calendarResourceImpl.setCode("");
-		}
-		else {
-			calendarResourceImpl.setCode(code);
-		}
-
-		if (name == null) {
-			calendarResourceImpl.setName("");
-		}
-		else {
-			calendarResourceImpl.setName(name);
-		}
-
-		if (description == null) {
-			calendarResourceImpl.setDescription("");
-		}
-		else {
-			calendarResourceImpl.setDescription(description);
-		}
-
-		calendarResourceImpl.setActive(active);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			calendarResourceImpl.setLastPublishDate(null);
-		}
-		else {
-			calendarResourceImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		calendarResourceImpl.resetOriginalValues();
+		calendarResourceImpl.setCalendarResourceCacheModel(this);
 
 		return calendarResourceImpl;
 	}

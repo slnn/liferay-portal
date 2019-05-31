@@ -416,7 +416,11 @@ public class PowwowServerModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		if (_powwowServerOriginalValues == null) {
+			_powwowServerOriginalValues = new PowwowServerOriginalValues(this);
+		}
+
+		_powwowServerOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
@@ -433,17 +437,23 @@ public class PowwowServerModelImpl
 
 	@Override
 	public void setProviderType(String providerType) {
-		_columnBitmask |= PROVIDERTYPE_COLUMN_BITMASK;
-
-		if (_originalProviderType == null) {
-			_originalProviderType = _providerType;
+		if (_powwowServerOriginalValues == null) {
+			_powwowServerOriginalValues = new PowwowServerOriginalValues(this);
 		}
+
+		_powwowServerOriginalValues._columnBitmask |=
+			PROVIDERTYPE_COLUMN_BITMASK;
 
 		_providerType = providerType;
 	}
 
 	public String getOriginalProviderType() {
-		return GetterUtil.getString(_originalProviderType);
+		if (_powwowServerOriginalValues == null) {
+			return GetterUtil.getString(_providerType);
+		}
+
+		return GetterUtil.getString(
+			_powwowServerOriginalValues._originalProviderType);
 	}
 
 	@Override
@@ -503,23 +513,29 @@ public class PowwowServerModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_powwowServerOriginalValues == null) {
+			_powwowServerOriginalValues = new PowwowServerOriginalValues(this);
 		}
+
+		_powwowServerOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_powwowServerOriginalValues == null) {
+			return _active;
+		}
+
+		return _powwowServerOriginalValues._originalActive;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_powwowServerOriginalValues == null) {
+			return 0;
+		}
+
+		return _powwowServerOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -621,16 +637,9 @@ public class PowwowServerModelImpl
 	public void resetOriginalValues() {
 		PowwowServerModelImpl powwowServerModelImpl = this;
 
+		powwowServerModelImpl._powwowServerOriginalValues = null;
+
 		powwowServerModelImpl._setModifiedDate = false;
-
-		powwowServerModelImpl._originalProviderType =
-			powwowServerModelImpl._providerType;
-
-		powwowServerModelImpl._originalActive = powwowServerModelImpl._active;
-
-		powwowServerModelImpl._setOriginalActive = false;
-
-		powwowServerModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -778,9 +787,85 @@ public class PowwowServerModelImpl
 		return sb.toString();
 	}
 
+	void setPowwowServerCacheModel(
+		PowwowServerCacheModel powwowServerCacheModel) {
+
+		_powwowServerId = powwowServerCacheModel.powwowServerId;
+		_companyId = powwowServerCacheModel.companyId;
+		_userId = powwowServerCacheModel.userId;
+
+		if (powwowServerCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = powwowServerCacheModel.userName;
+		}
+
+		if (powwowServerCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(powwowServerCacheModel.createDate);
+		}
+
+		if (powwowServerCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(powwowServerCacheModel.modifiedDate);
+		}
+
+		if (powwowServerCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = powwowServerCacheModel.name;
+		}
+
+		if (powwowServerCacheModel.providerType == null) {
+			_providerType = "";
+		}
+		else {
+			_providerType = powwowServerCacheModel.providerType;
+		}
+
+		if (powwowServerCacheModel.url == null) {
+			_url = "";
+		}
+		else {
+			_url = powwowServerCacheModel.url;
+		}
+
+		if (powwowServerCacheModel.apiKey == null) {
+			_apiKey = "";
+		}
+		else {
+			_apiKey = powwowServerCacheModel.apiKey;
+		}
+
+		if (powwowServerCacheModel.secret == null) {
+			_secret = "";
+		}
+		else {
+			_secret = powwowServerCacheModel.secret;
+		}
+
+		_active = powwowServerCacheModel.active;
+	}
+
+	private static class PowwowServerOriginalValues {
+
+		private PowwowServerOriginalValues(
+			PowwowServerModelImpl powwowServerModelImpl) {
+
+			_originalProviderType = powwowServerModelImpl._providerType;
+			_originalActive = powwowServerModelImpl._active;
+		}
+
+		private final String _originalProviderType;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, PowwowServer>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PowwowServerOriginalValues _powwowServerOriginalValues;
 	private long _powwowServerId;
 	private long _companyId;
 	private long _userId;
@@ -790,14 +875,10 @@ public class PowwowServerModelImpl
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _providerType;
-	private String _originalProviderType;
 	private String _url;
 	private String _apiKey;
 	private String _secret;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private PowwowServer _escapedModel;
 
 }

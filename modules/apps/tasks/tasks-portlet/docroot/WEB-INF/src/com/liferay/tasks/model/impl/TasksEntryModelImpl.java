@@ -413,19 +413,21 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
 		}
+
+		_tasksEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_tasksEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _tasksEntryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -447,13 +449,11 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
 		}
+
+		_tasksEntryOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -475,7 +475,11 @@ public class TasksEntryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_tasksEntryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _tasksEntryOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -502,7 +506,11 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
+		}
+
+		_tasksEntryOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -548,7 +556,11 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setPriority(int priority) {
-		_columnBitmask = -1L;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
+		}
+
+		_tasksEntryOriginalValues._columnBitmask = -1L;
 
 		_priority = priority;
 	}
@@ -561,13 +573,12 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setAssigneeUserId(long assigneeUserId) {
-		_columnBitmask |= ASSIGNEEUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssigneeUserId) {
-			_setOriginalAssigneeUserId = true;
-
-			_originalAssigneeUserId = _assigneeUserId;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
 		}
+
+		_tasksEntryOriginalValues._columnBitmask |=
+			ASSIGNEEUSERID_COLUMN_BITMASK;
 
 		_assigneeUserId = assigneeUserId;
 	}
@@ -589,7 +600,11 @@ public class TasksEntryModelImpl
 	}
 
 	public long getOriginalAssigneeUserId() {
-		return _originalAssigneeUserId;
+		if (_tasksEntryOriginalValues == null) {
+			return _assigneeUserId;
+		}
+
+		return _tasksEntryOriginalValues._originalAssigneeUserId;
 	}
 
 	@JSON
@@ -600,13 +615,12 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setResolverUserId(long resolverUserId) {
-		_columnBitmask |= RESOLVERUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalResolverUserId) {
-			_setOriginalResolverUserId = true;
-
-			_originalResolverUserId = _resolverUserId;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
 		}
+
+		_tasksEntryOriginalValues._columnBitmask |=
+			RESOLVERUSERID_COLUMN_BITMASK;
 
 		_resolverUserId = resolverUserId;
 	}
@@ -628,7 +642,11 @@ public class TasksEntryModelImpl
 	}
 
 	public long getOriginalResolverUserId() {
-		return _originalResolverUserId;
+		if (_tasksEntryOriginalValues == null) {
+			return _resolverUserId;
+		}
+
+		return _tasksEntryOriginalValues._originalResolverUserId;
 	}
 
 	@JSON
@@ -639,7 +657,11 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setDueDate(Date dueDate) {
-		_columnBitmask = -1L;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
+		}
+
+		_tasksEntryOriginalValues._columnBitmask = -1L;
 
 		_dueDate = dueDate;
 	}
@@ -663,23 +685,29 @@ public class TasksEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_tasksEntryOriginalValues == null) {
+			_tasksEntryOriginalValues = new TasksEntryOriginalValues(this);
 		}
+
+		_tasksEntryOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_tasksEntryOriginalValues == null) {
+			return _status;
+		}
+
+		return _tasksEntryOriginalValues._originalStatus;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_tasksEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _tasksEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -803,31 +831,9 @@ public class TasksEntryModelImpl
 	public void resetOriginalValues() {
 		TasksEntryModelImpl tasksEntryModelImpl = this;
 
-		tasksEntryModelImpl._originalGroupId = tasksEntryModelImpl._groupId;
-
-		tasksEntryModelImpl._setOriginalGroupId = false;
-
-		tasksEntryModelImpl._originalUserId = tasksEntryModelImpl._userId;
-
-		tasksEntryModelImpl._setOriginalUserId = false;
+		tasksEntryModelImpl._tasksEntryOriginalValues = null;
 
 		tasksEntryModelImpl._setModifiedDate = false;
-
-		tasksEntryModelImpl._originalAssigneeUserId =
-			tasksEntryModelImpl._assigneeUserId;
-
-		tasksEntryModelImpl._setOriginalAssigneeUserId = false;
-
-		tasksEntryModelImpl._originalResolverUserId =
-			tasksEntryModelImpl._resolverUserId;
-
-		tasksEntryModelImpl._setOriginalResolverUserId = false;
-
-		tasksEntryModelImpl._originalStatus = tasksEntryModelImpl._status;
-
-		tasksEntryModelImpl._setOriginalStatus = false;
-
-		tasksEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -968,17 +974,78 @@ public class TasksEntryModelImpl
 		return sb.toString();
 	}
 
+	void setTasksEntryCacheModel(TasksEntryCacheModel tasksEntryCacheModel) {
+		_tasksEntryId = tasksEntryCacheModel.tasksEntryId;
+		_groupId = tasksEntryCacheModel.groupId;
+		_companyId = tasksEntryCacheModel.companyId;
+		_userId = tasksEntryCacheModel.userId;
+
+		if (tasksEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = tasksEntryCacheModel.userName;
+		}
+
+		if (tasksEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(tasksEntryCacheModel.createDate);
+		}
+
+		if (tasksEntryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(tasksEntryCacheModel.modifiedDate);
+		}
+
+		if (tasksEntryCacheModel.title == null) {
+			_title = "";
+		}
+		else {
+			_title = tasksEntryCacheModel.title;
+		}
+
+		_priority = tasksEntryCacheModel.priority;
+		_assigneeUserId = tasksEntryCacheModel.assigneeUserId;
+		_resolverUserId = tasksEntryCacheModel.resolverUserId;
+
+		if (tasksEntryCacheModel.dueDate != Long.MIN_VALUE) {
+			_dueDate = new Date(tasksEntryCacheModel.dueDate);
+		}
+
+		if (tasksEntryCacheModel.finishDate != Long.MIN_VALUE) {
+			_finishDate = new Date(tasksEntryCacheModel.finishDate);
+		}
+
+		_status = tasksEntryCacheModel.status;
+	}
+
+	private static class TasksEntryOriginalValues {
+
+		private TasksEntryOriginalValues(
+			TasksEntryModelImpl tasksEntryModelImpl) {
+
+			_originalGroupId = tasksEntryModelImpl._groupId;
+			_originalUserId = tasksEntryModelImpl._userId;
+			_originalAssigneeUserId = tasksEntryModelImpl._assigneeUserId;
+			_originalResolverUserId = tasksEntryModelImpl._resolverUserId;
+			_originalStatus = tasksEntryModelImpl._status;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final long _originalAssigneeUserId;
+		private final long _originalResolverUserId;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, TasksEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private TasksEntryOriginalValues _tasksEntryOriginalValues;
 	private long _tasksEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -986,17 +1053,10 @@ public class TasksEntryModelImpl
 	private String _title;
 	private int _priority;
 	private long _assigneeUserId;
-	private long _originalAssigneeUserId;
-	private boolean _setOriginalAssigneeUserId;
 	private long _resolverUserId;
-	private long _originalResolverUserId;
-	private boolean _setOriginalResolverUserId;
 	private Date _dueDate;
 	private Date _finishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
-	private long _columnBitmask;
 	private TasksEntry _escapedModel;
 
 }

@@ -405,17 +405,21 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_kbCommentOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_kbCommentOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -437,19 +441,21 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_kbCommentOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _kbCommentOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -460,19 +466,21 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kbCommentOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kbCommentOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -483,13 +491,11 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -511,7 +517,11 @@ public class KBCommentModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_kbCommentOriginalValues == null) {
+			return _userId;
+		}
+
+		return _kbCommentOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -555,7 +565,11 @@ public class KBCommentModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
+		}
+
+		_kbCommentOriginalValues._columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -588,19 +602,21 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_kbCommentOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _kbCommentOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -611,19 +627,21 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_kbCommentOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _kbCommentOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -672,19 +690,21 @@ public class KBCommentModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_kbCommentOriginalValues == null) {
+			_kbCommentOriginalValues = new KBCommentOriginalValues(this);
 		}
+
+		_kbCommentOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_kbCommentOriginalValues == null) {
+			return _status;
+		}
+
+		return _kbCommentOriginalValues._originalStatus;
 	}
 
 	@Override
@@ -695,7 +715,11 @@ public class KBCommentModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kbCommentOriginalValues == null) {
+			return 0;
+		}
+
+		return _kbCommentOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -802,36 +826,9 @@ public class KBCommentModelImpl
 	public void resetOriginalValues() {
 		KBCommentModelImpl kbCommentModelImpl = this;
 
-		kbCommentModelImpl._originalUuid = kbCommentModelImpl._uuid;
-
-		kbCommentModelImpl._originalGroupId = kbCommentModelImpl._groupId;
-
-		kbCommentModelImpl._setOriginalGroupId = false;
-
-		kbCommentModelImpl._originalCompanyId = kbCommentModelImpl._companyId;
-
-		kbCommentModelImpl._setOriginalCompanyId = false;
-
-		kbCommentModelImpl._originalUserId = kbCommentModelImpl._userId;
-
-		kbCommentModelImpl._setOriginalUserId = false;
+		kbCommentModelImpl._kbCommentOriginalValues = null;
 
 		kbCommentModelImpl._setModifiedDate = false;
-
-		kbCommentModelImpl._originalClassNameId =
-			kbCommentModelImpl._classNameId;
-
-		kbCommentModelImpl._setOriginalClassNameId = false;
-
-		kbCommentModelImpl._originalClassPK = kbCommentModelImpl._classPK;
-
-		kbCommentModelImpl._setOriginalClassPK = false;
-
-		kbCommentModelImpl._originalStatus = kbCommentModelImpl._status;
-
-		kbCommentModelImpl._setOriginalStatus = false;
-
-		kbCommentModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -971,38 +968,95 @@ public class KBCommentModelImpl
 		return sb.toString();
 	}
 
+	void setKBCommentCacheModel(KBCommentCacheModel kbCommentCacheModel) {
+		if (kbCommentCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = kbCommentCacheModel.uuid;
+		}
+
+		_kbCommentId = kbCommentCacheModel.kbCommentId;
+		_groupId = kbCommentCacheModel.groupId;
+		_companyId = kbCommentCacheModel.companyId;
+		_userId = kbCommentCacheModel.userId;
+
+		if (kbCommentCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = kbCommentCacheModel.userName;
+		}
+
+		if (kbCommentCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(kbCommentCacheModel.createDate);
+		}
+
+		if (kbCommentCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(kbCommentCacheModel.modifiedDate);
+		}
+
+		_classNameId = kbCommentCacheModel.classNameId;
+		_classPK = kbCommentCacheModel.classPK;
+
+		if (kbCommentCacheModel.content == null) {
+			_content = "";
+		}
+		else {
+			_content = kbCommentCacheModel.content;
+		}
+
+		_userRating = kbCommentCacheModel.userRating;
+
+		if (kbCommentCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(kbCommentCacheModel.lastPublishDate);
+		}
+
+		_status = kbCommentCacheModel.status;
+	}
+
+	private static class KBCommentOriginalValues {
+
+		private KBCommentOriginalValues(KBCommentModelImpl kbCommentModelImpl) {
+			_originalUuid = kbCommentModelImpl._uuid;
+			_originalGroupId = kbCommentModelImpl._groupId;
+			_originalCompanyId = kbCommentModelImpl._companyId;
+			_originalUserId = kbCommentModelImpl._userId;
+			_originalClassNameId = kbCommentModelImpl._classNameId;
+			_originalClassPK = kbCommentModelImpl._classPK;
+			_originalStatus = kbCommentModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KBComment>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KBCommentOriginalValues _kbCommentOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _kbCommentId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _content;
 	private int _userRating;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
-	private long _columnBitmask;
 	private KBComment _escapedModel;
 
 }

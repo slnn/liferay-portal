@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -109,62 +107,7 @@ public class SegmentsExperienceCacheModel
 		SegmentsExperienceImpl segmentsExperienceImpl =
 			new SegmentsExperienceImpl();
 
-		if (uuid == null) {
-			segmentsExperienceImpl.setUuid("");
-		}
-		else {
-			segmentsExperienceImpl.setUuid(uuid);
-		}
-
-		segmentsExperienceImpl.setSegmentsExperienceId(segmentsExperienceId);
-		segmentsExperienceImpl.setGroupId(groupId);
-		segmentsExperienceImpl.setCompanyId(companyId);
-		segmentsExperienceImpl.setUserId(userId);
-
-		if (userName == null) {
-			segmentsExperienceImpl.setUserName("");
-		}
-		else {
-			segmentsExperienceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			segmentsExperienceImpl.setCreateDate(null);
-		}
-		else {
-			segmentsExperienceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			segmentsExperienceImpl.setModifiedDate(null);
-		}
-		else {
-			segmentsExperienceImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		segmentsExperienceImpl.setSegmentsEntryId(segmentsEntryId);
-		segmentsExperienceImpl.setClassNameId(classNameId);
-		segmentsExperienceImpl.setClassPK(classPK);
-
-		if (name == null) {
-			segmentsExperienceImpl.setName("");
-		}
-		else {
-			segmentsExperienceImpl.setName(name);
-		}
-
-		segmentsExperienceImpl.setPriority(priority);
-		segmentsExperienceImpl.setActive(active);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			segmentsExperienceImpl.setLastPublishDate(null);
-		}
-		else {
-			segmentsExperienceImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		segmentsExperienceImpl.resetOriginalValues();
+		segmentsExperienceImpl.setSegmentsExperienceCacheModel(this);
 
 		return segmentsExperienceImpl;
 	}

@@ -92,23 +92,8 @@ public class SocialActivityAchievementCacheModel
 		SocialActivityAchievementImpl socialActivityAchievementImpl =
 			new SocialActivityAchievementImpl();
 
-		socialActivityAchievementImpl.setActivityAchievementId(
-			activityAchievementId);
-		socialActivityAchievementImpl.setGroupId(groupId);
-		socialActivityAchievementImpl.setCompanyId(companyId);
-		socialActivityAchievementImpl.setUserId(userId);
-		socialActivityAchievementImpl.setCreateDate(createDate);
-
-		if (name == null) {
-			socialActivityAchievementImpl.setName("");
-		}
-		else {
-			socialActivityAchievementImpl.setName(name);
-		}
-
-		socialActivityAchievementImpl.setFirstInGroup(firstInGroup);
-
-		socialActivityAchievementImpl.resetOriginalValues();
+		socialActivityAchievementImpl.setSocialActivityAchievementCacheModel(
+			this);
 
 		return socialActivityAchievementImpl;
 	}

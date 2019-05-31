@@ -104,37 +104,7 @@ public class LVEntryCacheModel
 	public LVEntry toEntityModel() {
 		LVEntryImpl lvEntryImpl = new LVEntryImpl();
 
-		lvEntryImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			lvEntryImpl.setUuid("");
-		}
-		else {
-			lvEntryImpl.setUuid(uuid);
-		}
-
-		lvEntryImpl.setHeadId(headId);
-		lvEntryImpl.setHead(head);
-
-		if (defaultLanguageId == null) {
-			lvEntryImpl.setDefaultLanguageId("");
-		}
-		else {
-			lvEntryImpl.setDefaultLanguageId(defaultLanguageId);
-		}
-
-		lvEntryImpl.setLvEntryId(lvEntryId);
-		lvEntryImpl.setCompanyId(companyId);
-		lvEntryImpl.setGroupId(groupId);
-
-		if (uniqueGroupKey == null) {
-			lvEntryImpl.setUniqueGroupKey("");
-		}
-		else {
-			lvEntryImpl.setUniqueGroupKey(uniqueGroupKey);
-		}
-
-		lvEntryImpl.resetOriginalValues();
+		lvEntryImpl.setLVEntryCacheModel(this);
 
 		return lvEntryImpl;
 	}

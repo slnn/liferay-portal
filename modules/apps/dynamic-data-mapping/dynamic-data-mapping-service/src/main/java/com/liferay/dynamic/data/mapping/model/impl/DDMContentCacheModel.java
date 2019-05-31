@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,61 +95,7 @@ public class DDMContentCacheModel
 	public DDMContent toEntityModel() {
 		DDMContentImpl ddmContentImpl = new DDMContentImpl();
 
-		if (uuid == null) {
-			ddmContentImpl.setUuid("");
-		}
-		else {
-			ddmContentImpl.setUuid(uuid);
-		}
-
-		ddmContentImpl.setContentId(contentId);
-		ddmContentImpl.setGroupId(groupId);
-		ddmContentImpl.setCompanyId(companyId);
-		ddmContentImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmContentImpl.setUserName("");
-		}
-		else {
-			ddmContentImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmContentImpl.setCreateDate(null);
-		}
-		else {
-			ddmContentImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmContentImpl.setModifiedDate(null);
-		}
-		else {
-			ddmContentImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			ddmContentImpl.setName("");
-		}
-		else {
-			ddmContentImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmContentImpl.setDescription("");
-		}
-		else {
-			ddmContentImpl.setDescription(description);
-		}
-
-		if (data == null) {
-			ddmContentImpl.setData("");
-		}
-		else {
-			ddmContentImpl.setData(data);
-		}
-
-		ddmContentImpl.resetOriginalValues();
+		ddmContentImpl.setDDMContentCacheModel(this);
 
 		return ddmContentImpl;
 	}

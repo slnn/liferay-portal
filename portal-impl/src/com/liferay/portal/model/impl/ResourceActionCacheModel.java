@@ -99,26 +99,7 @@ public class ResourceActionCacheModel
 	public ResourceAction toEntityModel() {
 		ResourceActionImpl resourceActionImpl = new ResourceActionImpl();
 
-		resourceActionImpl.setMvccVersion(mvccVersion);
-		resourceActionImpl.setResourceActionId(resourceActionId);
-
-		if (name == null) {
-			resourceActionImpl.setName("");
-		}
-		else {
-			resourceActionImpl.setName(name);
-		}
-
-		if (actionId == null) {
-			resourceActionImpl.setActionId("");
-		}
-		else {
-			resourceActionImpl.setActionId(actionId);
-		}
-
-		resourceActionImpl.setBitwiseValue(bitwiseValue);
-
-		resourceActionImpl.resetOriginalValues();
+		resourceActionImpl.setResourceActionCacheModel(this);
 
 		return resourceActionImpl;
 	}

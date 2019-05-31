@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -98,45 +96,7 @@ public class AMImageEntryCacheModel
 	public AMImageEntry toEntityModel() {
 		AMImageEntryImpl amImageEntryImpl = new AMImageEntryImpl();
 
-		if (uuid == null) {
-			amImageEntryImpl.setUuid("");
-		}
-		else {
-			amImageEntryImpl.setUuid(uuid);
-		}
-
-		amImageEntryImpl.setAmImageEntryId(amImageEntryId);
-		amImageEntryImpl.setGroupId(groupId);
-		amImageEntryImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			amImageEntryImpl.setCreateDate(null);
-		}
-		else {
-			amImageEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (configurationUuid == null) {
-			amImageEntryImpl.setConfigurationUuid("");
-		}
-		else {
-			amImageEntryImpl.setConfigurationUuid(configurationUuid);
-		}
-
-		amImageEntryImpl.setFileVersionId(fileVersionId);
-
-		if (mimeType == null) {
-			amImageEntryImpl.setMimeType("");
-		}
-		else {
-			amImageEntryImpl.setMimeType(mimeType);
-		}
-
-		amImageEntryImpl.setHeight(height);
-		amImageEntryImpl.setWidth(width);
-		amImageEntryImpl.setSize(size);
-
-		amImageEntryImpl.resetOriginalValues();
+		amImageEntryImpl.setAMImageEntryCacheModel(this);
 
 		return amImageEntryImpl;
 	}

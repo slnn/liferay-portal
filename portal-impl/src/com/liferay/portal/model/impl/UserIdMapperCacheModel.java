@@ -103,33 +103,7 @@ public class UserIdMapperCacheModel
 	public UserIdMapper toEntityModel() {
 		UserIdMapperImpl userIdMapperImpl = new UserIdMapperImpl();
 
-		userIdMapperImpl.setMvccVersion(mvccVersion);
-		userIdMapperImpl.setUserIdMapperId(userIdMapperId);
-		userIdMapperImpl.setCompanyId(companyId);
-		userIdMapperImpl.setUserId(userId);
-
-		if (type == null) {
-			userIdMapperImpl.setType("");
-		}
-		else {
-			userIdMapperImpl.setType(type);
-		}
-
-		if (description == null) {
-			userIdMapperImpl.setDescription("");
-		}
-		else {
-			userIdMapperImpl.setDescription(description);
-		}
-
-		if (externalUserId == null) {
-			userIdMapperImpl.setExternalUserId("");
-		}
-		else {
-			userIdMapperImpl.setExternalUserId(externalUserId);
-		}
-
-		userIdMapperImpl.resetOriginalValues();
+		userIdMapperImpl.setUserIdMapperCacheModel(this);
 
 		return userIdMapperImpl;
 	}

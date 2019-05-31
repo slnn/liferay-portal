@@ -86,26 +86,7 @@ public class WikiPageResourceCacheModel
 	public WikiPageResource toEntityModel() {
 		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
 
-		if (uuid == null) {
-			wikiPageResourceImpl.setUuid("");
-		}
-		else {
-			wikiPageResourceImpl.setUuid(uuid);
-		}
-
-		wikiPageResourceImpl.setResourcePrimKey(resourcePrimKey);
-		wikiPageResourceImpl.setGroupId(groupId);
-		wikiPageResourceImpl.setCompanyId(companyId);
-		wikiPageResourceImpl.setNodeId(nodeId);
-
-		if (title == null) {
-			wikiPageResourceImpl.setTitle("");
-		}
-		else {
-			wikiPageResourceImpl.setTitle(title);
-		}
-
-		wikiPageResourceImpl.resetOriginalValues();
+		wikiPageResourceImpl.setWikiPageResourceCacheModel(this);
 
 		return wikiPageResourceImpl;
 	}

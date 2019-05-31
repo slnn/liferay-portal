@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,70 +101,7 @@ public class FragmentCollectionCacheModel
 		FragmentCollectionImpl fragmentCollectionImpl =
 			new FragmentCollectionImpl();
 
-		if (uuid == null) {
-			fragmentCollectionImpl.setUuid("");
-		}
-		else {
-			fragmentCollectionImpl.setUuid(uuid);
-		}
-
-		fragmentCollectionImpl.setFragmentCollectionId(fragmentCollectionId);
-		fragmentCollectionImpl.setGroupId(groupId);
-		fragmentCollectionImpl.setCompanyId(companyId);
-		fragmentCollectionImpl.setUserId(userId);
-
-		if (userName == null) {
-			fragmentCollectionImpl.setUserName("");
-		}
-		else {
-			fragmentCollectionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			fragmentCollectionImpl.setCreateDate(null);
-		}
-		else {
-			fragmentCollectionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			fragmentCollectionImpl.setModifiedDate(null);
-		}
-		else {
-			fragmentCollectionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (fragmentCollectionKey == null) {
-			fragmentCollectionImpl.setFragmentCollectionKey("");
-		}
-		else {
-			fragmentCollectionImpl.setFragmentCollectionKey(
-				fragmentCollectionKey);
-		}
-
-		if (name == null) {
-			fragmentCollectionImpl.setName("");
-		}
-		else {
-			fragmentCollectionImpl.setName(name);
-		}
-
-		if (description == null) {
-			fragmentCollectionImpl.setDescription("");
-		}
-		else {
-			fragmentCollectionImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			fragmentCollectionImpl.setLastPublishDate(null);
-		}
-		else {
-			fragmentCollectionImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		fragmentCollectionImpl.resetOriginalValues();
+		fragmentCollectionImpl.setFragmentCollectionCacheModel(this);
 
 		return fragmentCollectionImpl;
 	}

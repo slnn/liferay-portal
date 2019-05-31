@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -105,62 +103,8 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 		AssetListEntrySegmentsEntryRelImpl assetListEntrySegmentsEntryRelImpl =
 			new AssetListEntrySegmentsEntryRelImpl();
 
-		if (uuid == null) {
-			assetListEntrySegmentsEntryRelImpl.setUuid("");
-		}
-		else {
-			assetListEntrySegmentsEntryRelImpl.setUuid(uuid);
-		}
-
-		assetListEntrySegmentsEntryRelImpl.setAssetListEntrySegmentsEntryRelId(
-			assetListEntrySegmentsEntryRelId);
-		assetListEntrySegmentsEntryRelImpl.setGroupId(groupId);
-		assetListEntrySegmentsEntryRelImpl.setCompanyId(companyId);
-		assetListEntrySegmentsEntryRelImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetListEntrySegmentsEntryRelImpl.setUserName("");
-		}
-		else {
-			assetListEntrySegmentsEntryRelImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetListEntrySegmentsEntryRelImpl.setCreateDate(null);
-		}
-		else {
-			assetListEntrySegmentsEntryRelImpl.setCreateDate(
-				new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetListEntrySegmentsEntryRelImpl.setModifiedDate(null);
-		}
-		else {
-			assetListEntrySegmentsEntryRelImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		assetListEntrySegmentsEntryRelImpl.setAssetListEntryId(
-			assetListEntryId);
-		assetListEntrySegmentsEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
-
-		if (typeSettings == null) {
-			assetListEntrySegmentsEntryRelImpl.setTypeSettings("");
-		}
-		else {
-			assetListEntrySegmentsEntryRelImpl.setTypeSettings(typeSettings);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetListEntrySegmentsEntryRelImpl.setLastPublishDate(null);
-		}
-		else {
-			assetListEntrySegmentsEntryRelImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		assetListEntrySegmentsEntryRelImpl.resetOriginalValues();
+		assetListEntrySegmentsEntryRelImpl.
+			setAssetListEntrySegmentsEntryRelCacheModel(this);
 
 		return assetListEntrySegmentsEntryRelImpl;
 	}

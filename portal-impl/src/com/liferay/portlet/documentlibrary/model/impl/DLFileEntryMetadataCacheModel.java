@@ -91,21 +91,7 @@ public class DLFileEntryMetadataCacheModel
 		DLFileEntryMetadataImpl dlFileEntryMetadataImpl =
 			new DLFileEntryMetadataImpl();
 
-		if (uuid == null) {
-			dlFileEntryMetadataImpl.setUuid("");
-		}
-		else {
-			dlFileEntryMetadataImpl.setUuid(uuid);
-		}
-
-		dlFileEntryMetadataImpl.setFileEntryMetadataId(fileEntryMetadataId);
-		dlFileEntryMetadataImpl.setCompanyId(companyId);
-		dlFileEntryMetadataImpl.setDDMStorageId(DDMStorageId);
-		dlFileEntryMetadataImpl.setDDMStructureId(DDMStructureId);
-		dlFileEntryMetadataImpl.setFileEntryId(fileEntryId);
-		dlFileEntryMetadataImpl.setFileVersionId(fileVersionId);
-
-		dlFileEntryMetadataImpl.resetOriginalValues();
+		dlFileEntryMetadataImpl.setDLFileEntryMetadataCacheModel(this);
 
 		return dlFileEntryMetadataImpl;
 	}

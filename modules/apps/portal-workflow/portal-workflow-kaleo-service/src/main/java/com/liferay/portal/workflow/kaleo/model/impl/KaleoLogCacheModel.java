@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -152,136 +150,7 @@ public class KaleoLogCacheModel
 	public KaleoLog toEntityModel() {
 		KaleoLogImpl kaleoLogImpl = new KaleoLogImpl();
 
-		kaleoLogImpl.setMvccVersion(mvccVersion);
-		kaleoLogImpl.setKaleoLogId(kaleoLogId);
-		kaleoLogImpl.setGroupId(groupId);
-		kaleoLogImpl.setCompanyId(companyId);
-		kaleoLogImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoLogImpl.setUserName("");
-		}
-		else {
-			kaleoLogImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoLogImpl.setCreateDate(null);
-		}
-		else {
-			kaleoLogImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoLogImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoLogImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (kaleoClassName == null) {
-			kaleoLogImpl.setKaleoClassName("");
-		}
-		else {
-			kaleoLogImpl.setKaleoClassName(kaleoClassName);
-		}
-
-		kaleoLogImpl.setKaleoClassPK(kaleoClassPK);
-		kaleoLogImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-		kaleoLogImpl.setKaleoInstanceId(kaleoInstanceId);
-		kaleoLogImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
-		kaleoLogImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
-
-		if (kaleoNodeName == null) {
-			kaleoLogImpl.setKaleoNodeName("");
-		}
-		else {
-			kaleoLogImpl.setKaleoNodeName(kaleoNodeName);
-		}
-
-		kaleoLogImpl.setTerminalKaleoNode(terminalKaleoNode);
-		kaleoLogImpl.setKaleoActionId(kaleoActionId);
-
-		if (kaleoActionName == null) {
-			kaleoLogImpl.setKaleoActionName("");
-		}
-		else {
-			kaleoLogImpl.setKaleoActionName(kaleoActionName);
-		}
-
-		if (kaleoActionDescription == null) {
-			kaleoLogImpl.setKaleoActionDescription("");
-		}
-		else {
-			kaleoLogImpl.setKaleoActionDescription(kaleoActionDescription);
-		}
-
-		kaleoLogImpl.setPreviousKaleoNodeId(previousKaleoNodeId);
-
-		if (previousKaleoNodeName == null) {
-			kaleoLogImpl.setPreviousKaleoNodeName("");
-		}
-		else {
-			kaleoLogImpl.setPreviousKaleoNodeName(previousKaleoNodeName);
-		}
-
-		if (previousAssigneeClassName == null) {
-			kaleoLogImpl.setPreviousAssigneeClassName("");
-		}
-		else {
-			kaleoLogImpl.setPreviousAssigneeClassName(
-				previousAssigneeClassName);
-		}
-
-		kaleoLogImpl.setPreviousAssigneeClassPK(previousAssigneeClassPK);
-
-		if (currentAssigneeClassName == null) {
-			kaleoLogImpl.setCurrentAssigneeClassName("");
-		}
-		else {
-			kaleoLogImpl.setCurrentAssigneeClassName(currentAssigneeClassName);
-		}
-
-		kaleoLogImpl.setCurrentAssigneeClassPK(currentAssigneeClassPK);
-
-		if (type == null) {
-			kaleoLogImpl.setType("");
-		}
-		else {
-			kaleoLogImpl.setType(type);
-		}
-
-		if (comment == null) {
-			kaleoLogImpl.setComment("");
-		}
-		else {
-			kaleoLogImpl.setComment(comment);
-		}
-
-		if (startDate == Long.MIN_VALUE) {
-			kaleoLogImpl.setStartDate(null);
-		}
-		else {
-			kaleoLogImpl.setStartDate(new Date(startDate));
-		}
-
-		if (endDate == Long.MIN_VALUE) {
-			kaleoLogImpl.setEndDate(null);
-		}
-		else {
-			kaleoLogImpl.setEndDate(new Date(endDate));
-		}
-
-		kaleoLogImpl.setDuration(duration);
-
-		if (workflowContext == null) {
-			kaleoLogImpl.setWorkflowContext("");
-		}
-		else {
-			kaleoLogImpl.setWorkflowContext(workflowContext);
-		}
-
-		kaleoLogImpl.resetOriginalValues();
+		kaleoLogImpl.setKaleoLogCacheModel(this);
 
 		return kaleoLogImpl;
 	}

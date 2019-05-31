@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -106,73 +104,7 @@ public class PowwowMeetingCacheModel
 	public PowwowMeeting toEntityModel() {
 		PowwowMeetingImpl powwowMeetingImpl = new PowwowMeetingImpl();
 
-		powwowMeetingImpl.setPowwowMeetingId(powwowMeetingId);
-		powwowMeetingImpl.setGroupId(groupId);
-		powwowMeetingImpl.setCompanyId(companyId);
-		powwowMeetingImpl.setUserId(userId);
-
-		if (userName == null) {
-			powwowMeetingImpl.setUserName("");
-		}
-		else {
-			powwowMeetingImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			powwowMeetingImpl.setCreateDate(null);
-		}
-		else {
-			powwowMeetingImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			powwowMeetingImpl.setModifiedDate(null);
-		}
-		else {
-			powwowMeetingImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		powwowMeetingImpl.setPowwowServerId(powwowServerId);
-
-		if (name == null) {
-			powwowMeetingImpl.setName("");
-		}
-		else {
-			powwowMeetingImpl.setName(name);
-		}
-
-		if (description == null) {
-			powwowMeetingImpl.setDescription("");
-		}
-		else {
-			powwowMeetingImpl.setDescription(description);
-		}
-
-		if (providerType == null) {
-			powwowMeetingImpl.setProviderType("");
-		}
-		else {
-			powwowMeetingImpl.setProviderType(providerType);
-		}
-
-		if (providerTypeMetadata == null) {
-			powwowMeetingImpl.setProviderTypeMetadata("");
-		}
-		else {
-			powwowMeetingImpl.setProviderTypeMetadata(providerTypeMetadata);
-		}
-
-		if (languageId == null) {
-			powwowMeetingImpl.setLanguageId("");
-		}
-		else {
-			powwowMeetingImpl.setLanguageId(languageId);
-		}
-
-		powwowMeetingImpl.setCalendarBookingId(calendarBookingId);
-		powwowMeetingImpl.setStatus(status);
-
-		powwowMeetingImpl.resetOriginalValues();
+		powwowMeetingImpl.setPowwowMeetingCacheModel(this);
 
 		return powwowMeetingImpl;
 	}

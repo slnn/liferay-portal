@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -110,81 +108,7 @@ public class AssetCategoryCacheModel
 	public AssetCategory toEntityModel() {
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
 
-		if (uuid == null) {
-			assetCategoryImpl.setUuid("");
-		}
-		else {
-			assetCategoryImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			assetCategoryImpl.setExternalReferenceCode("");
-		}
-		else {
-			assetCategoryImpl.setExternalReferenceCode(externalReferenceCode);
-		}
-
-		assetCategoryImpl.setCategoryId(categoryId);
-		assetCategoryImpl.setGroupId(groupId);
-		assetCategoryImpl.setCompanyId(companyId);
-		assetCategoryImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetCategoryImpl.setUserName("");
-		}
-		else {
-			assetCategoryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetCategoryImpl.setCreateDate(null);
-		}
-		else {
-			assetCategoryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetCategoryImpl.setModifiedDate(null);
-		}
-		else {
-			assetCategoryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetCategoryImpl.setParentCategoryId(parentCategoryId);
-		assetCategoryImpl.setLeftCategoryId(leftCategoryId);
-		assetCategoryImpl.setRightCategoryId(rightCategoryId);
-
-		if (name == null) {
-			assetCategoryImpl.setName("");
-		}
-		else {
-			assetCategoryImpl.setName(name);
-		}
-
-		if (title == null) {
-			assetCategoryImpl.setTitle("");
-		}
-		else {
-			assetCategoryImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			assetCategoryImpl.setDescription("");
-		}
-		else {
-			assetCategoryImpl.setDescription(description);
-		}
-
-		assetCategoryImpl.setVocabularyId(vocabularyId);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetCategoryImpl.setLastPublishDate(null);
-		}
-		else {
-			assetCategoryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		assetCategoryImpl.resetOriginalValues();
+		assetCategoryImpl.setAssetCategoryCacheModel(this);
 
 		return assetCategoryImpl;
 	}

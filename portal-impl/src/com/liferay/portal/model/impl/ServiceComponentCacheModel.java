@@ -102,27 +102,7 @@ public class ServiceComponentCacheModel
 	public ServiceComponent toEntityModel() {
 		ServiceComponentImpl serviceComponentImpl = new ServiceComponentImpl();
 
-		serviceComponentImpl.setMvccVersion(mvccVersion);
-		serviceComponentImpl.setServiceComponentId(serviceComponentId);
-
-		if (buildNamespace == null) {
-			serviceComponentImpl.setBuildNamespace("");
-		}
-		else {
-			serviceComponentImpl.setBuildNamespace(buildNamespace);
-		}
-
-		serviceComponentImpl.setBuildNumber(buildNumber);
-		serviceComponentImpl.setBuildDate(buildDate);
-
-		if (data == null) {
-			serviceComponentImpl.setData("");
-		}
-		else {
-			serviceComponentImpl.setData(data);
-		}
-
-		serviceComponentImpl.resetOriginalValues();
+		serviceComponentImpl.setServiceComponentCacheModel(this);
 
 		return serviceComponentImpl;
 	}

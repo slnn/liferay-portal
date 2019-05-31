@@ -435,17 +435,22 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mbMailingListOriginalValues == null) {
+			_mbMailingListOriginalValues = new MBMailingListOriginalValues(
+				this);
 		}
+
+		_mbMailingListOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mbMailingListOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mbMailingListOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -465,19 +470,22 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbMailingListOriginalValues == null) {
+			_mbMailingListOriginalValues = new MBMailingListOriginalValues(
+				this);
 		}
+
+		_mbMailingListOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbMailingListOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbMailingListOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -487,19 +495,22 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mbMailingListOriginalValues == null) {
+			_mbMailingListOriginalValues = new MBMailingListOriginalValues(
+				this);
 		}
+
+		_mbMailingListOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mbMailingListOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mbMailingListOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -576,19 +587,23 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setCategoryId(long categoryId) {
-		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCategoryId) {
-			_setOriginalCategoryId = true;
-
-			_originalCategoryId = _categoryId;
+		if (_mbMailingListOriginalValues == null) {
+			_mbMailingListOriginalValues = new MBMailingListOriginalValues(
+				this);
 		}
+
+		_mbMailingListOriginalValues._columnBitmask |=
+			CATEGORYID_COLUMN_BITMASK;
 
 		_categoryId = categoryId;
 	}
 
 	public long getOriginalCategoryId() {
-		return _originalCategoryId;
+		if (_mbMailingListOriginalValues == null) {
+			return _categoryId;
+		}
+
+		return _mbMailingListOriginalValues._originalCategoryId;
 	}
 
 	@Override
@@ -828,19 +843,22 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_mbMailingListOriginalValues == null) {
+			_mbMailingListOriginalValues = new MBMailingListOriginalValues(
+				this);
 		}
+
+		_mbMailingListOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_mbMailingListOriginalValues == null) {
+			return _active;
+		}
+
+		return _mbMailingListOriginalValues._originalActive;
 	}
 
 	@Override
@@ -850,7 +868,11 @@ public class MBMailingListModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbMailingListOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbMailingListOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -968,30 +990,9 @@ public class MBMailingListModelImpl
 	public void resetOriginalValues() {
 		MBMailingListModelImpl mbMailingListModelImpl = this;
 
-		mbMailingListModelImpl._originalUuid = mbMailingListModelImpl._uuid;
-
-		mbMailingListModelImpl._originalGroupId =
-			mbMailingListModelImpl._groupId;
-
-		mbMailingListModelImpl._setOriginalGroupId = false;
-
-		mbMailingListModelImpl._originalCompanyId =
-			mbMailingListModelImpl._companyId;
-
-		mbMailingListModelImpl._setOriginalCompanyId = false;
+		mbMailingListModelImpl._mbMailingListOriginalValues = null;
 
 		mbMailingListModelImpl._setModifiedDate = false;
-
-		mbMailingListModelImpl._originalCategoryId =
-			mbMailingListModelImpl._categoryId;
-
-		mbMailingListModelImpl._setOriginalCategoryId = false;
-
-		mbMailingListModelImpl._originalActive = mbMailingListModelImpl._active;
-
-		mbMailingListModelImpl._setOriginalActive = false;
-
-		mbMailingListModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1197,26 +1198,150 @@ public class MBMailingListModelImpl
 		return sb.toString();
 	}
 
+	void setMBMailingListCacheModel(
+		MBMailingListCacheModel mbMailingListCacheModel) {
+
+		if (mbMailingListCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = mbMailingListCacheModel.uuid;
+		}
+
+		_mailingListId = mbMailingListCacheModel.mailingListId;
+		_groupId = mbMailingListCacheModel.groupId;
+		_companyId = mbMailingListCacheModel.companyId;
+		_userId = mbMailingListCacheModel.userId;
+
+		if (mbMailingListCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = mbMailingListCacheModel.userName;
+		}
+
+		if (mbMailingListCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(mbMailingListCacheModel.createDate);
+		}
+
+		if (mbMailingListCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(mbMailingListCacheModel.modifiedDate);
+		}
+
+		_categoryId = mbMailingListCacheModel.categoryId;
+
+		if (mbMailingListCacheModel.emailAddress == null) {
+			_emailAddress = "";
+		}
+		else {
+			_emailAddress = mbMailingListCacheModel.emailAddress;
+		}
+
+		if (mbMailingListCacheModel.inProtocol == null) {
+			_inProtocol = "";
+		}
+		else {
+			_inProtocol = mbMailingListCacheModel.inProtocol;
+		}
+
+		if (mbMailingListCacheModel.inServerName == null) {
+			_inServerName = "";
+		}
+		else {
+			_inServerName = mbMailingListCacheModel.inServerName;
+		}
+
+		_inServerPort = mbMailingListCacheModel.inServerPort;
+		_inUseSSL = mbMailingListCacheModel.inUseSSL;
+
+		if (mbMailingListCacheModel.inUserName == null) {
+			_inUserName = "";
+		}
+		else {
+			_inUserName = mbMailingListCacheModel.inUserName;
+		}
+
+		if (mbMailingListCacheModel.inPassword == null) {
+			_inPassword = "";
+		}
+		else {
+			_inPassword = mbMailingListCacheModel.inPassword;
+		}
+
+		_inReadInterval = mbMailingListCacheModel.inReadInterval;
+
+		if (mbMailingListCacheModel.outEmailAddress == null) {
+			_outEmailAddress = "";
+		}
+		else {
+			_outEmailAddress = mbMailingListCacheModel.outEmailAddress;
+		}
+
+		_outCustom = mbMailingListCacheModel.outCustom;
+
+		if (mbMailingListCacheModel.outServerName == null) {
+			_outServerName = "";
+		}
+		else {
+			_outServerName = mbMailingListCacheModel.outServerName;
+		}
+
+		_outServerPort = mbMailingListCacheModel.outServerPort;
+		_outUseSSL = mbMailingListCacheModel.outUseSSL;
+
+		if (mbMailingListCacheModel.outUserName == null) {
+			_outUserName = "";
+		}
+		else {
+			_outUserName = mbMailingListCacheModel.outUserName;
+		}
+
+		if (mbMailingListCacheModel.outPassword == null) {
+			_outPassword = "";
+		}
+		else {
+			_outPassword = mbMailingListCacheModel.outPassword;
+		}
+
+		_allowAnonymous = mbMailingListCacheModel.allowAnonymous;
+		_active = mbMailingListCacheModel.active;
+	}
+
+	private static class MBMailingListOriginalValues {
+
+		private MBMailingListOriginalValues(
+			MBMailingListModelImpl mbMailingListModelImpl) {
+
+			_originalUuid = mbMailingListModelImpl._uuid;
+			_originalGroupId = mbMailingListModelImpl._groupId;
+			_originalCompanyId = mbMailingListModelImpl._companyId;
+			_originalCategoryId = mbMailingListModelImpl._categoryId;
+			_originalActive = mbMailingListModelImpl._active;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalCategoryId;
+		private final boolean _originalActive;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBMailingList>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBMailingListOriginalValues _mbMailingListOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _mailingListId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _categoryId;
-	private long _originalCategoryId;
-	private boolean _setOriginalCategoryId;
 	private String _emailAddress;
 	private String _inProtocol;
 	private String _inServerName;
@@ -1234,9 +1359,6 @@ public class MBMailingListModelImpl
 	private String _outPassword;
 	private boolean _allowAnonymous;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
-	private long _columnBitmask;
 	private MBMailingList _escapedModel;
 
 }

@@ -522,6 +522,29 @@ public class ClusterGroupModelImpl
 		return sb.toString();
 	}
 
+	void setClusterGroupCacheModel(
+		ClusterGroupCacheModel clusterGroupCacheModel) {
+
+		_mvccVersion = clusterGroupCacheModel.mvccVersion;
+		_clusterGroupId = clusterGroupCacheModel.clusterGroupId;
+
+		if (clusterGroupCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = clusterGroupCacheModel.name;
+		}
+
+		if (clusterGroupCacheModel.clusterNodeIds == null) {
+			_clusterNodeIds = "";
+		}
+		else {
+			_clusterNodeIds = clusterGroupCacheModel.clusterNodeIds;
+		}
+
+		_wholeCluster = clusterGroupCacheModel.wholeCluster;
+	}
+
 	private static final Function<InvocationHandler, ClusterGroup>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 

@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -122,76 +120,7 @@ public class LayoutSetCacheModel
 	public LayoutSet toEntityModel() {
 		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
-		layoutSetImpl.setMvccVersion(mvccVersion);
-		layoutSetImpl.setHeadId(headId);
-		layoutSetImpl.setHead(head);
-		layoutSetImpl.setLayoutSetId(layoutSetId);
-		layoutSetImpl.setGroupId(groupId);
-		layoutSetImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutSetImpl.setCreateDate(null);
-		}
-		else {
-			layoutSetImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutSetImpl.setModifiedDate(null);
-		}
-		else {
-			layoutSetImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		layoutSetImpl.setPrivateLayout(privateLayout);
-		layoutSetImpl.setLogoId(logoId);
-
-		if (themeId == null) {
-			layoutSetImpl.setThemeId("");
-		}
-		else {
-			layoutSetImpl.setThemeId(themeId);
-		}
-
-		if (colorSchemeId == null) {
-			layoutSetImpl.setColorSchemeId("");
-		}
-		else {
-			layoutSetImpl.setColorSchemeId(colorSchemeId);
-		}
-
-		if (css == null) {
-			layoutSetImpl.setCss("");
-		}
-		else {
-			layoutSetImpl.setCss(css);
-		}
-
-		layoutSetImpl.setPageCount(pageCount);
-
-		if (settings == null) {
-			layoutSetImpl.setSettings("");
-		}
-		else {
-			layoutSetImpl.setSettings(settings);
-		}
-
-		if (layoutSetPrototypeUuid == null) {
-			layoutSetImpl.setLayoutSetPrototypeUuid("");
-		}
-		else {
-			layoutSetImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
-		}
-
-		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(
-			layoutSetPrototypeLinkEnabled);
-
-		layoutSetImpl.resetOriginalValues();
-
-		layoutSetImpl.setCompanyFallbackVirtualHostname(
-			_companyFallbackVirtualHostname);
-
-		layoutSetImpl.setVirtualHostname(_virtualHostname);
+		layoutSetImpl.setLayoutSetCacheModel(this);
 
 		return layoutSetImpl;
 	}

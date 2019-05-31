@@ -643,6 +643,19 @@ public class LocalizedEntryModelImpl
 		return sb.toString();
 	}
 
+	void setLocalizedEntryCacheModel(
+		LocalizedEntryCacheModel localizedEntryCacheModel) {
+
+		if (localizedEntryCacheModel.defaultLanguageId == null) {
+			_defaultLanguageId = "";
+		}
+		else {
+			_defaultLanguageId = localizedEntryCacheModel.defaultLanguageId;
+		}
+
+		_localizedEntryId = localizedEntryCacheModel.localizedEntryId;
+	}
+
 	private static final Function<InvocationHandler, LocalizedEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 

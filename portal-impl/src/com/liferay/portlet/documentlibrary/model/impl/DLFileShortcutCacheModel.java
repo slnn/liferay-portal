@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -112,77 +110,7 @@ public class DLFileShortcutCacheModel
 	public DLFileShortcut toEntityModel() {
 		DLFileShortcutImpl dlFileShortcutImpl = new DLFileShortcutImpl();
 
-		if (uuid == null) {
-			dlFileShortcutImpl.setUuid("");
-		}
-		else {
-			dlFileShortcutImpl.setUuid(uuid);
-		}
-
-		dlFileShortcutImpl.setFileShortcutId(fileShortcutId);
-		dlFileShortcutImpl.setGroupId(groupId);
-		dlFileShortcutImpl.setCompanyId(companyId);
-		dlFileShortcutImpl.setUserId(userId);
-
-		if (userName == null) {
-			dlFileShortcutImpl.setUserName("");
-		}
-		else {
-			dlFileShortcutImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			dlFileShortcutImpl.setCreateDate(null);
-		}
-		else {
-			dlFileShortcutImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			dlFileShortcutImpl.setModifiedDate(null);
-		}
-		else {
-			dlFileShortcutImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		dlFileShortcutImpl.setRepositoryId(repositoryId);
-		dlFileShortcutImpl.setFolderId(folderId);
-		dlFileShortcutImpl.setToFileEntryId(toFileEntryId);
-
-		if (treePath == null) {
-			dlFileShortcutImpl.setTreePath("");
-		}
-		else {
-			dlFileShortcutImpl.setTreePath(treePath);
-		}
-
-		dlFileShortcutImpl.setActive(active);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			dlFileShortcutImpl.setLastPublishDate(null);
-		}
-		else {
-			dlFileShortcutImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		dlFileShortcutImpl.setStatus(status);
-		dlFileShortcutImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			dlFileShortcutImpl.setStatusByUserName("");
-		}
-		else {
-			dlFileShortcutImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			dlFileShortcutImpl.setStatusDate(null);
-		}
-		else {
-			dlFileShortcutImpl.setStatusDate(new Date(statusDate));
-		}
-
-		dlFileShortcutImpl.resetOriginalValues();
+		dlFileShortcutImpl.setDLFileShortcutCacheModel(this);
 
 		return dlFileShortcutImpl;
 	}

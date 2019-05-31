@@ -132,76 +132,7 @@ public class GroupCacheModel
 	public Group toEntityModel() {
 		GroupImpl groupImpl = new GroupImpl();
 
-		groupImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			groupImpl.setUuid("");
-		}
-		else {
-			groupImpl.setUuid(uuid);
-		}
-
-		groupImpl.setGroupId(groupId);
-		groupImpl.setCompanyId(companyId);
-		groupImpl.setCreatorUserId(creatorUserId);
-		groupImpl.setClassNameId(classNameId);
-		groupImpl.setClassPK(classPK);
-		groupImpl.setParentGroupId(parentGroupId);
-		groupImpl.setLiveGroupId(liveGroupId);
-
-		if (treePath == null) {
-			groupImpl.setTreePath("");
-		}
-		else {
-			groupImpl.setTreePath(treePath);
-		}
-
-		if (groupKey == null) {
-			groupImpl.setGroupKey("");
-		}
-		else {
-			groupImpl.setGroupKey(groupKey);
-		}
-
-		if (name == null) {
-			groupImpl.setName("");
-		}
-		else {
-			groupImpl.setName(name);
-		}
-
-		if (description == null) {
-			groupImpl.setDescription("");
-		}
-		else {
-			groupImpl.setDescription(description);
-		}
-
-		groupImpl.setType(type);
-
-		if (typeSettings == null) {
-			groupImpl.setTypeSettings("");
-		}
-		else {
-			groupImpl.setTypeSettings(typeSettings);
-		}
-
-		groupImpl.setManualMembership(manualMembership);
-		groupImpl.setMembershipRestriction(membershipRestriction);
-
-		if (friendlyURL == null) {
-			groupImpl.setFriendlyURL("");
-		}
-		else {
-			groupImpl.setFriendlyURL(friendlyURL);
-		}
-
-		groupImpl.setSite(site);
-		groupImpl.setRemoteStagingGroupCount(remoteStagingGroupCount);
-		groupImpl.setInheritContent(inheritContent);
-		groupImpl.setActive(active);
-
-		groupImpl.resetOriginalValues();
+		groupImpl.setGroupCacheModel(this);
 
 		return groupImpl;
 	}

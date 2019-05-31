@@ -481,17 +481,23 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
 		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_fragmentEntryLinkOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -513,19 +519,23 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
 		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _fragmentEntryLinkOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -536,19 +546,23 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
 		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _fragmentEntryLinkOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -643,19 +657,23 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setFragmentEntryId(long fragmentEntryId) {
-		_columnBitmask |= FRAGMENTENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalFragmentEntryId) {
-			_setOriginalFragmentEntryId = true;
-
-			_originalFragmentEntryId = _fragmentEntryId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
 		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask |=
+			FRAGMENTENTRYID_COLUMN_BITMASK;
 
 		_fragmentEntryId = fragmentEntryId;
 	}
 
 	public long getOriginalFragmentEntryId() {
-		return _originalFragmentEntryId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return _fragmentEntryId;
+		}
+
+		return _fragmentEntryLinkOriginalValues._originalFragmentEntryId;
 	}
 
 	@Override
@@ -686,19 +704,22 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
 		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask = -1L;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _fragmentEntryLinkOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -709,19 +730,22 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
 		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask = -1L;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _fragmentEntryLinkOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -812,7 +836,12 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setPosition(int position) {
-		_columnBitmask = -1L;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			_fragmentEntryLinkOriginalValues =
+				new FragmentEntryLinkOriginalValues(this);
+		}
+
+		_fragmentEntryLinkOriginalValues._columnBitmask = -1L;
 
 		_position = position;
 	}
@@ -863,7 +892,11 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_fragmentEntryLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _fragmentEntryLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1012,37 +1045,9 @@ public class FragmentEntryLinkModelImpl
 	public void resetOriginalValues() {
 		FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl = this;
 
-		fragmentEntryLinkModelImpl._originalUuid =
-			fragmentEntryLinkModelImpl._uuid;
-
-		fragmentEntryLinkModelImpl._originalGroupId =
-			fragmentEntryLinkModelImpl._groupId;
-
-		fragmentEntryLinkModelImpl._setOriginalGroupId = false;
-
-		fragmentEntryLinkModelImpl._originalCompanyId =
-			fragmentEntryLinkModelImpl._companyId;
-
-		fragmentEntryLinkModelImpl._setOriginalCompanyId = false;
+		fragmentEntryLinkModelImpl._fragmentEntryLinkOriginalValues = null;
 
 		fragmentEntryLinkModelImpl._setModifiedDate = false;
-
-		fragmentEntryLinkModelImpl._originalFragmentEntryId =
-			fragmentEntryLinkModelImpl._fragmentEntryId;
-
-		fragmentEntryLinkModelImpl._setOriginalFragmentEntryId = false;
-
-		fragmentEntryLinkModelImpl._originalClassNameId =
-			fragmentEntryLinkModelImpl._classNameId;
-
-		fragmentEntryLinkModelImpl._setOriginalClassNameId = false;
-
-		fragmentEntryLinkModelImpl._originalClassPK =
-			fragmentEntryLinkModelImpl._classPK;
-
-		fragmentEntryLinkModelImpl._setOriginalClassPK = false;
-
-		fragmentEntryLinkModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1238,20 +1243,131 @@ public class FragmentEntryLinkModelImpl
 		return sb.toString();
 	}
 
+	void setFragmentEntryLinkCacheModel(
+		FragmentEntryLinkCacheModel fragmentEntryLinkCacheModel) {
+
+		if (fragmentEntryLinkCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = fragmentEntryLinkCacheModel.uuid;
+		}
+
+		_fragmentEntryLinkId = fragmentEntryLinkCacheModel.fragmentEntryLinkId;
+		_groupId = fragmentEntryLinkCacheModel.groupId;
+		_companyId = fragmentEntryLinkCacheModel.companyId;
+		_userId = fragmentEntryLinkCacheModel.userId;
+
+		if (fragmentEntryLinkCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = fragmentEntryLinkCacheModel.userName;
+		}
+
+		if (fragmentEntryLinkCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(fragmentEntryLinkCacheModel.createDate);
+		}
+
+		if (fragmentEntryLinkCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(fragmentEntryLinkCacheModel.modifiedDate);
+		}
+
+		_originalFragmentEntryLinkId =
+			fragmentEntryLinkCacheModel.originalFragmentEntryLinkId;
+		_fragmentEntryId = fragmentEntryLinkCacheModel.fragmentEntryId;
+		_classNameId = fragmentEntryLinkCacheModel.classNameId;
+		_classPK = fragmentEntryLinkCacheModel.classPK;
+
+		if (fragmentEntryLinkCacheModel.css == null) {
+			_css = "";
+		}
+		else {
+			_css = fragmentEntryLinkCacheModel.css;
+		}
+
+		if (fragmentEntryLinkCacheModel.html == null) {
+			_html = "";
+		}
+		else {
+			_html = fragmentEntryLinkCacheModel.html;
+		}
+
+		if (fragmentEntryLinkCacheModel.js == null) {
+			_js = "";
+		}
+		else {
+			_js = fragmentEntryLinkCacheModel.js;
+		}
+
+		if (fragmentEntryLinkCacheModel.editableValues == null) {
+			_editableValues = "";
+		}
+		else {
+			_editableValues = fragmentEntryLinkCacheModel.editableValues;
+		}
+
+		if (fragmentEntryLinkCacheModel.namespace == null) {
+			_namespace = "";
+		}
+		else {
+			_namespace = fragmentEntryLinkCacheModel.namespace;
+		}
+
+		_position = fragmentEntryLinkCacheModel.position;
+
+		if (fragmentEntryLinkCacheModel.rendererKey == null) {
+			_rendererKey = "";
+		}
+		else {
+			_rendererKey = fragmentEntryLinkCacheModel.rendererKey;
+		}
+
+		if (fragmentEntryLinkCacheModel.lastPropagationDate != Long.MIN_VALUE) {
+			_lastPropagationDate = new Date(
+				fragmentEntryLinkCacheModel.lastPropagationDate);
+		}
+
+		if (fragmentEntryLinkCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				fragmentEntryLinkCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class FragmentEntryLinkOriginalValues {
+
+		private FragmentEntryLinkOriginalValues(
+			FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl) {
+
+			_originalUuid = fragmentEntryLinkModelImpl._uuid;
+			_originalGroupId = fragmentEntryLinkModelImpl._groupId;
+			_originalCompanyId = fragmentEntryLinkModelImpl._companyId;
+			_originalFragmentEntryId =
+				fragmentEntryLinkModelImpl._fragmentEntryId;
+			_originalClassNameId = fragmentEntryLinkModelImpl._classNameId;
+			_originalClassPK = fragmentEntryLinkModelImpl._classPK;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalFragmentEntryId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, FragmentEntryLink>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private FragmentEntryLinkOriginalValues _fragmentEntryLinkOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _fragmentEntryLinkId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1259,14 +1375,8 @@ public class FragmentEntryLinkModelImpl
 	private boolean _setModifiedDate;
 	private long _originalFragmentEntryLinkId;
 	private long _fragmentEntryId;
-	private long _originalFragmentEntryId;
-	private boolean _setOriginalFragmentEntryId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _css;
 	private String _html;
 	private String _js;
@@ -1276,7 +1386,6 @@ public class FragmentEntryLinkModelImpl
 	private String _rendererKey;
 	private Date _lastPropagationDate;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private FragmentEntryLink _escapedModel;
 
 }

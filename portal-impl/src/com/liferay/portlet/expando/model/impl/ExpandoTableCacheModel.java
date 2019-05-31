@@ -82,18 +82,7 @@ public class ExpandoTableCacheModel
 	public ExpandoTable toEntityModel() {
 		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
 
-		expandoTableImpl.setTableId(tableId);
-		expandoTableImpl.setCompanyId(companyId);
-		expandoTableImpl.setClassNameId(classNameId);
-
-		if (name == null) {
-			expandoTableImpl.setName("");
-		}
-		else {
-			expandoTableImpl.setName(name);
-		}
-
-		expandoTableImpl.resetOriginalValues();
+		expandoTableImpl.setExpandoTableCacheModel(this);
 
 		return expandoTableImpl;
 	}

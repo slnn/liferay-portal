@@ -489,19 +489,23 @@ public class ExportImportConfigurationModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_exportImportConfigurationOriginalValues == null) {
+			_exportImportConfigurationOriginalValues =
+				new ExportImportConfigurationOriginalValues(this);
 		}
+
+		_exportImportConfigurationOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_exportImportConfigurationOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _exportImportConfigurationOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -512,19 +516,23 @@ public class ExportImportConfigurationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_exportImportConfigurationOriginalValues == null) {
+			_exportImportConfigurationOriginalValues =
+				new ExportImportConfigurationOriginalValues(this);
 		}
+
+		_exportImportConfigurationOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_exportImportConfigurationOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _exportImportConfigurationOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -578,7 +586,12 @@ public class ExportImportConfigurationModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_exportImportConfigurationOriginalValues == null) {
+			_exportImportConfigurationOriginalValues =
+				new ExportImportConfigurationOriginalValues(this);
+		}
+
+		_exportImportConfigurationOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -640,19 +653,23 @@ public class ExportImportConfigurationModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_exportImportConfigurationOriginalValues == null) {
+			_exportImportConfigurationOriginalValues =
+				new ExportImportConfigurationOriginalValues(this);
 		}
+
+		_exportImportConfigurationOriginalValues._columnBitmask |=
+			TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_exportImportConfigurationOriginalValues == null) {
+			return _type;
+		}
+
+		return _exportImportConfigurationOriginalValues._originalType;
 	}
 
 	@JSON
@@ -679,19 +696,23 @@ public class ExportImportConfigurationModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_exportImportConfigurationOriginalValues == null) {
+			_exportImportConfigurationOriginalValues =
+				new ExportImportConfigurationOriginalValues(this);
 		}
+
+		_exportImportConfigurationOriginalValues._columnBitmask |=
+			STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_exportImportConfigurationOriginalValues == null) {
+			return _status;
+		}
+
+		return _exportImportConfigurationOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -974,7 +995,11 @@ public class ExportImportConfigurationModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_exportImportConfigurationOriginalValues == null) {
+			return 0;
+		}
+
+		return _exportImportConfigurationOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1087,29 +1112,10 @@ public class ExportImportConfigurationModelImpl
 		ExportImportConfigurationModelImpl exportImportConfigurationModelImpl =
 			this;
 
-		exportImportConfigurationModelImpl._originalGroupId =
-			exportImportConfigurationModelImpl._groupId;
-
-		exportImportConfigurationModelImpl._setOriginalGroupId = false;
-
-		exportImportConfigurationModelImpl._originalCompanyId =
-			exportImportConfigurationModelImpl._companyId;
-
-		exportImportConfigurationModelImpl._setOriginalCompanyId = false;
+		exportImportConfigurationModelImpl.
+			_exportImportConfigurationOriginalValues = null;
 
 		exportImportConfigurationModelImpl._setModifiedDate = false;
-
-		exportImportConfigurationModelImpl._originalType =
-			exportImportConfigurationModelImpl._type;
-
-		exportImportConfigurationModelImpl._setOriginalType = false;
-
-		exportImportConfigurationModelImpl._originalStatus =
-			exportImportConfigurationModelImpl._status;
-
-		exportImportConfigurationModelImpl._setOriginalStatus = false;
-
-		exportImportConfigurationModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1276,17 +1282,105 @@ public class ExportImportConfigurationModelImpl
 		return sb.toString();
 	}
 
+	void setExportImportConfigurationCacheModel(
+		ExportImportConfigurationCacheModel
+			exportImportConfigurationCacheModel) {
+
+		_mvccVersion = exportImportConfigurationCacheModel.mvccVersion;
+		_exportImportConfigurationId =
+			exportImportConfigurationCacheModel.exportImportConfigurationId;
+		_groupId = exportImportConfigurationCacheModel.groupId;
+		_companyId = exportImportConfigurationCacheModel.companyId;
+		_userId = exportImportConfigurationCacheModel.userId;
+
+		if (exportImportConfigurationCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = exportImportConfigurationCacheModel.userName;
+		}
+
+		if (exportImportConfigurationCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(
+				exportImportConfigurationCacheModel.createDate);
+		}
+
+		if (exportImportConfigurationCacheModel.modifiedDate !=
+				Long.MIN_VALUE) {
+
+			_modifiedDate = new Date(
+				exportImportConfigurationCacheModel.modifiedDate);
+		}
+
+		if (exportImportConfigurationCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = exportImportConfigurationCacheModel.name;
+		}
+
+		if (exportImportConfigurationCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = exportImportConfigurationCacheModel.description;
+		}
+
+		_type = exportImportConfigurationCacheModel.type;
+
+		if (exportImportConfigurationCacheModel.settings == null) {
+			_settings = "";
+		}
+		else {
+			_settings = exportImportConfigurationCacheModel.settings;
+		}
+
+		_status = exportImportConfigurationCacheModel.status;
+		_statusByUserId = exportImportConfigurationCacheModel.statusByUserId;
+
+		if (exportImportConfigurationCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName =
+				exportImportConfigurationCacheModel.statusByUserName;
+		}
+
+		if (exportImportConfigurationCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(
+				exportImportConfigurationCacheModel.statusDate);
+		}
+	}
+
+	private static class ExportImportConfigurationOriginalValues {
+
+		private ExportImportConfigurationOriginalValues(
+			ExportImportConfigurationModelImpl
+				exportImportConfigurationModelImpl) {
+
+			_originalGroupId = exportImportConfigurationModelImpl._groupId;
+			_originalCompanyId = exportImportConfigurationModelImpl._companyId;
+			_originalType = exportImportConfigurationModelImpl._type;
+			_originalStatus = exportImportConfigurationModelImpl._status;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final int _originalType;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, ExportImportConfiguration>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private ExportImportConfigurationOriginalValues
+		_exportImportConfigurationOriginalValues;
 	private long _mvccVersion;
 	private long _exportImportConfigurationId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1295,16 +1389,11 @@ public class ExportImportConfigurationModelImpl
 	private String _name;
 	private String _description;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private String _settings;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private ExportImportConfiguration _escapedModel;
 
 }

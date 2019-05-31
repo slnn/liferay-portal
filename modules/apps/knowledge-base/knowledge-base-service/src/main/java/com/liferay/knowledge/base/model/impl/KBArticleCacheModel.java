@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -133,119 +131,7 @@ public class KBArticleCacheModel
 	public KBArticle toEntityModel() {
 		KBArticleImpl kbArticleImpl = new KBArticleImpl();
 
-		if (uuid == null) {
-			kbArticleImpl.setUuid("");
-		}
-		else {
-			kbArticleImpl.setUuid(uuid);
-		}
-
-		kbArticleImpl.setKbArticleId(kbArticleId);
-		kbArticleImpl.setResourcePrimKey(resourcePrimKey);
-		kbArticleImpl.setGroupId(groupId);
-		kbArticleImpl.setCompanyId(companyId);
-		kbArticleImpl.setUserId(userId);
-
-		if (userName == null) {
-			kbArticleImpl.setUserName("");
-		}
-		else {
-			kbArticleImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kbArticleImpl.setCreateDate(null);
-		}
-		else {
-			kbArticleImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kbArticleImpl.setModifiedDate(null);
-		}
-		else {
-			kbArticleImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kbArticleImpl.setRootResourcePrimKey(rootResourcePrimKey);
-		kbArticleImpl.setParentResourceClassNameId(parentResourceClassNameId);
-		kbArticleImpl.setParentResourcePrimKey(parentResourcePrimKey);
-		kbArticleImpl.setKbFolderId(kbFolderId);
-		kbArticleImpl.setVersion(version);
-
-		if (title == null) {
-			kbArticleImpl.setTitle("");
-		}
-		else {
-			kbArticleImpl.setTitle(title);
-		}
-
-		if (urlTitle == null) {
-			kbArticleImpl.setUrlTitle("");
-		}
-		else {
-			kbArticleImpl.setUrlTitle(urlTitle);
-		}
-
-		if (content == null) {
-			kbArticleImpl.setContent("");
-		}
-		else {
-			kbArticleImpl.setContent(content);
-		}
-
-		if (description == null) {
-			kbArticleImpl.setDescription("");
-		}
-		else {
-			kbArticleImpl.setDescription(description);
-		}
-
-		kbArticleImpl.setPriority(priority);
-
-		if (sections == null) {
-			kbArticleImpl.setSections("");
-		}
-		else {
-			kbArticleImpl.setSections(sections);
-		}
-
-		kbArticleImpl.setViewCount(viewCount);
-		kbArticleImpl.setLatest(latest);
-		kbArticleImpl.setMain(main);
-
-		if (sourceURL == null) {
-			kbArticleImpl.setSourceURL("");
-		}
-		else {
-			kbArticleImpl.setSourceURL(sourceURL);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			kbArticleImpl.setLastPublishDate(null);
-		}
-		else {
-			kbArticleImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		kbArticleImpl.setStatus(status);
-		kbArticleImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			kbArticleImpl.setStatusByUserName("");
-		}
-		else {
-			kbArticleImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			kbArticleImpl.setStatusDate(null);
-		}
-		else {
-			kbArticleImpl.setStatusDate(new Date(statusDate));
-		}
-
-		kbArticleImpl.resetOriginalValues();
+		kbArticleImpl.setKBArticleCacheModel(this);
 
 		return kbArticleImpl;
 	}

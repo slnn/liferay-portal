@@ -106,33 +106,8 @@ public class LocalizedEntryLocalizationCacheModel
 		LocalizedEntryLocalizationImpl localizedEntryLocalizationImpl =
 			new LocalizedEntryLocalizationImpl();
 
-		localizedEntryLocalizationImpl.setMvccVersion(mvccVersion);
-		localizedEntryLocalizationImpl.setLocalizedEntryLocalizationId(
-			localizedEntryLocalizationId);
-		localizedEntryLocalizationImpl.setLocalizedEntryId(localizedEntryId);
-
-		if (languageId == null) {
-			localizedEntryLocalizationImpl.setLanguageId("");
-		}
-		else {
-			localizedEntryLocalizationImpl.setLanguageId(languageId);
-		}
-
-		if (title == null) {
-			localizedEntryLocalizationImpl.setTitle("");
-		}
-		else {
-			localizedEntryLocalizationImpl.setTitle(title);
-		}
-
-		if (content == null) {
-			localizedEntryLocalizationImpl.setContent("");
-		}
-		else {
-			localizedEntryLocalizationImpl.setContent(content);
-		}
-
-		localizedEntryLocalizationImpl.resetOriginalValues();
+		localizedEntryLocalizationImpl.setLocalizedEntryLocalizationCacheModel(
+			this);
 
 		return localizedEntryLocalizationImpl;
 	}

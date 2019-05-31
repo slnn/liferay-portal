@@ -86,39 +86,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	public Module toEntityModel() {
 		ModuleImpl moduleImpl = new ModuleImpl();
 
-		if (uuid == null) {
-			moduleImpl.setUuid("");
-		}
-		else {
-			moduleImpl.setUuid(uuid);
-		}
-
-		moduleImpl.setModuleId(moduleId);
-		moduleImpl.setCompanyId(companyId);
-		moduleImpl.setAppId(appId);
-
-		if (bundleSymbolicName == null) {
-			moduleImpl.setBundleSymbolicName("");
-		}
-		else {
-			moduleImpl.setBundleSymbolicName(bundleSymbolicName);
-		}
-
-		if (bundleVersion == null) {
-			moduleImpl.setBundleVersion("");
-		}
-		else {
-			moduleImpl.setBundleVersion(bundleVersion);
-		}
-
-		if (contextName == null) {
-			moduleImpl.setContextName("");
-		}
-		else {
-			moduleImpl.setContextName(contextName);
-		}
-
-		moduleImpl.resetOriginalValues();
+		moduleImpl.setModuleCacheModel(this);
 
 		return moduleImpl;
 	}

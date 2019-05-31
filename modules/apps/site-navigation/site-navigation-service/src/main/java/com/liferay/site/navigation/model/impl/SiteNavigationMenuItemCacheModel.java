@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -109,77 +107,7 @@ public class SiteNavigationMenuItemCacheModel
 		SiteNavigationMenuItemImpl siteNavigationMenuItemImpl =
 			new SiteNavigationMenuItemImpl();
 
-		if (uuid == null) {
-			siteNavigationMenuItemImpl.setUuid("");
-		}
-		else {
-			siteNavigationMenuItemImpl.setUuid(uuid);
-		}
-
-		siteNavigationMenuItemImpl.setSiteNavigationMenuItemId(
-			siteNavigationMenuItemId);
-		siteNavigationMenuItemImpl.setGroupId(groupId);
-		siteNavigationMenuItemImpl.setCompanyId(companyId);
-		siteNavigationMenuItemImpl.setUserId(userId);
-
-		if (userName == null) {
-			siteNavigationMenuItemImpl.setUserName("");
-		}
-		else {
-			siteNavigationMenuItemImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			siteNavigationMenuItemImpl.setCreateDate(null);
-		}
-		else {
-			siteNavigationMenuItemImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			siteNavigationMenuItemImpl.setModifiedDate(null);
-		}
-		else {
-			siteNavigationMenuItemImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		siteNavigationMenuItemImpl.setSiteNavigationMenuId(
-			siteNavigationMenuId);
-		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId);
-
-		if (name == null) {
-			siteNavigationMenuItemImpl.setName("");
-		}
-		else {
-			siteNavigationMenuItemImpl.setName(name);
-		}
-
-		if (type == null) {
-			siteNavigationMenuItemImpl.setType("");
-		}
-		else {
-			siteNavigationMenuItemImpl.setType(type);
-		}
-
-		if (typeSettings == null) {
-			siteNavigationMenuItemImpl.setTypeSettings("");
-		}
-		else {
-			siteNavigationMenuItemImpl.setTypeSettings(typeSettings);
-		}
-
-		siteNavigationMenuItemImpl.setOrder(order);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			siteNavigationMenuItemImpl.setLastPublishDate(null);
-		}
-		else {
-			siteNavigationMenuItemImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		siteNavigationMenuItemImpl.resetOriginalValues();
+		siteNavigationMenuItemImpl.setSiteNavigationMenuItemCacheModel(this);
 
 		return siteNavigationMenuItemImpl;
 	}

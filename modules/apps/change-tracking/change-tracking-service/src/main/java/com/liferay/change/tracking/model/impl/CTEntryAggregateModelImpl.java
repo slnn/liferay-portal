@@ -415,19 +415,23 @@ public class CTEntryAggregateModelImpl
 
 	@Override
 	public void setOwnerCTEntryId(long ownerCTEntryId) {
-		_columnBitmask |= OWNERCTENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalOwnerCTEntryId) {
-			_setOriginalOwnerCTEntryId = true;
-
-			_originalOwnerCTEntryId = _ownerCTEntryId;
+		if (_ctEntryAggregateOriginalValues == null) {
+			_ctEntryAggregateOriginalValues =
+				new CTEntryAggregateOriginalValues(this);
 		}
+
+		_ctEntryAggregateOriginalValues._columnBitmask |=
+			OWNERCTENTRYID_COLUMN_BITMASK;
 
 		_ownerCTEntryId = ownerCTEntryId;
 	}
 
 	public long getOriginalOwnerCTEntryId() {
-		return _originalOwnerCTEntryId;
+		if (_ctEntryAggregateOriginalValues == null) {
+			return _ownerCTEntryId;
+		}
+
+		return _ctEntryAggregateOriginalValues._originalOwnerCTEntryId;
 	}
 
 	@Override
@@ -441,7 +445,11 @@ public class CTEntryAggregateModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ctEntryAggregateOriginalValues == null) {
+			return 0;
+		}
+
+		return _ctEntryAggregateOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -541,14 +549,9 @@ public class CTEntryAggregateModelImpl
 	public void resetOriginalValues() {
 		CTEntryAggregateModelImpl ctEntryAggregateModelImpl = this;
 
+		ctEntryAggregateModelImpl._ctEntryAggregateOriginalValues = null;
+
 		ctEntryAggregateModelImpl._setModifiedDate = false;
-
-		ctEntryAggregateModelImpl._originalOwnerCTEntryId =
-			ctEntryAggregateModelImpl._ownerCTEntryId;
-
-		ctEntryAggregateModelImpl._setOriginalOwnerCTEntryId = false;
-
-		ctEntryAggregateModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -658,11 +661,51 @@ public class CTEntryAggregateModelImpl
 		return sb.toString();
 	}
 
+	void setCTEntryAggregateCacheModel(
+		CTEntryAggregateCacheModel ctEntryAggregateCacheModel) {
+
+		_ctEntryAggregateId = ctEntryAggregateCacheModel.ctEntryAggregateId;
+		_companyId = ctEntryAggregateCacheModel.companyId;
+		_userId = ctEntryAggregateCacheModel.userId;
+
+		if (ctEntryAggregateCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ctEntryAggregateCacheModel.userName;
+		}
+
+		if (ctEntryAggregateCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ctEntryAggregateCacheModel.createDate);
+		}
+
+		if (ctEntryAggregateCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(ctEntryAggregateCacheModel.modifiedDate);
+		}
+
+		_ownerCTEntryId = ctEntryAggregateCacheModel.ownerCTEntryId;
+		_status = ctEntryAggregateCacheModel.status;
+	}
+
+	private static class CTEntryAggregateOriginalValues {
+
+		private CTEntryAggregateOriginalValues(
+			CTEntryAggregateModelImpl ctEntryAggregateModelImpl) {
+
+			_originalOwnerCTEntryId = ctEntryAggregateModelImpl._ownerCTEntryId;
+		}
+
+		private final long _originalOwnerCTEntryId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, CTEntryAggregate>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private CTEntryAggregateOriginalValues _ctEntryAggregateOriginalValues;
 	private long _ctEntryAggregateId;
 	private long _companyId;
 	private long _userId;
@@ -671,10 +714,7 @@ public class CTEntryAggregateModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _ownerCTEntryId;
-	private long _originalOwnerCTEntryId;
-	private boolean _setOriginalOwnerCTEntryId;
 	private int _status;
-	private long _columnBitmask;
 	private CTEntryAggregate _escapedModel;
 
 }

@@ -107,23 +107,7 @@ public class ResourceTypePermissionCacheModel
 		ResourceTypePermissionImpl resourceTypePermissionImpl =
 			new ResourceTypePermissionImpl();
 
-		resourceTypePermissionImpl.setMvccVersion(mvccVersion);
-		resourceTypePermissionImpl.setResourceTypePermissionId(
-			resourceTypePermissionId);
-		resourceTypePermissionImpl.setCompanyId(companyId);
-		resourceTypePermissionImpl.setGroupId(groupId);
-
-		if (name == null) {
-			resourceTypePermissionImpl.setName("");
-		}
-		else {
-			resourceTypePermissionImpl.setName(name);
-		}
-
-		resourceTypePermissionImpl.setRoleId(roleId);
-		resourceTypePermissionImpl.setActionIds(actionIds);
-
-		resourceTypePermissionImpl.resetOriginalValues();
+		resourceTypePermissionImpl.setResourceTypePermissionCacheModel(this);
 
 		return resourceTypePermissionImpl;
 	}

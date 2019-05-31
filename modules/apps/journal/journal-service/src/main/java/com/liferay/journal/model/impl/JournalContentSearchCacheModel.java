@@ -89,27 +89,7 @@ public class JournalContentSearchCacheModel
 		JournalContentSearchImpl journalContentSearchImpl =
 			new JournalContentSearchImpl();
 
-		journalContentSearchImpl.setContentSearchId(contentSearchId);
-		journalContentSearchImpl.setGroupId(groupId);
-		journalContentSearchImpl.setCompanyId(companyId);
-		journalContentSearchImpl.setPrivateLayout(privateLayout);
-		journalContentSearchImpl.setLayoutId(layoutId);
-
-		if (portletId == null) {
-			journalContentSearchImpl.setPortletId("");
-		}
-		else {
-			journalContentSearchImpl.setPortletId(portletId);
-		}
-
-		if (articleId == null) {
-			journalContentSearchImpl.setArticleId("");
-		}
-		else {
-			journalContentSearchImpl.setArticleId(articleId);
-		}
-
-		journalContentSearchImpl.resetOriginalValues();
+		journalContentSearchImpl.setJournalContentSearchCacheModel(this);
 
 		return journalContentSearchImpl;
 	}

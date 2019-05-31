@@ -99,19 +99,7 @@ public class VirtualHostCacheModel
 	public VirtualHost toEntityModel() {
 		VirtualHostImpl virtualHostImpl = new VirtualHostImpl();
 
-		virtualHostImpl.setMvccVersion(mvccVersion);
-		virtualHostImpl.setVirtualHostId(virtualHostId);
-		virtualHostImpl.setCompanyId(companyId);
-		virtualHostImpl.setLayoutSetId(layoutSetId);
-
-		if (hostname == null) {
-			virtualHostImpl.setHostname("");
-		}
-		else {
-			virtualHostImpl.setHostname(hostname);
-		}
-
-		virtualHostImpl.resetOriginalValues();
+		virtualHostImpl.setVirtualHostCacheModel(this);
 
 		return virtualHostImpl;
 	}

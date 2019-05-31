@@ -535,19 +535,22 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			_lvEntryLocalizationVersionOriginalValues =
+				new LVEntryLocalizationVersionOriginalValues(this);
 		}
+
+		_lvEntryLocalizationVersionOriginalValues._columnBitmask = -1L;
 
 		_version = version;
 	}
 
 	public int getOriginalVersion() {
-		return _originalVersion;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			return _version;
+		}
+
+		return _lvEntryLocalizationVersionOriginalValues._originalVersion;
 	}
 
 	@Override
@@ -557,19 +560,24 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public void setLvEntryLocalizationId(long lvEntryLocalizationId) {
-		_columnBitmask |= LVENTRYLOCALIZATIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalLvEntryLocalizationId) {
-			_setOriginalLvEntryLocalizationId = true;
-
-			_originalLvEntryLocalizationId = _lvEntryLocalizationId;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			_lvEntryLocalizationVersionOriginalValues =
+				new LVEntryLocalizationVersionOriginalValues(this);
 		}
+
+		_lvEntryLocalizationVersionOriginalValues._columnBitmask |=
+			LVENTRYLOCALIZATIONID_COLUMN_BITMASK;
 
 		_lvEntryLocalizationId = lvEntryLocalizationId;
 	}
 
 	public long getOriginalLvEntryLocalizationId() {
-		return _originalLvEntryLocalizationId;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			return _lvEntryLocalizationId;
+		}
+
+		return _lvEntryLocalizationVersionOriginalValues.
+			_originalLvEntryLocalizationId;
 	}
 
 	@Override
@@ -589,19 +597,23 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public void setLvEntryId(long lvEntryId) {
-		_columnBitmask |= LVENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalLvEntryId) {
-			_setOriginalLvEntryId = true;
-
-			_originalLvEntryId = _lvEntryId;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			_lvEntryLocalizationVersionOriginalValues =
+				new LVEntryLocalizationVersionOriginalValues(this);
 		}
+
+		_lvEntryLocalizationVersionOriginalValues._columnBitmask |=
+			LVENTRYID_COLUMN_BITMASK;
 
 		_lvEntryId = lvEntryId;
 	}
 
 	public long getOriginalLvEntryId() {
-		return _originalLvEntryId;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			return _lvEntryId;
+		}
+
+		return _lvEntryLocalizationVersionOriginalValues._originalLvEntryId;
 	}
 
 	@Override
@@ -616,17 +628,24 @@ public class LVEntryLocalizationVersionModelImpl
 
 	@Override
 	public void setLanguageId(String languageId) {
-		_columnBitmask |= LANGUAGEID_COLUMN_BITMASK;
-
-		if (_originalLanguageId == null) {
-			_originalLanguageId = _languageId;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			_lvEntryLocalizationVersionOriginalValues =
+				new LVEntryLocalizationVersionOriginalValues(this);
 		}
+
+		_lvEntryLocalizationVersionOriginalValues._columnBitmask |=
+			LANGUAGEID_COLUMN_BITMASK;
 
 		_languageId = languageId;
 	}
 
 	public String getOriginalLanguageId() {
-		return GetterUtil.getString(_originalLanguageId);
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			return GetterUtil.getString(_languageId);
+		}
+
+		return GetterUtil.getString(
+			_lvEntryLocalizationVersionOriginalValues._originalLanguageId);
 	}
 
 	@Override
@@ -660,7 +679,11 @@ public class LVEntryLocalizationVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_lvEntryLocalizationVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _lvEntryLocalizationVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -776,26 +799,8 @@ public class LVEntryLocalizationVersionModelImpl
 		LVEntryLocalizationVersionModelImpl
 			lvEntryLocalizationVersionModelImpl = this;
 
-		lvEntryLocalizationVersionModelImpl._originalVersion =
-			lvEntryLocalizationVersionModelImpl._version;
-
-		lvEntryLocalizationVersionModelImpl._setOriginalVersion = false;
-
-		lvEntryLocalizationVersionModelImpl._originalLvEntryLocalizationId =
-			lvEntryLocalizationVersionModelImpl._lvEntryLocalizationId;
-
-		lvEntryLocalizationVersionModelImpl._setOriginalLvEntryLocalizationId =
-			false;
-
-		lvEntryLocalizationVersionModelImpl._originalLvEntryId =
-			lvEntryLocalizationVersionModelImpl._lvEntryId;
-
-		lvEntryLocalizationVersionModelImpl._setOriginalLvEntryId = false;
-
-		lvEntryLocalizationVersionModelImpl._originalLanguageId =
-			lvEntryLocalizationVersionModelImpl._languageId;
-
-		lvEntryLocalizationVersionModelImpl._columnBitmask = 0;
+		lvEntryLocalizationVersionModelImpl.
+			_lvEntryLocalizationVersionOriginalValues = null;
 	}
 
 	@Override
@@ -910,25 +915,75 @@ public class LVEntryLocalizationVersionModelImpl
 		return sb.toString();
 	}
 
+	void setLVEntryLocalizationVersionCacheModel(
+		LVEntryLocalizationVersionCacheModel
+			lvEntryLocalizationVersionCacheModel) {
+
+		_lvEntryLocalizationVersionId =
+			lvEntryLocalizationVersionCacheModel.lvEntryLocalizationVersionId;
+		_version = lvEntryLocalizationVersionCacheModel.version;
+		_lvEntryLocalizationId =
+			lvEntryLocalizationVersionCacheModel.lvEntryLocalizationId;
+		_companyId = lvEntryLocalizationVersionCacheModel.companyId;
+		_lvEntryId = lvEntryLocalizationVersionCacheModel.lvEntryId;
+
+		if (lvEntryLocalizationVersionCacheModel.languageId == null) {
+			_languageId = "";
+		}
+		else {
+			_languageId = lvEntryLocalizationVersionCacheModel.languageId;
+		}
+
+		if (lvEntryLocalizationVersionCacheModel.title == null) {
+			_title = "";
+		}
+		else {
+			_title = lvEntryLocalizationVersionCacheModel.title;
+		}
+
+		if (lvEntryLocalizationVersionCacheModel.content == null) {
+			_content = "";
+		}
+		else {
+			_content = lvEntryLocalizationVersionCacheModel.content;
+		}
+	}
+
+	private static class LVEntryLocalizationVersionOriginalValues {
+
+		private LVEntryLocalizationVersionOriginalValues(
+			LVEntryLocalizationVersionModelImpl
+				lvEntryLocalizationVersionModelImpl) {
+
+			_originalVersion = lvEntryLocalizationVersionModelImpl._version;
+			_originalLvEntryLocalizationId =
+				lvEntryLocalizationVersionModelImpl._lvEntryLocalizationId;
+			_originalLvEntryId = lvEntryLocalizationVersionModelImpl._lvEntryId;
+			_originalLanguageId =
+				lvEntryLocalizationVersionModelImpl._languageId;
+		}
+
+		private final int _originalVersion;
+		private final long _originalLvEntryLocalizationId;
+		private final long _originalLvEntryId;
+		private final String _originalLanguageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LVEntryLocalizationVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LVEntryLocalizationVersionOriginalValues
+		_lvEntryLocalizationVersionOriginalValues;
 	private long _lvEntryLocalizationVersionId;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private long _lvEntryLocalizationId;
-	private long _originalLvEntryLocalizationId;
-	private boolean _setOriginalLvEntryLocalizationId;
 	private long _companyId;
 	private long _lvEntryId;
-	private long _originalLvEntryId;
-	private boolean _setOriginalLvEntryId;
 	private String _languageId;
-	private String _originalLanguageId;
 	private String _title;
 	private String _content;
-	private long _columnBitmask;
 	private LVEntryLocalizationVersion _escapedModel;
 
 }

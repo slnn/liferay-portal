@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -149,124 +147,7 @@ public class LayoutRevisionCacheModel
 	public LayoutRevision toEntityModel() {
 		LayoutRevisionImpl layoutRevisionImpl = new LayoutRevisionImpl();
 
-		layoutRevisionImpl.setMvccVersion(mvccVersion);
-		layoutRevisionImpl.setLayoutRevisionId(layoutRevisionId);
-		layoutRevisionImpl.setGroupId(groupId);
-		layoutRevisionImpl.setCompanyId(companyId);
-		layoutRevisionImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutRevisionImpl.setUserName("");
-		}
-		else {
-			layoutRevisionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutRevisionImpl.setCreateDate(null);
-		}
-		else {
-			layoutRevisionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutRevisionImpl.setModifiedDate(null);
-		}
-		else {
-			layoutRevisionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		layoutRevisionImpl.setLayoutSetBranchId(layoutSetBranchId);
-		layoutRevisionImpl.setLayoutBranchId(layoutBranchId);
-		layoutRevisionImpl.setParentLayoutRevisionId(parentLayoutRevisionId);
-		layoutRevisionImpl.setHead(head);
-		layoutRevisionImpl.setMajor(major);
-		layoutRevisionImpl.setPlid(plid);
-		layoutRevisionImpl.setPrivateLayout(privateLayout);
-
-		if (name == null) {
-			layoutRevisionImpl.setName("");
-		}
-		else {
-			layoutRevisionImpl.setName(name);
-		}
-
-		if (title == null) {
-			layoutRevisionImpl.setTitle("");
-		}
-		else {
-			layoutRevisionImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			layoutRevisionImpl.setDescription("");
-		}
-		else {
-			layoutRevisionImpl.setDescription(description);
-		}
-
-		if (keywords == null) {
-			layoutRevisionImpl.setKeywords("");
-		}
-		else {
-			layoutRevisionImpl.setKeywords(keywords);
-		}
-
-		if (robots == null) {
-			layoutRevisionImpl.setRobots("");
-		}
-		else {
-			layoutRevisionImpl.setRobots(robots);
-		}
-
-		if (typeSettings == null) {
-			layoutRevisionImpl.setTypeSettings("");
-		}
-		else {
-			layoutRevisionImpl.setTypeSettings(typeSettings);
-		}
-
-		layoutRevisionImpl.setIconImageId(iconImageId);
-
-		if (themeId == null) {
-			layoutRevisionImpl.setThemeId("");
-		}
-		else {
-			layoutRevisionImpl.setThemeId(themeId);
-		}
-
-		if (colorSchemeId == null) {
-			layoutRevisionImpl.setColorSchemeId("");
-		}
-		else {
-			layoutRevisionImpl.setColorSchemeId(colorSchemeId);
-		}
-
-		if (css == null) {
-			layoutRevisionImpl.setCss("");
-		}
-		else {
-			layoutRevisionImpl.setCss(css);
-		}
-
-		layoutRevisionImpl.setStatus(status);
-		layoutRevisionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			layoutRevisionImpl.setStatusByUserName("");
-		}
-		else {
-			layoutRevisionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			layoutRevisionImpl.setStatusDate(null);
-		}
-		else {
-			layoutRevisionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		layoutRevisionImpl.resetOriginalValues();
+		layoutRevisionImpl.setLayoutRevisionCacheModel(this);
 
 		return layoutRevisionImpl;
 	}

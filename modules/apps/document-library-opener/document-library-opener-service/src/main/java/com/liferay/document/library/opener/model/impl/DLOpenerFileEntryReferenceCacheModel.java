@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -101,45 +99,8 @@ public class DLOpenerFileEntryReferenceCacheModel
 		DLOpenerFileEntryReferenceImpl dlOpenerFileEntryReferenceImpl =
 			new DLOpenerFileEntryReferenceImpl();
 
-		dlOpenerFileEntryReferenceImpl.setDlOpenerFileEntryReferenceId(
-			dlOpenerFileEntryReferenceId);
-		dlOpenerFileEntryReferenceImpl.setGroupId(groupId);
-		dlOpenerFileEntryReferenceImpl.setCompanyId(companyId);
-		dlOpenerFileEntryReferenceImpl.setUserId(userId);
-
-		if (userName == null) {
-			dlOpenerFileEntryReferenceImpl.setUserName("");
-		}
-		else {
-			dlOpenerFileEntryReferenceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			dlOpenerFileEntryReferenceImpl.setCreateDate(null);
-		}
-		else {
-			dlOpenerFileEntryReferenceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			dlOpenerFileEntryReferenceImpl.setModifiedDate(null);
-		}
-		else {
-			dlOpenerFileEntryReferenceImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		if (referenceKey == null) {
-			dlOpenerFileEntryReferenceImpl.setReferenceKey("");
-		}
-		else {
-			dlOpenerFileEntryReferenceImpl.setReferenceKey(referenceKey);
-		}
-
-		dlOpenerFileEntryReferenceImpl.setFileEntryId(fileEntryId);
-		dlOpenerFileEntryReferenceImpl.setType(type);
-
-		dlOpenerFileEntryReferenceImpl.resetOriginalValues();
+		dlOpenerFileEntryReferenceImpl.setDLOpenerFileEntryReferenceCacheModel(
+			this);
 
 		return dlOpenerFileEntryReferenceImpl;
 	}

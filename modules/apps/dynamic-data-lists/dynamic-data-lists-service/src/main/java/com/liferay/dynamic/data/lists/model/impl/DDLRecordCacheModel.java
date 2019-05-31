@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -124,77 +122,7 @@ public class DDLRecordCacheModel
 	public DDLRecord toEntityModel() {
 		DDLRecordImpl ddlRecordImpl = new DDLRecordImpl();
 
-		ddlRecordImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			ddlRecordImpl.setUuid("");
-		}
-		else {
-			ddlRecordImpl.setUuid(uuid);
-		}
-
-		ddlRecordImpl.setRecordId(recordId);
-		ddlRecordImpl.setGroupId(groupId);
-		ddlRecordImpl.setCompanyId(companyId);
-		ddlRecordImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddlRecordImpl.setUserName("");
-		}
-		else {
-			ddlRecordImpl.setUserName(userName);
-		}
-
-		ddlRecordImpl.setVersionUserId(versionUserId);
-
-		if (versionUserName == null) {
-			ddlRecordImpl.setVersionUserName("");
-		}
-		else {
-			ddlRecordImpl.setVersionUserName(versionUserName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddlRecordImpl.setCreateDate(null);
-		}
-		else {
-			ddlRecordImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddlRecordImpl.setModifiedDate(null);
-		}
-		else {
-			ddlRecordImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ddlRecordImpl.setDDMStorageId(DDMStorageId);
-		ddlRecordImpl.setRecordSetId(recordSetId);
-
-		if (recordSetVersion == null) {
-			ddlRecordImpl.setRecordSetVersion("");
-		}
-		else {
-			ddlRecordImpl.setRecordSetVersion(recordSetVersion);
-		}
-
-		if (version == null) {
-			ddlRecordImpl.setVersion("");
-		}
-		else {
-			ddlRecordImpl.setVersion(version);
-		}
-
-		ddlRecordImpl.setDisplayIndex(displayIndex);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			ddlRecordImpl.setLastPublishDate(null);
-		}
-		else {
-			ddlRecordImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		ddlRecordImpl.resetOriginalValues();
+		ddlRecordImpl.setDDLRecordCacheModel(this);
 
 		return ddlRecordImpl;
 	}

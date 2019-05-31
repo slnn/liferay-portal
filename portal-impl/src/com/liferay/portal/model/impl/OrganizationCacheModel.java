@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -129,85 +127,7 @@ public class OrganizationCacheModel
 	public Organization toEntityModel() {
 		OrganizationImpl organizationImpl = new OrganizationImpl();
 
-		organizationImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			organizationImpl.setUuid("");
-		}
-		else {
-			organizationImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			organizationImpl.setExternalReferenceCode("");
-		}
-		else {
-			organizationImpl.setExternalReferenceCode(externalReferenceCode);
-		}
-
-		organizationImpl.setOrganizationId(organizationId);
-		organizationImpl.setCompanyId(companyId);
-		organizationImpl.setUserId(userId);
-
-		if (userName == null) {
-			organizationImpl.setUserName("");
-		}
-		else {
-			organizationImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			organizationImpl.setCreateDate(null);
-		}
-		else {
-			organizationImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			organizationImpl.setModifiedDate(null);
-		}
-		else {
-			organizationImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		organizationImpl.setParentOrganizationId(parentOrganizationId);
-
-		if (treePath == null) {
-			organizationImpl.setTreePath("");
-		}
-		else {
-			organizationImpl.setTreePath(treePath);
-		}
-
-		if (name == null) {
-			organizationImpl.setName("");
-		}
-		else {
-			organizationImpl.setName(name);
-		}
-
-		if (type == null) {
-			organizationImpl.setType("");
-		}
-		else {
-			organizationImpl.setType(type);
-		}
-
-		organizationImpl.setRecursable(recursable);
-		organizationImpl.setRegionId(regionId);
-		organizationImpl.setCountryId(countryId);
-		organizationImpl.setStatusId(statusId);
-
-		if (comments == null) {
-			organizationImpl.setComments("");
-		}
-		else {
-			organizationImpl.setComments(comments);
-		}
-
-		organizationImpl.setLogoId(logoId);
-
-		organizationImpl.resetOriginalValues();
+		organizationImpl.setOrganizationCacheModel(this);
 
 		return organizationImpl;
 	}

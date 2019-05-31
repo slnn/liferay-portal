@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -114,51 +112,7 @@ public class KaleoTaskCacheModel
 	public KaleoTask toEntityModel() {
 		KaleoTaskImpl kaleoTaskImpl = new KaleoTaskImpl();
 
-		kaleoTaskImpl.setMvccVersion(mvccVersion);
-		kaleoTaskImpl.setKaleoTaskId(kaleoTaskId);
-		kaleoTaskImpl.setGroupId(groupId);
-		kaleoTaskImpl.setCompanyId(companyId);
-		kaleoTaskImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTaskImpl.setUserName("");
-		}
-		else {
-			kaleoTaskImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTaskImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTaskImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTaskImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTaskImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kaleoTaskImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-		kaleoTaskImpl.setKaleoNodeId(kaleoNodeId);
-
-		if (name == null) {
-			kaleoTaskImpl.setName("");
-		}
-		else {
-			kaleoTaskImpl.setName(name);
-		}
-
-		if (description == null) {
-			kaleoTaskImpl.setDescription("");
-		}
-		else {
-			kaleoTaskImpl.setDescription(description);
-		}
-
-		kaleoTaskImpl.resetOriginalValues();
+		kaleoTaskImpl.setKaleoTaskCacheModel(this);
 
 		return kaleoTaskImpl;
 	}

@@ -100,27 +100,7 @@ public class PortletCacheModel
 	public Portlet toEntityModel() {
 		PortletImpl portletImpl = new PortletImpl();
 
-		portletImpl.setMvccVersion(mvccVersion);
-		portletImpl.setId(id);
-		portletImpl.setCompanyId(companyId);
-
-		if (portletId == null) {
-			portletImpl.setPortletId("");
-		}
-		else {
-			portletImpl.setPortletId(portletId);
-		}
-
-		if (roles == null) {
-			portletImpl.setRoles("");
-		}
-		else {
-			portletImpl.setRoles(roles);
-		}
-
-		portletImpl.setActive(active);
-
-		portletImpl.resetOriginalValues();
+		portletImpl.setPortletCacheModel(this);
 
 		return portletImpl;
 	}

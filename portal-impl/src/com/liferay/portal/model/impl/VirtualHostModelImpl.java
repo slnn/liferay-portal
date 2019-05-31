@@ -308,19 +308,21 @@ public class VirtualHostModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_virtualHostOriginalValues == null) {
+			_virtualHostOriginalValues = new VirtualHostOriginalValues(this);
 		}
+
+		_virtualHostOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_virtualHostOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _virtualHostOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -330,19 +332,21 @@ public class VirtualHostModelImpl
 
 	@Override
 	public void setLayoutSetId(long layoutSetId) {
-		_columnBitmask |= LAYOUTSETID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutSetId) {
-			_setOriginalLayoutSetId = true;
-
-			_originalLayoutSetId = _layoutSetId;
+		if (_virtualHostOriginalValues == null) {
+			_virtualHostOriginalValues = new VirtualHostOriginalValues(this);
 		}
+
+		_virtualHostOriginalValues._columnBitmask |= LAYOUTSETID_COLUMN_BITMASK;
 
 		_layoutSetId = layoutSetId;
 	}
 
 	public long getOriginalLayoutSetId() {
-		return _originalLayoutSetId;
+		if (_virtualHostOriginalValues == null) {
+			return _layoutSetId;
+		}
+
+		return _virtualHostOriginalValues._originalLayoutSetId;
 	}
 
 	@Override
@@ -357,21 +361,30 @@ public class VirtualHostModelImpl
 
 	@Override
 	public void setHostname(String hostname) {
-		_columnBitmask |= HOSTNAME_COLUMN_BITMASK;
-
-		if (_originalHostname == null) {
-			_originalHostname = _hostname;
+		if (_virtualHostOriginalValues == null) {
+			_virtualHostOriginalValues = new VirtualHostOriginalValues(this);
 		}
+
+		_virtualHostOriginalValues._columnBitmask |= HOSTNAME_COLUMN_BITMASK;
 
 		_hostname = hostname;
 	}
 
 	public String getOriginalHostname() {
-		return GetterUtil.getString(_originalHostname);
+		if (_virtualHostOriginalValues == null) {
+			return GetterUtil.getString(_hostname);
+		}
+
+		return GetterUtil.getString(
+			_virtualHostOriginalValues._originalHostname);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_virtualHostOriginalValues == null) {
+			return 0;
+		}
+
+		return _virtualHostOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -468,19 +481,7 @@ public class VirtualHostModelImpl
 	public void resetOriginalValues() {
 		VirtualHostModelImpl virtualHostModelImpl = this;
 
-		virtualHostModelImpl._originalCompanyId =
-			virtualHostModelImpl._companyId;
-
-		virtualHostModelImpl._setOriginalCompanyId = false;
-
-		virtualHostModelImpl._originalLayoutSetId =
-			virtualHostModelImpl._layoutSetId;
-
-		virtualHostModelImpl._setOriginalLayoutSetId = false;
-
-		virtualHostModelImpl._originalHostname = virtualHostModelImpl._hostname;
-
-		virtualHostModelImpl._columnBitmask = 0;
+		virtualHostModelImpl._virtualHostOriginalValues = null;
 	}
 
 	@Override
@@ -570,20 +571,46 @@ public class VirtualHostModelImpl
 		return sb.toString();
 	}
 
+	void setVirtualHostCacheModel(VirtualHostCacheModel virtualHostCacheModel) {
+		_mvccVersion = virtualHostCacheModel.mvccVersion;
+		_virtualHostId = virtualHostCacheModel.virtualHostId;
+		_companyId = virtualHostCacheModel.companyId;
+		_layoutSetId = virtualHostCacheModel.layoutSetId;
+
+		if (virtualHostCacheModel.hostname == null) {
+			_hostname = "";
+		}
+		else {
+			_hostname = virtualHostCacheModel.hostname;
+		}
+	}
+
+	private static class VirtualHostOriginalValues {
+
+		private VirtualHostOriginalValues(
+			VirtualHostModelImpl virtualHostModelImpl) {
+
+			_originalCompanyId = virtualHostModelImpl._companyId;
+			_originalLayoutSetId = virtualHostModelImpl._layoutSetId;
+			_originalHostname = virtualHostModelImpl._hostname;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalLayoutSetId;
+		private final String _originalHostname;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, VirtualHost>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private VirtualHostOriginalValues _virtualHostOriginalValues;
 	private long _mvccVersion;
 	private long _virtualHostId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _layoutSetId;
-	private long _originalLayoutSetId;
-	private boolean _setOriginalLayoutSetId;
 	private String _hostname;
-	private String _originalHostname;
-	private long _columnBitmask;
 	private VirtualHost _escapedModel;
 
 }

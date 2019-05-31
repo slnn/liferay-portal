@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -88,20 +86,7 @@ public class MBStatsUserCacheModel
 	public MBStatsUser toEntityModel() {
 		MBStatsUserImpl mbStatsUserImpl = new MBStatsUserImpl();
 
-		mbStatsUserImpl.setStatsUserId(statsUserId);
-		mbStatsUserImpl.setGroupId(groupId);
-		mbStatsUserImpl.setCompanyId(companyId);
-		mbStatsUserImpl.setUserId(userId);
-		mbStatsUserImpl.setMessageCount(messageCount);
-
-		if (lastPostDate == Long.MIN_VALUE) {
-			mbStatsUserImpl.setLastPostDate(null);
-		}
-		else {
-			mbStatsUserImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
-		mbStatsUserImpl.resetOriginalValues();
+		mbStatsUserImpl.setMBStatsUserCacheModel(this);
 
 		return mbStatsUserImpl;
 	}

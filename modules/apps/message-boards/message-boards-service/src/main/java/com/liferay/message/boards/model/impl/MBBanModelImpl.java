@@ -363,17 +363,21 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_mbBanOriginalValues == null) {
+			_mbBanOriginalValues = new MBBanOriginalValues(this);
 		}
+
+		_mbBanOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_mbBanOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_mbBanOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -395,19 +399,21 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_mbBanOriginalValues == null) {
+			_mbBanOriginalValues = new MBBanOriginalValues(this);
 		}
+
+		_mbBanOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_mbBanOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _mbBanOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -418,19 +424,21 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_mbBanOriginalValues == null) {
+			_mbBanOriginalValues = new MBBanOriginalValues(this);
 		}
+
+		_mbBanOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_mbBanOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _mbBanOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -441,13 +449,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_mbBanOriginalValues == null) {
+			_mbBanOriginalValues = new MBBanOriginalValues(this);
 		}
+
+		_mbBanOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -469,7 +475,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_mbBanOriginalValues == null) {
+			return _userId;
+		}
+
+		return _mbBanOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -524,13 +534,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setBanUserId(long banUserId) {
-		_columnBitmask |= BANUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalBanUserId) {
-			_setOriginalBanUserId = true;
-
-			_originalBanUserId = _banUserId;
+		if (_mbBanOriginalValues == null) {
+			_mbBanOriginalValues = new MBBanOriginalValues(this);
 		}
+
+		_mbBanOriginalValues._columnBitmask |= BANUSERID_COLUMN_BITMASK;
 
 		_banUserId = banUserId;
 	}
@@ -552,7 +560,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public long getOriginalBanUserId() {
-		return _originalBanUserId;
+		if (_mbBanOriginalValues == null) {
+			return _banUserId;
+		}
+
+		return _mbBanOriginalValues._originalBanUserId;
 	}
 
 	@JSON
@@ -573,7 +585,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_mbBanOriginalValues == null) {
+			return 0;
+		}
+
+		return _mbBanOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -675,27 +691,9 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	public void resetOriginalValues() {
 		MBBanModelImpl mbBanModelImpl = this;
 
-		mbBanModelImpl._originalUuid = mbBanModelImpl._uuid;
-
-		mbBanModelImpl._originalGroupId = mbBanModelImpl._groupId;
-
-		mbBanModelImpl._setOriginalGroupId = false;
-
-		mbBanModelImpl._originalCompanyId = mbBanModelImpl._companyId;
-
-		mbBanModelImpl._setOriginalCompanyId = false;
-
-		mbBanModelImpl._originalUserId = mbBanModelImpl._userId;
-
-		mbBanModelImpl._setOriginalUserId = false;
+		mbBanModelImpl._mbBanOriginalValues = null;
 
 		mbBanModelImpl._setModifiedDate = false;
-
-		mbBanModelImpl._originalBanUserId = mbBanModelImpl._banUserId;
-
-		mbBanModelImpl._setOriginalBanUserId = false;
-
-		mbBanModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -819,30 +817,75 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return sb.toString();
 	}
 
+	void setMBBanCacheModel(MBBanCacheModel mbBanCacheModel) {
+		if (mbBanCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = mbBanCacheModel.uuid;
+		}
+
+		_banId = mbBanCacheModel.banId;
+		_groupId = mbBanCacheModel.groupId;
+		_companyId = mbBanCacheModel.companyId;
+		_userId = mbBanCacheModel.userId;
+
+		if (mbBanCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = mbBanCacheModel.userName;
+		}
+
+		if (mbBanCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(mbBanCacheModel.createDate);
+		}
+
+		if (mbBanCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(mbBanCacheModel.modifiedDate);
+		}
+
+		_banUserId = mbBanCacheModel.banUserId;
+
+		if (mbBanCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(mbBanCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class MBBanOriginalValues {
+
+		private MBBanOriginalValues(MBBanModelImpl mbBanModelImpl) {
+			_originalUuid = mbBanModelImpl._uuid;
+			_originalGroupId = mbBanModelImpl._groupId;
+			_originalCompanyId = mbBanModelImpl._companyId;
+			_originalUserId = mbBanModelImpl._userId;
+			_originalBanUserId = mbBanModelImpl._banUserId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalBanUserId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MBBan>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MBBanOriginalValues _mbBanOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _banId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _banUserId;
-	private long _originalBanUserId;
-	private boolean _setOriginalBanUserId;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private MBBan _escapedModel;
 
 }

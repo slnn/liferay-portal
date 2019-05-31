@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -105,59 +103,7 @@ public class AssetListEntryUsageCacheModel
 		AssetListEntryUsageImpl assetListEntryUsageImpl =
 			new AssetListEntryUsageImpl();
 
-		if (uuid == null) {
-			assetListEntryUsageImpl.setUuid("");
-		}
-		else {
-			assetListEntryUsageImpl.setUuid(uuid);
-		}
-
-		assetListEntryUsageImpl.setAssetListEntryUsageId(assetListEntryUsageId);
-		assetListEntryUsageImpl.setGroupId(groupId);
-		assetListEntryUsageImpl.setCompanyId(companyId);
-		assetListEntryUsageImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetListEntryUsageImpl.setUserName("");
-		}
-		else {
-			assetListEntryUsageImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetListEntryUsageImpl.setCreateDate(null);
-		}
-		else {
-			assetListEntryUsageImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetListEntryUsageImpl.setModifiedDate(null);
-		}
-		else {
-			assetListEntryUsageImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetListEntryUsageImpl.setAssetListEntryId(assetListEntryId);
-		assetListEntryUsageImpl.setClassNameId(classNameId);
-		assetListEntryUsageImpl.setClassPK(classPK);
-
-		if (portletId == null) {
-			assetListEntryUsageImpl.setPortletId("");
-		}
-		else {
-			assetListEntryUsageImpl.setPortletId(portletId);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			assetListEntryUsageImpl.setLastPublishDate(null);
-		}
-		else {
-			assetListEntryUsageImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		assetListEntryUsageImpl.resetOriginalValues();
+		assetListEntryUsageImpl.setAssetListEntryUsageCacheModel(this);
 
 		return assetListEntryUsageImpl;
 	}

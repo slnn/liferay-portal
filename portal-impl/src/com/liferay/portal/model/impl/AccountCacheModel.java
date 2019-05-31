@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -124,98 +122,7 @@ public class AccountCacheModel
 	public Account toEntityModel() {
 		AccountImpl accountImpl = new AccountImpl();
 
-		accountImpl.setMvccVersion(mvccVersion);
-		accountImpl.setAccountId(accountId);
-		accountImpl.setCompanyId(companyId);
-		accountImpl.setUserId(userId);
-
-		if (userName == null) {
-			accountImpl.setUserName("");
-		}
-		else {
-			accountImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			accountImpl.setCreateDate(null);
-		}
-		else {
-			accountImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			accountImpl.setModifiedDate(null);
-		}
-		else {
-			accountImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		accountImpl.setParentAccountId(parentAccountId);
-
-		if (name == null) {
-			accountImpl.setName("");
-		}
-		else {
-			accountImpl.setName(name);
-		}
-
-		if (legalName == null) {
-			accountImpl.setLegalName("");
-		}
-		else {
-			accountImpl.setLegalName(legalName);
-		}
-
-		if (legalId == null) {
-			accountImpl.setLegalId("");
-		}
-		else {
-			accountImpl.setLegalId(legalId);
-		}
-
-		if (legalType == null) {
-			accountImpl.setLegalType("");
-		}
-		else {
-			accountImpl.setLegalType(legalType);
-		}
-
-		if (sicCode == null) {
-			accountImpl.setSicCode("");
-		}
-		else {
-			accountImpl.setSicCode(sicCode);
-		}
-
-		if (tickerSymbol == null) {
-			accountImpl.setTickerSymbol("");
-		}
-		else {
-			accountImpl.setTickerSymbol(tickerSymbol);
-		}
-
-		if (industry == null) {
-			accountImpl.setIndustry("");
-		}
-		else {
-			accountImpl.setIndustry(industry);
-		}
-
-		if (type == null) {
-			accountImpl.setType("");
-		}
-		else {
-			accountImpl.setType(type);
-		}
-
-		if (size == null) {
-			accountImpl.setSize("");
-		}
-		else {
-			accountImpl.setSize(size);
-		}
-
-		accountImpl.resetOriginalValues();
+		accountImpl.setAccountCacheModel(this);
 
 		return accountImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -111,91 +109,8 @@ public class CalendarNotificationTemplateCacheModel
 		CalendarNotificationTemplateImpl calendarNotificationTemplateImpl =
 			new CalendarNotificationTemplateImpl();
 
-		if (uuid == null) {
-			calendarNotificationTemplateImpl.setUuid("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setUuid(uuid);
-		}
-
-		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(
-			calendarNotificationTemplateId);
-		calendarNotificationTemplateImpl.setGroupId(groupId);
-		calendarNotificationTemplateImpl.setCompanyId(companyId);
-		calendarNotificationTemplateImpl.setUserId(userId);
-
-		if (userName == null) {
-			calendarNotificationTemplateImpl.setUserName("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			calendarNotificationTemplateImpl.setCreateDate(null);
-		}
-		else {
-			calendarNotificationTemplateImpl.setCreateDate(
-				new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			calendarNotificationTemplateImpl.setModifiedDate(null);
-		}
-		else {
-			calendarNotificationTemplateImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		calendarNotificationTemplateImpl.setCalendarId(calendarId);
-
-		if (notificationType == null) {
-			calendarNotificationTemplateImpl.setNotificationType("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setNotificationType(
-				notificationType);
-		}
-
-		if (notificationTypeSettings == null) {
-			calendarNotificationTemplateImpl.setNotificationTypeSettings("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setNotificationTypeSettings(
-				notificationTypeSettings);
-		}
-
-		if (notificationTemplateType == null) {
-			calendarNotificationTemplateImpl.setNotificationTemplateType("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setNotificationTemplateType(
-				notificationTemplateType);
-		}
-
-		if (subject == null) {
-			calendarNotificationTemplateImpl.setSubject("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setSubject(subject);
-		}
-
-		if (body == null) {
-			calendarNotificationTemplateImpl.setBody("");
-		}
-		else {
-			calendarNotificationTemplateImpl.setBody(body);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			calendarNotificationTemplateImpl.setLastPublishDate(null);
-		}
-		else {
-			calendarNotificationTemplateImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		calendarNotificationTemplateImpl.resetOriginalValues();
+		calendarNotificationTemplateImpl.
+			setCalendarNotificationTemplateCacheModel(this);
 
 		return calendarNotificationTemplateImpl;
 	}

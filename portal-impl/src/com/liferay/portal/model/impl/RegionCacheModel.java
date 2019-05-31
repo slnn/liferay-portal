@@ -100,27 +100,7 @@ public class RegionCacheModel
 	public Region toEntityModel() {
 		RegionImpl regionImpl = new RegionImpl();
 
-		regionImpl.setMvccVersion(mvccVersion);
-		regionImpl.setRegionId(regionId);
-		regionImpl.setCountryId(countryId);
-
-		if (regionCode == null) {
-			regionImpl.setRegionCode("");
-		}
-		else {
-			regionImpl.setRegionCode(regionCode);
-		}
-
-		if (name == null) {
-			regionImpl.setName("");
-		}
-		else {
-			regionImpl.setName(name);
-		}
-
-		regionImpl.setActive(active);
-
-		regionImpl.resetOriginalValues();
+		regionImpl.setRegionCacheModel(this);
 
 		return regionImpl;
 	}

@@ -498,17 +498,24 @@ public class WeDeployAuthAppModelImpl
 
 	@Override
 	public void setRedirectURI(String redirectURI) {
-		_columnBitmask |= REDIRECTURI_COLUMN_BITMASK;
-
-		if (_originalRedirectURI == null) {
-			_originalRedirectURI = _redirectURI;
+		if (_weDeployAuthAppOriginalValues == null) {
+			_weDeployAuthAppOriginalValues = new WeDeployAuthAppOriginalValues(
+				this);
 		}
+
+		_weDeployAuthAppOriginalValues._columnBitmask |=
+			REDIRECTURI_COLUMN_BITMASK;
 
 		_redirectURI = redirectURI;
 	}
 
 	public String getOriginalRedirectURI() {
-		return GetterUtil.getString(_originalRedirectURI);
+		if (_weDeployAuthAppOriginalValues == null) {
+			return GetterUtil.getString(_redirectURI);
+		}
+
+		return GetterUtil.getString(
+			_weDeployAuthAppOriginalValues._originalRedirectURI);
 	}
 
 	@JSON
@@ -524,17 +531,24 @@ public class WeDeployAuthAppModelImpl
 
 	@Override
 	public void setClientId(String clientId) {
-		_columnBitmask |= CLIENTID_COLUMN_BITMASK;
-
-		if (_originalClientId == null) {
-			_originalClientId = _clientId;
+		if (_weDeployAuthAppOriginalValues == null) {
+			_weDeployAuthAppOriginalValues = new WeDeployAuthAppOriginalValues(
+				this);
 		}
+
+		_weDeployAuthAppOriginalValues._columnBitmask |=
+			CLIENTID_COLUMN_BITMASK;
 
 		_clientId = clientId;
 	}
 
 	public String getOriginalClientId() {
-		return GetterUtil.getString(_originalClientId);
+		if (_weDeployAuthAppOriginalValues == null) {
+			return GetterUtil.getString(_clientId);
+		}
+
+		return GetterUtil.getString(
+			_weDeployAuthAppOriginalValues._originalClientId);
 	}
 
 	@JSON
@@ -550,21 +564,32 @@ public class WeDeployAuthAppModelImpl
 
 	@Override
 	public void setClientSecret(String clientSecret) {
-		_columnBitmask |= CLIENTSECRET_COLUMN_BITMASK;
-
-		if (_originalClientSecret == null) {
-			_originalClientSecret = _clientSecret;
+		if (_weDeployAuthAppOriginalValues == null) {
+			_weDeployAuthAppOriginalValues = new WeDeployAuthAppOriginalValues(
+				this);
 		}
+
+		_weDeployAuthAppOriginalValues._columnBitmask |=
+			CLIENTSECRET_COLUMN_BITMASK;
 
 		_clientSecret = clientSecret;
 	}
 
 	public String getOriginalClientSecret() {
-		return GetterUtil.getString(_originalClientSecret);
+		if (_weDeployAuthAppOriginalValues == null) {
+			return GetterUtil.getString(_clientSecret);
+		}
+
+		return GetterUtil.getString(
+			_weDeployAuthAppOriginalValues._originalClientSecret);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_weDeployAuthAppOriginalValues == null) {
+			return 0;
+		}
+
+		return _weDeployAuthAppOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -666,18 +691,9 @@ public class WeDeployAuthAppModelImpl
 	public void resetOriginalValues() {
 		WeDeployAuthAppModelImpl weDeployAuthAppModelImpl = this;
 
+		weDeployAuthAppModelImpl._weDeployAuthAppOriginalValues = null;
+
 		weDeployAuthAppModelImpl._setModifiedDate = false;
-
-		weDeployAuthAppModelImpl._originalRedirectURI =
-			weDeployAuthAppModelImpl._redirectURI;
-
-		weDeployAuthAppModelImpl._originalClientId =
-			weDeployAuthAppModelImpl._clientId;
-
-		weDeployAuthAppModelImpl._originalClientSecret =
-			weDeployAuthAppModelImpl._clientSecret;
-
-		weDeployAuthAppModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -815,9 +831,78 @@ public class WeDeployAuthAppModelImpl
 		return sb.toString();
 	}
 
+	void setWeDeployAuthAppCacheModel(
+		WeDeployAuthAppCacheModel weDeployAuthAppCacheModel) {
+
+		_weDeployAuthAppId = weDeployAuthAppCacheModel.weDeployAuthAppId;
+		_companyId = weDeployAuthAppCacheModel.companyId;
+		_userId = weDeployAuthAppCacheModel.userId;
+
+		if (weDeployAuthAppCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = weDeployAuthAppCacheModel.userName;
+		}
+
+		if (weDeployAuthAppCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(weDeployAuthAppCacheModel.createDate);
+		}
+
+		if (weDeployAuthAppCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(weDeployAuthAppCacheModel.modifiedDate);
+		}
+
+		if (weDeployAuthAppCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = weDeployAuthAppCacheModel.name;
+		}
+
+		if (weDeployAuthAppCacheModel.redirectURI == null) {
+			_redirectURI = "";
+		}
+		else {
+			_redirectURI = weDeployAuthAppCacheModel.redirectURI;
+		}
+
+		if (weDeployAuthAppCacheModel.clientId == null) {
+			_clientId = "";
+		}
+		else {
+			_clientId = weDeployAuthAppCacheModel.clientId;
+		}
+
+		if (weDeployAuthAppCacheModel.clientSecret == null) {
+			_clientSecret = "";
+		}
+		else {
+			_clientSecret = weDeployAuthAppCacheModel.clientSecret;
+		}
+	}
+
+	private static class WeDeployAuthAppOriginalValues {
+
+		private WeDeployAuthAppOriginalValues(
+			WeDeployAuthAppModelImpl weDeployAuthAppModelImpl) {
+
+			_originalRedirectURI = weDeployAuthAppModelImpl._redirectURI;
+			_originalClientId = weDeployAuthAppModelImpl._clientId;
+			_originalClientSecret = weDeployAuthAppModelImpl._clientSecret;
+		}
+
+		private final String _originalRedirectURI;
+		private final String _originalClientId;
+		private final String _originalClientSecret;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, WeDeployAuthApp>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WeDeployAuthAppOriginalValues _weDeployAuthAppOriginalValues;
 	private long _weDeployAuthAppId;
 	private long _companyId;
 	private long _userId;
@@ -827,12 +912,8 @@ public class WeDeployAuthAppModelImpl
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _redirectURI;
-	private String _originalRedirectURI;
 	private String _clientId;
-	private String _originalClientId;
 	private String _clientSecret;
-	private String _originalClientSecret;
-	private long _columnBitmask;
 	private WeDeployAuthApp _escapedModel;
 
 }

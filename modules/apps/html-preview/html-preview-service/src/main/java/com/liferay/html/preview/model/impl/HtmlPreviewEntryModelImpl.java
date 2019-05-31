@@ -342,19 +342,23 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			_htmlPreviewEntryOriginalValues =
+				new HtmlPreviewEntryOriginalValues(this);
 		}
+
+		_htmlPreviewEntryOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _htmlPreviewEntryOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -461,19 +465,23 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			_htmlPreviewEntryOriginalValues =
+				new HtmlPreviewEntryOriginalValues(this);
 		}
+
+		_htmlPreviewEntryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _htmlPreviewEntryOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -483,19 +491,23 @@ public class HtmlPreviewEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			_htmlPreviewEntryOriginalValues =
+				new HtmlPreviewEntryOriginalValues(this);
 		}
+
+		_htmlPreviewEntryOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _htmlPreviewEntryOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -509,7 +521,11 @@ public class HtmlPreviewEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_htmlPreviewEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _htmlPreviewEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -611,24 +627,9 @@ public class HtmlPreviewEntryModelImpl
 	public void resetOriginalValues() {
 		HtmlPreviewEntryModelImpl htmlPreviewEntryModelImpl = this;
 
-		htmlPreviewEntryModelImpl._originalGroupId =
-			htmlPreviewEntryModelImpl._groupId;
-
-		htmlPreviewEntryModelImpl._setOriginalGroupId = false;
+		htmlPreviewEntryModelImpl._htmlPreviewEntryOriginalValues = null;
 
 		htmlPreviewEntryModelImpl._setModifiedDate = false;
-
-		htmlPreviewEntryModelImpl._originalClassNameId =
-			htmlPreviewEntryModelImpl._classNameId;
-
-		htmlPreviewEntryModelImpl._setOriginalClassNameId = false;
-
-		htmlPreviewEntryModelImpl._originalClassPK =
-			htmlPreviewEntryModelImpl._classPK;
-
-		htmlPreviewEntryModelImpl._setOriginalClassPK = false;
-
-		htmlPreviewEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -742,13 +743,57 @@ public class HtmlPreviewEntryModelImpl
 		return sb.toString();
 	}
 
+	void setHtmlPreviewEntryCacheModel(
+		HtmlPreviewEntryCacheModel htmlPreviewEntryCacheModel) {
+
+		_htmlPreviewEntryId = htmlPreviewEntryCacheModel.htmlPreviewEntryId;
+		_groupId = htmlPreviewEntryCacheModel.groupId;
+		_companyId = htmlPreviewEntryCacheModel.companyId;
+		_userId = htmlPreviewEntryCacheModel.userId;
+
+		if (htmlPreviewEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = htmlPreviewEntryCacheModel.userName;
+		}
+
+		if (htmlPreviewEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(htmlPreviewEntryCacheModel.createDate);
+		}
+
+		if (htmlPreviewEntryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(htmlPreviewEntryCacheModel.modifiedDate);
+		}
+
+		_classNameId = htmlPreviewEntryCacheModel.classNameId;
+		_classPK = htmlPreviewEntryCacheModel.classPK;
+		_fileEntryId = htmlPreviewEntryCacheModel.fileEntryId;
+	}
+
+	private static class HtmlPreviewEntryOriginalValues {
+
+		private HtmlPreviewEntryOriginalValues(
+			HtmlPreviewEntryModelImpl htmlPreviewEntryModelImpl) {
+
+			_originalGroupId = htmlPreviewEntryModelImpl._groupId;
+			_originalClassNameId = htmlPreviewEntryModelImpl._classNameId;
+			_originalClassPK = htmlPreviewEntryModelImpl._classPK;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, HtmlPreviewEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private HtmlPreviewEntryOriginalValues _htmlPreviewEntryOriginalValues;
 	private long _htmlPreviewEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -756,13 +801,8 @@ public class HtmlPreviewEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _fileEntryId;
-	private long _columnBitmask;
 	private HtmlPreviewEntry _escapedModel;
 
 }

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,63 +98,7 @@ public class CTCollectionCacheModel
 	public CTCollection toEntityModel() {
 		CTCollectionImpl ctCollectionImpl = new CTCollectionImpl();
 
-		ctCollectionImpl.setCtCollectionId(ctCollectionId);
-		ctCollectionImpl.setCompanyId(companyId);
-		ctCollectionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ctCollectionImpl.setUserName("");
-		}
-		else {
-			ctCollectionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ctCollectionImpl.setCreateDate(null);
-		}
-		else {
-			ctCollectionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ctCollectionImpl.setModifiedDate(null);
-		}
-		else {
-			ctCollectionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			ctCollectionImpl.setName("");
-		}
-		else {
-			ctCollectionImpl.setName(name);
-		}
-
-		if (description == null) {
-			ctCollectionImpl.setDescription("");
-		}
-		else {
-			ctCollectionImpl.setDescription(description);
-		}
-
-		ctCollectionImpl.setStatus(status);
-		ctCollectionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			ctCollectionImpl.setStatusByUserName("");
-		}
-		else {
-			ctCollectionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			ctCollectionImpl.setStatusDate(null);
-		}
-		else {
-			ctCollectionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		ctCollectionImpl.resetOriginalValues();
+		ctCollectionImpl.setCTCollectionCacheModel(this);
 
 		return ctCollectionImpl;
 	}

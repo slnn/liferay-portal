@@ -333,19 +333,23 @@ public class SyncDLFileVersionDiffModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_columnBitmask |= FILEENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalFileEntryId) {
-			_setOriginalFileEntryId = true;
-
-			_originalFileEntryId = _fileEntryId;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			_syncDLFileVersionDiffOriginalValues =
+				new SyncDLFileVersionDiffOriginalValues(this);
 		}
+
+		_syncDLFileVersionDiffOriginalValues._columnBitmask |=
+			FILEENTRYID_COLUMN_BITMASK;
 
 		_fileEntryId = fileEntryId;
 	}
 
 	public long getOriginalFileEntryId() {
-		return _originalFileEntryId;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			return _fileEntryId;
+		}
+
+		return _syncDLFileVersionDiffOriginalValues._originalFileEntryId;
 	}
 
 	@Override
@@ -355,19 +359,24 @@ public class SyncDLFileVersionDiffModelImpl
 
 	@Override
 	public void setSourceFileVersionId(long sourceFileVersionId) {
-		_columnBitmask |= SOURCEFILEVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalSourceFileVersionId) {
-			_setOriginalSourceFileVersionId = true;
-
-			_originalSourceFileVersionId = _sourceFileVersionId;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			_syncDLFileVersionDiffOriginalValues =
+				new SyncDLFileVersionDiffOriginalValues(this);
 		}
+
+		_syncDLFileVersionDiffOriginalValues._columnBitmask |=
+			SOURCEFILEVERSIONID_COLUMN_BITMASK;
 
 		_sourceFileVersionId = sourceFileVersionId;
 	}
 
 	public long getOriginalSourceFileVersionId() {
-		return _originalSourceFileVersionId;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			return _sourceFileVersionId;
+		}
+
+		return _syncDLFileVersionDiffOriginalValues.
+			_originalSourceFileVersionId;
 	}
 
 	@Override
@@ -377,19 +386,24 @@ public class SyncDLFileVersionDiffModelImpl
 
 	@Override
 	public void setTargetFileVersionId(long targetFileVersionId) {
-		_columnBitmask |= TARGETFILEVERSIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalTargetFileVersionId) {
-			_setOriginalTargetFileVersionId = true;
-
-			_originalTargetFileVersionId = _targetFileVersionId;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			_syncDLFileVersionDiffOriginalValues =
+				new SyncDLFileVersionDiffOriginalValues(this);
 		}
+
+		_syncDLFileVersionDiffOriginalValues._columnBitmask |=
+			TARGETFILEVERSIONID_COLUMN_BITMASK;
 
 		_targetFileVersionId = targetFileVersionId;
 	}
 
 	public long getOriginalTargetFileVersionId() {
-		return _originalTargetFileVersionId;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			return _targetFileVersionId;
+		}
+
+		return _syncDLFileVersionDiffOriginalValues.
+			_originalTargetFileVersionId;
 	}
 
 	@Override
@@ -419,21 +433,31 @@ public class SyncDLFileVersionDiffModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
-
-		if (_originalExpirationDate == null) {
-			_originalExpirationDate = _expirationDate;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			_syncDLFileVersionDiffOriginalValues =
+				new SyncDLFileVersionDiffOriginalValues(this);
 		}
+
+		_syncDLFileVersionDiffOriginalValues._columnBitmask |=
+			EXPIRATIONDATE_COLUMN_BITMASK;
 
 		_expirationDate = expirationDate;
 	}
 
 	public Date getOriginalExpirationDate() {
-		return _originalExpirationDate;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			return _expirationDate;
+		}
+
+		return _syncDLFileVersionDiffOriginalValues._originalExpirationDate;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_syncDLFileVersionDiffOriginalValues == null) {
+			return 0;
+		}
+
+		return _syncDLFileVersionDiffOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -537,25 +561,8 @@ public class SyncDLFileVersionDiffModelImpl
 	public void resetOriginalValues() {
 		SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl = this;
 
-		syncDLFileVersionDiffModelImpl._originalFileEntryId =
-			syncDLFileVersionDiffModelImpl._fileEntryId;
-
-		syncDLFileVersionDiffModelImpl._setOriginalFileEntryId = false;
-
-		syncDLFileVersionDiffModelImpl._originalSourceFileVersionId =
-			syncDLFileVersionDiffModelImpl._sourceFileVersionId;
-
-		syncDLFileVersionDiffModelImpl._setOriginalSourceFileVersionId = false;
-
-		syncDLFileVersionDiffModelImpl._originalTargetFileVersionId =
-			syncDLFileVersionDiffModelImpl._targetFileVersionId;
-
-		syncDLFileVersionDiffModelImpl._setOriginalTargetFileVersionId = false;
-
-		syncDLFileVersionDiffModelImpl._originalExpirationDate =
-			syncDLFileVersionDiffModelImpl._expirationDate;
-
-		syncDLFileVersionDiffModelImpl._columnBitmask = 0;
+		syncDLFileVersionDiffModelImpl._syncDLFileVersionDiffOriginalValues =
+			null;
 	}
 
 	@Override
@@ -656,24 +663,59 @@ public class SyncDLFileVersionDiffModelImpl
 		return sb.toString();
 	}
 
+	void setSyncDLFileVersionDiffCacheModel(
+		SyncDLFileVersionDiffCacheModel syncDLFileVersionDiffCacheModel) {
+
+		_syncDLFileVersionDiffId =
+			syncDLFileVersionDiffCacheModel.syncDLFileVersionDiffId;
+		_fileEntryId = syncDLFileVersionDiffCacheModel.fileEntryId;
+		_sourceFileVersionId =
+			syncDLFileVersionDiffCacheModel.sourceFileVersionId;
+		_targetFileVersionId =
+			syncDLFileVersionDiffCacheModel.targetFileVersionId;
+		_dataFileEntryId = syncDLFileVersionDiffCacheModel.dataFileEntryId;
+		_size = syncDLFileVersionDiffCacheModel.size;
+
+		if (syncDLFileVersionDiffCacheModel.expirationDate != Long.MIN_VALUE) {
+			_expirationDate = new Date(
+				syncDLFileVersionDiffCacheModel.expirationDate);
+		}
+	}
+
+	private static class SyncDLFileVersionDiffOriginalValues {
+
+		private SyncDLFileVersionDiffOriginalValues(
+			SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl) {
+
+			_originalFileEntryId = syncDLFileVersionDiffModelImpl._fileEntryId;
+			_originalSourceFileVersionId =
+				syncDLFileVersionDiffModelImpl._sourceFileVersionId;
+			_originalTargetFileVersionId =
+				syncDLFileVersionDiffModelImpl._targetFileVersionId;
+			_originalExpirationDate =
+				syncDLFileVersionDiffModelImpl._expirationDate;
+		}
+
+		private final long _originalFileEntryId;
+		private final long _originalSourceFileVersionId;
+		private final long _originalTargetFileVersionId;
+		private final Date _originalExpirationDate;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SyncDLFileVersionDiff>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SyncDLFileVersionDiffOriginalValues
+		_syncDLFileVersionDiffOriginalValues;
 	private long _syncDLFileVersionDiffId;
 	private long _fileEntryId;
-	private long _originalFileEntryId;
-	private boolean _setOriginalFileEntryId;
 	private long _sourceFileVersionId;
-	private long _originalSourceFileVersionId;
-	private boolean _setOriginalSourceFileVersionId;
 	private long _targetFileVersionId;
-	private long _originalTargetFileVersionId;
-	private boolean _setOriginalTargetFileVersionId;
 	private long _dataFileEntryId;
 	private long _size;
 	private Date _expirationDate;
-	private Date _originalExpirationDate;
-	private long _columnBitmask;
 	private SyncDLFileVersionDiff _escapedModel;
 
 }

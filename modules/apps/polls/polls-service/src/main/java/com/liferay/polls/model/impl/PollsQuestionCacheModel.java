@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -102,75 +100,7 @@ public class PollsQuestionCacheModel
 	public PollsQuestion toEntityModel() {
 		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
 
-		if (uuid == null) {
-			pollsQuestionImpl.setUuid("");
-		}
-		else {
-			pollsQuestionImpl.setUuid(uuid);
-		}
-
-		pollsQuestionImpl.setQuestionId(questionId);
-		pollsQuestionImpl.setGroupId(groupId);
-		pollsQuestionImpl.setCompanyId(companyId);
-		pollsQuestionImpl.setUserId(userId);
-
-		if (userName == null) {
-			pollsQuestionImpl.setUserName("");
-		}
-		else {
-			pollsQuestionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setCreateDate(null);
-		}
-		else {
-			pollsQuestionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setModifiedDate(null);
-		}
-		else {
-			pollsQuestionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (title == null) {
-			pollsQuestionImpl.setTitle("");
-		}
-		else {
-			pollsQuestionImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			pollsQuestionImpl.setDescription("");
-		}
-		else {
-			pollsQuestionImpl.setDescription(description);
-		}
-
-		if (expirationDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setExpirationDate(null);
-		}
-		else {
-			pollsQuestionImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setLastPublishDate(null);
-		}
-		else {
-			pollsQuestionImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		if (lastVoteDate == Long.MIN_VALUE) {
-			pollsQuestionImpl.setLastVoteDate(null);
-		}
-		else {
-			pollsQuestionImpl.setLastVoteDate(new Date(lastVoteDate));
-		}
-
-		pollsQuestionImpl.resetOriginalValues();
+		pollsQuestionImpl.setPollsQuestionCacheModel(this);
 
 		return pollsQuestionImpl;
 	}

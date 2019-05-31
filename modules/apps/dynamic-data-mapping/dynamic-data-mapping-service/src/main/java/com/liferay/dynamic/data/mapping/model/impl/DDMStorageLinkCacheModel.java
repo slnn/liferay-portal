@@ -88,21 +88,7 @@ public class DDMStorageLinkCacheModel
 	public DDMStorageLink toEntityModel() {
 		DDMStorageLinkImpl ddmStorageLinkImpl = new DDMStorageLinkImpl();
 
-		if (uuid == null) {
-			ddmStorageLinkImpl.setUuid("");
-		}
-		else {
-			ddmStorageLinkImpl.setUuid(uuid);
-		}
-
-		ddmStorageLinkImpl.setStorageLinkId(storageLinkId);
-		ddmStorageLinkImpl.setCompanyId(companyId);
-		ddmStorageLinkImpl.setClassNameId(classNameId);
-		ddmStorageLinkImpl.setClassPK(classPK);
-		ddmStorageLinkImpl.setStructureId(structureId);
-		ddmStorageLinkImpl.setStructureVersionId(structureVersionId);
-
-		ddmStorageLinkImpl.resetOriginalValues();
+		ddmStorageLinkImpl.setDDMStorageLinkCacheModel(this);
 
 		return ddmStorageLinkImpl;
 	}

@@ -356,17 +356,21 @@ public class GadgetModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_gadgetOriginalValues == null) {
+			_gadgetOriginalValues = new GadgetOriginalValues(this);
 		}
+
+		_gadgetOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_gadgetOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_gadgetOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -388,19 +392,21 @@ public class GadgetModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_gadgetOriginalValues == null) {
+			_gadgetOriginalValues = new GadgetOriginalValues(this);
 		}
+
+		_gadgetOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_gadgetOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _gadgetOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -444,7 +450,11 @@ public class GadgetModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		if (_gadgetOriginalValues == null) {
+			_gadgetOriginalValues = new GadgetOriginalValues(this);
+		}
+
+		_gadgetOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
@@ -462,17 +472,21 @@ public class GadgetModelImpl
 
 	@Override
 	public void setUrl(String url) {
-		_columnBitmask |= URL_COLUMN_BITMASK;
-
-		if (_originalUrl == null) {
-			_originalUrl = _url;
+		if (_gadgetOriginalValues == null) {
+			_gadgetOriginalValues = new GadgetOriginalValues(this);
 		}
+
+		_gadgetOriginalValues._columnBitmask |= URL_COLUMN_BITMASK;
 
 		_url = url;
 	}
 
 	public String getOriginalUrl() {
-		return GetterUtil.getString(_originalUrl);
+		if (_gadgetOriginalValues == null) {
+			return GetterUtil.getString(_url);
+		}
+
+		return GetterUtil.getString(_gadgetOriginalValues._originalUrl);
 	}
 
 	@JSON
@@ -509,7 +523,11 @@ public class GadgetModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_gadgetOriginalValues == null) {
+			return 0;
+		}
+
+		return _gadgetOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -608,17 +626,9 @@ public class GadgetModelImpl
 	public void resetOriginalValues() {
 		GadgetModelImpl gadgetModelImpl = this;
 
-		gadgetModelImpl._originalUuid = gadgetModelImpl._uuid;
-
-		gadgetModelImpl._originalCompanyId = gadgetModelImpl._companyId;
-
-		gadgetModelImpl._setOriginalCompanyId = false;
+		gadgetModelImpl._gadgetOriginalValues = null;
 
 		gadgetModelImpl._setModifiedDate = false;
-
-		gadgetModelImpl._originalUrl = gadgetModelImpl._url;
-
-		gadgetModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -754,24 +764,80 @@ public class GadgetModelImpl
 		return sb.toString();
 	}
 
+	void setGadgetCacheModel(GadgetCacheModel gadgetCacheModel) {
+		if (gadgetCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = gadgetCacheModel.uuid;
+		}
+
+		_gadgetId = gadgetCacheModel.gadgetId;
+		_companyId = gadgetCacheModel.companyId;
+
+		if (gadgetCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(gadgetCacheModel.createDate);
+		}
+
+		if (gadgetCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(gadgetCacheModel.modifiedDate);
+		}
+
+		if (gadgetCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = gadgetCacheModel.name;
+		}
+
+		if (gadgetCacheModel.url == null) {
+			_url = "";
+		}
+		else {
+			_url = gadgetCacheModel.url;
+		}
+
+		if (gadgetCacheModel.portletCategoryNames == null) {
+			_portletCategoryNames = "";
+		}
+		else {
+			_portletCategoryNames = gadgetCacheModel.portletCategoryNames;
+		}
+
+		if (gadgetCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(gadgetCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class GadgetOriginalValues {
+
+		private GadgetOriginalValues(GadgetModelImpl gadgetModelImpl) {
+			_originalUuid = gadgetModelImpl._uuid;
+			_originalCompanyId = gadgetModelImpl._companyId;
+			_originalUrl = gadgetModelImpl._url;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final String _originalUrl;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Gadget>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private GadgetOriginalValues _gadgetOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _gadgetId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _url;
-	private String _originalUrl;
 	private String _portletCategoryNames;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private Gadget _escapedModel;
 
 }

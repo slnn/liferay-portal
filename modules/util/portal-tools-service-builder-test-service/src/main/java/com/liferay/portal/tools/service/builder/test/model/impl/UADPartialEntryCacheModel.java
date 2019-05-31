@@ -82,24 +82,7 @@ public class UADPartialEntryCacheModel
 	public UADPartialEntry toEntityModel() {
 		UADPartialEntryImpl uadPartialEntryImpl = new UADPartialEntryImpl();
 
-		uadPartialEntryImpl.setUadPartialEntryId(uadPartialEntryId);
-		uadPartialEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			uadPartialEntryImpl.setUserName("");
-		}
-		else {
-			uadPartialEntryImpl.setUserName(userName);
-		}
-
-		if (message == null) {
-			uadPartialEntryImpl.setMessage("");
-		}
-		else {
-			uadPartialEntryImpl.setMessage(message);
-		}
-
-		uadPartialEntryImpl.resetOriginalValues();
+		uadPartialEntryImpl.setUADPartialEntryCacheModel(this);
 
 		return uadPartialEntryImpl;
 	}

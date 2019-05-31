@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -122,135 +120,7 @@ public class JournalFeedCacheModel
 	public JournalFeed toEntityModel() {
 		JournalFeedImpl journalFeedImpl = new JournalFeedImpl();
 
-		if (uuid == null) {
-			journalFeedImpl.setUuid("");
-		}
-		else {
-			journalFeedImpl.setUuid(uuid);
-		}
-
-		journalFeedImpl.setId(id);
-		journalFeedImpl.setGroupId(groupId);
-		journalFeedImpl.setCompanyId(companyId);
-		journalFeedImpl.setUserId(userId);
-
-		if (userName == null) {
-			journalFeedImpl.setUserName("");
-		}
-		else {
-			journalFeedImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			journalFeedImpl.setCreateDate(null);
-		}
-		else {
-			journalFeedImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			journalFeedImpl.setModifiedDate(null);
-		}
-		else {
-			journalFeedImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (feedId == null) {
-			journalFeedImpl.setFeedId("");
-		}
-		else {
-			journalFeedImpl.setFeedId(feedId);
-		}
-
-		if (name == null) {
-			journalFeedImpl.setName("");
-		}
-		else {
-			journalFeedImpl.setName(name);
-		}
-
-		if (description == null) {
-			journalFeedImpl.setDescription("");
-		}
-		else {
-			journalFeedImpl.setDescription(description);
-		}
-
-		if (DDMStructureKey == null) {
-			journalFeedImpl.setDDMStructureKey("");
-		}
-		else {
-			journalFeedImpl.setDDMStructureKey(DDMStructureKey);
-		}
-
-		if (DDMTemplateKey == null) {
-			journalFeedImpl.setDDMTemplateKey("");
-		}
-		else {
-			journalFeedImpl.setDDMTemplateKey(DDMTemplateKey);
-		}
-
-		if (DDMRendererTemplateKey == null) {
-			journalFeedImpl.setDDMRendererTemplateKey("");
-		}
-		else {
-			journalFeedImpl.setDDMRendererTemplateKey(DDMRendererTemplateKey);
-		}
-
-		journalFeedImpl.setDelta(delta);
-
-		if (orderByCol == null) {
-			journalFeedImpl.setOrderByCol("");
-		}
-		else {
-			journalFeedImpl.setOrderByCol(orderByCol);
-		}
-
-		if (orderByType == null) {
-			journalFeedImpl.setOrderByType("");
-		}
-		else {
-			journalFeedImpl.setOrderByType(orderByType);
-		}
-
-		if (targetLayoutFriendlyUrl == null) {
-			journalFeedImpl.setTargetLayoutFriendlyUrl("");
-		}
-		else {
-			journalFeedImpl.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
-		}
-
-		if (targetPortletId == null) {
-			journalFeedImpl.setTargetPortletId("");
-		}
-		else {
-			journalFeedImpl.setTargetPortletId(targetPortletId);
-		}
-
-		if (contentField == null) {
-			journalFeedImpl.setContentField("");
-		}
-		else {
-			journalFeedImpl.setContentField(contentField);
-		}
-
-		if (feedFormat == null) {
-			journalFeedImpl.setFeedFormat("");
-		}
-		else {
-			journalFeedImpl.setFeedFormat(feedFormat);
-		}
-
-		journalFeedImpl.setFeedVersion(feedVersion);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			journalFeedImpl.setLastPublishDate(null);
-		}
-		else {
-			journalFeedImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		journalFeedImpl.resetOriginalValues();
+		journalFeedImpl.setJournalFeedCacheModel(this);
 
 		return journalFeedImpl;
 	}

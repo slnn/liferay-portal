@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -115,97 +113,7 @@ public class MBCategoryCacheModel
 	public MBCategory toEntityModel() {
 		MBCategoryImpl mbCategoryImpl = new MBCategoryImpl();
 
-		if (uuid == null) {
-			mbCategoryImpl.setUuid("");
-		}
-		else {
-			mbCategoryImpl.setUuid(uuid);
-		}
-
-		mbCategoryImpl.setCategoryId(categoryId);
-		mbCategoryImpl.setGroupId(groupId);
-		mbCategoryImpl.setCompanyId(companyId);
-		mbCategoryImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbCategoryImpl.setUserName("");
-		}
-		else {
-			mbCategoryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbCategoryImpl.setCreateDate(null);
-		}
-		else {
-			mbCategoryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbCategoryImpl.setModifiedDate(null);
-		}
-		else {
-			mbCategoryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbCategoryImpl.setParentCategoryId(parentCategoryId);
-
-		if (name == null) {
-			mbCategoryImpl.setName("");
-		}
-		else {
-			mbCategoryImpl.setName(name);
-		}
-
-		if (description == null) {
-			mbCategoryImpl.setDescription("");
-		}
-		else {
-			mbCategoryImpl.setDescription(description);
-		}
-
-		if (displayStyle == null) {
-			mbCategoryImpl.setDisplayStyle("");
-		}
-		else {
-			mbCategoryImpl.setDisplayStyle(displayStyle);
-		}
-
-		mbCategoryImpl.setThreadCount(threadCount);
-		mbCategoryImpl.setMessageCount(messageCount);
-
-		if (lastPostDate == Long.MIN_VALUE) {
-			mbCategoryImpl.setLastPostDate(null);
-		}
-		else {
-			mbCategoryImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			mbCategoryImpl.setLastPublishDate(null);
-		}
-		else {
-			mbCategoryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		mbCategoryImpl.setStatus(status);
-		mbCategoryImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			mbCategoryImpl.setStatusByUserName("");
-		}
-		else {
-			mbCategoryImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			mbCategoryImpl.setStatusDate(null);
-		}
-		else {
-			mbCategoryImpl.setStatusDate(new Date(statusDate));
-		}
-
-		mbCategoryImpl.resetOriginalValues();
+		mbCategoryImpl.setMBCategoryCacheModel(this);
 
 		return mbCategoryImpl;
 	}

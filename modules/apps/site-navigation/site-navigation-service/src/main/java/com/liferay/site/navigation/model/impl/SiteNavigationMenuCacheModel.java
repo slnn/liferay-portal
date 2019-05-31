@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,58 +101,7 @@ public class SiteNavigationMenuCacheModel
 		SiteNavigationMenuImpl siteNavigationMenuImpl =
 			new SiteNavigationMenuImpl();
 
-		if (uuid == null) {
-			siteNavigationMenuImpl.setUuid("");
-		}
-		else {
-			siteNavigationMenuImpl.setUuid(uuid);
-		}
-
-		siteNavigationMenuImpl.setSiteNavigationMenuId(siteNavigationMenuId);
-		siteNavigationMenuImpl.setGroupId(groupId);
-		siteNavigationMenuImpl.setCompanyId(companyId);
-		siteNavigationMenuImpl.setUserId(userId);
-
-		if (userName == null) {
-			siteNavigationMenuImpl.setUserName("");
-		}
-		else {
-			siteNavigationMenuImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			siteNavigationMenuImpl.setCreateDate(null);
-		}
-		else {
-			siteNavigationMenuImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			siteNavigationMenuImpl.setModifiedDate(null);
-		}
-		else {
-			siteNavigationMenuImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			siteNavigationMenuImpl.setName("");
-		}
-		else {
-			siteNavigationMenuImpl.setName(name);
-		}
-
-		siteNavigationMenuImpl.setType(type);
-		siteNavigationMenuImpl.setAuto(auto);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			siteNavigationMenuImpl.setLastPublishDate(null);
-		}
-		else {
-			siteNavigationMenuImpl.setLastPublishDate(
-				new Date(lastPublishDate));
-		}
-
-		siteNavigationMenuImpl.resetOriginalValues();
+		siteNavigationMenuImpl.setSiteNavigationMenuCacheModel(this);
 
 		return siteNavigationMenuImpl;
 	}

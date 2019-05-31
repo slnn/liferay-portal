@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -85,20 +83,7 @@ public class ExpandoRowCacheModel
 	public ExpandoRow toEntityModel() {
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
-		expandoRowImpl.setRowId(rowId);
-		expandoRowImpl.setCompanyId(companyId);
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			expandoRowImpl.setModifiedDate(null);
-		}
-		else {
-			expandoRowImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		expandoRowImpl.setTableId(tableId);
-		expandoRowImpl.setClassPK(classPK);
-
-		expandoRowImpl.resetOriginalValues();
+		expandoRowImpl.setExpandoRowCacheModel(this);
 
 		return expandoRowImpl;
 	}

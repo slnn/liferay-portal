@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -114,64 +112,7 @@ public class LockCacheModel
 	public Lock toEntityModel() {
 		LockImpl lockImpl = new LockImpl();
 
-		lockImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			lockImpl.setUuid("");
-		}
-		else {
-			lockImpl.setUuid(uuid);
-		}
-
-		lockImpl.setLockId(lockId);
-		lockImpl.setCompanyId(companyId);
-		lockImpl.setUserId(userId);
-
-		if (userName == null) {
-			lockImpl.setUserName("");
-		}
-		else {
-			lockImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			lockImpl.setCreateDate(null);
-		}
-		else {
-			lockImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (className == null) {
-			lockImpl.setClassName("");
-		}
-		else {
-			lockImpl.setClassName(className);
-		}
-
-		if (key == null) {
-			lockImpl.setKey("");
-		}
-		else {
-			lockImpl.setKey(key);
-		}
-
-		if (owner == null) {
-			lockImpl.setOwner("");
-		}
-		else {
-			lockImpl.setOwner(owner);
-		}
-
-		lockImpl.setInheritable(inheritable);
-
-		if (expirationDate == Long.MIN_VALUE) {
-			lockImpl.setExpirationDate(null);
-		}
-		else {
-			lockImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		lockImpl.resetOriginalValues();
+		lockImpl.setLockCacheModel(this);
 
 		return lockImpl;
 	}

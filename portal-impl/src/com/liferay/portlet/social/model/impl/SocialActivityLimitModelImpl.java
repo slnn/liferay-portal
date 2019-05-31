@@ -349,19 +349,23 @@ public class SocialActivityLimitModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_socialActivityLimitOriginalValues == null) {
+			_socialActivityLimitOriginalValues =
+				new SocialActivityLimitOriginalValues(this);
 		}
+
+		_socialActivityLimitOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_socialActivityLimitOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _socialActivityLimitOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -381,13 +385,13 @@ public class SocialActivityLimitModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_socialActivityLimitOriginalValues == null) {
+			_socialActivityLimitOriginalValues =
+				new SocialActivityLimitOriginalValues(this);
 		}
+
+		_socialActivityLimitOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -409,7 +413,11 @@ public class SocialActivityLimitModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_socialActivityLimitOriginalValues == null) {
+			return _userId;
+		}
+
+		return _socialActivityLimitOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -439,19 +447,23 @@ public class SocialActivityLimitModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_socialActivityLimitOriginalValues == null) {
+			_socialActivityLimitOriginalValues =
+				new SocialActivityLimitOriginalValues(this);
 		}
+
+		_socialActivityLimitOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_socialActivityLimitOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _socialActivityLimitOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -461,19 +473,23 @@ public class SocialActivityLimitModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_socialActivityLimitOriginalValues == null) {
+			_socialActivityLimitOriginalValues =
+				new SocialActivityLimitOriginalValues(this);
 		}
+
+		_socialActivityLimitOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_socialActivityLimitOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _socialActivityLimitOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -483,19 +499,23 @@ public class SocialActivityLimitModelImpl
 
 	@Override
 	public void setActivityType(int activityType) {
-		_columnBitmask |= ACTIVITYTYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalActivityType) {
-			_setOriginalActivityType = true;
-
-			_originalActivityType = _activityType;
+		if (_socialActivityLimitOriginalValues == null) {
+			_socialActivityLimitOriginalValues =
+				new SocialActivityLimitOriginalValues(this);
 		}
+
+		_socialActivityLimitOriginalValues._columnBitmask |=
+			ACTIVITYTYPE_COLUMN_BITMASK;
 
 		_activityType = activityType;
 	}
 
 	public int getOriginalActivityType() {
-		return _originalActivityType;
+		if (_socialActivityLimitOriginalValues == null) {
+			return _activityType;
+		}
+
+		return _socialActivityLimitOriginalValues._originalActivityType;
 	}
 
 	@Override
@@ -510,17 +530,24 @@ public class SocialActivityLimitModelImpl
 
 	@Override
 	public void setActivityCounterName(String activityCounterName) {
-		_columnBitmask |= ACTIVITYCOUNTERNAME_COLUMN_BITMASK;
-
-		if (_originalActivityCounterName == null) {
-			_originalActivityCounterName = _activityCounterName;
+		if (_socialActivityLimitOriginalValues == null) {
+			_socialActivityLimitOriginalValues =
+				new SocialActivityLimitOriginalValues(this);
 		}
+
+		_socialActivityLimitOriginalValues._columnBitmask |=
+			ACTIVITYCOUNTERNAME_COLUMN_BITMASK;
 
 		_activityCounterName = activityCounterName;
 	}
 
 	public String getOriginalActivityCounterName() {
-		return GetterUtil.getString(_originalActivityCounterName);
+		if (_socialActivityLimitOriginalValues == null) {
+			return GetterUtil.getString(_activityCounterName);
+		}
+
+		return GetterUtil.getString(
+			_socialActivityLimitOriginalValues._originalActivityCounterName);
 	}
 
 	@Override
@@ -539,7 +566,11 @@ public class SocialActivityLimitModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_socialActivityLimitOriginalValues == null) {
+			return 0;
+		}
+
+		return _socialActivityLimitOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -643,35 +674,7 @@ public class SocialActivityLimitModelImpl
 	public void resetOriginalValues() {
 		SocialActivityLimitModelImpl socialActivityLimitModelImpl = this;
 
-		socialActivityLimitModelImpl._originalGroupId =
-			socialActivityLimitModelImpl._groupId;
-
-		socialActivityLimitModelImpl._setOriginalGroupId = false;
-
-		socialActivityLimitModelImpl._originalUserId =
-			socialActivityLimitModelImpl._userId;
-
-		socialActivityLimitModelImpl._setOriginalUserId = false;
-
-		socialActivityLimitModelImpl._originalClassNameId =
-			socialActivityLimitModelImpl._classNameId;
-
-		socialActivityLimitModelImpl._setOriginalClassNameId = false;
-
-		socialActivityLimitModelImpl._originalClassPK =
-			socialActivityLimitModelImpl._classPK;
-
-		socialActivityLimitModelImpl._setOriginalClassPK = false;
-
-		socialActivityLimitModelImpl._originalActivityType =
-			socialActivityLimitModelImpl._activityType;
-
-		socialActivityLimitModelImpl._setOriginalActivityType = false;
-
-		socialActivityLimitModelImpl._originalActivityCounterName =
-			socialActivityLimitModelImpl._activityCounterName;
-
-		socialActivityLimitModelImpl._columnBitmask = 0;
+		socialActivityLimitModelImpl._socialActivityLimitOriginalValues = null;
 	}
 
 	@Override
@@ -779,30 +782,71 @@ public class SocialActivityLimitModelImpl
 		return sb.toString();
 	}
 
+	void setSocialActivityLimitCacheModel(
+		SocialActivityLimitCacheModel socialActivityLimitCacheModel) {
+
+		_activityLimitId = socialActivityLimitCacheModel.activityLimitId;
+		_groupId = socialActivityLimitCacheModel.groupId;
+		_companyId = socialActivityLimitCacheModel.companyId;
+		_userId = socialActivityLimitCacheModel.userId;
+		_classNameId = socialActivityLimitCacheModel.classNameId;
+		_classPK = socialActivityLimitCacheModel.classPK;
+		_activityType = socialActivityLimitCacheModel.activityType;
+
+		if (socialActivityLimitCacheModel.activityCounterName == null) {
+			_activityCounterName = "";
+		}
+		else {
+			_activityCounterName =
+				socialActivityLimitCacheModel.activityCounterName;
+		}
+
+		if (socialActivityLimitCacheModel.value == null) {
+			_value = "";
+		}
+		else {
+			_value = socialActivityLimitCacheModel.value;
+		}
+	}
+
+	private static class SocialActivityLimitOriginalValues {
+
+		private SocialActivityLimitOriginalValues(
+			SocialActivityLimitModelImpl socialActivityLimitModelImpl) {
+
+			_originalGroupId = socialActivityLimitModelImpl._groupId;
+			_originalUserId = socialActivityLimitModelImpl._userId;
+			_originalClassNameId = socialActivityLimitModelImpl._classNameId;
+			_originalClassPK = socialActivityLimitModelImpl._classPK;
+			_originalActivityType = socialActivityLimitModelImpl._activityType;
+			_originalActivityCounterName =
+				socialActivityLimitModelImpl._activityCounterName;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final int _originalActivityType;
+		private final String _originalActivityCounterName;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SocialActivityLimit>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SocialActivityLimitOriginalValues
+		_socialActivityLimitOriginalValues;
 	private long _activityLimitId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private int _activityType;
-	private int _originalActivityType;
-	private boolean _setOriginalActivityType;
 	private String _activityCounterName;
-	private String _originalActivityCounterName;
 	private String _value;
-	private long _columnBitmask;
 	private SocialActivityLimit _escapedModel;
 
 }

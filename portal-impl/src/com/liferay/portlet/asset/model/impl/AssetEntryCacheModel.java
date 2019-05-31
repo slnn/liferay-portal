@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -129,122 +127,7 @@ public class AssetEntryCacheModel
 	public AssetEntry toEntityModel() {
 		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
 
-		assetEntryImpl.setEntryId(entryId);
-		assetEntryImpl.setGroupId(groupId);
-		assetEntryImpl.setCompanyId(companyId);
-		assetEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetEntryImpl.setUserName("");
-		}
-		else {
-			assetEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetEntryImpl.setCreateDate(null);
-		}
-		else {
-			assetEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetEntryImpl.setModifiedDate(null);
-		}
-		else {
-			assetEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetEntryImpl.setClassNameId(classNameId);
-		assetEntryImpl.setClassPK(classPK);
-
-		if (classUuid == null) {
-			assetEntryImpl.setClassUuid("");
-		}
-		else {
-			assetEntryImpl.setClassUuid(classUuid);
-		}
-
-		assetEntryImpl.setClassTypeId(classTypeId);
-		assetEntryImpl.setListable(listable);
-		assetEntryImpl.setVisible(visible);
-
-		if (startDate == Long.MIN_VALUE) {
-			assetEntryImpl.setStartDate(null);
-		}
-		else {
-			assetEntryImpl.setStartDate(new Date(startDate));
-		}
-
-		if (endDate == Long.MIN_VALUE) {
-			assetEntryImpl.setEndDate(null);
-		}
-		else {
-			assetEntryImpl.setEndDate(new Date(endDate));
-		}
-
-		if (publishDate == Long.MIN_VALUE) {
-			assetEntryImpl.setPublishDate(null);
-		}
-		else {
-			assetEntryImpl.setPublishDate(new Date(publishDate));
-		}
-
-		if (expirationDate == Long.MIN_VALUE) {
-			assetEntryImpl.setExpirationDate(null);
-		}
-		else {
-			assetEntryImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		if (mimeType == null) {
-			assetEntryImpl.setMimeType("");
-		}
-		else {
-			assetEntryImpl.setMimeType(mimeType);
-		}
-
-		if (title == null) {
-			assetEntryImpl.setTitle("");
-		}
-		else {
-			assetEntryImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			assetEntryImpl.setDescription("");
-		}
-		else {
-			assetEntryImpl.setDescription(description);
-		}
-
-		if (summary == null) {
-			assetEntryImpl.setSummary("");
-		}
-		else {
-			assetEntryImpl.setSummary(summary);
-		}
-
-		if (url == null) {
-			assetEntryImpl.setUrl("");
-		}
-		else {
-			assetEntryImpl.setUrl(url);
-		}
-
-		if (layoutUuid == null) {
-			assetEntryImpl.setLayoutUuid("");
-		}
-		else {
-			assetEntryImpl.setLayoutUuid(layoutUuid);
-		}
-
-		assetEntryImpl.setHeight(height);
-		assetEntryImpl.setWidth(width);
-		assetEntryImpl.setPriority(priority);
-		assetEntryImpl.setViewCount(viewCount);
-
-		assetEntryImpl.resetOriginalValues();
+		assetEntryImpl.setAssetEntryCacheModel(this);
 
 		return assetEntryImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,78 +101,7 @@ public class OAuthTokenCacheModel
 	public OAuthToken toEntityModel() {
 		OAuthTokenImpl oAuthTokenImpl = new OAuthTokenImpl();
 
-		oAuthTokenImpl.setOAuthTokenId(oAuthTokenId);
-		oAuthTokenImpl.setCompanyId(companyId);
-		oAuthTokenImpl.setUserId(userId);
-
-		if (userName == null) {
-			oAuthTokenImpl.setUserName("");
-		}
-		else {
-			oAuthTokenImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			oAuthTokenImpl.setCreateDate(null);
-		}
-		else {
-			oAuthTokenImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			oAuthTokenImpl.setModifiedDate(null);
-		}
-		else {
-			oAuthTokenImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (gadgetKey == null) {
-			oAuthTokenImpl.setGadgetKey("");
-		}
-		else {
-			oAuthTokenImpl.setGadgetKey(gadgetKey);
-		}
-
-		if (serviceName == null) {
-			oAuthTokenImpl.setServiceName("");
-		}
-		else {
-			oAuthTokenImpl.setServiceName(serviceName);
-		}
-
-		oAuthTokenImpl.setModuleId(moduleId);
-
-		if (accessToken == null) {
-			oAuthTokenImpl.setAccessToken("");
-		}
-		else {
-			oAuthTokenImpl.setAccessToken(accessToken);
-		}
-
-		if (tokenName == null) {
-			oAuthTokenImpl.setTokenName("");
-		}
-		else {
-			oAuthTokenImpl.setTokenName(tokenName);
-		}
-
-		if (tokenSecret == null) {
-			oAuthTokenImpl.setTokenSecret("");
-		}
-		else {
-			oAuthTokenImpl.setTokenSecret(tokenSecret);
-		}
-
-		if (sessionHandle == null) {
-			oAuthTokenImpl.setSessionHandle("");
-		}
-		else {
-			oAuthTokenImpl.setSessionHandle(sessionHandle);
-		}
-
-		oAuthTokenImpl.setExpiration(expiration);
-
-		oAuthTokenImpl.resetOriginalValues();
+		oAuthTokenImpl.setOAuthTokenCacheModel(this);
 
 		return oAuthTokenImpl;
 	}

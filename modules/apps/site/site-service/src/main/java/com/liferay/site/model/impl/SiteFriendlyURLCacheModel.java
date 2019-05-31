@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -98,62 +96,7 @@ public class SiteFriendlyURLCacheModel
 	public SiteFriendlyURL toEntityModel() {
 		SiteFriendlyURLImpl siteFriendlyURLImpl = new SiteFriendlyURLImpl();
 
-		if (uuid == null) {
-			siteFriendlyURLImpl.setUuid("");
-		}
-		else {
-			siteFriendlyURLImpl.setUuid(uuid);
-		}
-
-		siteFriendlyURLImpl.setSiteFriendlyURLId(siteFriendlyURLId);
-		siteFriendlyURLImpl.setCompanyId(companyId);
-		siteFriendlyURLImpl.setUserId(userId);
-
-		if (userName == null) {
-			siteFriendlyURLImpl.setUserName("");
-		}
-		else {
-			siteFriendlyURLImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			siteFriendlyURLImpl.setCreateDate(null);
-		}
-		else {
-			siteFriendlyURLImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			siteFriendlyURLImpl.setModifiedDate(null);
-		}
-		else {
-			siteFriendlyURLImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		siteFriendlyURLImpl.setGroupId(groupId);
-
-		if (friendlyURL == null) {
-			siteFriendlyURLImpl.setFriendlyURL("");
-		}
-		else {
-			siteFriendlyURLImpl.setFriendlyURL(friendlyURL);
-		}
-
-		if (languageId == null) {
-			siteFriendlyURLImpl.setLanguageId("");
-		}
-		else {
-			siteFriendlyURLImpl.setLanguageId(languageId);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			siteFriendlyURLImpl.setLastPublishDate(null);
-		}
-		else {
-			siteFriendlyURLImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		siteFriendlyURLImpl.resetOriginalValues();
+		siteFriendlyURLImpl.setSiteFriendlyURLCacheModel(this);
 
 		return siteFriendlyURLImpl;
 	}

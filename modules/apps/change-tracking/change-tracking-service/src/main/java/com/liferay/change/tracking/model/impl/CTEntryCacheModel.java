@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,40 +98,7 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 	public CTEntry toEntityModel() {
 		CTEntryImpl ctEntryImpl = new CTEntryImpl();
 
-		ctEntryImpl.setCtEntryId(ctEntryId);
-		ctEntryImpl.setCompanyId(companyId);
-		ctEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			ctEntryImpl.setUserName("");
-		}
-		else {
-			ctEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ctEntryImpl.setCreateDate(null);
-		}
-		else {
-			ctEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ctEntryImpl.setModifiedDate(null);
-		}
-		else {
-			ctEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ctEntryImpl.setOriginalCTCollectionId(originalCTCollectionId);
-		ctEntryImpl.setModelClassNameId(modelClassNameId);
-		ctEntryImpl.setModelClassPK(modelClassPK);
-		ctEntryImpl.setModelResourcePrimKey(modelResourcePrimKey);
-		ctEntryImpl.setChangeType(changeType);
-		ctEntryImpl.setCollision(collision);
-		ctEntryImpl.setStatus(status);
-
-		ctEntryImpl.resetOriginalValues();
+		ctEntryImpl.setCTEntryCacheModel(this);
 
 		return ctEntryImpl;
 	}

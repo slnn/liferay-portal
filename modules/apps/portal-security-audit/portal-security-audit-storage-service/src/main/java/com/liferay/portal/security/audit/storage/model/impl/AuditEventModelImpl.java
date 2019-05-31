@@ -408,19 +408,21 @@ public class AuditEventModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_auditEventOriginalValues == null) {
+			_auditEventOriginalValues = new AuditEventOriginalValues(this);
 		}
+
+		_auditEventOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_auditEventOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _auditEventOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -474,7 +476,11 @@ public class AuditEventModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_auditEventOriginalValues == null) {
+			_auditEventOriginalValues = new AuditEventOriginalValues(this);
+		}
+
+		_auditEventOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -635,7 +641,11 @@ public class AuditEventModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_auditEventOriginalValues == null) {
+			return 0;
+		}
+
+		return _auditEventOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -742,11 +752,7 @@ public class AuditEventModelImpl
 	public void resetOriginalValues() {
 		AuditEventModelImpl auditEventModelImpl = this;
 
-		auditEventModelImpl._originalCompanyId = auditEventModelImpl._companyId;
-
-		auditEventModelImpl._setOriginalCompanyId = false;
-
-		auditEventModelImpl._columnBitmask = 0;
+		auditEventModelImpl._auditEventOriginalValues = null;
 	}
 
 	@Override
@@ -916,13 +922,107 @@ public class AuditEventModelImpl
 		return sb.toString();
 	}
 
+	void setAuditEventCacheModel(AuditEventCacheModel auditEventCacheModel) {
+		_auditEventId = auditEventCacheModel.auditEventId;
+		_companyId = auditEventCacheModel.companyId;
+		_userId = auditEventCacheModel.userId;
+
+		if (auditEventCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = auditEventCacheModel.userName;
+		}
+
+		if (auditEventCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(auditEventCacheModel.createDate);
+		}
+
+		if (auditEventCacheModel.eventType == null) {
+			_eventType = "";
+		}
+		else {
+			_eventType = auditEventCacheModel.eventType;
+		}
+
+		if (auditEventCacheModel.className == null) {
+			_className = "";
+		}
+		else {
+			_className = auditEventCacheModel.className;
+		}
+
+		if (auditEventCacheModel.classPK == null) {
+			_classPK = "";
+		}
+		else {
+			_classPK = auditEventCacheModel.classPK;
+		}
+
+		if (auditEventCacheModel.message == null) {
+			_message = "";
+		}
+		else {
+			_message = auditEventCacheModel.message;
+		}
+
+		if (auditEventCacheModel.clientHost == null) {
+			_clientHost = "";
+		}
+		else {
+			_clientHost = auditEventCacheModel.clientHost;
+		}
+
+		if (auditEventCacheModel.clientIP == null) {
+			_clientIP = "";
+		}
+		else {
+			_clientIP = auditEventCacheModel.clientIP;
+		}
+
+		if (auditEventCacheModel.serverName == null) {
+			_serverName = "";
+		}
+		else {
+			_serverName = auditEventCacheModel.serverName;
+		}
+
+		_serverPort = auditEventCacheModel.serverPort;
+
+		if (auditEventCacheModel.sessionID == null) {
+			_sessionID = "";
+		}
+		else {
+			_sessionID = auditEventCacheModel.sessionID;
+		}
+
+		if (auditEventCacheModel.additionalInfo == null) {
+			_additionalInfo = "";
+		}
+		else {
+			_additionalInfo = auditEventCacheModel.additionalInfo;
+		}
+	}
+
+	private static class AuditEventOriginalValues {
+
+		private AuditEventOriginalValues(
+			AuditEventModelImpl auditEventModelImpl) {
+
+			_originalCompanyId = auditEventModelImpl._companyId;
+		}
+
+		private final long _originalCompanyId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AuditEvent>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AuditEventOriginalValues _auditEventOriginalValues;
 	private long _auditEventId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -936,7 +1036,6 @@ public class AuditEventModelImpl
 	private int _serverPort;
 	private String _sessionID;
 	private String _additionalInfo;
-	private long _columnBitmask;
 	private AuditEvent _escapedModel;
 
 }

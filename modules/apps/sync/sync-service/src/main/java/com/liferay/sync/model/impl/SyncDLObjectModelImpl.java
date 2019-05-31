@@ -580,19 +580,21 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalModifiedTime) {
-			_setOriginalModifiedTime = true;
-
-			_originalModifiedTime = _modifiedTime;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask = -1L;
 
 		_modifiedTime = modifiedTime;
 	}
 
 	public long getOriginalModifiedTime() {
-		return _originalModifiedTime;
+		if (_syncDLObjectOriginalValues == null) {
+			return _modifiedTime;
+		}
+
+		return _syncDLObjectOriginalValues._originalModifiedTime;
 	}
 
 	@JSON
@@ -603,19 +605,21 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalRepositoryId) {
-			_setOriginalRepositoryId = true;
-
-			_originalRepositoryId = _repositoryId;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask = -1L;
 
 		_repositoryId = repositoryId;
 	}
 
 	public long getOriginalRepositoryId() {
-		return _originalRepositoryId;
+		if (_syncDLObjectOriginalValues == null) {
+			return _repositoryId;
+		}
+
+		return _syncDLObjectOriginalValues._originalRepositoryId;
 	}
 
 	@JSON
@@ -626,19 +630,22 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_columnBitmask |= PARENTFOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentFolderId) {
-			_setOriginalParentFolderId = true;
-
-			_originalParentFolderId = _parentFolderId;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask |=
+			PARENTFOLDERID_COLUMN_BITMASK;
 
 		_parentFolderId = parentFolderId;
 	}
 
 	public long getOriginalParentFolderId() {
-		return _originalParentFolderId;
+		if (_syncDLObjectOriginalValues == null) {
+			return _parentFolderId;
+		}
+
+		return _syncDLObjectOriginalValues._originalParentFolderId;
 	}
 
 	@JSON(include = false)
@@ -654,17 +661,22 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setTreePath(String treePath) {
-		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
-
-		if (_originalTreePath == null) {
-			_originalTreePath = _treePath;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask |= TREEPATH_COLUMN_BITMASK;
 
 		_treePath = treePath;
 	}
 
 	public String getOriginalTreePath() {
-		return GetterUtil.getString(_originalTreePath);
+		if (_syncDLObjectOriginalValues == null) {
+			return GetterUtil.getString(_treePath);
+		}
+
+		return GetterUtil.getString(
+			_syncDLObjectOriginalValues._originalTreePath);
 	}
 
 	@JSON
@@ -776,17 +788,22 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (_originalVersion == null) {
-			_originalVersion = _version;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask |= VERSION_COLUMN_BITMASK;
 
 		_version = version;
 	}
 
 	public String getOriginalVersion() {
-		return GetterUtil.getString(_originalVersion);
+		if (_syncDLObjectOriginalValues == null) {
+			return GetterUtil.getString(_version);
+		}
+
+		return GetterUtil.getString(
+			_syncDLObjectOriginalValues._originalVersion);
 	}
 
 	@JSON
@@ -840,17 +857,21 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setEvent(String event) {
-		_columnBitmask |= EVENT_COLUMN_BITMASK;
-
-		if (_originalEvent == null) {
-			_originalEvent = _event;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask |= EVENT_COLUMN_BITMASK;
 
 		_event = event;
 	}
 
 	public String getOriginalEvent() {
-		return GetterUtil.getString(_originalEvent);
+		if (_syncDLObjectOriginalValues == null) {
+			return GetterUtil.getString(_event);
+		}
+
+		return GetterUtil.getString(_syncDLObjectOriginalValues._originalEvent);
 	}
 
 	@JSON
@@ -947,17 +968,21 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		if (_syncDLObjectOriginalValues == null) {
+			return GetterUtil.getString(_type);
+		}
+
+		return GetterUtil.getString(_syncDLObjectOriginalValues._originalType);
 	}
 
 	@JSON
@@ -968,19 +993,21 @@ public class SyncDLObjectModelImpl
 
 	@Override
 	public void setTypePK(long typePK) {
-		_columnBitmask |= TYPEPK_COLUMN_BITMASK;
-
-		if (!_setOriginalTypePK) {
-			_setOriginalTypePK = true;
-
-			_originalTypePK = _typePK;
+		if (_syncDLObjectOriginalValues == null) {
+			_syncDLObjectOriginalValues = new SyncDLObjectOriginalValues(this);
 		}
+
+		_syncDLObjectOriginalValues._columnBitmask |= TYPEPK_COLUMN_BITMASK;
 
 		_typePK = typePK;
 	}
 
 	public long getOriginalTypePK() {
-		return _originalTypePK;
+		if (_syncDLObjectOriginalValues == null) {
+			return _typePK;
+		}
+
+		return _syncDLObjectOriginalValues._originalTypePK;
 	}
 
 	@JSON
@@ -1000,7 +1027,11 @@ public class SyncDLObjectModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_syncDLObjectOriginalValues == null) {
+			return 0;
+		}
+
+		return _syncDLObjectOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1141,35 +1172,7 @@ public class SyncDLObjectModelImpl
 	public void resetOriginalValues() {
 		SyncDLObjectModelImpl syncDLObjectModelImpl = this;
 
-		syncDLObjectModelImpl._originalModifiedTime =
-			syncDLObjectModelImpl._modifiedTime;
-
-		syncDLObjectModelImpl._setOriginalModifiedTime = false;
-
-		syncDLObjectModelImpl._originalRepositoryId =
-			syncDLObjectModelImpl._repositoryId;
-
-		syncDLObjectModelImpl._setOriginalRepositoryId = false;
-
-		syncDLObjectModelImpl._originalParentFolderId =
-			syncDLObjectModelImpl._parentFolderId;
-
-		syncDLObjectModelImpl._setOriginalParentFolderId = false;
-
-		syncDLObjectModelImpl._originalTreePath =
-			syncDLObjectModelImpl._treePath;
-
-		syncDLObjectModelImpl._originalVersion = syncDLObjectModelImpl._version;
-
-		syncDLObjectModelImpl._originalEvent = syncDLObjectModelImpl._event;
-
-		syncDLObjectModelImpl._originalType = syncDLObjectModelImpl._type;
-
-		syncDLObjectModelImpl._originalTypePK = syncDLObjectModelImpl._typePK;
-
-		syncDLObjectModelImpl._setOriginalTypePK = false;
-
-		syncDLObjectModelImpl._columnBitmask = 0;
+		syncDLObjectModelImpl._syncDLObjectOriginalValues = null;
 	}
 
 	@Override
@@ -1405,25 +1408,181 @@ public class SyncDLObjectModelImpl
 		return sb.toString();
 	}
 
+	void setSyncDLObjectCacheModel(
+		SyncDLObjectCacheModel syncDLObjectCacheModel) {
+
+		_syncDLObjectId = syncDLObjectCacheModel.syncDLObjectId;
+		_companyId = syncDLObjectCacheModel.companyId;
+		_userId = syncDLObjectCacheModel.userId;
+
+		if (syncDLObjectCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = syncDLObjectCacheModel.userName;
+		}
+
+		_createTime = syncDLObjectCacheModel.createTime;
+		_modifiedTime = syncDLObjectCacheModel.modifiedTime;
+		_repositoryId = syncDLObjectCacheModel.repositoryId;
+		_parentFolderId = syncDLObjectCacheModel.parentFolderId;
+
+		if (syncDLObjectCacheModel.treePath == null) {
+			_treePath = "";
+		}
+		else {
+			_treePath = syncDLObjectCacheModel.treePath;
+		}
+
+		if (syncDLObjectCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = syncDLObjectCacheModel.name;
+		}
+
+		if (syncDLObjectCacheModel.extension == null) {
+			_extension = "";
+		}
+		else {
+			_extension = syncDLObjectCacheModel.extension;
+		}
+
+		if (syncDLObjectCacheModel.mimeType == null) {
+			_mimeType = "";
+		}
+		else {
+			_mimeType = syncDLObjectCacheModel.mimeType;
+		}
+
+		if (syncDLObjectCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = syncDLObjectCacheModel.description;
+		}
+
+		if (syncDLObjectCacheModel.changeLog == null) {
+			_changeLog = "";
+		}
+		else {
+			_changeLog = syncDLObjectCacheModel.changeLog;
+		}
+
+		if (syncDLObjectCacheModel.extraSettings == null) {
+			_extraSettings = "";
+		}
+		else {
+			_extraSettings = syncDLObjectCacheModel.extraSettings;
+		}
+
+		if (syncDLObjectCacheModel.version == null) {
+			_version = "";
+		}
+		else {
+			_version = syncDLObjectCacheModel.version;
+		}
+
+		_versionId = syncDLObjectCacheModel.versionId;
+		_size = syncDLObjectCacheModel.size;
+
+		if (syncDLObjectCacheModel.checksum == null) {
+			_checksum = "";
+		}
+		else {
+			_checksum = syncDLObjectCacheModel.checksum;
+		}
+
+		if (syncDLObjectCacheModel.event == null) {
+			_event = "";
+		}
+		else {
+			_event = syncDLObjectCacheModel.event;
+		}
+
+		if (syncDLObjectCacheModel.lanTokenKey == null) {
+			_lanTokenKey = "";
+		}
+		else {
+			_lanTokenKey = syncDLObjectCacheModel.lanTokenKey;
+		}
+
+		if (syncDLObjectCacheModel.lastPermissionChangeDate != Long.MIN_VALUE) {
+			_lastPermissionChangeDate = new Date(
+				syncDLObjectCacheModel.lastPermissionChangeDate);
+		}
+
+		if (syncDLObjectCacheModel.lockExpirationDate != Long.MIN_VALUE) {
+			_lockExpirationDate = new Date(
+				syncDLObjectCacheModel.lockExpirationDate);
+		}
+
+		_lockUserId = syncDLObjectCacheModel.lockUserId;
+
+		if (syncDLObjectCacheModel.lockUserName == null) {
+			_lockUserName = "";
+		}
+		else {
+			_lockUserName = syncDLObjectCacheModel.lockUserName;
+		}
+
+		if (syncDLObjectCacheModel.type == null) {
+			_type = "";
+		}
+		else {
+			_type = syncDLObjectCacheModel.type;
+		}
+
+		_typePK = syncDLObjectCacheModel.typePK;
+
+		if (syncDLObjectCacheModel.typeUuid == null) {
+			_typeUuid = "";
+		}
+		else {
+			_typeUuid = syncDLObjectCacheModel.typeUuid;
+		}
+	}
+
+	private static class SyncDLObjectOriginalValues {
+
+		private SyncDLObjectOriginalValues(
+			SyncDLObjectModelImpl syncDLObjectModelImpl) {
+
+			_originalModifiedTime = syncDLObjectModelImpl._modifiedTime;
+			_originalRepositoryId = syncDLObjectModelImpl._repositoryId;
+			_originalParentFolderId = syncDLObjectModelImpl._parentFolderId;
+			_originalTreePath = syncDLObjectModelImpl._treePath;
+			_originalVersion = syncDLObjectModelImpl._version;
+			_originalEvent = syncDLObjectModelImpl._event;
+			_originalType = syncDLObjectModelImpl._type;
+			_originalTypePK = syncDLObjectModelImpl._typePK;
+		}
+
+		private final long _originalModifiedTime;
+		private final long _originalRepositoryId;
+		private final long _originalParentFolderId;
+		private final String _originalTreePath;
+		private final String _originalVersion;
+		private final String _originalEvent;
+		private final String _originalType;
+		private final long _originalTypePK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, SyncDLObject>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private SyncDLObjectOriginalValues _syncDLObjectOriginalValues;
 	private long _syncDLObjectId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private long _createTime;
 	private long _modifiedTime;
-	private long _originalModifiedTime;
-	private boolean _setOriginalModifiedTime;
 	private long _repositoryId;
-	private long _originalRepositoryId;
-	private boolean _setOriginalRepositoryId;
 	private long _parentFolderId;
-	private long _originalParentFolderId;
-	private boolean _setOriginalParentFolderId;
 	private String _treePath;
-	private String _originalTreePath;
 	private String _name;
 	private String _extension;
 	private String _mimeType;
@@ -1431,24 +1590,18 @@ public class SyncDLObjectModelImpl
 	private String _changeLog;
 	private String _extraSettings;
 	private String _version;
-	private String _originalVersion;
 	private long _versionId;
 	private long _size;
 	private String _checksum;
 	private String _event;
-	private String _originalEvent;
 	private String _lanTokenKey;
 	private Date _lastPermissionChangeDate;
 	private Date _lockExpirationDate;
 	private long _lockUserId;
 	private String _lockUserName;
 	private String _type;
-	private String _originalType;
 	private long _typePK;
-	private long _originalTypePK;
-	private boolean _setOriginalTypePK;
 	private String _typeUuid;
-	private long _columnBitmask;
 	private SyncDLObject _escapedModel;
 
 }

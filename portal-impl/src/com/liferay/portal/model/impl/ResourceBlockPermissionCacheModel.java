@@ -105,15 +105,7 @@ public class ResourceBlockPermissionCacheModel
 		ResourceBlockPermissionImpl resourceBlockPermissionImpl =
 			new ResourceBlockPermissionImpl();
 
-		resourceBlockPermissionImpl.setMvccVersion(mvccVersion);
-		resourceBlockPermissionImpl.setResourceBlockPermissionId(
-			resourceBlockPermissionId);
-		resourceBlockPermissionImpl.setCompanyId(companyId);
-		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockId);
-		resourceBlockPermissionImpl.setRoleId(roleId);
-		resourceBlockPermissionImpl.setActionIds(actionIds);
-
-		resourceBlockPermissionImpl.resetOriginalValues();
+		resourceBlockPermissionImpl.setResourceBlockPermissionCacheModel(this);
 
 		return resourceBlockPermissionImpl;
 	}

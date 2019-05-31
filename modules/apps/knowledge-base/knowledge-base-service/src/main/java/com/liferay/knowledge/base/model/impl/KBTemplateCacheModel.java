@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,61 +95,7 @@ public class KBTemplateCacheModel
 	public KBTemplate toEntityModel() {
 		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
 
-		if (uuid == null) {
-			kbTemplateImpl.setUuid("");
-		}
-		else {
-			kbTemplateImpl.setUuid(uuid);
-		}
-
-		kbTemplateImpl.setKbTemplateId(kbTemplateId);
-		kbTemplateImpl.setGroupId(groupId);
-		kbTemplateImpl.setCompanyId(companyId);
-		kbTemplateImpl.setUserId(userId);
-
-		if (userName == null) {
-			kbTemplateImpl.setUserName("");
-		}
-		else {
-			kbTemplateImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kbTemplateImpl.setCreateDate(null);
-		}
-		else {
-			kbTemplateImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kbTemplateImpl.setModifiedDate(null);
-		}
-		else {
-			kbTemplateImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (title == null) {
-			kbTemplateImpl.setTitle("");
-		}
-		else {
-			kbTemplateImpl.setTitle(title);
-		}
-
-		if (content == null) {
-			kbTemplateImpl.setContent("");
-		}
-		else {
-			kbTemplateImpl.setContent(content);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			kbTemplateImpl.setLastPublishDate(null);
-		}
-		else {
-			kbTemplateImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		kbTemplateImpl.resetOriginalValues();
+		kbTemplateImpl.setKBTemplateCacheModel(this);
 
 		return kbTemplateImpl;
 	}

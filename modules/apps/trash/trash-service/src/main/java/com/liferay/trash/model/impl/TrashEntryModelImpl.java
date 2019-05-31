@@ -388,19 +388,21 @@ public class TrashEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_trashEntryOriginalValues == null) {
+			_trashEntryOriginalValues = new TrashEntryOriginalValues(this);
 		}
+
+		_trashEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_trashEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _trashEntryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -411,19 +413,21 @@ public class TrashEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_trashEntryOriginalValues == null) {
+			_trashEntryOriginalValues = new TrashEntryOriginalValues(this);
 		}
+
+		_trashEntryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_trashEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _trashEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -477,17 +481,21 @@ public class TrashEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
-		if (_originalCreateDate == null) {
-			_originalCreateDate = _createDate;
+		if (_trashEntryOriginalValues == null) {
+			_trashEntryOriginalValues = new TrashEntryOriginalValues(this);
 		}
+
+		_trashEntryOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
 
 	public Date getOriginalCreateDate() {
-		return _originalCreateDate;
+		if (_trashEntryOriginalValues == null) {
+			return _createDate;
+		}
+
+		return _trashEntryOriginalValues._originalCreateDate;
 	}
 
 	@Override
@@ -518,19 +526,21 @@ public class TrashEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_trashEntryOriginalValues == null) {
+			_trashEntryOriginalValues = new TrashEntryOriginalValues(this);
 		}
+
+		_trashEntryOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_trashEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _trashEntryOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -541,19 +551,21 @@ public class TrashEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_trashEntryOriginalValues == null) {
+			_trashEntryOriginalValues = new TrashEntryOriginalValues(this);
 		}
+
+		_trashEntryOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_trashEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _trashEntryOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -595,7 +607,11 @@ public class TrashEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_trashEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _trashEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -698,27 +714,7 @@ public class TrashEntryModelImpl
 	public void resetOriginalValues() {
 		TrashEntryModelImpl trashEntryModelImpl = this;
 
-		trashEntryModelImpl._originalGroupId = trashEntryModelImpl._groupId;
-
-		trashEntryModelImpl._setOriginalGroupId = false;
-
-		trashEntryModelImpl._originalCompanyId = trashEntryModelImpl._companyId;
-
-		trashEntryModelImpl._setOriginalCompanyId = false;
-
-		trashEntryModelImpl._originalCreateDate =
-			trashEntryModelImpl._createDate;
-
-		trashEntryModelImpl._originalClassNameId =
-			trashEntryModelImpl._classNameId;
-
-		trashEntryModelImpl._setOriginalClassNameId = false;
-
-		trashEntryModelImpl._originalClassPK = trashEntryModelImpl._classPK;
-
-		trashEntryModelImpl._setOriginalClassPK = false;
-
-		trashEntryModelImpl._columnBitmask = 0;
+		trashEntryModelImpl._trashEntryOriginalValues = null;
 	}
 
 	@Override
@@ -832,30 +828,73 @@ public class TrashEntryModelImpl
 		return sb.toString();
 	}
 
+	void setTrashEntryCacheModel(TrashEntryCacheModel trashEntryCacheModel) {
+		_entryId = trashEntryCacheModel.entryId;
+		_groupId = trashEntryCacheModel.groupId;
+		_companyId = trashEntryCacheModel.companyId;
+		_userId = trashEntryCacheModel.userId;
+
+		if (trashEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = trashEntryCacheModel.userName;
+		}
+
+		if (trashEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(trashEntryCacheModel.createDate);
+		}
+
+		_classNameId = trashEntryCacheModel.classNameId;
+		_classPK = trashEntryCacheModel.classPK;
+		_systemEventSetKey = trashEntryCacheModel.systemEventSetKey;
+
+		if (trashEntryCacheModel.typeSettings == null) {
+			_typeSettings = "";
+		}
+		else {
+			_typeSettings = trashEntryCacheModel.typeSettings;
+		}
+
+		_status = trashEntryCacheModel.status;
+	}
+
+	private static class TrashEntryOriginalValues {
+
+		private TrashEntryOriginalValues(
+			TrashEntryModelImpl trashEntryModelImpl) {
+
+			_originalGroupId = trashEntryModelImpl._groupId;
+			_originalCompanyId = trashEntryModelImpl._companyId;
+			_originalCreateDate = trashEntryModelImpl._createDate;
+			_originalClassNameId = trashEntryModelImpl._classNameId;
+			_originalClassPK = trashEntryModelImpl._classPK;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final Date _originalCreateDate;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, TrashEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private TrashEntryOriginalValues _trashEntryOriginalValues;
 	private long _entryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
-	private Date _originalCreateDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _systemEventSetKey;
 	private String _typeSettings;
 	private int _status;
-	private long _columnBitmask;
 	private TrashEntry _escapedModel;
 
 }

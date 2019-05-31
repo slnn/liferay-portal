@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -126,78 +124,7 @@ public class KaleoTimerCacheModel
 	public KaleoTimer toEntityModel() {
 		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
 
-		kaleoTimerImpl.setMvccVersion(mvccVersion);
-		kaleoTimerImpl.setKaleoTimerId(kaleoTimerId);
-		kaleoTimerImpl.setGroupId(groupId);
-		kaleoTimerImpl.setCompanyId(companyId);
-		kaleoTimerImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTimerImpl.setUserName("");
-		}
-		else {
-			kaleoTimerImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTimerImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTimerImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTimerImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTimerImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (kaleoClassName == null) {
-			kaleoTimerImpl.setKaleoClassName("");
-		}
-		else {
-			kaleoTimerImpl.setKaleoClassName(kaleoClassName);
-		}
-
-		kaleoTimerImpl.setKaleoClassPK(kaleoClassPK);
-		kaleoTimerImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-
-		if (name == null) {
-			kaleoTimerImpl.setName("");
-		}
-		else {
-			kaleoTimerImpl.setName(name);
-		}
-
-		kaleoTimerImpl.setBlocking(blocking);
-
-		if (description == null) {
-			kaleoTimerImpl.setDescription("");
-		}
-		else {
-			kaleoTimerImpl.setDescription(description);
-		}
-
-		kaleoTimerImpl.setDuration(duration);
-
-		if (scale == null) {
-			kaleoTimerImpl.setScale("");
-		}
-		else {
-			kaleoTimerImpl.setScale(scale);
-		}
-
-		kaleoTimerImpl.setRecurrenceDuration(recurrenceDuration);
-
-		if (recurrenceScale == null) {
-			kaleoTimerImpl.setRecurrenceScale("");
-		}
-		else {
-			kaleoTimerImpl.setRecurrenceScale(recurrenceScale);
-		}
-
-		kaleoTimerImpl.resetOriginalValues();
+		kaleoTimerImpl.setKaleoTimerCacheModel(this);
 
 		return kaleoTimerImpl;
 	}

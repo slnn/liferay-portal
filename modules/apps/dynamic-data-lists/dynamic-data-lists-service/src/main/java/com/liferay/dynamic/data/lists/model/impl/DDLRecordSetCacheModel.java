@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -131,100 +129,7 @@ public class DDLRecordSetCacheModel
 	public DDLRecordSet toEntityModel() {
 		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
 
-		ddlRecordSetImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			ddlRecordSetImpl.setUuid("");
-		}
-		else {
-			ddlRecordSetImpl.setUuid(uuid);
-		}
-
-		ddlRecordSetImpl.setRecordSetId(recordSetId);
-		ddlRecordSetImpl.setGroupId(groupId);
-		ddlRecordSetImpl.setCompanyId(companyId);
-		ddlRecordSetImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddlRecordSetImpl.setUserName("");
-		}
-		else {
-			ddlRecordSetImpl.setUserName(userName);
-		}
-
-		ddlRecordSetImpl.setVersionUserId(versionUserId);
-
-		if (versionUserName == null) {
-			ddlRecordSetImpl.setVersionUserName("");
-		}
-		else {
-			ddlRecordSetImpl.setVersionUserName(versionUserName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddlRecordSetImpl.setCreateDate(null);
-		}
-		else {
-			ddlRecordSetImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddlRecordSetImpl.setModifiedDate(null);
-		}
-		else {
-			ddlRecordSetImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ddlRecordSetImpl.setDDMStructureId(DDMStructureId);
-
-		if (recordSetKey == null) {
-			ddlRecordSetImpl.setRecordSetKey("");
-		}
-		else {
-			ddlRecordSetImpl.setRecordSetKey(recordSetKey);
-		}
-
-		if (version == null) {
-			ddlRecordSetImpl.setVersion("");
-		}
-		else {
-			ddlRecordSetImpl.setVersion(version);
-		}
-
-		if (name == null) {
-			ddlRecordSetImpl.setName("");
-		}
-		else {
-			ddlRecordSetImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddlRecordSetImpl.setDescription("");
-		}
-		else {
-			ddlRecordSetImpl.setDescription(description);
-		}
-
-		ddlRecordSetImpl.setMinDisplayRows(minDisplayRows);
-		ddlRecordSetImpl.setScope(scope);
-
-		if (settings == null) {
-			ddlRecordSetImpl.setSettings("");
-		}
-		else {
-			ddlRecordSetImpl.setSettings(settings);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			ddlRecordSetImpl.setLastPublishDate(null);
-		}
-		else {
-			ddlRecordSetImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		ddlRecordSetImpl.resetOriginalValues();
-
-		ddlRecordSetImpl.setDDMFormValues(_ddmFormValues);
+		ddlRecordSetImpl.setDDLRecordSetCacheModel(this);
 
 		return ddlRecordSetImpl;
 	}

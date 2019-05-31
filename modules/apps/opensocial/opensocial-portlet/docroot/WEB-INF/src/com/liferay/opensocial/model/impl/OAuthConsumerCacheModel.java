@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -94,59 +92,7 @@ public class OAuthConsumerCacheModel
 	public OAuthConsumer toEntityModel() {
 		OAuthConsumerImpl oAuthConsumerImpl = new OAuthConsumerImpl();
 
-		oAuthConsumerImpl.setOAuthConsumerId(oAuthConsumerId);
-		oAuthConsumerImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			oAuthConsumerImpl.setCreateDate(null);
-		}
-		else {
-			oAuthConsumerImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			oAuthConsumerImpl.setModifiedDate(null);
-		}
-		else {
-			oAuthConsumerImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (gadgetKey == null) {
-			oAuthConsumerImpl.setGadgetKey("");
-		}
-		else {
-			oAuthConsumerImpl.setGadgetKey(gadgetKey);
-		}
-
-		if (serviceName == null) {
-			oAuthConsumerImpl.setServiceName("");
-		}
-		else {
-			oAuthConsumerImpl.setServiceName(serviceName);
-		}
-
-		if (consumerKey == null) {
-			oAuthConsumerImpl.setConsumerKey("");
-		}
-		else {
-			oAuthConsumerImpl.setConsumerKey(consumerKey);
-		}
-
-		if (consumerSecret == null) {
-			oAuthConsumerImpl.setConsumerSecret("");
-		}
-		else {
-			oAuthConsumerImpl.setConsumerSecret(consumerSecret);
-		}
-
-		if (keyType == null) {
-			oAuthConsumerImpl.setKeyType("");
-		}
-		else {
-			oAuthConsumerImpl.setKeyType(keyType);
-		}
-
-		oAuthConsumerImpl.resetOriginalValues();
+		oAuthConsumerImpl.setOAuthConsumerCacheModel(this);
 
 		return oAuthConsumerImpl;
 	}

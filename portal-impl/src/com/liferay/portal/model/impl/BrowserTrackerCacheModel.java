@@ -99,13 +99,7 @@ public class BrowserTrackerCacheModel
 	public BrowserTracker toEntityModel() {
 		BrowserTrackerImpl browserTrackerImpl = new BrowserTrackerImpl();
 
-		browserTrackerImpl.setMvccVersion(mvccVersion);
-		browserTrackerImpl.setBrowserTrackerId(browserTrackerId);
-		browserTrackerImpl.setCompanyId(companyId);
-		browserTrackerImpl.setUserId(userId);
-		browserTrackerImpl.setBrowserKey(browserKey);
-
-		browserTrackerImpl.resetOriginalValues();
+		browserTrackerImpl.setBrowserTrackerCacheModel(this);
 
 		return browserTrackerImpl;
 	}

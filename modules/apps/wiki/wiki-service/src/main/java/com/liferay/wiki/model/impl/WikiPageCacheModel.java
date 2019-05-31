@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -123,114 +121,7 @@ public class WikiPageCacheModel
 	public WikiPage toEntityModel() {
 		WikiPageImpl wikiPageImpl = new WikiPageImpl();
 
-		if (uuid == null) {
-			wikiPageImpl.setUuid("");
-		}
-		else {
-			wikiPageImpl.setUuid(uuid);
-		}
-
-		wikiPageImpl.setPageId(pageId);
-		wikiPageImpl.setResourcePrimKey(resourcePrimKey);
-		wikiPageImpl.setGroupId(groupId);
-		wikiPageImpl.setCompanyId(companyId);
-		wikiPageImpl.setUserId(userId);
-
-		if (userName == null) {
-			wikiPageImpl.setUserName("");
-		}
-		else {
-			wikiPageImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			wikiPageImpl.setCreateDate(null);
-		}
-		else {
-			wikiPageImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			wikiPageImpl.setModifiedDate(null);
-		}
-		else {
-			wikiPageImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		wikiPageImpl.setNodeId(nodeId);
-
-		if (title == null) {
-			wikiPageImpl.setTitle("");
-		}
-		else {
-			wikiPageImpl.setTitle(title);
-		}
-
-		wikiPageImpl.setVersion(version);
-		wikiPageImpl.setMinorEdit(minorEdit);
-
-		if (content == null) {
-			wikiPageImpl.setContent("");
-		}
-		else {
-			wikiPageImpl.setContent(content);
-		}
-
-		if (summary == null) {
-			wikiPageImpl.setSummary("");
-		}
-		else {
-			wikiPageImpl.setSummary(summary);
-		}
-
-		if (format == null) {
-			wikiPageImpl.setFormat("");
-		}
-		else {
-			wikiPageImpl.setFormat(format);
-		}
-
-		wikiPageImpl.setHead(head);
-
-		if (parentTitle == null) {
-			wikiPageImpl.setParentTitle("");
-		}
-		else {
-			wikiPageImpl.setParentTitle(parentTitle);
-		}
-
-		if (redirectTitle == null) {
-			wikiPageImpl.setRedirectTitle("");
-		}
-		else {
-			wikiPageImpl.setRedirectTitle(redirectTitle);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			wikiPageImpl.setLastPublishDate(null);
-		}
-		else {
-			wikiPageImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		wikiPageImpl.setStatus(status);
-		wikiPageImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			wikiPageImpl.setStatusByUserName("");
-		}
-		else {
-			wikiPageImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			wikiPageImpl.setStatusDate(null);
-		}
-		else {
-			wikiPageImpl.setStatusDate(new Date(statusDate));
-		}
-
-		wikiPageImpl.resetOriginalValues();
+		wikiPageImpl.setWikiPageCacheModel(this);
 
 		return wikiPageImpl;
 	}

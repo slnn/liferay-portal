@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -127,66 +125,7 @@ public class KaleoInstanceTokenCacheModel
 		KaleoInstanceTokenImpl kaleoInstanceTokenImpl =
 			new KaleoInstanceTokenImpl();
 
-		kaleoInstanceTokenImpl.setMvccVersion(mvccVersion);
-		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
-		kaleoInstanceTokenImpl.setGroupId(groupId);
-		kaleoInstanceTokenImpl.setCompanyId(companyId);
-		kaleoInstanceTokenImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoInstanceTokenImpl.setUserName("");
-		}
-		else {
-			kaleoInstanceTokenImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoInstanceTokenImpl.setCreateDate(null);
-		}
-		else {
-			kaleoInstanceTokenImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoInstanceTokenImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoInstanceTokenImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kaleoInstanceTokenImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoInstanceTokenImpl.setKaleoInstanceId(kaleoInstanceId);
-		kaleoInstanceTokenImpl.setParentKaleoInstanceTokenId(
-			parentKaleoInstanceTokenId);
-		kaleoInstanceTokenImpl.setCurrentKaleoNodeId(currentKaleoNodeId);
-
-		if (currentKaleoNodeName == null) {
-			kaleoInstanceTokenImpl.setCurrentKaleoNodeName("");
-		}
-		else {
-			kaleoInstanceTokenImpl.setCurrentKaleoNodeName(
-				currentKaleoNodeName);
-		}
-
-		if (className == null) {
-			kaleoInstanceTokenImpl.setClassName("");
-		}
-		else {
-			kaleoInstanceTokenImpl.setClassName(className);
-		}
-
-		kaleoInstanceTokenImpl.setClassPK(classPK);
-		kaleoInstanceTokenImpl.setCompleted(completed);
-
-		if (completionDate == Long.MIN_VALUE) {
-			kaleoInstanceTokenImpl.setCompletionDate(null);
-		}
-		else {
-			kaleoInstanceTokenImpl.setCompletionDate(new Date(completionDate));
-		}
-
-		kaleoInstanceTokenImpl.resetOriginalValues();
+		kaleoInstanceTokenImpl.setKaleoInstanceTokenCacheModel(this);
 
 		return kaleoInstanceTokenImpl;
 	}

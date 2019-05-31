@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -93,30 +91,7 @@ public class AssetLinkCacheModel
 	public AssetLink toEntityModel() {
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
-		assetLinkImpl.setLinkId(linkId);
-		assetLinkImpl.setCompanyId(companyId);
-		assetLinkImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetLinkImpl.setUserName("");
-		}
-		else {
-			assetLinkImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetLinkImpl.setCreateDate(null);
-		}
-		else {
-			assetLinkImpl.setCreateDate(new Date(createDate));
-		}
-
-		assetLinkImpl.setEntryId1(entryId1);
-		assetLinkImpl.setEntryId2(entryId2);
-		assetLinkImpl.setType(type);
-		assetLinkImpl.setWeight(weight);
-
-		assetLinkImpl.resetOriginalValues();
+		assetLinkImpl.setAssetLinkCacheModel(this);
 
 		return assetLinkImpl;
 	}

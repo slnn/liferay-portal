@@ -398,19 +398,23 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _workflowDefinitionLinkOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -420,19 +424,23 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _workflowDefinitionLinkOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -529,19 +537,23 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _workflowDefinitionLinkOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -551,19 +563,23 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask |=
+			CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _workflowDefinitionLinkOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -573,19 +589,23 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setTypePK(long typePK) {
-		_columnBitmask |= TYPEPK_COLUMN_BITMASK;
-
-		if (!_setOriginalTypePK) {
-			_setOriginalTypePK = true;
-
-			_originalTypePK = _typePK;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask |=
+			TYPEPK_COLUMN_BITMASK;
 
 		_typePK = typePK;
 	}
 
 	public long getOriginalTypePK() {
-		return _originalTypePK;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return _typePK;
+		}
+
+		return _workflowDefinitionLinkOriginalValues._originalTypePK;
 	}
 
 	@Override
@@ -600,17 +620,24 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setWorkflowDefinitionName(String workflowDefinitionName) {
-		_columnBitmask = -1L;
-
-		if (_originalWorkflowDefinitionName == null) {
-			_originalWorkflowDefinitionName = _workflowDefinitionName;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask = -1L;
 
 		_workflowDefinitionName = workflowDefinitionName;
 	}
 
 	public String getOriginalWorkflowDefinitionName() {
-		return GetterUtil.getString(_originalWorkflowDefinitionName);
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return GetterUtil.getString(_workflowDefinitionName);
+		}
+
+		return GetterUtil.getString(
+			_workflowDefinitionLinkOriginalValues.
+				_originalWorkflowDefinitionName);
 	}
 
 	@Override
@@ -620,23 +647,32 @@ public class WorkflowDefinitionLinkModelImpl
 
 	@Override
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion) {
-		_columnBitmask |= WORKFLOWDEFINITIONVERSION_COLUMN_BITMASK;
-
-		if (!_setOriginalWorkflowDefinitionVersion) {
-			_setOriginalWorkflowDefinitionVersion = true;
-
-			_originalWorkflowDefinitionVersion = _workflowDefinitionVersion;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			_workflowDefinitionLinkOriginalValues =
+				new WorkflowDefinitionLinkOriginalValues(this);
 		}
+
+		_workflowDefinitionLinkOriginalValues._columnBitmask |=
+			WORKFLOWDEFINITIONVERSION_COLUMN_BITMASK;
 
 		_workflowDefinitionVersion = workflowDefinitionVersion;
 	}
 
 	public int getOriginalWorkflowDefinitionVersion() {
-		return _originalWorkflowDefinitionVersion;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return _workflowDefinitionVersion;
+		}
+
+		return _workflowDefinitionLinkOriginalValues.
+			_originalWorkflowDefinitionVersion;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_workflowDefinitionLinkOriginalValues == null) {
+			return 0;
+		}
+
+		return _workflowDefinitionLinkOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -746,43 +782,10 @@ public class WorkflowDefinitionLinkModelImpl
 	public void resetOriginalValues() {
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = this;
 
-		workflowDefinitionLinkModelImpl._originalGroupId =
-			workflowDefinitionLinkModelImpl._groupId;
-
-		workflowDefinitionLinkModelImpl._setOriginalGroupId = false;
-
-		workflowDefinitionLinkModelImpl._originalCompanyId =
-			workflowDefinitionLinkModelImpl._companyId;
-
-		workflowDefinitionLinkModelImpl._setOriginalCompanyId = false;
+		workflowDefinitionLinkModelImpl._workflowDefinitionLinkOriginalValues =
+			null;
 
 		workflowDefinitionLinkModelImpl._setModifiedDate = false;
-
-		workflowDefinitionLinkModelImpl._originalClassNameId =
-			workflowDefinitionLinkModelImpl._classNameId;
-
-		workflowDefinitionLinkModelImpl._setOriginalClassNameId = false;
-
-		workflowDefinitionLinkModelImpl._originalClassPK =
-			workflowDefinitionLinkModelImpl._classPK;
-
-		workflowDefinitionLinkModelImpl._setOriginalClassPK = false;
-
-		workflowDefinitionLinkModelImpl._originalTypePK =
-			workflowDefinitionLinkModelImpl._typePK;
-
-		workflowDefinitionLinkModelImpl._setOriginalTypePK = false;
-
-		workflowDefinitionLinkModelImpl._originalWorkflowDefinitionName =
-			workflowDefinitionLinkModelImpl._workflowDefinitionName;
-
-		workflowDefinitionLinkModelImpl._originalWorkflowDefinitionVersion =
-			workflowDefinitionLinkModelImpl._workflowDefinitionVersion;
-
-		workflowDefinitionLinkModelImpl._setOriginalWorkflowDefinitionVersion =
-			false;
-
-		workflowDefinitionLinkModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -917,37 +920,94 @@ public class WorkflowDefinitionLinkModelImpl
 		return sb.toString();
 	}
 
+	void setWorkflowDefinitionLinkCacheModel(
+		WorkflowDefinitionLinkCacheModel workflowDefinitionLinkCacheModel) {
+
+		_mvccVersion = workflowDefinitionLinkCacheModel.mvccVersion;
+		_workflowDefinitionLinkId =
+			workflowDefinitionLinkCacheModel.workflowDefinitionLinkId;
+		_groupId = workflowDefinitionLinkCacheModel.groupId;
+		_companyId = workflowDefinitionLinkCacheModel.companyId;
+		_userId = workflowDefinitionLinkCacheModel.userId;
+
+		if (workflowDefinitionLinkCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = workflowDefinitionLinkCacheModel.userName;
+		}
+
+		if (workflowDefinitionLinkCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(workflowDefinitionLinkCacheModel.createDate);
+		}
+
+		if (workflowDefinitionLinkCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(
+				workflowDefinitionLinkCacheModel.modifiedDate);
+		}
+
+		_classNameId = workflowDefinitionLinkCacheModel.classNameId;
+		_classPK = workflowDefinitionLinkCacheModel.classPK;
+		_typePK = workflowDefinitionLinkCacheModel.typePK;
+
+		if (workflowDefinitionLinkCacheModel.workflowDefinitionName == null) {
+			_workflowDefinitionName = "";
+		}
+		else {
+			_workflowDefinitionName =
+				workflowDefinitionLinkCacheModel.workflowDefinitionName;
+		}
+
+		_workflowDefinitionVersion =
+			workflowDefinitionLinkCacheModel.workflowDefinitionVersion;
+	}
+
+	private static class WorkflowDefinitionLinkOriginalValues {
+
+		private WorkflowDefinitionLinkOriginalValues(
+			WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl) {
+
+			_originalGroupId = workflowDefinitionLinkModelImpl._groupId;
+			_originalCompanyId = workflowDefinitionLinkModelImpl._companyId;
+			_originalClassNameId = workflowDefinitionLinkModelImpl._classNameId;
+			_originalClassPK = workflowDefinitionLinkModelImpl._classPK;
+			_originalTypePK = workflowDefinitionLinkModelImpl._typePK;
+			_originalWorkflowDefinitionName =
+				workflowDefinitionLinkModelImpl._workflowDefinitionName;
+			_originalWorkflowDefinitionVersion =
+				workflowDefinitionLinkModelImpl._workflowDefinitionVersion;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final long _originalTypePK;
+		private final String _originalWorkflowDefinitionName;
+		private final int _originalWorkflowDefinitionVersion;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, WorkflowDefinitionLink>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WorkflowDefinitionLinkOriginalValues
+		_workflowDefinitionLinkOriginalValues;
 	private long _mvccVersion;
 	private long _workflowDefinitionLinkId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _typePK;
-	private long _originalTypePK;
-	private boolean _setOriginalTypePK;
 	private String _workflowDefinitionName;
-	private String _originalWorkflowDefinitionName;
 	private int _workflowDefinitionVersion;
-	private int _originalWorkflowDefinitionVersion;
-	private boolean _setOriginalWorkflowDefinitionVersion;
-	private long _columnBitmask;
 	private WorkflowDefinitionLink _escapedModel;
 
 }

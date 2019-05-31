@@ -394,17 +394,21 @@ public class KBFolderModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_kbFolderOriginalValues == null) {
+			_kbFolderOriginalValues = new KBFolderOriginalValues(this);
 		}
+
+		_kbFolderOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_kbFolderOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_kbFolderOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -426,19 +430,21 @@ public class KBFolderModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_kbFolderOriginalValues == null) {
+			_kbFolderOriginalValues = new KBFolderOriginalValues(this);
 		}
+
+		_kbFolderOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_kbFolderOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _kbFolderOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -449,19 +455,21 @@ public class KBFolderModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_kbFolderOriginalValues == null) {
+			_kbFolderOriginalValues = new KBFolderOriginalValues(this);
 		}
+
+		_kbFolderOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_kbFolderOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _kbFolderOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -543,19 +551,22 @@ public class KBFolderModelImpl
 
 	@Override
 	public void setParentKBFolderId(long parentKBFolderId) {
-		_columnBitmask |= PARENTKBFOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentKBFolderId) {
-			_setOriginalParentKBFolderId = true;
-
-			_originalParentKBFolderId = _parentKBFolderId;
+		if (_kbFolderOriginalValues == null) {
+			_kbFolderOriginalValues = new KBFolderOriginalValues(this);
 		}
+
+		_kbFolderOriginalValues._columnBitmask |=
+			PARENTKBFOLDERID_COLUMN_BITMASK;
 
 		_parentKBFolderId = parentKBFolderId;
 	}
 
 	public long getOriginalParentKBFolderId() {
-		return _originalParentKBFolderId;
+		if (_kbFolderOriginalValues == null) {
+			return _parentKBFolderId;
+		}
+
+		return _kbFolderOriginalValues._originalParentKBFolderId;
 	}
 
 	@JSON
@@ -571,17 +582,21 @@ public class KBFolderModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_kbFolderOriginalValues == null) {
+			_kbFolderOriginalValues = new KBFolderOriginalValues(this);
 		}
+
+		_kbFolderOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_kbFolderOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_kbFolderOriginalValues._originalName);
 	}
 
 	@JSON
@@ -597,17 +612,21 @@ public class KBFolderModelImpl
 
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
-
-		if (_originalUrlTitle == null) {
-			_originalUrlTitle = _urlTitle;
+		if (_kbFolderOriginalValues == null) {
+			_kbFolderOriginalValues = new KBFolderOriginalValues(this);
 		}
+
+		_kbFolderOriginalValues._columnBitmask |= URLTITLE_COLUMN_BITMASK;
 
 		_urlTitle = urlTitle;
 	}
 
 	public String getOriginalUrlTitle() {
-		return GetterUtil.getString(_originalUrlTitle);
+		if (_kbFolderOriginalValues == null) {
+			return GetterUtil.getString(_urlTitle);
+		}
+
+		return GetterUtil.getString(_kbFolderOriginalValues._originalUrlTitle);
 	}
 
 	@JSON
@@ -644,7 +663,11 @@ public class KBFolderModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kbFolderOriginalValues == null) {
+			return 0;
+		}
+
+		return _kbFolderOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -749,28 +772,9 @@ public class KBFolderModelImpl
 	public void resetOriginalValues() {
 		KBFolderModelImpl kbFolderModelImpl = this;
 
-		kbFolderModelImpl._originalUuid = kbFolderModelImpl._uuid;
-
-		kbFolderModelImpl._originalGroupId = kbFolderModelImpl._groupId;
-
-		kbFolderModelImpl._setOriginalGroupId = false;
-
-		kbFolderModelImpl._originalCompanyId = kbFolderModelImpl._companyId;
-
-		kbFolderModelImpl._setOriginalCompanyId = false;
+		kbFolderModelImpl._kbFolderOriginalValues = null;
 
 		kbFolderModelImpl._setModifiedDate = false;
-
-		kbFolderModelImpl._originalParentKBFolderId =
-			kbFolderModelImpl._parentKBFolderId;
-
-		kbFolderModelImpl._setOriginalParentKBFolderId = false;
-
-		kbFolderModelImpl._originalName = kbFolderModelImpl._name;
-
-		kbFolderModelImpl._originalUrlTitle = kbFolderModelImpl._urlTitle;
-
-		kbFolderModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -920,33 +924,101 @@ public class KBFolderModelImpl
 		return sb.toString();
 	}
 
+	void setKBFolderCacheModel(KBFolderCacheModel kbFolderCacheModel) {
+		if (kbFolderCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = kbFolderCacheModel.uuid;
+		}
+
+		_kbFolderId = kbFolderCacheModel.kbFolderId;
+		_groupId = kbFolderCacheModel.groupId;
+		_companyId = kbFolderCacheModel.companyId;
+		_userId = kbFolderCacheModel.userId;
+
+		if (kbFolderCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = kbFolderCacheModel.userName;
+		}
+
+		if (kbFolderCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(kbFolderCacheModel.createDate);
+		}
+
+		if (kbFolderCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(kbFolderCacheModel.modifiedDate);
+		}
+
+		_parentKBFolderId = kbFolderCacheModel.parentKBFolderId;
+
+		if (kbFolderCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = kbFolderCacheModel.name;
+		}
+
+		if (kbFolderCacheModel.urlTitle == null) {
+			_urlTitle = "";
+		}
+		else {
+			_urlTitle = kbFolderCacheModel.urlTitle;
+		}
+
+		if (kbFolderCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = kbFolderCacheModel.description;
+		}
+
+		if (kbFolderCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(kbFolderCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class KBFolderOriginalValues {
+
+		private KBFolderOriginalValues(KBFolderModelImpl kbFolderModelImpl) {
+			_originalUuid = kbFolderModelImpl._uuid;
+			_originalGroupId = kbFolderModelImpl._groupId;
+			_originalCompanyId = kbFolderModelImpl._companyId;
+			_originalParentKBFolderId = kbFolderModelImpl._parentKBFolderId;
+			_originalName = kbFolderModelImpl._name;
+			_originalUrlTitle = kbFolderModelImpl._urlTitle;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentKBFolderId;
+		private final String _originalName;
+		private final String _originalUrlTitle;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KBFolder>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KBFolderOriginalValues _kbFolderOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _kbFolderId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentKBFolderId;
-	private long _originalParentKBFolderId;
-	private boolean _setOriginalParentKBFolderId;
 	private String _name;
-	private String _originalName;
 	private String _urlTitle;
-	private String _originalUrlTitle;
 	private String _description;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private KBFolder _escapedModel;
 
 }

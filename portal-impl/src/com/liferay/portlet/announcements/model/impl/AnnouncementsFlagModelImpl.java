@@ -377,13 +377,12 @@ public class AnnouncementsFlagModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_announcementsFlagOriginalValues == null) {
+			_announcementsFlagOriginalValues =
+				new AnnouncementsFlagOriginalValues(this);
 		}
+
+		_announcementsFlagOriginalValues._columnBitmask = -1L;
 
 		_userId = userId;
 	}
@@ -405,7 +404,11 @@ public class AnnouncementsFlagModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_announcementsFlagOriginalValues == null) {
+			return _userId;
+		}
+
+		return _announcementsFlagOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -416,7 +419,12 @@ public class AnnouncementsFlagModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_announcementsFlagOriginalValues == null) {
+			_announcementsFlagOriginalValues =
+				new AnnouncementsFlagOriginalValues(this);
+		}
+
+		_announcementsFlagOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -429,19 +437,23 @@ public class AnnouncementsFlagModelImpl
 
 	@Override
 	public void setEntryId(long entryId) {
-		_columnBitmask |= ENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalEntryId) {
-			_setOriginalEntryId = true;
-
-			_originalEntryId = _entryId;
+		if (_announcementsFlagOriginalValues == null) {
+			_announcementsFlagOriginalValues =
+				new AnnouncementsFlagOriginalValues(this);
 		}
+
+		_announcementsFlagOriginalValues._columnBitmask |=
+			ENTRYID_COLUMN_BITMASK;
 
 		_entryId = entryId;
 	}
 
 	public long getOriginalEntryId() {
-		return _originalEntryId;
+		if (_announcementsFlagOriginalValues == null) {
+			return _entryId;
+		}
+
+		return _announcementsFlagOriginalValues._originalEntryId;
 	}
 
 	@JSON
@@ -452,23 +464,30 @@ public class AnnouncementsFlagModelImpl
 
 	@Override
 	public void setValue(int value) {
-		_columnBitmask |= VALUE_COLUMN_BITMASK;
-
-		if (!_setOriginalValue) {
-			_setOriginalValue = true;
-
-			_originalValue = _value;
+		if (_announcementsFlagOriginalValues == null) {
+			_announcementsFlagOriginalValues =
+				new AnnouncementsFlagOriginalValues(this);
 		}
+
+		_announcementsFlagOriginalValues._columnBitmask |= VALUE_COLUMN_BITMASK;
 
 		_value = value;
 	}
 
 	public int getOriginalValue() {
-		return _originalValue;
+		if (_announcementsFlagOriginalValues == null) {
+			return _value;
+		}
+
+		return _announcementsFlagOriginalValues._originalValue;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_announcementsFlagOriginalValues == null) {
+			return 0;
+		}
+
+		return _announcementsFlagOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -580,22 +599,7 @@ public class AnnouncementsFlagModelImpl
 	public void resetOriginalValues() {
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl = this;
 
-		announcementsFlagModelImpl._originalUserId =
-			announcementsFlagModelImpl._userId;
-
-		announcementsFlagModelImpl._setOriginalUserId = false;
-
-		announcementsFlagModelImpl._originalEntryId =
-			announcementsFlagModelImpl._entryId;
-
-		announcementsFlagModelImpl._setOriginalEntryId = false;
-
-		announcementsFlagModelImpl._originalValue =
-			announcementsFlagModelImpl._value;
-
-		announcementsFlagModelImpl._setOriginalValue = false;
-
-		announcementsFlagModelImpl._columnBitmask = 0;
+		announcementsFlagModelImpl._announcementsFlagOriginalValues = null;
 	}
 
 	@Override
@@ -688,22 +692,48 @@ public class AnnouncementsFlagModelImpl
 		return sb.toString();
 	}
 
+	void setAnnouncementsFlagCacheModel(
+		AnnouncementsFlagCacheModel announcementsFlagCacheModel) {
+
+		_flagId = announcementsFlagCacheModel.flagId;
+		_companyId = announcementsFlagCacheModel.companyId;
+		_userId = announcementsFlagCacheModel.userId;
+
+		if (announcementsFlagCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(announcementsFlagCacheModel.createDate);
+		}
+
+		_entryId = announcementsFlagCacheModel.entryId;
+		_value = announcementsFlagCacheModel.value;
+	}
+
+	private static class AnnouncementsFlagOriginalValues {
+
+		private AnnouncementsFlagOriginalValues(
+			AnnouncementsFlagModelImpl announcementsFlagModelImpl) {
+
+			_originalUserId = announcementsFlagModelImpl._userId;
+			_originalEntryId = announcementsFlagModelImpl._entryId;
+			_originalValue = announcementsFlagModelImpl._value;
+		}
+
+		private final long _originalUserId;
+		private final long _originalEntryId;
+		private final int _originalValue;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AnnouncementsFlag>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AnnouncementsFlagOriginalValues _announcementsFlagOriginalValues;
 	private long _flagId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private long _entryId;
-	private long _originalEntryId;
-	private boolean _setOriginalEntryId;
 	private int _value;
-	private int _originalValue;
-	private boolean _setOriginalValue;
-	private long _columnBitmask;
 	private AnnouncementsFlag _escapedModel;
 
 }

@@ -408,17 +408,21 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
 		}
+
+		_websiteOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_websiteOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_websiteOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -440,19 +444,21 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
 		}
+
+		_websiteOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_websiteOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _websiteOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -463,13 +469,11 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
 		}
+
+		_websiteOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -491,7 +495,11 @@ public class WebsiteModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_websiteOriginalValues == null) {
+			return _userId;
+		}
+
+		return _websiteOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -518,7 +526,11 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
+		}
+
+		_websiteOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -568,19 +580,21 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
 		}
+
+		_websiteOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_websiteOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _websiteOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -591,19 +605,21 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
 		}
+
+		_websiteOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_websiteOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _websiteOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -647,19 +663,21 @@ public class WebsiteModelImpl
 
 	@Override
 	public void setPrimary(boolean primary) {
-		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
-
-		if (!_setOriginalPrimary) {
-			_setOriginalPrimary = true;
-
-			_originalPrimary = _primary;
+		if (_websiteOriginalValues == null) {
+			_websiteOriginalValues = new WebsiteOriginalValues(this);
 		}
+
+		_websiteOriginalValues._columnBitmask |= PRIMARY_COLUMN_BITMASK;
 
 		_primary = primary;
 	}
 
 	public boolean getOriginalPrimary() {
-		return _originalPrimary;
+		if (_websiteOriginalValues == null) {
+			return _primary;
+		}
+
+		return _websiteOriginalValues._originalPrimary;
 	}
 
 	@JSON
@@ -681,7 +699,11 @@ public class WebsiteModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_websiteOriginalValues == null) {
+			return 0;
+		}
+
+		return _websiteOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -785,31 +807,9 @@ public class WebsiteModelImpl
 	public void resetOriginalValues() {
 		WebsiteModelImpl websiteModelImpl = this;
 
-		websiteModelImpl._originalUuid = websiteModelImpl._uuid;
-
-		websiteModelImpl._originalCompanyId = websiteModelImpl._companyId;
-
-		websiteModelImpl._setOriginalCompanyId = false;
-
-		websiteModelImpl._originalUserId = websiteModelImpl._userId;
-
-		websiteModelImpl._setOriginalUserId = false;
+		websiteModelImpl._websiteOriginalValues = null;
 
 		websiteModelImpl._setModifiedDate = false;
-
-		websiteModelImpl._originalClassNameId = websiteModelImpl._classNameId;
-
-		websiteModelImpl._setOriginalClassNameId = false;
-
-		websiteModelImpl._originalClassPK = websiteModelImpl._classPK;
-
-		websiteModelImpl._setOriginalClassPK = false;
-
-		websiteModelImpl._originalPrimary = websiteModelImpl._primary;
-
-		websiteModelImpl._setOriginalPrimary = false;
-
-		websiteModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -949,36 +949,93 @@ public class WebsiteModelImpl
 		return sb.toString();
 	}
 
+	void setWebsiteCacheModel(WebsiteCacheModel websiteCacheModel) {
+		_mvccVersion = websiteCacheModel.mvccVersion;
+
+		if (websiteCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = websiteCacheModel.uuid;
+		}
+
+		_websiteId = websiteCacheModel.websiteId;
+		_companyId = websiteCacheModel.companyId;
+		_userId = websiteCacheModel.userId;
+
+		if (websiteCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = websiteCacheModel.userName;
+		}
+
+		if (websiteCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(websiteCacheModel.createDate);
+		}
+
+		if (websiteCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(websiteCacheModel.modifiedDate);
+		}
+
+		_classNameId = websiteCacheModel.classNameId;
+		_classPK = websiteCacheModel.classPK;
+
+		if (websiteCacheModel.url == null) {
+			_url = "";
+		}
+		else {
+			_url = websiteCacheModel.url;
+		}
+
+		_typeId = websiteCacheModel.typeId;
+		_primary = websiteCacheModel.primary;
+
+		if (websiteCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(websiteCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class WebsiteOriginalValues {
+
+		private WebsiteOriginalValues(WebsiteModelImpl websiteModelImpl) {
+			_originalUuid = websiteModelImpl._uuid;
+			_originalCompanyId = websiteModelImpl._companyId;
+			_originalUserId = websiteModelImpl._userId;
+			_originalClassNameId = websiteModelImpl._classNameId;
+			_originalClassPK = websiteModelImpl._classPK;
+			_originalPrimary = websiteModelImpl._primary;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final boolean _originalPrimary;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Website>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WebsiteOriginalValues _websiteOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _websiteId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _url;
 	private long _typeId;
 	private boolean _primary;
-	private boolean _originalPrimary;
-	private boolean _setOriginalPrimary;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private Website _escapedModel;
 
 }

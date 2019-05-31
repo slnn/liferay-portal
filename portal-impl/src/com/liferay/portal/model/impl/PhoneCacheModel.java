@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -118,61 +116,7 @@ public class PhoneCacheModel
 	public Phone toEntityModel() {
 		PhoneImpl phoneImpl = new PhoneImpl();
 
-		phoneImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			phoneImpl.setUuid("");
-		}
-		else {
-			phoneImpl.setUuid(uuid);
-		}
-
-		phoneImpl.setPhoneId(phoneId);
-		phoneImpl.setCompanyId(companyId);
-		phoneImpl.setUserId(userId);
-
-		if (userName == null) {
-			phoneImpl.setUserName("");
-		}
-		else {
-			phoneImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			phoneImpl.setCreateDate(null);
-		}
-		else {
-			phoneImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			phoneImpl.setModifiedDate(null);
-		}
-		else {
-			phoneImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		phoneImpl.setClassNameId(classNameId);
-		phoneImpl.setClassPK(classPK);
-
-		if (number == null) {
-			phoneImpl.setNumber("");
-		}
-		else {
-			phoneImpl.setNumber(number);
-		}
-
-		if (extension == null) {
-			phoneImpl.setExtension("");
-		}
-		else {
-			phoneImpl.setExtension(extension);
-		}
-
-		phoneImpl.setTypeId(typeId);
-		phoneImpl.setPrimary(primary);
-
-		phoneImpl.resetOriginalValues();
+		phoneImpl.setPhoneCacheModel(this);
 
 		return phoneImpl;
 	}

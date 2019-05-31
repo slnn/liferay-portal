@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -105,48 +103,7 @@ public class AssetDisplayPageEntryCacheModel
 		AssetDisplayPageEntryImpl assetDisplayPageEntryImpl =
 			new AssetDisplayPageEntryImpl();
 
-		if (uuid == null) {
-			assetDisplayPageEntryImpl.setUuid("");
-		}
-		else {
-			assetDisplayPageEntryImpl.setUuid(uuid);
-		}
-
-		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(
-			assetDisplayPageEntryId);
-		assetDisplayPageEntryImpl.setGroupId(groupId);
-		assetDisplayPageEntryImpl.setCompanyId(companyId);
-		assetDisplayPageEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			assetDisplayPageEntryImpl.setUserName("");
-		}
-		else {
-			assetDisplayPageEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			assetDisplayPageEntryImpl.setCreateDate(null);
-		}
-		else {
-			assetDisplayPageEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			assetDisplayPageEntryImpl.setModifiedDate(null);
-		}
-		else {
-			assetDisplayPageEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		assetDisplayPageEntryImpl.setClassNameId(classNameId);
-		assetDisplayPageEntryImpl.setClassPK(classPK);
-		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(
-			layoutPageTemplateEntryId);
-		assetDisplayPageEntryImpl.setType(type);
-		assetDisplayPageEntryImpl.setPlid(plid);
-
-		assetDisplayPageEntryImpl.resetOriginalValues();
+		assetDisplayPageEntryImpl.setAssetDisplayPageEntryCacheModel(this);
 
 		return assetDisplayPageEntryImpl;
 	}

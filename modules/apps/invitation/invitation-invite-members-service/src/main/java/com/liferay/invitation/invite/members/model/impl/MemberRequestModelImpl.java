@@ -345,19 +345,22 @@ public class MemberRequestModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_memberRequestOriginalValues == null) {
+			_memberRequestOriginalValues = new MemberRequestOriginalValues(
+				this);
 		}
+
+		_memberRequestOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_memberRequestOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _memberRequestOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -418,7 +421,12 @@ public class MemberRequestModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_memberRequestOriginalValues == null) {
+			_memberRequestOriginalValues = new MemberRequestOriginalValues(
+				this);
+		}
+
+		_memberRequestOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -451,17 +459,22 @@ public class MemberRequestModelImpl
 
 	@Override
 	public void setKey(String key) {
-		_columnBitmask |= KEY_COLUMN_BITMASK;
-
-		if (_originalKey == null) {
-			_originalKey = _key;
+		if (_memberRequestOriginalValues == null) {
+			_memberRequestOriginalValues = new MemberRequestOriginalValues(
+				this);
 		}
+
+		_memberRequestOriginalValues._columnBitmask |= KEY_COLUMN_BITMASK;
 
 		_key = key;
 	}
 
 	public String getOriginalKey() {
-		return GetterUtil.getString(_originalKey);
+		if (_memberRequestOriginalValues == null) {
+			return GetterUtil.getString(_key);
+		}
+
+		return GetterUtil.getString(_memberRequestOriginalValues._originalKey);
 	}
 
 	@Override
@@ -471,13 +484,13 @@ public class MemberRequestModelImpl
 
 	@Override
 	public void setReceiverUserId(long receiverUserId) {
-		_columnBitmask |= RECEIVERUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalReceiverUserId) {
-			_setOriginalReceiverUserId = true;
-
-			_originalReceiverUserId = _receiverUserId;
+		if (_memberRequestOriginalValues == null) {
+			_memberRequestOriginalValues = new MemberRequestOriginalValues(
+				this);
 		}
+
+		_memberRequestOriginalValues._columnBitmask |=
+			RECEIVERUSERID_COLUMN_BITMASK;
 
 		_receiverUserId = receiverUserId;
 	}
@@ -499,7 +512,11 @@ public class MemberRequestModelImpl
 	}
 
 	public long getOriginalReceiverUserId() {
-		return _originalReceiverUserId;
+		if (_memberRequestOriginalValues == null) {
+			return _receiverUserId;
+		}
+
+		return _memberRequestOriginalValues._originalReceiverUserId;
 	}
 
 	@Override
@@ -529,23 +546,30 @@ public class MemberRequestModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_memberRequestOriginalValues == null) {
+			_memberRequestOriginalValues = new MemberRequestOriginalValues(
+				this);
 		}
+
+		_memberRequestOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_memberRequestOriginalValues == null) {
+			return _status;
+		}
+
+		return _memberRequestOriginalValues._originalStatus;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_memberRequestOriginalValues == null) {
+			return 0;
+		}
+
+		return _memberRequestOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -650,25 +674,9 @@ public class MemberRequestModelImpl
 	public void resetOriginalValues() {
 		MemberRequestModelImpl memberRequestModelImpl = this;
 
-		memberRequestModelImpl._originalGroupId =
-			memberRequestModelImpl._groupId;
-
-		memberRequestModelImpl._setOriginalGroupId = false;
+		memberRequestModelImpl._memberRequestOriginalValues = null;
 
 		memberRequestModelImpl._setModifiedDate = false;
-
-		memberRequestModelImpl._originalKey = memberRequestModelImpl._key;
-
-		memberRequestModelImpl._originalReceiverUserId =
-			memberRequestModelImpl._receiverUserId;
-
-		memberRequestModelImpl._setOriginalReceiverUserId = false;
-
-		memberRequestModelImpl._originalStatus = memberRequestModelImpl._status;
-
-		memberRequestModelImpl._setOriginalStatus = false;
-
-		memberRequestModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -792,13 +800,67 @@ public class MemberRequestModelImpl
 		return sb.toString();
 	}
 
+	void setMemberRequestCacheModel(
+		MemberRequestCacheModel memberRequestCacheModel) {
+
+		_memberRequestId = memberRequestCacheModel.memberRequestId;
+		_groupId = memberRequestCacheModel.groupId;
+		_companyId = memberRequestCacheModel.companyId;
+		_userId = memberRequestCacheModel.userId;
+
+		if (memberRequestCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = memberRequestCacheModel.userName;
+		}
+
+		if (memberRequestCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(memberRequestCacheModel.createDate);
+		}
+
+		if (memberRequestCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(memberRequestCacheModel.modifiedDate);
+		}
+
+		if (memberRequestCacheModel.key == null) {
+			_key = "";
+		}
+		else {
+			_key = memberRequestCacheModel.key;
+		}
+
+		_receiverUserId = memberRequestCacheModel.receiverUserId;
+		_invitedRoleId = memberRequestCacheModel.invitedRoleId;
+		_invitedTeamId = memberRequestCacheModel.invitedTeamId;
+		_status = memberRequestCacheModel.status;
+	}
+
+	private static class MemberRequestOriginalValues {
+
+		private MemberRequestOriginalValues(
+			MemberRequestModelImpl memberRequestModelImpl) {
+
+			_originalGroupId = memberRequestModelImpl._groupId;
+			_originalKey = memberRequestModelImpl._key;
+			_originalReceiverUserId = memberRequestModelImpl._receiverUserId;
+			_originalStatus = memberRequestModelImpl._status;
+		}
+
+		private final long _originalGroupId;
+		private final String _originalKey;
+		private final long _originalReceiverUserId;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MemberRequest>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MemberRequestOriginalValues _memberRequestOriginalValues;
 	private long _memberRequestId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -806,16 +868,10 @@ public class MemberRequestModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _key;
-	private String _originalKey;
 	private long _receiverUserId;
-	private long _originalReceiverUserId;
-	private boolean _setOriginalReceiverUserId;
 	private long _invitedRoleId;
 	private long _invitedTeamId;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
-	private long _columnBitmask;
 	private MemberRequest _escapedModel;
 
 }

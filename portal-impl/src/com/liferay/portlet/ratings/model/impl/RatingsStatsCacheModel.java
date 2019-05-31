@@ -88,15 +88,7 @@ public class RatingsStatsCacheModel
 	public RatingsStats toEntityModel() {
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
-		ratingsStatsImpl.setStatsId(statsId);
-		ratingsStatsImpl.setCompanyId(companyId);
-		ratingsStatsImpl.setClassNameId(classNameId);
-		ratingsStatsImpl.setClassPK(classPK);
-		ratingsStatsImpl.setTotalEntries(totalEntries);
-		ratingsStatsImpl.setTotalScore(totalScore);
-		ratingsStatsImpl.setAverageScore(averageScore);
-
-		ratingsStatsImpl.resetOriginalValues();
+		ratingsStatsImpl.setRatingsStatsCacheModel(this);
 
 		return ratingsStatsImpl;
 	}

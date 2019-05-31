@@ -457,17 +457,23 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_dlFileShortcutOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_dlFileShortcutOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -489,19 +495,22 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_dlFileShortcutOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _dlFileShortcutOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -512,19 +521,23 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_dlFileShortcutOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _dlFileShortcutOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -617,19 +630,22 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setFolderId(long folderId) {
-		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalFolderId) {
-			_setOriginalFolderId = true;
-
-			_originalFolderId = _folderId;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |= FOLDERID_COLUMN_BITMASK;
 
 		_folderId = folderId;
 	}
 
 	public long getOriginalFolderId() {
-		return _originalFolderId;
+		if (_dlFileShortcutOriginalValues == null) {
+			return _folderId;
+		}
+
+		return _dlFileShortcutOriginalValues._originalFolderId;
 	}
 
 	@JSON
@@ -640,19 +656,23 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setToFileEntryId(long toFileEntryId) {
-		_columnBitmask |= TOFILEENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalToFileEntryId) {
-			_setOriginalToFileEntryId = true;
-
-			_originalToFileEntryId = _toFileEntryId;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |=
+			TOFILEENTRYID_COLUMN_BITMASK;
 
 		_toFileEntryId = toFileEntryId;
 	}
 
 	public long getOriginalToFileEntryId() {
-		return _originalToFileEntryId;
+		if (_dlFileShortcutOriginalValues == null) {
+			return _toFileEntryId;
+		}
+
+		return _dlFileShortcutOriginalValues._originalToFileEntryId;
 	}
 
 	@JSON
@@ -685,19 +705,22 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
 		_active = active;
 	}
 
 	public boolean getOriginalActive() {
-		return _originalActive;
+		if (_dlFileShortcutOriginalValues == null) {
+			return _active;
+		}
+
+		return _dlFileShortcutOriginalValues._originalActive;
 	}
 
 	@JSON
@@ -719,19 +742,22 @@ public class DLFileShortcutModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_dlFileShortcutOriginalValues == null) {
+			_dlFileShortcutOriginalValues = new DLFileShortcutOriginalValues(
+				this);
 		}
+
+		_dlFileShortcutOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_dlFileShortcutOriginalValues == null) {
+			return _status;
+		}
+
+		return _dlFileShortcutOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1020,7 +1046,11 @@ public class DLFileShortcutModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_dlFileShortcutOriginalValues == null) {
+			return 0;
+		}
+
+		return _dlFileShortcutOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1130,41 +1160,9 @@ public class DLFileShortcutModelImpl
 	public void resetOriginalValues() {
 		DLFileShortcutModelImpl dlFileShortcutModelImpl = this;
 
-		dlFileShortcutModelImpl._originalUuid = dlFileShortcutModelImpl._uuid;
-
-		dlFileShortcutModelImpl._originalGroupId =
-			dlFileShortcutModelImpl._groupId;
-
-		dlFileShortcutModelImpl._setOriginalGroupId = false;
-
-		dlFileShortcutModelImpl._originalCompanyId =
-			dlFileShortcutModelImpl._companyId;
-
-		dlFileShortcutModelImpl._setOriginalCompanyId = false;
+		dlFileShortcutModelImpl._dlFileShortcutOriginalValues = null;
 
 		dlFileShortcutModelImpl._setModifiedDate = false;
-
-		dlFileShortcutModelImpl._originalFolderId =
-			dlFileShortcutModelImpl._folderId;
-
-		dlFileShortcutModelImpl._setOriginalFolderId = false;
-
-		dlFileShortcutModelImpl._originalToFileEntryId =
-			dlFileShortcutModelImpl._toFileEntryId;
-
-		dlFileShortcutModelImpl._setOriginalToFileEntryId = false;
-
-		dlFileShortcutModelImpl._originalActive =
-			dlFileShortcutModelImpl._active;
-
-		dlFileShortcutModelImpl._setOriginalActive = false;
-
-		dlFileShortcutModelImpl._originalStatus =
-			dlFileShortcutModelImpl._status;
-
-		dlFileShortcutModelImpl._setOriginalStatus = false;
-
-		dlFileShortcutModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1327,18 +1325,102 @@ public class DLFileShortcutModelImpl
 		return sb.toString();
 	}
 
+	void setDLFileShortcutCacheModel(
+		DLFileShortcutCacheModel dlFileShortcutCacheModel) {
+
+		if (dlFileShortcutCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = dlFileShortcutCacheModel.uuid;
+		}
+
+		_fileShortcutId = dlFileShortcutCacheModel.fileShortcutId;
+		_groupId = dlFileShortcutCacheModel.groupId;
+		_companyId = dlFileShortcutCacheModel.companyId;
+		_userId = dlFileShortcutCacheModel.userId;
+
+		if (dlFileShortcutCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = dlFileShortcutCacheModel.userName;
+		}
+
+		if (dlFileShortcutCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(dlFileShortcutCacheModel.createDate);
+		}
+
+		if (dlFileShortcutCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(dlFileShortcutCacheModel.modifiedDate);
+		}
+
+		_repositoryId = dlFileShortcutCacheModel.repositoryId;
+		_folderId = dlFileShortcutCacheModel.folderId;
+		_toFileEntryId = dlFileShortcutCacheModel.toFileEntryId;
+
+		if (dlFileShortcutCacheModel.treePath == null) {
+			_treePath = "";
+		}
+		else {
+			_treePath = dlFileShortcutCacheModel.treePath;
+		}
+
+		_active = dlFileShortcutCacheModel.active;
+
+		if (dlFileShortcutCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				dlFileShortcutCacheModel.lastPublishDate);
+		}
+
+		_status = dlFileShortcutCacheModel.status;
+		_statusByUserId = dlFileShortcutCacheModel.statusByUserId;
+
+		if (dlFileShortcutCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = dlFileShortcutCacheModel.statusByUserName;
+		}
+
+		if (dlFileShortcutCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(dlFileShortcutCacheModel.statusDate);
+		}
+	}
+
+	private static class DLFileShortcutOriginalValues {
+
+		private DLFileShortcutOriginalValues(
+			DLFileShortcutModelImpl dlFileShortcutModelImpl) {
+
+			_originalUuid = dlFileShortcutModelImpl._uuid;
+			_originalGroupId = dlFileShortcutModelImpl._groupId;
+			_originalCompanyId = dlFileShortcutModelImpl._companyId;
+			_originalFolderId = dlFileShortcutModelImpl._folderId;
+			_originalToFileEntryId = dlFileShortcutModelImpl._toFileEntryId;
+			_originalActive = dlFileShortcutModelImpl._active;
+			_originalStatus = dlFileShortcutModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalFolderId;
+		private final long _originalToFileEntryId;
+		private final boolean _originalActive;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DLFileShortcut>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DLFileShortcutOriginalValues _dlFileShortcutOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _fileShortcutId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1346,23 +1428,14 @@ public class DLFileShortcutModelImpl
 	private boolean _setModifiedDate;
 	private long _repositoryId;
 	private long _folderId;
-	private long _originalFolderId;
-	private boolean _setOriginalFolderId;
 	private long _toFileEntryId;
-	private long _originalToFileEntryId;
-	private boolean _setOriginalToFileEntryId;
 	private String _treePath;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private DLFileShortcut _escapedModel;
 
 }

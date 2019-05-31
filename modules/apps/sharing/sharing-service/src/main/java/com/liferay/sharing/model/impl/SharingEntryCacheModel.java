@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -104,53 +102,7 @@ public class SharingEntryCacheModel
 	public SharingEntry toEntityModel() {
 		SharingEntryImpl sharingEntryImpl = new SharingEntryImpl();
 
-		if (uuid == null) {
-			sharingEntryImpl.setUuid("");
-		}
-		else {
-			sharingEntryImpl.setUuid(uuid);
-		}
-
-		sharingEntryImpl.setSharingEntryId(sharingEntryId);
-		sharingEntryImpl.setGroupId(groupId);
-		sharingEntryImpl.setCompanyId(companyId);
-		sharingEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			sharingEntryImpl.setUserName("");
-		}
-		else {
-			sharingEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			sharingEntryImpl.setCreateDate(null);
-		}
-		else {
-			sharingEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			sharingEntryImpl.setModifiedDate(null);
-		}
-		else {
-			sharingEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		sharingEntryImpl.setToUserId(toUserId);
-		sharingEntryImpl.setClassNameId(classNameId);
-		sharingEntryImpl.setClassPK(classPK);
-		sharingEntryImpl.setShareable(shareable);
-		sharingEntryImpl.setActionIds(actionIds);
-
-		if (expirationDate == Long.MIN_VALUE) {
-			sharingEntryImpl.setExpirationDate(null);
-		}
-		else {
-			sharingEntryImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		sharingEntryImpl.resetOriginalValues();
+		sharingEntryImpl.setSharingEntryCacheModel(this);
 
 		return sharingEntryImpl;
 	}

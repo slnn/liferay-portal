@@ -87,28 +87,7 @@ public class DLContentCacheModel
 	public DLContent toEntityModel() {
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
-		dlContentImpl.setContentId(contentId);
-		dlContentImpl.setGroupId(groupId);
-		dlContentImpl.setCompanyId(companyId);
-		dlContentImpl.setRepositoryId(repositoryId);
-
-		if (path == null) {
-			dlContentImpl.setPath("");
-		}
-		else {
-			dlContentImpl.setPath(path);
-		}
-
-		if (version == null) {
-			dlContentImpl.setVersion("");
-		}
-		else {
-			dlContentImpl.setVersion(version);
-		}
-
-		dlContentImpl.setSize(size);
-
-		dlContentImpl.resetOriginalValues();
+		dlContentImpl.setDLContentCacheModel(this);
 
 		return dlContentImpl;
 	}

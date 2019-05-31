@@ -331,13 +331,11 @@ public class UserIdMapperModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_userIdMapperOriginalValues == null) {
+			_userIdMapperOriginalValues = new UserIdMapperOriginalValues(this);
 		}
+
+		_userIdMapperOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -359,7 +357,11 @@ public class UserIdMapperModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_userIdMapperOriginalValues == null) {
+			return _userId;
+		}
+
+		return _userIdMapperOriginalValues._originalUserId;
 	}
 
 	@Override
@@ -374,17 +376,21 @@ public class UserIdMapperModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_userIdMapperOriginalValues == null) {
+			_userIdMapperOriginalValues = new UserIdMapperOriginalValues(this);
 		}
+
+		_userIdMapperOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		if (_userIdMapperOriginalValues == null) {
+			return GetterUtil.getString(_type);
+		}
+
+		return GetterUtil.getString(_userIdMapperOriginalValues._originalType);
 	}
 
 	@Override
@@ -414,21 +420,31 @@ public class UserIdMapperModelImpl
 
 	@Override
 	public void setExternalUserId(String externalUserId) {
-		_columnBitmask |= EXTERNALUSERID_COLUMN_BITMASK;
-
-		if (_originalExternalUserId == null) {
-			_originalExternalUserId = _externalUserId;
+		if (_userIdMapperOriginalValues == null) {
+			_userIdMapperOriginalValues = new UserIdMapperOriginalValues(this);
 		}
+
+		_userIdMapperOriginalValues._columnBitmask |=
+			EXTERNALUSERID_COLUMN_BITMASK;
 
 		_externalUserId = externalUserId;
 	}
 
 	public String getOriginalExternalUserId() {
-		return GetterUtil.getString(_originalExternalUserId);
+		if (_userIdMapperOriginalValues == null) {
+			return GetterUtil.getString(_externalUserId);
+		}
+
+		return GetterUtil.getString(
+			_userIdMapperOriginalValues._originalExternalUserId);
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_userIdMapperOriginalValues == null) {
+			return 0;
+		}
+
+		return _userIdMapperOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -527,16 +543,7 @@ public class UserIdMapperModelImpl
 	public void resetOriginalValues() {
 		UserIdMapperModelImpl userIdMapperModelImpl = this;
 
-		userIdMapperModelImpl._originalUserId = userIdMapperModelImpl._userId;
-
-		userIdMapperModelImpl._setOriginalUserId = false;
-
-		userIdMapperModelImpl._originalType = userIdMapperModelImpl._type;
-
-		userIdMapperModelImpl._originalExternalUserId =
-			userIdMapperModelImpl._externalUserId;
-
-		userIdMapperModelImpl._columnBitmask = 0;
+		userIdMapperModelImpl._userIdMapperOriginalValues = null;
 	}
 
 	@Override
@@ -642,21 +649,64 @@ public class UserIdMapperModelImpl
 		return sb.toString();
 	}
 
+	void setUserIdMapperCacheModel(
+		UserIdMapperCacheModel userIdMapperCacheModel) {
+
+		_mvccVersion = userIdMapperCacheModel.mvccVersion;
+		_userIdMapperId = userIdMapperCacheModel.userIdMapperId;
+		_companyId = userIdMapperCacheModel.companyId;
+		_userId = userIdMapperCacheModel.userId;
+
+		if (userIdMapperCacheModel.type == null) {
+			_type = "";
+		}
+		else {
+			_type = userIdMapperCacheModel.type;
+		}
+
+		if (userIdMapperCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = userIdMapperCacheModel.description;
+		}
+
+		if (userIdMapperCacheModel.externalUserId == null) {
+			_externalUserId = "";
+		}
+		else {
+			_externalUserId = userIdMapperCacheModel.externalUserId;
+		}
+	}
+
+	private static class UserIdMapperOriginalValues {
+
+		private UserIdMapperOriginalValues(
+			UserIdMapperModelImpl userIdMapperModelImpl) {
+
+			_originalUserId = userIdMapperModelImpl._userId;
+			_originalType = userIdMapperModelImpl._type;
+			_originalExternalUserId = userIdMapperModelImpl._externalUserId;
+		}
+
+		private final long _originalUserId;
+		private final String _originalType;
+		private final String _originalExternalUserId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, UserIdMapper>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private UserIdMapperOriginalValues _userIdMapperOriginalValues;
 	private long _mvccVersion;
 	private long _userIdMapperId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _type;
-	private String _originalType;
 	private String _description;
 	private String _externalUserId;
-	private String _originalExternalUserId;
-	private long _columnBitmask;
 	private UserIdMapper _escapedModel;
 
 }

@@ -585,19 +585,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask = -1L;
 
 		_version = version;
 	}
 
 	public int getOriginalVersion() {
-		return _originalVersion;
+		if (_layoutVersionOriginalValues == null) {
+			return _version;
+		}
+
+		return _layoutVersionOriginalValues._originalVersion;
 	}
 
 	@Override
@@ -612,17 +615,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_layoutVersionOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_layoutVersionOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -632,19 +640,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= PLID_COLUMN_BITMASK;
 
 		_plid = plid;
 	}
 
 	public long getOriginalPlid() {
-		return _originalPlid;
+		if (_layoutVersionOriginalValues == null) {
+			return _plid;
+		}
+
+		return _layoutVersionOriginalValues._originalPlid;
 	}
 
 	@Override
@@ -654,19 +665,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_layoutVersionOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _layoutVersionOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -676,19 +690,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_layoutVersionOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _layoutVersionOriginalValues._originalCompanyId;
 	}
 
 	@Override
@@ -765,19 +782,23 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setParentPlid(long parentPlid) {
-		_columnBitmask |= PARENTPLID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentPlid) {
-			_setOriginalParentPlid = true;
-
-			_originalParentPlid = _parentPlid;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			PARENTPLID_COLUMN_BITMASK;
 
 		_parentPlid = parentPlid;
 	}
 
 	public long getOriginalParentPlid() {
-		return _originalParentPlid;
+		if (_layoutVersionOriginalValues == null) {
+			return _parentPlid;
+		}
+
+		return _layoutVersionOriginalValues._originalParentPlid;
 	}
 
 	@Override
@@ -792,19 +813,23 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			PRIVATELAYOUT_COLUMN_BITMASK;
 
 		_privateLayout = privateLayout;
 	}
 
 	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
+		if (_layoutVersionOriginalValues == null) {
+			return _privateLayout;
+		}
+
+		return _layoutVersionOriginalValues._originalPrivateLayout;
 	}
 
 	@Override
@@ -814,19 +839,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setLayoutId(long layoutId) {
-		_columnBitmask |= LAYOUTID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutId) {
-			_setOriginalLayoutId = true;
-
-			_originalLayoutId = _layoutId;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= LAYOUTID_COLUMN_BITMASK;
 
 		_layoutId = layoutId;
 	}
 
 	public long getOriginalLayoutId() {
-		return _originalLayoutId;
+		if (_layoutVersionOriginalValues == null) {
+			return _layoutId;
+		}
+
+		return _layoutVersionOriginalValues._originalLayoutId;
 	}
 
 	@Override
@@ -836,19 +864,23 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setParentLayoutId(long parentLayoutId) {
-		_columnBitmask |= PARENTLAYOUTID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentLayoutId) {
-			_setOriginalParentLayoutId = true;
-
-			_originalParentLayoutId = _parentLayoutId;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			PARENTLAYOUTID_COLUMN_BITMASK;
 
 		_parentLayoutId = parentLayoutId;
 	}
 
 	public long getOriginalParentLayoutId() {
-		return _originalParentLayoutId;
+		if (_layoutVersionOriginalValues == null) {
+			return _parentLayoutId;
+		}
+
+		return _layoutVersionOriginalValues._originalParentLayoutId;
 	}
 
 	@Override
@@ -878,19 +910,23 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_layoutVersionOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _layoutVersionOriginalValues._originalClassNameId;
 	}
 
 	@Override
@@ -900,19 +936,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_layoutVersionOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _layoutVersionOriginalValues._originalClassPK;
 	}
 
 	@Override
@@ -1452,17 +1491,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		if (_layoutVersionOriginalValues == null) {
+			return GetterUtil.getString(_type);
+		}
+
+		return GetterUtil.getString(_layoutVersionOriginalValues._originalType);
 	}
 
 	@Override
@@ -1492,19 +1536,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setHidden(boolean hidden) {
-		_columnBitmask |= HIDDEN_COLUMN_BITMASK;
-
-		if (!_setOriginalHidden) {
-			_setOriginalHidden = true;
-
-			_originalHidden = _hidden;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= HIDDEN_COLUMN_BITMASK;
 
 		_hidden = hidden;
 	}
 
 	public boolean getOriginalHidden() {
-		return _originalHidden;
+		if (_layoutVersionOriginalValues == null) {
+			return _hidden;
+		}
+
+		return _layoutVersionOriginalValues._originalHidden;
 	}
 
 	@Override
@@ -1534,17 +1581,24 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setFriendlyURL(String friendlyURL) {
-		_columnBitmask |= FRIENDLYURL_COLUMN_BITMASK;
-
-		if (_originalFriendlyURL == null) {
-			_originalFriendlyURL = _friendlyURL;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			FRIENDLYURL_COLUMN_BITMASK;
 
 		_friendlyURL = friendlyURL;
 	}
 
 	public String getOriginalFriendlyURL() {
-		return GetterUtil.getString(_originalFriendlyURL);
+		if (_layoutVersionOriginalValues == null) {
+			return GetterUtil.getString(_friendlyURL);
+		}
+
+		return GetterUtil.getString(
+			_layoutVersionOriginalValues._originalFriendlyURL);
 	}
 
 	@Override
@@ -1554,19 +1608,23 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setIconImageId(long iconImageId) {
-		_columnBitmask |= ICONIMAGEID_COLUMN_BITMASK;
-
-		if (!_setOriginalIconImageId) {
-			_setOriginalIconImageId = true;
-
-			_originalIconImageId = _iconImageId;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			ICONIMAGEID_COLUMN_BITMASK;
 
 		_iconImageId = iconImageId;
 	}
 
 	public long getOriginalIconImageId() {
-		return _originalIconImageId;
+		if (_layoutVersionOriginalValues == null) {
+			return _iconImageId;
+		}
+
+		return _layoutVersionOriginalValues._originalIconImageId;
 	}
 
 	@Override
@@ -1621,19 +1679,22 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setPriority(int priority) {
-		_columnBitmask |= PRIORITY_COLUMN_BITMASK;
-
-		if (!_setOriginalPriority) {
-			_setOriginalPriority = true;
-
-			_originalPriority = _priority;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |= PRIORITY_COLUMN_BITMASK;
 
 		_priority = priority;
 	}
 
 	public int getOriginalPriority() {
-		return _originalPriority;
+		if (_layoutVersionOriginalValues == null) {
+			return _priority;
+		}
+
+		return _layoutVersionOriginalValues._originalPriority;
 	}
 
 	@Override
@@ -1648,17 +1709,24 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setLayoutPrototypeUuid(String layoutPrototypeUuid) {
-		_columnBitmask |= LAYOUTPROTOTYPEUUID_COLUMN_BITMASK;
-
-		if (_originalLayoutPrototypeUuid == null) {
-			_originalLayoutPrototypeUuid = _layoutPrototypeUuid;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			LAYOUTPROTOTYPEUUID_COLUMN_BITMASK;
 
 		_layoutPrototypeUuid = layoutPrototypeUuid;
 	}
 
 	public String getOriginalLayoutPrototypeUuid() {
-		return GetterUtil.getString(_originalLayoutPrototypeUuid);
+		if (_layoutVersionOriginalValues == null) {
+			return GetterUtil.getString(_layoutPrototypeUuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutVersionOriginalValues._originalLayoutPrototypeUuid);
 	}
 
 	@Override
@@ -1690,17 +1758,24 @@ public class LayoutVersionModelImpl
 
 	@Override
 	public void setSourcePrototypeLayoutUuid(String sourcePrototypeLayoutUuid) {
-		_columnBitmask |= SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK;
-
-		if (_originalSourcePrototypeLayoutUuid == null) {
-			_originalSourcePrototypeLayoutUuid = _sourcePrototypeLayoutUuid;
+		if (_layoutVersionOriginalValues == null) {
+			_layoutVersionOriginalValues = new LayoutVersionOriginalValues(
+				this);
 		}
+
+		_layoutVersionOriginalValues._columnBitmask |=
+			SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK;
 
 		_sourcePrototypeLayoutUuid = sourcePrototypeLayoutUuid;
 	}
 
 	public String getOriginalSourcePrototypeLayoutUuid() {
-		return GetterUtil.getString(_originalSourcePrototypeLayoutUuid);
+		if (_layoutVersionOriginalValues == null) {
+			return GetterUtil.getString(_sourcePrototypeLayoutUuid);
+		}
+
+		return GetterUtil.getString(
+			_layoutVersionOriginalValues._originalSourcePrototypeLayoutUuid);
 	}
 
 	@Override
@@ -1724,7 +1799,11 @@ public class LayoutVersionModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_layoutVersionOriginalValues == null) {
+			return 0;
+		}
+
+		return _layoutVersionOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -2011,85 +2090,9 @@ public class LayoutVersionModelImpl
 	public void resetOriginalValues() {
 		LayoutVersionModelImpl layoutVersionModelImpl = this;
 
-		layoutVersionModelImpl._originalVersion =
-			layoutVersionModelImpl._version;
-
-		layoutVersionModelImpl._setOriginalVersion = false;
-
-		layoutVersionModelImpl._originalUuid = layoutVersionModelImpl._uuid;
-
-		layoutVersionModelImpl._originalPlid = layoutVersionModelImpl._plid;
-
-		layoutVersionModelImpl._setOriginalPlid = false;
-
-		layoutVersionModelImpl._originalGroupId =
-			layoutVersionModelImpl._groupId;
-
-		layoutVersionModelImpl._setOriginalGroupId = false;
-
-		layoutVersionModelImpl._originalCompanyId =
-			layoutVersionModelImpl._companyId;
-
-		layoutVersionModelImpl._setOriginalCompanyId = false;
+		layoutVersionModelImpl._layoutVersionOriginalValues = null;
 
 		layoutVersionModelImpl._setModifiedDate = false;
-
-		layoutVersionModelImpl._originalParentPlid =
-			layoutVersionModelImpl._parentPlid;
-
-		layoutVersionModelImpl._setOriginalParentPlid = false;
-
-		layoutVersionModelImpl._originalPrivateLayout =
-			layoutVersionModelImpl._privateLayout;
-
-		layoutVersionModelImpl._setOriginalPrivateLayout = false;
-
-		layoutVersionModelImpl._originalLayoutId =
-			layoutVersionModelImpl._layoutId;
-
-		layoutVersionModelImpl._setOriginalLayoutId = false;
-
-		layoutVersionModelImpl._originalParentLayoutId =
-			layoutVersionModelImpl._parentLayoutId;
-
-		layoutVersionModelImpl._setOriginalParentLayoutId = false;
-
-		layoutVersionModelImpl._originalClassNameId =
-			layoutVersionModelImpl._classNameId;
-
-		layoutVersionModelImpl._setOriginalClassNameId = false;
-
-		layoutVersionModelImpl._originalClassPK =
-			layoutVersionModelImpl._classPK;
-
-		layoutVersionModelImpl._setOriginalClassPK = false;
-
-		layoutVersionModelImpl._originalType = layoutVersionModelImpl._type;
-
-		layoutVersionModelImpl._originalHidden = layoutVersionModelImpl._hidden;
-
-		layoutVersionModelImpl._setOriginalHidden = false;
-
-		layoutVersionModelImpl._originalFriendlyURL =
-			layoutVersionModelImpl._friendlyURL;
-
-		layoutVersionModelImpl._originalIconImageId =
-			layoutVersionModelImpl._iconImageId;
-
-		layoutVersionModelImpl._setOriginalIconImageId = false;
-
-		layoutVersionModelImpl._originalPriority =
-			layoutVersionModelImpl._priority;
-
-		layoutVersionModelImpl._setOriginalPriority = false;
-
-		layoutVersionModelImpl._originalLayoutPrototypeUuid =
-			layoutVersionModelImpl._layoutPrototypeUuid;
-
-		layoutVersionModelImpl._originalSourcePrototypeLayoutUuid =
-			layoutVersionModelImpl._sourcePrototypeLayoutUuid;
-
-		layoutVersionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -2361,47 +2364,228 @@ public class LayoutVersionModelImpl
 		return sb.toString();
 	}
 
+	void setLayoutVersionCacheModel(
+		LayoutVersionCacheModel layoutVersionCacheModel) {
+
+		_layoutVersionId = layoutVersionCacheModel.layoutVersionId;
+		_version = layoutVersionCacheModel.version;
+
+		if (layoutVersionCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = layoutVersionCacheModel.uuid;
+		}
+
+		_plid = layoutVersionCacheModel.plid;
+		_groupId = layoutVersionCacheModel.groupId;
+		_companyId = layoutVersionCacheModel.companyId;
+		_userId = layoutVersionCacheModel.userId;
+
+		if (layoutVersionCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = layoutVersionCacheModel.userName;
+		}
+
+		if (layoutVersionCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(layoutVersionCacheModel.createDate);
+		}
+
+		if (layoutVersionCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(layoutVersionCacheModel.modifiedDate);
+		}
+
+		_parentPlid = layoutVersionCacheModel.parentPlid;
+		_privateLayout = layoutVersionCacheModel.privateLayout;
+		_layoutId = layoutVersionCacheModel.layoutId;
+		_parentLayoutId = layoutVersionCacheModel.parentLayoutId;
+		_classNameId = layoutVersionCacheModel.classNameId;
+		_classPK = layoutVersionCacheModel.classPK;
+
+		if (layoutVersionCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = layoutVersionCacheModel.name;
+		}
+
+		if (layoutVersionCacheModel.title == null) {
+			_title = "";
+		}
+		else {
+			_title = layoutVersionCacheModel.title;
+		}
+
+		if (layoutVersionCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = layoutVersionCacheModel.description;
+		}
+
+		if (layoutVersionCacheModel.keywords == null) {
+			_keywords = "";
+		}
+		else {
+			_keywords = layoutVersionCacheModel.keywords;
+		}
+
+		if (layoutVersionCacheModel.robots == null) {
+			_robots = "";
+		}
+		else {
+			_robots = layoutVersionCacheModel.robots;
+		}
+
+		if (layoutVersionCacheModel.type == null) {
+			_type = "";
+		}
+		else {
+			_type = layoutVersionCacheModel.type;
+		}
+
+		if (layoutVersionCacheModel.typeSettings == null) {
+			_typeSettings = "";
+		}
+		else {
+			_typeSettings = layoutVersionCacheModel.typeSettings;
+		}
+
+		_hidden = layoutVersionCacheModel.hidden;
+		_system = layoutVersionCacheModel.system;
+
+		if (layoutVersionCacheModel.friendlyURL == null) {
+			_friendlyURL = "";
+		}
+		else {
+			_friendlyURL = layoutVersionCacheModel.friendlyURL;
+		}
+
+		_iconImageId = layoutVersionCacheModel.iconImageId;
+
+		if (layoutVersionCacheModel.themeId == null) {
+			_themeId = "";
+		}
+		else {
+			_themeId = layoutVersionCacheModel.themeId;
+		}
+
+		if (layoutVersionCacheModel.colorSchemeId == null) {
+			_colorSchemeId = "";
+		}
+		else {
+			_colorSchemeId = layoutVersionCacheModel.colorSchemeId;
+		}
+
+		if (layoutVersionCacheModel.css == null) {
+			_css = "";
+		}
+		else {
+			_css = layoutVersionCacheModel.css;
+		}
+
+		_priority = layoutVersionCacheModel.priority;
+
+		if (layoutVersionCacheModel.layoutPrototypeUuid == null) {
+			_layoutPrototypeUuid = "";
+		}
+		else {
+			_layoutPrototypeUuid = layoutVersionCacheModel.layoutPrototypeUuid;
+		}
+
+		_layoutPrototypeLinkEnabled =
+			layoutVersionCacheModel.layoutPrototypeLinkEnabled;
+
+		if (layoutVersionCacheModel.sourcePrototypeLayoutUuid == null) {
+			_sourcePrototypeLayoutUuid = "";
+		}
+		else {
+			_sourcePrototypeLayoutUuid =
+				layoutVersionCacheModel.sourcePrototypeLayoutUuid;
+		}
+
+		if (layoutVersionCacheModel.publishDate != Long.MIN_VALUE) {
+			_publishDate = new Date(layoutVersionCacheModel.publishDate);
+		}
+
+		if (layoutVersionCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				layoutVersionCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class LayoutVersionOriginalValues {
+
+		private LayoutVersionOriginalValues(
+			LayoutVersionModelImpl layoutVersionModelImpl) {
+
+			_originalVersion = layoutVersionModelImpl._version;
+			_originalUuid = layoutVersionModelImpl._uuid;
+			_originalPlid = layoutVersionModelImpl._plid;
+			_originalGroupId = layoutVersionModelImpl._groupId;
+			_originalCompanyId = layoutVersionModelImpl._companyId;
+			_originalParentPlid = layoutVersionModelImpl._parentPlid;
+			_originalPrivateLayout = layoutVersionModelImpl._privateLayout;
+			_originalLayoutId = layoutVersionModelImpl._layoutId;
+			_originalParentLayoutId = layoutVersionModelImpl._parentLayoutId;
+			_originalClassNameId = layoutVersionModelImpl._classNameId;
+			_originalClassPK = layoutVersionModelImpl._classPK;
+			_originalType = layoutVersionModelImpl._type;
+			_originalHidden = layoutVersionModelImpl._hidden;
+			_originalFriendlyURL = layoutVersionModelImpl._friendlyURL;
+			_originalIconImageId = layoutVersionModelImpl._iconImageId;
+			_originalPriority = layoutVersionModelImpl._priority;
+			_originalLayoutPrototypeUuid =
+				layoutVersionModelImpl._layoutPrototypeUuid;
+			_originalSourcePrototypeLayoutUuid =
+				layoutVersionModelImpl._sourcePrototypeLayoutUuid;
+		}
+
+		private final int _originalVersion;
+		private final String _originalUuid;
+		private final long _originalPlid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentPlid;
+		private final boolean _originalPrivateLayout;
+		private final long _originalLayoutId;
+		private final long _originalParentLayoutId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final String _originalType;
+		private final boolean _originalHidden;
+		private final String _originalFriendlyURL;
+		private final long _originalIconImageId;
+		private final int _originalPriority;
+		private final String _originalLayoutPrototypeUuid;
+		private final String _originalSourcePrototypeLayoutUuid;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, LayoutVersion>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private LayoutVersionOriginalValues _layoutVersionOriginalValues;
 	private long _layoutVersionId;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentPlid;
-	private long _originalParentPlid;
-	private boolean _setOriginalParentPlid;
 	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private long _layoutId;
-	private long _originalLayoutId;
-	private boolean _setOriginalLayoutId;
 	private long _parentLayoutId;
-	private long _originalParentLayoutId;
-	private boolean _setOriginalParentLayoutId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _title;
@@ -2413,31 +2597,20 @@ public class LayoutVersionModelImpl
 	private String _robots;
 	private String _robotsCurrentLanguageId;
 	private String _type;
-	private String _originalType;
 	private String _typeSettings;
 	private boolean _hidden;
-	private boolean _originalHidden;
-	private boolean _setOriginalHidden;
 	private boolean _system;
 	private String _friendlyURL;
-	private String _originalFriendlyURL;
 	private long _iconImageId;
-	private long _originalIconImageId;
-	private boolean _setOriginalIconImageId;
 	private String _themeId;
 	private String _colorSchemeId;
 	private String _css;
 	private int _priority;
-	private int _originalPriority;
-	private boolean _setOriginalPriority;
 	private String _layoutPrototypeUuid;
-	private String _originalLayoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
-	private String _originalSourcePrototypeLayoutUuid;
 	private Date _publishDate;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private LayoutVersion _escapedModel;
 
 }

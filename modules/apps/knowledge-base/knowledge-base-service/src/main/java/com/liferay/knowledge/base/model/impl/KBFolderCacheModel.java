@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -101,70 +99,7 @@ public class KBFolderCacheModel
 	public KBFolder toEntityModel() {
 		KBFolderImpl kbFolderImpl = new KBFolderImpl();
 
-		if (uuid == null) {
-			kbFolderImpl.setUuid("");
-		}
-		else {
-			kbFolderImpl.setUuid(uuid);
-		}
-
-		kbFolderImpl.setKbFolderId(kbFolderId);
-		kbFolderImpl.setGroupId(groupId);
-		kbFolderImpl.setCompanyId(companyId);
-		kbFolderImpl.setUserId(userId);
-
-		if (userName == null) {
-			kbFolderImpl.setUserName("");
-		}
-		else {
-			kbFolderImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kbFolderImpl.setCreateDate(null);
-		}
-		else {
-			kbFolderImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kbFolderImpl.setModifiedDate(null);
-		}
-		else {
-			kbFolderImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kbFolderImpl.setParentKBFolderId(parentKBFolderId);
-
-		if (name == null) {
-			kbFolderImpl.setName("");
-		}
-		else {
-			kbFolderImpl.setName(name);
-		}
-
-		if (urlTitle == null) {
-			kbFolderImpl.setUrlTitle("");
-		}
-		else {
-			kbFolderImpl.setUrlTitle(urlTitle);
-		}
-
-		if (description == null) {
-			kbFolderImpl.setDescription("");
-		}
-		else {
-			kbFolderImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			kbFolderImpl.setLastPublishDate(null);
-		}
-		else {
-			kbFolderImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		kbFolderImpl.resetOriginalValues();
+		kbFolderImpl.setKBFolderCacheModel(this);
 
 		return kbFolderImpl;
 	}

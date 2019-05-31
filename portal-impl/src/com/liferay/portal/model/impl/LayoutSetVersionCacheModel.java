@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -110,71 +108,7 @@ public class LayoutSetVersionCacheModel
 	public LayoutSetVersion toEntityModel() {
 		LayoutSetVersionImpl layoutSetVersionImpl = new LayoutSetVersionImpl();
 
-		layoutSetVersionImpl.setLayoutSetVersionId(layoutSetVersionId);
-		layoutSetVersionImpl.setVersion(version);
-		layoutSetVersionImpl.setLayoutSetId(layoutSetId);
-		layoutSetVersionImpl.setGroupId(groupId);
-		layoutSetVersionImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			layoutSetVersionImpl.setCreateDate(null);
-		}
-		else {
-			layoutSetVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			layoutSetVersionImpl.setModifiedDate(null);
-		}
-		else {
-			layoutSetVersionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		layoutSetVersionImpl.setPrivateLayout(privateLayout);
-		layoutSetVersionImpl.setLogoId(logoId);
-
-		if (themeId == null) {
-			layoutSetVersionImpl.setThemeId("");
-		}
-		else {
-			layoutSetVersionImpl.setThemeId(themeId);
-		}
-
-		if (colorSchemeId == null) {
-			layoutSetVersionImpl.setColorSchemeId("");
-		}
-		else {
-			layoutSetVersionImpl.setColorSchemeId(colorSchemeId);
-		}
-
-		if (css == null) {
-			layoutSetVersionImpl.setCss("");
-		}
-		else {
-			layoutSetVersionImpl.setCss(css);
-		}
-
-		layoutSetVersionImpl.setPageCount(pageCount);
-
-		if (settings == null) {
-			layoutSetVersionImpl.setSettings("");
-		}
-		else {
-			layoutSetVersionImpl.setSettings(settings);
-		}
-
-		if (layoutSetPrototypeUuid == null) {
-			layoutSetVersionImpl.setLayoutSetPrototypeUuid("");
-		}
-		else {
-			layoutSetVersionImpl.setLayoutSetPrototypeUuid(
-				layoutSetPrototypeUuid);
-		}
-
-		layoutSetVersionImpl.setLayoutSetPrototypeLinkEnabled(
-			layoutSetPrototypeLinkEnabled);
-
-		layoutSetVersionImpl.resetOriginalValues();
+		layoutSetVersionImpl.setLayoutSetVersionCacheModel(this);
 
 		return layoutSetVersionImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -108,91 +106,7 @@ public class SegmentsEntryCacheModel
 	public SegmentsEntry toEntityModel() {
 		SegmentsEntryImpl segmentsEntryImpl = new SegmentsEntryImpl();
 
-		if (uuid == null) {
-			segmentsEntryImpl.setUuid("");
-		}
-		else {
-			segmentsEntryImpl.setUuid(uuid);
-		}
-
-		segmentsEntryImpl.setSegmentsEntryId(segmentsEntryId);
-		segmentsEntryImpl.setGroupId(groupId);
-		segmentsEntryImpl.setCompanyId(companyId);
-		segmentsEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			segmentsEntryImpl.setUserName("");
-		}
-		else {
-			segmentsEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			segmentsEntryImpl.setCreateDate(null);
-		}
-		else {
-			segmentsEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			segmentsEntryImpl.setModifiedDate(null);
-		}
-		else {
-			segmentsEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (segmentsEntryKey == null) {
-			segmentsEntryImpl.setSegmentsEntryKey("");
-		}
-		else {
-			segmentsEntryImpl.setSegmentsEntryKey(segmentsEntryKey);
-		}
-
-		if (name == null) {
-			segmentsEntryImpl.setName("");
-		}
-		else {
-			segmentsEntryImpl.setName(name);
-		}
-
-		if (description == null) {
-			segmentsEntryImpl.setDescription("");
-		}
-		else {
-			segmentsEntryImpl.setDescription(description);
-		}
-
-		segmentsEntryImpl.setActive(active);
-
-		if (criteria == null) {
-			segmentsEntryImpl.setCriteria("");
-		}
-		else {
-			segmentsEntryImpl.setCriteria(criteria);
-		}
-
-		if (source == null) {
-			segmentsEntryImpl.setSource("");
-		}
-		else {
-			segmentsEntryImpl.setSource(source);
-		}
-
-		if (type == null) {
-			segmentsEntryImpl.setType("");
-		}
-		else {
-			segmentsEntryImpl.setType(type);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			segmentsEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			segmentsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		segmentsEntryImpl.resetOriginalValues();
+		segmentsEntryImpl.setSegmentsEntryCacheModel(this);
 
 		return segmentsEntryImpl;
 	}

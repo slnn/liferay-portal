@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -100,63 +98,7 @@ public class PollsChoiceCacheModel
 	public PollsChoice toEntityModel() {
 		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
 
-		if (uuid == null) {
-			pollsChoiceImpl.setUuid("");
-		}
-		else {
-			pollsChoiceImpl.setUuid(uuid);
-		}
-
-		pollsChoiceImpl.setChoiceId(choiceId);
-		pollsChoiceImpl.setGroupId(groupId);
-		pollsChoiceImpl.setCompanyId(companyId);
-		pollsChoiceImpl.setUserId(userId);
-
-		if (userName == null) {
-			pollsChoiceImpl.setUserName("");
-		}
-		else {
-			pollsChoiceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			pollsChoiceImpl.setCreateDate(null);
-		}
-		else {
-			pollsChoiceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			pollsChoiceImpl.setModifiedDate(null);
-		}
-		else {
-			pollsChoiceImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		pollsChoiceImpl.setQuestionId(questionId);
-
-		if (name == null) {
-			pollsChoiceImpl.setName("");
-		}
-		else {
-			pollsChoiceImpl.setName(name);
-		}
-
-		if (description == null) {
-			pollsChoiceImpl.setDescription("");
-		}
-		else {
-			pollsChoiceImpl.setDescription(description);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			pollsChoiceImpl.setLastPublishDate(null);
-		}
-		else {
-			pollsChoiceImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		pollsChoiceImpl.resetOriginalValues();
+		pollsChoiceImpl.setPollsChoiceCacheModel(this);
 
 		return pollsChoiceImpl;
 	}

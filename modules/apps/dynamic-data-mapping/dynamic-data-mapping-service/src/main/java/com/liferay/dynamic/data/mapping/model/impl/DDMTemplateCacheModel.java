@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -128,129 +126,7 @@ public class DDMTemplateCacheModel
 	public DDMTemplate toEntityModel() {
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
 
-		if (uuid == null) {
-			ddmTemplateImpl.setUuid("");
-		}
-		else {
-			ddmTemplateImpl.setUuid(uuid);
-		}
-
-		ddmTemplateImpl.setTemplateId(templateId);
-		ddmTemplateImpl.setGroupId(groupId);
-		ddmTemplateImpl.setCompanyId(companyId);
-		ddmTemplateImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmTemplateImpl.setUserName("");
-		}
-		else {
-			ddmTemplateImpl.setUserName(userName);
-		}
-
-		ddmTemplateImpl.setVersionUserId(versionUserId);
-
-		if (versionUserName == null) {
-			ddmTemplateImpl.setVersionUserName("");
-		}
-		else {
-			ddmTemplateImpl.setVersionUserName(versionUserName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmTemplateImpl.setCreateDate(null);
-		}
-		else {
-			ddmTemplateImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmTemplateImpl.setModifiedDate(null);
-		}
-		else {
-			ddmTemplateImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ddmTemplateImpl.setClassNameId(classNameId);
-		ddmTemplateImpl.setClassPK(classPK);
-		ddmTemplateImpl.setResourceClassNameId(resourceClassNameId);
-
-		if (templateKey == null) {
-			ddmTemplateImpl.setTemplateKey("");
-		}
-		else {
-			ddmTemplateImpl.setTemplateKey(templateKey);
-		}
-
-		if (version == null) {
-			ddmTemplateImpl.setVersion("");
-		}
-		else {
-			ddmTemplateImpl.setVersion(version);
-		}
-
-		if (name == null) {
-			ddmTemplateImpl.setName("");
-		}
-		else {
-			ddmTemplateImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmTemplateImpl.setDescription("");
-		}
-		else {
-			ddmTemplateImpl.setDescription(description);
-		}
-
-		if (type == null) {
-			ddmTemplateImpl.setType("");
-		}
-		else {
-			ddmTemplateImpl.setType(type);
-		}
-
-		if (mode == null) {
-			ddmTemplateImpl.setMode("");
-		}
-		else {
-			ddmTemplateImpl.setMode(mode);
-		}
-
-		if (language == null) {
-			ddmTemplateImpl.setLanguage("");
-		}
-		else {
-			ddmTemplateImpl.setLanguage(language);
-		}
-
-		if (script == null) {
-			ddmTemplateImpl.setScript("");
-		}
-		else {
-			ddmTemplateImpl.setScript(script);
-		}
-
-		ddmTemplateImpl.setCacheable(cacheable);
-		ddmTemplateImpl.setSmallImage(smallImage);
-		ddmTemplateImpl.setSmallImageId(smallImageId);
-
-		if (smallImageURL == null) {
-			ddmTemplateImpl.setSmallImageURL("");
-		}
-		else {
-			ddmTemplateImpl.setSmallImageURL(smallImageURL);
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			ddmTemplateImpl.setLastPublishDate(null);
-		}
-		else {
-			ddmTemplateImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		ddmTemplateImpl.resetOriginalValues();
-
-		ddmTemplateImpl.setResourceClassName(_resourceClassName);
+		ddmTemplateImpl.setDDMTemplateCacheModel(this);
 
 		return ddmTemplateImpl;
 	}

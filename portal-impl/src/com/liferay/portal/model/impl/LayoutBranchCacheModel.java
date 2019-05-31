@@ -111,39 +111,7 @@ public class LayoutBranchCacheModel
 	public LayoutBranch toEntityModel() {
 		LayoutBranchImpl layoutBranchImpl = new LayoutBranchImpl();
 
-		layoutBranchImpl.setMvccVersion(mvccVersion);
-		layoutBranchImpl.setLayoutBranchId(layoutBranchId);
-		layoutBranchImpl.setGroupId(groupId);
-		layoutBranchImpl.setCompanyId(companyId);
-		layoutBranchImpl.setUserId(userId);
-
-		if (userName == null) {
-			layoutBranchImpl.setUserName("");
-		}
-		else {
-			layoutBranchImpl.setUserName(userName);
-		}
-
-		layoutBranchImpl.setLayoutSetBranchId(layoutSetBranchId);
-		layoutBranchImpl.setPlid(plid);
-
-		if (name == null) {
-			layoutBranchImpl.setName("");
-		}
-		else {
-			layoutBranchImpl.setName(name);
-		}
-
-		if (description == null) {
-			layoutBranchImpl.setDescription("");
-		}
-		else {
-			layoutBranchImpl.setDescription(description);
-		}
-
-		layoutBranchImpl.setMaster(master);
-
-		layoutBranchImpl.resetOriginalValues();
+		layoutBranchImpl.setLayoutBranchCacheModel(this);
 
 		return layoutBranchImpl;
 	}

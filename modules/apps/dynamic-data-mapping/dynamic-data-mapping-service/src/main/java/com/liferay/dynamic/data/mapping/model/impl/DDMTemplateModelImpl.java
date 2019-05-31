@@ -504,17 +504,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ddmTemplateOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_ddmTemplateOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -536,19 +540,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_ddmTemplateOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _ddmTemplateOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -559,19 +565,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ddmTemplateOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ddmTemplateOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -716,19 +724,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_ddmTemplateOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _ddmTemplateOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -739,19 +749,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_ddmTemplateOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _ddmTemplateOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -778,17 +790,22 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setTemplateKey(String templateKey) {
-		_columnBitmask |= TEMPLATEKEY_COLUMN_BITMASK;
-
-		if (_originalTemplateKey == null) {
-			_originalTemplateKey = _templateKey;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= TEMPLATEKEY_COLUMN_BITMASK;
 
 		_templateKey = templateKey;
 	}
 
 	public String getOriginalTemplateKey() {
-		return GetterUtil.getString(_originalTemplateKey);
+		if (_ddmTemplateOriginalValues == null) {
+			return GetterUtil.getString(_templateKey);
+		}
+
+		return GetterUtil.getString(
+			_ddmTemplateOriginalValues._originalTemplateKey);
 	}
 
 	@JSON
@@ -1031,17 +1048,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (_originalType == null) {
-			_originalType = _type;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		if (_ddmTemplateOriginalValues == null) {
+			return GetterUtil.getString(_type);
+		}
+
+		return GetterUtil.getString(_ddmTemplateOriginalValues._originalType);
 	}
 
 	@JSON
@@ -1057,17 +1078,21 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setMode(String mode) {
-		_columnBitmask |= MODE_COLUMN_BITMASK;
-
-		if (_originalMode == null) {
-			_originalMode = _mode;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= MODE_COLUMN_BITMASK;
 
 		_mode = mode;
 	}
 
 	public String getOriginalMode() {
-		return GetterUtil.getString(_originalMode);
+		if (_ddmTemplateOriginalValues == null) {
+			return GetterUtil.getString(_mode);
+		}
+
+		return GetterUtil.getString(_ddmTemplateOriginalValues._originalMode);
 	}
 
 	@JSON
@@ -1083,17 +1108,22 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setLanguage(String language) {
-		_columnBitmask |= LANGUAGE_COLUMN_BITMASK;
-
-		if (_originalLanguage == null) {
-			_originalLanguage = _language;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |= LANGUAGE_COLUMN_BITMASK;
 
 		_language = language;
 	}
 
 	public String getOriginalLanguage() {
-		return GetterUtil.getString(_originalLanguage);
+		if (_ddmTemplateOriginalValues == null) {
+			return GetterUtil.getString(_language);
+		}
+
+		return GetterUtil.getString(
+			_ddmTemplateOriginalValues._originalLanguage);
 	}
 
 	@JSON
@@ -1154,19 +1184,22 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void setSmallImageId(long smallImageId) {
-		_columnBitmask |= SMALLIMAGEID_COLUMN_BITMASK;
-
-		if (!_setOriginalSmallImageId) {
-			_setOriginalSmallImageId = true;
-
-			_originalSmallImageId = _smallImageId;
+		if (_ddmTemplateOriginalValues == null) {
+			_ddmTemplateOriginalValues = new DDMTemplateOriginalValues(this);
 		}
+
+		_ddmTemplateOriginalValues._columnBitmask |=
+			SMALLIMAGEID_COLUMN_BITMASK;
 
 		_smallImageId = smallImageId;
 	}
 
 	public long getOriginalSmallImageId() {
-		return _originalSmallImageId;
+		if (_ddmTemplateOriginalValues == null) {
+			return _smallImageId;
+		}
+
+		return _ddmTemplateOriginalValues._originalSmallImageId;
 	}
 
 	@JSON
@@ -1211,7 +1244,11 @@ public class DDMTemplateModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ddmTemplateOriginalValues == null) {
+			return 0;
+		}
+
+		return _ddmTemplateOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1417,45 +1454,11 @@ public class DDMTemplateModelImpl
 	public void resetOriginalValues() {
 		DDMTemplateModelImpl ddmTemplateModelImpl = this;
 
-		ddmTemplateModelImpl._originalUuid = ddmTemplateModelImpl._uuid;
-
-		ddmTemplateModelImpl._originalGroupId = ddmTemplateModelImpl._groupId;
-
-		ddmTemplateModelImpl._setOriginalGroupId = false;
-
-		ddmTemplateModelImpl._originalCompanyId =
-			ddmTemplateModelImpl._companyId;
-
-		ddmTemplateModelImpl._setOriginalCompanyId = false;
+		ddmTemplateModelImpl._ddmTemplateOriginalValues = null;
 
 		ddmTemplateModelImpl._setModifiedDate = false;
 
-		ddmTemplateModelImpl._originalClassNameId =
-			ddmTemplateModelImpl._classNameId;
-
-		ddmTemplateModelImpl._setOriginalClassNameId = false;
-
-		ddmTemplateModelImpl._originalClassPK = ddmTemplateModelImpl._classPK;
-
-		ddmTemplateModelImpl._setOriginalClassPK = false;
-
-		ddmTemplateModelImpl._originalTemplateKey =
-			ddmTemplateModelImpl._templateKey;
-
-		ddmTemplateModelImpl._originalType = ddmTemplateModelImpl._type;
-
-		ddmTemplateModelImpl._originalMode = ddmTemplateModelImpl._mode;
-
-		ddmTemplateModelImpl._originalLanguage = ddmTemplateModelImpl._language;
-
-		ddmTemplateModelImpl._originalSmallImageId =
-			ddmTemplateModelImpl._smallImageId;
-
-		ddmTemplateModelImpl._setOriginalSmallImageId = false;
-
 		setResourceClassName(null);
-
-		ddmTemplateModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1676,18 +1679,160 @@ public class DDMTemplateModelImpl
 		return sb.toString();
 	}
 
+	void setDDMTemplateCacheModel(DDMTemplateCacheModel ddmTemplateCacheModel) {
+		if (ddmTemplateCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = ddmTemplateCacheModel.uuid;
+		}
+
+		_templateId = ddmTemplateCacheModel.templateId;
+		_groupId = ddmTemplateCacheModel.groupId;
+		_companyId = ddmTemplateCacheModel.companyId;
+		_userId = ddmTemplateCacheModel.userId;
+
+		if (ddmTemplateCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ddmTemplateCacheModel.userName;
+		}
+
+		_versionUserId = ddmTemplateCacheModel.versionUserId;
+
+		if (ddmTemplateCacheModel.versionUserName == null) {
+			_versionUserName = "";
+		}
+		else {
+			_versionUserName = ddmTemplateCacheModel.versionUserName;
+		}
+
+		if (ddmTemplateCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ddmTemplateCacheModel.createDate);
+		}
+
+		if (ddmTemplateCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(ddmTemplateCacheModel.modifiedDate);
+		}
+
+		_classNameId = ddmTemplateCacheModel.classNameId;
+		_classPK = ddmTemplateCacheModel.classPK;
+		_resourceClassNameId = ddmTemplateCacheModel.resourceClassNameId;
+
+		if (ddmTemplateCacheModel.templateKey == null) {
+			_templateKey = "";
+		}
+		else {
+			_templateKey = ddmTemplateCacheModel.templateKey;
+		}
+
+		if (ddmTemplateCacheModel.version == null) {
+			_version = "";
+		}
+		else {
+			_version = ddmTemplateCacheModel.version;
+		}
+
+		if (ddmTemplateCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = ddmTemplateCacheModel.name;
+		}
+
+		if (ddmTemplateCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = ddmTemplateCacheModel.description;
+		}
+
+		if (ddmTemplateCacheModel.type == null) {
+			_type = "";
+		}
+		else {
+			_type = ddmTemplateCacheModel.type;
+		}
+
+		if (ddmTemplateCacheModel.mode == null) {
+			_mode = "";
+		}
+		else {
+			_mode = ddmTemplateCacheModel.mode;
+		}
+
+		if (ddmTemplateCacheModel.language == null) {
+			_language = "";
+		}
+		else {
+			_language = ddmTemplateCacheModel.language;
+		}
+
+		if (ddmTemplateCacheModel.script == null) {
+			_script = "";
+		}
+		else {
+			_script = ddmTemplateCacheModel.script;
+		}
+
+		_cacheable = ddmTemplateCacheModel.cacheable;
+		_smallImage = ddmTemplateCacheModel.smallImage;
+		_smallImageId = ddmTemplateCacheModel.smallImageId;
+
+		if (ddmTemplateCacheModel.smallImageURL == null) {
+			_smallImageURL = "";
+		}
+		else {
+			_smallImageURL = ddmTemplateCacheModel.smallImageURL;
+		}
+
+		if (ddmTemplateCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(ddmTemplateCacheModel.lastPublishDate);
+		}
+
+		setResourceClassName(ddmTemplateCacheModel._resourceClassName);
+	}
+
+	private static class DDMTemplateOriginalValues {
+
+		private DDMTemplateOriginalValues(
+			DDMTemplateModelImpl ddmTemplateModelImpl) {
+
+			_originalUuid = ddmTemplateModelImpl._uuid;
+			_originalGroupId = ddmTemplateModelImpl._groupId;
+			_originalCompanyId = ddmTemplateModelImpl._companyId;
+			_originalClassNameId = ddmTemplateModelImpl._classNameId;
+			_originalClassPK = ddmTemplateModelImpl._classPK;
+			_originalTemplateKey = ddmTemplateModelImpl._templateKey;
+			_originalType = ddmTemplateModelImpl._type;
+			_originalMode = ddmTemplateModelImpl._mode;
+			_originalLanguage = ddmTemplateModelImpl._language;
+			_originalSmallImageId = ddmTemplateModelImpl._smallImageId;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final String _originalTemplateKey;
+		private final String _originalType;
+		private final String _originalMode;
+		private final String _originalLanguage;
+		private final long _originalSmallImageId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DDMTemplate>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private DDMTemplateOriginalValues _ddmTemplateOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _templateId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private long _versionUserId;
@@ -1696,34 +1841,23 @@ public class DDMTemplateModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _resourceClassNameId;
 	private String _templateKey;
-	private String _originalTemplateKey;
 	private String _version;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _type;
-	private String _originalType;
 	private String _mode;
-	private String _originalMode;
 	private String _language;
-	private String _originalLanguage;
 	private String _script;
 	private boolean _cacheable;
 	private boolean _smallImage;
 	private long _smallImageId;
-	private long _originalSmallImageId;
-	private boolean _setOriginalSmallImageId;
 	private String _smallImageURL;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private DDMTemplate _escapedModel;
 
 }

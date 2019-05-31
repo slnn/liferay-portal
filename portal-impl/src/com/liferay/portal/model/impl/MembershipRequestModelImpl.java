@@ -423,19 +423,23 @@ public class MembershipRequestModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_membershipRequestOriginalValues == null) {
+			_membershipRequestOriginalValues =
+				new MembershipRequestOriginalValues(this);
 		}
+
+		_membershipRequestOriginalValues._columnBitmask |=
+			GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_membershipRequestOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _membershipRequestOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -457,13 +461,13 @@ public class MembershipRequestModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_membershipRequestOriginalValues == null) {
+			_membershipRequestOriginalValues =
+				new MembershipRequestOriginalValues(this);
 		}
+
+		_membershipRequestOriginalValues._columnBitmask |=
+			USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -485,7 +489,11 @@ public class MembershipRequestModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_membershipRequestOriginalValues == null) {
+			return _userId;
+		}
+
+		return _membershipRequestOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -496,7 +504,12 @@ public class MembershipRequestModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_membershipRequestOriginalValues == null) {
+			_membershipRequestOriginalValues =
+				new MembershipRequestOriginalValues(this);
+		}
+
+		_membershipRequestOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -579,23 +592,31 @@ public class MembershipRequestModelImpl
 
 	@Override
 	public void setStatusId(long statusId) {
-		_columnBitmask |= STATUSID_COLUMN_BITMASK;
-
-		if (!_setOriginalStatusId) {
-			_setOriginalStatusId = true;
-
-			_originalStatusId = _statusId;
+		if (_membershipRequestOriginalValues == null) {
+			_membershipRequestOriginalValues =
+				new MembershipRequestOriginalValues(this);
 		}
+
+		_membershipRequestOriginalValues._columnBitmask |=
+			STATUSID_COLUMN_BITMASK;
 
 		_statusId = statusId;
 	}
 
 	public long getOriginalStatusId() {
-		return _originalStatusId;
+		if (_membershipRequestOriginalValues == null) {
+			return _statusId;
+		}
+
+		return _membershipRequestOriginalValues._originalStatusId;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_membershipRequestOriginalValues == null) {
+			return 0;
+		}
+
+		return _membershipRequestOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -700,22 +721,7 @@ public class MembershipRequestModelImpl
 	public void resetOriginalValues() {
 		MembershipRequestModelImpl membershipRequestModelImpl = this;
 
-		membershipRequestModelImpl._originalGroupId =
-			membershipRequestModelImpl._groupId;
-
-		membershipRequestModelImpl._setOriginalGroupId = false;
-
-		membershipRequestModelImpl._originalUserId =
-			membershipRequestModelImpl._userId;
-
-		membershipRequestModelImpl._setOriginalUserId = false;
-
-		membershipRequestModelImpl._originalStatusId =
-			membershipRequestModelImpl._statusId;
-
-		membershipRequestModelImpl._setOriginalStatusId = false;
-
-		membershipRequestModelImpl._columnBitmask = 0;
+		membershipRequestModelImpl._membershipRequestOriginalValues = null;
 	}
 
 	@Override
@@ -838,27 +844,73 @@ public class MembershipRequestModelImpl
 		return sb.toString();
 	}
 
+	void setMembershipRequestCacheModel(
+		MembershipRequestCacheModel membershipRequestCacheModel) {
+
+		_mvccVersion = membershipRequestCacheModel.mvccVersion;
+		_membershipRequestId = membershipRequestCacheModel.membershipRequestId;
+		_groupId = membershipRequestCacheModel.groupId;
+		_companyId = membershipRequestCacheModel.companyId;
+		_userId = membershipRequestCacheModel.userId;
+
+		if (membershipRequestCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(membershipRequestCacheModel.createDate);
+		}
+
+		if (membershipRequestCacheModel.comments == null) {
+			_comments = "";
+		}
+		else {
+			_comments = membershipRequestCacheModel.comments;
+		}
+
+		if (membershipRequestCacheModel.replyComments == null) {
+			_replyComments = "";
+		}
+		else {
+			_replyComments = membershipRequestCacheModel.replyComments;
+		}
+
+		if (membershipRequestCacheModel.replyDate != Long.MIN_VALUE) {
+			_replyDate = new Date(membershipRequestCacheModel.replyDate);
+		}
+
+		_replierUserId = membershipRequestCacheModel.replierUserId;
+		_statusId = membershipRequestCacheModel.statusId;
+	}
+
+	private static class MembershipRequestOriginalValues {
+
+		private MembershipRequestOriginalValues(
+			MembershipRequestModelImpl membershipRequestModelImpl) {
+
+			_originalGroupId = membershipRequestModelImpl._groupId;
+			_originalUserId = membershipRequestModelImpl._userId;
+			_originalStatusId = membershipRequestModelImpl._statusId;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalUserId;
+		private final long _originalStatusId;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, MembershipRequest>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private MembershipRequestOriginalValues _membershipRequestOriginalValues;
 	private long _mvccVersion;
 	private long _membershipRequestId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _comments;
 	private String _replyComments;
 	private Date _replyDate;
 	private long _replierUserId;
 	private long _statusId;
-	private long _originalStatusId;
-	private boolean _setOriginalStatusId;
-	private long _columnBitmask;
 	private MembershipRequest _escapedModel;
 
 }

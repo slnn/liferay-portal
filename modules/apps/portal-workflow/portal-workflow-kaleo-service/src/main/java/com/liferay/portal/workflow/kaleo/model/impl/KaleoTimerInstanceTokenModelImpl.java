@@ -448,7 +448,12 @@ public class KaleoTimerInstanceTokenModelImpl
 
 	@Override
 	public void setKaleoTimerInstanceTokenId(long kaleoTimerInstanceTokenId) {
-		_columnBitmask = -1L;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			_kaleoTimerInstanceTokenOriginalValues =
+				new KaleoTimerInstanceTokenOriginalValues(this);
+		}
+
+		_kaleoTimerInstanceTokenOriginalValues._columnBitmask = -1L;
 
 		_kaleoTimerInstanceTokenId = kaleoTimerInstanceTokenId;
 	}
@@ -582,19 +587,23 @@ public class KaleoTimerInstanceTokenModelImpl
 
 	@Override
 	public void setKaleoInstanceId(long kaleoInstanceId) {
-		_columnBitmask |= KALEOINSTANCEID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoInstanceId) {
-			_setOriginalKaleoInstanceId = true;
-
-			_originalKaleoInstanceId = _kaleoInstanceId;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			_kaleoTimerInstanceTokenOriginalValues =
+				new KaleoTimerInstanceTokenOriginalValues(this);
 		}
+
+		_kaleoTimerInstanceTokenOriginalValues._columnBitmask |=
+			KALEOINSTANCEID_COLUMN_BITMASK;
 
 		_kaleoInstanceId = kaleoInstanceId;
 	}
 
 	public long getOriginalKaleoInstanceId() {
-		return _originalKaleoInstanceId;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			return _kaleoInstanceId;
+		}
+
+		return _kaleoTimerInstanceTokenOriginalValues._originalKaleoInstanceId;
 	}
 
 	@Override
@@ -604,19 +613,24 @@ public class KaleoTimerInstanceTokenModelImpl
 
 	@Override
 	public void setKaleoInstanceTokenId(long kaleoInstanceTokenId) {
-		_columnBitmask |= KALEOINSTANCETOKENID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoInstanceTokenId) {
-			_setOriginalKaleoInstanceTokenId = true;
-
-			_originalKaleoInstanceTokenId = _kaleoInstanceTokenId;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			_kaleoTimerInstanceTokenOriginalValues =
+				new KaleoTimerInstanceTokenOriginalValues(this);
 		}
+
+		_kaleoTimerInstanceTokenOriginalValues._columnBitmask |=
+			KALEOINSTANCETOKENID_COLUMN_BITMASK;
 
 		_kaleoInstanceTokenId = kaleoInstanceTokenId;
 	}
 
 	public long getOriginalKaleoInstanceTokenId() {
-		return _originalKaleoInstanceTokenId;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			return _kaleoInstanceTokenId;
+		}
+
+		return _kaleoTimerInstanceTokenOriginalValues.
+			_originalKaleoInstanceTokenId;
 	}
 
 	@Override
@@ -636,19 +650,23 @@ public class KaleoTimerInstanceTokenModelImpl
 
 	@Override
 	public void setKaleoTimerId(long kaleoTimerId) {
-		_columnBitmask |= KALEOTIMERID_COLUMN_BITMASK;
-
-		if (!_setOriginalKaleoTimerId) {
-			_setOriginalKaleoTimerId = true;
-
-			_originalKaleoTimerId = _kaleoTimerId;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			_kaleoTimerInstanceTokenOriginalValues =
+				new KaleoTimerInstanceTokenOriginalValues(this);
 		}
+
+		_kaleoTimerInstanceTokenOriginalValues._columnBitmask |=
+			KALEOTIMERID_COLUMN_BITMASK;
 
 		_kaleoTimerId = kaleoTimerId;
 	}
 
 	public long getOriginalKaleoTimerId() {
-		return _originalKaleoTimerId;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			return _kaleoTimerId;
+		}
+
+		return _kaleoTimerInstanceTokenOriginalValues._originalKaleoTimerId;
 	}
 
 	@Override
@@ -678,19 +696,23 @@ public class KaleoTimerInstanceTokenModelImpl
 
 	@Override
 	public void setBlocking(boolean blocking) {
-		_columnBitmask |= BLOCKING_COLUMN_BITMASK;
-
-		if (!_setOriginalBlocking) {
-			_setOriginalBlocking = true;
-
-			_originalBlocking = _blocking;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			_kaleoTimerInstanceTokenOriginalValues =
+				new KaleoTimerInstanceTokenOriginalValues(this);
 		}
+
+		_kaleoTimerInstanceTokenOriginalValues._columnBitmask |=
+			BLOCKING_COLUMN_BITMASK;
 
 		_blocking = blocking;
 	}
 
 	public boolean getOriginalBlocking() {
-		return _originalBlocking;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			return _blocking;
+		}
+
+		return _kaleoTimerInstanceTokenOriginalValues._originalBlocking;
 	}
 
 	@Override
@@ -731,19 +753,23 @@ public class KaleoTimerInstanceTokenModelImpl
 
 	@Override
 	public void setCompleted(boolean completed) {
-		_columnBitmask |= COMPLETED_COLUMN_BITMASK;
-
-		if (!_setOriginalCompleted) {
-			_setOriginalCompleted = true;
-
-			_originalCompleted = _completed;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			_kaleoTimerInstanceTokenOriginalValues =
+				new KaleoTimerInstanceTokenOriginalValues(this);
 		}
+
+		_kaleoTimerInstanceTokenOriginalValues._columnBitmask |=
+			COMPLETED_COLUMN_BITMASK;
 
 		_completed = completed;
 	}
 
 	public boolean getOriginalCompleted() {
-		return _originalCompleted;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			return _completed;
+		}
+
+		return _kaleoTimerInstanceTokenOriginalValues._originalCompleted;
 	}
 
 	@Override
@@ -772,7 +798,11 @@ public class KaleoTimerInstanceTokenModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_kaleoTimerInstanceTokenOriginalValues == null) {
+			return 0;
+		}
+
+		return _kaleoTimerInstanceTokenOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -903,35 +933,10 @@ public class KaleoTimerInstanceTokenModelImpl
 		KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl =
 			this;
 
+		kaleoTimerInstanceTokenModelImpl.
+			_kaleoTimerInstanceTokenOriginalValues = null;
+
 		kaleoTimerInstanceTokenModelImpl._setModifiedDate = false;
-
-		kaleoTimerInstanceTokenModelImpl._originalKaleoInstanceId =
-			kaleoTimerInstanceTokenModelImpl._kaleoInstanceId;
-
-		kaleoTimerInstanceTokenModelImpl._setOriginalKaleoInstanceId = false;
-
-		kaleoTimerInstanceTokenModelImpl._originalKaleoInstanceTokenId =
-			kaleoTimerInstanceTokenModelImpl._kaleoInstanceTokenId;
-
-		kaleoTimerInstanceTokenModelImpl._setOriginalKaleoInstanceTokenId =
-			false;
-
-		kaleoTimerInstanceTokenModelImpl._originalKaleoTimerId =
-			kaleoTimerInstanceTokenModelImpl._kaleoTimerId;
-
-		kaleoTimerInstanceTokenModelImpl._setOriginalKaleoTimerId = false;
-
-		kaleoTimerInstanceTokenModelImpl._originalBlocking =
-			kaleoTimerInstanceTokenModelImpl._blocking;
-
-		kaleoTimerInstanceTokenModelImpl._setOriginalBlocking = false;
-
-		kaleoTimerInstanceTokenModelImpl._originalCompleted =
-			kaleoTimerInstanceTokenModelImpl._completed;
-
-		kaleoTimerInstanceTokenModelImpl._setOriginalCompleted = false;
-
-		kaleoTimerInstanceTokenModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1106,9 +1111,106 @@ public class KaleoTimerInstanceTokenModelImpl
 		return sb.toString();
 	}
 
+	void setKaleoTimerInstanceTokenCacheModel(
+		KaleoTimerInstanceTokenCacheModel kaleoTimerInstanceTokenCacheModel) {
+
+		_mvccVersion = kaleoTimerInstanceTokenCacheModel.mvccVersion;
+		_kaleoTimerInstanceTokenId =
+			kaleoTimerInstanceTokenCacheModel.kaleoTimerInstanceTokenId;
+		_groupId = kaleoTimerInstanceTokenCacheModel.groupId;
+		_companyId = kaleoTimerInstanceTokenCacheModel.companyId;
+		_userId = kaleoTimerInstanceTokenCacheModel.userId;
+
+		if (kaleoTimerInstanceTokenCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = kaleoTimerInstanceTokenCacheModel.userName;
+		}
+
+		if (kaleoTimerInstanceTokenCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(
+				kaleoTimerInstanceTokenCacheModel.createDate);
+		}
+
+		if (kaleoTimerInstanceTokenCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(
+				kaleoTimerInstanceTokenCacheModel.modifiedDate);
+		}
+
+		if (kaleoTimerInstanceTokenCacheModel.kaleoClassName == null) {
+			_kaleoClassName = "";
+		}
+		else {
+			_kaleoClassName = kaleoTimerInstanceTokenCacheModel.kaleoClassName;
+		}
+
+		_kaleoClassPK = kaleoTimerInstanceTokenCacheModel.kaleoClassPK;
+		_kaleoDefinitionVersionId =
+			kaleoTimerInstanceTokenCacheModel.kaleoDefinitionVersionId;
+		_kaleoInstanceId = kaleoTimerInstanceTokenCacheModel.kaleoInstanceId;
+		_kaleoInstanceTokenId =
+			kaleoTimerInstanceTokenCacheModel.kaleoInstanceTokenId;
+		_kaleoTaskInstanceTokenId =
+			kaleoTimerInstanceTokenCacheModel.kaleoTaskInstanceTokenId;
+		_kaleoTimerId = kaleoTimerInstanceTokenCacheModel.kaleoTimerId;
+
+		if (kaleoTimerInstanceTokenCacheModel.kaleoTimerName == null) {
+			_kaleoTimerName = "";
+		}
+		else {
+			_kaleoTimerName = kaleoTimerInstanceTokenCacheModel.kaleoTimerName;
+		}
+
+		_blocking = kaleoTimerInstanceTokenCacheModel.blocking;
+		_completionUserId = kaleoTimerInstanceTokenCacheModel.completionUserId;
+		_completed = kaleoTimerInstanceTokenCacheModel.completed;
+
+		if (kaleoTimerInstanceTokenCacheModel.completionDate !=
+				Long.MIN_VALUE) {
+
+			_completionDate = new Date(
+				kaleoTimerInstanceTokenCacheModel.completionDate);
+		}
+
+		if (kaleoTimerInstanceTokenCacheModel.workflowContext == null) {
+			_workflowContext = "";
+		}
+		else {
+			_workflowContext =
+				kaleoTimerInstanceTokenCacheModel.workflowContext;
+		}
+	}
+
+	private static class KaleoTimerInstanceTokenOriginalValues {
+
+		private KaleoTimerInstanceTokenOriginalValues(
+			KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl) {
+
+			_originalKaleoInstanceId =
+				kaleoTimerInstanceTokenModelImpl._kaleoInstanceId;
+			_originalKaleoInstanceTokenId =
+				kaleoTimerInstanceTokenModelImpl._kaleoInstanceTokenId;
+			_originalKaleoTimerId =
+				kaleoTimerInstanceTokenModelImpl._kaleoTimerId;
+			_originalBlocking = kaleoTimerInstanceTokenModelImpl._blocking;
+			_originalCompleted = kaleoTimerInstanceTokenModelImpl._completed;
+		}
+
+		private final long _originalKaleoInstanceId;
+		private final long _originalKaleoInstanceTokenId;
+		private final long _originalKaleoTimerId;
+		private final boolean _originalBlocking;
+		private final boolean _originalCompleted;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, KaleoTimerInstanceToken>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private KaleoTimerInstanceTokenOriginalValues
+		_kaleoTimerInstanceTokenOriginalValues;
 	private long _mvccVersion;
 	private long _kaleoTimerInstanceTokenId;
 	private long _groupId;
@@ -1122,26 +1224,15 @@ public class KaleoTimerInstanceTokenModelImpl
 	private long _kaleoClassPK;
 	private long _kaleoDefinitionVersionId;
 	private long _kaleoInstanceId;
-	private long _originalKaleoInstanceId;
-	private boolean _setOriginalKaleoInstanceId;
 	private long _kaleoInstanceTokenId;
-	private long _originalKaleoInstanceTokenId;
-	private boolean _setOriginalKaleoInstanceTokenId;
 	private long _kaleoTaskInstanceTokenId;
 	private long _kaleoTimerId;
-	private long _originalKaleoTimerId;
-	private boolean _setOriginalKaleoTimerId;
 	private String _kaleoTimerName;
 	private boolean _blocking;
-	private boolean _originalBlocking;
-	private boolean _setOriginalBlocking;
 	private long _completionUserId;
 	private boolean _completed;
-	private boolean _originalCompleted;
-	private boolean _setOriginalCompleted;
 	private Date _completionDate;
 	private String _workflowContext;
-	private long _columnBitmask;
 	private KaleoTimerInstanceToken _escapedModel;
 
 }

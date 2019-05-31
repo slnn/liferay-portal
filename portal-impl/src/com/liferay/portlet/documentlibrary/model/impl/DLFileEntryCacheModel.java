@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -136,125 +134,7 @@ public class DLFileEntryCacheModel
 	public DLFileEntry toEntityModel() {
 		DLFileEntryImpl dlFileEntryImpl = new DLFileEntryImpl();
 
-		if (uuid == null) {
-			dlFileEntryImpl.setUuid("");
-		}
-		else {
-			dlFileEntryImpl.setUuid(uuid);
-		}
-
-		dlFileEntryImpl.setFileEntryId(fileEntryId);
-		dlFileEntryImpl.setGroupId(groupId);
-		dlFileEntryImpl.setCompanyId(companyId);
-		dlFileEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			dlFileEntryImpl.setUserName("");
-		}
-		else {
-			dlFileEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			dlFileEntryImpl.setCreateDate(null);
-		}
-		else {
-			dlFileEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			dlFileEntryImpl.setModifiedDate(null);
-		}
-		else {
-			dlFileEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		dlFileEntryImpl.setClassNameId(classNameId);
-		dlFileEntryImpl.setClassPK(classPK);
-		dlFileEntryImpl.setRepositoryId(repositoryId);
-		dlFileEntryImpl.setFolderId(folderId);
-
-		if (treePath == null) {
-			dlFileEntryImpl.setTreePath("");
-		}
-		else {
-			dlFileEntryImpl.setTreePath(treePath);
-		}
-
-		if (name == null) {
-			dlFileEntryImpl.setName("");
-		}
-		else {
-			dlFileEntryImpl.setName(name);
-		}
-
-		if (fileName == null) {
-			dlFileEntryImpl.setFileName("");
-		}
-		else {
-			dlFileEntryImpl.setFileName(fileName);
-		}
-
-		if (extension == null) {
-			dlFileEntryImpl.setExtension("");
-		}
-		else {
-			dlFileEntryImpl.setExtension(extension);
-		}
-
-		if (mimeType == null) {
-			dlFileEntryImpl.setMimeType("");
-		}
-		else {
-			dlFileEntryImpl.setMimeType(mimeType);
-		}
-
-		if (title == null) {
-			dlFileEntryImpl.setTitle("");
-		}
-		else {
-			dlFileEntryImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			dlFileEntryImpl.setDescription("");
-		}
-		else {
-			dlFileEntryImpl.setDescription(description);
-		}
-
-		if (extraSettings == null) {
-			dlFileEntryImpl.setExtraSettings("");
-		}
-		else {
-			dlFileEntryImpl.setExtraSettings(extraSettings);
-		}
-
-		dlFileEntryImpl.setFileEntryTypeId(fileEntryTypeId);
-
-		if (version == null) {
-			dlFileEntryImpl.setVersion("");
-		}
-		else {
-			dlFileEntryImpl.setVersion(version);
-		}
-
-		dlFileEntryImpl.setSize(size);
-		dlFileEntryImpl.setReadCount(readCount);
-		dlFileEntryImpl.setSmallImageId(smallImageId);
-		dlFileEntryImpl.setLargeImageId(largeImageId);
-		dlFileEntryImpl.setCustom1ImageId(custom1ImageId);
-		dlFileEntryImpl.setCustom2ImageId(custom2ImageId);
-		dlFileEntryImpl.setManualCheckInRequired(manualCheckInRequired);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			dlFileEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			dlFileEntryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		dlFileEntryImpl.resetOriginalValues();
+		dlFileEntryImpl.setDLFileEntryCacheModel(this);
 
 		return dlFileEntryImpl;
 	}

@@ -99,26 +99,7 @@ public class ClusterGroupCacheModel
 	public ClusterGroup toEntityModel() {
 		ClusterGroupImpl clusterGroupImpl = new ClusterGroupImpl();
 
-		clusterGroupImpl.setMvccVersion(mvccVersion);
-		clusterGroupImpl.setClusterGroupId(clusterGroupId);
-
-		if (name == null) {
-			clusterGroupImpl.setName("");
-		}
-		else {
-			clusterGroupImpl.setName(name);
-		}
-
-		if (clusterNodeIds == null) {
-			clusterGroupImpl.setClusterNodeIds("");
-		}
-		else {
-			clusterGroupImpl.setClusterNodeIds(clusterNodeIds);
-		}
-
-		clusterGroupImpl.setWholeCluster(wholeCluster);
-
-		clusterGroupImpl.resetOriginalValues();
+		clusterGroupImpl.setClusterGroupCacheModel(this);
 
 		return clusterGroupImpl;
 	}

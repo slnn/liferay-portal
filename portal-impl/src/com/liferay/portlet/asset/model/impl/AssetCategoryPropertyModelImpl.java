@@ -402,19 +402,23 @@ public class AssetCategoryPropertyModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_assetCategoryPropertyOriginalValues == null) {
+			_assetCategoryPropertyOriginalValues =
+				new AssetCategoryPropertyOriginalValues(this);
 		}
+
+		_assetCategoryPropertyOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_assetCategoryPropertyOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _assetCategoryPropertyOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -496,19 +500,23 @@ public class AssetCategoryPropertyModelImpl
 
 	@Override
 	public void setCategoryId(long categoryId) {
-		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCategoryId) {
-			_setOriginalCategoryId = true;
-
-			_originalCategoryId = _categoryId;
+		if (_assetCategoryPropertyOriginalValues == null) {
+			_assetCategoryPropertyOriginalValues =
+				new AssetCategoryPropertyOriginalValues(this);
 		}
+
+		_assetCategoryPropertyOriginalValues._columnBitmask |=
+			CATEGORYID_COLUMN_BITMASK;
 
 		_categoryId = categoryId;
 	}
 
 	public long getOriginalCategoryId() {
-		return _originalCategoryId;
+		if (_assetCategoryPropertyOriginalValues == null) {
+			return _categoryId;
+		}
+
+		return _assetCategoryPropertyOriginalValues._originalCategoryId;
 	}
 
 	@JSON
@@ -524,17 +532,23 @@ public class AssetCategoryPropertyModelImpl
 
 	@Override
 	public void setKey(String key) {
-		_columnBitmask = -1L;
-
-		if (_originalKey == null) {
-			_originalKey = _key;
+		if (_assetCategoryPropertyOriginalValues == null) {
+			_assetCategoryPropertyOriginalValues =
+				new AssetCategoryPropertyOriginalValues(this);
 		}
+
+		_assetCategoryPropertyOriginalValues._columnBitmask = -1L;
 
 		_key = key;
 	}
 
 	public String getOriginalKey() {
-		return GetterUtil.getString(_originalKey);
+		if (_assetCategoryPropertyOriginalValues == null) {
+			return GetterUtil.getString(_key);
+		}
+
+		return GetterUtil.getString(
+			_assetCategoryPropertyOriginalValues._originalKey);
 	}
 
 	@JSON
@@ -554,7 +568,11 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetCategoryPropertyOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetCategoryPropertyOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -657,22 +675,10 @@ public class AssetCategoryPropertyModelImpl
 	public void resetOriginalValues() {
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = this;
 
-		assetCategoryPropertyModelImpl._originalCompanyId =
-			assetCategoryPropertyModelImpl._companyId;
-
-		assetCategoryPropertyModelImpl._setOriginalCompanyId = false;
+		assetCategoryPropertyModelImpl._assetCategoryPropertyOriginalValues =
+			null;
 
 		assetCategoryPropertyModelImpl._setModifiedDate = false;
-
-		assetCategoryPropertyModelImpl._originalCategoryId =
-			assetCategoryPropertyModelImpl._categoryId;
-
-		assetCategoryPropertyModelImpl._setOriginalCategoryId = false;
-
-		assetCategoryPropertyModelImpl._originalKey =
-			assetCategoryPropertyModelImpl._key;
-
-		assetCategoryPropertyModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -800,25 +806,79 @@ public class AssetCategoryPropertyModelImpl
 		return sb.toString();
 	}
 
+	void setAssetCategoryPropertyCacheModel(
+		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel) {
+
+		_categoryPropertyId =
+			assetCategoryPropertyCacheModel.categoryPropertyId;
+		_companyId = assetCategoryPropertyCacheModel.companyId;
+		_userId = assetCategoryPropertyCacheModel.userId;
+
+		if (assetCategoryPropertyCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = assetCategoryPropertyCacheModel.userName;
+		}
+
+		if (assetCategoryPropertyCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(assetCategoryPropertyCacheModel.createDate);
+		}
+
+		if (assetCategoryPropertyCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(
+				assetCategoryPropertyCacheModel.modifiedDate);
+		}
+
+		_categoryId = assetCategoryPropertyCacheModel.categoryId;
+
+		if (assetCategoryPropertyCacheModel.key == null) {
+			_key = "";
+		}
+		else {
+			_key = assetCategoryPropertyCacheModel.key;
+		}
+
+		if (assetCategoryPropertyCacheModel.value == null) {
+			_value = "";
+		}
+		else {
+			_value = assetCategoryPropertyCacheModel.value;
+		}
+	}
+
+	private static class AssetCategoryPropertyOriginalValues {
+
+		private AssetCategoryPropertyOriginalValues(
+			AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl) {
+
+			_originalCompanyId = assetCategoryPropertyModelImpl._companyId;
+			_originalCategoryId = assetCategoryPropertyModelImpl._categoryId;
+			_originalKey = assetCategoryPropertyModelImpl._key;
+		}
+
+		private final long _originalCompanyId;
+		private final long _originalCategoryId;
+		private final String _originalKey;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetCategoryProperty>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AssetCategoryPropertyOriginalValues
+		_assetCategoryPropertyOriginalValues;
 	private long _categoryPropertyId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _categoryId;
-	private long _originalCategoryId;
-	private boolean _setOriginalCategoryId;
 	private String _key;
-	private String _originalKey;
 	private String _value;
-	private long _columnBitmask;
 	private AssetCategoryProperty _escapedModel;
 
 }

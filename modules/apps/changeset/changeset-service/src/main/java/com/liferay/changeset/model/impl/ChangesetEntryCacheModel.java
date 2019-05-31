@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -96,37 +94,7 @@ public class ChangesetEntryCacheModel
 	public ChangesetEntry toEntityModel() {
 		ChangesetEntryImpl changesetEntryImpl = new ChangesetEntryImpl();
 
-		changesetEntryImpl.setChangesetEntryId(changesetEntryId);
-		changesetEntryImpl.setGroupId(groupId);
-		changesetEntryImpl.setCompanyId(companyId);
-		changesetEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			changesetEntryImpl.setUserName("");
-		}
-		else {
-			changesetEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			changesetEntryImpl.setCreateDate(null);
-		}
-		else {
-			changesetEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			changesetEntryImpl.setModifiedDate(null);
-		}
-		else {
-			changesetEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		changesetEntryImpl.setChangesetCollectionId(changesetCollectionId);
-		changesetEntryImpl.setClassNameId(classNameId);
-		changesetEntryImpl.setClassPK(classPK);
-
-		changesetEntryImpl.resetOriginalValues();
+		changesetEntryImpl.setChangesetEntryCacheModel(this);
 
 		return changesetEntryImpl;
 	}

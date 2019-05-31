@@ -539,19 +539,21 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_assetEntryOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _assetEntryOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -562,19 +564,21 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_assetEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _assetEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -676,19 +680,21 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_assetEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _assetEntryOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -699,19 +705,21 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_assetEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _assetEntryOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -727,17 +735,22 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setClassUuid(String classUuid) {
-		_columnBitmask |= CLASSUUID_COLUMN_BITMASK;
-
-		if (_originalClassUuid == null) {
-			_originalClassUuid = _classUuid;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= CLASSUUID_COLUMN_BITMASK;
 
 		_classUuid = classUuid;
 	}
 
 	public String getOriginalClassUuid() {
-		return GetterUtil.getString(_originalClassUuid);
+		if (_assetEntryOriginalValues == null) {
+			return GetterUtil.getString(_classUuid);
+		}
+
+		return GetterUtil.getString(
+			_assetEntryOriginalValues._originalClassUuid);
 	}
 
 	@JSON
@@ -782,19 +795,21 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setVisible(boolean visible) {
-		_columnBitmask |= VISIBLE_COLUMN_BITMASK;
-
-		if (!_setOriginalVisible) {
-			_setOriginalVisible = true;
-
-			_originalVisible = _visible;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= VISIBLE_COLUMN_BITMASK;
 
 		_visible = visible;
 	}
 
 	public boolean getOriginalVisible() {
-		return _originalVisible;
+		if (_assetEntryOriginalValues == null) {
+			return _visible;
+		}
+
+		return _assetEntryOriginalValues._originalVisible;
 	}
 
 	@JSON
@@ -827,17 +842,21 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setPublishDate(Date publishDate) {
-		_columnBitmask |= PUBLISHDATE_COLUMN_BITMASK;
-
-		if (_originalPublishDate == null) {
-			_originalPublishDate = _publishDate;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= PUBLISHDATE_COLUMN_BITMASK;
 
 		_publishDate = publishDate;
 	}
 
 	public Date getOriginalPublishDate() {
-		return _originalPublishDate;
+		if (_assetEntryOriginalValues == null) {
+			return _publishDate;
+		}
+
+		return _assetEntryOriginalValues._originalPublishDate;
 	}
 
 	@JSON
@@ -848,17 +867,22 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
-
-		if (_originalExpirationDate == null) {
-			_originalExpirationDate = _expirationDate;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |=
+			EXPIRATIONDATE_COLUMN_BITMASK;
 
 		_expirationDate = expirationDate;
 	}
 
 	public Date getOriginalExpirationDate() {
-		return _originalExpirationDate;
+		if (_assetEntryOriginalValues == null) {
+			return _expirationDate;
+		}
+
+		return _assetEntryOriginalValues._originalExpirationDate;
 	}
 
 	@JSON
@@ -1227,17 +1251,22 @@ public class AssetEntryModelImpl
 
 	@Override
 	public void setLayoutUuid(String layoutUuid) {
-		_columnBitmask |= LAYOUTUUID_COLUMN_BITMASK;
-
-		if (_originalLayoutUuid == null) {
-			_originalLayoutUuid = _layoutUuid;
+		if (_assetEntryOriginalValues == null) {
+			_assetEntryOriginalValues = new AssetEntryOriginalValues(this);
 		}
+
+		_assetEntryOriginalValues._columnBitmask |= LAYOUTUUID_COLUMN_BITMASK;
 
 		_layoutUuid = layoutUuid;
 	}
 
 	public String getOriginalLayoutUuid() {
-		return GetterUtil.getString(_originalLayoutUuid);
+		if (_assetEntryOriginalValues == null) {
+			return GetterUtil.getString(_layoutUuid);
+		}
+
+		return GetterUtil.getString(
+			_assetEntryOriginalValues._originalLayoutUuid);
 	}
 
 	@JSON
@@ -1285,7 +1314,11 @@ public class AssetEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1512,41 +1545,9 @@ public class AssetEntryModelImpl
 	public void resetOriginalValues() {
 		AssetEntryModelImpl assetEntryModelImpl = this;
 
-		assetEntryModelImpl._originalGroupId = assetEntryModelImpl._groupId;
-
-		assetEntryModelImpl._setOriginalGroupId = false;
-
-		assetEntryModelImpl._originalCompanyId = assetEntryModelImpl._companyId;
-
-		assetEntryModelImpl._setOriginalCompanyId = false;
+		assetEntryModelImpl._assetEntryOriginalValues = null;
 
 		assetEntryModelImpl._setModifiedDate = false;
-
-		assetEntryModelImpl._originalClassNameId =
-			assetEntryModelImpl._classNameId;
-
-		assetEntryModelImpl._setOriginalClassNameId = false;
-
-		assetEntryModelImpl._originalClassPK = assetEntryModelImpl._classPK;
-
-		assetEntryModelImpl._setOriginalClassPK = false;
-
-		assetEntryModelImpl._originalClassUuid = assetEntryModelImpl._classUuid;
-
-		assetEntryModelImpl._originalVisible = assetEntryModelImpl._visible;
-
-		assetEntryModelImpl._setOriginalVisible = false;
-
-		assetEntryModelImpl._originalPublishDate =
-			assetEntryModelImpl._publishDate;
-
-		assetEntryModelImpl._originalExpirationDate =
-			assetEntryModelImpl._expirationDate;
-
-		assetEntryModelImpl._originalLayoutUuid =
-			assetEntryModelImpl._layoutUuid;
-
-		assetEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1763,40 +1764,156 @@ public class AssetEntryModelImpl
 		return sb.toString();
 	}
 
+	void setAssetEntryCacheModel(AssetEntryCacheModel assetEntryCacheModel) {
+		_entryId = assetEntryCacheModel.entryId;
+		_groupId = assetEntryCacheModel.groupId;
+		_companyId = assetEntryCacheModel.companyId;
+		_userId = assetEntryCacheModel.userId;
+
+		if (assetEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = assetEntryCacheModel.userName;
+		}
+
+		if (assetEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(assetEntryCacheModel.createDate);
+		}
+
+		if (assetEntryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(assetEntryCacheModel.modifiedDate);
+		}
+
+		_classNameId = assetEntryCacheModel.classNameId;
+		_classPK = assetEntryCacheModel.classPK;
+
+		if (assetEntryCacheModel.classUuid == null) {
+			_classUuid = "";
+		}
+		else {
+			_classUuid = assetEntryCacheModel.classUuid;
+		}
+
+		_classTypeId = assetEntryCacheModel.classTypeId;
+		_listable = assetEntryCacheModel.listable;
+		_visible = assetEntryCacheModel.visible;
+
+		if (assetEntryCacheModel.startDate != Long.MIN_VALUE) {
+			_startDate = new Date(assetEntryCacheModel.startDate);
+		}
+
+		if (assetEntryCacheModel.endDate != Long.MIN_VALUE) {
+			_endDate = new Date(assetEntryCacheModel.endDate);
+		}
+
+		if (assetEntryCacheModel.publishDate != Long.MIN_VALUE) {
+			_publishDate = new Date(assetEntryCacheModel.publishDate);
+		}
+
+		if (assetEntryCacheModel.expirationDate != Long.MIN_VALUE) {
+			_expirationDate = new Date(assetEntryCacheModel.expirationDate);
+		}
+
+		if (assetEntryCacheModel.mimeType == null) {
+			_mimeType = "";
+		}
+		else {
+			_mimeType = assetEntryCacheModel.mimeType;
+		}
+
+		if (assetEntryCacheModel.title == null) {
+			_title = "";
+		}
+		else {
+			_title = assetEntryCacheModel.title;
+		}
+
+		if (assetEntryCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = assetEntryCacheModel.description;
+		}
+
+		if (assetEntryCacheModel.summary == null) {
+			_summary = "";
+		}
+		else {
+			_summary = assetEntryCacheModel.summary;
+		}
+
+		if (assetEntryCacheModel.url == null) {
+			_url = "";
+		}
+		else {
+			_url = assetEntryCacheModel.url;
+		}
+
+		if (assetEntryCacheModel.layoutUuid == null) {
+			_layoutUuid = "";
+		}
+		else {
+			_layoutUuid = assetEntryCacheModel.layoutUuid;
+		}
+
+		_height = assetEntryCacheModel.height;
+		_width = assetEntryCacheModel.width;
+		_priority = assetEntryCacheModel.priority;
+		_viewCount = assetEntryCacheModel.viewCount;
+	}
+
+	private static class AssetEntryOriginalValues {
+
+		private AssetEntryOriginalValues(
+			AssetEntryModelImpl assetEntryModelImpl) {
+
+			_originalGroupId = assetEntryModelImpl._groupId;
+			_originalCompanyId = assetEntryModelImpl._companyId;
+			_originalClassNameId = assetEntryModelImpl._classNameId;
+			_originalClassPK = assetEntryModelImpl._classPK;
+			_originalClassUuid = assetEntryModelImpl._classUuid;
+			_originalVisible = assetEntryModelImpl._visible;
+			_originalPublishDate = assetEntryModelImpl._publishDate;
+			_originalExpirationDate = assetEntryModelImpl._expirationDate;
+			_originalLayoutUuid = assetEntryModelImpl._layoutUuid;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final String _originalClassUuid;
+		private final boolean _originalVisible;
+		private final Date _originalPublishDate;
+		private final Date _originalExpirationDate;
+		private final String _originalLayoutUuid;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private AssetEntryOriginalValues _assetEntryOriginalValues;
 	private long _entryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _classUuid;
-	private String _originalClassUuid;
 	private long _classTypeId;
 	private boolean _listable;
 	private boolean _visible;
-	private boolean _originalVisible;
-	private boolean _setOriginalVisible;
 	private Date _startDate;
 	private Date _endDate;
 	private Date _publishDate;
-	private Date _originalPublishDate;
 	private Date _expirationDate;
-	private Date _originalExpirationDate;
 	private String _mimeType;
 	private String _title;
 	private String _titleCurrentLanguageId;
@@ -1806,12 +1923,10 @@ public class AssetEntryModelImpl
 	private String _summaryCurrentLanguageId;
 	private String _url;
 	private String _layoutUuid;
-	private String _originalLayoutUuid;
 	private int _height;
 	private int _width;
 	private double _priority;
 	private int _viewCount;
-	private long _columnBitmask;
 	private AssetEntry _escapedModel;
 
 }

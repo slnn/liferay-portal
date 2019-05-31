@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -112,89 +110,7 @@ public class JournalFolderCacheModel
 	public JournalFolder toEntityModel() {
 		JournalFolderImpl journalFolderImpl = new JournalFolderImpl();
 
-		if (uuid == null) {
-			journalFolderImpl.setUuid("");
-		}
-		else {
-			journalFolderImpl.setUuid(uuid);
-		}
-
-		journalFolderImpl.setFolderId(folderId);
-		journalFolderImpl.setGroupId(groupId);
-		journalFolderImpl.setCompanyId(companyId);
-		journalFolderImpl.setUserId(userId);
-
-		if (userName == null) {
-			journalFolderImpl.setUserName("");
-		}
-		else {
-			journalFolderImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			journalFolderImpl.setCreateDate(null);
-		}
-		else {
-			journalFolderImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			journalFolderImpl.setModifiedDate(null);
-		}
-		else {
-			journalFolderImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		journalFolderImpl.setParentFolderId(parentFolderId);
-
-		if (treePath == null) {
-			journalFolderImpl.setTreePath("");
-		}
-		else {
-			journalFolderImpl.setTreePath(treePath);
-		}
-
-		if (name == null) {
-			journalFolderImpl.setName("");
-		}
-		else {
-			journalFolderImpl.setName(name);
-		}
-
-		if (description == null) {
-			journalFolderImpl.setDescription("");
-		}
-		else {
-			journalFolderImpl.setDescription(description);
-		}
-
-		journalFolderImpl.setRestrictionType(restrictionType);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			journalFolderImpl.setLastPublishDate(null);
-		}
-		else {
-			journalFolderImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		journalFolderImpl.setStatus(status);
-		journalFolderImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			journalFolderImpl.setStatusByUserName("");
-		}
-		else {
-			journalFolderImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			journalFolderImpl.setStatusDate(null);
-		}
-		else {
-			journalFolderImpl.setStatusDate(new Date(statusDate));
-		}
-
-		journalFolderImpl.resetOriginalValues();
+		journalFolderImpl.setJournalFolderCacheModel(this);
 
 		return journalFolderImpl;
 	}

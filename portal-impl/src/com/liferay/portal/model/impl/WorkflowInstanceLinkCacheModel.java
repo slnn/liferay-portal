@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -115,39 +113,7 @@ public class WorkflowInstanceLinkCacheModel
 		WorkflowInstanceLinkImpl workflowInstanceLinkImpl =
 			new WorkflowInstanceLinkImpl();
 
-		workflowInstanceLinkImpl.setMvccVersion(mvccVersion);
-		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(
-			workflowInstanceLinkId);
-		workflowInstanceLinkImpl.setGroupId(groupId);
-		workflowInstanceLinkImpl.setCompanyId(companyId);
-		workflowInstanceLinkImpl.setUserId(userId);
-
-		if (userName == null) {
-			workflowInstanceLinkImpl.setUserName("");
-		}
-		else {
-			workflowInstanceLinkImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			workflowInstanceLinkImpl.setCreateDate(null);
-		}
-		else {
-			workflowInstanceLinkImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			workflowInstanceLinkImpl.setModifiedDate(null);
-		}
-		else {
-			workflowInstanceLinkImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		workflowInstanceLinkImpl.setClassNameId(classNameId);
-		workflowInstanceLinkImpl.setClassPK(classPK);
-		workflowInstanceLinkImpl.setWorkflowInstanceId(workflowInstanceId);
-
-		workflowInstanceLinkImpl.resetOriginalValues();
+		workflowInstanceLinkImpl.setWorkflowInstanceLinkCacheModel(this);
 
 		return workflowInstanceLinkImpl;
 	}

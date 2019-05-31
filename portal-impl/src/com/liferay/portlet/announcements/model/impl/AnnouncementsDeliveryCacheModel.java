@@ -89,22 +89,7 @@ public class AnnouncementsDeliveryCacheModel
 		AnnouncementsDeliveryImpl announcementsDeliveryImpl =
 			new AnnouncementsDeliveryImpl();
 
-		announcementsDeliveryImpl.setDeliveryId(deliveryId);
-		announcementsDeliveryImpl.setCompanyId(companyId);
-		announcementsDeliveryImpl.setUserId(userId);
-
-		if (type == null) {
-			announcementsDeliveryImpl.setType("");
-		}
-		else {
-			announcementsDeliveryImpl.setType(type);
-		}
-
-		announcementsDeliveryImpl.setEmail(email);
-		announcementsDeliveryImpl.setSms(sms);
-		announcementsDeliveryImpl.setWebsite(website);
-
-		announcementsDeliveryImpl.resetOriginalValues();
+		announcementsDeliveryImpl.setAnnouncementsDeliveryCacheModel(this);
 
 		return announcementsDeliveryImpl;
 	}

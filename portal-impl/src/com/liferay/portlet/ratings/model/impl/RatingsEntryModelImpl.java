@@ -383,17 +383,21 @@ public class RatingsEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_ratingsEntryOriginalValues == null) {
+			_ratingsEntryOriginalValues = new RatingsEntryOriginalValues(this);
 		}
+
+		_ratingsEntryOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_ratingsEntryOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_ratingsEntryOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -415,19 +419,21 @@ public class RatingsEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_ratingsEntryOriginalValues == null) {
+			_ratingsEntryOriginalValues = new RatingsEntryOriginalValues(this);
 		}
+
+		_ratingsEntryOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_ratingsEntryOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _ratingsEntryOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -438,13 +444,11 @@ public class RatingsEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_ratingsEntryOriginalValues == null) {
+			_ratingsEntryOriginalValues = new RatingsEntryOriginalValues(this);
 		}
+
+		_ratingsEntryOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -466,7 +470,11 @@ public class RatingsEntryModelImpl
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_ratingsEntryOriginalValues == null) {
+			return _userId;
+		}
+
+		return _ratingsEntryOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -541,19 +549,22 @@ public class RatingsEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_ratingsEntryOriginalValues == null) {
+			_ratingsEntryOriginalValues = new RatingsEntryOriginalValues(this);
 		}
+
+		_ratingsEntryOriginalValues._columnBitmask |=
+			CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_ratingsEntryOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _ratingsEntryOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -564,19 +575,21 @@ public class RatingsEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_ratingsEntryOriginalValues == null) {
+			_ratingsEntryOriginalValues = new RatingsEntryOriginalValues(this);
 		}
+
+		_ratingsEntryOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_ratingsEntryOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _ratingsEntryOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -587,19 +600,21 @@ public class RatingsEntryModelImpl
 
 	@Override
 	public void setScore(double score) {
-		_columnBitmask |= SCORE_COLUMN_BITMASK;
-
-		if (!_setOriginalScore) {
-			_setOriginalScore = true;
-
-			_originalScore = _score;
+		if (_ratingsEntryOriginalValues == null) {
+			_ratingsEntryOriginalValues = new RatingsEntryOriginalValues(this);
 		}
+
+		_ratingsEntryOriginalValues._columnBitmask |= SCORE_COLUMN_BITMASK;
 
 		_score = score;
 	}
 
 	public double getOriginalScore() {
-		return _originalScore;
+		if (_ratingsEntryOriginalValues == null) {
+			return _score;
+		}
+
+		return _ratingsEntryOriginalValues._originalScore;
 	}
 
 	@Override
@@ -610,7 +625,11 @@ public class RatingsEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_ratingsEntryOriginalValues == null) {
+			return 0;
+		}
+
+		return _ratingsEntryOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -712,33 +731,9 @@ public class RatingsEntryModelImpl
 	public void resetOriginalValues() {
 		RatingsEntryModelImpl ratingsEntryModelImpl = this;
 
-		ratingsEntryModelImpl._originalUuid = ratingsEntryModelImpl._uuid;
-
-		ratingsEntryModelImpl._originalCompanyId =
-			ratingsEntryModelImpl._companyId;
-
-		ratingsEntryModelImpl._setOriginalCompanyId = false;
-
-		ratingsEntryModelImpl._originalUserId = ratingsEntryModelImpl._userId;
-
-		ratingsEntryModelImpl._setOriginalUserId = false;
+		ratingsEntryModelImpl._ratingsEntryOriginalValues = null;
 
 		ratingsEntryModelImpl._setModifiedDate = false;
-
-		ratingsEntryModelImpl._originalClassNameId =
-			ratingsEntryModelImpl._classNameId;
-
-		ratingsEntryModelImpl._setOriginalClassNameId = false;
-
-		ratingsEntryModelImpl._originalClassPK = ratingsEntryModelImpl._classPK;
-
-		ratingsEntryModelImpl._setOriginalClassPK = false;
-
-		ratingsEntryModelImpl._originalScore = ratingsEntryModelImpl._score;
-
-		ratingsEntryModelImpl._setOriginalScore = false;
-
-		ratingsEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -858,32 +853,78 @@ public class RatingsEntryModelImpl
 		return sb.toString();
 	}
 
+	void setRatingsEntryCacheModel(
+		RatingsEntryCacheModel ratingsEntryCacheModel) {
+
+		if (ratingsEntryCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = ratingsEntryCacheModel.uuid;
+		}
+
+		_entryId = ratingsEntryCacheModel.entryId;
+		_companyId = ratingsEntryCacheModel.companyId;
+		_userId = ratingsEntryCacheModel.userId;
+
+		if (ratingsEntryCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = ratingsEntryCacheModel.userName;
+		}
+
+		if (ratingsEntryCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(ratingsEntryCacheModel.createDate);
+		}
+
+		if (ratingsEntryCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(ratingsEntryCacheModel.modifiedDate);
+		}
+
+		_classNameId = ratingsEntryCacheModel.classNameId;
+		_classPK = ratingsEntryCacheModel.classPK;
+		_score = ratingsEntryCacheModel.score;
+	}
+
+	private static class RatingsEntryOriginalValues {
+
+		private RatingsEntryOriginalValues(
+			RatingsEntryModelImpl ratingsEntryModelImpl) {
+
+			_originalUuid = ratingsEntryModelImpl._uuid;
+			_originalCompanyId = ratingsEntryModelImpl._companyId;
+			_originalUserId = ratingsEntryModelImpl._userId;
+			_originalClassNameId = ratingsEntryModelImpl._classNameId;
+			_originalClassPK = ratingsEntryModelImpl._classPK;
+			_originalScore = ratingsEntryModelImpl._score;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final double _originalScore;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, RatingsEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private RatingsEntryOriginalValues _ratingsEntryOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _entryId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private double _score;
-	private double _originalScore;
-	private boolean _setOriginalScore;
-	private long _columnBitmask;
 	private RatingsEntry _escapedModel;
 
 }

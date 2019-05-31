@@ -106,48 +106,7 @@ public class CountryCacheModel
 	public Country toEntityModel() {
 		CountryImpl countryImpl = new CountryImpl();
 
-		countryImpl.setMvccVersion(mvccVersion);
-		countryImpl.setCountryId(countryId);
-
-		if (name == null) {
-			countryImpl.setName("");
-		}
-		else {
-			countryImpl.setName(name);
-		}
-
-		if (a2 == null) {
-			countryImpl.setA2("");
-		}
-		else {
-			countryImpl.setA2(a2);
-		}
-
-		if (a3 == null) {
-			countryImpl.setA3("");
-		}
-		else {
-			countryImpl.setA3(a3);
-		}
-
-		if (number == null) {
-			countryImpl.setNumber("");
-		}
-		else {
-			countryImpl.setNumber(number);
-		}
-
-		if (idd == null) {
-			countryImpl.setIdd("");
-		}
-		else {
-			countryImpl.setIdd(idd);
-		}
-
-		countryImpl.setZipRequired(zipRequired);
-		countryImpl.setActive(active);
-
-		countryImpl.resetOriginalValues();
+		countryImpl.setCountryCacheModel(this);
 
 		return countryImpl;
 	}

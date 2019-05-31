@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -126,72 +124,7 @@ public class KaleoTransitionCacheModel
 	public KaleoTransition toEntityModel() {
 		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
 
-		kaleoTransitionImpl.setMvccVersion(mvccVersion);
-		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransitionId);
-		kaleoTransitionImpl.setGroupId(groupId);
-		kaleoTransitionImpl.setCompanyId(companyId);
-		kaleoTransitionImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoTransitionImpl.setUserName("");
-		}
-		else {
-			kaleoTransitionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoTransitionImpl.setCreateDate(null);
-		}
-		else {
-			kaleoTransitionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoTransitionImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoTransitionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kaleoTransitionImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoTransitionImpl.setKaleoNodeId(kaleoNodeId);
-
-		if (name == null) {
-			kaleoTransitionImpl.setName("");
-		}
-		else {
-			kaleoTransitionImpl.setName(name);
-		}
-
-		if (description == null) {
-			kaleoTransitionImpl.setDescription("");
-		}
-		else {
-			kaleoTransitionImpl.setDescription(description);
-		}
-
-		kaleoTransitionImpl.setSourceKaleoNodeId(sourceKaleoNodeId);
-
-		if (sourceKaleoNodeName == null) {
-			kaleoTransitionImpl.setSourceKaleoNodeName("");
-		}
-		else {
-			kaleoTransitionImpl.setSourceKaleoNodeName(sourceKaleoNodeName);
-		}
-
-		kaleoTransitionImpl.setTargetKaleoNodeId(targetKaleoNodeId);
-
-		if (targetKaleoNodeName == null) {
-			kaleoTransitionImpl.setTargetKaleoNodeName("");
-		}
-		else {
-			kaleoTransitionImpl.setTargetKaleoNodeName(targetKaleoNodeName);
-		}
-
-		kaleoTransitionImpl.setDefaultTransition(defaultTransition);
-
-		kaleoTransitionImpl.resetOriginalValues();
+		kaleoTransitionImpl.setKaleoTransitionCacheModel(this);
 
 		return kaleoTransitionImpl;
 	}

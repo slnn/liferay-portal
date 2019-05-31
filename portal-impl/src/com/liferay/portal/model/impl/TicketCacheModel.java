@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -110,44 +108,7 @@ public class TicketCacheModel
 	public Ticket toEntityModel() {
 		TicketImpl ticketImpl = new TicketImpl();
 
-		ticketImpl.setMvccVersion(mvccVersion);
-		ticketImpl.setTicketId(ticketId);
-		ticketImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			ticketImpl.setCreateDate(null);
-		}
-		else {
-			ticketImpl.setCreateDate(new Date(createDate));
-		}
-
-		ticketImpl.setClassNameId(classNameId);
-		ticketImpl.setClassPK(classPK);
-
-		if (key == null) {
-			ticketImpl.setKey("");
-		}
-		else {
-			ticketImpl.setKey(key);
-		}
-
-		ticketImpl.setType(type);
-
-		if (extraInfo == null) {
-			ticketImpl.setExtraInfo("");
-		}
-		else {
-			ticketImpl.setExtraInfo(extraInfo);
-		}
-
-		if (expirationDate == Long.MIN_VALUE) {
-			ticketImpl.setExpirationDate(null);
-		}
-		else {
-			ticketImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		ticketImpl.resetOriginalValues();
+		ticketImpl.setTicketCacheModel(this);
 
 		return ticketImpl;
 	}

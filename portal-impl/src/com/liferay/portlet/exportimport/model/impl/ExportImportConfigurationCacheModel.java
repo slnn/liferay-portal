@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -128,76 +126,8 @@ public class ExportImportConfigurationCacheModel
 		ExportImportConfigurationImpl exportImportConfigurationImpl =
 			new ExportImportConfigurationImpl();
 
-		exportImportConfigurationImpl.setMvccVersion(mvccVersion);
-		exportImportConfigurationImpl.setExportImportConfigurationId(
-			exportImportConfigurationId);
-		exportImportConfigurationImpl.setGroupId(groupId);
-		exportImportConfigurationImpl.setCompanyId(companyId);
-		exportImportConfigurationImpl.setUserId(userId);
-
-		if (userName == null) {
-			exportImportConfigurationImpl.setUserName("");
-		}
-		else {
-			exportImportConfigurationImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			exportImportConfigurationImpl.setCreateDate(null);
-		}
-		else {
-			exportImportConfigurationImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			exportImportConfigurationImpl.setModifiedDate(null);
-		}
-		else {
-			exportImportConfigurationImpl.setModifiedDate(
-				new Date(modifiedDate));
-		}
-
-		if (name == null) {
-			exportImportConfigurationImpl.setName("");
-		}
-		else {
-			exportImportConfigurationImpl.setName(name);
-		}
-
-		if (description == null) {
-			exportImportConfigurationImpl.setDescription("");
-		}
-		else {
-			exportImportConfigurationImpl.setDescription(description);
-		}
-
-		exportImportConfigurationImpl.setType(type);
-
-		if (settings == null) {
-			exportImportConfigurationImpl.setSettings("");
-		}
-		else {
-			exportImportConfigurationImpl.setSettings(settings);
-		}
-
-		exportImportConfigurationImpl.setStatus(status);
-		exportImportConfigurationImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			exportImportConfigurationImpl.setStatusByUserName("");
-		}
-		else {
-			exportImportConfigurationImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			exportImportConfigurationImpl.setStatusDate(null);
-		}
-		else {
-			exportImportConfigurationImpl.setStatusDate(new Date(statusDate));
-		}
-
-		exportImportConfigurationImpl.resetOriginalValues();
+		exportImportConfigurationImpl.setExportImportConfigurationCacheModel(
+			this);
 
 		return exportImportConfigurationImpl;
 	}

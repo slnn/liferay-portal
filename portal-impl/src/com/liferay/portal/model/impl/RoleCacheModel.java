@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -120,74 +118,7 @@ public class RoleCacheModel
 	public Role toEntityModel() {
 		RoleImpl roleImpl = new RoleImpl();
 
-		roleImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			roleImpl.setUuid("");
-		}
-		else {
-			roleImpl.setUuid(uuid);
-		}
-
-		roleImpl.setRoleId(roleId);
-		roleImpl.setCompanyId(companyId);
-		roleImpl.setUserId(userId);
-
-		if (userName == null) {
-			roleImpl.setUserName("");
-		}
-		else {
-			roleImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			roleImpl.setCreateDate(null);
-		}
-		else {
-			roleImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			roleImpl.setModifiedDate(null);
-		}
-		else {
-			roleImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		roleImpl.setClassNameId(classNameId);
-		roleImpl.setClassPK(classPK);
-
-		if (name == null) {
-			roleImpl.setName("");
-		}
-		else {
-			roleImpl.setName(name);
-		}
-
-		if (title == null) {
-			roleImpl.setTitle("");
-		}
-		else {
-			roleImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			roleImpl.setDescription("");
-		}
-		else {
-			roleImpl.setDescription(description);
-		}
-
-		roleImpl.setType(type);
-
-		if (subtype == null) {
-			roleImpl.setSubtype("");
-		}
-		else {
-			roleImpl.setSubtype(subtype);
-		}
-
-		roleImpl.resetOriginalValues();
+		roleImpl.setRoleCacheModel(this);
 
 		return roleImpl;
 	}

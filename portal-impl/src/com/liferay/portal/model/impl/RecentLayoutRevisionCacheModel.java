@@ -107,17 +107,7 @@ public class RecentLayoutRevisionCacheModel
 		RecentLayoutRevisionImpl recentLayoutRevisionImpl =
 			new RecentLayoutRevisionImpl();
 
-		recentLayoutRevisionImpl.setMvccVersion(mvccVersion);
-		recentLayoutRevisionImpl.setRecentLayoutRevisionId(
-			recentLayoutRevisionId);
-		recentLayoutRevisionImpl.setGroupId(groupId);
-		recentLayoutRevisionImpl.setCompanyId(companyId);
-		recentLayoutRevisionImpl.setUserId(userId);
-		recentLayoutRevisionImpl.setLayoutRevisionId(layoutRevisionId);
-		recentLayoutRevisionImpl.setLayoutSetBranchId(layoutSetBranchId);
-		recentLayoutRevisionImpl.setPlid(plid);
-
-		recentLayoutRevisionImpl.resetOriginalValues();
+		recentLayoutRevisionImpl.setRecentLayoutRevisionCacheModel(this);
 
 		return recentLayoutRevisionImpl;
 	}

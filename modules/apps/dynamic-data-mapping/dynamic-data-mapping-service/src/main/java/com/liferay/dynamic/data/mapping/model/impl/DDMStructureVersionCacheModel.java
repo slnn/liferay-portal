@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -115,85 +113,7 @@ public class DDMStructureVersionCacheModel
 		DDMStructureVersionImpl ddmStructureVersionImpl =
 			new DDMStructureVersionImpl();
 
-		ddmStructureVersionImpl.setStructureVersionId(structureVersionId);
-		ddmStructureVersionImpl.setGroupId(groupId);
-		ddmStructureVersionImpl.setCompanyId(companyId);
-		ddmStructureVersionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmStructureVersionImpl.setUserName("");
-		}
-		else {
-			ddmStructureVersionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmStructureVersionImpl.setCreateDate(null);
-		}
-		else {
-			ddmStructureVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		ddmStructureVersionImpl.setStructureId(structureId);
-
-		if (version == null) {
-			ddmStructureVersionImpl.setVersion("");
-		}
-		else {
-			ddmStructureVersionImpl.setVersion(version);
-		}
-
-		ddmStructureVersionImpl.setParentStructureId(parentStructureId);
-
-		if (name == null) {
-			ddmStructureVersionImpl.setName("");
-		}
-		else {
-			ddmStructureVersionImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmStructureVersionImpl.setDescription("");
-		}
-		else {
-			ddmStructureVersionImpl.setDescription(description);
-		}
-
-		if (definition == null) {
-			ddmStructureVersionImpl.setDefinition("");
-		}
-		else {
-			ddmStructureVersionImpl.setDefinition(definition);
-		}
-
-		if (storageType == null) {
-			ddmStructureVersionImpl.setStorageType("");
-		}
-		else {
-			ddmStructureVersionImpl.setStorageType(storageType);
-		}
-
-		ddmStructureVersionImpl.setType(type);
-		ddmStructureVersionImpl.setStatus(status);
-		ddmStructureVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			ddmStructureVersionImpl.setStatusByUserName("");
-		}
-		else {
-			ddmStructureVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			ddmStructureVersionImpl.setStatusDate(null);
-		}
-		else {
-			ddmStructureVersionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		ddmStructureVersionImpl.resetOriginalValues();
-
-		ddmStructureVersionImpl.setDDMForm(_ddmForm);
+		ddmStructureVersionImpl.setDDMStructureVersionCacheModel(this);
 
 		return ddmStructureVersionImpl;
 	}

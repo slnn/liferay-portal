@@ -335,17 +335,23 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_assetEntryUsageOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_assetEntryUsageOriginalValues._originalUuid);
 	}
 
 	@Override
@@ -365,19 +371,22 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_assetEntryUsageOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _assetEntryUsageOriginalValues._originalGroupId;
 	}
 
 	@Override
@@ -413,19 +422,23 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
-		_columnBitmask |= ASSETENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalAssetEntryId) {
-			_setOriginalAssetEntryId = true;
-
-			_originalAssetEntryId = _assetEntryId;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |=
+			ASSETENTRYID_COLUMN_BITMASK;
 
 		_assetEntryId = assetEntryId;
 	}
 
 	public long getOriginalAssetEntryId() {
-		return _originalAssetEntryId;
+		if (_assetEntryUsageOriginalValues == null) {
+			return _assetEntryId;
+		}
+
+		return _assetEntryUsageOriginalValues._originalAssetEntryId;
 	}
 
 	@Override
@@ -435,19 +448,23 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setContainerType(long containerType) {
-		_columnBitmask |= CONTAINERTYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalContainerType) {
-			_setOriginalContainerType = true;
-
-			_originalContainerType = _containerType;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |=
+			CONTAINERTYPE_COLUMN_BITMASK;
 
 		_containerType = containerType;
 	}
 
 	public long getOriginalContainerType() {
-		return _originalContainerType;
+		if (_assetEntryUsageOriginalValues == null) {
+			return _containerType;
+		}
+
+		return _assetEntryUsageOriginalValues._originalContainerType;
 	}
 
 	@Override
@@ -462,17 +479,24 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setContainerKey(String containerKey) {
-		_columnBitmask |= CONTAINERKEY_COLUMN_BITMASK;
-
-		if (_originalContainerKey == null) {
-			_originalContainerKey = _containerKey;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |=
+			CONTAINERKEY_COLUMN_BITMASK;
 
 		_containerKey = containerKey;
 	}
 
 	public String getOriginalContainerKey() {
-		return GetterUtil.getString(_originalContainerKey);
+		if (_assetEntryUsageOriginalValues == null) {
+			return GetterUtil.getString(_containerKey);
+		}
+
+		return GetterUtil.getString(
+			_assetEntryUsageOriginalValues._originalContainerKey);
 	}
 
 	@Override
@@ -482,19 +506,22 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |= PLID_COLUMN_BITMASK;
 
 		_plid = plid;
 	}
 
 	public long getOriginalPlid() {
-		return _originalPlid;
+		if (_assetEntryUsageOriginalValues == null) {
+			return _plid;
+		}
+
+		return _assetEntryUsageOriginalValues._originalPlid;
 	}
 
 	@Override
@@ -504,19 +531,22 @@ public class AssetEntryUsageModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
-
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+		if (_assetEntryUsageOriginalValues == null) {
+			_assetEntryUsageOriginalValues = new AssetEntryUsageOriginalValues(
+				this);
 		}
+
+		_assetEntryUsageOriginalValues._columnBitmask |= TYPE_COLUMN_BITMASK;
 
 		_type = type;
 	}
 
 	public int getOriginalType() {
-		return _originalType;
+		if (_assetEntryUsageOriginalValues == null) {
+			return _type;
+		}
+
+		return _assetEntryUsageOriginalValues._originalType;
 	}
 
 	@Override
@@ -530,7 +560,11 @@ public class AssetEntryUsageModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_assetEntryUsageOriginalValues == null) {
+			return 0;
+		}
+
+		return _assetEntryUsageOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -633,37 +667,9 @@ public class AssetEntryUsageModelImpl
 	public void resetOriginalValues() {
 		AssetEntryUsageModelImpl assetEntryUsageModelImpl = this;
 
-		assetEntryUsageModelImpl._originalUuid = assetEntryUsageModelImpl._uuid;
-
-		assetEntryUsageModelImpl._originalGroupId =
-			assetEntryUsageModelImpl._groupId;
-
-		assetEntryUsageModelImpl._setOriginalGroupId = false;
+		assetEntryUsageModelImpl._assetEntryUsageOriginalValues = null;
 
 		assetEntryUsageModelImpl._setModifiedDate = false;
-
-		assetEntryUsageModelImpl._originalAssetEntryId =
-			assetEntryUsageModelImpl._assetEntryId;
-
-		assetEntryUsageModelImpl._setOriginalAssetEntryId = false;
-
-		assetEntryUsageModelImpl._originalContainerType =
-			assetEntryUsageModelImpl._containerType;
-
-		assetEntryUsageModelImpl._setOriginalContainerType = false;
-
-		assetEntryUsageModelImpl._originalContainerKey =
-			assetEntryUsageModelImpl._containerKey;
-
-		assetEntryUsageModelImpl._originalPlid = assetEntryUsageModelImpl._plid;
-
-		assetEntryUsageModelImpl._setOriginalPlid = false;
-
-		assetEntryUsageModelImpl._originalType = assetEntryUsageModelImpl._type;
-
-		assetEntryUsageModelImpl._setOriginalType = false;
-
-		assetEntryUsageModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -793,36 +799,89 @@ public class AssetEntryUsageModelImpl
 		return sb.toString();
 	}
 
+	void setAssetEntryUsageCacheModel(
+		AssetEntryUsageCacheModel assetEntryUsageCacheModel) {
+
+		if (assetEntryUsageCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = assetEntryUsageCacheModel.uuid;
+		}
+
+		_assetEntryUsageId = assetEntryUsageCacheModel.assetEntryUsageId;
+		_groupId = assetEntryUsageCacheModel.groupId;
+
+		if (assetEntryUsageCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(assetEntryUsageCacheModel.createDate);
+		}
+
+		if (assetEntryUsageCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(assetEntryUsageCacheModel.modifiedDate);
+		}
+
+		_assetEntryId = assetEntryUsageCacheModel.assetEntryId;
+		_containerType = assetEntryUsageCacheModel.containerType;
+
+		if (assetEntryUsageCacheModel.containerKey == null) {
+			_containerKey = "";
+		}
+		else {
+			_containerKey = assetEntryUsageCacheModel.containerKey;
+		}
+
+		_plid = assetEntryUsageCacheModel.plid;
+		_type = assetEntryUsageCacheModel.type;
+
+		if (assetEntryUsageCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				assetEntryUsageCacheModel.lastPublishDate);
+		}
+	}
+
+	private static class AssetEntryUsageOriginalValues {
+
+		private AssetEntryUsageOriginalValues(
+			AssetEntryUsageModelImpl assetEntryUsageModelImpl) {
+
+			_originalUuid = assetEntryUsageModelImpl._uuid;
+			_originalGroupId = assetEntryUsageModelImpl._groupId;
+			_originalAssetEntryId = assetEntryUsageModelImpl._assetEntryId;
+			_originalContainerType = assetEntryUsageModelImpl._containerType;
+			_originalContainerKey = assetEntryUsageModelImpl._containerKey;
+			_originalPlid = assetEntryUsageModelImpl._plid;
+			_originalType = assetEntryUsageModelImpl._type;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalAssetEntryId;
+		private final long _originalContainerType;
+		private final String _originalContainerKey;
+		private final long _originalPlid;
+		private final int _originalType;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, AssetEntryUsage>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private AssetEntryUsageOriginalValues _assetEntryUsageOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _assetEntryUsageId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _assetEntryId;
-	private long _originalAssetEntryId;
-	private boolean _setOriginalAssetEntryId;
 	private long _containerType;
-	private long _originalContainerType;
-	private boolean _setOriginalContainerType;
 	private String _containerKey;
-	private String _originalContainerKey;
 	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private Date _lastPublishDate;
-	private long _columnBitmask;
 	private AssetEntryUsage _escapedModel;
 
 }

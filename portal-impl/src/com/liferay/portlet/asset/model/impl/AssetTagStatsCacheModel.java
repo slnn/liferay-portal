@@ -87,13 +87,7 @@ public class AssetTagStatsCacheModel
 	public AssetTagStats toEntityModel() {
 		AssetTagStatsImpl assetTagStatsImpl = new AssetTagStatsImpl();
 
-		assetTagStatsImpl.setTagStatsId(tagStatsId);
-		assetTagStatsImpl.setCompanyId(companyId);
-		assetTagStatsImpl.setTagId(tagId);
-		assetTagStatsImpl.setClassNameId(classNameId);
-		assetTagStatsImpl.setAssetCount(assetCount);
-
-		assetTagStatsImpl.resetOriginalValues();
+		assetTagStatsImpl.setAssetTagStatsCacheModel(this);
 
 		return assetTagStatsImpl;
 	}

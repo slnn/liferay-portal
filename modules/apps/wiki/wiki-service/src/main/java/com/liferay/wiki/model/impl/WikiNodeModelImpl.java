@@ -412,17 +412,21 @@ public class WikiNodeModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_wikiNodeOriginalValues == null) {
+			_wikiNodeOriginalValues = new WikiNodeOriginalValues(this);
 		}
+
+		_wikiNodeOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_wikiNodeOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_wikiNodeOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -444,19 +448,21 @@ public class WikiNodeModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_wikiNodeOriginalValues == null) {
+			_wikiNodeOriginalValues = new WikiNodeOriginalValues(this);
 		}
+
+		_wikiNodeOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_wikiNodeOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _wikiNodeOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -467,19 +473,21 @@ public class WikiNodeModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_wikiNodeOriginalValues == null) {
+			_wikiNodeOriginalValues = new WikiNodeOriginalValues(this);
 		}
+
+		_wikiNodeOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_wikiNodeOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _wikiNodeOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -566,17 +574,21 @@ public class WikiNodeModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_wikiNodeOriginalValues == null) {
+			_wikiNodeOriginalValues = new WikiNodeOriginalValues(this);
 		}
+
+		_wikiNodeOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_wikiNodeOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(_wikiNodeOriginalValues._originalName);
 	}
 
 	@JSON
@@ -625,19 +637,21 @@ public class WikiNodeModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_wikiNodeOriginalValues == null) {
+			_wikiNodeOriginalValues = new WikiNodeOriginalValues(this);
 		}
+
+		_wikiNodeOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_wikiNodeOriginalValues == null) {
+			return _status;
+		}
+
+		return _wikiNodeOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -950,7 +964,11 @@ public class WikiNodeModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_wikiNodeOriginalValues == null) {
+			return 0;
+		}
+
+		return _wikiNodeOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1056,25 +1074,9 @@ public class WikiNodeModelImpl
 	public void resetOriginalValues() {
 		WikiNodeModelImpl wikiNodeModelImpl = this;
 
-		wikiNodeModelImpl._originalUuid = wikiNodeModelImpl._uuid;
-
-		wikiNodeModelImpl._originalGroupId = wikiNodeModelImpl._groupId;
-
-		wikiNodeModelImpl._setOriginalGroupId = false;
-
-		wikiNodeModelImpl._originalCompanyId = wikiNodeModelImpl._companyId;
-
-		wikiNodeModelImpl._setOriginalCompanyId = false;
+		wikiNodeModelImpl._wikiNodeOriginalValues = null;
 
 		wikiNodeModelImpl._setModifiedDate = false;
-
-		wikiNodeModelImpl._originalName = wikiNodeModelImpl._name;
-
-		wikiNodeModelImpl._originalStatus = wikiNodeModelImpl._status;
-
-		wikiNodeModelImpl._setOriginalStatus = false;
-
-		wikiNodeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1244,35 +1246,111 @@ public class WikiNodeModelImpl
 		return sb.toString();
 	}
 
+	void setWikiNodeCacheModel(WikiNodeCacheModel wikiNodeCacheModel) {
+		if (wikiNodeCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = wikiNodeCacheModel.uuid;
+		}
+
+		_nodeId = wikiNodeCacheModel.nodeId;
+		_groupId = wikiNodeCacheModel.groupId;
+		_companyId = wikiNodeCacheModel.companyId;
+		_userId = wikiNodeCacheModel.userId;
+
+		if (wikiNodeCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = wikiNodeCacheModel.userName;
+		}
+
+		if (wikiNodeCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(wikiNodeCacheModel.createDate);
+		}
+
+		if (wikiNodeCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(wikiNodeCacheModel.modifiedDate);
+		}
+
+		if (wikiNodeCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = wikiNodeCacheModel.name;
+		}
+
+		if (wikiNodeCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = wikiNodeCacheModel.description;
+		}
+
+		if (wikiNodeCacheModel.lastPostDate != Long.MIN_VALUE) {
+			_lastPostDate = new Date(wikiNodeCacheModel.lastPostDate);
+		}
+
+		if (wikiNodeCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(wikiNodeCacheModel.lastPublishDate);
+		}
+
+		_status = wikiNodeCacheModel.status;
+		_statusByUserId = wikiNodeCacheModel.statusByUserId;
+
+		if (wikiNodeCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = wikiNodeCacheModel.statusByUserName;
+		}
+
+		if (wikiNodeCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(wikiNodeCacheModel.statusDate);
+		}
+	}
+
+	private static class WikiNodeOriginalValues {
+
+		private WikiNodeOriginalValues(WikiNodeModelImpl wikiNodeModelImpl) {
+			_originalUuid = wikiNodeModelImpl._uuid;
+			_originalGroupId = wikiNodeModelImpl._groupId;
+			_originalCompanyId = wikiNodeModelImpl._companyId;
+			_originalName = wikiNodeModelImpl._name;
+			_originalStatus = wikiNodeModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, WikiNode>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private WikiNodeOriginalValues _wikiNodeOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _nodeId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private Date _lastPostDate;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private WikiNode _escapedModel;
 
 }

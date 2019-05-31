@@ -88,29 +88,7 @@ public class StatusCacheModel implements CacheModel<Status>, Externalizable {
 	public Status toEntityModel() {
 		StatusImpl statusImpl = new StatusImpl();
 
-		statusImpl.setStatusId(statusId);
-		statusImpl.setUserId(userId);
-		statusImpl.setModifiedDate(modifiedDate);
-		statusImpl.setOnline(online);
-		statusImpl.setAwake(awake);
-
-		if (activePanelIds == null) {
-			statusImpl.setActivePanelIds("");
-		}
-		else {
-			statusImpl.setActivePanelIds(activePanelIds);
-		}
-
-		if (message == null) {
-			statusImpl.setMessage("");
-		}
-		else {
-			statusImpl.setMessage(message);
-		}
-
-		statusImpl.setPlaySound(playSound);
-
-		statusImpl.resetOriginalValues();
+		statusImpl.setStatusCacheModel(this);
 
 		return statusImpl;
 	}

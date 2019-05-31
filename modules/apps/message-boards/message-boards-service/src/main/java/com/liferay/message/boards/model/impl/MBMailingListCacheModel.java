@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -128,118 +126,7 @@ public class MBMailingListCacheModel
 	public MBMailingList toEntityModel() {
 		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
 
-		if (uuid == null) {
-			mbMailingListImpl.setUuid("");
-		}
-		else {
-			mbMailingListImpl.setUuid(uuid);
-		}
-
-		mbMailingListImpl.setMailingListId(mailingListId);
-		mbMailingListImpl.setGroupId(groupId);
-		mbMailingListImpl.setCompanyId(companyId);
-		mbMailingListImpl.setUserId(userId);
-
-		if (userName == null) {
-			mbMailingListImpl.setUserName("");
-		}
-		else {
-			mbMailingListImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			mbMailingListImpl.setCreateDate(null);
-		}
-		else {
-			mbMailingListImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			mbMailingListImpl.setModifiedDate(null);
-		}
-		else {
-			mbMailingListImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		mbMailingListImpl.setCategoryId(categoryId);
-
-		if (emailAddress == null) {
-			mbMailingListImpl.setEmailAddress("");
-		}
-		else {
-			mbMailingListImpl.setEmailAddress(emailAddress);
-		}
-
-		if (inProtocol == null) {
-			mbMailingListImpl.setInProtocol("");
-		}
-		else {
-			mbMailingListImpl.setInProtocol(inProtocol);
-		}
-
-		if (inServerName == null) {
-			mbMailingListImpl.setInServerName("");
-		}
-		else {
-			mbMailingListImpl.setInServerName(inServerName);
-		}
-
-		mbMailingListImpl.setInServerPort(inServerPort);
-		mbMailingListImpl.setInUseSSL(inUseSSL);
-
-		if (inUserName == null) {
-			mbMailingListImpl.setInUserName("");
-		}
-		else {
-			mbMailingListImpl.setInUserName(inUserName);
-		}
-
-		if (inPassword == null) {
-			mbMailingListImpl.setInPassword("");
-		}
-		else {
-			mbMailingListImpl.setInPassword(inPassword);
-		}
-
-		mbMailingListImpl.setInReadInterval(inReadInterval);
-
-		if (outEmailAddress == null) {
-			mbMailingListImpl.setOutEmailAddress("");
-		}
-		else {
-			mbMailingListImpl.setOutEmailAddress(outEmailAddress);
-		}
-
-		mbMailingListImpl.setOutCustom(outCustom);
-
-		if (outServerName == null) {
-			mbMailingListImpl.setOutServerName("");
-		}
-		else {
-			mbMailingListImpl.setOutServerName(outServerName);
-		}
-
-		mbMailingListImpl.setOutServerPort(outServerPort);
-		mbMailingListImpl.setOutUseSSL(outUseSSL);
-
-		if (outUserName == null) {
-			mbMailingListImpl.setOutUserName("");
-		}
-		else {
-			mbMailingListImpl.setOutUserName(outUserName);
-		}
-
-		if (outPassword == null) {
-			mbMailingListImpl.setOutPassword("");
-		}
-		else {
-			mbMailingListImpl.setOutPassword(outPassword);
-		}
-
-		mbMailingListImpl.setAllowAnonymous(allowAnonymous);
-		mbMailingListImpl.setActive(active);
-
-		mbMailingListImpl.resetOriginalValues();
+		mbMailingListImpl.setMBMailingListCacheModel(this);
 
 		return mbMailingListImpl;
 	}

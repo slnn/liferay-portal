@@ -398,17 +398,21 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
 		}
+
+		_phoneOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_phoneOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(_phoneOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -430,19 +434,21 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
 		}
+
+		_phoneOriginalValues._columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_phoneOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _phoneOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -453,13 +459,11 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
 		}
+
+		_phoneOriginalValues._columnBitmask |= USERID_COLUMN_BITMASK;
 
 		_userId = userId;
 	}
@@ -481,7 +485,11 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	public long getOriginalUserId() {
-		return _originalUserId;
+		if (_phoneOriginalValues == null) {
+			return _userId;
+		}
+
+		return _phoneOriginalValues._originalUserId;
 	}
 
 	@JSON
@@ -508,7 +516,11 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
+		}
+
+		_phoneOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -558,19 +570,21 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
-
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
 		}
+
+		_phoneOriginalValues._columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
 
 		_classNameId = classNameId;
 	}
 
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		if (_phoneOriginalValues == null) {
+			return _classNameId;
+		}
+
+		return _phoneOriginalValues._originalClassNameId;
 	}
 
 	@JSON
@@ -581,19 +595,21 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
 		}
+
+		_phoneOriginalValues._columnBitmask |= CLASSPK_COLUMN_BITMASK;
 
 		_classPK = classPK;
 	}
 
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		if (_phoneOriginalValues == null) {
+			return _classPK;
+		}
+
+		return _phoneOriginalValues._originalClassPK;
 	}
 
 	@JSON
@@ -653,19 +669,21 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setPrimary(boolean primary) {
-		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
-
-		if (!_setOriginalPrimary) {
-			_setOriginalPrimary = true;
-
-			_originalPrimary = _primary;
+		if (_phoneOriginalValues == null) {
+			_phoneOriginalValues = new PhoneOriginalValues(this);
 		}
+
+		_phoneOriginalValues._columnBitmask |= PRIMARY_COLUMN_BITMASK;
 
 		_primary = primary;
 	}
 
 	public boolean getOriginalPrimary() {
-		return _originalPrimary;
+		if (_phoneOriginalValues == null) {
+			return _primary;
+		}
+
+		return _phoneOriginalValues._originalPrimary;
 	}
 
 	@Override
@@ -675,7 +693,11 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_phoneOriginalValues == null) {
+			return 0;
+		}
+
+		return _phoneOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -779,31 +801,9 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public void resetOriginalValues() {
 		PhoneModelImpl phoneModelImpl = this;
 
-		phoneModelImpl._originalUuid = phoneModelImpl._uuid;
-
-		phoneModelImpl._originalCompanyId = phoneModelImpl._companyId;
-
-		phoneModelImpl._setOriginalCompanyId = false;
-
-		phoneModelImpl._originalUserId = phoneModelImpl._userId;
-
-		phoneModelImpl._setOriginalUserId = false;
+		phoneModelImpl._phoneOriginalValues = null;
 
 		phoneModelImpl._setModifiedDate = false;
-
-		phoneModelImpl._originalClassNameId = phoneModelImpl._classNameId;
-
-		phoneModelImpl._setOriginalClassNameId = false;
-
-		phoneModelImpl._originalClassPK = phoneModelImpl._classPK;
-
-		phoneModelImpl._setOriginalClassPK = false;
-
-		phoneModelImpl._originalPrimary = phoneModelImpl._primary;
-
-		phoneModelImpl._setOriginalPrimary = false;
-
-		phoneModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -940,36 +940,96 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		return sb.toString();
 	}
 
+	void setPhoneCacheModel(PhoneCacheModel phoneCacheModel) {
+		_mvccVersion = phoneCacheModel.mvccVersion;
+
+		if (phoneCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = phoneCacheModel.uuid;
+		}
+
+		_phoneId = phoneCacheModel.phoneId;
+		_companyId = phoneCacheModel.companyId;
+		_userId = phoneCacheModel.userId;
+
+		if (phoneCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = phoneCacheModel.userName;
+		}
+
+		if (phoneCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(phoneCacheModel.createDate);
+		}
+
+		if (phoneCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(phoneCacheModel.modifiedDate);
+		}
+
+		_classNameId = phoneCacheModel.classNameId;
+		_classPK = phoneCacheModel.classPK;
+
+		if (phoneCacheModel.number == null) {
+			_number = "";
+		}
+		else {
+			_number = phoneCacheModel.number;
+		}
+
+		if (phoneCacheModel.extension == null) {
+			_extension = "";
+		}
+		else {
+			_extension = phoneCacheModel.extension;
+		}
+
+		_typeId = phoneCacheModel.typeId;
+		_primary = phoneCacheModel.primary;
+	}
+
+	private static class PhoneOriginalValues {
+
+		private PhoneOriginalValues(PhoneModelImpl phoneModelImpl) {
+			_originalUuid = phoneModelImpl._uuid;
+			_originalCompanyId = phoneModelImpl._companyId;
+			_originalUserId = phoneModelImpl._userId;
+			_originalClassNameId = phoneModelImpl._classNameId;
+			_originalClassPK = phoneModelImpl._classPK;
+			_originalPrimary = phoneModelImpl._primary;
+		}
+
+		private final String _originalUuid;
+		private final long _originalCompanyId;
+		private final long _originalUserId;
+		private final long _originalClassNameId;
+		private final long _originalClassPK;
+		private final boolean _originalPrimary;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, Phone>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
+	private PhoneOriginalValues _phoneOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _phoneId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _number;
 	private String _extension;
 	private long _typeId;
 	private boolean _primary;
-	private boolean _originalPrimary;
-	private boolean _setOriginalPrimary;
-	private long _columnBitmask;
 	private Phone _escapedModel;
 
 }

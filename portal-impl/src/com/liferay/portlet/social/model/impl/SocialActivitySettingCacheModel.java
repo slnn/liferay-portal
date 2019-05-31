@@ -91,27 +91,7 @@ public class SocialActivitySettingCacheModel
 		SocialActivitySettingImpl socialActivitySettingImpl =
 			new SocialActivitySettingImpl();
 
-		socialActivitySettingImpl.setActivitySettingId(activitySettingId);
-		socialActivitySettingImpl.setGroupId(groupId);
-		socialActivitySettingImpl.setCompanyId(companyId);
-		socialActivitySettingImpl.setClassNameId(classNameId);
-		socialActivitySettingImpl.setActivityType(activityType);
-
-		if (name == null) {
-			socialActivitySettingImpl.setName("");
-		}
-		else {
-			socialActivitySettingImpl.setName(name);
-		}
-
-		if (value == null) {
-			socialActivitySettingImpl.setValue("");
-		}
-		else {
-			socialActivitySettingImpl.setValue(value);
-		}
-
-		socialActivitySettingImpl.resetOriginalValues();
+		socialActivitySettingImpl.setSocialActivitySettingCacheModel(this);
 
 		return socialActivitySettingImpl;
 	}

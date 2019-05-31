@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -96,36 +94,7 @@ public class ReadingTimeEntryCacheModel
 	public ReadingTimeEntry toEntityModel() {
 		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
 
-		if (uuid == null) {
-			readingTimeEntryImpl.setUuid("");
-		}
-		else {
-			readingTimeEntryImpl.setUuid(uuid);
-		}
-
-		readingTimeEntryImpl.setReadingTimeEntryId(readingTimeEntryId);
-		readingTimeEntryImpl.setGroupId(groupId);
-		readingTimeEntryImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			readingTimeEntryImpl.setCreateDate(null);
-		}
-		else {
-			readingTimeEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			readingTimeEntryImpl.setModifiedDate(null);
-		}
-		else {
-			readingTimeEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		readingTimeEntryImpl.setClassNameId(classNameId);
-		readingTimeEntryImpl.setClassPK(classPK);
-		readingTimeEntryImpl.setReadingTime(readingTime);
-
-		readingTimeEntryImpl.resetOriginalValues();
+		readingTimeEntryImpl.setReadingTimeEntryCacheModel(this);
 
 		return readingTimeEntryImpl;
 	}

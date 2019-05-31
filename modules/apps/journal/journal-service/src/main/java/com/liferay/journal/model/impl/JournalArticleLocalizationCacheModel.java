@@ -90,33 +90,8 @@ public class JournalArticleLocalizationCacheModel
 		JournalArticleLocalizationImpl journalArticleLocalizationImpl =
 			new JournalArticleLocalizationImpl();
 
-		journalArticleLocalizationImpl.setArticleLocalizationId(
-			articleLocalizationId);
-		journalArticleLocalizationImpl.setCompanyId(companyId);
-		journalArticleLocalizationImpl.setArticlePK(articlePK);
-
-		if (title == null) {
-			journalArticleLocalizationImpl.setTitle("");
-		}
-		else {
-			journalArticleLocalizationImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			journalArticleLocalizationImpl.setDescription("");
-		}
-		else {
-			journalArticleLocalizationImpl.setDescription(description);
-		}
-
-		if (languageId == null) {
-			journalArticleLocalizationImpl.setLanguageId("");
-		}
-		else {
-			journalArticleLocalizationImpl.setLanguageId(languageId);
-		}
-
-		journalArticleLocalizationImpl.resetOriginalValues();
+		journalArticleLocalizationImpl.setJournalArticleLocalizationCacheModel(
+			this);
 
 		return journalArticleLocalizationImpl;
 	}

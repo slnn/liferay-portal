@@ -445,19 +445,22 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
 		}
+
+		_backgroundTaskOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_backgroundTaskOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _backgroundTaskOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -468,19 +471,23 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
 		}
+
+		_backgroundTaskOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_backgroundTaskOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _backgroundTaskOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -534,7 +541,12 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
+		}
+
+		_backgroundTaskOriginalValues._columnBitmask = -1L;
 
 		_createDate = createDate;
 	}
@@ -569,17 +581,23 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
 		}
+
+		_backgroundTaskOriginalValues._columnBitmask |= NAME_COLUMN_BITMASK;
 
 		_name = name;
 	}
 
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		if (_backgroundTaskOriginalValues == null) {
+			return GetterUtil.getString(_name);
+		}
+
+		return GetterUtil.getString(
+			_backgroundTaskOriginalValues._originalName);
 	}
 
 	@JSON
@@ -611,17 +629,24 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setTaskExecutorClassName(String taskExecutorClassName) {
-		_columnBitmask |= TASKEXECUTORCLASSNAME_COLUMN_BITMASK;
-
-		if (_originalTaskExecutorClassName == null) {
-			_originalTaskExecutorClassName = _taskExecutorClassName;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
 		}
+
+		_backgroundTaskOriginalValues._columnBitmask |=
+			TASKEXECUTORCLASSNAME_COLUMN_BITMASK;
 
 		_taskExecutorClassName = taskExecutorClassName;
 	}
 
 	public String getOriginalTaskExecutorClassName() {
-		return GetterUtil.getString(_originalTaskExecutorClassName);
+		if (_backgroundTaskOriginalValues == null) {
+			return GetterUtil.getString(_taskExecutorClassName);
+		}
+
+		return GetterUtil.getString(
+			_backgroundTaskOriginalValues._originalTaskExecutorClassName);
 	}
 
 	@JSON
@@ -649,19 +674,23 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setCompleted(boolean completed) {
-		_columnBitmask |= COMPLETED_COLUMN_BITMASK;
-
-		if (!_setOriginalCompleted) {
-			_setOriginalCompleted = true;
-
-			_originalCompleted = _completed;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
 		}
+
+		_backgroundTaskOriginalValues._columnBitmask |=
+			COMPLETED_COLUMN_BITMASK;
 
 		_completed = completed;
 	}
 
 	public boolean getOriginalCompleted() {
-		return _originalCompleted;
+		if (_backgroundTaskOriginalValues == null) {
+			return _completed;
+		}
+
+		return _backgroundTaskOriginalValues._originalCompleted;
 	}
 
 	@JSON
@@ -683,19 +712,22 @@ public class BackgroundTaskModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_backgroundTaskOriginalValues == null) {
+			_backgroundTaskOriginalValues = new BackgroundTaskOriginalValues(
+				this);
 		}
+
+		_backgroundTaskOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_backgroundTaskOriginalValues == null) {
+			return _status;
+		}
+
+		return _backgroundTaskOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -715,7 +747,11 @@ public class BackgroundTaskModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_backgroundTaskOriginalValues == null) {
+			return 0;
+		}
+
+		return _backgroundTaskOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -822,34 +858,9 @@ public class BackgroundTaskModelImpl
 	public void resetOriginalValues() {
 		BackgroundTaskModelImpl backgroundTaskModelImpl = this;
 
-		backgroundTaskModelImpl._originalGroupId =
-			backgroundTaskModelImpl._groupId;
-
-		backgroundTaskModelImpl._setOriginalGroupId = false;
-
-		backgroundTaskModelImpl._originalCompanyId =
-			backgroundTaskModelImpl._companyId;
-
-		backgroundTaskModelImpl._setOriginalCompanyId = false;
+		backgroundTaskModelImpl._backgroundTaskOriginalValues = null;
 
 		backgroundTaskModelImpl._setModifiedDate = false;
-
-		backgroundTaskModelImpl._originalName = backgroundTaskModelImpl._name;
-
-		backgroundTaskModelImpl._originalTaskExecutorClassName =
-			backgroundTaskModelImpl._taskExecutorClassName;
-
-		backgroundTaskModelImpl._originalCompleted =
-			backgroundTaskModelImpl._completed;
-
-		backgroundTaskModelImpl._setOriginalCompleted = false;
-
-		backgroundTaskModelImpl._originalStatus =
-			backgroundTaskModelImpl._status;
-
-		backgroundTaskModelImpl._setOriginalStatus = false;
-
-		backgroundTaskModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1013,39 +1024,116 @@ public class BackgroundTaskModelImpl
 		return sb.toString();
 	}
 
+	void setBackgroundTaskCacheModel(
+		BackgroundTaskCacheModel backgroundTaskCacheModel) {
+
+		_mvccVersion = backgroundTaskCacheModel.mvccVersion;
+		_backgroundTaskId = backgroundTaskCacheModel.backgroundTaskId;
+		_groupId = backgroundTaskCacheModel.groupId;
+		_companyId = backgroundTaskCacheModel.companyId;
+		_userId = backgroundTaskCacheModel.userId;
+
+		if (backgroundTaskCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = backgroundTaskCacheModel.userName;
+		}
+
+		if (backgroundTaskCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(backgroundTaskCacheModel.createDate);
+		}
+
+		if (backgroundTaskCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(backgroundTaskCacheModel.modifiedDate);
+		}
+
+		if (backgroundTaskCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = backgroundTaskCacheModel.name;
+		}
+
+		if (backgroundTaskCacheModel.servletContextNames == null) {
+			_servletContextNames = "";
+		}
+		else {
+			_servletContextNames = backgroundTaskCacheModel.servletContextNames;
+		}
+
+		if (backgroundTaskCacheModel.taskExecutorClassName == null) {
+			_taskExecutorClassName = "";
+		}
+		else {
+			_taskExecutorClassName =
+				backgroundTaskCacheModel.taskExecutorClassName;
+		}
+
+		_taskContextMap = backgroundTaskCacheModel.taskContextMap;
+		_completed = backgroundTaskCacheModel.completed;
+
+		if (backgroundTaskCacheModel.completionDate != Long.MIN_VALUE) {
+			_completionDate = new Date(backgroundTaskCacheModel.completionDate);
+		}
+
+		_status = backgroundTaskCacheModel.status;
+
+		if (backgroundTaskCacheModel.statusMessage == null) {
+			_statusMessage = "";
+		}
+		else {
+			_statusMessage = backgroundTaskCacheModel.statusMessage;
+		}
+	}
+
+	private static class BackgroundTaskOriginalValues {
+
+		private BackgroundTaskOriginalValues(
+			BackgroundTaskModelImpl backgroundTaskModelImpl) {
+
+			_originalGroupId = backgroundTaskModelImpl._groupId;
+			_originalCompanyId = backgroundTaskModelImpl._companyId;
+			_originalName = backgroundTaskModelImpl._name;
+			_originalTaskExecutorClassName =
+				backgroundTaskModelImpl._taskExecutorClassName;
+			_originalCompleted = backgroundTaskModelImpl._completed;
+			_originalStatus = backgroundTaskModelImpl._status;
+		}
+
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final String _originalName;
+		private final String _originalTaskExecutorClassName;
+		private final boolean _originalCompleted;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, BackgroundTask>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private BackgroundTaskOriginalValues _backgroundTaskOriginalValues;
 	private long _mvccVersion;
 	private long _backgroundTaskId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
-	private String _originalName;
 	private String _servletContextNames;
 	private String _taskExecutorClassName;
-	private String _originalTaskExecutorClassName;
 	private Map<String, Serializable> _taskContextMap;
 	private boolean _completed;
-	private boolean _originalCompleted;
-	private boolean _setOriginalCompleted;
 	private Date _completionDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private String _statusMessage;
-	private long _columnBitmask;
 	private BackgroundTask _escapedModel;
 
 }

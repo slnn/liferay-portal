@@ -107,28 +107,7 @@ public class PortletPreferencesCacheModel
 		PortletPreferencesImpl portletPreferencesImpl =
 			new PortletPreferencesImpl();
 
-		portletPreferencesImpl.setMvccVersion(mvccVersion);
-		portletPreferencesImpl.setPortletPreferencesId(portletPreferencesId);
-		portletPreferencesImpl.setCompanyId(companyId);
-		portletPreferencesImpl.setOwnerId(ownerId);
-		portletPreferencesImpl.setOwnerType(ownerType);
-		portletPreferencesImpl.setPlid(plid);
-
-		if (portletId == null) {
-			portletPreferencesImpl.setPortletId("");
-		}
-		else {
-			portletPreferencesImpl.setPortletId(portletId);
-		}
-
-		if (preferences == null) {
-			portletPreferencesImpl.setPreferences("");
-		}
-		else {
-			portletPreferencesImpl.setPreferences(preferences);
-		}
-
-		portletPreferencesImpl.resetOriginalValues();
+		portletPreferencesImpl.setPortletPreferencesCacheModel(this);
 
 		return portletPreferencesImpl;
 	}

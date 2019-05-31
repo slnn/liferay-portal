@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -130,85 +128,7 @@ public class AddressCacheModel
 	public Address toEntityModel() {
 		AddressImpl addressImpl = new AddressImpl();
 
-		addressImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			addressImpl.setUuid("");
-		}
-		else {
-			addressImpl.setUuid(uuid);
-		}
-
-		addressImpl.setAddressId(addressId);
-		addressImpl.setCompanyId(companyId);
-		addressImpl.setUserId(userId);
-
-		if (userName == null) {
-			addressImpl.setUserName("");
-		}
-		else {
-			addressImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			addressImpl.setCreateDate(null);
-		}
-		else {
-			addressImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			addressImpl.setModifiedDate(null);
-		}
-		else {
-			addressImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		addressImpl.setClassNameId(classNameId);
-		addressImpl.setClassPK(classPK);
-
-		if (street1 == null) {
-			addressImpl.setStreet1("");
-		}
-		else {
-			addressImpl.setStreet1(street1);
-		}
-
-		if (street2 == null) {
-			addressImpl.setStreet2("");
-		}
-		else {
-			addressImpl.setStreet2(street2);
-		}
-
-		if (street3 == null) {
-			addressImpl.setStreet3("");
-		}
-		else {
-			addressImpl.setStreet3(street3);
-		}
-
-		if (city == null) {
-			addressImpl.setCity("");
-		}
-		else {
-			addressImpl.setCity(city);
-		}
-
-		if (zip == null) {
-			addressImpl.setZip("");
-		}
-		else {
-			addressImpl.setZip(zip);
-		}
-
-		addressImpl.setRegionId(regionId);
-		addressImpl.setCountryId(countryId);
-		addressImpl.setTypeId(typeId);
-		addressImpl.setMailing(mailing);
-		addressImpl.setPrimary(primary);
-
-		addressImpl.resetOriginalValues();
+		addressImpl.setAddressCacheModel(this);
 
 		return addressImpl;
 	}

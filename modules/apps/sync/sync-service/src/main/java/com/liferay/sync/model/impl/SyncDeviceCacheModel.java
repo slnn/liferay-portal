@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -99,58 +97,7 @@ public class SyncDeviceCacheModel
 	public SyncDevice toEntityModel() {
 		SyncDeviceImpl syncDeviceImpl = new SyncDeviceImpl();
 
-		if (uuid == null) {
-			syncDeviceImpl.setUuid("");
-		}
-		else {
-			syncDeviceImpl.setUuid(uuid);
-		}
-
-		syncDeviceImpl.setSyncDeviceId(syncDeviceId);
-		syncDeviceImpl.setCompanyId(companyId);
-		syncDeviceImpl.setUserId(userId);
-
-		if (userName == null) {
-			syncDeviceImpl.setUserName("");
-		}
-		else {
-			syncDeviceImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			syncDeviceImpl.setCreateDate(null);
-		}
-		else {
-			syncDeviceImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			syncDeviceImpl.setModifiedDate(null);
-		}
-		else {
-			syncDeviceImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (type == null) {
-			syncDeviceImpl.setType("");
-		}
-		else {
-			syncDeviceImpl.setType(type);
-		}
-
-		syncDeviceImpl.setBuildNumber(buildNumber);
-		syncDeviceImpl.setFeatureSet(featureSet);
-
-		if (hostname == null) {
-			syncDeviceImpl.setHostname("");
-		}
-		else {
-			syncDeviceImpl.setHostname(hostname);
-		}
-
-		syncDeviceImpl.setStatus(status);
-
-		syncDeviceImpl.resetOriginalValues();
+		syncDeviceImpl.setSyncDeviceCacheModel(this);
 
 		return syncDeviceImpl;
 	}

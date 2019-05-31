@@ -293,19 +293,21 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalModifiedTime) {
-			_setOriginalModifiedTime = true;
-
-			_originalModifiedTime = _modifiedTime;
+		if (_dlSyncEventOriginalValues == null) {
+			_dlSyncEventOriginalValues = new DLSyncEventOriginalValues(this);
 		}
+
+		_dlSyncEventOriginalValues._columnBitmask = -1L;
 
 		_modifiedTime = modifiedTime;
 	}
 
 	public long getOriginalModifiedTime() {
-		return _originalModifiedTime;
+		if (_dlSyncEventOriginalValues == null) {
+			return _modifiedTime;
+		}
+
+		return _dlSyncEventOriginalValues._originalModifiedTime;
 	}
 
 	@Override
@@ -345,23 +347,29 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setTypePK(long typePK) {
-		_columnBitmask |= TYPEPK_COLUMN_BITMASK;
-
-		if (!_setOriginalTypePK) {
-			_setOriginalTypePK = true;
-
-			_originalTypePK = _typePK;
+		if (_dlSyncEventOriginalValues == null) {
+			_dlSyncEventOriginalValues = new DLSyncEventOriginalValues(this);
 		}
+
+		_dlSyncEventOriginalValues._columnBitmask |= TYPEPK_COLUMN_BITMASK;
 
 		_typePK = typePK;
 	}
 
 	public long getOriginalTypePK() {
-		return _originalTypePK;
+		if (_dlSyncEventOriginalValues == null) {
+			return _typePK;
+		}
+
+		return _dlSyncEventOriginalValues._originalTypePK;
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_dlSyncEventOriginalValues == null) {
+			return 0;
+		}
+
+		return _dlSyncEventOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -465,16 +473,7 @@ public class DLSyncEventModelImpl
 	public void resetOriginalValues() {
 		DLSyncEventModelImpl dlSyncEventModelImpl = this;
 
-		dlSyncEventModelImpl._originalModifiedTime =
-			dlSyncEventModelImpl._modifiedTime;
-
-		dlSyncEventModelImpl._setOriginalModifiedTime = false;
-
-		dlSyncEventModelImpl._originalTypePK = dlSyncEventModelImpl._typePK;
-
-		dlSyncEventModelImpl._setOriginalTypePK = false;
-
-		dlSyncEventModelImpl._columnBitmask = 0;
+		dlSyncEventModelImpl._dlSyncEventOriginalValues = null;
 	}
 
 	@Override
@@ -572,22 +571,55 @@ public class DLSyncEventModelImpl
 		return sb.toString();
 	}
 
+	void setDLSyncEventCacheModel(DLSyncEventCacheModel dlSyncEventCacheModel) {
+		_syncEventId = dlSyncEventCacheModel.syncEventId;
+		_companyId = dlSyncEventCacheModel.companyId;
+		_modifiedTime = dlSyncEventCacheModel.modifiedTime;
+
+		if (dlSyncEventCacheModel.event == null) {
+			_event = "";
+		}
+		else {
+			_event = dlSyncEventCacheModel.event;
+		}
+
+		if (dlSyncEventCacheModel.type == null) {
+			_type = "";
+		}
+		else {
+			_type = dlSyncEventCacheModel.type;
+		}
+
+		_typePK = dlSyncEventCacheModel.typePK;
+	}
+
+	private static class DLSyncEventOriginalValues {
+
+		private DLSyncEventOriginalValues(
+			DLSyncEventModelImpl dlSyncEventModelImpl) {
+
+			_originalModifiedTime = dlSyncEventModelImpl._modifiedTime;
+			_originalTypePK = dlSyncEventModelImpl._typePK;
+		}
+
+		private final long _originalModifiedTime;
+		private final long _originalTypePK;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, DLSyncEvent>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private DLSyncEventOriginalValues _dlSyncEventOriginalValues;
 	private long _syncEventId;
 	private long _companyId;
 	private long _modifiedTime;
-	private long _originalModifiedTime;
-	private boolean _setOriginalModifiedTime;
 	private String _event;
 	private String _type;
 	private long _typePK;
-	private long _originalTypePK;
-	private boolean _setOriginalTypePK;
-	private long _columnBitmask;
 	private DLSyncEvent _escapedModel;
 
 }

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -116,97 +114,7 @@ public class BookmarksEntryCacheModel
 	public BookmarksEntry toEntityModel() {
 		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
 
-		if (uuid == null) {
-			bookmarksEntryImpl.setUuid("");
-		}
-		else {
-			bookmarksEntryImpl.setUuid(uuid);
-		}
-
-		bookmarksEntryImpl.setEntryId(entryId);
-		bookmarksEntryImpl.setGroupId(groupId);
-		bookmarksEntryImpl.setCompanyId(companyId);
-		bookmarksEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			bookmarksEntryImpl.setUserName("");
-		}
-		else {
-			bookmarksEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			bookmarksEntryImpl.setCreateDate(null);
-		}
-		else {
-			bookmarksEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			bookmarksEntryImpl.setModifiedDate(null);
-		}
-		else {
-			bookmarksEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		bookmarksEntryImpl.setFolderId(folderId);
-
-		if (treePath == null) {
-			bookmarksEntryImpl.setTreePath("");
-		}
-		else {
-			bookmarksEntryImpl.setTreePath(treePath);
-		}
-
-		if (name == null) {
-			bookmarksEntryImpl.setName("");
-		}
-		else {
-			bookmarksEntryImpl.setName(name);
-		}
-
-		if (url == null) {
-			bookmarksEntryImpl.setUrl("");
-		}
-		else {
-			bookmarksEntryImpl.setUrl(url);
-		}
-
-		if (description == null) {
-			bookmarksEntryImpl.setDescription("");
-		}
-		else {
-			bookmarksEntryImpl.setDescription(description);
-		}
-
-		bookmarksEntryImpl.setVisits(visits);
-		bookmarksEntryImpl.setPriority(priority);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			bookmarksEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			bookmarksEntryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		bookmarksEntryImpl.setStatus(status);
-		bookmarksEntryImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			bookmarksEntryImpl.setStatusByUserName("");
-		}
-		else {
-			bookmarksEntryImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			bookmarksEntryImpl.setStatusDate(null);
-		}
-		else {
-			bookmarksEntryImpl.setStatusDate(new Date(statusDate));
-		}
-
-		bookmarksEntryImpl.resetOriginalValues();
+		bookmarksEntryImpl.setBookmarksEntryCacheModel(this);
 
 		return bookmarksEntryImpl;
 	}

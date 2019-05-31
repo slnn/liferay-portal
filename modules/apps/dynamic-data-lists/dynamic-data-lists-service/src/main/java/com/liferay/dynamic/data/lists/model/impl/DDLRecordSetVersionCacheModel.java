@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -127,75 +125,7 @@ public class DDLRecordSetVersionCacheModel
 		DDLRecordSetVersionImpl ddlRecordSetVersionImpl =
 			new DDLRecordSetVersionImpl();
 
-		ddlRecordSetVersionImpl.setMvccVersion(mvccVersion);
-		ddlRecordSetVersionImpl.setRecordSetVersionId(recordSetVersionId);
-		ddlRecordSetVersionImpl.setGroupId(groupId);
-		ddlRecordSetVersionImpl.setCompanyId(companyId);
-		ddlRecordSetVersionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddlRecordSetVersionImpl.setUserName("");
-		}
-		else {
-			ddlRecordSetVersionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddlRecordSetVersionImpl.setCreateDate(null);
-		}
-		else {
-			ddlRecordSetVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		ddlRecordSetVersionImpl.setRecordSetId(recordSetId);
-		ddlRecordSetVersionImpl.setDDMStructureVersionId(DDMStructureVersionId);
-
-		if (name == null) {
-			ddlRecordSetVersionImpl.setName("");
-		}
-		else {
-			ddlRecordSetVersionImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddlRecordSetVersionImpl.setDescription("");
-		}
-		else {
-			ddlRecordSetVersionImpl.setDescription(description);
-		}
-
-		if (settings == null) {
-			ddlRecordSetVersionImpl.setSettings("");
-		}
-		else {
-			ddlRecordSetVersionImpl.setSettings(settings);
-		}
-
-		if (version == null) {
-			ddlRecordSetVersionImpl.setVersion("");
-		}
-		else {
-			ddlRecordSetVersionImpl.setVersion(version);
-		}
-
-		ddlRecordSetVersionImpl.setStatus(status);
-		ddlRecordSetVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			ddlRecordSetVersionImpl.setStatusByUserName("");
-		}
-		else {
-			ddlRecordSetVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			ddlRecordSetVersionImpl.setStatusDate(null);
-		}
-		else {
-			ddlRecordSetVersionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		ddlRecordSetVersionImpl.resetOriginalValues();
+		ddlRecordSetVersionImpl.setDDLRecordSetVersionCacheModel(this);
 
 		return ddlRecordSetVersionImpl;
 	}

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -111,75 +109,7 @@ public class DDMFormInstanceVersionCacheModel
 		DDMFormInstanceVersionImpl ddmFormInstanceVersionImpl =
 			new DDMFormInstanceVersionImpl();
 
-		ddmFormInstanceVersionImpl.setFormInstanceVersionId(
-			formInstanceVersionId);
-		ddmFormInstanceVersionImpl.setGroupId(groupId);
-		ddmFormInstanceVersionImpl.setCompanyId(companyId);
-		ddmFormInstanceVersionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmFormInstanceVersionImpl.setUserName("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmFormInstanceVersionImpl.setCreateDate(null);
-		}
-		else {
-			ddmFormInstanceVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		ddmFormInstanceVersionImpl.setFormInstanceId(formInstanceId);
-		ddmFormInstanceVersionImpl.setStructureVersionId(structureVersionId);
-
-		if (name == null) {
-			ddmFormInstanceVersionImpl.setName("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmFormInstanceVersionImpl.setDescription("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setDescription(description);
-		}
-
-		if (settings == null) {
-			ddmFormInstanceVersionImpl.setSettings("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setSettings(settings);
-		}
-
-		if (version == null) {
-			ddmFormInstanceVersionImpl.setVersion("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setVersion(version);
-		}
-
-		ddmFormInstanceVersionImpl.setStatus(status);
-		ddmFormInstanceVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			ddmFormInstanceVersionImpl.setStatusByUserName("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			ddmFormInstanceVersionImpl.setStatusDate(null);
-		}
-		else {
-			ddmFormInstanceVersionImpl.setStatusDate(new Date(statusDate));
-		}
-
-		ddmFormInstanceVersionImpl.resetOriginalValues();
+		ddmFormInstanceVersionImpl.setDDMFormInstanceVersionCacheModel(this);
 
 		return ddmFormInstanceVersionImpl;
 	}

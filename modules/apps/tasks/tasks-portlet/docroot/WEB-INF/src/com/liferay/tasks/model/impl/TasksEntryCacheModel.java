@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -103,60 +101,7 @@ public class TasksEntryCacheModel
 	public TasksEntry toEntityModel() {
 		TasksEntryImpl tasksEntryImpl = new TasksEntryImpl();
 
-		tasksEntryImpl.setTasksEntryId(tasksEntryId);
-		tasksEntryImpl.setGroupId(groupId);
-		tasksEntryImpl.setCompanyId(companyId);
-		tasksEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			tasksEntryImpl.setUserName("");
-		}
-		else {
-			tasksEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			tasksEntryImpl.setCreateDate(null);
-		}
-		else {
-			tasksEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			tasksEntryImpl.setModifiedDate(null);
-		}
-		else {
-			tasksEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (title == null) {
-			tasksEntryImpl.setTitle("");
-		}
-		else {
-			tasksEntryImpl.setTitle(title);
-		}
-
-		tasksEntryImpl.setPriority(priority);
-		tasksEntryImpl.setAssigneeUserId(assigneeUserId);
-		tasksEntryImpl.setResolverUserId(resolverUserId);
-
-		if (dueDate == Long.MIN_VALUE) {
-			tasksEntryImpl.setDueDate(null);
-		}
-		else {
-			tasksEntryImpl.setDueDate(new Date(dueDate));
-		}
-
-		if (finishDate == Long.MIN_VALUE) {
-			tasksEntryImpl.setFinishDate(null);
-		}
-		else {
-			tasksEntryImpl.setFinishDate(new Date(finishDate));
-		}
-
-		tasksEntryImpl.setStatus(status);
-
-		tasksEntryImpl.resetOriginalValues();
+		tasksEntryImpl.setTasksEntryCacheModel(this);
 
 		return tasksEntryImpl;
 	}

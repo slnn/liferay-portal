@@ -441,17 +441,23 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
 		}
+
+		_bookmarksFolderOriginalValues._columnBitmask |= UUID_COLUMN_BITMASK;
 
 		_uuid = uuid;
 	}
 
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		if (_bookmarksFolderOriginalValues == null) {
+			return GetterUtil.getString(_uuid);
+		}
+
+		return GetterUtil.getString(
+			_bookmarksFolderOriginalValues._originalUuid);
 	}
 
 	@JSON
@@ -462,19 +468,23 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setFolderId(long folderId) {
-		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalFolderId) {
-			_setOriginalFolderId = true;
-
-			_originalFolderId = _folderId;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
 		}
+
+		_bookmarksFolderOriginalValues._columnBitmask |=
+			FOLDERID_COLUMN_BITMASK;
 
 		_folderId = folderId;
 	}
 
 	public long getOriginalFolderId() {
-		return _originalFolderId;
+		if (_bookmarksFolderOriginalValues == null) {
+			return _folderId;
+		}
+
+		return _bookmarksFolderOriginalValues._originalFolderId;
 	}
 
 	@JSON
@@ -485,19 +495,22 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
 		}
+
+		_bookmarksFolderOriginalValues._columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		_groupId = groupId;
 	}
 
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		if (_bookmarksFolderOriginalValues == null) {
+			return _groupId;
+		}
+
+		return _bookmarksFolderOriginalValues._originalGroupId;
 	}
 
 	@JSON
@@ -508,19 +521,23 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
 		}
+
+		_bookmarksFolderOriginalValues._columnBitmask |=
+			COMPANYID_COLUMN_BITMASK;
 
 		_companyId = companyId;
 	}
 
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		if (_bookmarksFolderOriginalValues == null) {
+			return _companyId;
+		}
+
+		return _bookmarksFolderOriginalValues._originalCompanyId;
 	}
 
 	@JSON
@@ -602,19 +619,22 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_columnBitmask = -1L;
-
-		if (!_setOriginalParentFolderId) {
-			_setOriginalParentFolderId = true;
-
-			_originalParentFolderId = _parentFolderId;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
 		}
+
+		_bookmarksFolderOriginalValues._columnBitmask = -1L;
 
 		_parentFolderId = parentFolderId;
 	}
 
 	public long getOriginalParentFolderId() {
-		return _originalParentFolderId;
+		if (_bookmarksFolderOriginalValues == null) {
+			return _parentFolderId;
+		}
+
+		return _bookmarksFolderOriginalValues._originalParentFolderId;
 	}
 
 	@JSON
@@ -646,7 +666,12 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
+		}
+
+		_bookmarksFolderOriginalValues._columnBitmask = -1L;
 
 		_name = name;
 	}
@@ -686,19 +711,22 @@ public class BookmarksFolderModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_bookmarksFolderOriginalValues == null) {
+			_bookmarksFolderOriginalValues = new BookmarksFolderOriginalValues(
+				this);
 		}
+
+		_bookmarksFolderOriginalValues._columnBitmask |= STATUS_COLUMN_BITMASK;
 
 		_status = status;
 	}
 
 	public int getOriginalStatus() {
-		return _originalStatus;
+		if (_bookmarksFolderOriginalValues == null) {
+			return _status;
+		}
+
+		return _bookmarksFolderOriginalValues._originalStatus;
 	}
 
 	@JSON
@@ -1012,7 +1040,11 @@ public class BookmarksFolderModelImpl
 	}
 
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		if (_bookmarksFolderOriginalValues == null) {
+			return 0;
+		}
+
+		return _bookmarksFolderOriginalValues._columnBitmask;
 	}
 
 	@Override
@@ -1133,36 +1165,9 @@ public class BookmarksFolderModelImpl
 	public void resetOriginalValues() {
 		BookmarksFolderModelImpl bookmarksFolderModelImpl = this;
 
-		bookmarksFolderModelImpl._originalUuid = bookmarksFolderModelImpl._uuid;
-
-		bookmarksFolderModelImpl._originalFolderId =
-			bookmarksFolderModelImpl._folderId;
-
-		bookmarksFolderModelImpl._setOriginalFolderId = false;
-
-		bookmarksFolderModelImpl._originalGroupId =
-			bookmarksFolderModelImpl._groupId;
-
-		bookmarksFolderModelImpl._setOriginalGroupId = false;
-
-		bookmarksFolderModelImpl._originalCompanyId =
-			bookmarksFolderModelImpl._companyId;
-
-		bookmarksFolderModelImpl._setOriginalCompanyId = false;
+		bookmarksFolderModelImpl._bookmarksFolderOriginalValues = null;
 
 		bookmarksFolderModelImpl._setModifiedDate = false;
-
-		bookmarksFolderModelImpl._originalParentFolderId =
-			bookmarksFolderModelImpl._parentFolderId;
-
-		bookmarksFolderModelImpl._setOriginalParentFolderId = false;
-
-		bookmarksFolderModelImpl._originalStatus =
-			bookmarksFolderModelImpl._status;
-
-		bookmarksFolderModelImpl._setOriginalStatus = false;
-
-		bookmarksFolderModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1335,41 +1340,126 @@ public class BookmarksFolderModelImpl
 		return sb.toString();
 	}
 
+	void setBookmarksFolderCacheModel(
+		BookmarksFolderCacheModel bookmarksFolderCacheModel) {
+
+		if (bookmarksFolderCacheModel.uuid == null) {
+			_uuid = "";
+		}
+		else {
+			_uuid = bookmarksFolderCacheModel.uuid;
+		}
+
+		_folderId = bookmarksFolderCacheModel.folderId;
+		_groupId = bookmarksFolderCacheModel.groupId;
+		_companyId = bookmarksFolderCacheModel.companyId;
+		_userId = bookmarksFolderCacheModel.userId;
+
+		if (bookmarksFolderCacheModel.userName == null) {
+			_userName = "";
+		}
+		else {
+			_userName = bookmarksFolderCacheModel.userName;
+		}
+
+		if (bookmarksFolderCacheModel.createDate != Long.MIN_VALUE) {
+			_createDate = new Date(bookmarksFolderCacheModel.createDate);
+		}
+
+		if (bookmarksFolderCacheModel.modifiedDate != Long.MIN_VALUE) {
+			_modifiedDate = new Date(bookmarksFolderCacheModel.modifiedDate);
+		}
+
+		_parentFolderId = bookmarksFolderCacheModel.parentFolderId;
+
+		if (bookmarksFolderCacheModel.treePath == null) {
+			_treePath = "";
+		}
+		else {
+			_treePath = bookmarksFolderCacheModel.treePath;
+		}
+
+		if (bookmarksFolderCacheModel.name == null) {
+			_name = "";
+		}
+		else {
+			_name = bookmarksFolderCacheModel.name;
+		}
+
+		if (bookmarksFolderCacheModel.description == null) {
+			_description = "";
+		}
+		else {
+			_description = bookmarksFolderCacheModel.description;
+		}
+
+		if (bookmarksFolderCacheModel.lastPublishDate != Long.MIN_VALUE) {
+			_lastPublishDate = new Date(
+				bookmarksFolderCacheModel.lastPublishDate);
+		}
+
+		_status = bookmarksFolderCacheModel.status;
+		_statusByUserId = bookmarksFolderCacheModel.statusByUserId;
+
+		if (bookmarksFolderCacheModel.statusByUserName == null) {
+			_statusByUserName = "";
+		}
+		else {
+			_statusByUserName = bookmarksFolderCacheModel.statusByUserName;
+		}
+
+		if (bookmarksFolderCacheModel.statusDate != Long.MIN_VALUE) {
+			_statusDate = new Date(bookmarksFolderCacheModel.statusDate);
+		}
+	}
+
+	private static class BookmarksFolderOriginalValues {
+
+		private BookmarksFolderOriginalValues(
+			BookmarksFolderModelImpl bookmarksFolderModelImpl) {
+
+			_originalUuid = bookmarksFolderModelImpl._uuid;
+			_originalFolderId = bookmarksFolderModelImpl._folderId;
+			_originalGroupId = bookmarksFolderModelImpl._groupId;
+			_originalCompanyId = bookmarksFolderModelImpl._companyId;
+			_originalParentFolderId = bookmarksFolderModelImpl._parentFolderId;
+			_originalStatus = bookmarksFolderModelImpl._status;
+		}
+
+		private final String _originalUuid;
+		private final long _originalFolderId;
+		private final long _originalGroupId;
+		private final long _originalCompanyId;
+		private final long _originalParentFolderId;
+		private final int _originalStatus;
+		private long _columnBitmask;
+
+	}
+
 	private static final Function<InvocationHandler, BookmarksFolder>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private BookmarksFolderOriginalValues _bookmarksFolderOriginalValues;
 	private String _uuid;
-	private String _originalUuid;
 	private long _folderId;
-	private long _originalFolderId;
-	private boolean _setOriginalFolderId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentFolderId;
-	private long _originalParentFolderId;
-	private boolean _setOriginalParentFolderId;
 	private String _treePath;
 	private String _name;
 	private String _description;
 	private Date _lastPublishDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _columnBitmask;
 	private BookmarksFolder _escapedModel;
 
 }

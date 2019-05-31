@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -106,29 +104,7 @@ public class ImageCacheModel
 	public Image toEntityModel() {
 		ImageImpl imageImpl = new ImageImpl();
 
-		imageImpl.setMvccVersion(mvccVersion);
-		imageImpl.setImageId(imageId);
-		imageImpl.setCompanyId(companyId);
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			imageImpl.setModifiedDate(null);
-		}
-		else {
-			imageImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (type == null) {
-			imageImpl.setType("");
-		}
-		else {
-			imageImpl.setType(type);
-		}
-
-		imageImpl.setHeight(height);
-		imageImpl.setWidth(width);
-		imageImpl.setSize(size);
-
-		imageImpl.resetOriginalValues();
+		imageImpl.setImageCacheModel(this);
 
 		return imageImpl;
 	}

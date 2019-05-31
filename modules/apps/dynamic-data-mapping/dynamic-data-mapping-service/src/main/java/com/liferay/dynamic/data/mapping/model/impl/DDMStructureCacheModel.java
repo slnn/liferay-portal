@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -116,107 +114,7 @@ public class DDMStructureCacheModel
 	public DDMStructure toEntityModel() {
 		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
 
-		if (uuid == null) {
-			ddmStructureImpl.setUuid("");
-		}
-		else {
-			ddmStructureImpl.setUuid(uuid);
-		}
-
-		ddmStructureImpl.setStructureId(structureId);
-		ddmStructureImpl.setGroupId(groupId);
-		ddmStructureImpl.setCompanyId(companyId);
-		ddmStructureImpl.setUserId(userId);
-
-		if (userName == null) {
-			ddmStructureImpl.setUserName("");
-		}
-		else {
-			ddmStructureImpl.setUserName(userName);
-		}
-
-		ddmStructureImpl.setVersionUserId(versionUserId);
-
-		if (versionUserName == null) {
-			ddmStructureImpl.setVersionUserName("");
-		}
-		else {
-			ddmStructureImpl.setVersionUserName(versionUserName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			ddmStructureImpl.setCreateDate(null);
-		}
-		else {
-			ddmStructureImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmStructureImpl.setModifiedDate(null);
-		}
-		else {
-			ddmStructureImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		ddmStructureImpl.setParentStructureId(parentStructureId);
-		ddmStructureImpl.setClassNameId(classNameId);
-
-		if (structureKey == null) {
-			ddmStructureImpl.setStructureKey("");
-		}
-		else {
-			ddmStructureImpl.setStructureKey(structureKey);
-		}
-
-		if (version == null) {
-			ddmStructureImpl.setVersion("");
-		}
-		else {
-			ddmStructureImpl.setVersion(version);
-		}
-
-		if (name == null) {
-			ddmStructureImpl.setName("");
-		}
-		else {
-			ddmStructureImpl.setName(name);
-		}
-
-		if (description == null) {
-			ddmStructureImpl.setDescription("");
-		}
-		else {
-			ddmStructureImpl.setDescription(description);
-		}
-
-		if (definition == null) {
-			ddmStructureImpl.setDefinition("");
-		}
-		else {
-			ddmStructureImpl.setDefinition(definition);
-		}
-
-		if (storageType == null) {
-			ddmStructureImpl.setStorageType("");
-		}
-		else {
-			ddmStructureImpl.setStorageType(storageType);
-		}
-
-		ddmStructureImpl.setType(type);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			ddmStructureImpl.setLastPublishDate(null);
-		}
-		else {
-			ddmStructureImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		ddmStructureImpl.resetOriginalValues();
-
-		ddmStructureImpl.setClassName(_className);
-
-		ddmStructureImpl.setDDMForm(_ddmForm);
+		ddmStructureImpl.setDDMStructureCacheModel(this);
 
 		return ddmStructureImpl;
 	}

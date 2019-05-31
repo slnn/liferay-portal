@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -102,78 +100,7 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public App toEntityModel() {
 		AppImpl appImpl = new AppImpl();
 
-		if (uuid == null) {
-			appImpl.setUuid("");
-		}
-		else {
-			appImpl.setUuid(uuid);
-		}
-
-		appImpl.setAppId(appId);
-		appImpl.setCompanyId(companyId);
-		appImpl.setUserId(userId);
-
-		if (userName == null) {
-			appImpl.setUserName("");
-		}
-		else {
-			appImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			appImpl.setCreateDate(null);
-		}
-		else {
-			appImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			appImpl.setModifiedDate(null);
-		}
-		else {
-			appImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		appImpl.setRemoteAppId(remoteAppId);
-
-		if (title == null) {
-			appImpl.setTitle("");
-		}
-		else {
-			appImpl.setTitle(title);
-		}
-
-		if (description == null) {
-			appImpl.setDescription("");
-		}
-		else {
-			appImpl.setDescription(description);
-		}
-
-		if (category == null) {
-			appImpl.setCategory("");
-		}
-		else {
-			appImpl.setCategory(category);
-		}
-
-		if (iconURL == null) {
-			appImpl.setIconURL("");
-		}
-		else {
-			appImpl.setIconURL(iconURL);
-		}
-
-		if (version == null) {
-			appImpl.setVersion("");
-		}
-		else {
-			appImpl.setVersion(version);
-		}
-
-		appImpl.setRequired(required);
-
-		appImpl.resetOriginalValues();
+		appImpl.setAppCacheModel(this);
 
 		return appImpl;
 	}

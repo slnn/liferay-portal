@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -97,39 +95,7 @@ public class TrashEntryCacheModel
 	public TrashEntry toEntityModel() {
 		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
 
-		trashEntryImpl.setEntryId(entryId);
-		trashEntryImpl.setGroupId(groupId);
-		trashEntryImpl.setCompanyId(companyId);
-		trashEntryImpl.setUserId(userId);
-
-		if (userName == null) {
-			trashEntryImpl.setUserName("");
-		}
-		else {
-			trashEntryImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			trashEntryImpl.setCreateDate(null);
-		}
-		else {
-			trashEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		trashEntryImpl.setClassNameId(classNameId);
-		trashEntryImpl.setClassPK(classPK);
-		trashEntryImpl.setSystemEventSetKey(systemEventSetKey);
-
-		if (typeSettings == null) {
-			trashEntryImpl.setTypeSettings("");
-		}
-		else {
-			trashEntryImpl.setTypeSettings(typeSettings);
-		}
-
-		trashEntryImpl.setStatus(status);
-
-		trashEntryImpl.resetOriginalValues();
+		trashEntryImpl.setTrashEntryCacheModel(this);
 
 		return trashEntryImpl;
 	}

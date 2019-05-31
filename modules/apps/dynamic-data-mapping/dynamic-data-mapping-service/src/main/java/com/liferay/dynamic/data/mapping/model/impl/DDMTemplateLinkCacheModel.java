@@ -84,13 +84,7 @@ public class DDMTemplateLinkCacheModel
 	public DDMTemplateLink toEntityModel() {
 		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
 
-		ddmTemplateLinkImpl.setTemplateLinkId(templateLinkId);
-		ddmTemplateLinkImpl.setCompanyId(companyId);
-		ddmTemplateLinkImpl.setClassNameId(classNameId);
-		ddmTemplateLinkImpl.setClassPK(classPK);
-		ddmTemplateLinkImpl.setTemplateId(templateId);
-
-		ddmTemplateLinkImpl.resetOriginalValues();
+		ddmTemplateLinkImpl.setDDMTemplateLinkCacheModel(this);
 
 		return ddmTemplateLinkImpl;
 	}

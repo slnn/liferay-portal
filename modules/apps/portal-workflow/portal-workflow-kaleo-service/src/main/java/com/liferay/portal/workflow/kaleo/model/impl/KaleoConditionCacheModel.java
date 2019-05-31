@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -117,60 +115,7 @@ public class KaleoConditionCacheModel
 	public KaleoCondition toEntityModel() {
 		KaleoConditionImpl kaleoConditionImpl = new KaleoConditionImpl();
 
-		kaleoConditionImpl.setMvccVersion(mvccVersion);
-		kaleoConditionImpl.setKaleoConditionId(kaleoConditionId);
-		kaleoConditionImpl.setGroupId(groupId);
-		kaleoConditionImpl.setCompanyId(companyId);
-		kaleoConditionImpl.setUserId(userId);
-
-		if (userName == null) {
-			kaleoConditionImpl.setUserName("");
-		}
-		else {
-			kaleoConditionImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			kaleoConditionImpl.setCreateDate(null);
-		}
-		else {
-			kaleoConditionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			kaleoConditionImpl.setModifiedDate(null);
-		}
-		else {
-			kaleoConditionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		kaleoConditionImpl.setKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId);
-		kaleoConditionImpl.setKaleoNodeId(kaleoNodeId);
-
-		if (script == null) {
-			kaleoConditionImpl.setScript("");
-		}
-		else {
-			kaleoConditionImpl.setScript(script);
-		}
-
-		if (scriptLanguage == null) {
-			kaleoConditionImpl.setScriptLanguage("");
-		}
-		else {
-			kaleoConditionImpl.setScriptLanguage(scriptLanguage);
-		}
-
-		if (scriptRequiredContexts == null) {
-			kaleoConditionImpl.setScriptRequiredContexts("");
-		}
-		else {
-			kaleoConditionImpl.setScriptRequiredContexts(
-				scriptRequiredContexts);
-		}
-
-		kaleoConditionImpl.resetOriginalValues();
+		kaleoConditionImpl.setKaleoConditionCacheModel(this);
 
 		return kaleoConditionImpl;
 	}

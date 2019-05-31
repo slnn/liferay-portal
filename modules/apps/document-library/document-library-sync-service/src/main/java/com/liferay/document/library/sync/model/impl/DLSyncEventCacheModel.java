@@ -86,27 +86,7 @@ public class DLSyncEventCacheModel
 	public DLSyncEvent toEntityModel() {
 		DLSyncEventImpl dlSyncEventImpl = new DLSyncEventImpl();
 
-		dlSyncEventImpl.setSyncEventId(syncEventId);
-		dlSyncEventImpl.setCompanyId(companyId);
-		dlSyncEventImpl.setModifiedTime(modifiedTime);
-
-		if (event == null) {
-			dlSyncEventImpl.setEvent("");
-		}
-		else {
-			dlSyncEventImpl.setEvent(event);
-		}
-
-		if (type == null) {
-			dlSyncEventImpl.setType("");
-		}
-		else {
-			dlSyncEventImpl.setType(type);
-		}
-
-		dlSyncEventImpl.setTypePK(typePK);
-
-		dlSyncEventImpl.resetOriginalValues();
+		dlSyncEventImpl.setDLSyncEventCacheModel(this);
 
 		return dlSyncEventImpl;
 	}
