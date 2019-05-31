@@ -245,22 +245,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			);
 		</#if>
 
-		<#assign columnBitmaskEnabled = true />
-
-		<#if entity.finderEntityColumns?size == 0>
-			<#if !dependencyInjectorDS>
-				public static final boolean COLUMN_BITMASK_ENABLED = false;
-			</#if>
-
-			<#assign columnBitmaskEnabled = false />
-		</#if>
-
-		<#if entity.finderEntityColumns?size &gt; 64>
-			<#if !dependencyInjectorDS>
-				public static final boolean COLUMN_BITMASK_ENABLED = false;
-			</#if>
-
-			<#assign columnBitmaskEnabled = false />
+		<#if !columnBitmaskEnabled && !dependencyInjectorDS>
+			public static final boolean COLUMN_BITMASK_ENABLED = false;
 		</#if>
 
 		<#if columnBitmaskEnabled>
@@ -659,17 +645,21 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 
 		public boolean getOriginalHead() {
-			return _originalHead;
+			if (_${entity.varName}OriginalValues == null) {
+				return _head;
+			}
+
+			return _${entity.varName}OriginalValues._originalHead;
 		}
 
 		public void setHead(boolean head) {
-			_columnBitmask |= HEAD_COLUMN_BITMASK;
-
-			if (!_setOriginalHead) {
-				_setOriginalHead = true;
-
-				_originalHead = _head;
+			if (_${entity.varName}OriginalValues == null) {
+				_${entity.varName}OriginalValues = new ${entity.name}OriginalValues(this);
 			}
+
+			<#if columnBitmaskEnabled>
+				_${entity.varName}OriginalValues._columnBitmask |= HEAD_COLUMN_BITMASK;
+			</#if>
 
 			_head = head;
 		}
@@ -849,23 +839,23 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#if>
 
 			<#if entityColumn.isOrderColumn() && columnBitmaskEnabled>
-				_columnBitmask = -1L;
+				if (_${entity.varName}OriginalValues == null) {
+					_${entity.varName}OriginalValues = new ${entity.name}OriginalValues(this);
+				}
+
+				_${entity.varName}OriginalValues._columnBitmask = -1L;
 			</#if>
 
 			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
+				<#if !entityColumn.isOrderColumn() || !columnBitmaskEnabled>
+					if (_${entity.varName}OriginalValues == null) {
+						_${entity.varName}OriginalValues = new ${entity.name}OriginalValues(this);
+					}
+				</#if>
+
 				<#if !entityColumn.isOrderColumn() && columnBitmaskEnabled>
-					_columnBitmask |= ${entityColumn.name?upper_case}_COLUMN_BITMASK;
+					_${entity.varName}OriginalValues._columnBitmask |= ${entityColumn.name?upper_case}_COLUMN_BITMASK;
 				</#if>
-
-				<#if entityColumn.isPrimitiveType()>
-					if (!_setOriginal${entityColumn.methodName}) {
-						_setOriginal${entityColumn.methodName} = true;
-				<#else>
-					if (_original${entityColumn.methodName} == null) {
-				</#if>
-
-					_original${entityColumn.methodName} = _${entityColumn.name};
-				}
 			</#if>
 
 			<#if entity.versionEntity?? && stringUtil.equals(entityColumn.name, "headId")>
@@ -964,9 +954,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
 			public ${entityColumn.type} getOriginal${entityColumn.methodName}() {
 				<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-					return GetterUtil.getString(_original${entityColumn.methodName});
+					if (_${entity.varName}OriginalValues == null) {
+						return GetterUtil.getString(_${entityColumn.name});
+					}
+
+					return GetterUtil.getString(_${entity.varName}OriginalValues._original${entityColumn.methodName});
 				<#else>
-					return _original${entityColumn.methodName};
+					if (_${entity.varName}OriginalValues == null) {
+						return _${entityColumn.name};
+					}
+
+					return _${entity.varName}OriginalValues._original${entityColumn.methodName};
 				</#if>
 			}
 		</#if>
@@ -1308,7 +1306,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#if columnBitmaskEnabled>
 		public long getColumnBitmask() {
-			return _columnBitmask;
+			if (_${entity.varName}OriginalValues == null) {
+				return 0;
+			}
+
+			return _${entity.varName}OriginalValues._columnBitmask;
 		}
 	</#if>
 
@@ -1571,20 +1573,18 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public void resetOriginalValues() {
+		<#if hasOriginalValues>
+			${entity.name}ModelImpl ${entity.varName}ModelImpl = this;
+
+			${entity.varName}ModelImpl._${entity.varName}OriginalValues = null;
+		</#if>
+
 		<#list entity.databaseRegularEntityColumns as entityColumn>
-			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name)) || (stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy) || (entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date"))>
+			<#if !hasOriginalValues && (entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name)) || (stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy) || (entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date")))>
 				<#if !cloneCastModelImpl??>
 					<#assign cloneCastModelImpl = true />
 
 					${entity.name}ModelImpl ${entity.varName}ModelImpl = this;
-				</#if>
-			</#if>
-
-			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
-				${entity.varName}ModelImpl._original${entityColumn.methodName} = ${entity.varName}ModelImpl._${entityColumn.name};
-
-				<#if entityColumn.isPrimitiveType()>
-					${entity.varName}ModelImpl._setOriginal${entityColumn.methodName} = false;
 				</#if>
 			</#if>
 
@@ -1605,10 +1605,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			set${methodName}(null);
 		</#list>
-
-		<#if columnBitmaskEnabled>
-			${entity.varName}ModelImpl._columnBitmask = 0;
-		</#if>
 	}
 
 	@Override
@@ -1762,11 +1758,39 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
+	<#if hasOriginalValues>
+		private static class ${entity.name}OriginalValues {
+
+			private ${entity.name}OriginalValues(${entity.name}ModelImpl ${entity.varName}ModelImpl) {
+				<#list entity.databaseRegularEntityColumns as entityColumn>
+					<#if (!stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy) && (entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name)))>
+						_original${entityColumn.methodName} = ${entity.varName}ModelImpl._${entityColumn.name};
+					</#if>
+				</#list>
+			}
+
+			<#list entity.databaseRegularEntityColumns as entityColumn>
+				<#if (!stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy) && (entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name)))>
+					private final ${entityColumn.type} _original${entityColumn.methodName};
+				</#if>
+			</#list>
+
+			<#if columnBitmaskEnabled>
+				private long _columnBitmask;
+			</#if>
+
+		}
+	</#if>
+
 	private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	<#if dependencyInjectorDS>
 		private static boolean _entityCacheEnabled;
 		private static boolean _finderCacheEnabled;
+	</#if>
+
+	<#if hasOriginalValues>
+		private ${entity.name}OriginalValues _${entity.varName}OriginalValues;
 	</#if>
 
 	<#list entity.databaseRegularEntityColumns as entityColumn>
@@ -1779,23 +1803,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				private String _${entityColumn.name}CurrentLanguageId;
 			</#if>
 
-			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
-				private ${entityColumn.type} _original${entityColumn.methodName};
-
-				<#if entityColumn.isPrimitiveType()>
-					private boolean _setOriginal${entityColumn.methodName};
-				</#if>
-			</#if>
-
 			<#if entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date") && stringUtil.equals(entityColumn.name, "modifiedDate")>
 				private boolean _setModifiedDate;
 			</#if>
 		</#if>
 	</#list>
-
-	<#if columnBitmaskEnabled>
-		private long _columnBitmask;
-	</#if>
 
 	private ${entity.name} _escapedModel;
 

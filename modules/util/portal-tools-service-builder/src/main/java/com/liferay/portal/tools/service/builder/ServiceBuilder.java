@@ -2847,9 +2847,38 @@ public class ServiceBuilder {
 			}
 		}
 
+		boolean columnBitmaskEnabled = true;
+		boolean hasOriginalValues = true;
+
+		List<EntityColumn> finderEntityColumns =
+			entity.getFinderEntityColumns();
+
+		if (finderEntityColumns.isEmpty() ||
+			(finderEntityColumns.size() > 64)) {
+
+			columnBitmaskEnabled = false;
+			hasOriginalValues = entity.isHierarchicalTree();
+		}
+
+		if (!hasOriginalValues) {
+			for (EntityColumn entityColumn : entity.getRegularEntityColumns()) {
+				if (Objects.equals(entityColumn.getType(), "Blob") &&
+					entityColumn.isLazy()) {
+
+					continue;
+				}
+
+				if (entityColumn.isFinderPath()) {
+					hasOriginalValues = true;
+				}
+			}
+		}
+
 		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
+		context.put("columnBitmaskEnabled", columnBitmaskEnabled);
 		context.put("entity", entity);
 		context.put("hasClassNameCacheField", hasClassNameCacheField);
+		context.put("hasOriginalValues", hasOriginalValues);
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
