@@ -1748,6 +1748,10 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String[] getRolesArray() {
+		if (_rolesArray == null) {
+			_rolesArray = StringUtil.split(getRoles());
+		}
+
 		return _rolesArray;
 	}
 
@@ -1768,6 +1772,10 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String getRootPortletId() {
+		if (_rootPortletId == null) {
+			_rootPortletId = PortletIdCodec.decodePortletName(getPortletId());
+		}
+
 		return _rootPortletId;
 	}
 
@@ -2478,11 +2486,13 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public boolean hasRoleWithName(String roleName) {
-		if (ArrayUtil.isEmpty(_rolesArray)) {
+		String[] rolesArray = getRolesArray();
+
+		if (ArrayUtil.isEmpty(rolesArray)) {
 			return false;
 		}
 
-		for (String curRoleName : _rolesArray) {
+		for (String curRoleName : rolesArray) {
 			if (StringUtil.equalsIgnoreCase(curRoleName, roleName)) {
 				return true;
 			}
@@ -3960,8 +3970,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setRoles(String roles) {
-		_rolesArray = StringUtil.split(roles);
-
 		super.setRoles(roles);
 	}
 
@@ -3972,9 +3980,9 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setRolesArray(String[] rolesArray) {
-		_rolesArray = rolesArray;
-
 		super.setRoles(StringUtil.merge(rolesArray));
+
+		_rolesArray = rolesArray;
 	}
 
 	/**

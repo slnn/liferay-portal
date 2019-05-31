@@ -459,6 +459,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public Locale getLocale() {
+		if (_locale == null) {
+			_locale = LocaleUtil.fromLanguageId(getLanguageId());
+		}
+
 		return _locale;
 	}
 
@@ -676,6 +680,18 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public TimeZone getTimeZone() {
+		if (_timeZone == null) {
+			String timeZoneId = getTimeZoneId();
+
+			if (Validator.isNull(timeZoneId)) {
+				TimeZone defaultTimeZone = TimeZoneUtil.getDefault();
+
+				timeZoneId = defaultTimeZone.getID();
+			}
+
+			_timeZone = TimeZoneUtil.getTimeZone(timeZoneId);
+		}
+
 		return _timeZone;
 	}
 
