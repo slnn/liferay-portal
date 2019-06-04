@@ -254,6 +254,9 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			int offset = GetterUtil.getInteger(
 				mbGroupServiceSettings.getRecentPostsDateOffset());
 
+			calendar.clear(Calendar.SECOND);
+			calendar.clear(Calendar.MILLISECOND);
+
 			calendar.add(Calendar.DATE, -offset);
 
 			boolean includeAnonymous = false;
