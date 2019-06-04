@@ -381,6 +381,15 @@ public class MBThreadPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_NotC_L_S() throws Exception {
+		_persistence.countByG_NotC_L_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_NotC_L_S(0L, 0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBThread newMBThread = addMBThread();
 
