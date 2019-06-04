@@ -550,6 +550,12 @@
 			<finder-column comparator="!=" name="categoryId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
+		<finder name="G_NotC_L_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="!=" name="categoryId" />
+			<finder-column comparator="&gt;" name="lastPostDate" />
+			<finder-column name="status" />
+		</finder>
 
 		<!-- References -->
 
