@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBThreadModelImpl;
 import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
+import com.liferay.message.boards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -81,16 +82,9 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws PortalException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				status, start, end, null);
-
-			if (includeAnonymous) {
-				return mbThreadFinder.findByG_U_LPD(
-					groupId, userId, modifiedDate, queryDefinition);
-			}
-
-			return mbThreadFinder.findByG_U_LPD_A(
-				groupId, userId, modifiedDate, false, queryDefinition);
+			return mbThreadPersistence.findByG_NotC_L_S(
+				groupId, -1, modifiedDate, status, start, end,
+				new ThreadLastPostDateComparator(false), true);
 		}
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(
@@ -212,16 +206,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				status);
-
-			if (includeAnonymous) {
-				return mbThreadFinder.countByG_U_LPD(
-					groupId, userId, modifiedDate, queryDefinition);
-			}
-
-			return mbThreadFinder.countByG_U_LPD_A(
-				groupId, userId, modifiedDate, false, queryDefinition);
+			return mbThreadPersistence.countByG_NotC_L_S(
+				groupId, -1, modifiedDate, status);
 		}
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(
