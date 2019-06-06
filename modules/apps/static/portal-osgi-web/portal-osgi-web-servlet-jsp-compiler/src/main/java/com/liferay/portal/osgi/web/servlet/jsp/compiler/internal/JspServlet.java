@@ -212,7 +212,7 @@ public class JspServlet extends HttpServlet {
 
 		defaults.put(
 			TagHandlerPool.OPTION_TAGPOOL, JspTagHandlerPool.class.getName());
-		defaults.put(TagHandlerPool.OPTION_MAXSIZE, "10");
+		defaults.put(TagHandlerPool.OPTION_MAXSIZE, "100");
 
 		for (Map.Entry<Object, Object> entry : _initParams.entrySet()) {
 			defaults.put(
