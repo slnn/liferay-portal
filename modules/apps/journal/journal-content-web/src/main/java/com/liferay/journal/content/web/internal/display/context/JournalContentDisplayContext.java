@@ -402,6 +402,12 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
+		if (Validator.isBlank(_ddmTemplateKey) ||
+			_ddmTemplateKey.equals(article.getDDMTemplateKey())) {
+
+			return article.getDDMTemplateKey();
+		}
+
 		List<DDMTemplate> ddmTemplates = getDDMTemplates();
 
 		Stream<DDMTemplate> stream = ddmTemplates.stream();
