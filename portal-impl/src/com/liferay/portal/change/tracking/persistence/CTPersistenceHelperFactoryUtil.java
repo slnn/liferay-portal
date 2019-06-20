@@ -55,11 +55,13 @@ public class CTPersistenceHelperFactoryUtil {
 				}
 
 				@Override
-				public void populate(List<T> baseModels) {
+				public List<T> populate(List<T> baseModels) {
+					return baseModels;
 				}
 
 				@Override
-				public void populate(T baseModel) {
+				public T populate(T baseModel) {
+					return baseModel;
 				}
 
 			};

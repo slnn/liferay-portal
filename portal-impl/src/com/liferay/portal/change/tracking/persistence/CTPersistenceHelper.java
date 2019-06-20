@@ -33,8 +33,8 @@ public interface CTPersistenceHelper<T extends BaseModel<T>> {
 
 	public boolean isValidFinderResult(T baseModel);
 
-	public void populate(List<T> baseModels);
+	public List<T> populate(List<T> baseModels);
 
-	public void populate(T baseModel);
+	public T populate(T baseModel);
 
 }

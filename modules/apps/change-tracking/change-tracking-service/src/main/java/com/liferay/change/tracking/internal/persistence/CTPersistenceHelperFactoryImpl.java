@@ -210,11 +210,13 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void populate(List<T> baseModels) {
+		public List<T> populate(List<T> baseModels) {
+			return baseModels;
 		}
 
 		@Override
-		public void populate(T baseModel) {
+		public T populate(T baseModel) {
+			return baseModel;
 		}
 
 	}
@@ -503,7 +505,7 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void populate(List<T> baseModels) {
+		public List<T> populate(List<T> baseModels) {
 			long[] primaryKeys = ListUtil.toLongArray(
 				baseModels, _ctAdapter::getPrimaryKey);
 
@@ -525,15 +527,19 @@ public class CTPersistenceHelperFactoryImpl
 					_ctAdapter.populateModel(baseModel, contextModel);
 				}
 			}
+
+			return baseModels;
 		}
 
 		@Override
-		public void populate(T baseModel) {
+		public T populate(T baseModel) {
 			C contextModel = _ctAdapter.fetchContextModel(
 				_ctAdapter.getPrimaryKey(baseModel),
 				_ctCollection.getCtCollectionId());
 
 			_ctAdapter.populateModel(baseModel, contextModel);
+
+			return baseModel;
 		}
 
 		@SuppressWarnings("unchecked")
