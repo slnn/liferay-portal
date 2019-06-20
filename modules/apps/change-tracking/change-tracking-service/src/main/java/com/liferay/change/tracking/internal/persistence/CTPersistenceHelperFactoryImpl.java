@@ -533,6 +533,10 @@ public class CTPersistenceHelperFactoryImpl
 
 		@Override
 		public T populate(T baseModel) {
+			if (baseModel == null) {
+				return null;
+			}
+
 			C contextModel = _ctAdapter.fetchContextModel(
 				_ctAdapter.getPrimaryKey(baseModel),
 				_ctCollection.getCtCollectionId());
