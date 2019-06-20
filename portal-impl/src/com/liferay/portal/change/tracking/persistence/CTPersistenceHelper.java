@@ -27,14 +27,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTPersistenceHelper<T extends BaseModel<T>> {
 
-	public Object[] appendContextFinderArgs(Object[] finderArgs);
+	public Object[] appendFinderArgs(Object[] finderArgs);
 
-	public void appendContextSQL(String tableName, StringBundler sb);
+	public void appendSQL(String tableName, StringBundler sb);
 
 	public boolean isValidFinderResult(T baseModel);
 
-	public void populateContext(T baseModel);
+	public void populate(List<T> baseModels);
 
-	public void populateContexts(List<T> baseModels);
+	public void populate(T baseModel);
 
 }

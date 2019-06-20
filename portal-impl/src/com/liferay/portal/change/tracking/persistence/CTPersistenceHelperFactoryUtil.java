@@ -38,14 +38,12 @@ public class CTPersistenceHelperFactoryUtil {
 			return new CTPersistenceHelper<T>() {
 
 				@Override
-				public Object[] appendContextFinderArgs(Object[] finderArgs) {
+				public Object[] appendFinderArgs(Object[] finderArgs) {
 					return finderArgs;
 				}
 
 				@Override
-				public void appendContextSQL(
-					String tableName, StringBundler sb) {
-
+				public void appendSQL(String tableName, StringBundler sb) {
 					sb.append(" AND ");
 					sb.append(tableName);
 					sb.append(".ctCollectionId = 0 ");
@@ -57,11 +55,11 @@ public class CTPersistenceHelperFactoryUtil {
 				}
 
 				@Override
-				public void populateContext(T baseModel) {
+				public void populate(List<T> baseModels) {
 				}
 
 				@Override
-				public void populateContexts(List<T> baseModels) {
+				public void populate(T baseModel) {
 				}
 
 			};

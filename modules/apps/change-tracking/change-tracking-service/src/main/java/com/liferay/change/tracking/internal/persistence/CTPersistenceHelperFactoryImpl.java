@@ -193,12 +193,12 @@ public class CTPersistenceHelperFactoryImpl
 		implements CTPersistenceHelper<T> {
 
 		@Override
-		public Object[] appendContextFinderArgs(Object[] finderArgs) {
+		public Object[] appendFinderArgs(Object[] finderArgs) {
 			return finderArgs;
 		}
 
 		@Override
-		public void appendContextSQL(String tableName, StringBundler sb) {
+		public void appendSQL(String tableName, StringBundler sb) {
 			sb.append(" AND ");
 			sb.append(tableName);
 			sb.append(".ctCollectionId = 0 ");
@@ -210,11 +210,11 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void populateContext(T baseModel) {
+		public void populate(List<T> baseModels) {
 		}
 
 		@Override
-		public void populateContexts(List<T> baseModels) {
+		public void populate(T baseModel) {
 		}
 
 	}
@@ -416,7 +416,7 @@ public class CTPersistenceHelperFactoryImpl
 			implements CTPersistenceHelper<T> {
 
 		@Override
-		public Object[] appendContextFinderArgs(Object[] finderArgs) {
+		public Object[] appendFinderArgs(Object[] finderArgs) {
 			List<CTEntry> ctEntries = _getCTEntries();
 
 			if (ctEntries.isEmpty()) {
@@ -447,7 +447,7 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void appendContextSQL(String tableName, StringBundler sb) {
+		public void appendSQL(String tableName, StringBundler sb) {
 			sb.append(" AND (");
 			sb.append(tableName);
 			sb.append(".ctCollectionId = 0 OR ");
@@ -503,16 +503,7 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void populateContext(T baseModel) {
-			C contextModel = _ctAdapter.fetchContextModel(
-				_ctAdapter.getPrimaryKey(baseModel),
-				_ctCollection.getCtCollectionId());
-
-			_ctAdapter.populateModel(baseModel, contextModel);
-		}
-
-		@Override
-		public void populateContexts(List<T> baseModels) {
+		public void populate(List<T> baseModels) {
 			long[] primaryKeys = ListUtil.toLongArray(
 				baseModels, _ctAdapter::getPrimaryKey);
 
@@ -534,6 +525,15 @@ public class CTPersistenceHelperFactoryImpl
 					_ctAdapter.populateModel(baseModel, contextModel);
 				}
 			}
+		}
+
+		@Override
+		public void populate(T baseModel) {
+			C contextModel = _ctAdapter.fetchContextModel(
+				_ctAdapter.getPrimaryKey(baseModel),
+				_ctCollection.getCtCollectionId());
+
+			_ctAdapter.populateModel(baseModel, contextModel);
 		}
 
 		@SuppressWarnings("unchecked")
