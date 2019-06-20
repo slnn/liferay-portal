@@ -14,10 +14,10 @@
 
 package com.liferay.layout.change.tracking.internal;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.change.tracking.CTAdapter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutCT;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutCTPK;
 import com.liferay.portal.kernel.service.persistence.LayoutCTPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
@@ -30,18 +30,19 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(immediate = true, service = CTAdapter.class)
-public class LayoutCTAdapter implements CTAdapter<Layout, LayoutCT> {
+@Component(immediate = true, service = AopService.class)
+public class LayoutCTAdapter
+	implements AopService, CTAdapter<Layout, LayoutCT> {
 
 	@Override
-	public LayoutCT createContextModel(Layout model, long ctCollectionId) {
+	public LayoutCT createContextModel(Layout layout, long ctCollectionId) {
 		return _layoutCTPersistence.create(
-			new LayoutCTPK(model.getPlid(), ctCollectionId));
+			new LayoutCTPK(layout.getPlid(), ctCollectionId));
 	}
 
 	@Override
 	public Layout fetchByPrimaryKey(long primaryKey) {
-		return _layoutLocalService.fetchLayout(primaryKey);
+		return _layoutPersistence.fetchByPrimaryKey(primaryKey);
 	}
 
 	@Override
@@ -68,18 +69,18 @@ public class LayoutCTAdapter implements CTAdapter<Layout, LayoutCT> {
 	}
 
 	@Override
-	public long getModelCTCollectionId(Layout model) {
-		return model.getCtCollectionId();
+	public long getModelCTCollectionId(Layout layout) {
+		return layout.getCtCollectionId();
 	}
 
 	@Override
-	public long getModelPrimaryKey(LayoutCT ctContextModel) {
-		return ctContextModel.getPlid();
+	public long getModelPrimaryKey(LayoutCT layoutCT) {
+		return layoutCT.getPlid();
 	}
 
 	@Override
-	public long getPrimaryKey(Layout model) {
-		return model.getPlid();
+	public long getPrimaryKey(Layout layout) {
+		return layout.getPlid();
 	}
 
 	@Override
@@ -88,47 +89,54 @@ public class LayoutCTAdapter implements CTAdapter<Layout, LayoutCT> {
 	}
 
 	@Override
-	public void populateContextModel(Layout model, LayoutCT ctContextModel) {
-		ctContextModel.setTypeSettings(model.getTypeSettings());
+	public void populateContextModel(Layout layout, LayoutCT ctContextModel) {
+		ctContextModel.setTypeSettings(layout.getTypeSettings());
 	}
 
 	@Override
-	public void populateModel(Layout model, LayoutCT ctContextModel) {
-		model.setTypeSettings(ctContextModel.getTypeSettings());
+	public void populateModel(Layout model, LayoutCT layoutCT) {
+		model.setTypeSettings(layoutCT.getTypeSettings());
 	}
 
 	@Override
 	public void removeContext(long primaryKey, long ctCollectionId) {
-		_layoutLocalService.deleteLayoutCT(primaryKey, ctCollectionId);
+		LayoutCT layoutCT = _layoutCTPersistence.fetchByPrimaryKey(
+			new LayoutCTPK(primaryKey, ctCollectionId));
+
+		if (layoutCT != null) {
+			_layoutCTPersistence.remove(layoutCT);
+		}
 	}
 
 	@Override
-	public void removeContexts(Layout model) {
-		_layoutCTPersistence.removeByPlid(model.getPlid());
+	public void removeContexts(Layout layout) {
+		_layoutCTPersistence.removeByPlid(layout.getPlid());
 	}
 
 	@Override
 	public void setContextModelCTCollectionId(
-		LayoutCT ctContextModel, long ctCollectionId) {
+		LayoutCT layoutCT, long ctCollectionId) {
 
-		ctContextModel.setCtCollectionId(ctCollectionId);
+		layoutCT.setCtCollectionId(ctCollectionId);
 	}
 
 	@Override
-	public void setModelCTCollectionId(Layout model, long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
+	public void setModelCTCollectionId(Layout layout, long ctCollectionId) {
+		layout.setCtCollectionId(ctCollectionId);
 	}
 
 	@Override
-	public void updateContextModel(LayoutCT ctContextModel) {
-		_layoutCTPersistence.update(ctContextModel);
+	public void updateContextModel(LayoutCT layoutCT) {
+		_layoutCTPersistence.update(layoutCT);
+	}
+
+	@Override
+	public void updateModel(Layout layout) {
+		_layoutPersistence.update(layout);
 	}
 
 	@Reference
 	private LayoutCTPersistence _layoutCTPersistence;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPersistence _layoutPersistence;
