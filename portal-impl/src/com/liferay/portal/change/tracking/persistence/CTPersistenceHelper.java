@@ -17,7 +17,10 @@ package com.liferay.portal.change.tracking.persistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.BaseModel;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,6 +37,8 @@ public interface CTPersistenceHelper<T extends BaseModel<T>> {
 	public boolean isValidFinderResult(T baseModel);
 
 	public List<T> populate(List<T> baseModels);
+
+	public Map<Serializable, T> populate(Map<Serializable, T> map);
 
 	public T populate(T baseModel);
 

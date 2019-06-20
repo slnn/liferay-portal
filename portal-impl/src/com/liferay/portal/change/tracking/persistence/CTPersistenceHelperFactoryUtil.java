@@ -18,7 +18,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -57,6 +60,11 @@ public class CTPersistenceHelperFactoryUtil {
 				@Override
 				public List<T> populate(List<T> baseModels) {
 					return baseModels;
+				}
+
+				@Override
+				public Map<Serializable, T> populate(Map<Serializable, T> map) {
+					return map;
 				}
 
 				@Override

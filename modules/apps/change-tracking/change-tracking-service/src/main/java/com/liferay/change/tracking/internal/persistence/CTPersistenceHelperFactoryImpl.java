@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -212,6 +215,11 @@ public class CTPersistenceHelperFactoryImpl
 		@Override
 		public List<T> populate(List<T> baseModels) {
 			return baseModels;
+		}
+
+		@Override
+		public Map<Serializable, T> populate(Map<Serializable, T> map) {
+			return map;
 		}
 
 		@Override
@@ -506,29 +514,16 @@ public class CTPersistenceHelperFactoryImpl
 
 		@Override
 		public List<T> populate(List<T> baseModels) {
-			long[] primaryKeys = ListUtil.toLongArray(
-				baseModels, _ctAdapter::getPrimaryKey);
-
-			List<C> contextModels = _ctAdapter.fetchContextModels(
-				primaryKeys, _ctCollection.getCtCollectionId());
-
-			Map<Long, C> contextModelMap = new HashMap<>();
-
-			for (C contextModel : contextModels) {
-				contextModelMap.put(
-					_ctAdapter.getModelPrimaryKey(contextModel), contextModel);
-			}
-
-			for (T baseModel : baseModels) {
-				C contextModel = contextModelMap.get(
-					_ctAdapter.getPrimaryKey(baseModel));
-
-				if (contextModel != null) {
-					_ctAdapter.populateModel(baseModel, contextModel);
-				}
-			}
+			_populate(baseModels);
 
 			return baseModels;
+		}
+
+		@Override
+		public Map<Serializable, T> populate(Map<Serializable, T> map) {
+			_populate(map.values());
+
+			return map;
 		}
 
 		@Override
@@ -563,6 +558,35 @@ public class CTPersistenceHelperFactoryImpl
 			}
 
 			return _ctEntries;
+		}
+
+		private void _populate(Collection<T> baseModels) {
+			long[] primaryKeys = new long[baseModels.size()];
+
+			Iterator<T> iterator = baseModels.iterator();
+
+			for (int i = 0; iterator.hasNext(); i++) {
+				primaryKeys[i] = _ctAdapter.getPrimaryKey(iterator.next());
+			}
+
+			List<C> contextModels = _ctAdapter.fetchContextModels(
+				primaryKeys, _ctCollection.getCtCollectionId());
+
+			Map<Long, C> contextModelMap = new HashMap<>();
+
+			for (C contextModel : contextModels) {
+				contextModelMap.put(
+					_ctAdapter.getModelPrimaryKey(contextModel), contextModel);
+			}
+
+			for (T baseModel : baseModels) {
+				C contextModel = contextModelMap.get(
+					_ctAdapter.getPrimaryKey(baseModel));
+
+				if (contextModel != null) {
+					_ctAdapter.populateModel(baseModel, contextModel);
+				}
+			}
 		}
 
 		private final long _classNameId;
