@@ -14,15 +14,24 @@
 
 package com.liferay.portal.change.tracking;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.List;
 
 /**
  * @author Preston Crary
  */
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface CTAdapter<T extends BaseModel<T>, C extends BaseModel<C>> {
 
+	@Transactional(enabled = false)
 	public C createContextModel(T model, long ctCollectionId);
 
 	public T fetchByPrimaryKey(long primaryKey);
@@ -33,27 +42,36 @@ public interface CTAdapter<T extends BaseModel<T>, C extends BaseModel<C>> {
 
 	public List<T> findByCTCollectionId(long ctCollectionId);
 
+	@Transactional(enabled = false)
 	public Class<T> getModelClass();
 
+	@Transactional(enabled = false)
 	public long getModelCTCollectionId(T model);
 
+	@Transactional(enabled = false)
 	public long getModelPrimaryKey(C ctContextModel);
 
+	@Transactional(enabled = false)
 	public long getPrimaryKey(T model);
 
+	@Transactional(enabled = false)
 	public String getPrimaryKeyColumnName();
 
+	@Transactional(enabled = false)
 	public void populateContextModel(T model, C ctContextModel);
 
+	@Transactional(enabled = false)
 	public void populateModel(T model, C ctContextModel);
 
 	public void removeContext(long primaryKey, long ctCollectionId);
 
 	public void removeContexts(T model);
 
+	@Transactional(enabled = false)
 	public void setContextModelCTCollectionId(
 		C ctContextModel, long ctCollectionId);
 
+	@Transactional(enabled = false)
 	public void setModelCTCollectionId(T model, long ctCollectionId);
 
 	public void updateContextModel(C ctContextModel);
