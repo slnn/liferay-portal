@@ -16,9 +16,12 @@ package com.liferay.portal.change.tracking.persistence;
 
 import com.liferay.portal.kernel.model.BaseModel;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Preston Crary
  */
+@ProviderType
 public interface CTPersistenceHelperFactory {
 
 	public <T extends BaseModel<T>> CTPersistenceHelper<T> create(
