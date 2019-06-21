@@ -385,6 +385,22 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId_Head() throws Exception {
+		_persistence.countByCTCollectionId_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByCTCollectionId_Head(
+			0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByIconImageId() throws Exception {
 		_persistence.countByIconImageId(RandomTestUtil.nextLong());
 
@@ -440,22 +456,6 @@ public class LayoutPersistenceTest {
 
 		_persistence.countBySourcePrototypeLayoutUuid_Head(
 			(String)null, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCTCollectionId(0L);
-	}
-
-	@Test
-	public void testCountByCTCollectionId_Head() throws Exception {
-		_persistence.countByCTCollectionId_Head(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByCTCollectionId_Head(
-			0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

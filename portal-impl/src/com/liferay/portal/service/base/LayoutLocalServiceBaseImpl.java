@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
-import com.liferay.portal.kernel.service.persistence.LayoutCTPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
@@ -944,26 +943,6 @@ public abstract class LayoutLocalServiceBaseImpl
 		LayoutVersionPersistence layoutVersionPersistence) {
 
 		this.layoutVersionPersistence = layoutVersionPersistence;
-	}
-
-	/**
-	 * Returns the layout ct persistence.
-	 *
-	 * @return the layout ct persistence
-	 */
-	public LayoutCTPersistence getLayoutCTPersistence() {
-		return layoutCTPersistence;
-	}
-
-	/**
-	 * Sets the layout ct persistence.
-	 *
-	 * @param layoutCTPersistence the layout ct persistence
-	 */
-	public void setLayoutCTPersistence(
-		LayoutCTPersistence layoutCTPersistence) {
-
-		this.layoutCTPersistence = layoutCTPersistence;
 	}
 
 	/**
@@ -2009,9 +1988,6 @@ public abstract class LayoutLocalServiceBaseImpl
 
 	@BeanReference(type = LayoutVersionPersistence.class)
 	protected LayoutVersionPersistence layoutVersionPersistence;
-
-	@BeanReference(type = LayoutCTPersistence.class)
-	protected LayoutCTPersistence layoutCTPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService.class
