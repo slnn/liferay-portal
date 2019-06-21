@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.List;
@@ -34,12 +35,16 @@ public interface CTAdapter<T extends BaseModel<T>, C extends BaseModel<C>> {
 	@Transactional(enabled = false)
 	public C createContextModel(T model, long ctCollectionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public T fetchByPrimaryKey(long primaryKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public C fetchContextModel(long primaryKey, long ctCollectionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<C> fetchContextModels(long[] primaryKeys, long ctCollectionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> findByCTCollectionId(long ctCollectionId);
 
 	@Transactional(enabled = false)
