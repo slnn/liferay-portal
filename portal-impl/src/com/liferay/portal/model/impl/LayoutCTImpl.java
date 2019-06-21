@@ -17,23 +17,8 @@ package com.liferay.portal.model.impl;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model implementation for the LayoutCT service. Represents a row in the &quot;LayoutCT&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.kernel.model.LayoutCT<code> interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class LayoutCTImpl extends LayoutCTBaseImpl {
-
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a layout ct model instance should use the {@link com.liferay.portal.kernel.model.LayoutCT} interface instead.
-	 */
-	public LayoutCTImpl() {
-	}
-
 }
