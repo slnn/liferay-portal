@@ -42,6 +42,13 @@ public class EntityFinder {
 		_arrayableColumns = new ArrayList<>();
 
 		for (EntityColumn column : _entityColumns) {
+			if (column.isChangeTracked()) {
+				throw new IllegalArgumentException(
+					"A finder cannot have a change tracked column. Create a " +
+						"custom finder implementation joining on the model " +
+							"CT table.");
+			}
+
 			if (column.hasArrayableOperator()) {
 				_arrayableColumns.add(column);
 			}

@@ -5637,6 +5637,7 @@ public class ServiceBuilder {
 		List<EntityColumn> collectionEntityColumns = new ArrayList<>();
 		List<EntityColumn> entityColumns = new ArrayList<>();
 
+		boolean changeTrackedModel = false;
 		boolean permissionedModel = false;
 		boolean resourcedModel = false;
 
@@ -5747,6 +5748,8 @@ public class ServiceBuilder {
 			String idParam = columnElement.attributeValue("id-param");
 			boolean convertNull = GetterUtil.getBoolean(
 				columnElement.attributeValue("convert-null"), true);
+			boolean changeTracked = GetterUtil.getBoolean(
+				columnElement.attributeValue("change-tracked"));
 			boolean lazy = GetterUtil.getBoolean(
 				columnElement.attributeValue("lazy"), true);
 			boolean localized = GetterUtil.getBoolean(
@@ -5772,12 +5775,16 @@ public class ServiceBuilder {
 				resourcedModel = true;
 			}
 
+			if (changeTracked) {
+				changeTrackedModel = true;
+			}
+
 			EntityColumn entityColumn = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
 				filterPrimary, columnEntityName, mappingTableName, idType,
 				idParam, convertNull, lazy, localized, colJsonEnabled,
 				containerModel, parentContainerModel, uadAnonymizeFieldName,
-				uadNonanonymizable);
+				uadNonanonymizable, changeTracked);
 
 			if (primary) {
 				if (!columnType.equals("int") && !columnType.equals("long") &&
@@ -5808,6 +5815,12 @@ public class ServiceBuilder {
 			if (Validator.isNotNull(columnEntityName) &&
 				Validator.isNotNull(mappingTableName)) {
 
+				if (changeTracked) {
+					throw new IllegalArgumentException(
+						"Cannot use mapping table with change tracked column " +
+							columnName);
+				}
+
 				EntityMapping entityMapping = new EntityMapping(
 					mappingTableName, entityName, columnEntityName);
 
@@ -5821,6 +5834,14 @@ public class ServiceBuilder {
 			throw new ServiceBuilderException(
 				"Unable to create entity \"" + entityName +
 					"\" with a UUID without a primary key");
+		}
+
+		if (changeTrackedModel) {
+			if (entityColumns.indexOf(new EntityColumn("ctCollectionId")) < 0) {
+				throw new IllegalArgumentException(
+					"Please add ctCollectionId column to " + entityName +
+						" to use change tracked columns");
+			}
 		}
 
 		EntityOrder entityOrder = null;
@@ -5869,6 +5890,12 @@ public class ServiceBuilder {
 				}
 
 				EntityColumn entityColumn = entityColumns.get(index);
+
+				if (entityColumn.isChangeTracked()) {
+					throw new IllegalArgumentException(
+						"Cannot order by change tracked column " +
+							orderColName);
+				}
 
 				entityColumn.setOrderColumn(true);
 
@@ -6174,7 +6201,13 @@ public class ServiceBuilder {
 			regularEntityColumns, blobEntityColumns, collectionEntityColumns,
 			entityColumns, entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
-			resourceActionModel);
+			resourceActionModel, changeTrackedModel);
+
+		if (entity.isHierarchicalTree() && changeTrackedModel) {
+			throw new IllegalArgumentException(
+				"Hierarchical Tree with change tracked columns is not yet " +
+					"supported");
+		}
 
 		_entities.add(entity);
 
@@ -6209,7 +6242,7 @@ public class ServiceBuilder {
 			EntityColumn headEntityColumn = new EntityColumn(
 				"head", "head", "boolean", false, false, false, null, null,
 				null, null, true, false, false, false, false, false, null,
-				false);
+				false, false);
 
 			headEntityColumn.setComparator("=");
 			headEntityColumn.setFinderPath(true);
@@ -6635,7 +6668,8 @@ public class ServiceBuilder {
 
 					if (!attributeName.equals("primary") &&
 						!attributeName.equals("uad-anonymize-field-name") &&
-						!attributeName.equals("uad-nonanonymizable")) {
+						!attributeName.equals("uad-nonanonymizable") &&
+						!attributeName.equals("change-tracked")) {
 
 						versionEntityColumnElement.addAttribute(
 							attributeName, attribute.getValue());

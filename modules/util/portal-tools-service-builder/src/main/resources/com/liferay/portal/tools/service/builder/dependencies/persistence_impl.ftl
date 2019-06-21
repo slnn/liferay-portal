@@ -43,6 +43,11 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 	import ${packagePath}.service.persistence.impl.constants.${portletShortName}PersistenceConstants;
 </#if>
 
+<#if entity.isChangeTrackedModel()>
+	import com.liferay.portal.change.tracking.persistence.CTPersistenceHelper;
+	import com.liferay.portal.change.tracking.persistence.CTPersistenceHelperFactoryUtil;
+</#if>
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -862,7 +867,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return findByPrimaryKey((Serializable)${entity.PKVarName});
 	}
 
-	<#if serviceBuilder.isVersionLTE_7_1_0()>
+	<#if serviceBuilder.isVersionLTE_7_1_0() || entity.isChangeTrackedModel()>
 		/**
 		 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
 		 *
@@ -871,40 +876,52 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		 */
 		@Override
 		public ${entity.name} fetchByPrimaryKey(Serializable primaryKey) {
-			Serializable serializable = ${entityCache}.getResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
+			<#if entity.isChangeTrackedModel()>
+				${entity.name} ${entity.varName} = super.fetchByPrimaryKey(primaryKey);
 
-			if (serializable == nullModel) {
-				return null;
-			}
+				if (${entity.varName} == null) {
+					return ${entity.varName};
+				}
 
-			${entity.name} ${entity.varName} = (${entity.name})serializable;
+				CTPersistenceHelper<${entity.name}> ctPersistenceHelper = CTPersistenceHelperFactoryUtil.create(${entity.name}.class);
 
-			if (${entity.varName} == null) {
-				Session session = null;
+				return ctPersistenceHelper.populate(${entity.varName});
+			<#else>
+				Serializable serializable = ${entityCache}.getResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
 
-				try {
-					session = openSession();
+				if (serializable == nullModel) {
+					return null;
+				}
 
-					${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
+				${entity.name} ${entity.varName} = (${entity.name})serializable;
 
-					if (${entity.varName} != null) {
-						cacheResult(${entity.varName});
+				if (${entity.varName} == null) {
+					Session session = null;
+
+					try {
+						session = openSession();
+
+						${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
+
+						if (${entity.varName} != null) {
+							cacheResult(${entity.varName});
+						}
+						else {
+							${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey, nullModel);
+						}
 					}
-					else {
-						${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey, nullModel);
+					catch (Exception e) {
+						${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
+
+						throw processException(e);
+					}
+					finally {
+						closeSession(session);
 					}
 				}
-				catch (Exception e) {
-					${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
 
-					throw processException(e);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return ${entity.varName};
+				return ${entity.varName};
+			</#if>
 		}
 	</#if>
 
