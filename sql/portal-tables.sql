@@ -602,7 +602,7 @@ create table LayoutCT (
 	mvccVersion LONG default 0 not null,
 	plid LONG not null,
 	ctCollectionId LONG not null,
-	typeSettings VARCHAR(75) null,
+	typeSettings TEXT null,
 	primary key (plid, ctCollectionId)
 );
 

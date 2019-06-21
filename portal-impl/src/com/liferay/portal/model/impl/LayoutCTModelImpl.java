@@ -65,7 +65,7 @@ public class LayoutCTModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"plid", Types.BIGINT},
-		{"ctCollectionId", Types.BIGINT}, {"typeSettings", Types.VARCHAR}
+		{"ctCollectionId", Types.BIGINT}, {"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -75,11 +75,11 @@ public class LayoutCTModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutCT (mvccVersion LONG default 0 not null,plid LONG not null,ctCollectionId LONG not null,typeSettings VARCHAR(75) null,primary key (plid, ctCollectionId))";
+		"create table LayoutCT (mvccVersion LONG default 0 not null,plid LONG not null,ctCollectionId LONG not null,typeSettings TEXT null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutCT";
 
