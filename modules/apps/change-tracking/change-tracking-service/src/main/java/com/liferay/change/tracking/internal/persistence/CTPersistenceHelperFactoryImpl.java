@@ -303,9 +303,9 @@ public class CTPersistenceHelperFactoryImpl
 
 				try {
 					_ctManager.registerModelChange(
-						ctCollection.getCompanyId(), ctCollection.getUserId(),
-						_classNameId, _ctAdapter.getPrimaryKey(model), 0,
-						CTConstants.CT_CHANGE_TYPE_ADDITION);
+						ctCollection, ctCollection.getUserId(), _classNameId,
+						_ctAdapter.getPrimaryKey(model), 0,
+						CTConstants.CT_CHANGE_TYPE_ADDITION, false);
 				}
 				catch (CTEngineException ctee) {
 					if (_log.isWarnEnabled()) {
@@ -327,9 +327,9 @@ public class CTPersistenceHelperFactoryImpl
 
 				try {
 					_ctManager.registerModelChange(
-						ctCollection.getCompanyId(), ctCollection.getUserId(),
-						_classNameId, _ctAdapter.getPrimaryKey(model), 0,
-						CTConstants.CT_CHANGE_TYPE_DELETION);
+						ctCollection, ctCollection.getUserId(), _classNameId,
+						_ctAdapter.getPrimaryKey(model), 0,
+						CTConstants.CT_CHANGE_TYPE_DELETION, false);
 				}
 				catch (CTEngineException ctee) {
 					if (_log.isWarnEnabled()) {
@@ -355,9 +355,9 @@ public class CTPersistenceHelperFactoryImpl
 
 				try {
 					_ctManager.registerModelChange(
-						ctCollection.getCompanyId(), ctCollection.getUserId(),
-						_classNameId, _ctAdapter.getPrimaryKey(model), 0,
-						CTConstants.CT_CHANGE_TYPE_MODIFICATION);
+						ctCollection, ctCollection.getUserId(), _classNameId,
+						_ctAdapter.getPrimaryKey(model), 0,
+						CTConstants.CT_CHANGE_TYPE_MODIFICATION, false);
 				}
 				catch (CTEngineException ctee) {
 					if (_log.isWarnEnabled()) {
