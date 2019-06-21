@@ -81,7 +81,7 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		CTAdapterHolder ctAdapterHolder = _ctAdapterHolders.get(
-			_classNameLocalService.getClassName(modelClass.getName()));
+			_classNameLocalService.getClassNameId(modelClass));
 
 		if (ctAdapterHolder == null) {
 			return _getDefaultCTPersistenceHelper();
@@ -347,12 +347,6 @@ public class CTPersistenceHelperFactoryImpl
 			if (ctCollectionOptional.isPresent()) {
 				CTCollection ctCollection = ctCollectionOptional.get();
 
-				C contextModel = _ctAdapter.fetchContextModel(
-					_ctAdapter.getPrimaryKey(model),
-					ctCollection.getCtCollectionId());
-
-				_ctAdapter.populateModel(model, contextModel);
-
 				try {
 					_ctManager.registerModelChange(
 						ctCollection, ctCollection.getUserId(), _classNameId,
@@ -388,32 +382,29 @@ public class CTPersistenceHelperFactoryImpl
 			if (ctCollectionOptional.isPresent()) {
 				CTCollection ctCollection = ctCollectionOptional.get();
 
-				C contextModel = _ctAdapter.fetchContextModel(
+				C modelCT = _ctAdapter.fetchContextModel(
 					_ctAdapter.getPrimaryKey(model),
 					ctCollection.getCtCollectionId());
 
-				if (contextModel == null) {
-					contextModel = _ctAdapter.createContextModel(
+				if (modelCT == null) {
+					modelCT = _ctAdapter.createContextModel(
 						model, ctCollection.getCtCollectionId());
-
-					_ctAdapter.populateContextModel(model, contextModel);
-
-					_ctAdapter.setContextModelCTCollectionId(
-						contextModel, ctCollection.getCtCollectionId());
-				}
-				else {
-					_ctAdapter.populateContextModel(model, contextModel);
 				}
 
-				_ctAdapter.updateContextModel(contextModel);
+				_ctAdapter.populateContextModel(model, modelCT);
+
+				_ctAdapter.updateContextModel(modelCT);
 
 				T oldModel = _ctAdapter.fetchByPrimaryKey(
 					_ctAdapter.getPrimaryKey(model));
 
 				if (oldModel != null) {
-					_ctAdapter.populateContextModel(oldModel, contextModel);
+					C oldModelCT = _ctAdapter.createContextModel(
+						oldModel, ctCollection.getCtCollectionId());
 
-					_ctAdapter.populateModel(model, contextModel);
+					_ctAdapter.populateContextModel(oldModel, oldModelCT);
+
+					_ctAdapter.populateModel(model, oldModelCT);
 				}
 			}
 		}
@@ -488,7 +479,7 @@ public class CTPersistenceHelperFactoryImpl
 			sb.append(".ctCollectionId = ");
 			sb.append(_ctCollection.getCtCollectionId());
 
-			if (ctEntries.isEmpty()) {
+			if (!ctEntries.isEmpty()) {
 				sb.append(") AND ");
 				sb.append(tableName);
 				sb.append(".");
@@ -559,7 +550,9 @@ public class CTPersistenceHelperFactoryImpl
 				_ctAdapter.getPrimaryKey(baseModel),
 				_ctCollection.getCtCollectionId());
 
-			_ctAdapter.populateModel(baseModel, contextModel);
+			if (contextModel != null) {
+				_ctAdapter.populateModel(baseModel, contextModel);
+			}
 
 			return baseModel;
 		}
