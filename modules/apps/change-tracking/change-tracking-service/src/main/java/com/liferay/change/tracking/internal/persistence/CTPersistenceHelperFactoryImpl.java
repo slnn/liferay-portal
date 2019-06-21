@@ -201,10 +201,18 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void appendSQL(String tableName, StringBundler sb) {
+		public String appendSQL(String tableName, String sql) {
+			return StringBundler.concat(
+				sql, " AND ", tableName, ".ctCollectionId = 0 ");
+		}
+
+		@Override
+		public StringBundler appendSQL(String tableName, StringBundler sb) {
 			sb.append(" AND ");
 			sb.append(tableName);
 			sb.append(".ctCollectionId = 0 ");
+
+			return sb;
 		}
 
 		@Override
@@ -457,15 +465,28 @@ public class CTPersistenceHelperFactoryImpl
 		}
 
 		@Override
-		public void appendSQL(String tableName, StringBundler sb) {
+		public String appendSQL(String tableName, String sql) {
+			List<CTEntry> ctEntries = _getCTEntries();
+
+			StringBundler sb = new StringBundler(2 * ctEntries.size() + 12);
+
+			sb.append(sql);
+
+			sb = appendSQL(tableName, sb);
+
+			return sb.toString();
+		}
+
+		@Override
+		public StringBundler appendSQL(String tableName, StringBundler sb) {
+			List<CTEntry> ctEntries = _getCTEntries();
+
 			sb.append(" AND (");
 			sb.append(tableName);
 			sb.append(".ctCollectionId = 0 OR ");
 			sb.append(tableName);
 			sb.append(".ctCollectionId = ");
 			sb.append(_ctCollection.getCtCollectionId());
-
-			List<CTEntry> ctEntries = _getCTEntries();
 
 			if (ctEntries.isEmpty()) {
 				sb.append(") AND ");
@@ -483,6 +504,8 @@ public class CTPersistenceHelperFactoryImpl
 			}
 
 			sb.append(") ");
+
+			return sb;
 		}
 
 		@Override

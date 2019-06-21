@@ -46,10 +46,20 @@ public class CTPersistenceHelperFactoryUtil {
 				}
 
 				@Override
-				public void appendSQL(String tableName, StringBundler sb) {
+				public String appendSQL(String tableName, String sql) {
+					return StringBundler.concat(
+						sql, " AND ", tableName, ".ctCollectionId = 0 ");
+				}
+
+				@Override
+				public StringBundler appendSQL(
+					String tableName, StringBundler sb) {
+
 					sb.append(" AND ");
 					sb.append(tableName);
 					sb.append(".ctCollectionId = 0 ");
+
+					return sb;
 				}
 
 				@Override
