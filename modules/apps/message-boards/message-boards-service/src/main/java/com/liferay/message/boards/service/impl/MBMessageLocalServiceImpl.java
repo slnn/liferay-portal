@@ -1471,7 +1471,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				threadId, WorkflowConstants.STATUS_IN_TRASH, start, end,
 				orderByComparator);
 
-			if (!(comparator instanceof OrderByComparator)) {
+			if (!(comparator instanceof OrderByComparator) &&
+				(messages.size() > 1)) {
+
 				messages = ListUtil.sort(messages, comparator);
 			}
 
@@ -1489,7 +1491,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		List<MBMessage> messages = mbMessageFinder.findByThreadId(
 			threadId, queryDefinition);
 
-		if (!(comparator instanceof OrderByComparator)) {
+		if (!(comparator instanceof OrderByComparator) &&
+			(messages.size() > 1)) {
+
 			messages = ListUtil.sort(messages, comparator);
 		}
 
