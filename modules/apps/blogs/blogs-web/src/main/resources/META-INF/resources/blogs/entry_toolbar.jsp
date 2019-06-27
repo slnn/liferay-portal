@@ -30,7 +30,16 @@ boolean showOnlyIcons = ParamUtil.getBoolean(request, "showOnlyIcons");
 		<div class="autofit-col">
 
 			<%
-			int messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
+			Discussion discussion = (Discussion)request.getAttribute("view_entry_content.jsp-discussion");
+
+			int messagesCount = 0;
+
+			if (discussion == null) {
+				messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
+			}
+			else {
+				messagesCount = discussion.getDiscussionCommentsCount();
+			}
 			%>
 
 			<portlet:renderURL var="viewEntryCommentsURL">
