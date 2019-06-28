@@ -34,6 +34,9 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Peter Fellwock
  */
@@ -82,11 +85,16 @@ public class HelloWorldPortlet extends MVCPortlet {
 		}
 
 		printWriter.print(
-			"Welcome to ".concat(
+			"Welcome to sleep".concat(
 				releaseInfo
 			).concat(
 				"."
 			));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException ex) {
+			Logger.getLogger(HelloWorldPortlet.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	@Reference(
