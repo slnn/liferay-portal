@@ -24,7 +24,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -71,24 +70,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		dlFileRank.setFileEntryId(fileEntryId);
 		dlFileRank.setActive(true);
 
-		try {
-			dlFileRankPersistence.update(dlFileRank);
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {companyId=", companyId, ", userId=",
-						userId, ", fileEntryId=", fileEntryId, "}"));
-			}
-
-			dlFileRank = dlFileRankPersistence.fetchByC_U_F(
-				companyId, userId, fileEntryId, false);
-
-			if (dlFileRank == null) {
-				throw se;
-			}
-		}
+		dlFileRankPersistence.update(dlFileRank);
 
 		return dlFileRank;
 	}

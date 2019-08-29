@@ -129,7 +129,7 @@ public class SocialActivityCounterLocalServiceImpl
 
 		activityCounter = socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
 			groupId, classNameId, classPK, name, ownerType,
-			SocialActivityCounterConstants.END_PERIOD_UNDEFINED, false);
+			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
 
 		if (activityCounter != null) {
 			return activityCounter;

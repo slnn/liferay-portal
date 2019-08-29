@@ -17,10 +17,8 @@ package com.liferay.asset.tag.stats.service.impl;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.base.AssetTagStatsLocalServiceBaseImpl;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -57,24 +55,7 @@ public class AssetTagStatsLocalServiceImpl
 		tagStats.setTagId(tagId);
 		tagStats.setClassNameId(classNameId);
 
-		try {
-			assetTagStatsPersistence.update(tagStats);
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {tagId=", tagId, ", classNameId=",
-						classNameId, "}"));
-			}
-
-			tagStats = assetTagStatsPersistence.fetchByT_C(
-				tagId, classNameId, false);
-
-			if (tagStats == null) {
-				throw se;
-			}
-		}
+		assetTagStatsPersistence.update(tagStats);
 
 		return tagStats;
 	}

@@ -277,7 +277,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 						@Override
 						public Lock call() {
 							Lock lock = lockPersistence.fetchByC_K(
-								className, key, false);
+								className, key);
 
 							if (lock == null) {
 								long lockId = counterLocalService.increment();
@@ -409,7 +409,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 						@Override
 						public Void call() {
 							Lock lock = lockPersistence.fetchByC_K(
-								className, key, false);
+								className, key);
 
 							if (lock == null) {
 								return null;

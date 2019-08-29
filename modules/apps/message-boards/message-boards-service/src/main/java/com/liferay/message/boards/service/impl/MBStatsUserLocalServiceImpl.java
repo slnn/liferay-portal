@@ -20,7 +20,6 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -63,24 +61,7 @@ public class MBStatsUserLocalServiceImpl
 		statsUser.setGroupId(groupId);
 		statsUser.setUserId(userId);
 
-		try {
-			mbStatsUserPersistence.update(statsUser);
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {groupId=", groupId, ", userId=",
-						userId, "}"));
-			}
-
-			statsUser = mbStatsUserPersistence.fetchByG_U(
-				groupId, userId, false);
-
-			if (statsUser == null) {
-				throw se;
-			}
-		}
+		mbStatsUserPersistence.update(statsUser);
 
 		return statsUser;
 	}
