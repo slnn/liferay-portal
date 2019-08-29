@@ -51,24 +51,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		delivery.setSms(false);
 		delivery.setWebsite(true);
 
-		try {
-			announcementsDeliveryPersistence.update(delivery);
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {userId=", userId, ", type=", type,
-						"}"));
-			}
-
-			delivery = announcementsDeliveryPersistence.fetchByU_T(
-				userId, type, false);
-
-			if (delivery == null) {
-				throw se;
-			}
-		}
+		announcementsDeliveryPersistence.update(delivery);
 
 		return delivery;
 	}

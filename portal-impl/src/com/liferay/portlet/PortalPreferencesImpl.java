@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -386,10 +384,9 @@ public class PortalPreferencesImpl
 
 				_portalPreferences.setPreferences(toXML());
 
-				PortalPreferencesLocalServiceUtil.updatePortalPreferences(
-					_portalPreferences);
-
-				_portalPreferences = _reload(getOwnerId(), getOwnerType());
+				_portalPreferences =
+					PortalPreferencesLocalServiceUtil.updatePortalPreferences(
+						_portalPreferences);
 			}
 		}
 		catch (Throwable t) {
@@ -433,8 +430,11 @@ public class PortalPreferencesImpl
 			catch (Exception e) {
 				if (isCausedByStaleObjectException(e)) {
 					com.liferay.portal.kernel.model.PortalPreferences
-						portalPreferences = _reload(
-							getOwnerId(), getOwnerType());
+						portalPreferences =
+							PortalPreferencesLocalServiceUtil.
+								fetchPortalPreferences(
+									_portalPreferences.
+										getPortalPreferencesId());
 
 					if (portalPreferences == null) {
 						continue;
@@ -478,25 +478,6 @@ public class PortalPreferencesImpl
 		).concat(
 			key
 		);
-	}
-
-	private com.liferay.portal.kernel.model.PortalPreferences _reload(
-			final long ownerId, final int ownerType)
-		throws Throwable {
-
-		return TransactionInvokerUtil.invoke(
-			SUPPORTS_TRANSACTION_CONFIG,
-			new Callable<com.liferay.portal.kernel.model.PortalPreferences>() {
-
-				@Override
-				public com.liferay.portal.kernel.model.PortalPreferences
-					call() {
-
-					return PortalPreferencesUtil.fetchByO_O(
-						ownerId, ownerType, false);
-				}
-
-			});
 	}
 
 	private static final String _RANDOM_KEY = "r";

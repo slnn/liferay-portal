@@ -17,15 +17,12 @@ package com.liferay.wiki.service.impl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -133,25 +130,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setName(name);
 		node.setDescription(description);
 
-		try {
-			wikiNodePersistence.update(node);
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {groupId=", groupId, ", name=", name,
-						"}"));
-			}
-
-			node = wikiNodePersistence.fetchByG_N(groupId, name, false);
-
-			if (node == null) {
-				throw se;
-			}
-
-			return node;
-		}
+		wikiNodePersistence.update(node);
 
 		// Resources
 
@@ -661,9 +640,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	protected void validate(long groupId, String name) throws PortalException {
 		validate(0, groupId, name);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WikiNodeLocalServiceImpl.class);
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

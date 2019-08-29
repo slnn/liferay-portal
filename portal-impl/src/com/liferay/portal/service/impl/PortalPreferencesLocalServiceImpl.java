@@ -64,24 +64,7 @@ public class PortalPreferencesLocalServiceImpl
 
 		portalPreferences.setPreferences(defaultPreferences);
 
-		try {
-			portalPreferencesPersistence.update(portalPreferences);
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {ownerId=", ownerId, ", ownerType=",
-						ownerType, "}"));
-			}
-
-			portalPreferences = portalPreferencesPersistence.fetchByO_O(
-				ownerId, ownerType, false);
-
-			if (portalPreferences == null) {
-				throw se;
-			}
-		}
+		portalPreferencesPersistence.update(portalPreferences);
 
 		return portalPreferences;
 	}

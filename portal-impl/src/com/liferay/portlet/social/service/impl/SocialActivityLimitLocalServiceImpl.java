@@ -37,7 +37,7 @@ public class SocialActivityLimitLocalServiceImpl
 		SocialActivityLimit activityLimit =
 			socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
 				groupId, userId, classNameId, classPK, activityType,
-				activityCounterName, false);
+				activityCounterName);
 
 		if (activityLimit != null) {
 			return activityLimit;
