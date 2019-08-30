@@ -77,11 +77,11 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
 				getNotificationsCount(themeDisplay));
-		}
 
-		_recentGroupManager.addRecentGroup(
-			_portal.getHttpServletRequest(renderRequest),
-			themeDisplay.getScopeGroupId());
+			_recentGroupManager.addRecentGroup(
+				_portal.getHttpServletRequest(renderRequest),
+				themeDisplay.getScopeGroupId());
+		}
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
