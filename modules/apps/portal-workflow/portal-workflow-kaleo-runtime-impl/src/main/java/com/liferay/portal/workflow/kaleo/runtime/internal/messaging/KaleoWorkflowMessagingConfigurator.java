@@ -162,10 +162,10 @@ public class KaleoWorkflowMessagingConfigurator {
 		properties.put(
 			"destination.name", KaleoRuntimeDestinationNames.WORKFLOW_TIMER);
 
-		_schedulerEventMessageListenerServiceRegistration =
-			_bundleContext.registerService(
-				MessageListener.class, schedulerEventMessageListenerWrapper,
-				properties);
+//		_schedulerEventMessageListenerServiceRegistration =
+//			_bundleContext.registerService(
+//				MessageListener.class, schedulerEventMessageListenerWrapper,
+//				properties);
 	}
 
 	protected void registerWorkflowDefinitionLinkDestination() {

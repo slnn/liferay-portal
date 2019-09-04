@@ -639,12 +639,12 @@ public class PortletBagFactory {
 			schedulerEventMessageListenerWrapper.setSchedulerEntry(
 				schedulerEntry);
 
-			ServiceRegistration<?> serviceRegistration =
-				registry.registerService(
-					SchedulerEventMessageListener.class,
-					schedulerEventMessageListenerWrapper, properties);
-
-			serviceRegistrations.add(serviceRegistration);
+//			ServiceRegistration<?> serviceRegistration =
+//				registry.registerService(
+//					SchedulerEventMessageListener.class,
+//					schedulerEventMessageListenerWrapper, properties);
+//
+//			serviceRegistrations.add(serviceRegistration);
 		}
 	}
 

@@ -566,45 +566,45 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		MessageListener messageListener, SchedulerEntry schedulerEntry,
 		String destinationName) {
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("destination.name", destinationName);
-
-		Class<?> messageListenerClass = messageListener.getClass();
-
-		ServiceRegistration<SchedulerEventMessageListener> serviceRegistration =
-			_serviceRegistrations.get(messageListenerClass.getName());
-
-		if (serviceRegistration != null) {
-			SchedulerEventMessageListenerWrapper
-				schedulerEventMessageListenerWrapper =
-					(SchedulerEventMessageListenerWrapper)
-						_bundleContext.getService(
-							serviceRegistration.getReference());
-
-			schedulerEventMessageListenerWrapper.setSchedulerEntry(
-				schedulerEntry);
-
-			serviceRegistration.setProperties(properties);
-
-			return;
-		}
-
-		SchedulerEventMessageListenerWrapper
-			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper();
-
-		schedulerEventMessageListenerWrapper.setMessageListener(
-			messageListener);
-
-		schedulerEventMessageListenerWrapper.setSchedulerEntry(schedulerEntry);
-
-		serviceRegistration = _bundleContext.registerService(
-			SchedulerEventMessageListener.class,
-			schedulerEventMessageListenerWrapper, properties);
-
-		_serviceRegistrations.put(
-			messageListenerClass.getName(), serviceRegistration);
+//		Dictionary<String, Object> properties = new HashMapDictionary<>();
+//
+//		properties.put("destination.name", destinationName);
+//
+//		Class<?> messageListenerClass = messageListener.getClass();
+//
+//		ServiceRegistration<SchedulerEventMessageListener> serviceRegistration =
+//			_serviceRegistrations.get(messageListenerClass.getName());
+//
+//		if (serviceRegistration != null) {
+//			SchedulerEventMessageListenerWrapper
+//				schedulerEventMessageListenerWrapper =
+//					(SchedulerEventMessageListenerWrapper)
+//						_bundleContext.getService(
+//							serviceRegistration.getReference());
+//
+//			schedulerEventMessageListenerWrapper.setSchedulerEntry(
+//				schedulerEntry);
+//
+//			serviceRegistration.setProperties(properties);
+//
+//			return;
+//		}
+//
+//		SchedulerEventMessageListenerWrapper
+//			schedulerEventMessageListenerWrapper =
+//				new SchedulerEventMessageListenerWrapper();
+//
+//		schedulerEventMessageListenerWrapper.setMessageListener(
+//			messageListener);
+//
+//		schedulerEventMessageListenerWrapper.setSchedulerEntry(schedulerEntry);
+//
+//		serviceRegistration = _bundleContext.registerService(
+//			SchedulerEventMessageListener.class,
+//			schedulerEventMessageListenerWrapper, properties);
+//
+//		_serviceRegistrations.put(
+//			messageListenerClass.getName(), serviceRegistration);
 	}
 
 	@Override
@@ -777,11 +777,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		scriptingDestination.register(schedulerEventMessageListenerWrapper);
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			"(objectClass=" + SchedulerEventMessageListener.class.getName() +
-				")",
-			new SchedulerEventMessageListenerServiceTrackerCustomizer());
+//		_serviceTracker = ServiceTrackerFactory.open(
+//			_bundleContext,
+//			"(objectClass=" + SchedulerEventMessageListener.class.getName() +
+//				")",
+//			new SchedulerEventMessageListenerServiceTrackerCustomizer());
 	}
 
 	protected void addWeeklyDayPos(
