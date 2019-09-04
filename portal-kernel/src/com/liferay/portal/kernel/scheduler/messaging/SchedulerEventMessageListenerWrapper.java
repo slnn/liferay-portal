@@ -123,62 +123,62 @@ public class SchedulerEventMessageListenerWrapper
 			String groupName)
 		throws MessageListenerException {
 
-		try {
-			_messageListener.receive(message);
-		}
-		catch (Exception e) {
-			handleException(message, e);
-
-			if (e instanceof MessageListenerException) {
-				throw (MessageListenerException)e;
-			}
-
-			throw new MessageListenerException(e);
-		}
-		finally {
-			TriggerState triggerState = null;
-
-			if (message.getBoolean(SchedulerEngine.DISABLE)) {
-				triggerState = TriggerState.COMPLETE;
-
-				if (destinationName.equals(
-						DestinationNames.SCHEDULER_DISPATCH)) {
-
-					MessageBusUtil.unregisterMessageListener(
-						destinationName, this);
-				}
-
-				StorageType storageType = (StorageType)message.get(
-					SchedulerEngine.STORAGE_TYPE);
-
-				try {
-					SchedulerEngineHelperUtil.delete(
-						jobName, groupName, storageType);
-				}
-				catch (SchedulerException se) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Unable to delete job ", jobName, " in group ",
-								groupName),
-							se);
-					}
-				}
-			}
-			else {
-				triggerState = TriggerState.NORMAL;
-			}
-
-			try {
-				SchedulerEngineHelperUtil.auditSchedulerJobs(
-					message, triggerState);
-			}
-			catch (Exception e) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to send audit message", e);
-				}
-			}
-		}
+//		try {
+//			_messageListener.receive(message);
+//		}
+//		catch (Exception e) {
+//			handleException(message, e);
+//
+//			if (e instanceof MessageListenerException) {
+//				throw (MessageListenerException)e;
+//			}
+//
+//			throw new MessageListenerException(e);
+//		}
+//		finally {
+//			TriggerState triggerState = null;
+//
+//			if (message.getBoolean(SchedulerEngine.DISABLE)) {
+//				triggerState = TriggerState.COMPLETE;
+//
+//				if (destinationName.equals(
+//						DestinationNames.SCHEDULER_DISPATCH)) {
+//
+//					MessageBusUtil.unregisterMessageListener(
+//						destinationName, this);
+//				}
+//
+//				StorageType storageType = (StorageType)message.get(
+//					SchedulerEngine.STORAGE_TYPE);
+//
+//				try {
+//					SchedulerEngineHelperUtil.delete(
+//						jobName, groupName, storageType);
+//				}
+//				catch (SchedulerException se) {
+//					if (_log.isInfoEnabled()) {
+//						_log.info(
+//							StringBundler.concat(
+//								"Unable to delete job ", jobName, " in group ",
+//								groupName),
+//							se);
+//					}
+//				}
+//			}
+//			else {
+//				triggerState = TriggerState.NORMAL;
+//			}
+//
+//			try {
+//				SchedulerEngineHelperUtil.auditSchedulerJobs(
+//					message, triggerState);
+//			}
+//			catch (Exception e) {
+//				if (_log.isInfoEnabled()) {
+//					_log.info("Unable to send audit message", e);
+//				}
+//			}
+//		}
 	}
 
 	private static final int _SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT =

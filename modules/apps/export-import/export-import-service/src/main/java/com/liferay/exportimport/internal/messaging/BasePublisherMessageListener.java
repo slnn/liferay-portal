@@ -56,15 +56,15 @@ public abstract class BasePublisherMessageListener
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		SchedulerEventMessageListenerWrapper
-			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper();
+//		SchedulerEventMessageListenerWrapper
+//			schedulerEventMessageListenerWrapper =
+//				new SchedulerEventMessageListenerWrapper();
+//
+//		schedulerEventMessageListenerWrapper.setMessageListener(this);
 
-		schedulerEventMessageListenerWrapper.setMessageListener(this);
-
-		serviceRegistration = bundleContext.registerService(
-			MessageListener.class, schedulerEventMessageListenerWrapper,
-			properties);
+//		serviceRegistration = bundleContext.registerService(
+//			MessageListener.class, schedulerEventMessageListenerWrapper,
+//			properties);
 	}
 
 	protected void initThreadLocals(
