@@ -775,7 +775,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		schedulerEventMessageListenerWrapper.setMessageListener(
 			new ScriptingMessageListener());
 
-		scriptingDestination.register(schedulerEventMessageListenerWrapper);
+		//scriptingDestination.register(schedulerEventMessageListenerWrapper);
 
 //		_serviceTracker = ServiceTrackerFactory.open(
 //			_bundleContext,
