@@ -677,13 +677,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void unregister(MessageListener messageListener) {
 		Class<?> messageListenerClass = messageListener.getClass();
 
-		_serviceRegistrations.compute(
+		/*_serviceRegistrations.compute(
 			messageListenerClass.getName(),
 			(key, value) -> {
 				value.unregister();
 
 				return null;
-			});
+			});*/
 	}
 
 	@Override
@@ -822,11 +822,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			destination.destroy();
 		}
 
-		for (ServiceRegistration<SchedulerEventMessageListener>
+		/*for (ServiceRegistration<SchedulerEventMessageListener>
 				serviceRegistration : _serviceRegistrations.values()) {
 
 			serviceRegistration.unregister();
-		}
+		}*/
 
 		_bundleContext = null;
 	}
