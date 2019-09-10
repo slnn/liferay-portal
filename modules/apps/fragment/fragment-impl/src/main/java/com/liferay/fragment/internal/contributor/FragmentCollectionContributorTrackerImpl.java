@@ -192,9 +192,11 @@ public class FragmentCollectionContributorTrackerImpl
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(type)) {
 
-				if (!_validateFragmentEntry(fragmentEntry)) {
-					continue;
-				}
+				fragmentEntryValidator.validateConfiguration(
+					fragmentEntry.getConfiguration());
+
+				fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+					fragmentEntry.getHtml(), fragmentEntry.getConfiguration());
 
 				fragmentEntries.put(
 					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
@@ -221,23 +223,6 @@ public class FragmentCollectionContributorTrackerImpl
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				fragmentEntryLink);
 		}
-	}
-
-	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
-		try {
-			fragmentEntryValidator.validateConfiguration(
-				fragmentEntry.getConfiguration());
-
-			fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-				fragmentEntry.getHtml(), fragmentEntry.getConfiguration());
-
-			return true;
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to validate fragment entry", pe);
-		}
-
-		return false;
 	}
 
 	private static final int[] _SUPPORTED_FRAGMENT_TYPES = {
