@@ -179,25 +179,16 @@ public abstract class BaseFragmentCollectionContributor
 		}
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), logic moved to FragmentCollectionContributorTracker
-	 */
-	@Deprecated
+	@Reference
 	protected FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
 
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), logic moved to FragmentCollectionContributorTracker
-	 */
-	@Deprecated
+	@Reference
 	protected FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), logic moved to FragmentCollectionContributorTracker
-	 */
-	@Deprecated
+	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
 	private Map<Locale, String> _getContributedCollectionNames()
