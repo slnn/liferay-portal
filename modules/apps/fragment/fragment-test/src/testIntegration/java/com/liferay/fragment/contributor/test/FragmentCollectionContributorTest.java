@@ -81,7 +81,7 @@ public class FragmentCollectionContributorTest {
 		Assert.assertNull(
 			fragmentEntries.get(
 				TestFragmentCollectionContributor.
-					TEST_UNSUPPORTED_FRAGMENT_ENTRY));
+					TEST_UNSUPORTED_FRAGMENT_ENTRY));
 	}
 
 	@Test
@@ -115,7 +115,7 @@ public class FragmentCollectionContributorTest {
 		public static final String TEST_SECTION_FRAGMENT_ENTRY =
 			"test-section-fragment-entry";
 
-		public static final String TEST_UNSUPPORTED_FRAGMENT_ENTRY =
+		public static final String TEST_UNSUPORTED_FRAGMENT_ENTRY =
 			"test-unsuported-fragment-entry";
 
 		@Override
@@ -138,7 +138,7 @@ public class FragmentCollectionContributorTest {
 			else {
 				fragmentEntries.add(
 					_getFragmentEntry(
-						TEST_UNSUPPORTED_FRAGMENT_ENTRY,
+						TEST_UNSUPORTED_FRAGMENT_ENTRY,
 						RandomTestUtil.randomInt()));
 			}
 
