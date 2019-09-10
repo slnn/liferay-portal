@@ -17,6 +17,7 @@ package com.liferay.fragment.internal.contributor;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -182,7 +183,8 @@ public class FragmentCollectionContributorTrackerImpl
 	}
 
 	private Map<String, FragmentEntry> _getFragmentEntries(
-		FragmentCollectionContributor fragmentCollectionContributor) {
+			FragmentCollectionContributor fragmentCollectionContributor)
+		throws PortalException {
 
 		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
@@ -271,16 +273,32 @@ public class FragmentCollectionContributorTrackerImpl
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
 
-			Map<String, FragmentEntry> fragmentEntries = _getFragmentEntries(
-				fragmentCollectionContributor);
+			try {
+				Map<String, FragmentEntry> fragmentEntries =
+					_getFragmentEntries(fragmentCollectionContributor);
 
-			if (MapUtil.isEmpty(fragmentEntries)) {
-				return null;
+				if (MapUtil.isEmpty(fragmentEntries)) {
+					return null;
+				}
+
+				_fragmentEntries.putAll(fragmentEntries);
+
+				return fragmentCollectionContributor;
+			}
+			catch (PortalException pe) {
+				if (pe instanceof FragmentEntryConfigurationException) {
+					_log.error(
+						"There are fragment entries with invalid" +
+							"configuration for " +
+								fragmentCollectionContributor.getName(),
+						pe);
+				}
+				else {
+					_log.error(pe, pe);
+				}
 			}
 
-			_fragmentEntries.putAll(fragmentEntries);
-
-			return fragmentCollectionContributor;
+			return null;
 		}
 
 		@Override
