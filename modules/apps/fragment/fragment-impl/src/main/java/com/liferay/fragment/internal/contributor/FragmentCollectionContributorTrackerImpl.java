@@ -18,8 +18,6 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
@@ -41,7 +39,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -166,7 +163,20 @@ public class FragmentCollectionContributorTrackerImpl
 	}
 
 	private synchronized Map<String, FragmentEntry> _getFragmentEntries() {
-		return new HashMap<>(_fragmentEntries);
+		if (_fragmentEntries != null) {
+			return _fragmentEntries;
+		}
+
+		_fragmentEntries = new ConcurrentHashMap<>();
+
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				_serviceTrackerMap.values()) {
+
+			_populateFragmentEntries(
+				_fragmentEntries, fragmentCollectionContributor);
+		}
+
+		return _fragmentEntries;
 	}
 
 	private void _populateFragmentEntries(
@@ -179,26 +189,7 @@ public class FragmentCollectionContributorTrackerImpl
 
 				fragmentEntries.put(
 					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-
-				_updateFragmentEntryLinks(fragmentEntry);
 			}
-		}
-	}
-
-	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				fragmentEntry.getFragmentEntryKey());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLink.setCss(fragmentEntry.getCss());
-			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-			fragmentEntryLink.setJs(fragmentEntry.getJs());
-			fragmentEntryLink.setConfiguration(
-				fragmentEntry.getConfiguration());
-
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLink);
 		}
 	}
 
@@ -206,12 +197,7 @@ public class FragmentCollectionContributorTrackerImpl
 		FragmentConstants.TYPE_COMPONENT, FragmentConstants.TYPE_SECTION
 	};
 
-	private volatile Map<String, FragmentEntry> _fragmentEntries =
-		new ConcurrentHashMap<>();
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
+	private volatile Map<String, FragmentEntry> _fragmentEntries;
 	private ServiceTrackerMap<String, FragmentCollectionContributor>
 		_serviceTrackerMap;
 
@@ -232,8 +218,12 @@ public class FragmentCollectionContributorTrackerImpl
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
 
-			_populateFragmentEntries(
-				_fragmentEntries, fragmentCollectionContributor);
+			Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
+
+			if (fragmentEntries != null) {
+				_populateFragmentEntries(
+					_fragmentEntries, fragmentCollectionContributor);
+			}
 
 			return fragmentCollectionContributor;
 		}
