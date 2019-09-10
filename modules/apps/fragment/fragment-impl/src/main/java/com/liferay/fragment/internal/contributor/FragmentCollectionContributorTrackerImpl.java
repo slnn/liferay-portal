@@ -169,10 +169,9 @@ public class FragmentCollectionContributorTrackerImpl
 		return new HashMap<>(_fragmentEntries);
 	}
 
-	private Map<String, FragmentEntry> _populateFragmentEntries(
+	private void _populateFragmentEntries(
+		Map<String, FragmentEntry> fragmentEntries,
 		FragmentCollectionContributor fragmentCollectionContributor) {
-
-		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
 		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
 			for (FragmentEntry fragmentEntry :
@@ -184,8 +183,6 @@ public class FragmentCollectionContributorTrackerImpl
 				_updateFragmentEntryLinks(fragmentEntry);
 			}
 		}
-
-		return fragmentEntries;
 	}
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
@@ -235,10 +232,8 @@ public class FragmentCollectionContributorTrackerImpl
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
 
-			Map<String, FragmentEntry> fragmentEntries =
-				_populateFragmentEntries(fragmentCollectionContributor);
-
-			_fragmentEntries.putAll(fragmentEntries);
+			_populateFragmentEntries(
+				_fragmentEntries, fragmentCollectionContributor);
 
 			return fragmentCollectionContributor;
 		}
