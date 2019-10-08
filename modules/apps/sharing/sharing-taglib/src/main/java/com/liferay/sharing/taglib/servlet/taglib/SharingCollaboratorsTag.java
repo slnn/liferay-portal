@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
@@ -28,7 +29,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Alejandro Tardín
  */
-public class SharingCollaboratorsTag extends BaseSharingTag {
+public class SharingCollaboratorsTag extends IncludeTag {
 
 	public String getClassName() {
 		return _className;
