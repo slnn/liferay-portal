@@ -25,22 +25,26 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryModel;
-import com.liferay.sharing.service.SharingEntryLocalServiceUtil;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alejandro Tardín
  */
-public class CollaboratorsUtil {
+@Component(service = CollaboratorsHelper.class)
+public class CollaboratorsHelper {
 
-	public static JSONObject getCollaboratorsJSONObject(
+	public JSONObject getCollaboratorsJSONObject(
 			long classNameId, long classPK, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -52,12 +56,12 @@ public class CollaboratorsUtil {
 			_getUserJSONObject(_getOwner(classNameId, classPK), themeDisplay)
 		).put(
 			"total",
-			SharingEntryLocalServiceUtil.getSharingEntriesCount(
+			_sharingEntryLocalService.getSharingEntriesCount(
 				classNameId, classPK)
 		);
 	}
 
-	private static User _getOwner(long classNameId, long classPK)
+	private User _getOwner(long classNameId, long classPK)
 		throws PortalException {
 
 		AssetRendererFactory<?> assetRendererFactory =
@@ -67,12 +71,10 @@ public class CollaboratorsUtil {
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			classPK);
 
-		return UserLocalServiceUtil.fetchUser(assetRenderer.getUserId());
+		return _userLocalService.fetchUser(assetRenderer.getUserId());
 	}
 
-	private static String _getPortraitURL(
-		ThemeDisplay themeDisplay, User user) {
-
+	private String _getPortraitURL(ThemeDisplay themeDisplay, User user) {
 		try {
 			if (user.getPortraitId() == 0) {
 				return null;
@@ -87,11 +89,11 @@ public class CollaboratorsUtil {
 		}
 	}
 
-	private static JSONArray _getSharingEntryToUsersJSONArray(
+	private JSONArray _getSharingEntryToUsersJSONArray(
 		long classPK, long classNameId, ThemeDisplay themeDisplay) {
 
 		List<SharingEntry> sharingEntries =
-			SharingEntryLocalServiceUtil.getSharingEntries(
+			_sharingEntryLocalService.getSharingEntries(
 				classNameId, classPK, 0, 4);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -101,7 +103,7 @@ public class CollaboratorsUtil {
 		stream.map(
 			SharingEntryModel::getToUserId
 		).map(
-			UserLocalServiceUtil::fetchUserById
+			_userLocalService::fetchUserById
 		).filter(
 			Objects::nonNull
 		).map(
@@ -113,7 +115,7 @@ public class CollaboratorsUtil {
 		return jsonArray;
 	}
 
-	private static JSONObject _getUserJSONObject(
+	private JSONObject _getUserJSONObject(
 		User user, ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
@@ -126,6 +128,12 @@ public class CollaboratorsUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CollaboratorsUtil.class);
+		CollaboratorsHelper.class);
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
