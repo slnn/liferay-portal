@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -40,14 +43,17 @@ import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryModel;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,6 +110,11 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				_getSharingEntryToUsersJSONArray(
 					classPK, classNameId, themeDisplay)
 			).put(
+				"manageCollaboratorsURL",
+				_getManageCollaboratorsURL(
+					classNameId, classPK, themeDisplay, httpServletRequest,
+					resourceResponse)
+			).put(
 				"owner",
 				_getUserJSONObject(
 					_getOwner(classNameId, classPK), themeDisplay)
@@ -112,6 +123,46 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				_sharingEntryLocalService.getSharingEntriesCount(
 					classNameId, classPK)
 			));
+	}
+
+	private PortletURL _getManageCollaboratorsURL(
+			long classNameId, long classPK, ThemeDisplay themeDisplay,
+			HttpServletRequest httpServletRequest,
+			ResourceResponse resourceResponse)
+		throws PortalException, WindowStateException {
+
+		boolean canManageCollaborators = false;
+
+		try {
+			canManageCollaborators =
+				_sharingPermission.containsManageCollaboratorsPermission(
+					themeDisplay.getPermissionChecker(), classNameId, classPK,
+					themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		if (canManageCollaborators) {
+			PortletURL manageCollaboratorsRenderURL =
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, SharingEntry.class.getName(),
+					PortletProvider.Action.MANAGE);
+
+			manageCollaboratorsRenderURL.setParameter(
+				"classNameId", String.valueOf(classNameId));
+			manageCollaboratorsRenderURL.setParameter(
+				"classPK", String.valueOf(classPK));
+			manageCollaboratorsRenderURL.setParameter(
+				"dialogId",
+				resourceResponse.getNamespace() + "manageCollaboratorsDialog");
+			manageCollaboratorsRenderURL.setWindowState(
+				LiferayWindowState.POP_UP);
+
+			return manageCollaboratorsRenderURL;
+		}
+
+		return null;
 	}
 
 	private User _getOwner(long classNameId, long classPK)
@@ -194,6 +245,9 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private SharingPermission _sharingPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;
