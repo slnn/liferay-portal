@@ -85,8 +85,8 @@ public class LayoutCTTest {
 		_ctCollection = _ctCollectionLocalService.createCTCollection(
 			ctCollectionId);
 
-		_ctCollection.setUserId(userId);
 		_ctCollection.setName(String.valueOf(ctCollectionId));
+		_ctCollection.setUserId(userId);
 
 		_ctCollection = _ctCollectionLocalService.updateCTCollection(
 			_ctCollection);
@@ -346,7 +346,10 @@ public class LayoutCTTest {
 			String message = throwable.getMessage();
 
 			Assert.assertTrue(
-				message, message.contains("MVCC version mismatch between "));
+				message,
+				message.startsWith(
+					"com.liferay.portal.kernel.exception.SystemException: " +
+						"MVCC version mismatch between "));
 		}
 
 		layout = _layoutLocalService.fetchLayout(layout.getPlid());
