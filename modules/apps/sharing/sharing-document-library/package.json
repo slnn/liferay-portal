@@ -7,7 +7,7 @@
 		"react": "16.9.0",
 		"react-dom": "16.9.0"
 	},
-	"name": "sharing-taglib",
+	"name": "sharing-document-library",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
