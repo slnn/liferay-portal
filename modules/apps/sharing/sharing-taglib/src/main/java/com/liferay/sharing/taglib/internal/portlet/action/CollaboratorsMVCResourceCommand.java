@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.constants.SharingPortletKeys;
-import com.liferay.sharing.taglib.util.CollaboratorsUtil;
+import com.liferay.sharing.taglib.util.CollaboratorsHelper;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -81,12 +81,15 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			CollaboratorsUtil.getCollaboratorsJSONObject(
+			_collaboratorsHelper.getCollaboratorsJSONObject(
 				classNameId, classPK, themeDisplay));
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CollaboratorsHelper _collaboratorsHelper;
 
 	@Reference
 	private Portal _portal;
