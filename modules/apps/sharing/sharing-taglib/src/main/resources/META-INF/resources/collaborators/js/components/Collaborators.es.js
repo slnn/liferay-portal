@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -43,36 +44,14 @@ const Collaborators = ({
 		});
 	}, [classNameId, classPK, collaboratorsResourceURL]);
 
+	if (!data) {
+		return <ClayLoadingIndicator />;
+	}
+
 	const {owner, total, collaborators} = data;
 
 	if (total < 1) {
-		return (
-			<div className="autofit-row sidebar-panel">
-				<div className="autofit-col inline-item-before">
-					<UserIcon {...owner} size="" />
-				</div>
-
-				<div className="autofit-col autofit-col-expand">
-					<div className="autofit-row">
-						<div className="autofit-col autofit-col-expand">
-							<div className="component-title h4 username">
-								{owner.displayURL ? (
-									<a href={owner.displayURL}>
-										{owner.fullName}
-									</a>
-								) : (
-									owner.fullName
-								)}
-							</div>
-
-							<small className="text-muted">
-								{Liferay.Language.get('owner')}
-							</small>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
+		return null;
 	}
 
 	const moreCollaboratorsCount = total - collaborators.length;
