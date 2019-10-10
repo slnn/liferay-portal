@@ -42,6 +42,7 @@ import java.util.Set;
 
 @ProviderType
 public interface ${entity.name}Persistence extends BasePersistence<${entity.name}>
+
 	<#if entity.isChangeTrackingEnabled()>
 		, CTPersistence<${entity.name}>
 	</#if>
