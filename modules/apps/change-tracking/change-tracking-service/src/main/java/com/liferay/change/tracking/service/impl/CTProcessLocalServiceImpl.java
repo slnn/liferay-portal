@@ -15,17 +15,20 @@
 package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.internal.background.task.CTPublishBackgroundTaskExecutor;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTProcessLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
 import java.io.Serializable;
 
@@ -39,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
- * @author Preston Crary
  */
 @Component(
 	property = "model.class.name=com.liferay.change.tracking.model.CTProcess",
@@ -48,24 +50,26 @@ import org.osgi.service.component.annotations.Reference;
 public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Override
-	public CTProcess addCTProcess(long userId, long ctCollectionId)
+	public CTProcess addCTProcess(
+			long userId, long ctCollectionId, boolean ignoreCollision,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
-			ctCollectionId);
+		_validate(ctCollectionId);
 
-		long ctProcessId = counterLocalService.increment(
-			CTProcess.class.getName());
+		long ctProcessId = counterLocalService.increment();
 
 		CTProcess ctProcess = ctProcessPersistence.create(ctProcessId);
 
-		ctProcess.setCompanyId(ctCollection.getCompanyId());
-		ctProcess.setUserId(userId);
-		ctProcess.setCreateDate(new Date());
+		User user = userLocalService.getUser(userId);
+
+		ctProcess.setCompanyId(user.getCompanyId());
+		ctProcess.setUserId(user.getUserId());
+
+		ctProcess.setCreateDate(serviceContext.getCreateDate(new Date()));
 		ctProcess.setCtCollectionId(ctCollectionId);
 
-		Company company = companyLocalService.getCompany(
-			ctCollection.getCompanyId());
+		Company company = companyLocalService.getCompany(user.getCompanyId());
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
@@ -74,9 +78,10 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.addBackgroundTask(
-				userId, company.getGroupId(), String.valueOf(ctCollectionId),
-				null, CTPublishBackgroundTaskExecutor.class, taskContextMap,
-				null);
+				user.getUserId(), company.getGroupId(),
+				String.valueOf(ctCollectionId), null,
+				CTPublishBackgroundTaskExecutor.class, taskContextMap,
+				serviceContext);
 
 		ctProcess.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
 
@@ -104,7 +109,10 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Override
 	public CTProcess fetchLatestCTProcess(long companyId) {
-		return ctProcessPersistence.fetchByCompanyId_First(companyId, null);
+		return ctProcessPersistence.fetchByCompanyId_First(
+			companyId,
+			OrderByComparatorFactoryUtil.create(
+				"CTProcess", "createDate", false));
 	}
 
 	@Override
@@ -119,6 +127,21 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 		return ctProcessFinder.findByC_U_N_D_S(
 			companyId, userId, keywords, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String keywords,
+		QueryDefinition<?> queryDefinition) {
+
+		return ctProcessFinder.findByC_U_N_D_S(
+			companyId, userId, keywords, queryDefinition.getStatus(),
+			queryDefinition.getStart(), queryDefinition.getEnd(),
+			queryDefinition.getOrderByComparator());
+	}
+
+	private void _validate(long ctCollectionId) throws PortalException {
+		ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
