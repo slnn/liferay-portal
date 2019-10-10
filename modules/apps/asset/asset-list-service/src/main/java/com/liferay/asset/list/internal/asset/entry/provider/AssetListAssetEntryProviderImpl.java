@@ -732,10 +732,7 @@ public class AssetListAssetEntryProviderImpl
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
 		}
 
-		anyAssetCategoryIds = _filterAssetCategoryIds(anyAssetCategoryIds);
-
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
-
 		assetEntryQuery.setAnyKeywords(anyKeywords);
 
 		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
