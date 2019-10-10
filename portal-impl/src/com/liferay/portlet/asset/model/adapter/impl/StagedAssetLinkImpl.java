@@ -153,11 +153,6 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 	}
 
 	@Override
-	public long getMvccVersion() {
-		return _assetLink.getMvccVersion();
-	}
-
-	@Override
 	public long getPrimaryKey() {
 		return _assetLink.getPrimaryKey();
 	}
@@ -299,11 +294,6 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 
 	@Override
 	public void setModifiedDate(Date date) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
 		throw new UnsupportedOperationException();
 	}
 
