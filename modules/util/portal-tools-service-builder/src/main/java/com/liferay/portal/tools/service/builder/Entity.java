@@ -95,8 +95,8 @@ public class Entity implements Comparable<Entity> {
 		this(
 			serviceBuilder, null, null, null, name, null, null, null, false,
 			false, false, false, true, true, null, null, null, null, null, true,
-			false, false, false, false, false, null, false, null, null, false,
-			null, null, null, null, null, null, null, null, null, null, false);
+			false, false, false, false, null, false, null, null, false, null,
+			null, null, null, null, null, null, null, null, null, false, false);
 	}
 
 	public Entity(
@@ -107,10 +107,9 @@ public class Entity implements Comparable<Entity> {
 		boolean localService, boolean remoteService, boolean persistence,
 		String persistenceClass, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
-		boolean changeTrackingEnabled, boolean dynamicUpdateEnabled,
-		boolean jsonEnabled, boolean mvccEnabled, boolean trashEnabled,
-		String uadApplicationName, boolean uadAutoDelete, String uadOutputPath,
-		String uadPackagePath, boolean deprecated,
+		boolean dynamicUpdateEnabled, boolean jsonEnabled, boolean mvccEnabled,
+		boolean trashEnabled, String uadApplicationName, boolean uadAutoDelete,
+		String uadOutputPath, String uadPackagePath, boolean deprecated,
 		List<EntityColumn> pkEntityColumns,
 		List<EntityColumn> regularEntityColumns,
 		List<EntityColumn> blobEntityColumns,
@@ -118,7 +117,8 @@ public class Entity implements Comparable<Entity> {
 		List<EntityColumn> entityColumns, EntityOrder entityOrder,
 		List<EntityFinder> entityFinders, List<Entity> referenceEntities,
 		List<String> unresolvedReferenceEntityNames,
-		List<String> txRequiredMethodNames, boolean resourceActionModel) {
+		List<String> txRequiredMethodNames, boolean resourceActionModel,
+		boolean changeTrackingEnabled) {
 
 		_serviceBuilder = serviceBuilder;
 		_packagePath = packagePath;
@@ -135,7 +135,6 @@ public class Entity implements Comparable<Entity> {
 		_persistence = persistence;
 		_persistenceClassName = persistenceClass;
 		_finderClassName = finderClassName;
-		_changeTrackingEnabled = changeTrackingEnabled;
 		_dynamicUpdateEnabled = dynamicUpdateEnabled;
 		_jsonEnabled = jsonEnabled;
 		_mvccEnabled = mvccEnabled;
@@ -156,6 +155,7 @@ public class Entity implements Comparable<Entity> {
 		_unresolvedReferenceEntityNames = unresolvedReferenceEntityNames;
 		_txRequiredMethodNames = txRequiredMethodNames;
 		_resourceActionModel = resourceActionModel;
+		_changeTrackingEnabled = changeTrackingEnabled;
 
 		_humanName = GetterUtil.getString(
 			humanName, ServiceBuilder.toHumanName(name));
