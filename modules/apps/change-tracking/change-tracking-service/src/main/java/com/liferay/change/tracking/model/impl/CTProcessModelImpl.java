@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -92,10 +91,10 @@ public class CTProcessModelImpl
 	public static final String TABLE_SQL_DROP = "drop table CTProcess";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY ctProcess.createDate DESC";
+		" ORDER BY ctProcess.ctProcessId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY CTProcess.createDate DESC";
+		" ORDER BY CTProcess.ctProcessId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -107,7 +106,9 @@ public class CTProcessModelImpl
 
 	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static final long USERID_COLUMN_BITMASK = 4L;
+
+	public static final long CTPROCESSID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -325,6 +326,14 @@ public class CTProcessModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -344,6 +353,10 @@ public class CTProcessModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -351,8 +364,6 @@ public class CTProcessModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
 		_createDate = createDate;
 	}
 
@@ -439,17 +450,17 @@ public class CTProcessModelImpl
 
 	@Override
 	public int compareTo(CTProcess ctProcess) {
-		int value = 0;
+		long primaryKey = ctProcess.getPrimaryKey();
 
-		value = DateUtil.compareTo(getCreateDate(), ctProcess.getCreateDate());
-
-		value = value * -1;
-
-		if (value != 0) {
-			return value;
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
 		}
-
-		return 0;
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -496,6 +507,10 @@ public class CTProcessModelImpl
 		ctProcessModelImpl._originalCompanyId = ctProcessModelImpl._companyId;
 
 		ctProcessModelImpl._setOriginalCompanyId = false;
+
+		ctProcessModelImpl._originalUserId = ctProcessModelImpl._userId;
+
+		ctProcessModelImpl._setOriginalUserId = false;
 
 		ctProcessModelImpl._originalCtCollectionId =
 			ctProcessModelImpl._ctCollectionId;
@@ -612,6 +627,8 @@ public class CTProcessModelImpl
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private long _ctCollectionId;
 	private long _originalCtCollectionId;
