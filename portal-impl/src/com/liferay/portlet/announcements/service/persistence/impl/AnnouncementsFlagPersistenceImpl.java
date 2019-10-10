@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -149,11 +150,14 @@ public class AnnouncementsFlagPersistenceImpl
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -203,7 +207,7 @@ public class AnnouncementsFlagPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AnnouncementsFlagModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -220,8 +224,18 @@ public class AnnouncementsFlagPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<AnnouncementsFlag>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -659,11 +673,14 @@ public class AnnouncementsFlagPersistenceImpl
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByEntryId;
@@ -711,7 +728,7 @@ public class AnnouncementsFlagPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AnnouncementsFlagModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -728,8 +745,18 @@ public class AnnouncementsFlagPersistenceImpl
 
 				qPos.add(entryId);
 
-				list = (List<AnnouncementsFlag>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1831,11 +1858,14 @@ public class AnnouncementsFlagPersistenceImpl
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1872,7 +1902,9 @@ public class AnnouncementsFlagPersistenceImpl
 			else {
 				sql = _SQL_SELECT_ANNOUNCEMENTSFLAG;
 
-				sql = sql.concat(AnnouncementsFlagModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(AnnouncementsFlagModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1882,8 +1914,18 @@ public class AnnouncementsFlagPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<AnnouncementsFlag>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

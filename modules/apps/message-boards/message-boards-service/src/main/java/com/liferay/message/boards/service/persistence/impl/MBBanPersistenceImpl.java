@@ -47,6 +47,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -166,11 +167,14 @@ public class MBBanPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -227,7 +231,7 @@ public class MBBanPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MBBanModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -246,7 +250,18 @@ public class MBBanPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<MBBan>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -960,11 +975,14 @@ public class MBBanPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1027,7 +1045,7 @@ public class MBBanPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MBBanModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1048,7 +1066,18 @@ public class MBBanPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<MBBan>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1531,11 +1560,14 @@ public class MBBanPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -1583,7 +1615,7 @@ public class MBBanPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MBBanModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1600,7 +1632,18 @@ public class MBBanPersistenceImpl
 
 				qPos.add(groupId);
 
-				list = (List<MBBan>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2023,11 +2066,14 @@ public class MBBanPersistenceImpl
 		long userId, int start, int end,
 		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -2075,7 +2121,7 @@ public class MBBanPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MBBanModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2092,7 +2138,18 @@ public class MBBanPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<MBBan>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2515,11 +2572,14 @@ public class MBBanPersistenceImpl
 		long banUserId, int start, int end,
 		OrderByComparator<MBBan> orderByComparator, boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByBanUserId;
@@ -2569,7 +2629,7 @@ public class MBBanPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MBBanModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2586,7 +2646,18 @@ public class MBBanPersistenceImpl
 
 				qPos.add(banUserId);
 
-				list = (List<MBBan>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3766,11 +3837,14 @@ public class MBBanPersistenceImpl
 		int start, int end, OrderByComparator<MBBan> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3807,7 +3881,9 @@ public class MBBanPersistenceImpl
 			else {
 				sql = _SQL_SELECT_MBBAN;
 
-				sql = sql.concat(MBBanModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(MBBanModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -3817,7 +3893,18 @@ public class MBBanPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<MBBan>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBBan>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

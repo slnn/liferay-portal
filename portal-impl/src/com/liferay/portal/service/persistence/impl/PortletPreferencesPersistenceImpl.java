@@ -40,6 +40,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -151,11 +152,14 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByOwnerId;
@@ -203,7 +207,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -220,8 +224,18 @@ public class PortletPreferencesPersistenceImpl
 
 				qPos.add(ownerId);
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -654,11 +668,14 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByPlid;
@@ -706,7 +723,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -723,8 +740,18 @@ public class PortletPreferencesPersistenceImpl
 
 				qPos.add(plid);
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1159,11 +1186,14 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByPortletId;
@@ -1222,7 +1252,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1241,8 +1271,18 @@ public class PortletPreferencesPersistenceImpl
 					qPos.add(portletId);
 				}
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1719,11 +1759,14 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByO_P;
@@ -1786,7 +1829,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1807,8 +1850,18 @@ public class PortletPreferencesPersistenceImpl
 					qPos.add(portletId);
 				}
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2309,11 +2362,14 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByP_P;
@@ -2376,7 +2432,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2397,8 +2453,18 @@ public class PortletPreferencesPersistenceImpl
 					qPos.add(portletId);
 				}
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2905,11 +2971,14 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByO_O_P;
@@ -2966,7 +3035,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2987,8 +3056,18 @@ public class PortletPreferencesPersistenceImpl
 
 				qPos.add(plid);
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3492,11 +3571,14 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByO_O_PI;
@@ -3562,7 +3644,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3585,8 +3667,18 @@ public class PortletPreferencesPersistenceImpl
 					qPos.add(portletId);
 				}
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -4120,11 +4212,14 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByO_P_P;
@@ -4190,7 +4285,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4213,8 +4308,18 @@ public class PortletPreferencesPersistenceImpl
 					qPos.add(portletId);
 				}
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -4756,6 +4861,7 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -4822,7 +4928,7 @@ public class PortletPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4847,8 +4953,18 @@ public class PortletPreferencesPersistenceImpl
 					qPos.add(portletId);
 				}
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -6329,11 +6445,14 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -6370,7 +6489,9 @@ public class PortletPreferencesPersistenceImpl
 			else {
 				sql = _SQL_SELECT_PORTLETPREFERENCES;
 
-				sql = sql.concat(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -6380,8 +6501,18 @@ public class PortletPreferencesPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<PortletPreferences>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

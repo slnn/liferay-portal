@@ -40,6 +40,7 @@ import com.liferay.view.count.service.persistence.impl.constants.ViewCountPersis
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -430,11 +431,14 @@ public class ViewCountEntryPersistenceImpl
 		int start, int end, OrderByComparator<ViewCountEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -471,7 +475,9 @@ public class ViewCountEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_VIEWCOUNTENTRY;
 
-				sql = sql.concat(ViewCountEntryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(ViewCountEntryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -481,8 +487,18 @@ public class ViewCountEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<ViewCountEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ViewCountEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ViewCountEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

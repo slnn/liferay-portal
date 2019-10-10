@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -149,11 +150,14 @@ public class MembershipRequestPersistenceImpl
 		OrderByComparator<MembershipRequest> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -201,7 +205,7 @@ public class MembershipRequestPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MembershipRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -218,8 +222,18 @@ public class MembershipRequestPersistenceImpl
 
 				qPos.add(groupId);
 
-				list = (List<MembershipRequest>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -654,11 +668,14 @@ public class MembershipRequestPersistenceImpl
 		OrderByComparator<MembershipRequest> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -706,7 +723,7 @@ public class MembershipRequestPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MembershipRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -723,8 +740,18 @@ public class MembershipRequestPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<MembershipRequest>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1163,11 +1190,14 @@ public class MembershipRequestPersistenceImpl
 		OrderByComparator<MembershipRequest> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_S;
@@ -1221,7 +1251,7 @@ public class MembershipRequestPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MembershipRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1240,8 +1270,18 @@ public class MembershipRequestPersistenceImpl
 
 				qPos.add(statusId);
 
-				list = (List<MembershipRequest>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1718,11 +1758,14 @@ public class MembershipRequestPersistenceImpl
 		OrderByComparator<MembershipRequest> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_U_S;
@@ -1779,7 +1822,7 @@ public class MembershipRequestPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(MembershipRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1800,8 +1843,18 @@ public class MembershipRequestPersistenceImpl
 
 				qPos.add(statusId);
 
-				list = (List<MembershipRequest>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2715,11 +2768,14 @@ public class MembershipRequestPersistenceImpl
 		OrderByComparator<MembershipRequest> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2756,7 +2812,9 @@ public class MembershipRequestPersistenceImpl
 			else {
 				sql = _SQL_SELECT_MEMBERSHIPREQUEST;
 
-				sql = sql.concat(MembershipRequestModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(MembershipRequestModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2766,8 +2824,18 @@ public class MembershipRequestPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<MembershipRequest>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MembershipRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

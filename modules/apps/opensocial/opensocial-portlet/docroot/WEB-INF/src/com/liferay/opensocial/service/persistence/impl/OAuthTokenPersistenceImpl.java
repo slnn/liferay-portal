@@ -162,11 +162,14 @@ public class OAuthTokenPersistenceImpl
 		gadgetKey = Objects.toString(gadgetKey, "");
 		serviceName = Objects.toString(serviceName, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_S;
@@ -238,7 +241,7 @@ public class OAuthTokenPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(OAuthTokenModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -261,8 +264,18 @@ public class OAuthTokenPersistenceImpl
 					qPos.add(serviceName);
 				}
 
-				list = (List<OAuthToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<OAuthToken>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<OAuthToken>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1600,11 +1613,14 @@ public class OAuthTokenPersistenceImpl
 		int start, int end, OrderByComparator<OAuthToken> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1641,7 +1657,9 @@ public class OAuthTokenPersistenceImpl
 			else {
 				sql = _SQL_SELECT_OAUTHTOKEN;
 
-				sql = sql.concat(OAuthTokenModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(OAuthTokenModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1651,8 +1669,18 @@ public class OAuthTokenPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<OAuthToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<OAuthToken>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<OAuthToken>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

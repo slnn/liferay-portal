@@ -657,11 +657,14 @@ public class NestedSetsTreeEntryPersistenceImpl
 		OrderByComparator<NestedSetsTreeEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -698,7 +701,10 @@ public class NestedSetsTreeEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_NESTEDSETSTREEENTRY;
 
-				sql = sql.concat(NestedSetsTreeEntryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						NestedSetsTreeEntryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -708,8 +714,18 @@ public class NestedSetsTreeEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<NestedSetsTreeEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<NestedSetsTreeEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<NestedSetsTreeEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

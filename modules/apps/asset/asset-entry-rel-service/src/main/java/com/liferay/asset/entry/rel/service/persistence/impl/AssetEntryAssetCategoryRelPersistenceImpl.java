@@ -164,11 +164,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
@@ -222,7 +225,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -239,8 +242,18 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				qPos.add(assetEntryId);
 
-				list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -684,11 +697,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByAssetCategoryId;
@@ -742,7 +758,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -759,8 +775,18 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				qPos.add(assetCategoryId);
 
-				list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1904,11 +1930,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1945,8 +1974,10 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			else {
 				sql = _SQL_SELECT_ASSETENTRYASSETCATEGORYREL;
 
-				sql = sql.concat(
-					AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1956,8 +1987,18 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

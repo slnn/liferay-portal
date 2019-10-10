@@ -571,11 +571,14 @@ public class UADPartialEntryPersistenceImpl
 		OrderByComparator<UADPartialEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -612,7 +615,9 @@ public class UADPartialEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_UADPARTIALENTRY;
 
-				sql = sql.concat(UADPartialEntryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(UADPartialEntryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -622,8 +627,18 @@ public class UADPartialEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<UADPartialEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<UADPartialEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<UADPartialEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
