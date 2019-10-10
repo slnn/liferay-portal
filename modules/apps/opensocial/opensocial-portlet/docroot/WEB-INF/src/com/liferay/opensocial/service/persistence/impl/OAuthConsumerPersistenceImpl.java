@@ -157,11 +157,14 @@ public class OAuthConsumerPersistenceImpl
 
 		gadgetKey = Objects.toString(gadgetKey, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGadgetKey;
@@ -220,7 +223,7 @@ public class OAuthConsumerPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(OAuthConsumerModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -239,8 +242,18 @@ public class OAuthConsumerPersistenceImpl
 					qPos.add(gadgetKey);
 				}
 
-				list = (List<OAuthConsumer>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<OAuthConsumer>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<OAuthConsumer>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1408,11 +1421,14 @@ public class OAuthConsumerPersistenceImpl
 		int start, int end, OrderByComparator<OAuthConsumer> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1449,7 +1465,9 @@ public class OAuthConsumerPersistenceImpl
 			else {
 				sql = _SQL_SELECT_OAUTHCONSUMER;
 
-				sql = sql.concat(OAuthConsumerModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(OAuthConsumerModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1459,8 +1477,18 @@ public class OAuthConsumerPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<OAuthConsumer>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<OAuthConsumer>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<OAuthConsumer>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

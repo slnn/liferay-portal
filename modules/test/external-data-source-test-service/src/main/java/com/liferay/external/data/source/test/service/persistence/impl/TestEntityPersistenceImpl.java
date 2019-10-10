@@ -581,11 +581,14 @@ public class TestEntityPersistenceImpl
 		int start, int end, OrderByComparator<TestEntity> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -622,7 +625,9 @@ public class TestEntityPersistenceImpl
 			else {
 				sql = _SQL_SELECT_TESTENTITY;
 
-				sql = sql.concat(TestEntityModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(TestEntityModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -632,8 +637,18 @@ public class TestEntityPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<TestEntity>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<TestEntity>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<TestEntity>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
