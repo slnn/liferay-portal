@@ -12,25 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.model.impl;
+package com.liferay.change.tracking.uad.anonymizer;
 
-import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Daniel Kocsis
  */
-public class CTCollectionImpl extends CTCollectionBaseImpl {
-
-	public CTCollectionImpl() {
-	}
-
-	public boolean isProduction() {
-		if (CTConstants.CT_COLLECTION_ID_PRODUCTION == getCtCollectionId()) {
-			return true;
-		}
-
-		return false;
-	}
-
+@Component(immediate = true, service = UADAnonymizer.class)
+public class CTCollectionUADAnonymizer extends BaseCTCollectionUADAnonymizer {
 }
