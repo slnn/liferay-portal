@@ -128,9 +128,8 @@ create table DDMStorageLink (
 
 create table DDMStructure (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	structureId LONG not null,
+	structureId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -148,8 +147,7 @@ create table DDMStructure (
 	definition TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER,
-	lastPublishDate DATE null,
-	primary key (structureId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table DDMStructureLayout (
@@ -181,8 +179,7 @@ create table DDMStructureLink (
 
 create table DDMStructureVersion (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	structureVersionId LONG not null,
+	structureVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -199,15 +196,13 @@ create table DDMStructureVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	primary key (structureVersionId, ctCollectionId)
+	statusDate DATE null
 );
 
 create table DDMTemplate (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	templateId LONG not null,
+	templateId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -231,8 +226,7 @@ create table DDMTemplate (
 	smallImage BOOLEAN,
 	smallImageId LONG,
 	smallImageURL STRING null,
-	lastPublishDate DATE null,
-	primary key (templateId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table DDMTemplateLink (
@@ -246,8 +240,7 @@ create table DDMTemplateLink (
 
 create table DDMTemplateVersion (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	templateVersionId LONG not null,
+	templateVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -264,6 +257,5 @@ create table DDMTemplateVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	primary key (templateVersionId, ctCollectionId)
+	statusDate DATE null
 );
