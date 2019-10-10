@@ -22,13 +22,13 @@
 	/>
 </#if>
 
-<#assign finderFieldSQLSuffix = "_SQL" />
-
 <#assign useCache = "useFinderCache" />
 
 <#if entity.isChangeTrackingEnabled()>
 	<#assign useCache = "useFinderCache && productionMode" />
 </#if>
+
+<#assign finderFieldSQLSuffix = "_SQL" />
 
 package ${packagePath}.service.persistence.impl;
 
