@@ -585,10 +585,10 @@ public class AssetPublisherDisplayContext {
 					continue;
 				}
 
-				List<Map<String, String>> selectedItems = new ArrayList<>();
+				List<HashMap<String, String>> selectedItems = new ArrayList<>();
 
 				for (String keyword : keywords) {
-					Map<String, String> selectedCategory = new HashMap<>();
+					HashMap<String, String> selectedCategory = new HashMap<>();
 
 					selectedCategory.put("label", keyword);
 					selectedCategory.put("value", keyword);
@@ -610,10 +610,10 @@ public class AssetPublisherDisplayContext {
 					continue;
 				}
 
-				List<Map<String, Object>> selectedItems = new ArrayList<>();
+				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
 
 				for (AssetCategory category : categories) {
-					Map<String, Object> selectedCategory = new HashMap<>();
+					HashMap<String, Object> selectedCategory = new HashMap<>();
 
 					selectedCategory.put(
 						"label", category.getTitle(_themeDisplay.getLocale()));
