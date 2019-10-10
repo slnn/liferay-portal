@@ -159,11 +159,14 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -220,7 +223,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -237,8 +240,18 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 				qPos.add(lvEntryLocalizationId);
 
-				list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -933,11 +946,14 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByLvEntryId;
@@ -991,7 +1007,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1008,8 +1024,18 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 				qPos.add(lvEntryId);
 
-				list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1457,11 +1483,14 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -1519,7 +1548,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1538,8 +1567,18 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 				qPos.add(version);
 
-				list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2017,11 +2056,14 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		languageId = Objects.toString(languageId, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -2089,7 +2131,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2110,8 +2152,18 @@ public class LVEntryLocalizationVersionPersistenceImpl
 					qPos.add(languageId);
 				}
 
-				list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3663,11 +3715,14 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3704,8 +3759,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_LVENTRYLOCALIZATIONVERSION;
 
-				sql = sql.concat(
-					LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -3715,8 +3772,18 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LVEntryLocalizationVersion>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

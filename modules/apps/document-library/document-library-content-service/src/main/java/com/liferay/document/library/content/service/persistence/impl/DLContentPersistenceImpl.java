@@ -44,6 +44,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,11 +171,14 @@ public class DLContentPersistenceImpl
 		OrderByComparator<DLContent> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_R;
@@ -228,7 +232,7 @@ public class DLContentPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLContentModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -247,8 +251,18 @@ public class DLContentPersistenceImpl
 
 				qPos.add(repositoryId);
 
-				list = (List<DLContent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -723,11 +737,14 @@ public class DLContentPersistenceImpl
 
 		path = Objects.toString(path, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_R_P;
@@ -793,7 +810,7 @@ public class DLContentPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLContentModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -816,8 +833,18 @@ public class DLContentPersistenceImpl
 					qPos.add(path);
 				}
 
-				list = (List<DLContent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1345,6 +1372,7 @@ public class DLContentPersistenceImpl
 
 		path = Objects.toString(path, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -1406,7 +1434,7 @@ public class DLContentPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLContentModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1429,8 +1457,18 @@ public class DLContentPersistenceImpl
 					qPos.add(path);
 				}
 
-				list = (List<DLContent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2707,11 +2745,14 @@ public class DLContentPersistenceImpl
 		int start, int end, OrderByComparator<DLContent> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2748,7 +2789,9 @@ public class DLContentPersistenceImpl
 			else {
 				sql = _SQL_SELECT_DLCONTENT;
 
-				sql = sql.concat(DLContentModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(DLContentModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2758,8 +2801,18 @@ public class DLContentPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<DLContent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLContent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

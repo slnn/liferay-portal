@@ -46,6 +46,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -159,11 +160,14 @@ public class DLFileShortcutPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -220,7 +224,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -239,8 +243,18 @@ public class DLFileShortcutPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -962,11 +976,14 @@ public class DLFileShortcutPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1029,7 +1046,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1050,8 +1067,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1544,11 +1571,14 @@ public class DLFileShortcutPersistenceImpl
 		OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -1598,7 +1628,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1615,8 +1645,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2049,11 +2089,14 @@ public class DLFileShortcutPersistenceImpl
 		OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByToFileEntryId;
@@ -2103,7 +2146,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2120,8 +2163,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(toFileEntryId);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2565,11 +2618,14 @@ public class DLFileShortcutPersistenceImpl
 		OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_F;
@@ -2623,7 +2679,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2642,8 +2698,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(folderId);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3508,6 +3574,7 @@ public class DLFileShortcutPersistenceImpl
 		OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -3556,7 +3623,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3575,8 +3642,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -4052,11 +4129,14 @@ public class DLFileShortcutPersistenceImpl
 		OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_F_A;
@@ -4113,7 +4193,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4134,8 +4214,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(active);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -5063,11 +5153,14 @@ public class DLFileShortcutPersistenceImpl
 		int end, OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_F_A_S;
@@ -5127,7 +5220,7 @@ public class DLFileShortcutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5150,8 +5243,18 @@ public class DLFileShortcutPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -6724,11 +6827,14 @@ public class DLFileShortcutPersistenceImpl
 		int start, int end, OrderByComparator<DLFileShortcut> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -6765,7 +6871,9 @@ public class DLFileShortcutPersistenceImpl
 			else {
 				sql = _SQL_SELECT_DLFILESHORTCUT;
 
-				sql = sql.concat(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -6775,8 +6883,18 @@ public class DLFileShortcutPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<DLFileShortcut>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileShortcut>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

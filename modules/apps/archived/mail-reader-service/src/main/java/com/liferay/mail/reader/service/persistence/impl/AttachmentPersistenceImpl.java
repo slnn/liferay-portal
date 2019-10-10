@@ -43,6 +43,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,11 +163,14 @@ public class AttachmentPersistenceImpl
 		OrderByComparator<Attachment> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByMessageId;
@@ -216,7 +220,7 @@ public class AttachmentPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AttachmentModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -233,8 +237,18 @@ public class AttachmentPersistenceImpl
 
 				qPos.add(messageId);
 
-				list = (List<Attachment>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Attachment>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Attachment>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -986,11 +1000,14 @@ public class AttachmentPersistenceImpl
 		int start, int end, OrderByComparator<Attachment> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1027,7 +1044,9 @@ public class AttachmentPersistenceImpl
 			else {
 				sql = _SQL_SELECT_ATTACHMENT;
 
-				sql = sql.concat(AttachmentModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(AttachmentModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1037,8 +1056,18 @@ public class AttachmentPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<Attachment>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Attachment>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Attachment>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

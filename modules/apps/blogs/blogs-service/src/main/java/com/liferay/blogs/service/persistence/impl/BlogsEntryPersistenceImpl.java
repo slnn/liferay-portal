@@ -59,6 +59,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -179,11 +180,14 @@ public class BlogsEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -240,7 +244,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -259,8 +263,18 @@ public class BlogsEntryPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -977,11 +991,14 @@ public class BlogsEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1044,7 +1061,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1065,8 +1082,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1552,11 +1579,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -1604,7 +1634,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1621,8 +1651,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(groupId);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2426,11 +2466,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -2480,7 +2523,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2497,8 +2540,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3187,6 +3240,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -3245,7 +3299,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3266,8 +3320,18 @@ public class BlogsEntryPersistenceImpl
 					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -4186,11 +4250,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_S;
@@ -4244,7 +4311,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4263,8 +4330,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -5120,6 +5197,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -5168,7 +5246,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5187,8 +5265,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -6045,11 +6133,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_U;
@@ -6103,7 +6194,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6122,8 +6213,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -6588,6 +6689,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -6646,7 +6748,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6667,8 +6769,18 @@ public class BlogsEntryPersistenceImpl
 					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -7160,11 +7272,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_S;
@@ -7218,7 +7333,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -7237,8 +7352,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -7703,6 +7828,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -7751,7 +7877,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -7770,8 +7896,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -8236,6 +8372,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -8294,7 +8431,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -8315,8 +8452,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -8813,6 +8960,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -8875,7 +9023,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -8898,8 +9046,18 @@ public class BlogsEntryPersistenceImpl
 					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -9876,11 +10034,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_U_S;
@@ -9937,7 +10098,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -9958,8 +10119,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -10899,10 +11070,13 @@ public class BlogsEntryPersistenceImpl
 				groupId, userId, statuses[0], start, end, orderByComparator);
 		}
 
+		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
@@ -10966,7 +11140,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -10985,8 +11159,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -11407,6 +11591,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -11458,7 +11643,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -11479,8 +11664,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -12395,11 +12590,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_D_S;
@@ -12469,7 +12667,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -12492,8 +12690,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -13468,6 +13676,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -13530,7 +13739,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -13553,8 +13762,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -14531,6 +14750,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -14593,7 +14813,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -14616,8 +14836,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -15594,6 +15824,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -15656,7 +15887,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -15679,8 +15910,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -16658,11 +16899,14 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_U_S;
@@ -16719,7 +16963,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -16740,8 +16984,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -17238,6 +17492,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -17289,7 +17544,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -17310,8 +17565,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -17809,6 +18074,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -17871,7 +18137,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -17894,8 +18160,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -18422,6 +18698,7 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -18484,7 +18761,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -18507,8 +18784,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -19042,6 +19329,7 @@ public class BlogsEntryPersistenceImpl
 		int end, OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -19107,7 +19395,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -19132,8 +19420,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -20166,6 +20464,7 @@ public class BlogsEntryPersistenceImpl
 		int end, OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -20231,7 +20530,7 @@ public class BlogsEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -20256,8 +20555,18 @@ public class BlogsEntryPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -22029,11 +22338,14 @@ public class BlogsEntryPersistenceImpl
 		int start, int end, OrderByComparator<BlogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -22070,7 +22382,9 @@ public class BlogsEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_BLOGSENTRY;
 
-				sql = sql.concat(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -22080,8 +22394,18 @@ public class BlogsEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<BlogsEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

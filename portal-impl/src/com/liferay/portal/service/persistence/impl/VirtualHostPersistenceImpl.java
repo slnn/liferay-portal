@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -988,11 +989,14 @@ public class VirtualHostPersistenceImpl
 		int start, int end, OrderByComparator<VirtualHost> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1029,7 +1033,9 @@ public class VirtualHostPersistenceImpl
 			else {
 				sql = _SQL_SELECT_VIRTUALHOST;
 
-				sql = sql.concat(VirtualHostModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(VirtualHostModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1039,8 +1045,18 @@ public class VirtualHostPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<VirtualHost>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<VirtualHost>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VirtualHost>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
