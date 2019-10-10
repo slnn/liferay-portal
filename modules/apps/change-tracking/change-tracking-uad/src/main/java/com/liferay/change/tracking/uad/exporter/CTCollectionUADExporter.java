@@ -12,25 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.model.impl;
+package com.liferay.change.tracking.uad.exporter;
 
-import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.user.associated.data.exporter.UADExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Daniel Kocsis
  */
-public class CTCollectionImpl extends CTCollectionBaseImpl {
-
-	public CTCollectionImpl() {
-	}
-
-	public boolean isProduction() {
-		if (CTConstants.CT_COLLECTION_ID_PRODUCTION == getCtCollectionId()) {
-			return true;
-		}
-
-		return false;
-	}
-
+@Component(immediate = true, service = UADExporter.class)
+public class CTCollectionUADExporter extends BaseCTCollectionUADExporter {
 }
