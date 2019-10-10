@@ -14,10 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DDMTemplateVersionLocalService}.
@@ -43,8 +40,10 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @return the ddm template version that was added
 	 */
 	@Override
-	public DDMTemplateVersion addDDMTemplateVersion(
-		DDMTemplateVersion ddmTemplateVersion) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+		addDDMTemplateVersion(
+			com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+				ddmTemplateVersion) {
 
 		return _ddmTemplateVersionLocalService.addDDMTemplateVersion(
 			ddmTemplateVersion);
@@ -57,7 +56,9 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @return the new ddm template version
 	 */
 	@Override
-	public DDMTemplateVersion createDDMTemplateVersion(long templateVersionId) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+		createDDMTemplateVersion(long templateVersionId) {
+
 		return _ddmTemplateVersionLocalService.createDDMTemplateVersion(
 			templateVersionId);
 	}
@@ -69,8 +70,10 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @return the ddm template version that was removed
 	 */
 	@Override
-	public DDMTemplateVersion deleteDDMTemplateVersion(
-		DDMTemplateVersion ddmTemplateVersion) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+		deleteDDMTemplateVersion(
+			com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+				ddmTemplateVersion) {
 
 		return _ddmTemplateVersionLocalService.deleteDDMTemplateVersion(
 			ddmTemplateVersion);
@@ -84,7 +87,8 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @throws PortalException if a ddm template version with the primary key could not be found
 	 */
 	@Override
-	public DDMTemplateVersion deleteDDMTemplateVersion(long templateVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+			deleteDDMTemplateVersion(long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionLocalService.deleteDDMTemplateVersion(
@@ -200,7 +204,9 @@ public class DDMTemplateVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMTemplateVersion fetchDDMTemplateVersion(long templateVersionId) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+		fetchDDMTemplateVersion(long templateVersionId) {
+
 		return _ddmTemplateVersionLocalService.fetchDDMTemplateVersion(
 			templateVersionId);
 	}
@@ -220,7 +226,8 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @throws PortalException if a ddm template version with the primary key could not be found
 	 */
 	@Override
-	public DDMTemplateVersion getDDMTemplateVersion(long templateVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+			getDDMTemplateVersion(long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionLocalService.getDDMTemplateVersion(
@@ -239,8 +246,9 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @return the range of ddm template versions
 	 */
 	@Override
-	public java.util.List<DDMTemplateVersion> getDDMTemplateVersions(
-		int start, int end) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>
+			getDDMTemplateVersions(int start, int end) {
 
 		return _ddmTemplateVersionLocalService.getDDMTemplateVersions(
 			start, end);
@@ -265,7 +273,8 @@ public class DDMTemplateVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+			getLatestTemplateVersion(long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionLocalService.getLatestTemplateVersion(
@@ -291,7 +300,8 @@ public class DDMTemplateVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMTemplateVersion getTemplateVersion(long templateVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+			getTemplateVersion(long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionLocalService.getTemplateVersion(
@@ -299,8 +309,8 @@ public class DDMTemplateVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMTemplateVersion getTemplateVersion(
-			long templateId, String version)
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+			getTemplateVersion(long templateId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionLocalService.getTemplateVersion(
@@ -308,17 +318,21 @@ public class DDMTemplateVersionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMTemplateVersion> getTemplateVersions(
-		long templateId) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>
+			getTemplateVersions(long templateId) {
 
 		return _ddmTemplateVersionLocalService.getTemplateVersions(templateId);
 	}
 
 	@Override
-	public java.util.List<DDMTemplateVersion> getTemplateVersions(
-		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>
+			getTemplateVersions(
+				long templateId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>
+						orderByComparator) {
 
 		return _ddmTemplateVersionLocalService.getTemplateVersions(
 			templateId, start, end, orderByComparator);
@@ -337,31 +351,13 @@ public class DDMTemplateVersionLocalServiceWrapper
 	 * @return the ddm template version that was updated
 	 */
 	@Override
-	public DDMTemplateVersion updateDDMTemplateVersion(
-		DDMTemplateVersion ddmTemplateVersion) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+		updateDDMTemplateVersion(
+			com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
+				ddmTemplateVersion) {
 
 		return _ddmTemplateVersionLocalService.updateDDMTemplateVersion(
 			ddmTemplateVersion);
-	}
-
-	@Override
-	public CTPersistence<DDMTemplateVersion> getCTPersistence() {
-		return _ddmTemplateVersionLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DDMTemplateVersion> getModelClass() {
-		return _ddmTemplateVersionLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DDMTemplateVersion>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _ddmTemplateVersionLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

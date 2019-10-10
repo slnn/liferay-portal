@@ -82,16 +82,16 @@ public class DDMTemplateVersionModelImpl
 	public static final String TABLE_NAME = "DDMTemplateVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"templateVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"templateId", Types.BIGINT}, {"version", Types.VARCHAR},
-		{"name", Types.CLOB}, {"description", Types.CLOB},
-		{"language", Types.VARCHAR}, {"script", Types.CLOB},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"templateVersionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"templateId", Types.BIGINT},
+		{"version", Types.VARCHAR}, {"name", Types.CLOB},
+		{"description", Types.CLOB}, {"language", Types.VARCHAR},
+		{"script", Types.CLOB}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,7 +99,6 @@ public class DDMTemplateVersionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("templateVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -121,7 +120,7 @@ public class DDMTemplateVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,templateVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (templateVersionId, ctCollectionId))";
+		"create table DDMTemplateVersion (mvccVersion LONG default 0 not null,templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 
@@ -137,15 +136,13 @@ public class DDMTemplateVersionModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
+	public static final long STATUS_COLUMN_BITMASK = 1L;
 
-	public static final long STATUS_COLUMN_BITMASK = 2L;
+	public static final long TEMPLATEID_COLUMN_BITMASK = 2L;
 
-	public static final long TEMPLATEID_COLUMN_BITMASK = 4L;
+	public static final long VERSION_COLUMN_BITMASK = 4L;
 
-	public static final long VERSION_COLUMN_BITMASK = 8L;
-
-	public static final long TEMPLATEVERSIONID_COLUMN_BITMASK = 16L;
+	public static final long TEMPLATEVERSIONID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -169,7 +166,6 @@ public class DDMTemplateVersionModelImpl
 		DDMTemplateVersion model = new DDMTemplateVersionImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setTemplateVersionId(soapModel.getTemplateVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -350,12 +346,6 @@ public class DDMTemplateVersionModelImpl
 			(BiConsumer<DDMTemplateVersion, Long>)
 				DDMTemplateVersion::setMvccVersion);
 		attributeGetterFunctions.put(
-			"ctCollectionId", DDMTemplateVersion::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DDMTemplateVersion, Long>)
-				DDMTemplateVersion::setCtCollectionId);
-		attributeGetterFunctions.put(
 			"templateVersionId", DDMTemplateVersion::getTemplateVersionId);
 		attributeSetterBiConsumers.put(
 			"templateVersionId",
@@ -472,29 +462,6 @@ public class DDMTemplateVersionModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCtCollectionId) {
-			_setOriginalCtCollectionId = true;
-
-			_originalCtCollectionId = _ctCollectionId;
-		}
-
-		_ctCollectionId = ctCollectionId;
-	}
-
-	public long getOriginalCtCollectionId() {
-		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1202,7 +1169,6 @@ public class DDMTemplateVersionModelImpl
 			new DDMTemplateVersionImpl();
 
 		ddmTemplateVersionImpl.setMvccVersion(getMvccVersion());
-		ddmTemplateVersionImpl.setCtCollectionId(getCtCollectionId());
 		ddmTemplateVersionImpl.setTemplateVersionId(getTemplateVersionId());
 		ddmTemplateVersionImpl.setGroupId(getGroupId());
 		ddmTemplateVersionImpl.setCompanyId(getCompanyId());
@@ -1283,11 +1249,6 @@ public class DDMTemplateVersionModelImpl
 	public void resetOriginalValues() {
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl = this;
 
-		ddmTemplateVersionModelImpl._originalCtCollectionId =
-			ddmTemplateVersionModelImpl._ctCollectionId;
-
-		ddmTemplateVersionModelImpl._setOriginalCtCollectionId = false;
-
 		ddmTemplateVersionModelImpl._originalTemplateId =
 			ddmTemplateVersionModelImpl._templateId;
 
@@ -1310,8 +1271,6 @@ public class DDMTemplateVersionModelImpl
 			new DDMTemplateVersionCacheModel();
 
 		ddmTemplateVersionCacheModel.mvccVersion = getMvccVersion();
-
-		ddmTemplateVersionCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmTemplateVersionCacheModel.templateVersionId = getTemplateVersionId();
 
@@ -1482,9 +1441,6 @@ public class DDMTemplateVersionModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
-	private long _originalCtCollectionId;
-	private boolean _setOriginalCtCollectionId;
 	private long _templateVersionId;
 	private long _groupId;
 	private long _companyId;
