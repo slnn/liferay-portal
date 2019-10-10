@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -71,7 +72,7 @@ public interface CTCollectionLocalService
 	public CTCollection addCTCollection(CTCollection ctCollection);
 
 	public CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			long userId, String name, String description)
 		throws PortalException;
 
 	/**
@@ -83,7 +84,8 @@ public interface CTCollectionLocalService
 	@Transactional(enabled = false)
 	public CTCollection createCTCollection(long ctCollectionId);
 
-	public void deleteCompanyCTCollections(long companyId);
+	public void deleteCompanyCTCollections(long companyId)
+		throws PortalException;
 
 	/**
 	 * Deletes the ct collection from the database. Also notifies the appropriate model listeners.
@@ -217,6 +219,15 @@ public interface CTCollectionLocalService
 		long companyId, int status, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTCollection> getCTCollections(
+		long companyId, QueryDefinition<CTCollection> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTCollection> getCTCollections(
+		long companyId, QueryDefinition<CTCollection> queryDefinition,
+		boolean includeProduction);
+
 	/**
 	 * Returns the number of ct collections.
 	 *
@@ -251,6 +262,10 @@ public interface CTCollectionLocalService
 
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)
+		throws PortalException;
+
+	public CTCollection updateStatus(
+			long userId, CTCollection ctCollection, int status)
 		throws PortalException;
 
 }

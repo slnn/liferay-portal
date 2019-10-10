@@ -395,6 +395,10 @@ public abstract class CTCollectionLocalServiceBaseImpl
 		counterLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
+	@Reference
 	protected CTEntryPersistence ctEntryPersistence;
 
 	@Reference

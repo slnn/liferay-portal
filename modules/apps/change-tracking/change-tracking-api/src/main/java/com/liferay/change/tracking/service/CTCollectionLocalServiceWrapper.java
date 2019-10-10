@@ -48,11 +48,11 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			long userId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.addCTCollection(
-			companyId, userId, name, description);
+			userId, name, description);
 	}
 
 	/**
@@ -69,7 +69,9 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCompanyCTCollections(long companyId) {
+	public void deleteCompanyCTCollections(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_ctCollectionLocalService.deleteCompanyCTCollections(companyId);
 	}
 
@@ -268,6 +270,31 @@ public class CTCollectionLocalServiceWrapper
 			companyId, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
+			long companyId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTCollection>
+					queryDefinition) {
+
+		return _ctCollectionLocalService.getCTCollections(
+			companyId, queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
+			long companyId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTCollection>
+					queryDefinition,
+			boolean includeProduction) {
+
+		return _ctCollectionLocalService.getCTCollections(
+			companyId, queryDefinition, includeProduction);
+	}
+
 	/**
 	 * Returns the number of ct collections.
 	 *
@@ -323,6 +350,17 @@ public class CTCollectionLocalServiceWrapper
 
 		return _ctCollectionLocalService.updateCTCollection(
 			userId, ctCollectionId, name, description);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection updateStatus(
+			long userId,
+			com.liferay.change.tracking.model.CTCollection ctCollection,
+			int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.updateStatus(
+			userId, ctCollection, status);
 	}
 
 	@Override
