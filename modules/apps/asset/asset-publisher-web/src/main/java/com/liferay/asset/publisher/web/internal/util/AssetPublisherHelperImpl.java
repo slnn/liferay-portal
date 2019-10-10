@@ -368,24 +368,24 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		return getAssetEntryQuery(
 			portletPreferences, groupId, layout, overrideAllAssetCategoryIds,
-			overrideAllAssetTagNames, null);
+			null, overrideAllAssetTagNames);
 	}
 
 	@Override
 	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long groupId, Layout layout,
-			long[] overrideAllAssetCategoryIds,
-			String[] overrideAllAssetTagNames, String[] overrideAllKeywords)
+			long[] overrideAllAssetCategoryIds, String[] overrideAllKeywords,
+			String[] overrideAllAssetTagNames)
 		throws PortalException {
 
 		long[] groupIds = getGroupIds(portletPreferences, groupId, layout);
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		_setCategoriesAndTagsAndKeywords(
+		_setCategoriesAndKeywordsAndTags(
 			assetEntryQuery, portletPreferences, groupIds,
-			overrideAllAssetCategoryIds, overrideAllAssetTagNames,
-			overrideAllKeywords);
+			overrideAllAssetCategoryIds, overrideAllKeywords,
+			overrideAllAssetTagNames);
 
 		assetEntryQuery.setGroupIds(groupIds);
 
@@ -1135,25 +1135,25 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		portletPreferences.store();
 	}
 
-	private void _setCategoriesAndTagsAndKeywords(
+	private void _setCategoriesAndKeywordsAndTags(
 		AssetEntryQuery assetEntryQuery, PortletPreferences portletPreferences,
 		long[] scopeGroupIds, long[] overrideAllAssetCategoryIds,
-		String[] overrideAllAssetTagNames, String[] overrideAllKeywords) {
+		String[] overrideAllKeywords, String[] overrideAllAssetTagNames) {
 
 		long[] allAssetCategoryIds = new long[0];
 		long[] anyAssetCategoryIds = new long[0];
 		long[] notAllAssetCategoryIds = new long[0];
 		long[] notAnyAssetCategoryIds = new long[0];
 
-		String[] allAssetTagNames = new String[0];
-		String[] anyAssetTagNames = new String[0];
-		String[] notAllAssetTagNames = new String[0];
-		String[] notAnyAssetTagNames = new String[0];
-
 		String[] allKeywords = new String[0];
 		String[] anyKeywords = new String[0];
 		String[] notAllKeywords = new String[0];
 		String[] notAnyKeywords = new String[0];
+
+		String[] allAssetTagNames = new String[0];
+		String[] anyAssetTagNames = new String[0];
+		String[] notAllAssetTagNames = new String[0];
+		String[] notAnyAssetTagNames = new String[0];
 
 		for (int i = 0; true; i++) {
 			String[] queryValues = portletPreferences.getValues(
@@ -1257,6 +1257,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
 
 		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
+
 		assetEntryQuery.setNotAllKeywords(notAllKeywords);
 
 		for (String assetTagName : notAllAssetTagNames) {
@@ -1267,6 +1268,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		}
 
 		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
+
 		assetEntryQuery.setNotAnyKeywords(notAnyKeywords);
 
 		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
