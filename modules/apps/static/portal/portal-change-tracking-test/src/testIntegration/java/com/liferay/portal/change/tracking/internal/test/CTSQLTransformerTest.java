@@ -1082,12 +1082,12 @@ public class CTSQLTransformerTest {
 			(proxy, method, args) -> {
 				String methodName = method.getName();
 
-				if (methodName.equals("getMvccVersion")) {
-					return 0L;
-				}
-
 				if (methodName.equals("getPrimaryKey")) {
 					return primaryKey;
+				}
+
+				if (methodName.equals("getMvccVersion")) {
+					return 0L;
 				}
 
 				throw new UnsupportedOperationException(method.toString());
