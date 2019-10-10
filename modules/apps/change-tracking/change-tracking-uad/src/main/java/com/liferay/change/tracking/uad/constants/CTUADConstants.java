@@ -12,25 +12,16 @@
  * details.
  */
 
-package com.liferay.change.tracking.model.impl;
-
-import com.liferay.change.tracking.constants.CTConstants;
+package com.liferay.change.tracking.uad.constants;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Daniel Kocsis
+ * @generated
  */
-public class CTCollectionImpl extends CTCollectionBaseImpl {
+public class CTUADConstants {
 
-	public CTCollectionImpl() {
-	}
-
-	public boolean isProduction() {
-		if (CTConstants.CT_COLLECTION_ID_PRODUCTION == getCtCollectionId()) {
-			return true;
-		}
-
-		return false;
-	}
+	public static final String[] USER_ID_FIELD_NAMES_CT_COLLECTION = {
+		"userId", "statusByUserId"
+	};
 
 }
