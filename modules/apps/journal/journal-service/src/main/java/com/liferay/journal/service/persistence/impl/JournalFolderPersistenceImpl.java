@@ -178,11 +178,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -239,7 +242,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -258,8 +261,18 @@ public class JournalFolderPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1012,11 +1025,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1079,7 +1095,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1100,8 +1116,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1611,11 +1637,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
@@ -1665,7 +1694,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1682,8 +1711,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(ctCollectionId);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2122,11 +2161,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -2174,7 +2216,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2191,8 +2233,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(groupId);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3017,11 +3069,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -3071,7 +3126,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3088,8 +3143,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3543,11 +3608,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P;
@@ -3601,7 +3669,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3620,8 +3688,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(parentFolderId);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -4792,6 +4870,7 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -4840,7 +4919,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4859,8 +4938,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -5652,11 +5741,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P_S;
@@ -5713,7 +5805,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5734,8 +5826,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -6674,6 +6776,7 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -6725,7 +6828,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6746,8 +6849,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -7694,6 +7807,7 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -7749,7 +7863,7 @@ public class JournalFolderPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(JournalFolderModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -7772,8 +7886,18 @@ public class JournalFolderPersistenceImpl
 
 				qPos.add(status);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -8984,11 +9108,14 @@ public class JournalFolderPersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalFolder.class);
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -9025,7 +9152,9 @@ public class JournalFolderPersistenceImpl
 			else {
 				sql = _SQL_SELECT_JOURNALFOLDER;
 
-				sql = sql.concat(JournalFolderModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(JournalFolderModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -9035,8 +9164,18 @@ public class JournalFolderPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<JournalFolder>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalFolder>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

@@ -44,6 +44,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -164,11 +165,14 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -216,7 +220,7 @@ public class ChangesetCollectionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -233,8 +237,18 @@ public class ChangesetCollectionPersistenceImpl
 
 				qPos.add(groupId);
 
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -672,11 +686,14 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -726,7 +743,7 @@ public class ChangesetCollectionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -743,8 +760,18 @@ public class ChangesetCollectionPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1188,11 +1215,14 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_U;
@@ -1246,7 +1276,7 @@ public class ChangesetCollectionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1265,8 +1295,18 @@ public class ChangesetCollectionPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1991,11 +2031,14 @@ public class ChangesetCollectionPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_N;
@@ -2058,7 +2101,7 @@ public class ChangesetCollectionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2079,8 +2122,18 @@ public class ChangesetCollectionPersistenceImpl
 					qPos.add(name);
 				}
 
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3075,11 +3128,14 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3116,7 +3172,10 @@ public class ChangesetCollectionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_CHANGESETCOLLECTION;
 
-				sql = sql.concat(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						ChangesetCollectionModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -3126,8 +3185,18 @@ public class ChangesetCollectionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ChangesetCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

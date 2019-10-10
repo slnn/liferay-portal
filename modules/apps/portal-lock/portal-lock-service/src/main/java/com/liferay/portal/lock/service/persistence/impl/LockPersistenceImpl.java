@@ -47,6 +47,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -166,11 +167,14 @@ public class LockPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -227,7 +231,7 @@ public class LockPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LockModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -246,7 +250,18 @@ public class LockPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<Lock>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -704,11 +719,14 @@ public class LockPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -771,7 +789,7 @@ public class LockPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LockModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -792,7 +810,18 @@ public class LockPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<Lock>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1277,11 +1306,14 @@ public class LockPersistenceImpl
 
 		className = Objects.toString(className, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByClassName;
@@ -1340,7 +1372,7 @@ public class LockPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LockModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1359,7 +1391,18 @@ public class LockPersistenceImpl
 					qPos.add(className);
 				}
 
-				list = (List<Lock>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1814,6 +1857,7 @@ public class LockPersistenceImpl
 		Date expirationDate, int start, int end,
 		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -1869,7 +1913,7 @@ public class LockPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LockModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1888,7 +1932,18 @@ public class LockPersistenceImpl
 					qPos.add(new Timestamp(expirationDate.getTime()));
 				}
 
-				list = (List<Lock>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3049,11 +3104,14 @@ public class LockPersistenceImpl
 		int start, int end, OrderByComparator<Lock> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3090,7 +3148,9 @@ public class LockPersistenceImpl
 			else {
 				sql = _SQL_SELECT_LOCK_;
 
-				sql = sql.concat(LockModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(LockModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -3100,7 +3160,18 @@ public class LockPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<Lock>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Lock>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

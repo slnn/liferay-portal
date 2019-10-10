@@ -44,6 +44,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -164,11 +165,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
@@ -220,7 +224,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -237,8 +241,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				qPos.add(assetEntryId);
 
-				list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -679,11 +693,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByAssetTagId;
@@ -733,7 +750,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -750,8 +767,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				qPos.add(assetTagId);
 
-				list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1865,11 +1892,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1906,7 +1936,10 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_ASSETAUTOTAGGERENTRY;
 
-				sql = sql.concat(AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1916,8 +1949,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetAutoTaggerEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
