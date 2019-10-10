@@ -100,8 +100,8 @@ public interface AssetPublisherHelper {
 
 	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long groupId, Layout layout,
-			long[] overrideAllAssetCategoryIds, String[] overrideAllAssetTagNames,
-			String[] overrideAllKeywords)
+			long[] overrideAllAssetCategoryIds, String[] overrideAllKeywords,
+			String[] overrideAllAssetTagNames)
 		throws PortalException;
 
 	public List<AssetEntryResult> getAssetEntryResults(
