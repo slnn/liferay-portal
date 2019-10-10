@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,15 +126,9 @@ public class CTPublishBackgroundTaskExecutor
 
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 
-		Date modifiedDate = new Date();
-
-		ctCollection.setModifiedDate(modifiedDate);
-
-		ctCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
-		ctCollection.setStatusByUserId(backgroundTask.getUserId());
-		ctCollection.setStatusDate(modifiedDate);
-
-		_ctCollectionLocalService.updateCTCollection(ctCollection);
+		_ctCollectionLocalService.updateStatus(
+			backgroundTask.getUserId(), ctCollection,
+			WorkflowConstants.STATUS_APPROVED);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
