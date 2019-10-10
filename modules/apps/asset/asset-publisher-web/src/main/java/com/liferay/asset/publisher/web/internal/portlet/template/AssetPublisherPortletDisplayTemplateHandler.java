@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.tag.stats.service.AssetTagStatsLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -126,7 +127,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 			AssetEntryLocalService.class, AssetEntryService.class,
 			AssetVocabularyLocalService.class, AssetVocabularyService.class,
 			AssetCategoryLocalService.class, AssetCategoryService.class,
-			AssetTagLocalService.class, AssetTagService.class);
+			AssetTagLocalService.class, AssetTagService.class,
+			AssetTagStatsLocalService.class);
 
 		templateVariableGroups.put(
 			assetServicesTemplateVariableGroup.getLabel(),
