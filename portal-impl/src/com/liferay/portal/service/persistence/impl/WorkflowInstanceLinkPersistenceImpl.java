@@ -41,6 +41,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -165,11 +166,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 		OrderByComparator<WorkflowInstanceLink> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_C;
@@ -227,7 +231,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -248,8 +252,18 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 				qPos.add(classNameId);
 
-				list = (List<WorkflowInstanceLink>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<WorkflowInstanceLink>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<WorkflowInstanceLink>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -760,11 +774,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 		int end, OrderByComparator<WorkflowInstanceLink> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
@@ -828,7 +845,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -851,8 +868,18 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 				qPos.add(classPK);
 
-				list = (List<WorkflowInstanceLink>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<WorkflowInstanceLink>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<WorkflowInstanceLink>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1788,11 +1815,14 @@ public class WorkflowInstanceLinkPersistenceImpl
 		OrderByComparator<WorkflowInstanceLink> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1829,7 +1859,10 @@ public class WorkflowInstanceLinkPersistenceImpl
 			else {
 				sql = _SQL_SELECT_WORKFLOWINSTANCELINK;
 
-				sql = sql.concat(WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1839,8 +1872,18 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<WorkflowInstanceLink>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<WorkflowInstanceLink>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<WorkflowInstanceLink>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

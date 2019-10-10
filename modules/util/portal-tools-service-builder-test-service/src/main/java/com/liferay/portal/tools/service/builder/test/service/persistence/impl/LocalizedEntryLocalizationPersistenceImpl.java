@@ -157,11 +157,14 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByLocalizedEntryId;
@@ -215,7 +218,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -232,8 +235,18 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 				qPos.add(localizedEntryId);
 
-				list = (List<LocalizedEntryLocalization>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LocalizedEntryLocalization>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LocalizedEntryLocalization>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1547,11 +1560,14 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1588,8 +1604,10 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			else {
 				sql = _SQL_SELECT_LOCALIZEDENTRYLOCALIZATION;
 
-				sql = sql.concat(
-					LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1599,8 +1617,18 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<LocalizedEntryLocalization>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LocalizedEntryLocalization>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LocalizedEntryLocalization>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

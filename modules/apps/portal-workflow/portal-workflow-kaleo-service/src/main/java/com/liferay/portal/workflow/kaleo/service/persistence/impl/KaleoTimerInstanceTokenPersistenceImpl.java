@@ -168,11 +168,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByKaleoInstanceId;
@@ -224,7 +227,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -241,8 +244,18 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 				qPos.add(kaleoInstanceId);
 
-				list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -946,11 +959,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByKITI_C;
@@ -1006,7 +1022,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1025,8 +1041,18 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 				qPos.add(completed);
 
-				list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1511,11 +1537,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByKITI_B_C;
@@ -1577,7 +1606,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1598,8 +1627,18 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 				qPos.add(completed);
 
-				list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2602,11 +2641,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2643,8 +2685,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			else {
 				sql = _SQL_SELECT_KALEOTIMERINSTANCETOKEN;
 
-				sql = sql.concat(
-					KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2654,8 +2698,18 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<KaleoTimerInstanceToken>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
