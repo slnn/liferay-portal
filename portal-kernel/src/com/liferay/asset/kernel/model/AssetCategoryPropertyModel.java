@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -39,8 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @Deprecated
 @ProviderType
 public interface AssetCategoryPropertyModel
-	extends AuditedModel, BaseModel<AssetCategoryProperty>, MVCCModel,
-			ShardedModel {
+	extends AuditedModel, BaseModel<AssetCategoryProperty>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -61,22 +59,6 @@ public interface AssetCategoryPropertyModel
 	 * @param primaryKey the primary key of this asset category property
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this asset category property.
-	 *
-	 * @return the mvcc version of this asset category property
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this asset category property.
-	 *
-	 * @param mvccVersion the mvcc version of this asset category property
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the category property ID of this asset category property.
