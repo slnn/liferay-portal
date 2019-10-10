@@ -492,6 +492,8 @@ public interface AssetCategoryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void rebuildTree(long groupId, boolean force);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> search(
 		long groupId, String name, String[] categoryProperties, int start,
