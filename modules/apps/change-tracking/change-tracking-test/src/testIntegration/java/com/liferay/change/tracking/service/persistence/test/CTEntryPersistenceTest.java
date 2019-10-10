@@ -141,7 +141,13 @@ public class CTEntryPersistenceTest {
 
 		newCTEntry.setModelMvccVersion(RandomTestUtil.nextLong());
 
+		newCTEntry.setModelResourcePrimKey(RandomTestUtil.nextLong());
+
 		newCTEntry.setChangeType(RandomTestUtil.nextInt());
+
+		newCTEntry.setCollision(RandomTestUtil.randomBoolean());
+
+		newCTEntry.setStatus(RandomTestUtil.nextInt());
 
 		_ctEntries.add(_persistence.update(newCTEntry));
 
@@ -174,7 +180,14 @@ public class CTEntryPersistenceTest {
 			existingCTEntry.getModelMvccVersion(),
 			newCTEntry.getModelMvccVersion());
 		Assert.assertEquals(
+			existingCTEntry.getModelResourcePrimKey(),
+			newCTEntry.getModelResourcePrimKey());
+		Assert.assertEquals(
 			existingCTEntry.getChangeType(), newCTEntry.getChangeType());
+		Assert.assertEquals(
+			existingCTEntry.isCollision(), newCTEntry.isCollision());
+		Assert.assertEquals(
+			existingCTEntry.getStatus(), newCTEntry.getStatus());
 	}
 
 	@Test
@@ -193,12 +206,46 @@ public class CTEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_MRPK() throws Exception {
+		_persistence.countByC_MRPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_MRPK(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
+	}
+
+	@Test
 	public void testCountByC_MCNI_MCPK() throws Exception {
 		_persistence.countByC_MCNI_MCPK(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
 		_persistence.countByC_MCNI_MCPK(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_MCNI_S() throws Exception {
+		_persistence.countByC_MCNI_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_MCNI_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_MRPK_S() throws Exception {
+		_persistence.countByC_MRPK_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_MRPK_S(0L, 0L, 0);
 	}
 
 	@Test
@@ -229,7 +276,8 @@ public class CTEntryPersistenceTest {
 			"CTEntry", "mvccVersion", true, "ctEntryId", true, "companyId",
 			true, "userId", true, "createDate", true, "modifiedDate", true,
 			"ctCollectionId", true, "modelClassNameId", true, "modelClassPK",
-			true, "modelMvccVersion", true, "changeType", true);
+			true, "modelMvccVersion", true, "modelResourcePrimKey", true,
+			"changeType", true, "collision", true, "status", true);
 	}
 
 	@Test
@@ -482,7 +530,13 @@ public class CTEntryPersistenceTest {
 
 		ctEntry.setModelMvccVersion(RandomTestUtil.nextLong());
 
+		ctEntry.setModelResourcePrimKey(RandomTestUtil.nextLong());
+
 		ctEntry.setChangeType(RandomTestUtil.nextInt());
+
+		ctEntry.setCollision(RandomTestUtil.randomBoolean());
+
+		ctEntry.setStatus(RandomTestUtil.nextInt());
 
 		_ctEntries.add(_persistence.update(ctEntry));
 
