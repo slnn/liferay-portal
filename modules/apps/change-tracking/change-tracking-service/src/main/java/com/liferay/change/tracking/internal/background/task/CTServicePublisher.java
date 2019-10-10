@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author Preston Crary
  */
-public class CTServicePublisher<T extends CTModel<T>> {
+public class CTServicePublisher<T extends CTModel<T>> implements CTPublisher {
 
 	public CTServicePublisher(
 		CTEntryLocalService ctEntryLocalService, CTService<T> ctService,
@@ -46,6 +46,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		_targetCTCollectionId = targetCTCollectionId;
 	}
 
+	@Override
 	public void addCTEntry(CTEntry ctEntry) {
 		long modelClassPK = ctEntry.getModelClassPK();
 		int changeType = ctEntry.getChangeType();
@@ -73,6 +74,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 	}
 
+	@Override
 	public void publish() {
 		_ctService.updateWithUnsafeFunction(this::_publish);
 	}
