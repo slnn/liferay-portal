@@ -474,6 +474,8 @@ public class LayoutCTTest {
 	@Inject
 	private static CounterLocalService _counterLocalService;
 
+	private static CTCollection _ctCollection;
+
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
 
@@ -484,8 +486,6 @@ public class LayoutCTTest {
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
-
-	private CTCollection _ctCollection;
 
 	@Inject
 	private CTProcessLocalService _ctProcessLocalService;
