@@ -18,8 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -72,12 +74,18 @@ public class LayoutCTTest {
 
 	@Before
 	public void setUp() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+		long userId = TestPropsValues.getUserId();
+
+		_userCTPreferences = _ctPreferencesLocalService.getCTPreferences(
+			companyId, userId);
+
 		long ctCollectionId = _counterLocalService.increment();
 
 		_ctCollection = _ctCollectionLocalService.createCTCollection(
 			ctCollectionId);
 
-		_ctCollection.setUserId(TestPropsValues.getUserId());
+		_ctCollection.setUserId(userId);
 		_ctCollection.setName(String.valueOf(ctCollectionId));
 
 		_ctCollection = _ctCollectionLocalService.updateCTCollection(
@@ -91,6 +99,8 @@ public class LayoutCTTest {
 
 	@After
 	public void tearDown() throws Exception {
+		_ctPreferencesLocalService.deleteCTPreferences(_userCTPreferences);
+
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 	}
 
@@ -482,10 +492,15 @@ public class LayoutCTTest {
 	@Inject
 	private static CTEntryLocalService _ctEntryLocalService;
 
+	@Inject
+	private static CTPreferencesLocalService _ctPreferencesLocalService;
+
 	private static long _layoutClassNameId;
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
+
+	private static CTPreferences _userCTPreferences;
 
 	@Inject
 	private CTProcessLocalService _ctProcessLocalService;
