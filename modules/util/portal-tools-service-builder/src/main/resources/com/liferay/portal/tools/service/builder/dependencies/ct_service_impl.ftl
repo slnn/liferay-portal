@@ -2,7 +2,6 @@ package ${packagePath}.service.impl;
 
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
-
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
