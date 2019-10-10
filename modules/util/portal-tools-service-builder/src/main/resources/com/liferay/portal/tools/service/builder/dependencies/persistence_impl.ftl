@@ -539,6 +539,52 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	}
 
+	<#if entity.isChangeTrackingEnabled()>
+		@Override
+		public List<String[]> getUniqueIndexColumnNames() {
+			return _uniqueIndexColumnNames;
+		}
+
+		@Override
+		public ${entity.name} removeCTModel(${entity.name} ${entity.varName}, boolean quiet) {
+			if (quiet) {
+				return removeImpl(${entity.varName});
+			}
+
+			return remove(${entity.varName});
+		}
+
+		@Override
+		public ${entity.name} updateCTModel(${entity.name} ${entity.varName}, boolean quiet) {
+			if (quiet) {
+				return updateImpl(${entity.varName});
+			}
+
+			return update(${entity.varName});
+		}
+
+		private static final List<String[]> _uniqueIndexColumnNames = new ArrayList<String[]>();
+
+		static {
+			<#list entity.entityFinders as entityFinder>
+				<#if entityFinder.isUnique()>
+					<#assign entityColumns = entityFinder.entityColumns />
+
+					_uniqueIndexColumnNames.add(
+						new String[] {
+							<#list entityColumns as entityColumn>
+								"${entityColumn.DBName}"
+
+								<#if entityColumn_has_next>
+									,
+								</#if>
+							</#list>
+						});
+				</#if>
+			</#list>
+		}
+	</#if>
+
 	@Override
 	protected ${entity.name} removeImpl(${entity.name} ${entity.varName}) {
 		<#list entity.entityColumns as entityColumn>
@@ -1826,52 +1872,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ${entity.name}ModelImpl.TABLE_COLUMNS_MAP;
 	}
-
-	<#if entity.isChangeTrackingEnabled()>
-		@Override
-		public List<String[]> getUniqueIndexColumnNames() {
-			return _uniqueIndexColumnNames;
-		}
-
-		@Override
-		public ${entity.name} removeCTModel(${entity.name} ${entity.varName}, boolean quiet) {
-			if (quiet) {
-				return removeImpl(${entity.varName});
-			}
-
-			return remove(${entity.varName});
-		}
-
-		@Override
-		public ${entity.name} updateCTModel(${entity.name} ${entity.varName}, boolean quiet) {
-			if (quiet) {
-				return updateImpl(${entity.varName});
-			}
-
-			return update(${entity.varName});
-		}
-
-		private static final List<String[]> _uniqueIndexColumnNames = new ArrayList<String[]>();
-
-		static {
-			<#list entity.entityFinders as entityFinder>
-				<#if entityFinder.isUnique()>
-					<#assign entityColumns = entityFinder.entityColumns />
-
-					_uniqueIndexColumnNames.add(
-						new String[] {
-							<#list entityColumns as entityColumn>
-								"${entityColumn.DBName}"
-
-								<#if entityColumn_has_next>
-									,
-								</#if>
-							</#list>
-						});
-				</#if>
-			</#list>
-		}
-	</#if>
 
 	<#if entity.isHierarchicalTree()>
 		@Override
