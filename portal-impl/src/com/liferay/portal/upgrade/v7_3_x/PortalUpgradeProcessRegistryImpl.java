@@ -14,11 +14,9 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
 
 import java.util.TreeMap;
 
@@ -32,14 +30,11 @@ public class PortalUpgradeProcessRegistryImpl
 	public void registerUpgradeProcesses(
 		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
-		upgradeProcesses.put(new Version(6, 0, 0), new UpgradeMVCCVersion());
+		upgradeProcesses.put(new Version(6, 0, 0), new UpgradeLayout());
 
-		upgradeProcesses.put(new Version(6, 0, 1), new UpgradeLayout());
+		upgradeProcesses.put(new Version(6, 0, 1), new UpgradeLayoutSet());
 
-		upgradeProcesses.put(new Version(6, 0, 2), new UpgradeLayoutSet());
-
-		upgradeProcesses.put(
-			new Version(6, 0, 3), new UpgradeCTModel(LayoutTable.class));
+		upgradeProcesses.put(new Version(6, 0, 2), new UpgradeMVCCVersion());
 	}
 
 }
