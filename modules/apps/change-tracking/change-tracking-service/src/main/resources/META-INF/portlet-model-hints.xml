@@ -6,6 +6,7 @@
 		<field name="ctCollectionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
@@ -15,6 +16,7 @@
 		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTEntry">
@@ -28,7 +30,10 @@
 		<field name="modelClassNameId" type="long" />
 		<field name="modelClassPK" type="long" />
 		<field name="modelMvccVersion" type="long" />
+		<field name="modelResourcePrimKey" type="long" />
 		<field name="changeType" type="int" />
+		<field name="collision" type="boolean" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTPreferences">
 		<field name="mvccVersion" type="long" />
