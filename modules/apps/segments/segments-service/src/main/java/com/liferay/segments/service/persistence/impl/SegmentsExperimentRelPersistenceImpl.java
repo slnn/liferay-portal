@@ -44,6 +44,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -167,11 +168,14 @@ public class SegmentsExperimentRelPersistenceImpl
 		OrderByComparator<SegmentsExperimentRel> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -225,7 +229,7 @@ public class SegmentsExperimentRelPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(SegmentsExperimentRelModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -242,8 +246,18 @@ public class SegmentsExperimentRelPersistenceImpl
 
 				qPos.add(segmentsExperimentId);
 
-				list = (List<SegmentsExperimentRel>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<SegmentsExperimentRel>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SegmentsExperimentRel>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1363,11 +1377,14 @@ public class SegmentsExperimentRelPersistenceImpl
 		OrderByComparator<SegmentsExperimentRel> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1404,7 +1421,10 @@ public class SegmentsExperimentRelPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SEGMENTSEXPERIMENTREL;
 
-				sql = sql.concat(SegmentsExperimentRelModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						SegmentsExperimentRelModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1414,8 +1434,18 @@ public class SegmentsExperimentRelPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<SegmentsExperimentRel>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<SegmentsExperimentRel>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SegmentsExperimentRel>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

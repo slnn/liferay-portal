@@ -40,6 +40,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,11 +151,14 @@ public class UserIdMapperPersistenceImpl
 		OrderByComparator<UserIdMapper> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -202,7 +206,7 @@ public class UserIdMapperPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(UserIdMapperModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -219,8 +223,18 @@ public class UserIdMapperPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<UserIdMapper>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<UserIdMapper>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<UserIdMapper>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1607,11 +1621,14 @@ public class UserIdMapperPersistenceImpl
 		int start, int end, OrderByComparator<UserIdMapper> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1648,7 +1665,9 @@ public class UserIdMapperPersistenceImpl
 			else {
 				sql = _SQL_SELECT_USERIDMAPPER;
 
-				sql = sql.concat(UserIdMapperModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(UserIdMapperModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1658,8 +1677,18 @@ public class UserIdMapperPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<UserIdMapper>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<UserIdMapper>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<UserIdMapper>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

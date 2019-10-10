@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,11 +156,14 @@ public class ServiceComponentPersistenceImpl
 
 		buildNamespace = Objects.toString(buildNamespace, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByBuildNamespace;
@@ -220,7 +224,7 @@ public class ServiceComponentPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(ServiceComponentModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -239,8 +243,18 @@ public class ServiceComponentPersistenceImpl
 					qPos.add(buildNamespace);
 				}
 
-				list = (List<ServiceComponent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ServiceComponent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ServiceComponent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1370,11 +1384,14 @@ public class ServiceComponentPersistenceImpl
 		OrderByComparator<ServiceComponent> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1411,7 +1428,9 @@ public class ServiceComponentPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SERVICECOMPONENT;
 
-				sql = sql.concat(ServiceComponentModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(ServiceComponentModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1421,8 +1440,18 @@ public class ServiceComponentPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<ServiceComponent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<ServiceComponent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ServiceComponent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
