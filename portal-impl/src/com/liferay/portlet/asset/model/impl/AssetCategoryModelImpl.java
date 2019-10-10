@@ -81,22 +81,21 @@ public class AssetCategoryModelImpl
 	public static final String TABLE_NAME = "AssetCategory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"categoryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentCategoryId", Types.BIGINT}, {"leftCategoryId", Types.BIGINT},
-		{"rightCategoryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"vocabularyId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"categoryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"parentCategoryId", Types.BIGINT},
+		{"leftCategoryId", Types.BIGINT}, {"rightCategoryId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"vocabularyId", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
@@ -117,7 +116,7 @@ public class AssetCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
+		"create table AssetCategory (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 
@@ -175,7 +174,6 @@ public class AssetCategoryModelImpl
 
 		AssetCategory model = new AssetCategoryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCategoryId(soapModel.getCategoryId());
@@ -367,11 +365,6 @@ public class AssetCategoryModelImpl
 		Map<String, BiConsumer<AssetCategory, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<AssetCategory, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AssetCategory::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AssetCategory, Long>)AssetCategory::setMvccVersion);
 		attributeGetterFunctions.put("uuid", AssetCategory::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<AssetCategory, String>)AssetCategory::setUuid);
@@ -455,17 +448,6 @@ public class AssetCategoryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1116,7 +1098,6 @@ public class AssetCategoryModelImpl
 	public Object clone() {
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
 
-		assetCategoryImpl.setMvccVersion(getMvccVersion());
 		assetCategoryImpl.setUuid(getUuid());
 		assetCategoryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		assetCategoryImpl.setCategoryId(getCategoryId());
@@ -1230,8 +1211,6 @@ public class AssetCategoryModelImpl
 	public CacheModel<AssetCategory> toCacheModel() {
 		AssetCategoryCacheModel assetCategoryCacheModel =
 			new AssetCategoryCacheModel();
-
-		assetCategoryCacheModel.mvccVersion = getMvccVersion();
 
 		assetCategoryCacheModel.uuid = getUuid();
 
@@ -1401,7 +1380,6 @@ public class AssetCategoryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

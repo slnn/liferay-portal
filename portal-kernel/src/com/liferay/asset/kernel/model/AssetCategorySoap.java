@@ -31,7 +31,6 @@ public class AssetCategorySoap implements Serializable {
 	public static AssetCategorySoap toSoapModel(AssetCategory model) {
 		AssetCategorySoap soapModel = new AssetCategorySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCategoryId(model.getCategoryId());
@@ -100,14 +99,6 @@ public class AssetCategorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCategoryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -246,7 +237,6 @@ public class AssetCategorySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _categoryId;
