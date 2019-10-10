@@ -98,12 +98,6 @@ public interface AssetPublisherHelper {
 			String[] overrideAllAssetTagNames)
 		throws PortalException;
 
-	public AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long groupId, Layout layout,
-			long[] overrideAllAssetCategoryIds, String[] overrideAllKeywords,
-			String[] overrideAllAssetTagNames)
-		throws PortalException;
-
 	public List<AssetEntryResult> getAssetEntryResults(
 			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
 			Layout layout, PortletPreferences portletPreferences,
@@ -139,8 +133,6 @@ public interface AssetPublisherHelper {
 	public long[] getGroupIds(
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout);
-
-	public String[] getKeywords(PortletPreferences portletPreferences);
 
 	public String getScopeId(Group group, long scopeGroupId);
 
