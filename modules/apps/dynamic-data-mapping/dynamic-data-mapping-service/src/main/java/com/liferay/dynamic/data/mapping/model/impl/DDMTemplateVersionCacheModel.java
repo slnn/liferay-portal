@@ -78,12 +78,10 @@ public class DDMTemplateVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", templateVersionId=");
 		sb.append(templateVersionId);
 		sb.append(", groupId=");
@@ -131,7 +129,6 @@ public class DDMTemplateVersionCacheModel
 			new DDMTemplateVersionImpl();
 
 		ddmTemplateVersionImpl.setMvccVersion(mvccVersion);
-		ddmTemplateVersionImpl.setCtCollectionId(ctCollectionId);
 		ddmTemplateVersionImpl.setTemplateVersionId(templateVersionId);
 		ddmTemplateVersionImpl.setGroupId(groupId);
 		ddmTemplateVersionImpl.setCompanyId(companyId);
@@ -216,8 +213,6 @@ public class DDMTemplateVersionCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		templateVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -249,8 +244,6 @@ public class DDMTemplateVersionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(templateVersionId);
 
@@ -325,7 +318,6 @@ public class DDMTemplateVersionCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long templateVersionId;
 	public long groupId;
 	public long companyId;

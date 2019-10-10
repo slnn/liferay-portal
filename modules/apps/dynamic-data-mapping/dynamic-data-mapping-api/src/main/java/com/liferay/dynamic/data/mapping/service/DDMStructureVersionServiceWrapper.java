@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -40,7 +39,8 @@ public class DDMStructureVersionServiceWrapper
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureVersionServiceUtil} to access the ddm structure version remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Override
-	public DDMStructureVersion getLatestStructureVersion(long structureId)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
+			getLatestStructureVersion(long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureVersionService.getLatestStructureVersion(
@@ -58,7 +58,8 @@ public class DDMStructureVersionServiceWrapper
 	}
 
 	@Override
-	public DDMStructureVersion getStructureVersion(long structureVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion
+			getStructureVersion(long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureVersionService.getStructureVersion(
@@ -66,11 +67,14 @@ public class DDMStructureVersionServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMStructureVersion> getStructureVersions(
-			long structureId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
+				getStructureVersions(
+					long structureId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.dynamic.data.mapping.model.
+							DDMStructureVersion> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureVersionService.getStructureVersions(
 			structureId, start, end, orderByComparator);

@@ -77,12 +77,10 @@ public class DDMTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", templateId=");
@@ -145,7 +143,6 @@ public class DDMTemplateCacheModel
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
 
 		ddmTemplateImpl.setMvccVersion(mvccVersion);
-		ddmTemplateImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddmTemplateImpl.setUuid("");
@@ -279,8 +276,6 @@ public class DDMTemplateCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		templateId = objectInput.readLong();
@@ -325,8 +320,6 @@ public class DDMTemplateCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -443,7 +436,6 @@ public class DDMTemplateCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public long templateId;
 	public long groupId;
