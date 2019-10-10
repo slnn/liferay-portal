@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -831,11 +832,14 @@ public class CountryPersistenceImpl
 		boolean active, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByActive;
@@ -883,7 +887,7 @@ public class CountryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(CountryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -900,8 +904,18 @@ public class CountryPersistenceImpl
 
 				qPos.add(active);
 
-				list = (List<Country>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Country>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Country>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1742,11 +1756,14 @@ public class CountryPersistenceImpl
 		int start, int end, OrderByComparator<Country> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1783,7 +1800,9 @@ public class CountryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_COUNTRY;
 
-				sql = sql.concat(CountryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(CountryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1793,8 +1812,18 @@ public class CountryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<Country>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<Country>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Country>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

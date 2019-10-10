@@ -47,6 +47,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -168,11 +169,14 @@ public class BatchEngineTaskPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -229,7 +233,7 @@ public class BatchEngineTaskPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -248,8 +252,18 @@ public class BatchEngineTaskPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -715,11 +729,14 @@ public class BatchEngineTaskPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -782,7 +799,7 @@ public class BatchEngineTaskPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -803,8 +820,18 @@ public class BatchEngineTaskPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1299,11 +1326,14 @@ public class BatchEngineTaskPersistenceImpl
 
 		executeStatus = Objects.toString(executeStatus, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByExecuteStatus;
@@ -1364,7 +1394,7 @@ public class BatchEngineTaskPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1383,8 +1413,18 @@ public class BatchEngineTaskPersistenceImpl
 					qPos.add(executeStatus);
 				}
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2276,11 +2316,14 @@ public class BatchEngineTaskPersistenceImpl
 		OrderByComparator<BatchEngineTask> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2317,7 +2360,9 @@ public class BatchEngineTaskPersistenceImpl
 			else {
 				sql = _SQL_SELECT_BATCHENGINETASK;
 
-				sql = sql.concat(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(BatchEngineTaskModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2327,8 +2372,18 @@ public class BatchEngineTaskPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<BatchEngineTask>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BatchEngineTask>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

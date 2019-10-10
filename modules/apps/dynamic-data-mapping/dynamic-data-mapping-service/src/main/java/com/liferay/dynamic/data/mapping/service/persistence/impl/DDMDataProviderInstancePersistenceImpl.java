@@ -51,6 +51,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -174,11 +175,14 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -235,7 +239,7 @@ public class DDMDataProviderInstancePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -254,8 +258,18 @@ public class DDMDataProviderInstancePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<DDMDataProviderInstance>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -992,11 +1006,14 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1059,7 +1076,7 @@ public class DDMDataProviderInstancePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1080,8 +1097,18 @@ public class DDMDataProviderInstancePersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<DDMDataProviderInstance>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1577,11 +1604,14 @@ public class DDMDataProviderInstancePersistenceImpl
 		OrderByComparator<DDMDataProviderInstance> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -1629,7 +1659,7 @@ public class DDMDataProviderInstancePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1646,8 +1676,18 @@ public class DDMDataProviderInstancePersistenceImpl
 
 				qPos.add(groupId);
 
-				list = (List<DDMDataProviderInstance>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2510,10 +2550,13 @@ public class DDMDataProviderInstancePersistenceImpl
 			return findByGroupId(groupIds[0], start, end, orderByComparator);
 		}
 
+		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
@@ -2569,7 +2612,7 @@ public class DDMDataProviderInstancePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2582,8 +2625,18 @@ public class DDMDataProviderInstancePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<DDMDataProviderInstance>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2939,11 +2992,14 @@ public class DDMDataProviderInstancePersistenceImpl
 		OrderByComparator<DDMDataProviderInstance> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -2993,7 +3049,7 @@ public class DDMDataProviderInstancePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3010,8 +3066,18 @@ public class DDMDataProviderInstancePersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<DDMDataProviderInstance>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3988,11 +4054,14 @@ public class DDMDataProviderInstancePersistenceImpl
 		OrderByComparator<DDMDataProviderInstance> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -4029,8 +4098,10 @@ public class DDMDataProviderInstancePersistenceImpl
 			else {
 				sql = _SQL_SELECT_DDMDATAPROVIDERINSTANCE;
 
-				sql = sql.concat(
-					DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -4040,8 +4111,18 @@ public class DDMDataProviderInstancePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<DDMDataProviderInstance>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMDataProviderInstance>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

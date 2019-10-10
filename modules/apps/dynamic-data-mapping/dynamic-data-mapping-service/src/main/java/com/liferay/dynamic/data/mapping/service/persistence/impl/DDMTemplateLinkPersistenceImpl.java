@@ -42,6 +42,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -161,11 +162,14 @@ public class DDMTemplateLinkPersistenceImpl
 		OrderByComparator<DDMTemplateLink> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByClassNameId;
@@ -215,7 +219,7 @@ public class DDMTemplateLinkPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMTemplateLinkModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -232,8 +236,18 @@ public class DDMTemplateLinkPersistenceImpl
 
 				qPos.add(classNameId);
 
-				list = (List<DDMTemplateLink>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMTemplateLink>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMTemplateLink>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -671,11 +685,14 @@ public class DDMTemplateLinkPersistenceImpl
 		OrderByComparator<DDMTemplateLink> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByTemplateId;
@@ -725,7 +742,7 @@ public class DDMTemplateLinkPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(DDMTemplateLinkModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -742,8 +759,18 @@ public class DDMTemplateLinkPersistenceImpl
 
 				qPos.add(templateId);
 
-				list = (List<DDMTemplateLink>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMTemplateLink>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMTemplateLink>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1807,11 +1834,14 @@ public class DDMTemplateLinkPersistenceImpl
 		OrderByComparator<DDMTemplateLink> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1848,7 +1878,9 @@ public class DDMTemplateLinkPersistenceImpl
 			else {
 				sql = _SQL_SELECT_DDMTEMPLATELINK;
 
-				sql = sql.concat(DDMTemplateLinkModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(DDMTemplateLinkModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1858,8 +1890,18 @@ public class DDMTemplateLinkPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<DDMTemplateLink>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<DDMTemplateLink>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMTemplateLink>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

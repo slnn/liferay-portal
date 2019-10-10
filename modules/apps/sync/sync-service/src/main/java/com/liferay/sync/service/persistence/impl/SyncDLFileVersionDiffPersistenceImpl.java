@@ -44,6 +44,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -166,11 +167,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByFileEntryId;
@@ -220,7 +224,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(SyncDLFileVersionDiffModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -237,8 +241,18 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 				qPos.add(fileEntryId);
 
-				list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -680,6 +694,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -736,7 +751,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(SyncDLFileVersionDiffModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -755,8 +770,18 @@ public class SyncDLFileVersionDiffPersistenceImpl
 					qPos.add(new Timestamp(expirationDate.getTime()));
 				}
 
-				list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1897,11 +1922,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1938,7 +1966,10 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SYNCDLFILEVERSIONDIFF;
 
-				sql = sql.concat(SyncDLFileVersionDiffModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(
+						SyncDLFileVersionDiffModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1948,8 +1979,18 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SyncDLFileVersionDiff>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
