@@ -42,6 +42,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -157,11 +158,14 @@ public class CTProcessPersistenceImpl
 		OrderByComparator<CTProcess> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -211,7 +215,7 @@ public class CTProcessPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(CTProcessModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -228,8 +232,18 @@ public class CTProcessPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<CTProcess>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<CTProcess>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CTProcess>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -660,11 +674,14 @@ public class CTProcessPersistenceImpl
 		OrderByComparator<CTProcess> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCollectionId;
@@ -714,7 +731,7 @@ public class CTProcessPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(CTProcessModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -731,8 +748,18 @@ public class CTProcessPersistenceImpl
 
 				qPos.add(ctCollectionId);
 
-				list = (List<CTProcess>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<CTProcess>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CTProcess>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1500,11 +1527,14 @@ public class CTProcessPersistenceImpl
 		int start, int end, OrderByComparator<CTProcess> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1541,7 +1571,9 @@ public class CTProcessPersistenceImpl
 			else {
 				sql = _SQL_SELECT_CTPROCESS;
 
-				sql = sql.concat(CTProcessModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(CTProcessModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1551,8 +1583,18 @@ public class CTProcessPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<CTProcess>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<CTProcess>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CTProcess>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
