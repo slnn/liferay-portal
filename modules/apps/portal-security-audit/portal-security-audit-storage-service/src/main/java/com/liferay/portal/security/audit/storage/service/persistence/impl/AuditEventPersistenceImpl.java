@@ -42,6 +42,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -159,11 +160,14 @@ public class AuditEventPersistenceImpl
 		OrderByComparator<AuditEvent> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -213,7 +217,7 @@ public class AuditEventPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(AuditEventModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -230,8 +234,18 @@ public class AuditEventPersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<AuditEvent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AuditEvent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AuditEvent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -975,11 +989,14 @@ public class AuditEventPersistenceImpl
 		int start, int end, OrderByComparator<AuditEvent> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1016,7 +1033,9 @@ public class AuditEventPersistenceImpl
 			else {
 				sql = _SQL_SELECT_AUDITEVENT;
 
-				sql = sql.concat(AuditEventModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(AuditEventModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1026,8 +1045,18 @@ public class AuditEventPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<AuditEvent>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<AuditEvent>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AuditEvent>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
