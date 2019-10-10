@@ -204,13 +204,13 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		</#list>
 
-		<#if entity.isChangeTrackingEnabled()>
-			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
-		</#if>
-
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
+
+		<#if entity.isChangeTrackingEnabled()>
+			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
+		</#if>
 
 		<#if !entityFinder.hasCustomComparator()>
 			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
@@ -1625,12 +1625,12 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		}
 
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
 		<#if entity.isChangeTrackingEnabled()>
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
-
-		boolean pagination = true;
-		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 			pagination = false;
@@ -1996,12 +1996,12 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		}
 
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
 		<#if entity.isChangeTrackingEnabled()>
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
-
-		boolean pagination = true;
-		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 			pagination = false;
@@ -2310,11 +2310,11 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		</#list>
 
+		Object[] finderArgs = null;
+
 		<#if entity.isChangeTrackingEnabled()>
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
-
-		Object[] finderArgs = null;
 
 		if (${useCache}) {
 			finderArgs = new Object[] {
@@ -2396,7 +2396,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 							if (_log.isWarnEnabled()) {
 								<#if entity.isChangeTrackingEnabled()>
-									if (!productionMode || !useFinderCache) {
+									if (!useFinderCache || !productionMode) {
 								<#else>
 									if (!useFinderCache) {
 								</#if>
