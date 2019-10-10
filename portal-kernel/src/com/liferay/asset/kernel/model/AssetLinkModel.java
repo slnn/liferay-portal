@@ -16,7 +16,6 @@ package com.liferay.asset.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -35,8 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AssetLinkModel
-	extends BaseModel<AssetLink>, MVCCModel, ShardedModel {
+public interface AssetLinkModel extends BaseModel<AssetLink>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -57,22 +55,6 @@ public interface AssetLinkModel
 	 * @param primaryKey the primary key of this asset link
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this asset link.
-	 *
-	 * @return the mvcc version of this asset link
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this asset link.
-	 *
-	 * @param mvccVersion the mvcc version of this asset link
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the link ID of this asset link.

@@ -75,18 +75,17 @@ public class AssetCategoryPropertyModelImpl
 	public static final String TABLE_NAME = "AssetCategoryProperty";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"categoryPropertyId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"categoryId", Types.BIGINT},
-		{"key_", Types.VARCHAR}, {"value", Types.VARCHAR}
+		{"categoryPropertyId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"categoryId", Types.BIGINT}, {"key_", Types.VARCHAR},
+		{"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("categoryPropertyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -99,7 +98,7 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,categoryPropertyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table AssetCategoryProperty (categoryPropertyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetCategoryProperty";
@@ -152,7 +151,6 @@ public class AssetCategoryPropertyModelImpl
 
 		AssetCategoryProperty model = new AssetCategoryPropertyImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCategoryPropertyId(soapModel.getCategoryPropertyId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -324,12 +322,6 @@ public class AssetCategoryPropertyModelImpl
 					<String, BiConsumer<AssetCategoryProperty, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", AssetCategoryProperty::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AssetCategoryProperty, Long>)
-				AssetCategoryProperty::setMvccVersion);
-		attributeGetterFunctions.put(
 			"categoryPropertyId", AssetCategoryProperty::getCategoryPropertyId);
 		attributeSetterBiConsumers.put(
 			"categoryPropertyId",
@@ -386,17 +378,6 @@ public class AssetCategoryPropertyModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -607,7 +588,6 @@ public class AssetCategoryPropertyModelImpl
 		AssetCategoryPropertyImpl assetCategoryPropertyImpl =
 			new AssetCategoryPropertyImpl();
 
-		assetCategoryPropertyImpl.setMvccVersion(getMvccVersion());
 		assetCategoryPropertyImpl.setCategoryPropertyId(
 			getCategoryPropertyId());
 		assetCategoryPropertyImpl.setCompanyId(getCompanyId());
@@ -701,8 +681,6 @@ public class AssetCategoryPropertyModelImpl
 	public CacheModel<AssetCategoryProperty> toCacheModel() {
 		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel =
 			new AssetCategoryPropertyCacheModel();
-
-		assetCategoryPropertyCacheModel.mvccVersion = getMvccVersion();
 
 		assetCategoryPropertyCacheModel.categoryPropertyId =
 			getCategoryPropertyId();
@@ -831,7 +809,6 @@ public class AssetCategoryPropertyModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _categoryPropertyId;
 	private long _companyId;
 	private long _originalCompanyId;

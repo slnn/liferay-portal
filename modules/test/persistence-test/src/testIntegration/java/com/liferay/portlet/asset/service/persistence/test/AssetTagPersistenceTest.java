@@ -123,8 +123,6 @@ public class AssetTagPersistenceTest {
 
 		AssetTag newAssetTag = _persistence.create(pk);
 
-		newAssetTag.setMvccVersion(RandomTestUtil.nextLong());
-
 		newAssetTag.setUuid(RandomTestUtil.randomString());
 
 		newAssetTag.setGroupId(RandomTestUtil.nextLong());
@@ -150,8 +148,6 @@ public class AssetTagPersistenceTest {
 		AssetTag existingAssetTag = _persistence.findByPrimaryKey(
 			newAssetTag.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingAssetTag.getMvccVersion(), newAssetTag.getMvccVersion());
 		Assert.assertEquals(existingAssetTag.getUuid(), newAssetTag.getUuid());
 		Assert.assertEquals(
 			existingAssetTag.getTagId(), newAssetTag.getTagId());
@@ -283,10 +279,10 @@ public class AssetTagPersistenceTest {
 
 	protected OrderByComparator<AssetTag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetTag", "mvccVersion", true, "uuid", true, "tagId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"assetCount", true, "lastPublishDate", true);
+			"AssetTag", "uuid", true, "tagId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "assetCount", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -525,8 +521,6 @@ public class AssetTagPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AssetTag assetTag = _persistence.create(pk);
-
-		assetTag.setMvccVersion(RandomTestUtil.nextLong());
 
 		assetTag.setUuid(RandomTestUtil.randomString());
 

@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class AssetTagCacheModel
-	implements CacheModel<AssetTag>, Externalizable, MVCCModel {
+	implements CacheModel<AssetTag>, Externalizable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,9 +47,7 @@ public class AssetTagCacheModel
 
 		AssetTagCacheModel assetTagCacheModel = (AssetTagCacheModel)obj;
 
-		if ((tagId == assetTagCacheModel.tagId) &&
-			(mvccVersion == assetTagCacheModel.mvccVersion)) {
-
+		if (tagId == assetTagCacheModel.tagId) {
 			return true;
 		}
 
@@ -59,28 +56,14 @@ public class AssetTagCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, tagId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, tagId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", tagId=");
 		sb.append(tagId);
@@ -110,8 +93,6 @@ public class AssetTagCacheModel
 	@Override
 	public AssetTag toEntityModel() {
 		AssetTagImpl assetTagImpl = new AssetTagImpl();
-
-		assetTagImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			assetTagImpl.setUuid("");
@@ -169,7 +150,6 @@ public class AssetTagCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		tagId = objectInput.readLong();
@@ -190,8 +170,6 @@ public class AssetTagCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -228,7 +206,6 @@ public class AssetTagCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long tagId;
 	public long groupId;

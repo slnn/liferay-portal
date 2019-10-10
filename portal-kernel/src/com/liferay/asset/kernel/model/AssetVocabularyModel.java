@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -41,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetVocabularyModel
-	extends BaseModel<AssetVocabulary>, LocalizedModel, MVCCModel, ShardedModel,
+	extends BaseModel<AssetVocabulary>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
 	/**
@@ -63,22 +62,6 @@ public interface AssetVocabularyModel
 	 * @param primaryKey the primary key of this asset vocabulary
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this asset vocabulary.
-	 *
-	 * @return the mvcc version of this asset vocabulary
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this asset vocabulary.
-	 *
-	 * @param mvccVersion the mvcc version of this asset vocabulary
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this asset vocabulary.
