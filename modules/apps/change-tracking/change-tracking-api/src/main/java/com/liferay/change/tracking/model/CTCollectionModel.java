@@ -15,9 +15,11 @@
 package com.liferay.change.tracking.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -36,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CTCollectionModel
-	extends BaseModel<CTCollection>, MVCCModel, ShardedModel {
+	extends AuditedModel, BaseModel<CTCollection>, MVCCModel, ShardedModel,
+			WorkflowedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -109,6 +112,7 @@ public interface CTCollectionModel
 	 *
 	 * @return the user ID of this ct collection
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -116,6 +120,7 @@ public interface CTCollectionModel
 	 *
 	 * @param userId the user ID of this ct collection
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -123,6 +128,7 @@ public interface CTCollectionModel
 	 *
 	 * @return the user uuid of this ct collection
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -130,13 +136,32 @@ public interface CTCollectionModel
 	 *
 	 * @param userUuid the user uuid of this ct collection
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this ct collection.
+	 *
+	 * @return the user name of this ct collection
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this ct collection.
+	 *
+	 * @param userName the user name of this ct collection
+	 */
+	@Override
+	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this ct collection.
 	 *
 	 * @return the create date of this ct collection
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -144,6 +169,7 @@ public interface CTCollectionModel
 	 *
 	 * @param createDate the create date of this ct collection
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -151,6 +177,7 @@ public interface CTCollectionModel
 	 *
 	 * @return the modified date of this ct collection
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -158,6 +185,7 @@ public interface CTCollectionModel
 	 *
 	 * @param modifiedDate the modified date of this ct collection
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -195,6 +223,7 @@ public interface CTCollectionModel
 	 *
 	 * @return the status of this ct collection
 	 */
+	@Override
 	public int getStatus();
 
 	/**
@@ -202,6 +231,7 @@ public interface CTCollectionModel
 	 *
 	 * @param status the status of this ct collection
 	 */
+	@Override
 	public void setStatus(int status);
 
 	/**
@@ -209,6 +239,7 @@ public interface CTCollectionModel
 	 *
 	 * @return the status by user ID of this ct collection
 	 */
+	@Override
 	public long getStatusByUserId();
 
 	/**
@@ -216,6 +247,7 @@ public interface CTCollectionModel
 	 *
 	 * @param statusByUserId the status by user ID of this ct collection
 	 */
+	@Override
 	public void setStatusByUserId(long statusByUserId);
 
 	/**
@@ -223,6 +255,7 @@ public interface CTCollectionModel
 	 *
 	 * @return the status by user uuid of this ct collection
 	 */
+	@Override
 	public String getStatusByUserUuid();
 
 	/**
@@ -230,13 +263,32 @@ public interface CTCollectionModel
 	 *
 	 * @param statusByUserUuid the status by user uuid of this ct collection
 	 */
+	@Override
 	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this ct collection.
+	 *
+	 * @return the status by user name of this ct collection
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this ct collection.
+	 *
+	 * @param statusByUserName the status by user name of this ct collection
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
 
 	/**
 	 * Returns the status date of this ct collection.
 	 *
 	 * @return the status date of this ct collection
 	 */
+	@Override
 	public Date getStatusDate();
 
 	/**
@@ -244,6 +296,71 @@ public interface CTCollectionModel
 	 *
 	 * @param statusDate the status date of this ct collection
 	 */
+	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this ct collection is approved.
+	 *
+	 * @return <code>true</code> if this ct collection is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is denied.
+	 *
+	 * @return <code>true</code> if this ct collection is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is a draft.
+	 *
+	 * @return <code>true</code> if this ct collection is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is expired.
+	 *
+	 * @return <code>true</code> if this ct collection is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is inactive.
+	 *
+	 * @return <code>true</code> if this ct collection is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is incomplete.
+	 *
+	 * @return <code>true</code> if this ct collection is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is pending.
+	 *
+	 * @return <code>true</code> if this ct collection is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is scheduled.
+	 *
+	 * @return <code>true</code> if this ct collection is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 }

@@ -397,4 +397,8 @@ public abstract class CTProcessLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.CompanyLocalService
 		companyLocalService;
 
+	@Reference
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 }
