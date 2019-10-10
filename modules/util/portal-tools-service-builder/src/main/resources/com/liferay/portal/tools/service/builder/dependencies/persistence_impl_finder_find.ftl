@@ -208,11 +208,14 @@ that may or may not be enforced with a unique index at the database level. Case
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		<#if !entityFinder.hasCustomComparator()>
 			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+				pagination = false;
+
 				if (${useCache}) {
 					finderPath = _finderPathWithoutPaginationFindBy${entityFinder.name};
 					finderArgs = new Object[] {
@@ -275,7 +278,11 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		if (list == null) {
+			<#assign checkPagination = true />
+
 			<#include "persistence_impl_find_by_query.ftl">
+
+			<#assign checkPagination = false />
 
 			String sql = query.toString();
 
@@ -290,7 +297,16 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				<@finderQPos />
 
-				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1613,9 +1629,11 @@ that may or may not be enforced with a unique index at the database level. Case
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
 
+		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+			pagination = false;
 			if (${useCache}) {
 				finderArgs = new Object[] {
 					<#list entityColumns as entityColumn>
@@ -1679,7 +1697,11 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		if (list == null) {
+			<#assign checkPagination = true />
+
 			<#include "persistence_impl_find_by_arrayable_query.ftl">
+
+			<#assign checkPagination = false />
 
 			String sql = query.toString();
 
@@ -1696,7 +1718,16 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				<@finderQPos _arrayable=true />
 
-				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1969,9 +2000,12 @@ that may or may not be enforced with a unique index at the database level. Case
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
 
+		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+			pagination = false;
+
 			if (${useCache}) {
 				finderArgs = new Object[] {
 					<#list entityColumns as entityColumn>
@@ -2060,7 +2094,7 @@ that may or may not be enforced with a unique index at the database level. Case
 							</#if>
 						</#list>
 
-						start, end, orderByComparator));
+						start, end, orderByComparator, pagination));
 					<#list entityFinderArrayableColsList as arrayableentityColumn>
 						}
 					</#list>
@@ -2080,7 +2114,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						</#if>
 					</#list>
 
-					start, end, orderByComparator);
+					start, end, orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -2111,10 +2145,14 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#if>
 	</#list>
 
-	int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean pagination) {
 		List<${entity.name}> list = null;
 
+		<#assign checkPagination = true />
+
 		<#include "persistence_impl_find_by_arrayable_query.ftl">
+
+		<#assign checkPagination = false />
 
 		String sql = query.toString();
 
@@ -2131,7 +2169,16 @@ that may or may not be enforced with a unique index at the database level. Case
 
 			<@finderQPos _arrayable=true />
 
-			list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+			if (!pagination) {
+				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
+			}
+			else {
+				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
