@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -43,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMTemplateModel
-	extends AttachedModel, BaseModel<DDMTemplate>, CTModel<DDMTemplate>,
-			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
+	extends AttachedModel, BaseModel<DDMTemplate>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -57,7 +56,6 @@ public interface DDMTemplateModel
 	 *
 	 * @return the primary key of this ddm template
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -65,7 +63,6 @@ public interface DDMTemplateModel
 	 *
 	 * @param primaryKey the primary key of this ddm template
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -83,22 +80,6 @@ public interface DDMTemplateModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this ddm template.
-	 *
-	 * @return the ct collection ID of this ddm template
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ddm template.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm template
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this ddm template.
