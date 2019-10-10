@@ -77,7 +77,7 @@ public class AssetCategoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,8 +101,10 @@ public class AssetCategoryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", parentCategoryId=");
 		sb.append(parentCategoryId);
-		sb.append(", treePath=");
-		sb.append(treePath);
+		sb.append(", leftCategoryId=");
+		sb.append(leftCategoryId);
+		sb.append(", rightCategoryId=");
+		sb.append(rightCategoryId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -165,13 +167,8 @@ public class AssetCategoryCacheModel
 		}
 
 		assetCategoryImpl.setParentCategoryId(parentCategoryId);
-
-		if (treePath == null) {
-			assetCategoryImpl.setTreePath("");
-		}
-		else {
-			assetCategoryImpl.setTreePath(treePath);
-		}
+		assetCategoryImpl.setLeftCategoryId(leftCategoryId);
+		assetCategoryImpl.setRightCategoryId(rightCategoryId);
 
 		if (name == null) {
 			assetCategoryImpl.setName("");
@@ -226,7 +223,10 @@ public class AssetCategoryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		parentCategoryId = objectInput.readLong();
-		treePath = objectInput.readUTF();
+
+		leftCategoryId = objectInput.readLong();
+
+		rightCategoryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -273,12 +273,9 @@ public class AssetCategoryCacheModel
 
 		objectOutput.writeLong(parentCategoryId);
 
-		if (treePath == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(treePath);
-		}
+		objectOutput.writeLong(leftCategoryId);
+
+		objectOutput.writeLong(rightCategoryId);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -316,7 +313,8 @@ public class AssetCategoryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long parentCategoryId;
-	public String treePath;
+	public long leftCategoryId;
+	public long rightCategoryId;
 	public String name;
 	public String title;
 	public String description;
