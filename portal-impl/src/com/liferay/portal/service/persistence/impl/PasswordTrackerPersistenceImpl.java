@@ -40,6 +40,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,11 +150,14 @@ public class PasswordTrackerPersistenceImpl
 		OrderByComparator<PasswordTracker> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -201,7 +205,7 @@ public class PasswordTrackerPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(PasswordTrackerModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -218,8 +222,18 @@ public class PasswordTrackerPersistenceImpl
 
 				qPos.add(userId);
 
-				list = (List<PasswordTracker>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PasswordTracker>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PasswordTracker>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -985,11 +999,14 @@ public class PasswordTrackerPersistenceImpl
 		OrderByComparator<PasswordTracker> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1026,7 +1043,9 @@ public class PasswordTrackerPersistenceImpl
 			else {
 				sql = _SQL_SELECT_PASSWORDTRACKER;
 
-				sql = sql.concat(PasswordTrackerModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(PasswordTrackerModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1036,8 +1055,18 @@ public class PasswordTrackerPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<PasswordTracker>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<PasswordTracker>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<PasswordTracker>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

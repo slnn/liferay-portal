@@ -569,11 +569,14 @@ public class LocalizedEntryPersistenceImpl
 		int start, int end, OrderByComparator<LocalizedEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -610,7 +613,9 @@ public class LocalizedEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_LOCALIZEDENTRY;
 
-				sql = sql.concat(LocalizedEntryModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(LocalizedEntryModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -620,8 +625,18 @@ public class LocalizedEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<LocalizedEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LocalizedEntry>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LocalizedEntry>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 

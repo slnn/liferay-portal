@@ -46,6 +46,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -161,11 +162,14 @@ public class LayoutSetPrototypePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -222,7 +226,7 @@ public class LayoutSetPrototypePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LayoutSetPrototypeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -241,8 +245,18 @@ public class LayoutSetPrototypePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				list = (List<LayoutSetPrototype>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -1137,11 +1151,14 @@ public class LayoutSetPrototypePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1204,7 +1221,7 @@ public class LayoutSetPrototypePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LayoutSetPrototypeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1225,8 +1242,18 @@ public class LayoutSetPrototypePersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<LayoutSetPrototype>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -2165,11 +2192,14 @@ public class LayoutSetPrototypePersistenceImpl
 		OrderByComparator<LayoutSetPrototype> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -2219,7 +2249,7 @@ public class LayoutSetPrototypePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LayoutSetPrototypeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2236,8 +2266,18 @@ public class LayoutSetPrototypePersistenceImpl
 
 				qPos.add(companyId);
 
-				list = (List<LayoutSetPrototype>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -3063,11 +3103,14 @@ public class LayoutSetPrototypePersistenceImpl
 		OrderByComparator<LayoutSetPrototype> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_A;
@@ -3121,7 +3164,7 @@ public class LayoutSetPrototypePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else {
+			else if (pagination) {
 				query.append(LayoutSetPrototypeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3140,8 +3183,18 @@ public class LayoutSetPrototypePersistenceImpl
 
 				qPos.add(active);
 
-				list = (List<LayoutSetPrototype>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
@@ -4478,11 +4531,14 @@ public class LayoutSetPrototypePersistenceImpl
 		OrderByComparator<LayoutSetPrototype> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
+
+			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -4519,7 +4575,9 @@ public class LayoutSetPrototypePersistenceImpl
 			else {
 				sql = _SQL_SELECT_LAYOUTSETPROTOTYPE;
 
-				sql = sql.concat(LayoutSetPrototypeModelImpl.ORDER_BY_JPQL);
+				if (pagination) {
+					sql = sql.concat(LayoutSetPrototypeModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -4529,8 +4587,18 @@ public class LayoutSetPrototypePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				list = (List<LayoutSetPrototype>)QueryUtil.list(
-					q, getDialect(), start, end);
+				if (!pagination) {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutSetPrototype>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
 
 				cacheResult(list);
 
