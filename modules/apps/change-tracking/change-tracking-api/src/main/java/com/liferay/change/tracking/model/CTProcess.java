@@ -56,4 +56,6 @@ public interface CTProcess extends CTProcessModel, PersistedModel {
 
 		};
 
+	public int getStatus();
+
 }
