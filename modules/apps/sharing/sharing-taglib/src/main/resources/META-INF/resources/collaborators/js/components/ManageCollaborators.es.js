@@ -16,19 +16,19 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
-import {fetch} from 'frontend-js-web';
+import React from 'react';
 
 import UserIcon from './UserIcon.es';
 
-const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
-	const [data, setData] = useState(null);
-
-	useEffect(() => {
-		fetch(collaboratorsResourceURL)
-			.then(res => res.json())
-			.then(setData);
-	}, [collaboratorsResourceURL]);
+const ManageCollaborators = ({
+	manageCollaboratorsRenderURL,
+	owner,
+	portletNamespace,
+	sharingEntriesCount,
+	sharingEntryToUsers,
+	showManageCollaborators = false
+}) => {
+	const moreCollaboratorsCount = sharingEntriesCount - 4;
 
 	const handleClick = () => {
 		Liferay.Util.openWindow({
@@ -46,15 +46,9 @@ const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 			},
 			id: `${portletNamespace}manageCollaboratorsDialog`,
 			title: Liferay.Language.get('collaborators'),
-			uri: data.manageCollaboratorsURL
+			uri: manageCollaboratorsRenderURL
 		});
 	};
-
-	if (!data) return <></>;
-
-	const {owner, total, manageCollaboratorsURL, collaborators} = data;
-
-	const moreCollaboratorsCount = total - collaborators.length;
 
 	return (
 		<>
@@ -64,7 +58,8 @@ const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 						className="lfr-portal-tooltip"
 						data-title={Liferay.Util.sub(
 							Liferay.Language.get('x-is-the-owner'),
-							owner.fullName
+							// TODO owner.fullname
+							`${owner.firstName} ${owner.lastName}`
 						)}
 					>
 						<UserIcon {...owner} size="" />
@@ -73,16 +68,17 @@ const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 
 				<div className="autofit-col autofit-col-expand">
 					<div className="autofit-row">
-						{collaborators.map(collaborator => (
+						{sharingEntryToUsers.map(sharingEntryToUser => (
 							<div
 								className="autofit-col manage-collaborators-collaborator"
-								key={collaborator.userId}
+								key={sharingEntryToUser.userId}
 							>
 								<div
 									className="lfr-portal-tooltip"
-									data-title={collaborator.fullName}
+									// TODO sharingEntryToUser.fullname
+									data-title={`${sharingEntryToUser.firstName} ${sharingEntryToUser.lastName}`}
 								>
-									<UserIcon {...collaborator} size="" />
+									<UserIcon {...sharingEntryToUser} size="" />
 								</div>
 							</div>
 						))}
@@ -119,7 +115,7 @@ const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 					</div>
 				</div>
 			</div>
-			{manageCollaboratorsURL && (
+			{showManageCollaborators && (
 				<div className="autofit-row sidebar-panel">
 					<ClayButton
 						className="btn-link manage-collaborators-btn"
@@ -136,8 +132,22 @@ const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 };
 
 ManageCollaborators.propTypes = {
-	collaboratorsURL: PropTypes.string,
-	portletNamespace: PropTypes.string.isRequired
+	manageCollaboratorsRenderURL: PropTypes.string,
+	owner: PropTypes.shape({
+		fullName: PropTypes.string.isRequired,
+		portraitURL: PropTypes.string,
+		userId: PropTypes.string.isRequired
+	}).isRequired,
+	portletNamespace: PropTypes.string.isRequired,
+	sharingEntriesCount: PropTypes.number.isRequired,
+	sharingEntryToUsers: PropTypes.arrayOf(
+		PropTypes.shape({
+			fullName: PropTypes.string.isRequired,
+			portraitURL: PropTypes.string,
+			userId: PropTypes.string.isRequired
+		})
+	).isRequired,
+	showManageCollaborators: PropTypes.bool
 };
 
 export default ManageCollaborators;
