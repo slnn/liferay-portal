@@ -14,13 +14,8 @@
 
 package com.liferay.sharing.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -68,18 +63,10 @@ public class SharingCollaboratorsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		ResourceURL collaboratorsResourceURL = PortletURLFactoryUtil.create(
-			request, SharingPortletKeys.SHARING, PortletRequest.RESOURCE_PHASE);
-
-		collaboratorsResourceURL.setParameter("className", getClassName());
-		collaboratorsResourceURL.setParameter(
-			"classPK", String.valueOf(getClassPK()));
-
-		collaboratorsResourceURL.setResourceID("/sharing/collaborators");
-
 		httpServletRequest.setAttribute(
-			"liferay-sharing:collaborators:collaboratorsResourceURL",
-			collaboratorsResourceURL.toString());
+			"liferay-sharing:collaborators:className", getClassName());
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classPK", getClassPK());
 	}
 
 	private static final String _PAGE = "/collaborators/page.jsp";
