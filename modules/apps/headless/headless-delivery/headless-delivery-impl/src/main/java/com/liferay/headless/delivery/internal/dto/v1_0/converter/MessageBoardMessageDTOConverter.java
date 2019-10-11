@@ -29,6 +29,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,6 +60,8 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			dtoConverterContext.getResourcePrimKey());
+
+		User user = dtoConverterContext.getUser();
 
 		return new MessageBoardMessage() {
 			{
@@ -92,7 +95,7 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 				showAsAnswer = mbMessage.isAnswer();
 				siteId = mbMessage.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
-					mbMessage.getCompanyId(), dtoConverterContext.getUserId(),
+					mbMessage.getCompanyId(), user.getUserId(),
 					MBThread.class.getName(), mbMessage.getThreadId());
 
 				setCreator(

@@ -66,15 +66,6 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 		return _user;
 	}
 
-	@Override
-	public long getUserId() {
-		if (_user != null) {
-			return _user.getUserId();
-		}
-
-		return 0;
-	}
-
 	private final Locale _locale;
 	private final long _resourcePrimKey;
 	private UriInfo _uriInfo;
