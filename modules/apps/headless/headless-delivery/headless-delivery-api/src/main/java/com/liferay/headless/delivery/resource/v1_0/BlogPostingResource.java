@@ -75,10 +75,6 @@ public interface BlogPostingResource {
 	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
 		throws Exception;
 
-	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;
-
-	public void putSiteBlogPostingUnsubscribe(Long siteId) throws Exception;
-
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
