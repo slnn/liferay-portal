@@ -25,6 +25,7 @@
 	%>
 
 	<react:component
+		componentId="manageCollaborators"
 		data="<%= data %>"
 		module="collaborators/js/index.es"
 	/>
