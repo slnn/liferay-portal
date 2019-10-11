@@ -59,7 +59,7 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 	protected WebUrl randomWebUrl() {
 		return new WebUrl() {
 			{
-				url = "http://" + RandomTestUtil.randomString() + ".com";
+				url = "http://" + RandomTestUtil.randomString();
 			}
 		};
 	}
