@@ -17,7 +17,6 @@ package com.liferay.sharing.taglib.util;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,21 +54,6 @@ public class CollaboratorsUtil {
 			SharingEntryLocalServiceUtil.getSharingEntriesCount(
 				classNameId, classPK)
 		);
-	}
-
-	private static String _getDisplayURL(ThemeDisplay themeDisplay, User user) {
-		try {
-			if (user.isDefaultUser()) {
-				return StringPool.BLANK;
-			}
-
-			return user.getDisplayURL(themeDisplay);
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-
-			return null;
-		}
 	}
 
 	private static User _getOwner(long classNameId, long classPK) {
@@ -137,8 +121,6 @@ public class CollaboratorsUtil {
 		User user, ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
-			"displayURL", _getDisplayURL(themeDisplay, user)
-		).put(
 			"fullName", user.getFullName()
 		).put(
 			"userId", user.getUserId()
