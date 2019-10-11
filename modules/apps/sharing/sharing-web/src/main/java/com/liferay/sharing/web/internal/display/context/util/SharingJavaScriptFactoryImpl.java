@@ -49,7 +49,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		requestSharingJavascript();
+		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 
 		return StringBundler.concat(
 			"Liferay.Sharing.manageCollaborators(",
@@ -61,7 +61,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createSharingOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
-		requestSharingJavascript();
+		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 
 		return StringBundler.concat(
 			"Liferay.Sharing.share(",
@@ -69,11 +69,6 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 			", '",
 			_getSharingDialogTitle(className, classPK, httpServletRequest),
 			"')");
-	}
-
-	@Override
-	public void requestSharingJavascript() {
-		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 	}
 
 	private String _getAssetTitle(
