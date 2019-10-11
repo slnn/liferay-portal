@@ -283,13 +283,13 @@ public class TaxonomyCategoryResourceImpl
 			sorts);
 	}
 
-	private ParentTaxonomyCategory _toParentTaxonomyCategory(
-		AssetCategory parentAssetCategory) {
+	private ParentTaxonomyCategory _toParentCategory(
+		AssetCategory parentCategory) {
 
 		return new ParentTaxonomyCategory() {
 			{
-				id = parentAssetCategory.getCategoryId();
-				name = parentAssetCategory.getTitle(
+				id = parentCategory.getCategoryId();
+				name = parentCategory.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 			}
 		};
@@ -336,7 +336,7 @@ public class TaxonomyCategoryResourceImpl
 							return null;
 						}
 
-						return _toParentTaxonomyCategory(
+						return _toParentCategory(
 							assetCategory.getParentCategory());
 					});
 			}
