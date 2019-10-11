@@ -14,8 +14,6 @@
 
 package com.liferay.headless.delivery.dto.v1_0.converter;
 
-import com.liferay.portal.kernel.model.User;
-
 import java.util.Locale;
 import java.util.Optional;
 
@@ -32,9 +30,5 @@ public interface DTOConverterContext {
 	public long getResourcePrimKey();
 
 	public Optional<UriInfo> getUriInfoOptional();
-
-	public default User getUser() {
-		return null;
-	}
 
 }
