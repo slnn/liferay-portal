@@ -74,34 +74,6 @@ public class AggregateRating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double bestRating;
 
-	@Schema(description = "The average rating.")
-	public Double getRatingAverage() {
-		return ratingAverage;
-	}
-
-	public void setRatingAverage(Double ratingAverage) {
-		this.ratingAverage = ratingAverage;
-	}
-
-	@JsonIgnore
-	public void setRatingAverage(
-		UnsafeSupplier<Double, Exception> ratingAverageUnsafeSupplier) {
-
-		try {
-			ratingAverage = ratingAverageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Double ratingAverage;
-
 	@Schema(description = "The number of ratings.")
 	public Integer getRatingCount() {
 		return ratingCount;
@@ -130,7 +102,7 @@ public class AggregateRating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer ratingCount;
 
-	@Schema(description = "The rating value.")
+	@Schema(description = "The average rating.")
 	public Double getRatingValue() {
 		return ratingValue;
 	}
@@ -223,16 +195,6 @@ public class AggregateRating {
 			sb.append("\"bestRating\": ");
 
 			sb.append(bestRating);
-		}
-
-		if (ratingAverage != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"ratingAverage\": ");
-
-			sb.append(ratingAverage);
 		}
 
 		if (ratingCount != null) {
