@@ -193,16 +193,6 @@ public class DocumentFolderSerDes {
 			sb.append(documentFolder.getSiteId());
 		}
 
-		if (documentFolder.getSubscribed() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"subscribed\": ");
-
-			sb.append(documentFolder.getSubscribed());
-		}
-
 		if (documentFolder.getViewableBy() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -310,14 +300,6 @@ public class DocumentFolderSerDes {
 			map.put("siteId", String.valueOf(documentFolder.getSiteId()));
 		}
 
-		if (documentFolder.getSubscribed() == null) {
-			map.put("subscribed", null);
-		}
-		else {
-			map.put(
-				"subscribed", String.valueOf(documentFolder.getSubscribed()));
-		}
-
 		if (documentFolder.getViewableBy() == null) {
 			map.put("viewableBy", null);
 		}
@@ -411,11 +393,6 @@ public class DocumentFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					documentFolder.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "subscribed")) {
-				if (jsonParserFieldValue != null) {
-					documentFolder.setSubscribed((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

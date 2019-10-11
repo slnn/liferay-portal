@@ -362,16 +362,6 @@ public class StructuredContentSerDes {
 			sb.append(structuredContent.getSiteId());
 		}
 
-		if (structuredContent.getSubscribed() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"subscribed\": ");
-
-			sb.append(structuredContent.getSubscribed());
-		}
-
 		if (structuredContent.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -628,15 +618,6 @@ public class StructuredContentSerDes {
 			map.put("siteId", String.valueOf(structuredContent.getSiteId()));
 		}
 
-		if (structuredContent.getSubscribed() == null) {
-			map.put("subscribed", null);
-		}
-		else {
-			map.put(
-				"subscribed",
-				String.valueOf(structuredContent.getSubscribed()));
-		}
-
 		if (structuredContent.getTaxonomyCategories() == null) {
 			map.put("taxonomyCategories", null);
 		}
@@ -834,12 +815,6 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "subscribed")) {
-				if (jsonParserFieldValue != null) {
-					structuredContent.setSubscribed(
-						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
