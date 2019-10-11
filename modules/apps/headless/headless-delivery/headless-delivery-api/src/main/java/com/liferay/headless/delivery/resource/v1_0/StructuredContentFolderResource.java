@@ -82,14 +82,6 @@ public interface StructuredContentFolderResource {
 			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
-	public void putStructuredContentFolderSubscribe(
-			Long structuredContentFolderId)
-		throws Exception;
-
-	public void putStructuredContentFolderUnsubscribe(
-			Long structuredContentFolderId)
-		throws Exception;
-
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
