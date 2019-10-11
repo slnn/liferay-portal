@@ -305,8 +305,7 @@ public class MessageBoardMessageResourceImpl
 		throws Exception {
 
 		return _messageBoardMessageDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				null, mbMessage.getPrimaryKey(), null, contextUser));
+			new DefaultDTOConverterContext(null, mbMessage.getPrimaryKey()));
 	}
 
 	private void _updateAnswer(

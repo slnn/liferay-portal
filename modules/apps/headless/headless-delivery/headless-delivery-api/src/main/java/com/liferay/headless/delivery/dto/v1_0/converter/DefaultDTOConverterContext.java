@@ -14,8 +14,6 @@
 
 package com.liferay.headless.delivery.dto.v1_0.converter;
 
-import com.liferay.portal.kernel.model.User;
-
 import java.util.Locale;
 import java.util.Optional;
 
@@ -28,22 +26,16 @@ import javax.ws.rs.core.UriInfo;
 public class DefaultDTOConverterContext implements DTOConverterContext {
 
 	public DefaultDTOConverterContext(Locale locale, long resourcePrimKey) {
-		this(locale, resourcePrimKey, null, null);
+		_locale = locale;
+		_resourcePrimKey = resourcePrimKey;
 	}
 
 	public DefaultDTOConverterContext(
 		Locale locale, long resourcePrimKey, UriInfo uriInfo) {
 
-		this(locale, resourcePrimKey, uriInfo, null);
-	}
-
-	public DefaultDTOConverterContext(
-		Locale locale, long resourcePrimKey, UriInfo uriInfo, User user) {
-
 		_locale = locale;
 		_resourcePrimKey = resourcePrimKey;
 		_uriInfo = uriInfo;
-		_user = user;
 	}
 
 	@Override
@@ -61,14 +53,8 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 		return Optional.ofNullable(_uriInfo);
 	}
 
-	@Override
-	public User getUser() {
-		return _user;
-	}
-
 	private final Locale _locale;
 	private final long _resourcePrimKey;
 	private UriInfo _uriInfo;
-	private final User _user;
 
 }
