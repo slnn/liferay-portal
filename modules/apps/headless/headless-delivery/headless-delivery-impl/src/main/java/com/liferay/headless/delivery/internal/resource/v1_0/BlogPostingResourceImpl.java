@@ -230,16 +230,6 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
-	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception {
-		_blogsEntryService.subscribe(siteId);
-	}
-
-	@Override
-	public void putSiteBlogPostingUnsubscribe(Long siteId) throws Exception {
-		_blogsEntryService.unsubscribe(siteId);
-	}
-
-	@Override
 	protected void preparePatch(
 		BlogPosting blogPosting, BlogPosting existingBlogPosting) {
 
@@ -306,7 +296,7 @@ public class BlogPostingResourceImpl
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
-				blogsEntry.getEntryId(), contextUriInfo, contextUser));
+				blogsEntry.getEntryId()));
 	}
 
 	@Reference
