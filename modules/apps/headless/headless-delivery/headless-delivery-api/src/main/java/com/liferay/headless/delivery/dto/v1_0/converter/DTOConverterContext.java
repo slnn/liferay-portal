@@ -37,8 +37,4 @@ public interface DTOConverterContext {
 		return null;
 	}
 
-	public default long getUserId() {
-		return 0;
-	}
-
 }

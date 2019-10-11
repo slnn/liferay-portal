@@ -22,6 +22,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,6 +54,8 @@ public class StructuredContentFolderDTOConverter implements DTOConverter {
 		JournalFolder journalFolder = _journalFolderService.getFolder(
 			dtoConverterContext.getResourcePrimKey());
 
+		User user = dtoConverterContext.getUser();
+
 		return new StructuredContentFolder() {
 			{
 				creator = CreatorUtil.toCreator(
@@ -77,8 +80,7 @@ public class StructuredContentFolderDTOConverter implements DTOConverter {
 						WorkflowConstants.STATUS_APPROVED);
 				siteId = journalFolder.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
-					journalFolder.getCompanyId(),
-					dtoConverterContext.getUserId(),
+					journalFolder.getCompanyId(), user.getUserId(),
 					JournalFolder.class.getName(), journalFolder.getFolderId());
 			}
 		};
