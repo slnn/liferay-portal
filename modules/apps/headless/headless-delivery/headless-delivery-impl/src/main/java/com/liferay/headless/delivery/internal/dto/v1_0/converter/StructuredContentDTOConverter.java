@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -63,7 +62,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.text.ParseException;
 
@@ -101,8 +99,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			dtoConverterContext.getResourcePrimKey());
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		User user = dtoConverterContext.getUser();
 
 		return new StructuredContent() {
 			{
@@ -152,10 +148,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 					dtoConverterContext.getLocale(),
 					dtoConverterContext.getUriInfoOptional());
 				siteId = journalArticle.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					journalArticle.getCompanyId(), user.getUserId(),
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						JournalArticle.class.getName(),
@@ -457,9 +449,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
