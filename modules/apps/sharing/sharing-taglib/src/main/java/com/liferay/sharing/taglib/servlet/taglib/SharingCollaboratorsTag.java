@@ -27,7 +27,6 @@ import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.sharing.taglib.internal.servlet.SharingJavaScriptFactoryUtil;
 import com.liferay.sharing.taglib.internal.servlet.SharingPermissionUtil;
-import com.liferay.sharing.taglib.util.CollaboratorsUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
@@ -80,11 +79,8 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		long classNameId = PortalUtil.getClassNameId(getClassName());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		boolean canManageCollaborators = _canManageCollaborators(
-			classNameId, getClassPK(), themeDisplay);
+			classNameId, getClassPK());
 
 		if (canManageCollaborators) {
 			SharingJavaScriptFactory sharingJavaScriptFactory =
@@ -103,11 +99,6 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 		httpServletRequest.setAttribute(
 			"liferay-sharing:collaborators:classPK", getClassPK());
 
-		httpServletRequest.setAttribute(
-			"liferay-sharing:collaborators:collaboratorsJSONObject",
-			CollaboratorsUtil.getCollaboratorsJSONObject(
-				classNameId, getClassPK(), themeDisplay));
-
 		ResourceURL collaboratorsResourceURL = PortletURLFactoryUtil.create(
 			request, SharingPortletKeys.SHARING, PortletRequest.RESOURCE_PHASE);
 
@@ -122,11 +113,12 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 			collaboratorsResourceURL.toString());
 	}
 
-	private boolean _canManageCollaborators(
-		long classNameId, long classPK, ThemeDisplay themeDisplay) {
-
+	private boolean _canManageCollaborators(long classNameId, long classPK) {
 		SharingPermission sharingPermission =
 			SharingPermissionUtil.getSharingPermission();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		try {
 			return sharingPermission.containsManageCollaboratorsPermission(
