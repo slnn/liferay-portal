@@ -28,6 +28,7 @@ class Sharing extends PortletBase {
 		this._classNameId = config.classNameId;
 		this._classPK = config.classPK;
 		this._dialogId = config.dialogId;
+		this._refererPortletNamespace = config.refererPortletNamespace;
 		this._userEmailAddresses = [];
 	}
 
@@ -228,10 +229,9 @@ class Sharing extends PortletBase {
 						  });
 				})
 				.then(json => {
-					parent.Liferay.fire('sharing:changed', {
-						classNameId: this._classNameId,
-						classPK: this._classPK
-					});
+					parent.Liferay.Portlet.refresh(
+						`#p_p_id${this._refererPortletNamespace}`
+					);
 
 					this._showNotification(json.successMessage);
 				})
