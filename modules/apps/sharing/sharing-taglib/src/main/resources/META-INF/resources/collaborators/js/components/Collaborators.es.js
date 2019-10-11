@@ -23,10 +23,10 @@ import {fetch} from 'frontend-js-web';
 import UserIcon from './UserIcon.es';
 
 const Collaborators = ({
-	canManageCollaborators,
 	classNameId,
 	classPK,
-	collaboratorsResourceURL
+	collaboratorsResourceURL,
+	portletNamespace
 }) => {
 	const [data, setData] = useState(null);
 
@@ -49,11 +49,24 @@ const Collaborators = ({
 		});
 	}, [classNameId, classPK, updateCollaborators]);
 
+	const handleClick = () => {
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				height: 470,
+				width: 600
+			},
+			id: `${portletNamespace}manageCollaboratorsDialog`,
+			title: Liferay.Language.get('collaborators'),
+			uri: data.manageCollaboratorsURL
+		});
+	};
+
 	if (!data) {
 		return <ClayLoadingIndicator />;
 	}
 
-	const {owner, total, collaborators} = data;
+	const {owner, total, manageCollaboratorsURL, collaborators} = data;
 
 	if (total < 1) {
 		return null;
@@ -124,17 +137,12 @@ const Collaborators = ({
 					</div>
 				</div>
 			</div>
-			{canManageCollaborators && (
+			{manageCollaboratorsURL && (
 				<div className="autofit-row sidebar-panel">
 					<ClayButton
 						className="btn-link collaborators-btn"
 						displayType="link"
-						onClick={() =>
-							Liferay.Sharing.manageCollaborators(
-								classNameId,
-								classPK
-							)
-						}
+						onClick={handleClick}
 						small
 					>
 						{Liferay.Language.get('manage-collaborators')}
@@ -146,10 +154,8 @@ const Collaborators = ({
 };
 
 Collaborators.propTypes = {
-	canManageCollaborators: PropTypes.bool,
-	classNameId: PropTypes.number,
-	classPK: PropTypes.number,
-	collaboratorsURL: PropTypes.string
+	collaboratorsURL: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired
 };
 
 export default Collaborators;
