@@ -103,7 +103,7 @@ public class KnowledgeBaseArticleResourceImpl
 			Long knowledgeBaseArticleId)
 		throws Exception {
 
-		return _toKnowledgeBaseArticle(
+		return _toKBArticle(
 			_kbArticleService.getLatestKBArticle(
 				knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED));
 	}
@@ -251,7 +251,7 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return _toKnowledgeBaseArticle(
+		return _toKBArticle(
 			_kbArticleService.updateKBArticle(
 				knowledgeBaseArticleId, knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getArticleBody(),
@@ -332,7 +332,7 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return _toKnowledgeBaseArticle(
+		return _toKBArticle(
 			_kbArticleService.addKBArticle(
 				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, parentResourceClassNameId,
 				parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
@@ -367,7 +367,7 @@ public class KnowledgeBaseArticleResourceImpl
 					searchContext.setKeywords("");
 				}
 			},
-			document -> _toKnowledgeBaseArticle(
+			document -> _toKBArticle(
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
 			sorts);
 	}
@@ -380,17 +380,17 @@ public class KnowledgeBaseArticleResourceImpl
 			contextUser);
 	}
 
-	private KnowledgeBaseArticle _toKnowledgeBaseArticle(KBArticle kbArticle)
+	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)
 		throws Exception {
 
 		if (kbArticle == null) {
 			return null;
 		}
 
-		return _toKnowledgeBaseArticle(kbArticle.getResourcePrimKey());
+		return _toKBArticle(kbArticle.getResourcePrimKey());
 	}
 
-	private KnowledgeBaseArticle _toKnowledgeBaseArticle(
+	private KnowledgeBaseArticle _toKBArticle(
 			long knowledgeBaseArticleResourcePrimKey)
 		throws Exception {
 
