@@ -435,54 +435,12 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	@Test
 	public void testPutMessageBoardMessageSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage messageBoardMessage =
-			testPutMessageBoardMessageSubscribe_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				putMessageBoardMessageSubscribeHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putMessageBoardMessageSubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardMessage
-			testPutMessageBoardMessageSubscribe_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPutMessageBoardMessageUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage messageBoardMessage =
-			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				putMessageBoardMessageUnsubscribeHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putMessageBoardMessageUnsubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardMessage
-			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
