@@ -113,18 +113,6 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}
 
-	@Override
-	protected WikiPage testPutWikiPageSubscribe_addWikiPage() throws Exception {
-		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
-	}
-
-	@Override
-	protected WikiPage testPutWikiPageUnsubscribe_addWikiPage()
-		throws Exception {
-
-		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
-	}
-
 	private WikiPage _addWikiPage(Long wikiNodeId) throws Exception {
 		return wikiPageResource.postWikiNodeWikiPage(
 			wikiNodeId, randomWikiPage());
