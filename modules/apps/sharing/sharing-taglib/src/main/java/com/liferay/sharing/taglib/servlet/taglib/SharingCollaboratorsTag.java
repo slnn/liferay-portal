@@ -29,9 +29,6 @@ import com.liferay.sharing.taglib.internal.servlet.SharingJavaScriptFactoryUtil;
 import com.liferay.sharing.taglib.internal.servlet.SharingPermissionUtil;
 import com.liferay.sharing.taglib.util.CollaboratorsUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
 
@@ -81,8 +78,6 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		Map<String, Object> data = new HashMap<>();
-
 		long classNameId = PortalUtil.getClassNameId(getClassName());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -97,11 +92,21 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 
 			sharingJavaScriptFactory.requestSharingJavascript();
 
-			data.put("canManageCollaborators", true);
+			httpServletRequest.setAttribute(
+				"liferay-sharing:collaborators:canManageCollaborators",
+				Boolean.TRUE);
 		}
 
-		data.put("classNameId", classNameId);
-		data.put("classPK", getClassPK());
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classNameId", classNameId);
+
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classPK", getClassPK());
+
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:collaboratorsJSONObject",
+			CollaboratorsUtil.getCollaboratorsJSONObject(
+				classNameId, getClassPK(), themeDisplay));
 
 		ResourceURL collaboratorsResourceURL = PortletURLFactoryUtil.create(
 			request, SharingPortletKeys.SHARING, PortletRequest.RESOURCE_PHASE);
@@ -112,16 +117,9 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 
 		collaboratorsResourceURL.setResourceID("/sharing/collaborators");
 
-		data.put(
-			"collaboratorsResourceURL", collaboratorsResourceURL.toString());
-
-		data.put(
-			"initialData",
-			CollaboratorsUtil.getCollaboratorsJSONObject(
-				classNameId, getClassPK(), themeDisplay));
-
 		httpServletRequest.setAttribute(
-			"liferay-sharing:collaborators:data", data);
+			"liferay-sharing:collaborators:collaboratorsResourceURL",
+			collaboratorsResourceURL.toString());
 	}
 
 	private boolean _canManageCollaborators(
