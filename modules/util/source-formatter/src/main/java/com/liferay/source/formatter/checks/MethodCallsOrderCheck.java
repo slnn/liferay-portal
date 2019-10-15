@@ -14,13 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
@@ -36,95 +33,27 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return _sortMethodCalls(fileName, content);
-	}
-
-	private String _getSortedCodeBlock(String codeBlock, String methodCall) {
-		String previousParameters = null;
-		String previousPutOrSetParameterName = null;
-
-		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
-			new PutOrSetParameterNameComparator();
-
-		int x = 0;
-
-		while (true) {
-			String s = StringUtil.trim(codeBlock.substring(x));
-
-			if (!s.startsWith(methodCall)) {
-				return codeBlock;
-			}
-
-			String parameters = null;
-
-			x = codeBlock.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
-
-			int y = x;
-
-			while (true) {
-				y = codeBlock.indexOf(CharPool.CLOSE_PARENTHESIS, y + 1);
-
-				if (y == -1) {
-					return codeBlock;
-				}
-
-				s = codeBlock.substring(x, y + 1);
-
-				if ((ToolsUtil.getLevel(s, "(", ")") == 0) &&
-					(ToolsUtil.getLevel(s, "{", "}") == 0)) {
-
-					if (codeBlock.charAt(y + 1) != CharPool.SEMICOLON) {
-						return codeBlock;
-					}
-
-					parameters = codeBlock.substring(x + 1, y);
-
-					x = y + 2;
-
-					break;
-				}
-			}
-
-			List<String> parametersList = JavaSourceUtil.splitParameters(
-				parameters);
-
-			String putOrSetParameterName = parametersList.get(0);
-
-			if (previousPutOrSetParameterName != null) {
-				int compare = putOrSetParameterNameComparator.compare(
-					previousPutOrSetParameterName, putOrSetParameterName);
-
-				if (compare > 0) {
-					String sortedCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
-
-					return StringUtil.replaceLast(
-						sortedCodeBlock, parameters, previousParameters);
-				}
-			}
-
-			previousParameters = parameters;
-			previousPutOrSetParameterName = putOrSetParameterName;
-		}
+		return _sortMethodCalls(content);
 	}
 
 	private boolean _isAllowedVariableType(
-		String content, String variableName, String[] variableTypeNames) {
+		String content, String variableName,
+		String[] variableTypeRegexStrings) {
 
-		if (variableTypeNames.length == 0) {
+		if (variableTypeRegexStrings.length == 0) {
 			return true;
 		}
 
-		for (String variableTypeName : variableTypeNames) {
-			if (variableName.matches(variableTypeName)) {
+		for (String variableTypeRegex : variableTypeRegexStrings) {
+			if (variableName.matches(variableTypeRegex)) {
 				return true;
 			}
 
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("\\W");
-			sb.append(variableTypeName);
-			sb.append("(<.*>|\\(\\))?\\s+");
+			sb.append(variableTypeRegex);
+			sb.append("\\s+");
 			sb.append(variableName);
 			sb.append("\\W");
 
@@ -136,13 +65,12 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 				return true;
 			}
 
-			sb = new StringBundler(5);
+			sb = new StringBundler(4);
 
 			sb.append("\\W");
 			sb.append(variableName);
 			sb.append(" =\\s+new ");
-			sb.append(variableTypeName);
-			sb.append("(<.*>|\\(\\))");
+			sb.append(variableTypeRegex);
 
 			pattern = Pattern.compile(sb.toString());
 
@@ -156,9 +84,9 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private String _sortChainedMethodCalls(
+	private String _sortChainedMethodCall(
 		String content, String methodName, int expectedParameterCount,
-		String... variableTypeNames) {
+		String... variableTypeRegexStrings) {
 
 		if (!content.contains("." + methodName + "(")) {
 			return content;
@@ -173,7 +101,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			if (!_isAllowedVariableType(
-					content, matcher.group(1), variableTypeNames)) {
+					content, matcher.group(1), variableTypeRegexStrings)) {
 
 				continue;
 			}
@@ -246,59 +174,85 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _sortMethodCalls(String fileName, String content) {
-		content = _sortChainedMethodCalls(
-			content, "put", 2, "JSONObject", "JSONUtil");
-
-		content = _sortMethodCalls(
-			fileName, content, "add", "ConcurrentSkipListSet", "HashSet",
-			"TreeSet");
-		content = _sortMethodCalls(
-			fileName, content, "put", "ConcurrentHashMap", "HashMap",
-			"JSONObject", "SortedMap", "TreeMap");
-		content = _sortMethodCalls(fileName, content, "setAttribute");
-
-		return content;
-	}
-
-	private String _sortMethodCalls(
-		String fileName, String content, String methodName,
-		String... variableTypeNames) {
+	private String _sortMethodCall(
+		String content, String methodName, String... variableTypeRegexStrings) {
 
 		if (!content.contains("." + methodName + "(")) {
 			return content;
 		}
 
-		Pattern pattern = Pattern.compile(
-			"[^;]\n\t+((\\w*)\\." + methodName + "\\()");
+		Pattern codeBlockPattern = Pattern.compile(
+			"(\t+(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
+			Pattern.DOTALL);
 
-		Matcher matcher = pattern.matcher(content);
+		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
 
-		while (matcher.find()) {
+		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
+			new PutOrSetParameterNameComparator();
+
+		while (codeBlockMatcher.find()) {
 			if (!_isAllowedVariableType(
-					content, matcher.group(2), variableTypeNames) ||
-				((fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) &&
-				 !JSPSourceUtil.isJavaSource(content, matcher.start()))) {
+					content, codeBlockMatcher.group(2),
+					variableTypeRegexStrings)) {
 
 				continue;
 			}
 
-			int x = content.indexOf("\n\n", matcher.end());
+			String codeBlock = codeBlockMatcher.group();
 
-			if (x == -1) {
-				x = content.length();
-			}
+			Pattern singleLineMethodCallPattern = Pattern.compile(
+				"\t*\\w*\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
 
-			String codeBlock = content.substring(matcher.start() + 2, x);
+			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
+				codeBlock);
 
-			String sortedCodeBlock = _getSortedCodeBlock(
-				codeBlock, matcher.group(1));
+			String previousParameters = null;
+			String previousPutOrSetParameterName = null;
 
-			if (!codeBlock.equals(sortedCodeBlock)) {
-				return StringUtil.replaceFirst(
-					content, codeBlock, sortedCodeBlock, matcher.start());
+			while (singleLineMatcher.find()) {
+				String parameters = singleLineMatcher.group(1);
+
+				List<String> parametersList = JavaSourceUtil.splitParameters(
+					parameters);
+
+				String putOrSetParameterName = parametersList.get(0);
+
+				if (previousPutOrSetParameterName != null) {
+					int compare = putOrSetParameterNameComparator.compare(
+						previousPutOrSetParameterName, putOrSetParameterName);
+
+					if (compare > 0) {
+						String newCodeBlock = StringUtil.replaceFirst(
+							codeBlock, previousParameters, parameters);
+
+						newCodeBlock = StringUtil.replaceLast(
+							newCodeBlock, parameters, previousParameters);
+
+						return StringUtil.replace(
+							content, codeBlock, newCodeBlock);
+					}
+				}
+
+				previousParameters = parameters;
+				previousPutOrSetParameterName = putOrSetParameterName;
 			}
 		}
+
+		return content;
+	}
+
+	private String _sortMethodCalls(String content) {
+		content = _sortChainedMethodCall(
+			content, "put", 2, "JSONObject", "JSONUtil");
+
+		content = _sortMethodCall(
+			content, "add", "ConcurrentSkipListSet(<.*>|\\(\\))",
+			"HashSet(<.*>|\\(\\))", "TreeSet(<.*>|\\(\\))");
+		content = _sortMethodCall(
+			content, "put", "ConcurrentHashMap(<.*>|\\(\\))",
+			"HashMap(<.*>|\\(\\))", "JSONObject", "SortedMap(<.*>|\\(\\))",
+			"TreeMap(<.*>|\\(\\))");
+		content = _sortMethodCall(content, "setAttribute");
 
 		return content;
 	}
