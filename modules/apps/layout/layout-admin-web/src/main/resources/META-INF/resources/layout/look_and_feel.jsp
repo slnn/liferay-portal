@@ -63,42 +63,22 @@ else {
 }
 %>
 
-<div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
+<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
 
-	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
 
-	<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
-
-	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
-			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
-				<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
-				<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
-			</liferay-util:include>
-		</div>
-	</c:if>
-
-	<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
-		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
+<c:if test="<%= !group.isLayoutPrototype() %>">
+	<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
+		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
+			<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
+			<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
+		</liferay-util:include>
 	</div>
-</div>
+</c:if>
 
-<%
-LayoutPageTemplateEntry layoutPageTemplateEntry = null;
-
-if (selLayout.getMasterLayoutPageTemplateEntryId() > 0) {
-	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntry(selLayout.getMasterLayoutPageTemplateEntryId());
-}
-%>
-
-<div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
-
-	<p>
-		<b><liferay-ui:message key="master-name" />:</b> <%= (layoutPageTemplateEntry != null) ? layoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %>
-	</p>
+<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
+	<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 </div>
 
 <aui:script>
