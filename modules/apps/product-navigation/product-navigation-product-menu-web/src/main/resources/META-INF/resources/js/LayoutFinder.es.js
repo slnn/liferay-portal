@@ -31,30 +31,27 @@ function LayoutFinder(props) {
 		event.stopPropagation();
 	}, []);
 
-	const [updatePageResults, cancelUpdatePageResults] = useDebounceCallback(
-		newKeywords => {
-			fetch(props.findLayoutsURL, {
-				body: objectToFormData({
-					[`${props.namespace}keywords`]: newKeywords
-				}),
-				method: 'post'
+	const [updatePageResults] = useDebounceCallback(newKeywords => {
+		fetch(props.findLayoutsURL, {
+			body: objectToFormData({
+				[`${props.namespace}keywords`]: newKeywords
+			}),
+			method: 'post'
+		})
+			.then(response => {
+				return response.ok
+					? response.json()
+					: {
+							layouts: [],
+							totalCount: 0
+					  };
 			})
-				.then(response => {
-					return response.ok
-						? response.json()
-						: {
-								layouts: [],
-								totalCount: 0
-						  };
-				})
-				.then(response => {
-					setLoading(false);
-					setLayouts(response.layouts);
-					setTotalCount(response.totalCount);
-				});
-		},
-		1000
-	);
+			.then(response => {
+				setLoading(false);
+				setLayouts(response.layouts);
+				setTotalCount(response.totalCount);
+			});
+	}, 1000);
 
 	const handleOnChange = useCallback(
 		event => {
@@ -62,28 +59,15 @@ function LayoutFinder(props) {
 
 			setKeywords(newKeywords);
 
-			const tree = document.querySelector(
-				`[data-treeid="${props.treeId}"]`
-			);
-
-			if (newKeywords.length == 0	) {
-				setLoading(false);
+			if (newKeywords.length <= 1) {
 				setLayouts([]);
 				setTotalCount(0);
-
-				cancelUpdatePageResults();
-
-				tree.classList.remove('hide');
 			} else {
 				setLoading(true);
 				updatePageResults(newKeywords);
-
-				if (!tree.classList.contains('hide')) {
-					tree.classList.add('hide');
-				}
 			}
 		},
-		[cancelUpdatePageResults, props.treeId, updatePageResults]
+		[updatePageResults]
 	);
 
 	return (
@@ -169,7 +153,6 @@ LayoutFinder.propTypes = {
 	administrationPortletURL: PropTypes.string,
 	findLayoutsURL: PropTypes.string,
 	namespace: PropTypes.string,
-	treeId: PropTypes.string,
 	viewInPageAdministrationURL: PropTypes.string
 };
 
