@@ -38,6 +38,8 @@ data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMen
 String treeId = "layoutsTree";
 
 data.put("treeId", treeId);
+
+Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <div id="<%= renderResponse.getNamespace() + "-layout-finder" %>">
@@ -47,10 +49,6 @@ data.put("treeId", treeId);
 		servletContext="<%= application %>"
 	/>
 </div>
-
-<%
-Group scopeGroup = themeDisplay.getScopeGroup();
-%>
 
 <liferay-layout:layouts-tree
 	groupId="<%= scopeGroupId %>"
