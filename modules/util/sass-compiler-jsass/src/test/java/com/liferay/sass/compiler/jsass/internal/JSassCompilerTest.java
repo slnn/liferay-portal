@@ -31,202 +31,200 @@ public class JSassCompilerTest {
 
 	@Test
 	public void testBoxShadowTransparent() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			String expectedOutput =
-				"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
-			String actualOutput = sassCompiler.compileString(
-				"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput =
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
+		String actualOutput = sassCompiler.compileString(
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	@Test
 	public void testCompileFileClayCss() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			File sassSpecDir = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/sass-spec");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			for (File testDir : sassSpecDir.listFiles()) {
-				File inputFile = new File(testDir, "input.scss");
+		File sassSpecDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/sass-spec");
 
-				String dirName = testDir.getName();
+		for (File testDir : sassSpecDir.listFiles()) {
+			File inputFile = new File(testDir, "input.scss");
 
-				if (!inputFile.exists() || dirName.endsWith("-4.0")) {
-					continue;
-				}
+			String dirName = testDir.getName();
 
-				String actualOutput = sassCompiler.compileFile(
-					inputFile.getCanonicalPath(), "", false);
-
-				Assert.assertNotNull("Testing: " + dirName, actualOutput);
-
-				File expectedOutputFile = new File(
-					testDir, "expected_output.css");
-
-				String expectedOutput = read(expectedOutputFile.toPath());
-
-				Assert.assertEquals(
-					"Testing: " + dirName, stripNewLines(expectedOutput),
-					stripNewLines(actualOutput));
+			if (!inputFile.exists() || dirName.endsWith("-4.0")) {
+				continue;
 			}
+
+			String actualOutput = sassCompiler.compileFile(
+				inputFile.getCanonicalPath(), "", false);
+
+			Assert.assertNotNull("Testing: " + dirName, actualOutput);
+
+			File expectedOutputFile = new File(testDir, "expected_output.css");
+
+			String expectedOutput = read(expectedOutputFile.toPath());
+
+			Assert.assertEquals(
+				"Testing: " + dirName, stripNewLines(expectedOutput),
+				stripNewLines(actualOutput));
 		}
 	}
 
 	@Test
 	public void testCompileFileSassVariableWithUnicode() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			File inputDir = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			File inputFile = new File(inputDir, "/unicode/input.scss");
+		File inputDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/");
 
-			String actualOutput = sassCompiler.compileFile(
-				inputFile.getCanonicalPath(), "");
+		File inputFile = new File(inputDir, "/unicode/input.scss");
 
-			Assert.assertNotNull(actualOutput);
+		String actualOutput = sassCompiler.compileFile(
+			inputFile.getCanonicalPath(), "");
 
-			File expectedOutputFile = new File(
-				inputDir, "/unicode/expected_output.css");
+		Assert.assertNotNull(actualOutput);
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+		File expectedOutputFile = new File(
+			inputDir, "/unicode/expected_output.css");
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	@Test
 	public void testCompileFileWithSourceMap() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			File inputDir = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/sass-spec/14_imports");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			File sourceMapFile = new File(
-				inputDir, ".sass-cache/input.css.map");
+		File inputDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/sass-spec/14_imports");
 
-			sourceMapFile.deleteOnExit();
+		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
 
-			Assert.assertFalse(sourceMapFile.exists());
+		sourceMapFile.deleteOnExit();
 
-			File inputFile = new File(inputDir, "input.scss");
+		Assert.assertFalse(sourceMapFile.exists());
 
-			String actualOutput = sassCompiler.compileFile(
-				inputFile.getCanonicalPath(), "", true,
-				sourceMapFile.getCanonicalPath());
+		File inputFile = new File(inputDir, "input.scss");
 
-			Assert.assertNotNull(actualOutput);
+		String actualOutput = sassCompiler.compileFile(
+			inputFile.getCanonicalPath(), "", true,
+			sourceMapFile.getCanonicalPath());
 
-			Assert.assertTrue(sourceMapFile.exists());
+		Assert.assertNotNull(actualOutput);
 
-			File expectedOutputFile = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/sourcemap",
-				"expected_output_custom_source_map.css");
+		Assert.assertTrue(sourceMapFile.exists());
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+		File expectedOutputFile = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/sourcemap",
+			"expected_output_custom_source_map.css");
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	@Test
 	public void testCompileString() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			String expectedOutput = "foo { margin: 42px; }";
-			String actualOutput = sassCompiler.compileString(
-				"foo { margin: 21px * 2; }", "");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput = "foo { margin: 42px; }";
+		String actualOutput = sassCompiler.compileString(
+			"foo { margin: 21px * 2; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	@Test
 	public void testCompileStringSassVariableWithUnicode() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			File inputDir = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			File inputFile = new File(inputDir, "/unicode/input.scss");
+		File inputDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/");
 
-			String input = read(inputFile.toPath());
+		File inputFile = new File(inputDir, "/unicode/input.scss");
 
-			String actualOutput = sassCompiler.compileString(input, "");
+		String input = read(inputFile.toPath());
 
-			Assert.assertNotNull(actualOutput);
+		String actualOutput = sassCompiler.compileString(input, "");
 
-			File expectedOutputFile = new File(
-				inputDir, "/unicode/expected_output.css");
+		Assert.assertNotNull(actualOutput);
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+		File expectedOutputFile = new File(
+			inputDir, "/unicode/expected_output.css");
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	@Test
 	public void testCompileStringWithSourceMap() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler()) {
-			File inputDir = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/sass-spec/14_imports");
+		SassCompiler sassCompiler = new JSassCompiler();
 
-			File sourceMapFile = new File(inputDir, "input.css.map");
+		File inputDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/sass-spec/14_imports");
 
-			sourceMapFile.deleteOnExit();
+		File sourceMapFile = new File(inputDir, "input.css.map");
 
-			Assert.assertFalse(sourceMapFile.exists());
+		sourceMapFile.deleteOnExit();
 
-			File inputFile = new File(inputDir, "input.scss");
+		Assert.assertFalse(sourceMapFile.exists());
 
-			String input = read(inputFile.toPath());
+		File inputFile = new File(inputDir, "input.scss");
 
-			String actualOutput = sassCompiler.compileString(
-				input, inputFile.getCanonicalPath(), "", true);
+		String input = read(inputFile.toPath());
 
-			Assert.assertNotNull(actualOutput);
+		String actualOutput = sassCompiler.compileString(
+			input, inputFile.getCanonicalPath(), "", true);
 
-			Assert.assertTrue(sourceMapFile.exists());
+		Assert.assertNotNull(actualOutput);
 
-			File expectedOutputFile = new File(
-				"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
-					"/compiler/jni/internal/dependencies/sourcemap",
-				"expected_output.css");
+		Assert.assertTrue(sourceMapFile.exists());
 
-			String expectedOutput = read(expectedOutputFile.toPath());
+		File expectedOutputFile = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/sourcemap",
+			"expected_output.css");
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	@Test
 	public void testSassPrecision() throws Exception {
-		try (SassCompiler sassCompiler = new JSassCompiler(10)) {
-			String expectedOutput = ".foo { line-height: 1.428571429; }";
-			String actualOutput = sassCompiler.compileString(
-				"$val: 1.428571429;.foo { line-height: $val; }", "");
+		SassCompiler sassCompiler = new JSassCompiler(10);
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		String expectedOutput = ".foo { line-height: 1.428571429; }";
+		String actualOutput = sassCompiler.compileString(
+			"$val: 1.428571429;.foo { line-height: $val; }", "");
 
-		try (SassCompiler sassCompiler = new JSassCompiler(3)) {
-			String expectedOutput = ".foo { line-height: 1.429; }";
-			String actualOutput = sassCompiler.compileString(
-				"$val: 1.428571429;.foo { line-height: $val; }", "");
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 
-			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
-		}
+		sassCompiler = new JSassCompiler(3);
+
+		expectedOutput = ".foo { line-height: 1.429; }";
+		actualOutput = sassCompiler.compileString(
+			"$val: 1.428571429;.foo { line-height: $val; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	protected String read(Path filePath) throws Exception {
