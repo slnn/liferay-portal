@@ -375,11 +375,11 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_MLPTEI() throws Exception {
-		_persistence.countByG_MLPTEI(
+	public void testCountByG_M() throws Exception {
+		_persistence.countByG_M(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_MLPTEI(0L, 0L);
+		_persistence.countByG_M(0L, 0L);
 	}
 
 	@Test
