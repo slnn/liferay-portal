@@ -2237,10 +2237,10 @@ public class LayoutUtil {
 	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID
 	 * @return the matching layouts
 	 */
-	public static List<Layout> findByG_MLPTEI(
+	public static List<Layout> findByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId) {
 
-		return getPersistence().findByG_MLPTEI(
+		return getPersistence().findByG_M(
 			groupId, masterLayoutPageTemplateEntryId);
 	}
 
@@ -2257,11 +2257,11 @@ public class LayoutUtil {
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
-	public static List<Layout> findByG_MLPTEI(
+	public static List<Layout> findByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId, int start,
 		int end) {
 
-		return getPersistence().findByG_MLPTEI(
+		return getPersistence().findByG_M(
 			groupId, masterLayoutPageTemplateEntryId, start, end);
 	}
 
@@ -2279,11 +2279,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByG_MLPTEI(
+	public static List<Layout> findByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().findByG_MLPTEI(
+		return getPersistence().findByG_M(
 			groupId, masterLayoutPageTemplateEntryId, start, end,
 			orderByComparator);
 	}
@@ -2303,11 +2303,11 @@ public class LayoutUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByG_MLPTEI(
+	public static List<Layout> findByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByG_MLPTEI(
+		return getPersistence().findByG_M(
 			groupId, masterLayoutPageTemplateEntryId, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -2321,12 +2321,12 @@ public class LayoutUtil {
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByG_MLPTEI_First(
+	public static Layout findByG_M_First(
 			long groupId, long masterLayoutPageTemplateEntryId,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_MLPTEI_First(
+		return getPersistence().findByG_M_First(
 			groupId, masterLayoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -2338,11 +2338,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByG_MLPTEI_First(
+	public static Layout fetchByG_M_First(
 		long groupId, long masterLayoutPageTemplateEntryId,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByG_MLPTEI_First(
+		return getPersistence().fetchByG_M_First(
 			groupId, masterLayoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -2355,12 +2355,12 @@ public class LayoutUtil {
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByG_MLPTEI_Last(
+	public static Layout findByG_M_Last(
 			long groupId, long masterLayoutPageTemplateEntryId,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_MLPTEI_Last(
+		return getPersistence().findByG_M_Last(
 			groupId, masterLayoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -2372,11 +2372,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByG_MLPTEI_Last(
+	public static Layout fetchByG_M_Last(
 		long groupId, long masterLayoutPageTemplateEntryId,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByG_MLPTEI_Last(
+		return getPersistence().fetchByG_M_Last(
 			groupId, masterLayoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -2390,12 +2390,12 @@ public class LayoutUtil {
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public static Layout[] findByG_MLPTEI_PrevAndNext(
+	public static Layout[] findByG_M_PrevAndNext(
 			long plid, long groupId, long masterLayoutPageTemplateEntryId,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_MLPTEI_PrevAndNext(
+		return getPersistence().findByG_M_PrevAndNext(
 			plid, groupId, masterLayoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -2406,10 +2406,10 @@ public class LayoutUtil {
 	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID
 	 * @return the matching layouts that the user has permission to view
 	 */
-	public static List<Layout> filterFindByG_MLPTEI(
+	public static List<Layout> filterFindByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId) {
 
-		return getPersistence().filterFindByG_MLPTEI(
+		return getPersistence().filterFindByG_M(
 			groupId, masterLayoutPageTemplateEntryId);
 	}
 
@@ -2426,11 +2426,11 @@ public class LayoutUtil {
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts that the user has permission to view
 	 */
-	public static List<Layout> filterFindByG_MLPTEI(
+	public static List<Layout> filterFindByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId, int start,
 		int end) {
 
-		return getPersistence().filterFindByG_MLPTEI(
+		return getPersistence().filterFindByG_M(
 			groupId, masterLayoutPageTemplateEntryId, start, end);
 	}
 
@@ -2448,11 +2448,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts that the user has permission to view
 	 */
-	public static List<Layout> filterFindByG_MLPTEI(
+	public static List<Layout> filterFindByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().filterFindByG_MLPTEI(
+		return getPersistence().filterFindByG_M(
 			groupId, masterLayoutPageTemplateEntryId, start, end,
 			orderByComparator);
 	}
@@ -2467,12 +2467,12 @@ public class LayoutUtil {
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public static Layout[] filterFindByG_MLPTEI_PrevAndNext(
+	public static Layout[] filterFindByG_M_PrevAndNext(
 			long plid, long groupId, long masterLayoutPageTemplateEntryId,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().filterFindByG_MLPTEI_PrevAndNext(
+		return getPersistence().filterFindByG_M_PrevAndNext(
 			plid, groupId, masterLayoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -2482,11 +2482,10 @@ public class LayoutUtil {
 	 * @param groupId the group ID
 	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID
 	 */
-	public static void removeByG_MLPTEI(
+	public static void removeByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId) {
 
-		getPersistence().removeByG_MLPTEI(
-			groupId, masterLayoutPageTemplateEntryId);
+		getPersistence().removeByG_M(groupId, masterLayoutPageTemplateEntryId);
 	}
 
 	/**
@@ -2496,10 +2495,10 @@ public class LayoutUtil {
 	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID
 	 * @return the number of matching layouts
 	 */
-	public static int countByG_MLPTEI(
+	public static int countByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId) {
 
-		return getPersistence().countByG_MLPTEI(
+		return getPersistence().countByG_M(
 			groupId, masterLayoutPageTemplateEntryId);
 	}
 
@@ -2510,10 +2509,10 @@ public class LayoutUtil {
 	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID
 	 * @return the number of matching layouts that the user has permission to view
 	 */
-	public static int filterCountByG_MLPTEI(
+	public static int filterCountByG_M(
 		long groupId, long masterLayoutPageTemplateEntryId) {
 
-		return getPersistence().filterCountByG_MLPTEI(
+		return getPersistence().filterCountByG_M(
 			groupId, masterLayoutPageTemplateEntryId);
 	}
 
