@@ -35,10 +35,6 @@ data.put("findLayoutsURL", findLayoutsURL.toString());
 
 data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU));
 
-String treeId = "layoutsTree";
-
-data.put("treeId", treeId);
-
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
@@ -57,5 +53,5 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
 	rootNodeName="<%= scopeGroup.getLayoutRootNodeName(layout.isPrivateLayout(), locale) %>"
 	selPlid="<%= plid %>"
-	treeId="<%= treeId %>"
+	treeId="layoutsTree"
 />
