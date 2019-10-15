@@ -79,9 +79,6 @@ public class LayoutWrapper
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
 		attributes.put(
 			"sourcePrototypeLayoutUuid", getSourcePrototypeLayoutUuid());
-		attributes.put(
-			"masterLayoutPageTemplateEntryId",
-			getMasterLayoutPageTemplateEntryId());
 		attributes.put("publishDate", getPublishDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -295,13 +292,6 @@ public class LayoutWrapper
 
 		if (sourcePrototypeLayoutUuid != null) {
 			setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
-		}
-
-		Long masterLayoutPageTemplateEntryId = (Long)attributes.get(
-			"masterLayoutPageTemplateEntryId");
-
-		if (masterLayoutPageTemplateEntryId != null) {
-			setMasterLayoutPageTemplateEntryId(masterLayoutPageTemplateEntryId);
 		}
 
 		Date publishDate = (Date)attributes.get("publishDate");
@@ -880,16 +870,6 @@ public class LayoutWrapper
 	@Override
 	public Layout getLinkedToLayout() {
 		return model.getLinkedToLayout();
-	}
-
-	/**
-	 * Returns the master layout page template entry ID of this layout.
-	 *
-	 * @return the master layout page template entry ID of this layout
-	 */
-	@Override
-	public long getMasterLayoutPageTemplateEntryId() {
-		return model.getMasterLayoutPageTemplateEntryId();
 	}
 
 	/**
@@ -1969,19 +1949,6 @@ public class LayoutWrapper
 	@Override
 	public void setLayoutSet(LayoutSet layoutSet) {
 		model.setLayoutSet(layoutSet);
-	}
-
-	/**
-	 * Sets the master layout page template entry ID of this layout.
-	 *
-	 * @param masterLayoutPageTemplateEntryId the master layout page template entry ID of this layout
-	 */
-	@Override
-	public void setMasterLayoutPageTemplateEntryId(
-		long masterLayoutPageTemplateEntryId) {
-
-		model.setMasterLayoutPageTemplateEntryId(
-			masterLayoutPageTemplateEntryId);
 	}
 
 	/**
