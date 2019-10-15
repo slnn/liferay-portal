@@ -44,12 +44,12 @@ import javax.servlet.http.HttpServletRequest;
 public class MasterPageDisplayContext {
 
 	public MasterPageDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest httpServletRequest) {
 
-		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
