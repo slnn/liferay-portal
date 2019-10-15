@@ -409,16 +409,16 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeLayoutWebKeys.SET_CUSTOM_NAME,
-			_isUseCustomName(siteNavigationMenuItem));
-		httpServletRequest.setAttribute(
-			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
-			siteNavigationMenuItem);
-		httpServletRequest.setAttribute(
 			WebKeys.SEL_LAYOUT, _fetchLayout(siteNavigationMenuItem));
 		httpServletRequest.setAttribute(
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));
+		httpServletRequest.setAttribute(
+			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
+			siteNavigationMenuItem);
+		httpServletRequest.setAttribute(
+			SiteNavigationMenuItemTypeLayoutWebKeys.SET_CUSTOM_NAME,
+			_isUseCustomName(siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
