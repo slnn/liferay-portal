@@ -84,6 +84,9 @@ public class MasterPageDisplayContext {
 		SearchContainer masterPagesSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "there-are-no-master-pages");
 
+		masterPagesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
 		masterPagesSearchContainer.setOrderByCol(getOrderByCol());
 
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
@@ -138,8 +141,6 @@ public class MasterPageDisplayContext {
 		}
 
 		masterPagesSearchContainer.setResults(layoutPageTemplateEntries);
-		masterPagesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 		masterPagesSearchContainer.setTotal(layoutPageTemplateEntriesCount);
 
 		_masterPagesSearchContainer = masterPagesSearchContainer;
