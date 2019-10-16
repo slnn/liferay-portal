@@ -80,7 +80,7 @@ public class ItemSelectorUploadView
 
 	@Override
 	public void renderHTML(
-			ServletRequest servletRequest, ServletResponse servletResponse,
+			ServletRequest request, ServletResponse response,
 			UploadItemSelectorCriterion uploadItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -96,11 +96,11 @@ public class ItemSelectorUploadView
 					uploadItemSelectorCriterion, this, itemSelectedEventName,
 					_itemSelectorReturnTypeResolverHandler);
 
-		servletRequest.setAttribute(
+		request.setAttribute(
 			ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT,
 			itemSelectorUploadViewDisplayContext);
 
-		requestDispatcher.include(servletRequest, servletResponse);
+		requestDispatcher.include(request, response);
 	}
 
 	@Reference(
