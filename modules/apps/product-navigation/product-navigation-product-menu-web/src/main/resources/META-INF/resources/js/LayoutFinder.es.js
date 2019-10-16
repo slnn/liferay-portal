@@ -116,30 +116,13 @@ function LayoutFinder(props) {
 						{layouts.map(
 							(layout, layoutIndex) =>
 								layoutIndex < MAX_ITEMS_TO_SHOW && (
-									<>
-										{layout.path && layout.path.length > 0 && (
-											<ol className="breadcrumb">
-												{layout.path.map(layoutPath => (
-													<li
-														className="breadcrumb-item"
-														key={layoutPath}
-													>
-														<span className="breadcrumb-text-truncate">
-															{layoutPath}
-														</span>
-													</li>
-												))}
-											</ol>
-										)}
-
-										<a
-											className="d-block font-weight-bold mb-2 text-break"
-											href={layout.url}
-											key={layout.url}
-										>
-											{layout.name}
-										</a>
-									</>
+									<a
+										className="d-block p-2 text-break"
+										href={layout.url}
+										key={layout.url}
+									>
+										{layout.name}
+									</a>
 								)
 						)}
 					</nav>
