@@ -358,8 +358,8 @@ public class CXFEndpointPublisher {
 
 			@Override
 			public void doFilter(
-					ServletRequest servletRequest,
-					ServletResponse servletResponse, FilterChain chain)
+					ServletRequest request, ServletResponse response,
+					FilterChain chain)
 				throws IOException, ServletException {
 
 				boolean remoteAccess =
@@ -368,7 +368,7 @@ public class CXFEndpointPublisher {
 				try {
 					AccessControlThreadLocal.setRemoteAccess(true);
 
-					chain.doFilter(servletRequest, servletResponse);
+					chain.doFilter(request, response);
 				}
 				catch (Exception e) {
 					throw new ServletException(e);
