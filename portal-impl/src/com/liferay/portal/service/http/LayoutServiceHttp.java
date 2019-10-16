@@ -60,7 +60,6 @@ public class LayoutServiceHttp {
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
-			long masterLayoutPageTemplateEntryId,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -74,8 +73,7 @@ public class LayoutServiceHttp {
 				methodKey, groupId, privateLayout, parentLayoutId, classNameId,
 				classPK, localeNamesMap, localeTitlesMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, hidden, system,
-				masterLayoutPageTemplateEntryId, friendlyURLMap,
-				serviceContext);
+				friendlyURLMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -112,6 +110,7 @@ public class LayoutServiceHttp {
 			java.util.Map<java.util.Locale, String> keywordsMap,
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
+			long masterLayoutPageTemplateEntryId,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -125,7 +124,8 @@ public class LayoutServiceHttp {
 				methodKey, groupId, privateLayout, parentLayoutId, classNameId,
 				classPK, localeNamesMap, localeTitlesMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, hidden, system,
-				friendlyURLMap, serviceContext);
+				masterLayoutPageTemplateEntryId, friendlyURLMap,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1953,14 +1953,14 @@ public class LayoutServiceHttp {
 		long.class, boolean.class, long.class, long.class, long.class,
 		java.util.Map.class, java.util.Map.class, java.util.Map.class,
 		java.util.Map.class, java.util.Map.class, String.class, String.class,
-		boolean.class, boolean.class, long.class, java.util.Map.class,
+		boolean.class, boolean.class, java.util.Map.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addLayoutParameterTypes1 = new Class[] {
 		long.class, boolean.class, long.class, long.class, long.class,
 		java.util.Map.class, java.util.Map.class, java.util.Map.class,
 		java.util.Map.class, java.util.Map.class, String.class, String.class,
-		boolean.class, boolean.class, java.util.Map.class,
+		boolean.class, boolean.class, long.class, java.util.Map.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addLayoutParameterTypes2 = new Class[] {
