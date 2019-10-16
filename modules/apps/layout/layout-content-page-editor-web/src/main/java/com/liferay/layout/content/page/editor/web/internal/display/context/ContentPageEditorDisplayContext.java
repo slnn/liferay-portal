@@ -210,14 +210,16 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/delete_fragment_entry_link")
 		).put(
+			"duplicateFragmentEntryLinkURL",
+			getFragmentEntryActionURL(
+				"/content_layout/duplicate_fragment_entry_link")
+		).put(
 			"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 		).put(
 			"discardDraftURL",
 			getFragmentEntryActionURL("/content_layout/discard_draft_layout")
 		).put(
-			"duplicateFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/duplicate_fragment_entry_link")
+			"lookAndFeelURL", _getLookAndFeelURL()
 		).put(
 			"editFragmentEntryLinkCommentURL",
 			getFragmentEntryActionURL(
@@ -265,8 +267,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 		).put(
-			"lookAndFeelURL", _getLookAndFeelURL()
-		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		).put(
 			"pageContents",
@@ -278,10 +278,10 @@ public class ContentPageEditorDisplayContext {
 			"publishURL",
 			getFragmentEntryActionURL("/content_layout/publish_layout")
 		).put(
-			"redirectURL", _getRedirect()
-		).put(
 			"renderFragmentEntryURL",
 			getFragmentEntryActionURL("/content_layout/render_fragment_entry")
+		).put(
+			"redirectURL", _getRedirect()
 		).put(
 			"sections",
 			_getFragmentCollectionsSoyContexts(FragmentConstants.TYPE_SECTION)
