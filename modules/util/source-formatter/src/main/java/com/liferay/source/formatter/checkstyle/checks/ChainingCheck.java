@@ -207,10 +207,6 @@ public class ChainingCheck extends BaseCheck {
 				}
 			}
 
-			if (chainSize > 3) {
-				_checkChainOrder(methodCallDetailAST, chainedMethodNames);
-			}
-
 			if (_isAllowedChainingMethodCall(
 					methodCallDetailAST, chainedMethodNames, detailAST)) {
 
@@ -248,31 +244,6 @@ public class ChainingCheck extends BaseCheck {
 
 		if (parentDetailAST.getType() == TokenTypes.DOT) {
 			log(detailAST, _MSG_AVOID_TYPE_CAST_CHAINING);
-		}
-	}
-
-	private void _checkChainOrder(
-		DetailAST methodCallDetailAST, List<String> chainedMethodNames) {
-
-		if (!Objects.equals(chainedMethodNames.get(0), "status") ||
-			!Objects.equals(
-				chainedMethodNames.get(chainedMethodNames.size() - 1),
-				"build") ||
-			!Objects.equals(
-				_getClassOrVariableName(methodCallDetailAST), "Response")) {
-
-			return;
-		}
-
-		List<String> middleMethodNames = chainedMethodNames.subList(
-			1, chainedMethodNames.size() - 1);
-
-		String unsortedNames = middleMethodNames.toString();
-
-		Collections.sort(middleMethodNames);
-
-		if (!unsortedNames.equals(middleMethodNames.toString())) {
-			log(methodCallDetailAST, _MSG_UNSORTED_RESPONSE);
 		}
 	}
 
@@ -911,8 +882,6 @@ public class ChainingCheck extends BaseCheck {
 		"chaining.avoid.type.cast";
 
 	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
-
-	private static final String _MSG_UNSORTED_RESPONSE = "response.unsorted";
 
 	private static final String _REQUIRED_CHAINING_CLASS_FILE_NAMES_KEY =
 		"requiredChainingClassFileNames";
