@@ -157,6 +157,7 @@ function LayoutFinder(props) {
 
 							<div className="text-center">
 								<a
+									className="text-primary"
 									href={`${props.administrationPortletURL}&${props.administrationPortletNamespace}keywords=${keywords}`}
 								>
 									{Liferay.Language.get(
