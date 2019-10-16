@@ -3,29 +3,6 @@
 .pages-tree {
 	.layout-finder {
 		padding: 16px;
-
-		.breadcrumb {
-			flex-wrap: nowrap;
-			margin-bottom: 0px;
-			padding-bottom: 4px;
-
-			.breadcrumb-item {
-				flex-shrink: 0;
-
-				&:not(:first-child):not(:last-child) {
-					flex-basis: 1.5rem;
-					flex-grow: 0.5;
-					flex-shrink: 1;
-					width: 100%;
-
-					.breadcrumb-text-truncate {
-						max-width: 95%;
-						padding-right: 0.5rem;
-						position: absolute;
-					}
-				}
-			}
-		}
 	}
 }
 
