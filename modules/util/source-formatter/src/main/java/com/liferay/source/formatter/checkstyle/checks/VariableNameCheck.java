@@ -79,7 +79,7 @@ public class VariableNameCheck extends BaseCheck {
 
 			_checkTypeName(
 				detailAST, name, typeName, "DetailAST", "HttpServletRequest",
-				"HttpServletResponse", "ServletRequest", "ServletResponse");
+				"HttpServletResponse");
 		}
 
 		_checkTypo(detailAST, name, typeName);
