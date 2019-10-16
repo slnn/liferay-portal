@@ -281,10 +281,10 @@ public class LocalizedEntryLocalizationModelImpl
 				@Override
 				public void accept(
 					LocalizedEntryLocalization localizedEntryLocalization,
-					Object mvccVersionObject) {
+					Object mvccVersion) {
 
 					localizedEntryLocalization.setMvccVersion(
-						(Long)mvccVersionObject);
+						(Long)mvccVersion);
 				}
 
 			});
@@ -308,10 +308,10 @@ public class LocalizedEntryLocalizationModelImpl
 				@Override
 				public void accept(
 					LocalizedEntryLocalization localizedEntryLocalization,
-					Object localizedEntryLocalizationIdObject) {
+					Object localizedEntryLocalizationId) {
 
 					localizedEntryLocalization.setLocalizedEntryLocalizationId(
-						(Long)localizedEntryLocalizationIdObject);
+						(Long)localizedEntryLocalizationId);
 				}
 
 			});
@@ -334,10 +334,10 @@ public class LocalizedEntryLocalizationModelImpl
 				@Override
 				public void accept(
 					LocalizedEntryLocalization localizedEntryLocalization,
-					Object localizedEntryIdObject) {
+					Object localizedEntryId) {
 
 					localizedEntryLocalization.setLocalizedEntryId(
-						(Long)localizedEntryIdObject);
+						(Long)localizedEntryId);
 				}
 
 			});
@@ -360,10 +360,10 @@ public class LocalizedEntryLocalizationModelImpl
 				@Override
 				public void accept(
 					LocalizedEntryLocalization localizedEntryLocalization,
-					Object languageIdObject) {
+					Object languageId) {
 
 					localizedEntryLocalization.setLanguageId(
-						(String)languageIdObject);
+						(String)languageId);
 				}
 
 			});
@@ -386,9 +386,9 @@ public class LocalizedEntryLocalizationModelImpl
 				@Override
 				public void accept(
 					LocalizedEntryLocalization localizedEntryLocalization,
-					Object titleObject) {
+					Object title) {
 
-					localizedEntryLocalization.setTitle((String)titleObject);
+					localizedEntryLocalization.setTitle((String)title);
 				}
 
 			});
@@ -411,10 +411,9 @@ public class LocalizedEntryLocalizationModelImpl
 				@Override
 				public void accept(
 					LocalizedEntryLocalization localizedEntryLocalization,
-					Object contentObject) {
+					Object content) {
 
-					localizedEntryLocalization.setContent(
-						(String)contentObject);
+					localizedEntryLocalization.setContent((String)content);
 				}
 
 			});
