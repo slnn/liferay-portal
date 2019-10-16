@@ -170,7 +170,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  hidden whether the layout is hidden
 	 * @param  system whether the layout is of system type
 	 * @param  masterLayoutPageTemplateEntryId the primary key of the master
-	 *         layout page template entry
+	 *         template
 	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
