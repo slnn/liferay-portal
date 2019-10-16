@@ -45,10 +45,10 @@ public class LockedExperimentExceptionMapper
 
 		return Response.status(
 			400
-		).entity(
-			lockedSegmentsExperimentException.getMessage()
 		).type(
 			MediaType.TEXT_PLAIN
+		).entity(
+			lockedSegmentsExperimentException.getMessage()
 		).build();
 	}
 
