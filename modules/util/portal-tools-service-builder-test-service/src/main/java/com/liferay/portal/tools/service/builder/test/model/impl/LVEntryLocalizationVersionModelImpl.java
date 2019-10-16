@@ -288,10 +288,10 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryLocalizationVersionIdObject) {
+					Object lvEntryLocalizationVersionId) {
 
 					lvEntryLocalizationVersion.setLvEntryLocalizationVersionId(
-						(Long)lvEntryLocalizationVersionIdObject);
+						(Long)lvEntryLocalizationVersionId);
 				}
 
 			});
@@ -314,10 +314,9 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object versionObject) {
+					Object version) {
 
-					lvEntryLocalizationVersion.setVersion(
-						(Integer)versionObject);
+					lvEntryLocalizationVersion.setVersion((Integer)version);
 				}
 
 			});
@@ -341,10 +340,10 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryLocalizationIdObject) {
+					Object lvEntryLocalizationId) {
 
 					lvEntryLocalizationVersion.setLvEntryLocalizationId(
-						(Long)lvEntryLocalizationIdObject);
+						(Long)lvEntryLocalizationId);
 				}
 
 			});
@@ -367,10 +366,9 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object companyIdObject) {
+					Object companyId) {
 
-					lvEntryLocalizationVersion.setCompanyId(
-						(Long)companyIdObject);
+					lvEntryLocalizationVersion.setCompanyId((Long)companyId);
 				}
 
 			});
@@ -393,10 +391,9 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object lvEntryIdObject) {
+					Object lvEntryId) {
 
-					lvEntryLocalizationVersion.setLvEntryId(
-						(Long)lvEntryIdObject);
+					lvEntryLocalizationVersion.setLvEntryId((Long)lvEntryId);
 				}
 
 			});
@@ -419,10 +416,10 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object languageIdObject) {
+					Object languageId) {
 
 					lvEntryLocalizationVersion.setLanguageId(
-						(String)languageIdObject);
+						(String)languageId);
 				}
 
 			});
@@ -445,9 +442,9 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object titleObject) {
+					Object title) {
 
-					lvEntryLocalizationVersion.setTitle((String)titleObject);
+					lvEntryLocalizationVersion.setTitle((String)title);
 				}
 
 			});
@@ -470,10 +467,9 @@ public class LVEntryLocalizationVersionModelImpl
 				@Override
 				public void accept(
 					LVEntryLocalizationVersion lvEntryLocalizationVersion,
-					Object contentObject) {
+					Object content) {
 
-					lvEntryLocalizationVersion.setContent(
-						(String)contentObject);
+					lvEntryLocalizationVersion.setContent((String)content);
 				}
 
 			});
