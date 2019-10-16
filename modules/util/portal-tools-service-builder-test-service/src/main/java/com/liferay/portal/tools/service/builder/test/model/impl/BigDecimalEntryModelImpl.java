@@ -283,11 +283,10 @@ public class BigDecimalEntryModelImpl
 
 				@Override
 				public void accept(
-					BigDecimalEntry bigDecimalEntry,
-					Object bigDecimalEntryIdObject) {
+					BigDecimalEntry bigDecimalEntry, Object bigDecimalEntryId) {
 
 					bigDecimalEntry.setBigDecimalEntryId(
-						(Long)bigDecimalEntryIdObject);
+						(Long)bigDecimalEntryId);
 				}
 
 			});
@@ -307,9 +306,9 @@ public class BigDecimalEntryModelImpl
 
 				@Override
 				public void accept(
-					BigDecimalEntry bigDecimalEntry, Object companyIdObject) {
+					BigDecimalEntry bigDecimalEntry, Object companyId) {
 
-					bigDecimalEntry.setCompanyId((Long)companyIdObject);
+					bigDecimalEntry.setCompanyId((Long)companyId);
 				}
 
 			});
@@ -329,11 +328,10 @@ public class BigDecimalEntryModelImpl
 
 				@Override
 				public void accept(
-					BigDecimalEntry bigDecimalEntry,
-					Object bigDecimalValueObject) {
+					BigDecimalEntry bigDecimalEntry, Object bigDecimalValue) {
 
 					bigDecimalEntry.setBigDecimalValue(
-						(BigDecimal)bigDecimalValueObject);
+						(BigDecimal)bigDecimalValue);
 				}
 
 			});
