@@ -374,13 +374,10 @@ public class JspServlet extends HttpServlet {
 	}
 
 	@Override
-	public void service(
-			ServletRequest servletRequest, ServletResponse servletResponse)
+	public void service(ServletRequest request, ServletResponse response)
 		throws IOException, ServletException {
 
-		service(
-			(HttpServletRequest)servletRequest,
-			(HttpServletResponse)servletResponse);
+		service((HttpServletRequest)request, (HttpServletResponse)response);
 	}
 
 	@Override

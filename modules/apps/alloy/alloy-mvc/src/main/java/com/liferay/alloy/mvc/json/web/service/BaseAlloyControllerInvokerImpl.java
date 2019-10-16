@@ -105,19 +105,18 @@ public abstract class BaseAlloyControllerInvokerImpl
 	}
 
 	protected PageContext createPageContext(
-		final ServletRequest servletRequest,
-		final ServletResponse servletResponse) {
+		final ServletRequest request, final ServletResponse response) {
 
 		return new AlloyMockUtil.MockPageContext() {
 
 			@Override
 			public ServletRequest getRequest() {
-				return servletRequest;
+				return request;
 			}
 
 			@Override
 			public ServletResponse getResponse() {
-				return servletResponse;
+				return response;
 			}
 
 		};
