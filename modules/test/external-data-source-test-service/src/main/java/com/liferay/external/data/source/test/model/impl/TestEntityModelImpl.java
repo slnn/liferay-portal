@@ -244,8 +244,8 @@ public class TestEntityModelImpl
 			new BiConsumer<TestEntity, Object>() {
 
 				@Override
-				public void accept(TestEntity testEntity, Object idObject) {
-					testEntity.setId((Long)idObject);
+				public void accept(TestEntity testEntity, Object id) {
+					testEntity.setId((Long)id);
 				}
 
 			});
@@ -264,8 +264,8 @@ public class TestEntityModelImpl
 			new BiConsumer<TestEntity, Object>() {
 
 				@Override
-				public void accept(TestEntity testEntity, Object dataObject) {
-					testEntity.setData((String)dataObject);
+				public void accept(TestEntity testEntity, Object data) {
+					testEntity.setData((String)data);
 				}
 
 			});
