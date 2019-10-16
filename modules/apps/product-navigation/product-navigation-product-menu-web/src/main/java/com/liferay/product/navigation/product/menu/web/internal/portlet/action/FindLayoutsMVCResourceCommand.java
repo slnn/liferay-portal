@@ -139,12 +139,12 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> ancestorLayouts = layout.getAncestors();
+		List<Layout> ancestors = layout.getAncestors();
 
-		Collections.reverse(ancestorLayouts);
+		Collections.reverse(ancestors);
 
-		for (Layout ancestorLayout : ancestorLayouts) {
-			jsonArray.put(HtmlUtil.escape(ancestorLayout.getName(locale)));
+		for (Layout ancestor : ancestors) {
+			jsonArray.put(HtmlUtil.escape(ancestor.getName(locale)));
 		}
 
 		return jsonArray;
