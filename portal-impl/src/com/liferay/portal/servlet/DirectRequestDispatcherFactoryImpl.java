@@ -147,9 +147,9 @@ public class DirectRequestDispatcherFactoryImpl
 		}
 
 		private DirectRequestDispatcherServletRequest(
-			ServletRequest servletRequest, ServletContext servletContext) {
+			ServletRequest request, ServletContext servletContext) {
 
-			super((HttpServletRequest)servletRequest);
+			super((HttpServletRequest)request);
 
 			_servletContext = servletContext;
 		}
@@ -166,39 +166,37 @@ public class DirectRequestDispatcherFactoryImpl
 		implements RequestDispatcher {
 
 		@Override
-		public void forward(
-				ServletRequest servletRequest, ServletResponse servletResponse)
+		public void forward(ServletRequest request, ServletResponse response)
 			throws IOException, ServletException {
 
-			Class<?> clazz = servletRequest.getClass();
+			Class<?> clazz = request.getClass();
 
 			if (_EQUINOX_REQUEST_CLASS_NAME.equals(clazz.getName())) {
 				HttpServletRequestWrapper wrapper =
-					(HttpServletRequestWrapper)servletRequest;
+					(HttpServletRequestWrapper)request;
 
-				servletRequest = new DirectRequestDispatcherServletRequest(
+				request = new DirectRequestDispatcherServletRequest(
 					wrapper.getRequest(), wrapper.getServletContext());
 			}
 
-			_requestDispatcher.forward(servletRequest, servletResponse);
+			_requestDispatcher.forward(request, response);
 		}
 
 		@Override
-		public void include(
-				ServletRequest servletRequest, ServletResponse servletResponse)
+		public void include(ServletRequest request, ServletResponse response)
 			throws IOException, ServletException {
 
-			Class<?> clazz = servletRequest.getClass();
+			Class<?> clazz = request.getClass();
 
 			if (_EQUINOX_REQUEST_CLASS_NAME.equals(clazz.getName())) {
 				HttpServletRequestWrapper wrapper =
-					(HttpServletRequestWrapper)servletRequest;
+					(HttpServletRequestWrapper)request;
 
-				servletRequest = new DirectRequestDispatcherServletRequest(
+				request = new DirectRequestDispatcherServletRequest(
 					wrapper.getRequest(), wrapper.getServletContext());
 			}
 
-			_requestDispatcher.include(servletRequest, servletResponse);
+			_requestDispatcher.include(request, response);
 		}
 
 		private IndirectRequestDispatcher(RequestDispatcher requestDispatcher) {
