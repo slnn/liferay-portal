@@ -807,6 +807,21 @@ public class LayoutsAdminDisplayContext {
 						});
 				}
 
+				if (!(stagingGroupHelper.isLocalLiveGroup(group) ||
+					  stagingGroupHelper.isRemoteLiveGroup(group))) {
+
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								Objects.equals(getTabs1(), "page-templates"));
+							navigationItem.setHref(
+								getPortletURL(), "tabs1", "page-templates");
+							navigationItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "page-templates"));
+						});
+				}
+
 				if (!group.isCompany() &&
 					!(stagingGroupHelper.isLocalLiveGroup(group) ||
 					  stagingGroupHelper.isRemoteLiveGroup(group))) {
