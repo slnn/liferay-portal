@@ -1,13 +1,7 @@
 @import 'atlas-variables';
-@import 'variables';
-
-$product-menu-width: 320px;
-$product-menu-item-fixed-width: $product-menu-width;
-$product-menu-pages-administration-link-height: 72px;
 
 .pages-tree {
 	.layout-finder {
-		border-bottom: 1px solid #272833;
 		padding: 16px;
 
 		.breadcrumb {
@@ -49,20 +43,10 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 
 	.pages-administration-link {
-		align-items: center;
-		background-color: #272833;
-		border-top: 1px solid black;
-		bottom: 0;
-		display: flex;
-		height: $product-menu-pages-administration-link-height;
-		position: fixed;
-		width: $product-menu-item-fixed-width;
-	}
-
-	.tree-view-content {
-		margin-bottom: calc(
-			#{$product-menu-pages-administration-link-height} + #{$spacer}
-		);
+		border-top: 1px solid #000;
+		bottom: 0px;
+		padding: 32px;
+		position: absolute;
 	}
 }
 
