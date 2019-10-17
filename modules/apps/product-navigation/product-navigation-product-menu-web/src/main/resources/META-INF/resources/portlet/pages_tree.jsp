@@ -33,13 +33,11 @@ findLayoutsURL.setResourceID("/product_menu/find_layouts");
 
 data.put("findLayoutsURL", findLayoutsURL.toString());
 
-String namespace = PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU);
-
-data.put("namespace", namespace);
+data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU));
 
 Group scopeGroup = themeDisplay.getScopeGroup();
 
-boolean privateLayout = GetterUtil.getBoolean(SessionClicks.get(request, namespace + ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT, "false"), layout.isPrivateLayout());
+boolean privateLayout = GetterUtil.getBoolean(SessionClicks.get(request, renderResponse.getNamespace() + ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT, "false"), layout.isPrivateLayout());
 
 Map<String, Object> pageTypeSelectorData = new HashMap<>();
 
