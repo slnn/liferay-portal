@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -172,23 +171,9 @@ public class PagesTreeProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.isCompany() || group.isControlPanel() ||
-			layout.isTypeControlPanel()) {
-
-			SessionClicks.put(
-				httpServletRequest,
-				"com.liferay.product.navigation.product.menu.web_" +
-					"pagesTreeState",
-				"closed");
-
-			httpServletRequest.setAttribute(
-				ProductNavigationProductMenuWebKeys.PANEL_NAME,
-				ProductNavigationProductMenuWebKeys.PRODUCT_MENU);
-
+		if (group.isCompany() || group.isControlPanel()) {
 			return false;
 		}
 
