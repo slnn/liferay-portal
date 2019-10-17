@@ -128,8 +128,6 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 		}
 	).render();
 
-	Liferay.component('<%= namespace + treeId %>', treeview);
-
 	Liferay.once(
 		'screenLoad',
 		function() {
