@@ -23,8 +23,6 @@ public class ProductNavigationProductMenuWebKeys {
 
 	public static final String PANEL_NAME = "PANEL_NAME";
 
-	public static final String PRIVATE_LAYOUT = "PRIVATE_LAYOUT";
-
 	public static final String PRODUCT_MENU = "PRODUCT_MENU";
 
 }
