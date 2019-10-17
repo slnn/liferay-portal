@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,7 +44,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -116,12 +114,10 @@ public class PagesTreeProductNavigationControlMenuEntry
 
 		values.put("portletNamespace", portletNamespace);
 
-		ResourceBundle resourceBundle = _getResourceBundle(
-			themeDisplay.getLocale());
-
 		values.put(
 			"title",
-			HtmlUtil.escape(LanguageUtil.get(resourceBundle, "find-a-page")));
+			HtmlUtil.escape(
+				LanguageUtil.get(httpServletRequest, "find-a-page")));
 
 		String pagesTreeState = SessionClicks.get(
 			httpServletRequest,
@@ -178,11 +174,6 @@ public class PagesTreeProductNavigationControlMenuEntry
 		}
 
 		return true;
-	}
-
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
 	}
 
 	private void _processBodyBottomContent(PageContext pageContext) {
