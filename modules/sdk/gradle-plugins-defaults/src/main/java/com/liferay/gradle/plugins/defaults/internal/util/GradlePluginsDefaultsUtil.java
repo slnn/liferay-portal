@@ -22,7 +22,6 @@ import java.io.File;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -156,10 +155,6 @@ public class GradlePluginsDefaultsUtil {
 		}
 
 		Set<String> fileNames = new HashSet<>();
-
-		if (Objects.equals(buildProfile, "dxp")) {
-			buildProfile = "portal";
-		}
 
 		fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile);
 		fileNames.add(
