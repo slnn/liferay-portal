@@ -46,17 +46,17 @@ function PageTypeSelector(props) {
 	return (
 		<div className="align-items-center d-flex page-type-selector">
 			<div className="flex-fill flex-grow-1">
-				<select
-					className="form-control form-control-sm"
-					defaultValue={
-						props.privateLayout ? 'private-pages' : 'public-pages'
-					}
-					onChange={handleOnChange}
-				>
-					<option value="public-pages">
+				<select className="form-control" onChange={handleOnChange}>
+					<option
+						selected={!props.privateLayout}
+						value="public-pages"
+					>
 						{Liferay.Language.get('public-pages')}
 					</option>
-					<option value="private-pages">
+					<option
+						selected={props.privateLayout}
+						value="private-pages"
+					>
 						{Liferay.Language.get('private-pages')}
 					</option>
 				</select>
