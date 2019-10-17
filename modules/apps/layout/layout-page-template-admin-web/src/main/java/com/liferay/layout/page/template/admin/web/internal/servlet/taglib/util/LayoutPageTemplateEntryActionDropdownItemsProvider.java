@@ -122,7 +122,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/layout_page_template/edit_layout", "redirect",
+				"/layout/edit_layout", "redirect",
 				_themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "selPlid",
 				_layoutPageTemplateEntry.getPlid());
@@ -140,7 +140,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		deleteLayoutPageTemplateEntryURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout_page_template/delete_layout_page_template_entry");
+			"/layout/delete_layout_page_template_entry");
 		deleteLayoutPageTemplateEntryURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		deleteLayoutPageTemplateEntryURL.setParameter(
@@ -166,7 +166,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout_page_template/delete_layout_page_template_entry_preview");
+			"/layout/delete_layout_page_template_entry_preview");
 
 		deleteLayoutPageTemplateEntryPreviewURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
@@ -195,7 +195,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout_page_template/upload_layout_page_template_entry_preview");
+			"/layout/upload_layout_page_template_entry_preview");
 		uploadURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
@@ -311,7 +311,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		updateLayoutPageTemplateEntryURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout_page_template/update_layout_page_template_entry");
+			"/layout/update_layout_page_template_entry");
 		updateLayoutPageTemplateEntryURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		updateLayoutPageTemplateEntryURL.setParameter(
