@@ -21,11 +21,13 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
@@ -79,7 +81,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	configurationPid = "com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration",
+	configurationPid = "com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration, com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -107,6 +109,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_layoutAdminWebConfiguration = ConfigurableUtil.createConfigurable(
+			LayoutAdminWebConfiguration.class, properties);
 		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
 			LayoutConverterConfiguration.class, properties);
 	}
@@ -157,6 +161,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 				}
 			}
 
+			renderRequest.setAttribute(
+				LayoutAdminWebConfiguration.class.getName(),
+				_layoutAdminWebConfiguration);
 			renderRequest.setAttribute(
 				LayoutConverterConfiguration.class.getName(),
 				_layoutConverterConfiguration);
@@ -222,6 +229,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 	@Reference
 	private ItemSelector _itemSelector;
 
+	private volatile LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
 	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 
 	@Reference
@@ -229,6 +237,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService
