@@ -35,14 +35,11 @@ data.put("findLayoutsURL", findLayoutsURL.toString());
 
 data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU));
 
+String treeId = "layoutsTree";
+
+data.put("treeId", treeId);
+
 Group scopeGroup = themeDisplay.getScopeGroup();
-
-boolean privateLayout = GetterUtil.getBoolean(SessionClicks.get(request, renderResponse.getNamespace() + ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT, "false"), layout.isPrivateLayout());
-
-Map<String, Object> pageTypeSelectorData = new HashMap<>();
-
-pageTypeSelectorData.put("privateLayout", privateLayout);
-pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU));
 %>
 
 <div id="<%= renderResponse.getNamespace() + "-layout-finder" %>">
@@ -54,21 +51,14 @@ pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavi
 </div>
 
 <div id="<%= renderResponse.getNamespace() + "layoutsTree" %>">
-	<div id="<%= renderResponse.getNamespace() + "-page-type" %>">
-		<react:component
-			data="<%= pageTypeSelectorData %>"
-			module="js/PageTypeSelector.es"
-			servletContext="<%= application %>"
-		/>
-	</div>
-
 	<liferay-layout:layouts-tree
 		groupId="<%= scopeGroupId %>"
 		linkTemplate='<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">{label}</a>'
-		privateLayout="<%= privateLayout %>"
+		privateLayout="<%= layout.isPrivateLayout() %>"
 		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
-		rootNodeName="<%= scopeGroup.getLayoutRootNodeName(privateLayout, locale) %>"
+		rootNodeName="<%= scopeGroup.getLayoutRootNodeName(layout.isPrivateLayout(), locale) %>"
 		selPlid="<%= plid %>"
-		treeId="pagesTree"
+		treeId="<%= treeId %>"
 	/>
 </div>
+
