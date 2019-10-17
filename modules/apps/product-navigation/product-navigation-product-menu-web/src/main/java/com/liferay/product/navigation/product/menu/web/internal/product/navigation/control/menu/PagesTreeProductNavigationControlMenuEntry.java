@@ -172,9 +172,9 @@ public class PagesTreeProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
-
 		Layout layout = themeDisplay.getLayout();
+
+		Group group = themeDisplay.getScopeGroup();
 
 		if (group.isCompany() || group.isControlPanel() ||
 			layout.isTypeControlPanel()) {
