@@ -179,7 +179,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 
 		actionURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout_page_template/add_layout_page_template_entry");
+			"/layout/add_layout_page_template_entry");
 		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		actionURL.setParameter("backURL", _themeDisplay.getURLCurrent());
 		actionURL.setParameter(
