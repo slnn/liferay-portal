@@ -73,8 +73,4 @@ pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavi
 		selPlid="<%= plid %>"
 		treeId="pagesTree"
 	/>
-
-	<div class="pages-administration-link">
-		<aui:a href="<%= administrationPortletURL.toString() %>"><%= LanguageUtil.get(request, "view-in-page-administration") %></aui:a>
-	</div>
 </div>
