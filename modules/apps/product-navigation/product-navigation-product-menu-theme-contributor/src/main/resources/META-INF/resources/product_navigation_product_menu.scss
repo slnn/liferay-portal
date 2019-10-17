@@ -67,15 +67,17 @@ body {
 }
 
 .product-menu {
-	.form-control-sm {
+	.form-control {
 		background-color: #1b2228;
-		border-radius: $border-radius;
+		border-radius: 0;
 		border-width: 0;
 		box-shadow: none;
-		width: 100%;
+		color: #869cad;
+		height: 40px;
+		padding: 8px 12px;
 
 		@include placeholder {
-			color: white;
+			color: #869cad;
 		}
 
 		&:focus {
@@ -87,11 +89,6 @@ body {
 				color: #fff;
 			}
 		}
-	}
-
-	select.form-control-sm {
-		border: 1px solid #6b6c7e;
-		color: white;
 	}
 
 	.page-type-selector {
