@@ -99,7 +99,7 @@ function LayoutFinder(props) {
 				<input
 					autoComplete="off"
 					autoFocus
-					className="form-control form-control-sm"
+					className="form-control"
 					id={`${props.namespace}-layout-finder-page-input`}
 					onChange={handleOnChange}
 					placeholder={Liferay.Language.get(
