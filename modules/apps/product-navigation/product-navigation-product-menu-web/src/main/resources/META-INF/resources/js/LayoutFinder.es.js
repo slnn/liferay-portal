@@ -63,7 +63,7 @@ function LayoutFinder(props) {
 			setKeywords(newKeywords);
 
 			const tree = document.querySelector(
-				`#${props.namespace}layoutsTree`
+				`[data-treeid="${props.treeId}"]`
 			);
 
 			if (newKeywords.length == 0) {
@@ -83,7 +83,7 @@ function LayoutFinder(props) {
 				}
 			}
 		},
-		[cancelUpdatePageResults, props.namespace, updatePageResults]
+		[cancelUpdatePageResults, props.treeId, updatePageResults]
 	);
 
 	return (
@@ -187,6 +187,7 @@ LayoutFinder.propTypes = {
 	administrationPortletURL: PropTypes.string,
 	findLayoutsURL: PropTypes.string,
 	namespace: PropTypes.string,
+	treeId: PropTypes.string,
 	viewInPageAdministrationURL: PropTypes.string
 };
 

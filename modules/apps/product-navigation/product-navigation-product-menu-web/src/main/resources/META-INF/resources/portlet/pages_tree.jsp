@@ -38,8 +38,6 @@ data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMen
 String treeId = "layoutsTree";
 
 data.put("treeId", treeId);
-
-Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <div id="<%= renderResponse.getNamespace() + "-layout-finder" %>">
@@ -50,15 +48,16 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	/>
 </div>
 
-<div id="<%= renderResponse.getNamespace() + "layoutsTree" %>">
-	<liferay-layout:layouts-tree
-		groupId="<%= scopeGroupId %>"
-		linkTemplate='<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">{label}</a>'
-		privateLayout="<%= layout.isPrivateLayout() %>"
-		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
-		rootNodeName="<%= scopeGroup.getLayoutRootNodeName(layout.isPrivateLayout(), locale) %>"
-		selPlid="<%= plid %>"
-		treeId="<%= treeId %>"
-	/>
-</div>
+<%
+Group scopeGroup = themeDisplay.getScopeGroup();
+%>
 
+<liferay-layout:layouts-tree
+	groupId="<%= scopeGroupId %>"
+	linkTemplate='<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">{label}</a>'
+	privateLayout="<%= layout.isPrivateLayout() %>"
+	rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
+	rootNodeName="<%= scopeGroup.getLayoutRootNodeName(layout.isPrivateLayout(), locale) %>"
+	selPlid="<%= plid %>"
+	treeId="<%= treeId %>"
+/>
