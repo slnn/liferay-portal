@@ -37,35 +37,16 @@ function PageTypeSelector(props) {
 		[props.namespace]
 	);
 
-	const handleOnClick = useCallback(() => {
-		const tree = Liferay.component(`${props.namespace}pagesTree`);
-
-		tree.collapseAll();
-	}, [props.namespace]);
-
 	return (
-		<div className="align-items-center d-flex page-type-selector">
-			<div className="flex-fill flex-grow-1">
-				<select className="form-control" onChange={handleOnChange}>
-					<option
-						selected={!props.privateLayout}
-						value="public-pages"
-					>
-						{Liferay.Language.get('public-pages')}
-					</option>
-					<option
-						selected={props.privateLayout}
-						value="private-pages"
-					>
-						{Liferay.Language.get('private-pages')}
-					</option>
-				</select>
-			</div>
-			<div className="flex-fill flex-grow-1 text-right">
-				<a href="javascript: void(0);" onClick={handleOnClick}>
-					{Liferay.Language.get('collapse-all')}
-				</a>
-			</div>
+		<div className="page-type-selector">
+			<select className="form-control" onChange={handleOnChange}>
+				<option selected={!props.privateLayout} value="public-pages">
+					{Liferay.Language.get('public-pages')}
+				</option>
+				<option selected={props.privateLayout} value="private-pages">
+					{Liferay.Language.get('private-pages')}
+				</option>
+			</select>
 		</div>
 	);
 }
