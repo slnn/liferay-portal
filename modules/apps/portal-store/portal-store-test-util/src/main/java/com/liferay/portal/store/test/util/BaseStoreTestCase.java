@@ -688,7 +688,7 @@ public abstract class BaseStoreTestCase {
 		for (int i = 1; i <= newVersionCount; i++) {
 			store.updateFile(
 				companyId, repositoryId, fileName, versionLabel + i,
-				new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+				_DATA_VERSION_1);
 		}
 	}
 
