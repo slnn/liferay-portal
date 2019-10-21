@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -295,16 +296,35 @@ public class AudioProcessorImpl
 				destinationFileVersion.getExtension());
 
 			if (!hasPreviews(destinationFileVersion)) {
-				try (InputStream inputStream =
-						destinationFileVersion.getContentStream(false)) {
+				File file = null;
 
-					FileUtil.write(audioTempFile, inputStream);
+				if (destinationFileVersion instanceof LiferayFileVersion) {
+					try {
+						LiferayFileVersion liferayFileVersion =
+							(LiferayFileVersion)destinationFileVersion;
+
+						file = liferayFileVersion.getFile(false);
+					}
+					catch (UnsupportedOperationException uoe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(uoe, uoe);
+						}
+					}
+				}
+
+				if (file == null) {
+					try (InputStream inputStream =
+							destinationFileVersion.getContentStream(false)) {
+
+						FileUtil.write(audioTempFile, inputStream);
+
+						file = audioTempFile;
+					}
 				}
 
 				try {
 					_generateAudioXuggler(
-						destinationFileVersion, audioTempFile,
-						previewTempFiles);
+						destinationFileVersion, file, previewTempFiles);
 
 					_fileVersionPreviewEventListener.onSuccess(
 						destinationFileVersion);

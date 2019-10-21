@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 
 import java.awt.image.RenderedImage;
 
@@ -77,8 +78,6 @@ public class AMGIFImageScaler implements AMImageScaler {
 					"-", file.getAbsolutePath());
 
 			Map.Entry<byte[], byte[]> objectValuePair = collectorFuture.get();
-
-			file.delete();
 
 			byte[] bytes = objectValuePair.getKey();
 
@@ -144,6 +143,13 @@ public class AMGIFImageScaler implements AMImageScaler {
 
 	private File _getFile(FileVersion fileVersion)
 		throws IOException, PortalException {
+
+		if (fileVersion instanceof LiferayFileVersion) {
+			LiferayFileVersion liferayFileVersion =
+				(LiferayFileVersion)fileVersion;
+
+			return liferayFileVersion.getFile(false);
+		}
 
 		try (InputStream inputStream = fileVersion.getContentStream(false)) {
 			return FileUtil.createTempFile(inputStream);
