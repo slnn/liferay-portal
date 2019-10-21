@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -614,9 +613,8 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
-		byte[] currentVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(
-				companyId, repositoryId, fileName, StringPool.BLANK));
+		byte[] currentVersionBytes = store.getFileAsBytes(
+			companyId, repositoryId, fileName);
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
 	}
@@ -643,9 +641,8 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
-		byte[] currentVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(
-				companyId, repositoryId, fileName, StringPool.BLANK));
+		byte[] currentVersionBytes = store.getFileAsBytes(
+			companyId, repositoryId, fileName);
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
 	}
@@ -672,9 +669,8 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
-		byte[] currentVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(
-				companyId, repositoryId, fileName, StringPool.BLANK));
+		byte[] currentVersionBytes = store.getFileAsBytes(
+			companyId, repositoryId, fileName);
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
 	}
