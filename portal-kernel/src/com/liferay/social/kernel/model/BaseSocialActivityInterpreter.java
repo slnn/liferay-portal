@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
@@ -150,6 +151,14 @@ public abstract class BaseSocialActivityInterpreter
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of Wilberforce (7.0.x)
+	 */
+	@Deprecated
+	protected String cleanContent(String content) {
+		return StringUtil.shorten(HtmlUtil.extractText(content), 200);
+	}
+
 	protected SocialActivityFeedEntry doInterpret(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -174,6 +183,17 @@ public abstract class BaseSocialActivityInterpreter
 		String body = getBody(activity, serviceContext);
 
 		return new SocialActivityFeedEntry(link, title, body);
+	}
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x)
+	 */
+	@Deprecated
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return _deprecatedMarkerSocialActivityFeedEntry;
 	}
 
 	protected SocialActivityFeedEntry doInterpret(
@@ -234,6 +254,48 @@ public abstract class BaseSocialActivityInterpreter
 			else if (group.hasPrivateLayouts()) {
 				groupDisplayURL = group.getDisplayURL(
 					serviceContext.getThemeDisplay(), true);
+			}
+			else {
+				return HtmlUtil.escape(groupName);
+			}
+
+			groupName = StringBundler.concat(
+				"<a class=\"group\" href=\"", groupDisplayURL, "\">",
+				HtmlUtil.escape(groupName), "</a>");
+
+			return groupName;
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+	}
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getGroupName(long, ServiceContext)}
+	 */
+	@Deprecated
+	protected String getGroupName(long groupId, ThemeDisplay themeDisplay) {
+		try {
+			if (groupId <= 0) {
+				return StringPool.BLANK;
+			}
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			String groupName = group.getDescriptiveName();
+
+			if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
+				return HtmlUtil.escape(groupName);
+			}
+
+			String groupDisplayURL = StringPool.BLANK;
+
+			if (group.hasPublicLayouts()) {
+				groupDisplayURL = group.getDisplayURL(themeDisplay, false);
+			}
+			else if (group.hasPrivateLayouts()) {
+				groupDisplayURL = group.getDisplayURL(themeDisplay, true);
 			}
 			else {
 				return HtmlUtil.escape(groupName);
@@ -416,6 +478,53 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getUserName(long, ServiceContext)}
+	 */
+	@Deprecated
+	protected String getUserName(long userId, ThemeDisplay themeDisplay) {
+		try {
+			if (userId <= 0) {
+				return StringPool.BLANK;
+			}
+
+			User user = UserLocalServiceUtil.getUserById(userId);
+
+			if (user.getUserId() == themeDisplay.getUserId()) {
+				return HtmlUtil.escape(user.getFirstName());
+			}
+
+			String userName = user.getFullName();
+
+			Group group = user.getGroup();
+
+			if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
+				return HtmlUtil.escape(userName);
+			}
+
+			String userDisplayURL = user.getDisplayURL(themeDisplay);
+
+			userName = StringBundler.concat(
+				"<a class=\"user\" href=\"", userDisplayURL, "\">",
+				HtmlUtil.escape(userName), "</a>");
+
+			return userName;
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+	}
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             #getJSONValue(String, String, String)}
+	 */
+	@Deprecated
+	protected String getValue(String json, String key, String defaultValue) {
+		return getJSONValue(json, key, defaultValue);
+	}
+
 	protected String getViewEntryInTrashURL(
 			String className, long classPK, ServiceContext serviceContext)
 		throws Exception {
@@ -507,5 +616,9 @@ public abstract class BaseSocialActivityInterpreter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSocialActivityInterpreter.class);
+
+	private final SocialActivityFeedEntry
+		_deprecatedMarkerSocialActivityFeedEntry = new SocialActivityFeedEntry(
+			StringPool.BLANK, StringPool.BLANK);
 
 }

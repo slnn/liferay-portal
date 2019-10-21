@@ -14,6 +14,8 @@
 
 package com.liferay.social.kernel.model;
 
+import com.liferay.social.kernel.util.SocialRelationTypesUtil;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -43,5 +45,32 @@ public class SocialRelationConstants {
 	public static final int TYPE_UNI_SUBORDINATE = 10;
 
 	public static final int TYPE_UNI_SUPERVISOR = 11;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             SocialRelationTypesUtil#getTypeLabel(int)}
+	 */
+	@Deprecated
+	public static String getTypeLabel(int type) {
+		return SocialRelationTypesUtil.getTypeLabel(type);
+	}
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             SocialRelationTypesUtil#isTypeBi(int)}
+	 */
+	@Deprecated
+	public static boolean isTypeBi(int type) {
+		return SocialRelationTypesUtil.isTypeBi(type);
+	}
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             SocialRelationTypesUtil#isTypeUni(int)}
+	 */
+	@Deprecated
+	public static boolean isTypeUni(int type) {
+		return SocialRelationTypesUtil.isTypeUni(type);
+	}
 
 }
