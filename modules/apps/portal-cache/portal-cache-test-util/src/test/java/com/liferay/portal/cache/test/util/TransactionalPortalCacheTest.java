@@ -335,12 +335,11 @@ public class TransactionalPortalCacheTest {
 			new TransactionalPortalCache(_portalCache);
 
 		TransactionalPortalCacheHelper.put(
-			transactionalPortalCache, _KEY_1, _VALUE_1, 0, false);
+			transactionalPortalCache, _KEY_1, _VALUE_1, 0);
 
-		TransactionalPortalCacheHelper.removeAll(
-			transactionalPortalCache, false);
+		TransactionalPortalCacheHelper.removeAll(transactionalPortalCache);
 
-		TransactionalPortalCacheHelper.commit(false);
+		TransactionalPortalCacheHelper.commit();
 
 		TransactionLifecycleListener transactionLifecycleListener =
 			TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER;
