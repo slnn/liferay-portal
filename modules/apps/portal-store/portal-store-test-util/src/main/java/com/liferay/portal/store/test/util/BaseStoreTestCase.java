@@ -91,9 +91,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 		File file = createFile(_DATA_VERSION_1);
 
-		try (InputStream is = new FileInputStream(file)) {
-			store.addFile(companyId, repositoryId, fileName, is);
-		}
+		store.addFile(companyId, repositoryId, fileName, file);
 
 		Assert.assertTrue(
 			store.hasFile(
