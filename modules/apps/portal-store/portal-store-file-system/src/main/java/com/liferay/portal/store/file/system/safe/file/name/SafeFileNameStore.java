@@ -167,6 +167,15 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
+
+		String safeDirName = FileUtil.encodeSafeFileName(dirName);
+
+		return _store.hasDirectory(companyId, repositoryId, safeDirName);
+	}
+
+	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
