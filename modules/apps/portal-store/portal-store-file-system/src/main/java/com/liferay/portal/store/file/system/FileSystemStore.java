@@ -56,22 +56,7 @@ public class FileSystemStore extends BaseStore {
 
 		_fileSystemStoreConfiguration = fileSystemStoreConfiguration;
 
-		String path = _fileSystemStoreConfiguration.rootDir();
-
-		File rootDir = new File(path);
-
-		if (!rootDir.isAbsolute()) {
-			rootDir = new File(PropsUtil.get(PropsKeys.LIFERAY_HOME), path);
-		}
-
-		_rootDir = rootDir;
-
-		try {
-			FileUtil.mkdirs(_rootDir);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
+		initializeRootDir();
 
 		fileSystemHelper = new FileSystemHelper(
 			_fileSystemStoreConfiguration.useHardLinks(), _rootDir.toPath());
@@ -612,12 +597,29 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
+	protected void initializeRootDir() {
+		String path = _fileSystemStoreConfiguration.rootDir();
+
+		_rootDir = new File(path);
+
+		if (!_rootDir.isAbsolute()) {
+			_rootDir = new File(PropsUtil.get(PropsKeys.LIFERAY_HOME), path);
+		}
+
+		try {
+			FileUtil.mkdirs(_rootDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+	}
+
 	protected final FileSystemHelper fileSystemHelper;
 
 	private final FileSystemStoreConfiguration _fileSystemStoreConfiguration;
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
-	private final File _rootDir;
+	private File _rootDir;
 
 	private static class RepositoryDirKey {
 
