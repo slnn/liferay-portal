@@ -216,11 +216,11 @@ class StateSyncronizer extends Component {
 				const {value} = field;
 				const newValue = {};
 
-				Object.keys(value).forEach(locale => {
+				for (const locale in value) {
 					newValue[locale] = value[locale].filter(
 						({value}) => value !== ''
 					);
-				});
+				}
 
 				if (!newValue[defaultLanguageId]) {
 					newValue[defaultLanguageId] = [];

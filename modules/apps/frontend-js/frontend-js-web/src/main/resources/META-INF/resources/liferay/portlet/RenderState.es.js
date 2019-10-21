@@ -47,11 +47,14 @@ class RenderState {
 	from(renderState) {
 		this.parameters = {};
 
-		Object.keys(renderState.parameters).forEach(name => {
-			if (Array.isArray(renderState.parameters[name])) {
+		for (const name in renderState.parameters) {
+			if (
+				Object.hasOwnProperty.call(renderState.parameters, name) &&
+				Array.isArray(renderState.parameters[name])
+			) {
 				this.parameters[name] = renderState.parameters[name].slice(0);
 			}
-		});
+		}
 
 		this.setPortletMode(renderState.portletMode);
 		this.setWindowState(renderState.windowState);

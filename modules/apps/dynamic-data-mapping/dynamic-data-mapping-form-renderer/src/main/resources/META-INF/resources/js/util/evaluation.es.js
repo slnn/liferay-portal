@@ -82,7 +82,7 @@ export const evaluate = (fieldName, evaluatorContext) => {
 export const mergeFieldOptions = (field, newField) => {
 	let newValue = {...newField.value};
 
-	Object.keys(newValue).forEach(languageId => {
+	for (const languageId in newValue) {
 		newValue = {
 			...newValue,
 			[languageId]: newValue[languageId].map(option => {
@@ -96,7 +96,7 @@ export const mergeFieldOptions = (field, newField) => {
 				};
 			})
 		};
-	});
+	}
 
 	return newValue;
 };

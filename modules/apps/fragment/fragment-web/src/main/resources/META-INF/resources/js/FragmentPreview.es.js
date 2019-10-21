@@ -12,7 +12,8 @@
  * details.
  */
 
-import {PortletBase, debounce} from 'frontend-js-web';
+import {PortletBase} from 'frontend-js-web';
+import {debounce} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 

@@ -469,12 +469,12 @@ class Sidebar extends Component {
 
 		let eventName = false;
 
-		Object.keys(transitionEndEvents).some(name => {
+		for (const name in transitionEndEvents) {
 			if (el.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
-				return true;
+				break;
 			}
-		});
+		}
 
 		return eventName;
 	}
