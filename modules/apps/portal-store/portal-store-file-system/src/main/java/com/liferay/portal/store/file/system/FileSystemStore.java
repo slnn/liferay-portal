@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -36,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,14 +71,8 @@ public class FileSystemStore extends BaseStore {
 			throw new SystemException(ioe);
 		}
 
-		if (fileSystemStoreConfiguration.useHardLinks() &&
-			_isSupportHardLink(_rootDir.toPath())) {
-
-			_useHardLink = true;
-		}
-		else {
-			_useHardLink = false;
-		}
+		fileSystemHelper = new FileSystemHelper(
+			fileSystemStoreConfiguration.useHardLinks(), _rootDir.toPath());
 	}
 
 	@Override
@@ -148,17 +140,8 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		try {
-			if (_useHardLink) {
-				Files.createLink(
-					toFileNameVersionFile.toPath(),
-					fromFileNameVersionFile.toPath());
-			}
-			else {
-				toFileNameVersionFile.createNewFile();
-
-				FileUtil.copyFile(
-					fromFileNameVersionFile, toFileNameVersionFile);
-			}
+			fileSystemHelper.copy(
+				fromFileNameVersionFile, toFileNameVersionFile);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -404,7 +387,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		move(fileNameDir, newFileNameDir);
+		fileSystemHelper.move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -436,7 +419,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		move(fileNameDir, newFileNameDir);
+		fileSystemHelper.move(fileNameDir, newFileNameDir);
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -485,7 +468,7 @@ public class FileSystemStore extends BaseStore {
 				companyId, repositoryId, fileName, toVersionLabel);
 		}
 
-		move(fromFileNameVersionFile, toFileNameVersionFile);
+		fileSystemHelper.move(fromFileNameVersionFile, toFileNameVersionFile);
 	}
 
 	protected void deleteEmptyAncestors(File file) {
@@ -627,70 +610,11 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
-	protected void move(File source, File destination) {
-		if (_useHardLink) {
-			try {
-				Files.move(source.toPath(), destination.toPath());
-			}
-			catch (IOException ioe) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()),
-					ioe);
-			}
-		}
-		else {
-			boolean renamed = FileUtil.move(source, destination);
-
-			if (!renamed) {
-				throw new SystemException(
-					StringBundler.concat(
-						"File name was not renamed from ", source.getPath(),
-						" to ", destination.getPath()));
-			}
-		}
-	}
-
-	private static boolean _isSupportHardLink(Path path) {
-		Path sourceFilePath = null;
-		Path destinationFilePath = null;
-
-		try {
-			sourceFilePath = Files.createTempFile(path, null, null);
-
-			Path fileNamePath = sourceFilePath.getFileName();
-
-			destinationFilePath = sourceFilePath.resolveSibling(
-				fileNamePath.toString() + "-link");
-
-			Files.createLink(destinationFilePath, sourceFilePath);
-
-			return true;
-		}
-		catch (IOException ioe) {
-		}
-		finally {
-			try {
-				Files.deleteIfExists(sourceFilePath);
-			}
-			catch (IOException ioe) {
-			}
-
-			try {
-				Files.deleteIfExists(destinationFilePath);
-			}
-			catch (IOException ioe) {
-			}
-		}
-
-		return false;
-	}
+	protected final FileSystemHelper fileSystemHelper;
 
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private final File _rootDir;
-	private final boolean _useHardLink;
 
 	private static class RepositoryDirKey {
 
