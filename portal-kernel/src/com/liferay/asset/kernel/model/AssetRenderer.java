@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -45,6 +48,12 @@ public interface AssetRenderer<T> extends Renderer {
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
 	public static final String TEMPLATE_PREVIEW = "preview";
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getAddToPagePortletId() throws Exception;
 
 	public T getAssetObject();
 
@@ -77,9 +86,23 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public String getDiscussionPath();
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public Date getDisplayDate();
+
 	public long getGroupId();
 
 	public String getNewName(String oldName, String token);
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getPreviewPath(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception;
 
 	public String getSearchSummary(Locale locale);
 
@@ -202,5 +225,14 @@ public interface AssetRenderer<T> extends Renderer {
 	public boolean isPrintable();
 
 	public boolean isRatable();
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setAddToPagePreferences(
+			PortletPreferences portletPreferences, String portletId,
+			ThemeDisplay themeDisplay)
+		throws Exception;
 
 }
