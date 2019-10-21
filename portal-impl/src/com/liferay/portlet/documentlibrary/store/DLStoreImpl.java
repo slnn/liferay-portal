@@ -311,14 +311,8 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		try {
-			return StreamUtil.toByteArray(
-				store.getFileAsStream(
-					companyId, repositoryId, fileName, versionLabel));
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
+		return store.getFileAsBytes(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
