@@ -362,7 +362,7 @@ public class AssetPublisherDisplayContext {
 			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
 				_portletPreferences, _themeDisplay.getScopeGroupId(),
 				_themeDisplay.getLayout(), getAllAssetCategoryIds(),
-				getAllAssetTagNames(), getAllKeywords());
+				getAllKeywords(), getAllAssetTagNames());
 		}
 
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
