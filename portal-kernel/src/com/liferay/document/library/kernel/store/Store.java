@@ -57,6 +57,15 @@ public interface Store {
 		throws PortalException;
 
 	/**
+	 * Ensures company's root directory exists.
+	 *
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 * @param companyId the primary key of the company
+	 */
+	@Deprecated
+	public void checkRoot(long companyId);
+
+	/**
 	 * Deletes a directory.
 	 *
 	 * @param companyId the primary key of the company

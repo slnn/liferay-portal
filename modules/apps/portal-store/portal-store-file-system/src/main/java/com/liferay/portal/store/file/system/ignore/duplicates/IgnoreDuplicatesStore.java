@@ -51,6 +51,11 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
+	public void checkRoot(long companyId) {
+		_store.checkRoot(companyId);
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 

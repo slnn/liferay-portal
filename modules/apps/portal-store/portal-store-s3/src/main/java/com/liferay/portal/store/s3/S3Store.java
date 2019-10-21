@@ -112,6 +112,10 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
+	public void checkRoot(long companyId) {
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 

@@ -122,6 +122,10 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
+	public void checkRoot(long companyId) {
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
