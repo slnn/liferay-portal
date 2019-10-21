@@ -108,9 +108,7 @@ public interface Store {
 	 * @param  fileName the file's name
 	 * @return Returns the size of the file
 	 */
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException;
 
 	public String[] getFileVersions(

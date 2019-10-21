@@ -195,15 +195,11 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws NoSuchFileException {
 
-		if (Validator.isNull(versionLabel)) {
-			versionLabel = getHeadVersionLabel(
-				companyId, repositoryId, fileName);
-		}
+		String versionLabel = getHeadVersionLabel(
+			companyId, repositoryId, fileName);
 
 		File fileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, versionLabel);

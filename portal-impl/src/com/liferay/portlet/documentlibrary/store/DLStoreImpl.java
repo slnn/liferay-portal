@@ -323,8 +323,7 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		return store.getFileSize(
-			companyId, repositoryId, fileName, StringPool.BLANK);
+		return store.getFileSize(companyId, repositoryId, fileName);
 	}
 
 	@Override
