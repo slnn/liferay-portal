@@ -61,7 +61,6 @@ import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
-import org.gradle.jvm.tasks.Jar;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.util.VersionNumber;
 
@@ -635,19 +634,6 @@ public class NodePlugin implements Plugin<Project> {
 		final PackageRunBuildTask packageRunBuildTask) {
 
 		final Project project = packageRunBuildTask.getProject();
-
-		packageRunBuildTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Jar jar = (Jar)GradleUtil.getTask(
-						project, JavaPlugin.JAR_TASK_NAME);
-
-					project.delete(jar.getArchivePath());
-				}
-
-			});
 
 		Copy processResourcesCopy = (Copy)GradleUtil.getTask(
 			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
