@@ -64,9 +64,16 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 					image.getImageId() + StringPool.PERIOD + image.getType();
 
 				try {
-					transferFile(
-						sourceStore, targetStore, 0L, 0L, fileName,
-						Store.VERSION_DEFAULT, delete);
+					if (delete) {
+						sourceStore.moveFileToStore(
+							0L, 0L, fileName, Store.VERSION_DEFAULT,
+							targetStore);
+					}
+					else {
+						sourceStore.copyFileToStore(
+							0L, 0L, fileName, Store.VERSION_DEFAULT,
+							targetStore);
+					}
 				}
 				catch (Exception e) {
 					_log.error("Unable to migrate " + fileName, e);

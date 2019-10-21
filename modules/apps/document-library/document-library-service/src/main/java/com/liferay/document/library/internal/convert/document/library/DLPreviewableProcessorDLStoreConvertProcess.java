@@ -85,10 +85,18 @@ public class DLPreviewableProcessorDLStoreConvertProcess
 						fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 					try {
-						transferFile(
-							sourceStore, targetStore, companyId,
-							DLPreviewableProcessor.REPOSITORY_ID,
-							actualFileName, Store.VERSION_DEFAULT, delete);
+						if (delete) {
+							sourceStore.moveFileToStore(
+								companyId, DLPreviewableProcessor.REPOSITORY_ID,
+								actualFileName, Store.VERSION_DEFAULT,
+								targetStore);
+						}
+						else {
+							sourceStore.copyFileToStore(
+								companyId, DLPreviewableProcessor.REPOSITORY_ID,
+								actualFileName, Store.VERSION_DEFAULT,
+								targetStore);
+						}
 					}
 					catch (Exception e) {
 						_log.error("Unable to migrate " + fileName, e);
