@@ -97,8 +97,7 @@ public class SafeFileNameStore implements Store {
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
 		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
+			_store.hasFile(companyId, repositoryId, fileName)) {
 
 			_store.deleteFile(companyId, repositoryId, fileName);
 
@@ -213,8 +212,7 @@ public class SafeFileNameStore implements Store {
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
 		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
+			_store.hasFile(companyId, repositoryId, fileName)) {
 
 			return _store.getFileSize(companyId, repositoryId, fileName);
 		}

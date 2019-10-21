@@ -120,9 +120,7 @@ public class S3StoreTest extends BaseStoreTestCase {
 		store.updateFile(
 			companyId, repositoryId, fileName, RandomTestUtil.randomString());
 
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
+		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
 	}
 
 	private static Configuration _configuration;

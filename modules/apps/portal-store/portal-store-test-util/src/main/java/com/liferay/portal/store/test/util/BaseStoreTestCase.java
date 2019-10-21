@@ -504,12 +504,8 @@ public abstract class BaseStoreTestCase {
 
 		store.updateFile(companyId, repositoryId, fileName, newFileName);
 
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, newFileName, Store.VERSION_DEFAULT));
+		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertTrue(store.hasFile(companyId, repositoryId, newFileName));
 
 		Assert.assertTrue(
 			store.hasFile(companyId, repositoryId, newFileName, "1.0"));
@@ -617,12 +613,8 @@ public abstract class BaseStoreTestCase {
 
 		store.updateFile(companyId, repositoryId, fileName, newFileName);
 
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, newFileName, Store.VERSION_DEFAULT));
+		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertTrue(store.hasFile(companyId, repositoryId, newFileName));
 	}
 
 	@Test(expected = DuplicateFileException.class)
@@ -659,12 +651,8 @@ public abstract class BaseStoreTestCase {
 
 		store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
 
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, newRepositoryId, fileName, Store.VERSION_DEFAULT));
+		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertTrue(store.hasFile(companyId, newRepositoryId, fileName));
 
 		store.deleteDirectory(companyId, newRepositoryId, StringPool.SLASH);
 	}

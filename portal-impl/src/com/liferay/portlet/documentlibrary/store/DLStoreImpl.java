@@ -400,8 +400,7 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		return store.hasFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
+		return store.hasFile(companyId, repositoryId, fileName);
 	}
 
 	@Override

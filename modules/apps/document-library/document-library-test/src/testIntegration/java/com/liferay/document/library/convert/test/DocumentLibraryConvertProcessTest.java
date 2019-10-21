@@ -284,7 +284,7 @@ public class DocumentLibraryConvertProcessTest {
 			_sourceStore.hasFile(
 				rootDLFileEntry.getCompanyId(),
 				rootDLFileEntry.getDataRepositoryId(),
-				rootDLFileEntry.getName(), Store.VERSION_DEFAULT));
+				rootDLFileEntry.getName()));
 
 		DLFileEntry folderDLFileEntry = (DLFileEntry)folderFileEntry.getModel();
 
@@ -305,7 +305,7 @@ public class DocumentLibraryConvertProcessTest {
 			_sourceStore.hasFile(
 				folderDLFileEntry.getCompanyId(),
 				folderDLFileEntry.getDataRepositoryId(),
-				folderDLFileEntry.getName(), Store.VERSION_DEFAULT));
+				folderDLFileEntry.getName()));
 
 		_dlContentLocalService.getContent(
 			folderDLFileEntry.getCompanyId(),
