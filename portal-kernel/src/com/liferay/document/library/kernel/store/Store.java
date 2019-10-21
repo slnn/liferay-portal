@@ -201,6 +201,11 @@ public interface Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
+			String versionLabel, byte[] bytes)
+		throws PortalException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
 		throws PortalException;
 
