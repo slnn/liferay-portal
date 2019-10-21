@@ -47,6 +47,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UsersAdminUtil {
 
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 *             UsersAdmin#CUSTOM_QUESTION}
+	 */
+	@Deprecated
+	public static final String CUSTOM_QUESTION = "write-my-own-question";
+
 	public static void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
