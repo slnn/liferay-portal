@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
@@ -57,6 +58,17 @@ import java.util.Set;
  * @author Raymond Augé
  */
 public class AnnouncementsUtil {
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getAnnouncementScopes(User)}
+	 */
+	@Deprecated
+	public static LinkedHashMap<Long, long[]> getAnnouncementScopes(long userId)
+		throws PortalException {
+
+		return getAnnouncementScopes(UserLocalServiceUtil.getUserById(userId));
+	}
 
 	public static LinkedHashMap<Long, long[]> getAnnouncementScopes(User user)
 		throws PortalException {
