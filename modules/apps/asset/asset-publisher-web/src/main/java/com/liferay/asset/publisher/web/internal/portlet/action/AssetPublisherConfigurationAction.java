@@ -467,14 +467,14 @@ public class AssetPublisherConfigurationAction
 				actionRequest, "queryTagNames" + index);
 		}
 		else if (name.equals("keywords")) {
-			StrTokenizer strTokenizer = new StrTokenizer(
+			StrTokenizer tokenizer = new StrTokenizer(
 				ParamUtil.getString(actionRequest, "keywords" + index));
 
-			strTokenizer.setQuoteMatcher(StrMatcher.quoteMatcher());
+			tokenizer.setQuoteMatcher(StrMatcher.quoteMatcher());
 
-			List<String> valuesList = (List<String>)strTokenizer.getTokenList();
+			List<String> tokenList = (List<String>)tokenizer.getTokenList();
 
-			values = valuesList.toArray(new String[0]);
+			values = tokenList.toArray(new String[0]);
 		}
 		else {
 			values = ParamUtil.getStringValues(
