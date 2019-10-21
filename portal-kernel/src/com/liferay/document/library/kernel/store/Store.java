@@ -176,6 +176,12 @@ public interface Store {
 		String versionLabel);
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public void move(String srcDir, String destDir);
+
+	/**
 	 * Moves a file to a new data repository.
 	 *
 	 * @param companyId the primary key of the company
