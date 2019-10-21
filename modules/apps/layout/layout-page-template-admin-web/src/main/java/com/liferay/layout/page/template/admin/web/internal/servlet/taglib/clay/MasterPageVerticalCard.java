@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -22,9 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -41,16 +38,13 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class MasterPageVerticalCard
-	extends BaseBaseClayCard implements VerticalCard {
+public class MasterPageVerticalCard implements VerticalCard {
 
 	public MasterPageVerticalCard(
-		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RenderResponse renderResponse, RowChecker rowChecker) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(baseModel, rowChecker);
-
-		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
+		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -121,10 +115,6 @@ public class MasterPageVerticalCard
 
 	@Override
 	public boolean isSelectable() {
-		if (_layoutPageTemplateEntry.getLayoutPageTemplateEntryId() > 0) {
-			return true;
-		}
-
 		return false;
 	}
 
