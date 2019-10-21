@@ -15,6 +15,7 @@
 package com.liferay.document.library.kernel.antivirus;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,6 +40,11 @@ public class AntivirusScannerWrapper implements AntivirusScanner {
 	@Override
 	public void scan(File file) throws AntivirusScannerException {
 		_antivirusScanner.scan(file);
+	}
+
+	@Override
+	public void scan(InputStream inputStream) throws AntivirusScannerException {
+		_antivirusScanner.scan(inputStream);
 	}
 
 	public void setAntivirusScanner(AntivirusScanner antivirusScanner) {

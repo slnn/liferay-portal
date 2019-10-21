@@ -15,16 +15,20 @@
 package com.liferay.document.library.kernel.antivirus;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * @author Michael C. Han
  */
-public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
+public abstract class BaseInputStreamAntivirusScanner
+	implements AntivirusScanner {
 
 	@Override
 	public boolean isActive() {
@@ -32,49 +36,23 @@ public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 	}
 
 	@Override
-	public void scan(byte[] bytes) throws AntivirusScannerException {
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile(_ANTIVIRUS_EXTENSION);
-
-			FileUtil.write(file, bytes);
-
-			scan(file);
+	public void scan(File file) throws AntivirusScannerException {
+		try (InputStream inputStream = new FileInputStream(file)) {
+			scan(inputStream);
+		}
+		catch (FileNotFoundException fnfe) {
+			throw new SystemException("Unable to scan file", fnfe);
 		}
 		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			if (file != null) {
-				file.delete();
-			}
-		}
-	}
-
-	@Override
-	public void scan(InputStream inputStream) throws AntivirusScannerException {
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile(_ANTIVIRUS_EXTENSION);
-
-			FileUtil.write(file, inputStream);
-
-			scan(file);
-		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			if (file != null) {
-				file.delete();
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
 			}
 		}
 	}
 
 	private static final boolean _ACTIVE = true;
 
-	private static final String _ANTIVIRUS_EXTENSION = "avs";
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseInputStreamAntivirusScanner.class);
 
 }

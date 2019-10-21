@@ -15,6 +15,7 @@
 package com.liferay.document.library.kernel.antivirus;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author Michael C. Han
@@ -45,6 +46,14 @@ public class AntivirusScannerUtil {
 	public static void scan(File file) throws AntivirusScannerException {
 		if (isActive()) {
 			getAntivirusScanner().scan(file);
+		}
+	}
+
+	public static void scan(InputStream inputStream)
+		throws AntivirusScannerException {
+
+		if (isActive()) {
+			getAntivirusScanner().scan(inputStream);
 		}
 	}
 
