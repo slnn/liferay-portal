@@ -106,6 +106,14 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
+			long companyId, long repositoryId, String fileName, File file)
+		throws PortalException {
+
+		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, file);
+	}
+
+	@Override
+	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException {
 
