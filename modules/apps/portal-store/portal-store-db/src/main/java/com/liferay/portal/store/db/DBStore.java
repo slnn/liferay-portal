@@ -18,6 +18,7 @@ import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.document.library.content.service.DLContentLocalService;
+import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
@@ -68,12 +69,12 @@ public class DBStore extends BaseStore {
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream inputStream)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		if (_dlContentLocalService.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			_dlContentLocalService.deleteContent(
+			throw new DuplicateFileException(
 				companyId, repositoryId, fileName, versionLabel);
 		}
 

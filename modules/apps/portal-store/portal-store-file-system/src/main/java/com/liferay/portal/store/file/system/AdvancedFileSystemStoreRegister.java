@@ -20,6 +20,7 @@ import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirExceptio
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration;
+import com.liferay.portal.store.file.system.ignore.duplicates.IgnoreDuplicatesStore;
 import com.liferay.portal.store.file.system.safe.file.name.SafeFileNameStore;
 
 import java.util.Map;
@@ -58,8 +59,9 @@ public class AdvancedFileSystemStoreRegister {
 		_serviceRegistration = bundleContext.registerService(
 			Store.class,
 			new SafeFileNameStore(
-				new AdvancedFileSystemStore(
-					advancedFileSystemStoreConfiguration)),
+				new IgnoreDuplicatesStore(
+					new AdvancedFileSystemStore(
+						advancedFileSystemStoreConfiguration))),
 			MapUtil.singletonDictionary(
 				"store.type", AdvancedFileSystemStore.class.getName()));
 	}
