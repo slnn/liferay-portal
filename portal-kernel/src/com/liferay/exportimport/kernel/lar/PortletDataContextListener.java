@@ -14,22 +14,16 @@
 
 package com.liferay.exportimport.kernel.lar;
 
-import java.util.concurrent.Callable;
-
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
- * @author Daniel Kocsis
+ * @author     Raymond Augé
+ * @deprecated As of Wilberforce (7.0.x), see {@link
+ *             com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent}
  */
-@ProviderType
-public interface ExportImportProcessCallbackRegistry {
+@Deprecated
+public interface PortletDataContextListener {
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public void registerCallback(Callable<?> callable);
+	public void onAddZipEntry(String path);
 
-	public void registerCallback(String processId, Callable<?> callable);
+	public void onGetZipEntry(String path);
 
 }

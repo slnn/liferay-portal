@@ -843,6 +843,14 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_stagingControls = stagingControls;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x)
+	 */
+	@Deprecated
+	protected void setSupportsDataStrategyCopyAsNew(
+		boolean supportsDataStrategyCopyAsNew) {
+	}
+
 	private PortletDataException _handleException(
 		Exception e, int type, String portletId) {
 
