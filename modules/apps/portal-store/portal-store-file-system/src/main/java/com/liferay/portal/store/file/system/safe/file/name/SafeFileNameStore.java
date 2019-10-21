@@ -15,7 +15,6 @@
 package com.liferay.portal.store.file.system.safe.file.name;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -167,7 +166,7 @@ public class SafeFileNameStore implements Store {
 
 		String[] versions = versionSet.toArray(new String[0]);
 
-		Arrays.sort(versions, DLUtil::compareVersions);
+		Arrays.sort(versions);
 
 		return versions;
 	}
