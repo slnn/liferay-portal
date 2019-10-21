@@ -52,6 +52,11 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
+		_store.deleteFile(companyId, repositoryId, fileName);
+	}
+
+	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -123,14 +128,7 @@ public class IgnoreDuplicatesStore implements Store {
 	protected StoreAction createDeleteFileStoreAction(
 		final long companyId, final long repositoryId, final String fileName) {
 
-		return () -> {
-			for (String versionLabel :
-					_store.getFileVersions(companyId, repositoryId, fileName)) {
-
-				_store.deleteFile(
-					companyId, repositoryId, fileName, versionLabel);
-			}
-		};
+		return () -> _store.deleteFile(companyId, repositoryId, fileName);
 	}
 
 	protected StoreAction createDeleteFileStoreAction(

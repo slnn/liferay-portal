@@ -131,6 +131,23 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
+		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
+
+		if (!fileNameDir.exists()) {
+			logFailedDeletion(companyId, repositoryId, fileName, null, null);
+
+			return;
+		}
+
+		File parentFile = fileNameDir.getParentFile();
+
+		FileUtil.deltree(fileNameDir);
+
+		deleteEmptyAncestors(companyId, repositoryId, parentFile);
+	}
+
+	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

@@ -210,11 +210,7 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		for (String versionLabel :
-				store.getFileVersions(companyId, repositoryId, fileName)) {
-
-			store.deleteFile(companyId, repositoryId, fileName, versionLabel);
-		}
+		store.deleteFile(companyId, repositoryId, fileName);
 	}
 
 	@Override
