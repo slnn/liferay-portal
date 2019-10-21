@@ -17,7 +17,6 @@ package com.liferay.portlet.asset.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -151,10 +149,6 @@ public class AssetSearcher extends BaseSearcher {
 		BooleanQuery keywordsQuery = new BooleanQueryImpl();
 
 		for (String keyword : allKeywords) {
-			if (keyword.contains(" ")) {
-				keyword = StringUtil.quote(keyword, CharPool.QUOTE);
-			}
-
 			StringQuery stringQuery = new StringQuery(keyword);
 
 			keywordsQuery.add(stringQuery, BooleanClauseOccur.MUST);
@@ -253,10 +247,6 @@ public class AssetSearcher extends BaseSearcher {
 		BooleanQuery keywordsQuery = new BooleanQueryImpl();
 
 		for (String keyword : anyKeywords) {
-			if (keyword.contains(" ")) {
-				keyword = StringUtil.quote(keyword, CharPool.QUOTE);
-			}
-
 			StringQuery stringQuery = new StringQuery(keyword);
 
 			keywordsQuery.add(stringQuery, BooleanClauseOccur.SHOULD);
@@ -399,10 +389,6 @@ public class AssetSearcher extends BaseSearcher {
 		BooleanQuery keywordsQuery = new BooleanQueryImpl();
 
 		for (String keyword : notAllKeywords) {
-			if (keyword.contains(" ")) {
-				keyword = StringUtil.quote(keyword, CharPool.QUOTE);
-			}
-
 			StringQuery stringQuery = new StringQuery(keyword);
 
 			keywordsQuery.add(stringQuery, BooleanClauseOccur.MUST);
@@ -494,10 +480,6 @@ public class AssetSearcher extends BaseSearcher {
 		BooleanQuery keywordsQuery = new BooleanQueryImpl();
 
 		for (String keyword : notAnyKeywords) {
-			if (keyword.contains(" ")) {
-				keyword = StringUtil.quote(keyword, CharPool.QUOTE);
-			}
-
 			StringQuery stringQuery = new StringQuery(keyword);
 
 			keywordsQuery.add(stringQuery, BooleanClauseOccur.SHOULD);

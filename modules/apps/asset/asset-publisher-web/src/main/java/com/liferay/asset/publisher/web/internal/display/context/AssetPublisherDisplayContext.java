@@ -50,7 +50,6 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,8 +95,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -582,28 +579,24 @@ public class AssetPublisherDisplayContext {
 					_httpServletRequest, "keywords" + queryLogicIndex,
 					queryValues);
 
-				String[] keywords = StringUtil.split(queryValues, ",");
+				String[] keywords = StringUtil.split(queryValues, " ");
 
 				if (ArrayUtil.isEmpty(keywords)) {
 					continue;
 				}
 
-				List<String> items = new ArrayList<>();
+				List<Map<String, String>> selectedItems = new ArrayList<>();
 
 				for (String keyword : keywords) {
-					if (keyword.contains(" ")) {
-						keyword = StringUtil.quote(keyword, CharPool.QUOTE);
-					}
+					Map<String, String> selectedCategory = new HashMap<>();
 
-					items.add(keyword);
+					selectedCategory.put("label", keyword);
+					selectedCategory.put("value", keyword);
+
+					selectedItems.add(selectedCategory);
 				}
 
-				Stream<String> stream = items.stream();
-
-				queryValues = stream.collect(
-					Collectors.joining(StringPool.SPACE));
-
-				ruleJSONObject.put("selectedItems", queryValues);
+				ruleJSONObject.put("selectedItems", selectedItems);
 			}
 			else {
 				queryValues = ParamUtil.getString(
