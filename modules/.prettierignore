@@ -44,7 +44,7 @@
 ##
 
 	#
-	# Specify JSP files with tags inside their script blocks that, when
+	# JSP files with tags inside their script blocks that, when
 	# removed, produce and invalid JS syntax tree.
 	#
 	apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/resources/edit_form/end.jsp
