@@ -22,8 +22,6 @@ checkoutDXPScript {
 			branchName = branchName + "-private"
 		}
 
-		logger.lifecycle "git fetch --depth=1 --force --no-tags {} {}", repositoryURL, branchName + ":" + branchName
-
 		exec {
 			commandLine "git", "fetch", "--depth=1", "--force", "--no-tags", repositoryURL, branchName + ":" + branchName
 			workingDir = projectDir.parentFile
