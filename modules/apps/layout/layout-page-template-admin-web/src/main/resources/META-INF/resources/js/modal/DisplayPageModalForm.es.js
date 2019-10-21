@@ -85,7 +85,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 							>
 								<option value="">
 									{`-- ${Liferay.Language.get(
-										'not-selected'
+										'no-selected'
 									)} --`}
 								</option>
 								{props.mappingTypes.map(mappingType => (
@@ -114,7 +114,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 								>
 									<option value="">
 										{`-- ${Liferay.Language.get(
-											'not-selected'
+											'no-selected'
 										)} --`}
 									</option>
 									{subtypes.map(subtype => (
