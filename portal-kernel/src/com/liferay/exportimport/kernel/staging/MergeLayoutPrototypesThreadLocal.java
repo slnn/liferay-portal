@@ -17,6 +17,8 @@ package com.liferay.exportimport.kernel.staging;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
 
+import java.lang.reflect.Method;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -36,6 +38,15 @@ public class MergeLayoutPrototypesThreadLocal {
 		return _inProgress.get();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #isMergeComplete(String, Object...)}
+	 */
+	@Deprecated
+	public static boolean isMergeComplete(Method method, Object[] arguments) {
+		return isMergeComplete(method.getName(), arguments);
+	}
+
 	public static boolean isMergeComplete(
 		String methodName, Object... arguments) {
 
@@ -46,6 +57,15 @@ public class MergeLayoutPrototypesThreadLocal {
 
 	public static void setInProgress(boolean inProgress) {
 		_inProgress.set(inProgress);
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #setMergeComplete(String, Object...)}
+	 */
+	@Deprecated
+	public static void setMergeComplete(Method method, Object[] arguments) {
+		setMergeComplete(method.getName(), arguments);
 	}
 
 	public static void setMergeComplete(
