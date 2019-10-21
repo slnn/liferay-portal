@@ -84,13 +84,12 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is)
 		throws DuplicateFileException {
 
 		try {
 			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, versionLabel);
+				companyId, repositoryId, fileName, VERSION_DEFAULT);
 
 			if (fileNameVersionFile.exists()) {
 				throw new DuplicateFileException(

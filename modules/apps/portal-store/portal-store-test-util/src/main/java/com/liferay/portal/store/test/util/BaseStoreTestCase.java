@@ -66,7 +66,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new BufferedInputStream(new ByteArrayInputStream(_DATA_VERSION_1)));
 
 		Assert.assertTrue(
@@ -79,7 +79,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new ByteArrayInputStream(_DATA_VERSION_1));
 
 		Assert.assertTrue(
@@ -93,8 +93,7 @@ public abstract class BaseStoreTestCase {
 		File file = createFile(_DATA_VERSION_1);
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new FileInputStream(file));
+			companyId, repositoryId, fileName, new FileInputStream(file));
 
 		Assert.assertTrue(
 			store.hasFile(
@@ -106,7 +105,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		Assert.assertTrue(
@@ -121,13 +120,13 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName1,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName2,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		store.deleteDirectory(companyId, repositoryId, dirName);
@@ -149,13 +148,13 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName1,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName2,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		store.deleteDirectory(companyId, repositoryId, dirName);
@@ -173,7 +172,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		addVersions(fileName, 1);
@@ -192,7 +191,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		addVersions(fileName, 1);
@@ -212,7 +211,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		addVersions(fileName, 5);
@@ -234,13 +233,13 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName1,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName2 = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName2,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String[] fileNames = store.getFileNames(companyId, repositoryId);
@@ -262,13 +261,13 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName1,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName2 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName2,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String[] fileNames = store.getFileNames(
@@ -293,20 +292,20 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName1,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName2,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName3 =
 			RandomTestUtil.randomString() + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName3, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName3,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String[] fileNames = store.getFileNames(
@@ -353,13 +352,13 @@ public abstract class BaseStoreTestCase {
 		String fileName1 = dirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName1,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String fileName2 = subdirName + "/" + RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName2,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String[] fileNames = store.getFileNames(companyId, repositoryId);
@@ -379,7 +378,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		long size = store.getFileSize(companyId, repositoryId, fileName);
@@ -398,7 +397,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		addVersions(fileName, 5);
@@ -448,7 +447,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		addVersions(fileName, 2);
@@ -477,7 +476,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		store.updateFile(
@@ -506,7 +505,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		String newFileName = RandomTestUtil.randomString();
@@ -528,7 +527,7 @@ public abstract class BaseStoreTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
 		store.updateFile(companyId, repositoryId, fileName, fileName);

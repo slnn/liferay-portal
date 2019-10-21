@@ -66,11 +66,12 @@ public class DBStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream inputStream)
+			InputStream inputStream)
 		throws DuplicateFileException {
 
 		updateFile(
-			companyId, repositoryId, fileName, versionLabel, inputStream);
+			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			inputStream);
 	}
 
 	@Override

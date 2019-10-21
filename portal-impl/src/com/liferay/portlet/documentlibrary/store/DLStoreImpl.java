@@ -62,7 +62,7 @@ public class DLStoreImpl implements DLStore {
 		Store store = _storeFactory.getStore();
 
 		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(bytes));
 	}
 
@@ -81,8 +81,7 @@ public class DLStoreImpl implements DLStore {
 		Store store = _storeFactory.getStore();
 
 		try (InputStream is = new FileInputStream(file)) {
-			store.addFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT, is);
+			store.addFile(companyId, repositoryId, fileName, is);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -124,9 +123,7 @@ public class DLStoreImpl implements DLStore {
 				AntivirusScannerUtil.scan(tempFile);
 
 				try (InputStream fis = new FileInputStream(tempFile)) {
-					store.addFile(
-						companyId, repositoryId, fileName,
-						Store.VERSION_DEFAULT, fis);
+					store.addFile(companyId, repositoryId, fileName, fis);
 				}
 			}
 			catch (IOException ioe) {
@@ -141,9 +138,7 @@ public class DLStoreImpl implements DLStore {
 		}
 		else {
 			try {
-				store.addFile(
-					companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-					is);
+				store.addFile(companyId, repositoryId, fileName, is);
 			}
 			catch (AccessDeniedException ade) {
 				throw new PrincipalException(ade);

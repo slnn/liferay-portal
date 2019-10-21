@@ -33,15 +33,14 @@ public class IgnoreDuplicatesStore implements Store {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
+			final long companyId, final long repositoryId,
+			final String fileName, final InputStream is)
 		throws PortalException {
 
 		recoverAndRetryOnFailure(
 			createDeleteFileStoreAction(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT),
-			() -> _store.addFile(
-				companyId, repositoryId, fileName, versionLabel, is));
+			() -> _store.addFile(companyId, repositoryId, fileName, is));
 	}
 
 	@Override
