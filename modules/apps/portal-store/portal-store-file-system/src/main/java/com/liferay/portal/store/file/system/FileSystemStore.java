@@ -597,8 +597,12 @@ public class FileSystemStore extends BaseStore {
 		return repositoryDir;
 	}
 
+	protected String getRootDirName() {
+		return _fileSystemStoreConfiguration.rootDir();
+	}
+
 	protected void initializeRootDir() {
-		String path = _fileSystemStoreConfiguration.rootDir();
+		String path = getRootDirName();
 
 		_rootDir = new File(path);
 
