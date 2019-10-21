@@ -91,6 +91,16 @@ public abstract class BaseStore implements Store {
 		}
 	}
 
+	@Override
+	public void copyFileToStore(
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		Store targetStore) {
+
+		_transfer(
+			companyId, repositoryId, fileName, versionLabel, targetStore,
+			false);
+	}
+
 	/**
 	 * Creates a new copy of the file version.
 	 *
@@ -276,6 +286,15 @@ public abstract class BaseStore implements Store {
 	public void move(String srcDir, String destDir) {
 	}
 
+	@Override
+	public void moveFileToStore(
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		Store targetStore) {
+
+		_transfer(
+			companyId, repositoryId, fileName, versionLabel, targetStore, true);
+	}
+
 	/**
 	 * Updates a file based on a byte array.
 	 *
@@ -413,6 +432,30 @@ public abstract class BaseStore implements Store {
 			if (_log.isDebugEnabled() && (cause == null)) {
 				_log.debug(sb.toString());
 			}
+		}
+	}
+
+	private void _transfer(
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		Store targetStore, boolean delete) {
+
+		try (InputStream is = getFileAsStream(
+				companyId, repositoryId, fileName, versionLabel)) {
+
+			if (versionLabel.equals(Store.VERSION_DEFAULT)) {
+				targetStore.addFile(companyId, repositoryId, fileName, is);
+			}
+			else {
+				targetStore.updateFile(
+					companyId, repositoryId, fileName, versionLabel, is);
+			}
+
+			if (delete) {
+				deleteFile(companyId, repositoryId, fileName, versionLabel);
+			}
+		}
+		catch (IOException | PortalException e) {
+			throw new SystemException(e);
 		}
 	}
 

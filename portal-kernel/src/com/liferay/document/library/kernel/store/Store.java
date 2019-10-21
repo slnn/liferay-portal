@@ -74,6 +74,11 @@ public interface Store {
 	@Deprecated
 	public void checkRoot(long companyId);
 
+	public void copyFileToStore(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, Store targetStore)
+		throws PortalException;
+
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
@@ -211,6 +216,11 @@ public interface Store {
 	 */
 	@Deprecated
 	public void move(String srcDir, String destDir);
+
+	public void moveFileToStore(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, Store targetStore)
+		throws PortalException;
 
 	/**
 	 * Moves a file to a new data repository.
