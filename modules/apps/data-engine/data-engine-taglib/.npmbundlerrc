@@ -17,5 +17,6 @@
 		"**/__tests__/*.js",
 		"!**/*.es.js",
 		"!**/*.soy.js"
-	]
+	],
+	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }

@@ -13,5 +13,6 @@
 		"react-dnd-html5-backend": [
 			"dist/**/*"
 		]
-	}
+	},
+	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }
