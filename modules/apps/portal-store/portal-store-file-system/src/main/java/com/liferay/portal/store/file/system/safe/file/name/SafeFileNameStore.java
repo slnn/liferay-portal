@@ -40,13 +40,7 @@ public class SafeFileNameStore implements Store {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(
-				companyId, repositoryId, fileName,
-				DLFileEntryConstants.VERSION_DEFAULT)) {
-
-			_store.updateFile(companyId, repositoryId, fileName, safeFileName);
-		}
+		renameUnsafeFile(companyId, repositoryId, fileName, safeFileName);
 
 		_store.addFile(companyId, repositoryId, safeFileName, versionLabel, is);
 	}
@@ -210,6 +204,20 @@ public class SafeFileNameStore implements Store {
 
 		_store.updateFile(
 			companyId, repositoryId, safeFileName, safeNewFileName);
+	}
+
+	protected void renameUnsafeFile(
+			long companyId, long repositoryId, String fileName,
+			String safeFileName)
+		throws PortalException {
+
+		if (!safeFileName.equals(fileName) &&
+			_store.hasFile(
+				companyId, repositoryId, fileName,
+				DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			_store.updateFile(companyId, repositoryId, fileName, safeFileName);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
