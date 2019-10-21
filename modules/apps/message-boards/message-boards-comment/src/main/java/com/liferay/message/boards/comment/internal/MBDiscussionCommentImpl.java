@@ -94,6 +94,24 @@ public class MBDiscussionCommentImpl
 		return _ratingsStats.get(getCommentId());
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x)
+	 */
+	@Deprecated
+	@Override
+	public List<DiscussionComment> getThreadComments() {
+		return getDescendantComments();
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x)
+	 */
+	@Deprecated
+	@Override
+	public int getThreadCommentsCount() {
+		return getDescendantCommentsCount();
+	}
+
 	@Override
 	public DiscussionCommentIterator getThreadDiscussionCommentIterator() {
 		List<MBMessage> messages = _treeWalker.getMessages();
