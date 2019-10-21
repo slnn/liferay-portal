@@ -176,6 +176,23 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
+	public String[] getFileNames(long companyId, long repositoryId) {
+		File repositoryDir = getRepositoryDir(companyId, repositoryId);
+
+		List<String> fileNames = new ArrayList<>();
+
+		String[] dirNames = FileUtil.listDirs(repositoryDir);
+
+		for (String dirName : dirNames) {
+			getFileNames(
+				fileNames, dirName,
+				repositoryDir.getPath() + StringPool.SLASH + dirName);
+		}
+
+		return fileNames.toArray(new String[0]);
+	}
+
+	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
@@ -315,7 +332,7 @@ public class FileSystemStore extends BaseStore {
 					path + StringPool.SLASH + pathDirName);
 			}
 		}
-		else if (!dirName.isEmpty()) {
+		else {
 			File file = new File(path);
 
 			if (file.isDirectory()) {
