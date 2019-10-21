@@ -109,6 +109,11 @@ public interface DLStore {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws PortalException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
 			String versionLabel, String sourceFileName, File file)
 		throws PortalException;

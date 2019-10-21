@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -46,23 +45,7 @@ public class SafeFileNameStore implements Store {
 				companyId, repositoryId, fileName,
 				DLFileEntryConstants.VERSION_DEFAULT)) {
 
-			for (String curVersionLabel :
-					_store.getFileVersions(companyId, repositoryId, fileName)) {
-
-				try (InputStream inputStream = _store.getFileAsStream(
-						companyId, repositoryId, fileName, curVersionLabel)) {
-
-					_store.addFile(
-						companyId, repositoryId, safeFileName, curVersionLabel,
-						inputStream);
-				}
-				catch (IOException ioe) {
-					throw new PortalException(ioe);
-				}
-
-				_store.deleteFile(
-					companyId, repositoryId, fileName, curVersionLabel);
-			}
+			_store.updateFile(companyId, repositoryId, fileName, safeFileName);
 		}
 
 		_store.addFile(companyId, repositoryId, safeFileName, versionLabel, is);
@@ -206,6 +189,27 @@ public class SafeFileNameStore implements Store {
 
 		return _store.hasFile(
 			companyId, repositoryId, safeFileName, versionLabel);
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws PortalException {
+
+		String safeFileName = FileUtil.encodeSafeFileName(fileName);
+		String safeNewFileName = FileUtil.encodeSafeFileName(newFileName);
+
+		if (!safeFileName.equals(fileName) &&
+			_store.hasFile(
+				companyId, repositoryId, fileName,
+				DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			safeFileName = fileName;
+		}
+
+		_store.updateFile(
+			companyId, repositoryId, safeFileName, safeNewFileName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

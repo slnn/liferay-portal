@@ -132,4 +132,9 @@ public interface Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel);
 
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws PortalException;
+
 }
