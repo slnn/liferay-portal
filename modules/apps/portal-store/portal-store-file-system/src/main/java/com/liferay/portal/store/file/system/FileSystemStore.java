@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +60,7 @@ public class FileSystemStore extends BaseStore {
 		initializeRootDir();
 
 		fileSystemHelper = new FileSystemHelper(
-			_fileSystemStoreConfiguration.useHardLinks(), _rootDir.toPath());
+			_fileSystemStoreConfiguration.useHardLinks(), getRootDirPath());
 	}
 
 	@Override
@@ -599,6 +600,10 @@ public class FileSystemStore extends BaseStore {
 
 	protected String getRootDirName() {
 		return _fileSystemStoreConfiguration.rootDir();
+	}
+
+	protected Path getRootDirPath() {
+		return _rootDir.toPath();
 	}
 
 	protected void initializeRootDir() {
