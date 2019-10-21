@@ -108,6 +108,11 @@ public interface DLStore {
 	public boolean isValidName(String name);
 
 	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws PortalException;
+
+	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws PortalException;
