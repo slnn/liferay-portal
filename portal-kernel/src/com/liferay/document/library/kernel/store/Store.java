@@ -45,6 +45,10 @@ public interface Store {
 	public void addDirectory(long companyId, long repositoryId, String dirName);
 
 	public void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes)
+		throws PortalException;
+
+	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException;
 
