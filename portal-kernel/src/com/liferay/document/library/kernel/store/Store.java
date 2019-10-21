@@ -66,6 +66,11 @@ public interface Store {
 	@Deprecated
 	public void checkRoot(long companyId);
 
+	public void copyFileVersion(
+			long companyId, long repositoryId, String fileName,
+			String fromVersionLabel, String toVersionLabel)
+		throws PortalException;
+
 	/**
 	 * Deletes a directory.
 	 *
