@@ -13,7 +13,6 @@
  */
 
 import React, {useContext} from 'react';
-
 import EditAppContext, {UPDATE_SETTINGS} from './EditAppContext.es';
 
 const SCOPES = [
@@ -33,10 +32,10 @@ const SCOPES = [
 
 export default () => {
 	const {
-		dispatch,
 		state: {
 			app: {appDeployments}
-		}
+		},
+		dispatch
 	} = useContext(EditAppContext);
 
 	const onScopeChange = event => {

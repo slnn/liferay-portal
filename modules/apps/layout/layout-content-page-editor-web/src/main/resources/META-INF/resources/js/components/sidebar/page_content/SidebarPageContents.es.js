@@ -13,11 +13,10 @@
  */
 
 import React from 'react';
-
+import {PageContents} from './PageContents.es';
+import {NoPageContents} from './NoPageContents.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import SidebarHeader from '../SidebarHeader.es';
-import {NoPageContents} from './NoPageContents.es';
-import {PageContents} from './PageContents.es';
 
 const SidebarPageContents = () => {
 	const pageContents = useSelector(state => state.pageContents);

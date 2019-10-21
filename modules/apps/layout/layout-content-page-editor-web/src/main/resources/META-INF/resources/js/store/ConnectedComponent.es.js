@@ -12,12 +12,11 @@
  * details.
  */
 
-import {Config} from 'metal-state';
 import React, {useContext, useEffect, useState} from 'react';
-
-import StoreContext from './StoreContext.es';
-import INITIAL_STATE from './state.es';
+import {Config} from 'metal-state';
 import {connect, disconnect, Store} from './store.es';
+import INITIAL_STATE from './state.es';
+import StoreContext from './StoreContext.es';
 
 /**
  * HOC that returns a component that connects automatically

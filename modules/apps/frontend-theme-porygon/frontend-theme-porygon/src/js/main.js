@@ -13,7 +13,7 @@
  */
 
 (function() {
-	AUI().ready('liferay-sign-in-modal', A => {
+	AUI().ready('liferay-sign-in-modal', function(A) {
 		var signIn = A.one('.sign-in > a');
 
 		if (signIn && signIn.getData('redirect') !== 'true') {
@@ -28,12 +28,12 @@
 	);
 
 	if (porygonSearch && porygonSearchButton && porygonSearchInput) {
-		porygonSearchButton.addEventListener('click', _event => {
+		porygonSearchButton.addEventListener('click', function(_event) {
 			porygonSearch.classList.toggle('active');
 			porygonSearchInput.focus();
 		});
 
-		porygonSearch.addEventListener('keydown', event => {
+		porygonSearch.addEventListener('keydown', function(event) {
 			if (event.keyCode === 27) {
 				porygonSearch.classList.remove('active');
 			}

@@ -13,14 +13,13 @@
  */
 
 import {ClayActionsDropdown} from 'clay-dropdown';
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
-import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-
+import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import Component from 'metal-jsx';
+import dom from 'metal-dom';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 const getFieldIndexes = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);

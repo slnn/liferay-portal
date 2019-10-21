@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-container',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var CSS_TEMPLATE = 'lfr-template';
@@ -102,7 +102,7 @@ AUI.add(
 
 							cells.empty();
 
-							arr.forEach((item, index) => {
+							arr.forEach(function(item, index) {
 								var cell = cells.item(index);
 
 								if (cell) {
@@ -148,7 +148,7 @@ AUI.add(
 					if (Lang.isNumber(obj) || Lang.isString(obj)) {
 						var row = null;
 
-						instance._table.all('tr').some((item, index) => {
+						instance._table.all('tr').some(function(item, index) {
 							if (!item.hasClass(CSS_TEMPLATE) && index == obj) {
 								row = item;
 							}
@@ -184,7 +184,7 @@ AUI.add(
 
 						// LPS-83031
 
-						setTimeout(() => {
+						setTimeout(function() {
 							obj.remove(true);
 						}, 0);
 					}

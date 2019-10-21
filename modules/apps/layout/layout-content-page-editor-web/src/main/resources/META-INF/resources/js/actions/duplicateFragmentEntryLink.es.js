@@ -13,10 +13,10 @@
  */
 
 import {duplicateFragmentEntryLink} from '../utils/FragmentsEditorFetchUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
 import {DUPLICATE_FRAGMENT_ENTRY_LINK} from './actions.es';
-import {updateActiveItemAction} from './updateActiveItem.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
+import {updateActiveItemAction} from './updateActiveItem.es';
 
 /**
  * @param {string} fragmentEntryLinkId

@@ -13,11 +13,10 @@
  */
 
 import 'clay-alert';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {isString} from 'metal';
-
 import fetch from './../../util/fetch.es';
+import {isString} from 'metal';
+import Soy from 'metal-soy';
 
 import '../../compat/modal/Modal.es';
 import PortletBase from '../../PortletBase.es';

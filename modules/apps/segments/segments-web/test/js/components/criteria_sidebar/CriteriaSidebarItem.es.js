@@ -13,9 +13,8 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import React from 'react';
-
 import CriteriaSidebarItem from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebarItem.es';
+import React from 'react';
 
 const connectDnd = jest.fn(el => el);
 

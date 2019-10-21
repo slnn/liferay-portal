@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-uad-export',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var isString = Lang.isString;
@@ -65,10 +65,10 @@ AUI.add(
 
 					if (exportProcessesNode && exportProcessesResourceURL) {
 						Liferay.Util.fetch(exportProcessesResourceURL)
-							.then(response => {
+							.then(function(response) {
 								return response.text();
 							})
-							.then(response => {
+							.then(function(response) {
 								exportProcessesNode.plug(A.Plugin.ParseContent);
 
 								exportProcessesNode.empty();

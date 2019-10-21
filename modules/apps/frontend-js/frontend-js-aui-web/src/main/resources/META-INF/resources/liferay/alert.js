@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-alert',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var Alert = A.Component.create({
@@ -205,7 +205,7 @@ AUI.add(
 												.outerHeight() + 'px'
 										: 0
 								},
-								() => {
+								function() {
 									parentNode.toggleClass('in', visible);
 
 									instance._uiSetVisibleHost(visible);

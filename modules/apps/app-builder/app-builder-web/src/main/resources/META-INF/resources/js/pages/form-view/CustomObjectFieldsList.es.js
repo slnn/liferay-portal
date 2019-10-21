@@ -13,12 +13,11 @@
  */
 
 import React, {useContext} from 'react';
-
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
+import FormViewContext from './FormViewContext.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {DRAG_CUSTOM_OBJECT_FIELD} from '../../utils/dragTypes.es';
-import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
-import FormViewContext from './FormViewContext.es';
 import {
 	dropCustomObjectField,
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
@@ -33,7 +32,7 @@ const getFieldTypes = ({
 	const {dataDefinitionFields} = dataDefinition;
 	const {dataLayoutPages} = dataLayout;
 
-	return dataDefinitionFields.map(({fieldType, label, name}) => {
+	return dataDefinitionFields.map(({label, fieldType, name}) => {
 		const fieldTypeSettings = fieldTypes.find(({name}) => {
 			return name === fieldType;
 		});

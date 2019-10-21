@@ -13,7 +13,6 @@
  */
 
 import React, {useContext} from 'react';
-
 import SearchContext from './SearchContext.es';
 import SearchInput from './SearchInput.es';
 import SearchSort from './SearchSort.es';

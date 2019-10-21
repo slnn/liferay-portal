@@ -12,12 +12,11 @@
  * details.
  */
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
 import core from 'metal';
-
-import KeyboardFocusManager from './../../keyboard-focus/KeyboardFocusManager.es';
 import templates from './Treeview.soy';
+import Component from 'metal-component';
+import KeyboardFocusManager from './../../keyboard-focus/KeyboardFocusManager.es';
+import Soy from 'metal-soy';
 
 /**
  * Treeview component.

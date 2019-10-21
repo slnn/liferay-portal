@@ -56,7 +56,7 @@
 				editor.on('key', A.bind('_onEditorKey', instance))
 			];
 
-			editor.once('instanceReady', event => {
+			editor.once('instanceReady', function(event) {
 				var editorBody = A.one(event.editor.element.$);
 
 				instance._eventHandles.push(
@@ -176,7 +176,7 @@
 
 			var triggers = instance._getTriggers();
 
-			AArray.each(triggers, item => {
+			AArray.each(triggers, function(item) {
 				var triggerPosition = query.lastIndexOf(item);
 
 				if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
@@ -197,7 +197,7 @@
 					) {
 						var nodeText = node.getText();
 
-						AArray.each(triggers, item => {
+						AArray.each(triggers, function(item) {
 							var triggerPosition = nodeText.lastIndexOf(item);
 
 							if (

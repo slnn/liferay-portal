@@ -12,16 +12,15 @@
  * details.
  */
 
-import React, {useEffect, useMemo, useState} from 'react';
-
-import useDispatch from '../../../store/hooks/useDispatch.es';
-import useSelector from '../../../store/hooks/useSelector.es';
-import SearchForm from '../../common/SearchForm.es';
-import SidebarHeader from '../SidebarHeader.es';
 import Collapse from './../../common/Collapse.es';
+import React, {useEffect, useMemo, useState} from 'react';
+import SearchForm from '../../common/SearchForm.es';
 import SidebarCard from './../SidebarCard.es';
 import SidebarElementsDragDrop from './SidebarElementsDragDrop.es';
+import SidebarHeader from '../SidebarHeader.es';
 import SidebarLayouts from './SidebarLayouts.es';
+import useDispatch from '../../../store/hooks/useDispatch.es';
+import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarElements = () => {
 	const dispatch = useDispatch();

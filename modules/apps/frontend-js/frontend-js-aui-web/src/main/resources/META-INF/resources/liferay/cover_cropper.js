@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-cover-cropper',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var STR_BOTH = 'both';

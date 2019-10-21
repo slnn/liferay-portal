@@ -13,9 +13,8 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import React from 'react';
-
 import ClayToggle from '../../../../src/main/resources/META-INF/resources/js/components/shared/ClayToggle.es';
+import React from 'react';
 
 describe('ClayToggle', () => {
 	afterEach(cleanup);

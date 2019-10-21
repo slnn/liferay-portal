@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-resize-rtl',
-	A => {
+	function(A) {
 		var RULES = A.Resize.RULES;
 
 		var tmpL = RULES.l;

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-message',
-	A => {
+	function(A) {
 		var EVENT_DATA_DISMISS_ALL = {
 			categoryVisible: false
 		};

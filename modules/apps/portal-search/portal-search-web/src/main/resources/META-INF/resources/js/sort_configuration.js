@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-sort-configuration',
-	A => {
+	function(A) {
 		var SortConfiguration = function(form) {
 			var instance = this;
 
@@ -31,11 +31,13 @@ AUI.add(
 
 				var fields = [];
 
-				var fieldFormRows = A.all('.field-form-row').filter(item => {
+				var fieldFormRows = A.all('.field-form-row').filter(function(
+					item
+				) {
 					return !item.get('hidden');
 				});
 
-				fieldFormRows.each(item => {
+				fieldFormRows.each(function(item) {
 					var label = item.one('.label-input').val();
 
 					var field = item.one('.sort-field-input').val();

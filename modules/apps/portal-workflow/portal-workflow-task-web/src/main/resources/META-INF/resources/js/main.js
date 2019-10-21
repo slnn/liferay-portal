@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-workflow-tasks',
-	A => {
+	function(A) {
 		var WorkflowTasks = {
 			_comments: {},
 			_content: {},

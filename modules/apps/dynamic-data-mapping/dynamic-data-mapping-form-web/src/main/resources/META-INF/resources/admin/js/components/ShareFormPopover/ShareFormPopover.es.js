@@ -12,13 +12,12 @@
  * details.
  */
 
-import getCN from 'classnames';
 import ClipboardJS from 'clipboard';
-import {selectText} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import Component, {Config} from 'metal-jsx';
-import {Align} from 'metal-position';
-
+import getCN from 'classnames';
 import Popover from '../Popover/Popover.es';
+import {Align} from 'metal-position';
+import {selectText} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 
 class ShareFormPopover extends Component {
 	attached() {

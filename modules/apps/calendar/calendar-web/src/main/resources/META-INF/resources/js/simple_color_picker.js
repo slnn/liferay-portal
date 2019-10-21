@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-simple-color-picker',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 

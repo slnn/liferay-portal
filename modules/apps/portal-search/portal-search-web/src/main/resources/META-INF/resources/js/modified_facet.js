@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-modified-facet',
-	A => {
+	function(A) {
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var FacetUtil = Liferay.Search.FacetUtil;

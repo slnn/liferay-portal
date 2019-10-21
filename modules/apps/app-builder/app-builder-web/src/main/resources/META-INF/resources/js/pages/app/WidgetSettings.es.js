@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import React, {useState} from 'react';
+import ClayAlert from '@clayui/alert';
 
 export default () => {
 	const [show, setShow] = useState(true);

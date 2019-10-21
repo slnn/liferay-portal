@@ -13,7 +13,6 @@
  */
 
 import State, {Config} from 'metal-state';
-
 import {DEFAULT_INITIAL_STATE} from './state.es';
 
 /**
@@ -274,10 +273,9 @@ class Store extends State {
 			throw new Error('State already initialized');
 		}
 
-		this._state = this._getFrozenState({
-			...DEFAULT_INITIAL_STATE,
-			...initialState
-		});
+		this._state = this._getFrozenState(
+			Object.assign({}, DEFAULT_INITIAL_STATE, initialState)
+		);
 
 		return this._state;
 	}

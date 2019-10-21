@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-modified-facet-configuration',
-	A => {
+	function(A) {
 		var ModifiedFacetConfiguration = function(form) {
 			var instance = this;
 
@@ -31,11 +31,13 @@ AUI.add(
 
 				var ranges = [];
 
-				var rangeFormRows = A.all('.range-form-row').filter(item => {
+				var rangeFormRows = A.all('.range-form-row').filter(function(
+					item
+				) {
 					return !item.get('hidden');
 				});
 
-				rangeFormRows.each(item => {
+				rangeFormRows.each(function(item) {
 					var label = item.one('.label-input').val();
 
 					var range = item.one('.range-input').val();

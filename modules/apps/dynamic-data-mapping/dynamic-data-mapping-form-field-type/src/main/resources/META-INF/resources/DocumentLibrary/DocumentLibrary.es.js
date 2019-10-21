@@ -13,15 +13,12 @@
  */
 
 import '../FieldBase/FieldBase.es';
-
 import './DocumentLibraryRegister.soy.js';
-
 import {createActionURL, createPortletURL} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-
 import templates from './DocumentLibrary.soy.js';
+import {Config} from 'metal-state';
 
 class DocumentLibrary extends Component {
 	created() {

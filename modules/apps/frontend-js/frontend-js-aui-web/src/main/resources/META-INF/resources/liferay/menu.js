@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-menu',
-	A => {
+	function(A) {
 		var Util = Liferay.Util;
 
 		var ARIA_ATTR_ROLE = 'role';
@@ -141,7 +141,7 @@ AUI.add(
 				}
 			},
 
-			_getAlignPoints: A.cached(cssClass => {
+			_getAlignPoints: A.cached(function(cssClass) {
 				var alignPoints = DEFAULT_ALIGN_POINTS;
 
 				var defaultOverlayHorizontalAlign = STR_RIGHT;
@@ -228,7 +228,7 @@ AUI.add(
 						zIndex: Liferay.zIndex.MENU
 					}).render();
 
-					Liferay.once('beforeScreenFlip', () => {
+					Liferay.once('beforeScreenFlip', function() {
 						overlay.destroy();
 
 						instance._overlay = null;
@@ -272,7 +272,7 @@ AUI.add(
 					if (trigger.hasClass('select')) {
 						listContainer.delegate(
 							'click',
-							event => {
+							function(event) {
 								var selectedListItem = event.currentTarget;
 
 								var selectedListItemIcon = selectedListItem.one(
@@ -487,7 +487,7 @@ AUI.add(
 			}
 		};
 
-		Menu._registerTask = A.debounce(() => {
+		Menu._registerTask = A.debounce(function() {
 			if (buffer.length) {
 				var nodes = A.all(buffer);
 
@@ -508,7 +508,7 @@ AUI.add(
 		Liferay.provide(
 			Menu,
 			'_getFocusManager',
-			() => {
+			function() {
 				var menuInstance = Menu._INSTANCE;
 
 				var focusManager = menuInstance._focusManager;
@@ -528,7 +528,7 @@ AUI.add(
 
 					bodyNode.on(
 						'key',
-						() => {
+						function() {
 							var activeTrigger = menuInstance._activeTrigger;
 
 							if (activeTrigger) {
@@ -544,7 +544,7 @@ AUI.add(
 
 					bodyNode.delegate(
 						'mouseenter',
-						event => {
+						function(event) {
 							if (focusManager.get('focused')) {
 								focusManager.focus(
 									event.currentTarget.one(SELECTOR_ANCHOR)
@@ -554,7 +554,9 @@ AUI.add(
 						SELECTOR_LIST_ITEM
 					);
 
-					focusManager.after('activeDescendantChange', event => {
+					focusManager.after('activeDescendantChange', function(
+						event
+					) {
 						var descendants = focusManager.get('descendants');
 
 						var selectedItem = descendants.item(event.newVal);
@@ -583,7 +585,7 @@ AUI.add(
 		Liferay.provide(
 			Menu,
 			'_getLiveSearch',
-			(_trigger, menu) => {
+			function(_trigger, menu) {
 				var id = menu.guid();
 
 				var liveSearch = MAP_LIVE_SEARCH[id];
@@ -593,7 +595,7 @@ AUI.add(
 
 					var results = [];
 
-					listNode.all('li').each(node => {
+					listNode.all('li').each(function(node) {
 						results.push({
 							name: node
 								.one('.taglib-text-icon')
@@ -624,7 +626,7 @@ AUI.add(
 		Liferay.provide(
 			Menu,
 			'_registerMenu',
-			event => {
+			function(event) {
 				var menuInstance = Menu._INSTANCE;
 
 				var handles = menuInstance._handles;
@@ -680,14 +682,14 @@ AUI.add(
 							),
 							listContainer.on(
 								'touchendoutside',
-								event => {
+								function(event) {
 									event.preventDefault();
 
 									menuInstance._closeActiveMenu();
 								},
 								menuInstance
 							),
-							Liferay.on('dropdownShow', event => {
+							Liferay.on('dropdownShow', function(event) {
 								if (event.src !== 'LiferayMenu') {
 									menuInstance._closeActiveMenu();
 								}

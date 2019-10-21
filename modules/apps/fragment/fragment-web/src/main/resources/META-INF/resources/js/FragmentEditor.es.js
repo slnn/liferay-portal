@@ -12,14 +12,12 @@
  * details.
  */
 
-import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {PortletBase, openToast} from 'frontend-js-web';
 
 import templates from './FragmentEditor.soy';
-
 import './FragmentPreview.es';
-
 import './SourceEditor.es';
 
 /**

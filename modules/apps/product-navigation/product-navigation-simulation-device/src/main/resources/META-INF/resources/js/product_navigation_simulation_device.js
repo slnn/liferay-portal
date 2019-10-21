@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-simulation-device',
-	A => {
+	function(A) {
 		var AObject = A.Object;
 		var Lang = A.Lang;
 
@@ -373,7 +373,7 @@ AUI.add(
 									WIN.location.href
 								)
 							},
-							dialogWindow => {
+							function(dialogWindow) {
 								var dialogBoundingBox = dialogWindow.get(
 									STR_BOUNDING_BOX
 								);
@@ -404,7 +404,7 @@ AUI.add(
 										start() {
 											AObject.each(
 												instance.get(STR_DEVICES),
-												item => {
+												function(item) {
 													if (item.skin) {
 														dialogBoundingBox.removeClass(
 															item.skin
@@ -495,7 +495,7 @@ AUI.add(
 
 					var devices = instance.get('devices');
 
-					AObject.some(devices, item => {
+					AObject.some(devices, function(item) {
 						var selected = item.selected;
 
 						if (selected) {

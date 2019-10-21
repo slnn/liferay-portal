@@ -13,9 +13,8 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import React from 'react';
-
 import DecimalInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/DecimalInput.es';
+import React from 'react';
 import {testControlledInput} from '../../utils';
 
 const DECIMAL_NUMBER_INPUT_TESTID = 'decimal-number';

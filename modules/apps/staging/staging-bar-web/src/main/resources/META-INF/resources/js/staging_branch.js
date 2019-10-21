@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-staging-branch',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var StagingBar = Liferay.StagingBar;

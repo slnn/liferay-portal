@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-store',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var isObject = Lang.isObject;

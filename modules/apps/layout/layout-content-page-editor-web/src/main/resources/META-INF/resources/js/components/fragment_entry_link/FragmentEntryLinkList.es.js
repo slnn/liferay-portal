@@ -13,15 +13,13 @@
  */
 
 import Component from 'metal-component';
-import {DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {DragDrop} from 'metal-drag-drop';
 
 import '../floating_toolbar/FloatingToolbar.es';
-
 import './FragmentEntryLink.es';
-
 import './FragmentEntryLinkListRow.es';
 import {
 	CLEAR_DROP_TARGET,
@@ -29,19 +27,19 @@ import {
 	MOVE_ROW,
 	UPDATE_DROP_TARGET
 } from '../../actions/actions.es';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {
+	FRAGMENTS_EDITOR_ITEM_BORDERS,
+	FRAGMENTS_EDITOR_ITEM_TYPES,
+	FRAGMENTS_EDITOR_ROW_TYPES
+} from '../../utils/constants';
 import {initializeDragDrop} from '../../utils/FragmentsEditorDragDrop.es';
 import {
 	moveItem,
 	setDraggingItemPosition,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
-import {
-	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES
-} from '../../utils/constants';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
 
 /**

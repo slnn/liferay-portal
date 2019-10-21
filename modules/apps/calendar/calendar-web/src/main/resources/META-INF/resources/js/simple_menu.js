@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-simple-menu',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var getClassName = A.getClassName;
@@ -52,10 +52,10 @@ AUI.add(
 		var TPL_SIMPLE_MENU_ITEM =
 			'<li class="{cssClass}" data-id="{id}">{icon} {caption}</li>';
 
-		var getItemHandler = A.cached((id, items) => {
+		var getItemHandler = A.cached(function(id, items) {
 			var found = null;
 
-			items.some(item => {
+			items.some(function(item) {
 				if (item.id === id) {
 					found = item;
 				}
@@ -197,7 +197,7 @@ AUI.add(
 
 					instance.items = A.NodeList.create();
 
-					items.forEach(item => {
+					items.forEach(function(item) {
 						var caption = item.caption;
 
 						if (!Object.prototype.hasOwnProperty.call(item, 'id')) {
@@ -250,7 +250,7 @@ AUI.add(
 					var instance = this;
 
 					if (instance.get('rendered')) {
-						instance.items.each(item => {
+						instance.items.each(function(item) {
 							var id = item.attr('data-id');
 
 							item.toggleClass(

@@ -13,9 +13,8 @@
  */
 
 import {DefaultEventHandler} from 'frontend-js-web';
-import {Config} from 'metal-state';
-
 import {openDisplayPageModal} from './modal/openDisplayPageModal.es';
+import {Config} from 'metal-state';
 
 class DisplayPageManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addDisplayPage(itemData) {

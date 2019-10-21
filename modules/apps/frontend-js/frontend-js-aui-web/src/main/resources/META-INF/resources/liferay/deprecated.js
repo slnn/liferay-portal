@@ -38,7 +38,7 @@
 
 	var MAP_HTML_CHARS_UNESCAPED = {};
 
-	AObject.each(MAP_HTML_CHARS_ESCAPED, (item, index) => {
+	AObject.each(MAP_HTML_CHARS_ESCAPED, function(item, index) {
 		MAP_HTML_CHARS_UNESCAPED[item] = index;
 
 		htmlEscapedValues.push(item);
@@ -98,7 +98,7 @@
 	};
 
 	Util.addInputFocus = function() {
-		A.use('aui-base', A => {
+		A.use('aui-base', function(A) {
 			var handleFocus = function(event) {
 				var target = event.target;
 
@@ -144,7 +144,7 @@
 
 				var defaultType = 'text';
 
-				el.all('input').each(item => {
+				el.all('input').each(function(item) {
 					var type = item.get('type') || defaultType;
 
 					item.addClass(type);
@@ -162,7 +162,7 @@
 			regex = new RegExp(separator + '([a-z])', 'gi');
 		}
 
-		value = value.replace(regex, (match0, match1) => {
+		value = value.replace(regex, function(match0, match1) {
 			return match1.toUpperCase();
 		});
 
@@ -183,7 +183,7 @@
 		if (Lang.isObject(entities)) {
 			entitiesValues = [];
 
-			AObject.each(entities, (item, index) => {
+			AObject.each(entities, function(item, index) {
 				entitiesList.push(index);
 
 				entitiesValues.push(item);
@@ -265,7 +265,7 @@
 					'\t' +
 					elValue.substring(el.selectionEnd, elValue.length);
 
-				setTimeout(() => {
+				setTimeout(function() {
 					el.focus();
 					el.setSelectionRange(caretPos, caretPos);
 				}, 0);
@@ -301,7 +301,7 @@
 
 			entitiesMap = {};
 
-			AObject.each(entities, (item, index) => {
+			AObject.each(entities, function(item, index) {
 				entitiesMap[item] = index;
 
 				entitiesValues.push(item);
@@ -354,7 +354,7 @@
 	Liferay.provide(
 		Util,
 		'check',
-		(form, name, checked) => {
+		function(form, name, checked) {
 			var checkbox = A.one(form[name]);
 
 			if (checkbox) {
@@ -367,7 +367,7 @@
 	Liferay.provide(
 		Util,
 		'disableSelectBoxes',
-		(toggleBoxId, value, selectBoxId) => {
+		function(toggleBoxId, value, selectBoxId) {
 			var selectBox = A.one('#' + selectBoxId);
 			var toggleBox = A.one('#' + toggleBoxId);
 
@@ -397,7 +397,7 @@
 	Liferay.provide(
 		Util,
 		'disableTextareaTabs',
-		textarea => {
+		function(textarea) {
 			textarea = A.one(textarea);
 
 			if (textarea && textarea.attr('textareatabs') != 'enabled') {
@@ -412,7 +412,7 @@
 	Liferay.provide(
 		Util,
 		'enableTextareaTabs',
-		textarea => {
+		function(textarea) {
 			textarea = A.one(textarea);
 
 			if (textarea && textarea.attr('textareatabs') != 'enabled') {
@@ -427,7 +427,7 @@
 	Liferay.provide(
 		Util,
 		'removeItem',
-		(box, value) => {
+		function(box, value) {
 			box = A.one(box);
 
 			var selectedIndex = box.get('selectedIndex');
@@ -448,7 +448,7 @@
 	Liferay.provide(
 		Util,
 		'resizeTextarea',
-		(elString, usingRichEditor) => {
+		function(elString, usingRichEditor) {
 			var el = A.one('#' + elString);
 
 			if (!el) {
@@ -502,7 +502,7 @@
 						if (!el || !A.DOM.inDoc(el)) {
 							A.on(
 								'available',
-								() => {
+								function() {
 									el = A.one(window[elString]);
 
 									if (el) {
@@ -545,7 +545,7 @@
 	Liferay.provide(
 		Util,
 		'setSelectedValue',
-		(col, value) => {
+		function(col, value) {
 			var option = A.one(col).one(
 				'option[value=' + value + STR_RIGHT_SQUARE_BRACKET
 			);
@@ -560,7 +560,7 @@
 	Liferay.provide(
 		Util,
 		'switchEditor',
-		options => {
+		function(options) {
 			var uri = options.uri;
 
 			var windowName = Liferay.Util.getWindowName();

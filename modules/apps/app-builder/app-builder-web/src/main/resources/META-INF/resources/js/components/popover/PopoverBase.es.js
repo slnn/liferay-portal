@@ -13,10 +13,9 @@
  */
 
 import classNames from 'classnames';
-import {PropTypes} from 'prop-types';
-import React from 'react';
-
 import omitDefinedProps from '../../utils/omitDefinedProps.es';
+import React from 'react';
+import {PropTypes} from 'prop-types';
 
 const Header = ({children}) => {
 	return <div className="border-0 popover-header">{children}</div>;

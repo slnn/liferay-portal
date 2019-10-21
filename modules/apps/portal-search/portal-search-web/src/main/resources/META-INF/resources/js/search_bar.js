@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-bar',
-	A => {
+	function(A) {
 		var SearchBar = function(form) {
 			var instance = this;
 

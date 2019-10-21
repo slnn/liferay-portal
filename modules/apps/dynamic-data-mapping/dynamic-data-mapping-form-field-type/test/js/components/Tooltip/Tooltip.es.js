@@ -12,9 +12,8 @@
  * details.
  */
 
-import {dom as MetalTestUtil} from 'metal-dom';
-
 import Tooltip from '../../../src/main/resources/META-INF/resources/components/Tooltip/Tooltip.es';
+import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';

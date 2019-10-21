@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-facet-util',
-	A => {
+	function(A) {
 		var FacetUtil = {
 			addURLParameter(key, value, parameterArray) {
 				key = encodeURIComponent(key);
@@ -38,7 +38,9 @@ AUI.add(
 					'#' + form.id + ' input.facet-term'
 				);
 
-				Array.prototype.forEach.call(formCheckboxes, checkbox => {
+				Array.prototype.forEach.call(formCheckboxes, function(
+					checkbox
+				) {
 					if (checkbox.checked) {
 						selections.push(checkbox.getAttribute('data-term-id'));
 					}
@@ -62,7 +64,7 @@ AUI.add(
 			removeURLParameters(key, parameterArray) {
 				key = encodeURIComponent(key);
 
-				var newParameters = parameterArray.filter(item => {
+				var newParameters = parameterArray.filter(function(item) {
 					var itemSplit = item.split('=');
 
 					if (itemSplit && itemSplit[0] === key) {
@@ -113,7 +115,7 @@ AUI.add(
 					parameterArray
 				);
 
-				values.forEach(item => {
+				values.forEach(function(item) {
 					newParameters = FacetUtil.addURLParameter(
 						key,
 						item,
@@ -137,7 +139,7 @@ AUI.add(
 					search = search.substr(1);
 				}
 
-				var parameterArray = search.split('&').filter(item => {
+				var parameterArray = search.split('&').filter(function(item) {
 					return item.trim() !== '';
 				});
 

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-blogs',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var CSS_INVISIBLE = 'invisible';
@@ -210,7 +210,7 @@ AUI.add(
 								instance.get('strings').confirmDiscardImages
 							)
 						) {
-							instance._getTempImages().each(node => {
+							instance._getTempImages().each(function(node) {
 								node.ancestor().remove();
 							});
 
@@ -294,7 +294,7 @@ AUI.add(
 					instance._saveDraftTimer = A.later(
 						instance.get('saveInterval'),
 						instance,
-						() => {
+						function() {
 							if (!instance._hasTempImages()) {
 								instance._saveEntry(true, true);
 							}
@@ -456,7 +456,7 @@ AUI.add(
 								'[name^=' + instance.NS + 'ExpandoAttribute]'
 							);
 
-							customAttributes.each(item => {
+							customAttributes.each(function(item) {
 								data[item.attr('name')] = item.val();
 							});
 

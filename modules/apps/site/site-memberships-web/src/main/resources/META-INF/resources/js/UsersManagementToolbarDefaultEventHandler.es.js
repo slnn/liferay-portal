@@ -12,8 +12,8 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
 import dom from 'metal-dom';
+import {DefaultEventHandler} from 'frontend-js-web';
 
 class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedUsers() {
@@ -44,12 +44,12 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-site-role'),
 				uri: itemData.selectRolesURL
 			},
-			event => {
+			function(event) {
 				location.href = Liferay.Util.addParams(
 					`${this.ns('roleId')}=${event.id}`,
 					itemData.viewRoleURL
 				);
-			}
+			}.bind(this)
 		);
 	}
 

@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-autocomplete-input-caretoffset-sel',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var DOC = A.config.doc;

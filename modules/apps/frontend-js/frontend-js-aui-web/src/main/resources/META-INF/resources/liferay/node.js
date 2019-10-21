@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-node',
-	A => {
+	function(A) {
 		var getRegExp = A.DOM._getRegExp;
 
 		var prefix = A.Lang.String.prefix;

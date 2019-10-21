@@ -13,15 +13,15 @@
  */
 
 import Component from 'metal-component';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import Soy from 'metal-soy';
 
 import './FloatingToolbarFragmentBackgroundImagePanelDelegateTemplate.soy';
-import {updateEditableValueContentAction} from '../../../actions/updateEditableValue.es';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../utils/constants';
 import templates from './FloatingToolbarFragmentBackgroundImagePanel.soy';
+import {updateEditableValueContentAction} from '../../../actions/updateEditableValue.es';
 
 /**
  * FloatingToolbarFragmentBackgroundImagePanel

@@ -13,9 +13,8 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import React from 'react';
-
 import IntegerInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/IntegerInput.es';
+import React from 'react';
 import {testControlledInput} from '../../utils';
 
 const INTEGER_NUMBER_INPUT_TESTID = 'integer-number';

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-scheduler-models',
-	A => {
+	function(A) {
 		var AObject = A.Object;
 
 		var DateMath = A.DataType.DateMath;
@@ -28,7 +28,7 @@ AUI.add(
 		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
-		var toInitialCap = A.cached(str => {
+		var toInitialCap = A.cached(function(str) {
 			return str.substring(0, 1).toUpperCase() + str.substring(1);
 		});
 
@@ -630,7 +630,7 @@ AUI.add(
 							CalendarWorkflow.STATUS_MAYBE,
 							CalendarWorkflow.STATUS_PENDING
 						],
-						calendarBookings => {
+						function(calendarBookings) {
 							if (filterCalendarBookings) {
 								calendarBookings = calendarBookings.filter(
 									filterCalendarBookings

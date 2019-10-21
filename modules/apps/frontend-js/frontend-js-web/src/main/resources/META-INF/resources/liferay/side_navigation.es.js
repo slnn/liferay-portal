@@ -602,7 +602,7 @@ SideNavigation.prototype = {
 
 			instance._emit('closedStart.lexicon.sidenav');
 
-			instance._subscribeSidenavTransitionEnd(content, () => {
+			instance._subscribeSidenavTransitionEnd(content, function() {
 				removeClass(container, 'sidenav-transition');
 				removeClass(toggler, 'sidenav-transition');
 
@@ -653,7 +653,7 @@ SideNavigation.prototype = {
 		 */
 		const useDataAttribute = toggler.dataset.toggle === 'liferay-sidenav';
 
-		options = {...defaults, ...options};
+		options = Object.assign({}, defaults, options);
 
 		options.breakpoint = toInt(options.breakpoint);
 		options.container =
@@ -843,7 +843,7 @@ SideNavigation.prototype = {
 
 			instance._emit('openStart.lexicon.sidenav');
 
-			instance._subscribeSidenavTransitionEnd(content, () => {
+			instance._subscribeSidenavTransitionEnd(content, function() {
 				removeClass(container, 'sidenav-transition');
 				removeClass(toggler, 'sidenav-transition');
 
@@ -898,7 +898,7 @@ SideNavigation.prototype = {
 			instance._emit('closedStart.lexicon.sidenav');
 		}
 
-		instance._subscribeSidenavTransitionEnd(container, () => {
+		instance._subscribeSidenavTransitionEnd(container, function() {
 			const menu = container.querySelector('.sidenav-menu');
 
 			if (hasClass(container, 'closed')) {

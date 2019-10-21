@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-autocomplete-input',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
@@ -79,7 +79,7 @@ AUI.add(
 
 				var tplResults = instance.get('tplResults');
 
-				return results.map(result => {
+				return results.map(function(result) {
 					return Lang.sub(tplResults, result.raw);
 				});
 			},
@@ -178,7 +178,7 @@ AUI.add(
 				if (!instance._triggers) {
 					var triggers = [];
 
-					instance.get(STR_TRIGGER).forEach(item => {
+					instance.get(STR_TRIGGER).forEach(function(item) {
 						triggers.push(Lang.isString(item) ? item : item.term);
 					});
 
@@ -274,7 +274,7 @@ AUI.add(
 
 				var autocompleteAttrs = A.Object.keys(
 					A.AutoComplete.ATTRS
-				).filter(item => {
+				).filter(function(item) {
 					return item !== 'value';
 				});
 

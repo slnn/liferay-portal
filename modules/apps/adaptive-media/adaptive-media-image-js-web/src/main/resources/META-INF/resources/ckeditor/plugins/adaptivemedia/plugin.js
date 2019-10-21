@@ -32,7 +32,7 @@
 		_bindEvent(editor) {
 			var instance = this;
 
-			editor.on('beforeCommandExec', event => {
+			editor.on('beforeCommandExec', function(event) {
 				if (event.data.name === 'imageselector') {
 					event.removeListener();
 
@@ -82,26 +82,25 @@
 
 				var sources = '';
 
-				itemValue.sources.forEach(source => {
+				itemValue.sources.forEach(function(source) {
 					var propertyNames = Object.getOwnPropertyNames(
 						source.attributes
 					);
 
-					var mediaText = propertyNames.reduce(
-						(previous, current) => {
-							var value =
-								'(' +
-								current +
-								':' +
-								source.attributes[current] +
-								')';
+					var mediaText = propertyNames.reduce(function(
+						previous,
+						current
+					) {
+						var value =
+							'(' +
+							current +
+							':' +
+							source.attributes[current] +
+							')';
 
-							return previous
-								? previous + ' and ' + value
-								: value;
-						},
-						''
-					);
+						return previous ? previous + ' and ' + value : value;
+					},
+					'');
 
 					sources += Lang.sub(TPL_SOURCE_TAG, {
 						media: mediaText,

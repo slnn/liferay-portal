@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-navigation-interaction',
-	A => {
+	function(A) {
 		var ACTIVE_DESCENDANT = 'activeDescendant';
 
 		var DIRECTION_LEFT = 'left';
@@ -332,7 +332,7 @@ AUI.add(
 
 					Liferay.on(
 						['hideNavigationMenu', 'showNavigationMenu'],
-						event => {
+						function(event) {
 							var menu = event.menu;
 
 							if (menu) {

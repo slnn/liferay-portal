@@ -13,9 +13,7 @@
  */
 
 import 'clay-label';
-
 import 'clay-progress-bar';
-
 import 'clay-sticker';
 import {PortletBase, createPortletURL, fetch, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';

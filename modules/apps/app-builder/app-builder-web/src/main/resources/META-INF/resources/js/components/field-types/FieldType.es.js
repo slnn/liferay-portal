@@ -12,15 +12,14 @@
  * details.
  */
 
+import React, {useEffect} from 'react';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import {useDrag} from 'react-dnd';
 import classnames from 'classnames';
 import {getEmptyImage} from 'react-dnd-html5-backend';
-import {useDrag} from 'react-dnd';
-import React, {useEffect} from 'react';
-
-import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
+import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
 
 const ICONS = {
 	checkbox_multiple: 'select-from-list',

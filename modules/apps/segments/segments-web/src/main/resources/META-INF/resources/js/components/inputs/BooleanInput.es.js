@@ -16,7 +16,6 @@ import {ClaySelectWithOption} from '@clayui/form';
 import getCN from 'classnames';
 import propTypes from 'prop-types';
 import React from 'react';
-
 import {BOOLEAN_OPTIONS} from '../../utils/constants.es';
 
 class BooleanInput extends React.Component {

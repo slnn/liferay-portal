@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-item-selector-uploader',
-	A => {
+	function(A) {
 		var CSS_PROGRESS = 'progress';
 
 		var CSS_UPLOADING = 'uploading';

@@ -13,11 +13,9 @@
  */
 
 import './MockFieldRegister.soy.js';
-
 import Component from 'metal-component';
-import Soy from 'metal-soy';
 import Config from 'metal-state/lib/Config';
-
+import Soy from 'metal-soy';
 import templates from './MockField.soy.js';
 
 class MockField extends Component {

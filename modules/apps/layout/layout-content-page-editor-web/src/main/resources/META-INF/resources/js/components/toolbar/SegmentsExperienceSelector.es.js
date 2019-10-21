@@ -27,13 +27,9 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {STATUS_DRAFT} from '../../utils/ExperimentsStatus.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SegmentsExperienceSelector.soy';
-
 import './ExperimentsLabel.es';
-
 import './segmentsExperiences/modal.es';
-
 import 'clay-alert';
-
 import 'clay-icon';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;
@@ -201,15 +197,14 @@ class SegmentsExperienceSelector extends Component {
 			segment => segment.segmentsEntryId !== state.defaultSegmentsEntryId
 		);
 
-		const innerState = {
-			...state,
+		const innerState = Object.assign({}, state, {
 			activeSegmentsExperienceName:
 				activeExperience && activeExperience.name,
 			availableSegmentsEntries,
 			availableSegmentsExperiences: availableSegmentsExperiencesArray,
 			classPK: state.classPK,
 			segmentsExperienceId: selectedSegmentsExperienceId
-		};
+		});
 
 		return innerState;
 	}
@@ -395,7 +390,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @param {!string} name
 	 * @memberof SegmentsExperienceSelector
 	 */
-	_editSegmentsExperience({name, segmentsEntryId, segmentsExperienceId}) {
+	_editSegmentsExperience({segmentsExperienceId, name, segmentsEntryId}) {
 		this.store
 			.dispatch({
 				name,
@@ -658,7 +653,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @param {!string} payload.segmentsExperienceId
 	 * @memberof SegmentsExperienceSelector
 	 */
-	_updatePriority({focusFallbackElement, payload, priorityButton}) {
+	_updatePriority({focusFallbackElement, priorityButton, payload}) {
 		const onBlur = () => {
 			focusFallbackElement.focus();
 			priorityButton.removeEventListener('blur', onBlur);
@@ -671,7 +666,11 @@ class SegmentsExperienceSelector extends Component {
 		};
 
 		this.store
-			.dispatch({...payload, type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY})
+			.dispatch(
+				Object.assign({}, payload, {
+					type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
+				})
+			)
 			.done(removeBlurListener)
 			.failed(removeBlurListener);
 	}

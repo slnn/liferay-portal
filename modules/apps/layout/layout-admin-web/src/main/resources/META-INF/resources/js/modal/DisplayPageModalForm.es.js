@@ -12,9 +12,8 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React, {useRef, useEffect, useState, useCallback} from 'react';
-
+import PropTypes from 'prop-types';
 import FormField from './FormField.es';
 
 const DisplayPageModalForm = React.forwardRef((props, ref) => {

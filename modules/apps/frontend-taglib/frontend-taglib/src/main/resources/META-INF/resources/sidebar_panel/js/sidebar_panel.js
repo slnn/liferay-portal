@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-sidebar-panel',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var SidebarPanel = A.Component.create({
@@ -52,8 +52,8 @@ AUI.add(
 							),
 							instance
 						),
-						Liferay.after('refreshInfoPanel', () => {
-							setTimeout(() => {
+						Liferay.after('refreshInfoPanel', function() {
+							setTimeout(function() {
 								instance._getSidebarContent();
 							}, 0);
 						})

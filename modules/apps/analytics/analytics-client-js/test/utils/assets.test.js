@@ -12,9 +12,8 @@
  * details.
  */
 
-import {expect} from 'chai';
-
 import {getNumberOfWords} from '../../src/utils/assets';
+import {expect} from 'chai';
 
 describe('getNumberOfWords', () => {
 	it('returns the number of words', () => {

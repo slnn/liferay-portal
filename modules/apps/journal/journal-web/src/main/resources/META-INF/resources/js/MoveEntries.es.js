@@ -12,8 +12,8 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
 import {Config} from 'metal-state';
+import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
 
 /**
  * @class MoveEntries

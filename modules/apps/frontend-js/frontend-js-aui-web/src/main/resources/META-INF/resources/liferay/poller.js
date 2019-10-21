@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-poller',
-	A => {
+	function(A) {
 		var AObject = A.Object;
 
 		var _browserKey = Liferay.Util.randomInt();
@@ -367,7 +367,7 @@ AUI.add(
 			url: _url
 		};
 
-		A.getWin().on('focus', () => {
+		A.getWin().on('focus', function() {
 			_metaData.startPolling = true;
 
 			_thawConnection();

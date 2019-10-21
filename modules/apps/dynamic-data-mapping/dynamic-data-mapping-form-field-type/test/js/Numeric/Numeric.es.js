@@ -12,9 +12,8 @@
  * details.
  */
 
-import {dom} from 'metal-dom';
-
 import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric.es';
+import {dom} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';

@@ -13,16 +13,15 @@
  */
 
 import Component from 'metal-component';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import Soy from 'metal-soy';
 
 import '../common/FloatingToolbarColorPicker.es';
-
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
-import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
-import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {CONFIG_KEYS} from '../../../utils/rowConstants';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarBackgroundColorPanel.soy';
+import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 
 /**
  * FloatingToolbarBackgroundColorPanel

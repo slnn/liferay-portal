@@ -104,12 +104,12 @@ function init(
 
 			title: Liferay.Language.get('edit-content')
 		},
-		dialog => {
+		function(dialog) {
 			_dialog = dialog;
 
 			Liferay.Util.getTop()
 				.AUI()
-				.use('liferay-fullscreen-source-editor', A => {
+				.use('liferay-fullscreen-source-editor', function(A) {
 					_editor = new A.LiferayFullScreenSourceEditor({
 						boundingBox: dialog
 							.getStdModNode(A.WidgetStdMod.BODY)

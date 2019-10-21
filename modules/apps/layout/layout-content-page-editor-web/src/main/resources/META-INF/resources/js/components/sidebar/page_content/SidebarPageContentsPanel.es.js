@@ -12,8 +12,8 @@
  * details.
  */
 
-import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import SidebarPageContents from './SidebarPageContents.es';
+import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import templates from './SidebarPageContentsPanel.soy';
 
 const SidebarPageContentsPanel = getConnectedReactComponentAdapter(

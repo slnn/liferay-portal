@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-sign-in-modal',
-	A => {
+	function(A) {
 		var NAME = 'signinmodal';
 
 		var WIN = A.config.win;
@@ -156,7 +156,7 @@ AUI.add(
 								id: NAME,
 								title: Liferay.Language.get('sign-in')
 							},
-							dialogWindow => {
+							function(dialogWindow) {
 								var bodyNode = dialogWindow.bodyNode;
 
 								bodyNode.plug(A.Plugin.ParseContent);

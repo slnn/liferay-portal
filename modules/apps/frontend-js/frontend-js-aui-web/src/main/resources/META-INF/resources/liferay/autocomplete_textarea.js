@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-autocomplete-textarea',
-	A => {
+	function(A) {
 		var KeyMap = A.Event.KeyMap;
 		var Lang = A.Lang;
 
@@ -106,7 +106,7 @@ AUI.add(
 				if (caretIndex) {
 					val = val.substring(0, caretIndex.start);
 
-					instance._getTriggers().forEach(item => {
+					instance._getTriggers().forEach(function(item) {
 						var lastTriggerIndex = val.lastIndexOf(item);
 
 						if (lastTriggerIndex >= 0) {

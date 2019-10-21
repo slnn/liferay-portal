@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-translation-manager',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 		var Node = A.Node;
@@ -263,7 +263,7 @@ AUI.add(
 
 					var html;
 
-					instance._locales.forEach(item => {
+					instance._locales.forEach(function(item) {
 						tplBuffer[0] = item;
 						tplBuffer[1] = localesMap[item];
 
@@ -378,7 +378,7 @@ AUI.add(
 						locale: STR_BLANK
 					};
 
-					val.forEach(item => {
+					val.forEach(function(item) {
 						if (defaultLocale !== item) {
 							tplBuffer.cssClass =
 								editingLocale === item
@@ -681,7 +681,7 @@ AUI.add(
 
 					instance.set(
 						'availableLocales',
-						AArray.filter(availableLocales, item => {
+						AArray.filter(availableLocales, function(item) {
 							return AArray.indexOf(locales, item) > -1;
 						})
 					);

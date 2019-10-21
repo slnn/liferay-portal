@@ -14,9 +14,8 @@
 
 import {AOP} from 'frontend-js-web';
 import {Drag, DragDrop} from 'metal-drag-drop';
-import {Position} from 'metal-position';
-
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS} from './constants';
+import {Position} from 'metal-position';
 
 let _getRegionInterceptor = null;
 
@@ -54,7 +53,7 @@ function _interceptGetRegion() {
 					target.parentElement &&
 					target.parentElement.classList.contains('row')
 				) {
-					const currentRetVal = {...AOP.currentRetVal};
+					const currentRetVal = Object.assign({}, AOP.currentRetVal);
 
 					const parentComputedStyle = window.getComputedStyle(
 						target.parentElement
@@ -91,13 +90,17 @@ function _interceptGetRegion() {
  * @review
  */
 function initializeDragDrop(dragDropOptions) {
-	const dragDrop = new DragDrop({
-		autoScroll: true,
-		dragPlaceholder: Drag.Placeholder.CLONE,
-		draggingClass: FRAGMENTS_EDITOR_DRAGGING_CLASS,
-		scrollContainers: '.fragment-entry-link-list-wrapper',
-		...dragDropOptions
-	});
+	const dragDrop = new DragDrop(
+		Object.assign(
+			{
+				autoScroll: true,
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				draggingClass: FRAGMENTS_EDITOR_DRAGGING_CLASS,
+				scrollContainers: '.fragment-entry-link-list-wrapper'
+			},
+			dragDropOptions
+		)
+	);
 
 	dragDrop.on('dispose', _stopInterceptGetRegion);
 	dragDrop.on(Drag.Events.START, _interceptGetRegion);

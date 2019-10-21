@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-input-move-boxes',
-	A => {
+	function(A) {
 		var Util = Liferay.Util;
 
 		var CSS_LEFT_REORDER = 'left-reorder';
@@ -112,7 +112,7 @@ AUI.add(
 
 						selectedOption = options.item(selectedIndex);
 
-						options.each(item => {
+						options.each(function(item) {
 							if (item.get('selected')) {
 								to.append(item);
 							}
@@ -447,7 +447,7 @@ AUI.add(
 
 					boxObj.all('option').remove(true);
 
-					newBox.forEach(item => {
+					newBox.forEach(function(item) {
 						boxObj.append(
 							'<option value="' +
 								item[0] +

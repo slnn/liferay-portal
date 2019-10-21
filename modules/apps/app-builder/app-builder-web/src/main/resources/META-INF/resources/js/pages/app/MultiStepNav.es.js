@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React from 'react';
+import ClayMultiStepNav from '@clayui/multi-step-nav';
 
 export default ({currentStep}) => {
 	const steps = ['1', '2', '3'];

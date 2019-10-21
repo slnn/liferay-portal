@@ -12,10 +12,9 @@
  * details.
  */
 
-import dom from 'metal-dom';
-
-import FormRenderer from '../../../src/main/resources/META-INF/resources/js//components/FormRenderer/FormRenderer.es';
 import * as FormSupport from '../../../src/main/resources/META-INF/resources/js//components/FormRenderer/FormSupport.es';
+import dom from 'metal-dom';
+import FormRenderer from '../../../src/main/resources/META-INF/resources/js//components/FormRenderer/FormRenderer.es';
 import mockPages from '../__mock__/mockPages.es';
 import mockSuccessPage from '../__mock__/mockSuccessPage.es';
 

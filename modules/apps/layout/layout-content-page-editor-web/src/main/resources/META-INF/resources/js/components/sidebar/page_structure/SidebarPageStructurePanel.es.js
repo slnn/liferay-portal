@@ -13,17 +13,10 @@
  */
 
 import Component from 'metal-component';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {removeFragmentEntryLinkAction} from '../../../actions/removeFragmentEntryLinks.es';
-import {removeRowAction} from '../../../actions/removeRow.es';
-import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {
-	getItemPath,
-	getRowFragmentEntryLinkIds
-} from '../../../utils/FragmentsEditorGetUtils.es';
 import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -31,7 +24,14 @@ import {
 	FRAGMENTS_EDITOR_ROW_TYPES,
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 } from '../../../utils/constants';
+import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {
+	getItemPath,
+	getRowFragmentEntryLinkIds
+} from '../../../utils/FragmentsEditorGetUtils.es';
 import templates from './SidebarPageStructurePanel.soy';
+import {removeRowAction} from '../../../actions/removeRow.es';
+import {removeFragmentEntryLinkAction} from '../../../actions/removeFragmentEntryLinks.es';
 
 /**
  * SidebarPageStructurePanel

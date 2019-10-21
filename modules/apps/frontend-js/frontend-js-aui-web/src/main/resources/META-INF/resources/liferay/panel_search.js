@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-panel-search',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var PanelSearch = A.Component.create({
@@ -75,7 +75,7 @@ AUI.add(
 				_setItemsVisibility(visible) {
 					var instance = this;
 
-					instance._nodes.each(item => {
+					instance._nodes.each(function(item) {
 						var contentItem = item;
 
 						var nodeContainerSelector = instance.get(
@@ -102,7 +102,7 @@ AUI.add(
 					if (!instance._collapsedCategories) {
 						instance._collapsedCategories = [];
 
-						categories.each(item => {
+						categories.each(function(item) {
 							var header = item.one('.list-group-heading');
 
 							if (header && header.hasClass('collapsed')) {
@@ -117,7 +117,9 @@ AUI.add(
 						instance._setItemsVisibility(true);
 
 						if (instance._collapsedCategories) {
-							instance._collapsedCategories.forEach(item => {
+							instance._collapsedCategories.forEach(function(
+								item
+							) {
 								item.one('.list-group-heading').addClass(
 									'collapsed'
 								);
@@ -135,7 +137,7 @@ AUI.add(
 
 						instance._setItemsVisibility(false);
 
-						event.results.forEach(item => {
+						event.results.forEach(function(item) {
 							var node = item.raw.node;
 
 							var nodeContainerSelector = instance.get(

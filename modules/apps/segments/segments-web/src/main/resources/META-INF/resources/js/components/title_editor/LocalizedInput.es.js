@@ -13,10 +13,9 @@
  */
 
 import getCN from 'classnames';
+import LocalizedDropdown from './LocalizedDropdown.es';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import LocalizedDropdown from './LocalizedDropdown.es';
 
 export default class LocalizedInput extends React.Component {
 	static propTypes = {

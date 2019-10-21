@@ -14,12 +14,14 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import Conjunction from './Conjunction.es';
+import CriteriaBuilder from './CriteriaBuilder.es';
+import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
+import EmptyPlaceholder from './EmptyPlaceholder.es';
 import getCN from 'classnames';
-import PropTypes from 'prop-types';
 import HTML5Backend from 'react-dnd-html5-backend';
-import {DragDropContext as dragDropContext} from 'react-dnd';
+import PropTypes from 'prop-types';
 import React from 'react';
-
 import {
 	conjunctionShape,
 	contributorShape,
@@ -27,11 +29,8 @@ import {
 	propertyGroupShape,
 	propertyTypesShape
 } from '../../utils/types.es';
+import {DragDropContext as dragDropContext} from 'react-dnd';
 import {getPluralMessage} from '../../utils/utils.es';
-import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
-import Conjunction from './Conjunction.es';
-import CriteriaBuilder from './CriteriaBuilder.es';
-import EmptyPlaceholder from './EmptyPlaceholder.es';
 
 class ContributorBuilder extends React.Component {
 	static propTypes = {

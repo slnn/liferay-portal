@@ -13,12 +13,12 @@
  */
 
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
+import Header from './Header.es';
 import Carousel from './Carousel.es';
 import Footer from './Footer.es';
-import Header from './Header.es';
 
 const KEY_CODE = {
 	ESC: 27,
@@ -214,7 +214,7 @@ class ItemSelectorPreview extends Component {
 	};
 
 	render() {
-		const {currentItem, currentItemIndex, items} = this.state;
+		const {currentItemIndex, currentItem, items} = this.state;
 
 		return (
 			<div className="fullscreen item-selector-preview">

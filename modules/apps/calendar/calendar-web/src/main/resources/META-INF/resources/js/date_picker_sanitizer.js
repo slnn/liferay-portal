@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-date-picker-sanitizer',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 
 		var DateMath = A.DataType.DateMath;
@@ -67,7 +67,7 @@ AUI.add(
 
 					var datePickers = instance.get('datePickers');
 
-					instance.eventHandlers = A.map(datePickers, item => {
+					instance.eventHandlers = A.map(datePickers, function(item) {
 						return item.on(
 							'selectionChange',
 							A.bind(

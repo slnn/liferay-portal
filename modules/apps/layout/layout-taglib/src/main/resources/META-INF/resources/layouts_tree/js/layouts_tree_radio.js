@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree-radio',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var LABEL_TPL =

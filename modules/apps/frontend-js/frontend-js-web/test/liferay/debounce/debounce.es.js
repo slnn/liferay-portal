@@ -17,8 +17,8 @@ import {
 	debounce
 } from '../../../src/main/resources/META-INF/resources/liferay/debounce/debounce.es';
 
-describe('debounce', () => {
-	it('only calls received function with the last called args after a delay', () => {
+describe('debounce', function() {
+	it('only calls received function with the last called args after a delay', function() {
 		jest.useFakeTimers();
 
 		const fn = jest.fn();
@@ -41,7 +41,7 @@ describe('debounce', () => {
 		jest.runAllTimers();
 	});
 
-	it('calls original function with its original context', () => {
+	it('calls original function with its original context', function() {
 		jest.useFakeTimers();
 
 		const expectedContext = {};
@@ -55,14 +55,14 @@ describe('debounce', () => {
 
 		debounced(1, 2, 3);
 
-		setTimeout(() => {
+		setTimeout(function() {
 			expect(expectedContext).toBe(context);
 		}, 200);
 
 		jest.runAllTimers();
 	});
 
-	it('cancels the debounced function call', () => {
+	it('cancels the debounced function call', function() {
 		jest.useFakeTimers();
 
 		const fn = jest.fn();

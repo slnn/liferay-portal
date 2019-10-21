@@ -13,9 +13,8 @@
  */
 
 import React from 'react';
-
-import {AppContextProvider} from '../../AppContext.es';
 import EditEntry from './EditEntry.es';
+import {AppContextProvider} from '../../AppContext.es';
 
 export default ({basePortletURL, ...restProps}) => {
 	return (

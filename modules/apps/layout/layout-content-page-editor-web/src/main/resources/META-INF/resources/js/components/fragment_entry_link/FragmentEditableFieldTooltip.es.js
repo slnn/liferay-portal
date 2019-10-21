@@ -12,12 +12,12 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
-import Component from 'metal-component';
-import dom from 'metal-dom';
 import {Align} from 'metal-position';
-import Soy from 'metal-soy';
+import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {debounce} from 'frontend-js-web';
+import dom from 'metal-dom';
+import Soy from 'metal-soy';
 
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import templates from './FragmentEditableFieldTooltip.soy';

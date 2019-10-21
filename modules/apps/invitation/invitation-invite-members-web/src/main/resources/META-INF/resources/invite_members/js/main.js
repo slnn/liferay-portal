@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-invite-members',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var Language = Liferay.Language;
@@ -308,7 +308,7 @@ AUI.add(
 						}
 					} else {
 						buffer.push(
-							A.Array.map(results, result => {
+							A.Array.map(results, function(result) {
 								var cssClass = 'user';
 
 								if (result.hasPendingMemberRequest) {
@@ -402,7 +402,7 @@ AUI.add(
 
 					var invitedEmailList = instance.one('#invitedEmailList');
 
-					invitedEmailList.all('.user').each(item => {
+					invitedEmailList.all('.user').each(function(item) {
 						emailAddresses.push(item.attr('data-emailAddress'));
 					});
 
@@ -419,9 +419,11 @@ AUI.add(
 
 					var userIds = [];
 
-					instance._invitedMembersList.all('.user').each(item => {
-						userIds.push(item.attr('data-userId'));
-					});
+					instance._invitedMembersList
+						.all('.user')
+						.each(function(item) {
+							userIds.push(item.attr('data-userId'));
+						});
 
 					receiverUserIds.val(userIds.join());
 				},

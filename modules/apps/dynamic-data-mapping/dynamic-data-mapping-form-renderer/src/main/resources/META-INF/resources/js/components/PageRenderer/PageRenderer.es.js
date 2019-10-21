@@ -13,25 +13,18 @@
  */
 
 import './PaginatedPageRenderer.soy.js';
-
 import './SimplePageRenderer.soy.js';
-
 import './TabbedPageRenderer.soy.js';
-
 import './WizardPageRenderer.soy.js';
-
 import 'clay-button';
-
 import 'clay-dropdown';
-
 import 'clay-modal';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-import core from 'metal';
-
 import * as FormSupport from '../FormRenderer/FormSupport.es';
+import Component from 'metal-component';
+import core from 'metal';
+import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
+import {Config} from 'metal-state';
 
 class PageRenderer extends Component {
 	getPage(page) {

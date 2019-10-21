@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-item-selector-repository-entry-browser',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
@@ -366,7 +366,7 @@ AUI.add(
 					if (A.config.win.FileReader) {
 						var reader = new FileReader();
 
-						reader.addEventListener('loadend', event => {
+						reader.addEventListener('loadend', function(event) {
 							instance._showFile(file, event.target.result);
 						});
 

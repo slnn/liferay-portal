@@ -12,18 +12,18 @@
  * details.
  */
 
-import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
+import {
+	appendItemToColumn,
+	moveItemInside,
+	removeItem
+} from './LayoutUpdateUtils.es';
 import {
 	columnIsItemChild,
 	getColumnActiveItem,
 	getItemColumn,
 	getItemColumnIndex
 } from './LayoutGetUtils.es';
-import {
-	appendItemToColumn,
-	moveItemInside,
-	removeItem
-} from './LayoutUpdateUtils.es';
+import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 
 /**
  * @param {object} layoutColumns

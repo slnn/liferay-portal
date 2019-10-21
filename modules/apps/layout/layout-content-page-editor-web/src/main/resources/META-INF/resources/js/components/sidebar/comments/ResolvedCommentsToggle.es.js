@@ -12,12 +12,11 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
 import React from 'react';
-
-import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
+import {ClayCheckbox} from '@clayui/form';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useSelector from '../../../store/hooks/useSelector.es';
+import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
 
 const ResolvedCommentsToggle = () => {
 	const dispatch = useDispatch();

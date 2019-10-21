@@ -13,7 +13,6 @@
  */
 
 const path = require('path');
-
 const webpack = require('./webpack.config.test');
 
 module.exports = function(config) {

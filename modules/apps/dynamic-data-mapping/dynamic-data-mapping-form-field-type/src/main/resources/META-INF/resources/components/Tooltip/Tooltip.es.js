@@ -13,14 +13,12 @@
  */
 
 import '../FormPortal/FormPortal.es';
-
 import 'clay-icon';
 import Component from 'metal-component';
-import {Align} from 'metal-position';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-
 import templates from './Tooltip.soy.js';
+import {Align} from 'metal-position';
+import {Config} from 'metal-state';
 
 const POSITIONS = ['top', 'left', 'right', 'bottom'];
 

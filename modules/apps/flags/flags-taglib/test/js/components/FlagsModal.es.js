@@ -13,9 +13,8 @@
  */
 
 import {cleanup, render, waitForElement} from '@testing-library/react';
-import React from 'react';
-
 import FlagsModal from '../../../src/main/resources/META-INF/resources/flags/js/components/FlagsModal.es';
+import React from 'react';
 import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
@@ -64,7 +63,7 @@ describe('FlagsModal', () => {
 	afterEach(cleanup);
 
 	it('renders', async () => {
-		const {getByRole, getByText} = _renderFlagsModalComponent();
+		const {getByText, getByRole} = _renderFlagsModalComponent();
 
 		await waitForElement(() => getByText('report-inappropriate-content'));
 		await waitForElement(() => getByRole('form'));

@@ -14,9 +14,8 @@
 
 import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
-import {Config} from 'metal-state';
-
 import Notifications from '../../util/Notifications.es';
+import {Config} from 'metal-state';
 
 class PreviewButton extends Component {
 	preview() {

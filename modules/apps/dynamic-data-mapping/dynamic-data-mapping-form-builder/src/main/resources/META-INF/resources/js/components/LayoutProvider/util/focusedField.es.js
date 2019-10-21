@@ -12,9 +12,8 @@
  * details.
  */
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
-
 import {updateFieldValidationProperty} from './fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
 import {updateSettingsContextProperty} from './settings.es';
 
 const shouldAutoGenerateName = (

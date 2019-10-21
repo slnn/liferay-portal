@@ -12,8 +12,8 @@
  * details.
  */
 
-import WithEvaluator from '../../../src/main/resources/META-INF/resources/js//components/Form/Evaluator.es';
 import mockPages from '../__mock__/mockPages.es';
+import WithEvaluator from '../../../src/main/resources/META-INF/resources/js//components/Form/Evaluator.es';
 
 const fieldType = 'text';
 let component;

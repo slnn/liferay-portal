@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-pagination',
-	A => {
+	function(A) {
 		var ANode = A.Node;
 		var Lang = A.Lang;
 
@@ -378,7 +378,7 @@ AUI.add(
 
 					var buffer = instance
 						.get(ITEMS_PER_PAGE_LIST)
-						.map((item, index) => {
+						.map(function(item, index) {
 							return Lang.sub(instance.TPL_ITEM, {
 								idLi: namespace + 'itemLiId' + index,
 								idLink: namespace + 'itemLinkId' + index,

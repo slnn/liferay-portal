@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-fullscreen-source-editor',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var CONTENT_TEMPLATE =

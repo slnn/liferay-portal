@@ -13,7 +13,6 @@
  */
 
 import React from 'react';
-
 import PreviewSeoContainer from './PreviewSeo.es';
 
 export default function(props) {

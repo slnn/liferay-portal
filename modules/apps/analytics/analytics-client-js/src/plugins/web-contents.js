@@ -12,8 +12,8 @@
  * details.
  */
 
-import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
 import {onReady} from '../utils/events.js';
+import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
 
 const applicationId = 'WebContent';
 

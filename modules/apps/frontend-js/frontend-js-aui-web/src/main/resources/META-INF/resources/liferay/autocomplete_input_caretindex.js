@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-autocomplete-input-caretindex',
-	A => {
+	function(A) {
 		var STR_INPUT_NODE = 'inputNode';
 
 		var AutcompleteInputCaretIndex = function() {};

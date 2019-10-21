@@ -13,9 +13,7 @@
  */
 
 import '../FieldBase/FieldBase.es';
-
 import './CheckboxRegister.soy.js';
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';

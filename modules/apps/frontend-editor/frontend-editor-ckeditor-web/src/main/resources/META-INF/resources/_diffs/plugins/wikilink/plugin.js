@@ -31,7 +31,7 @@ CKEDITOR.plugins.add('wikilink', {
 
 		CKEDITOR.dialog.add('link', instance.path + 'dialogs/link.js');
 
-		editor.on('selectionChange', event => {
+		editor.on('selectionChange', function(event) {
 			// document.queryCommandEnabled does not work for this in Firefox.
 			// Use element paths to detect the state.
 
@@ -56,7 +56,7 @@ CKEDITOR.plugins.add('wikilink', {
 			command.setState(commandState);
 		});
 
-		editor.on('doubleclick', event => {
+		editor.on('doubleclick', function(event) {
 			var element =
 				CKEDITOR.plugins.link.getSelectedLink(editor) ||
 				event.data.element;
@@ -84,7 +84,7 @@ CKEDITOR.plugins.add('wikilink', {
 		}
 
 		if (editor.contextMenu) {
-			editor.contextMenu.addListener(element => {
+			editor.contextMenu.addListener(function(element) {
 				var selectionObj = null;
 
 				if (element && !element.isReadOnly()) {

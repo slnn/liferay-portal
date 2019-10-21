@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-logo-selector',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var DELETE_LOGO = 'DELETE_LOGO';

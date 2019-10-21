@@ -12,9 +12,8 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
-
 import {convertToFormData, makeFetch} from './fetch.es';
+import {debounce} from 'frontend-js-web';
 import {PagesVisitor} from './visitors.es';
 
 const EVALUATOR_URL =

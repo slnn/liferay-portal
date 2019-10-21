@@ -12,8 +12,8 @@
  * details.
  */
 
-import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import SidebarComments from './SidebarComments.es';
+import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import templates from './SidebarCommentsPanel.soy';
 
 const SidebarCommentsPanel = getConnectedReactComponentAdapter(

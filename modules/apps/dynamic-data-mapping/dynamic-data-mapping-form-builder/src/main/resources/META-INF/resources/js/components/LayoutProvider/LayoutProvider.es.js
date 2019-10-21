@@ -13,19 +13,17 @@
  */
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
-import handlePaginationNextClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationNextClicked.es';
-import handlePaginationPreviousClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationPreviousClicked.es';
+import Component from 'metal-jsx';
+import {Config} from 'metal-state';
+import {getFieldProperties} from '../../util/fieldSupport.es';
+import {pageStructure, ruleStructure} from '../../util/config.es';
 import {
 	PagesVisitor,
 	RulesVisitor
 } from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import Component from 'metal-jsx';
-import {Config} from 'metal-state';
-
-import {pageStructure, ruleStructure} from '../../util/config.es';
-import {getFieldProperties} from '../../util/fieldSupport.es';
 import {setLocalizedValue} from '../../util/i18n.es';
+import {generateFieldName} from './util/fields.es';
+
 import handleColumnResized from './handlers/columnResizedHandler.es';
 import handleFieldAdded from './handlers/fieldAddedHandler.es';
 import handleFieldBlurred from './handlers/fieldBlurredHandler.es';
@@ -36,7 +34,9 @@ import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
-import {generateFieldName} from './util/fields.es';
+import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
+import handlePaginationNextClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationNextClicked.es';
+import handlePaginationPreviousClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationPreviousClicked.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -259,8 +259,8 @@ class LayoutProvider extends Component {
 		const {
 			children,
 			defaultLanguageId,
-			editingLanguageId,
 			fieldActions,
+			editingLanguageId,
 			spritemap
 		} = this.props;
 		const {

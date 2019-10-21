@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-portlet-url',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var PortletURL = function(lifecycle, params, basePortletURL) {
@@ -74,7 +74,7 @@ AUI.add(
 				secure: null
 			};
 
-			A.each(params, (item, index) => {
+			A.each(params, function(item, index) {
 				if (Lang.isValue(item)) {
 					if (instance._isReservedParam(index)) {
 						instance.reservedParams[index] = item;
@@ -95,7 +95,7 @@ AUI.add(
 
 				var result = false;
 
-				A.each(instance.reservedParams, (item, index) => {
+				A.each(instance.reservedParams, function(item, index) {
 					if (index === paramName) {
 						result = true;
 					}
@@ -189,7 +189,7 @@ AUI.add(
 			setParameters(parameters) {
 				var instance = this;
 
-				A.each(parameters, (item, index) => {
+				A.each(parameters, function(item, index) {
 					instance.setParameter(index, item);
 				});
 
@@ -264,18 +264,20 @@ AUI.add(
 
 				var reservedParameters = {};
 
-				Object.entries(instance.reservedParams).forEach(
-					([key, value]) => {
-						if (value != null) {
-							reservedParameters[key] = value;
-						}
+				Object.entries(instance.reservedParams).forEach(function([
+					key,
+					value
+				]) {
+					if (value != null) {
+						reservedParameters[key] = value;
 					}
-				);
+				});
 
-				var parameters = {
-					...instance.params,
-					...reservedParameters
-				};
+				var parameters = Object.assign(
+					{},
+					instance.params,
+					reservedParameters
+				);
 
 				var portletURL = Liferay.Util.PortletURL.createPortletURL(
 					options.basePortletURL,

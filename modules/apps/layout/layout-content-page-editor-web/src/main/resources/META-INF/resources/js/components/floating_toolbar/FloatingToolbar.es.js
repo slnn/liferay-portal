@@ -12,14 +12,15 @@
  * details.
  */
 
-import Component from 'metal-component';
 import {Align} from 'metal-position';
-import Soy from 'metal-soy';
+import Component from 'metal-component';
 import {Config} from 'metal-state';
+import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbar.soy';
+
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @type {object}

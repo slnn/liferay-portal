@@ -36,7 +36,7 @@ class OpenStreetMapGeocoder extends State {
 	 * @protected
 	 * @review
 	 */
-	_handleReverseJSONP({display_name, error, lat, lon}, callback) {
+	_handleReverseJSONP({error, display_name, lat, lon}, callback) {
 		const result = {
 			data: {},
 			err: error

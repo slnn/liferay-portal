@@ -64,7 +64,9 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 		 */
 		handleClick: event => {
 			Liferay.Util.openInDialog(
-				{...event, currentTarget: event.target.element},
+				Object.assign({}, event, {
+					currentTarget: event.target.element
+				}),
 				{
 					dialog: {
 						destroyOnHide: true

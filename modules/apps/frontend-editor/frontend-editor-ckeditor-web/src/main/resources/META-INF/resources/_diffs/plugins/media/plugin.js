@@ -300,7 +300,7 @@
 				});
 			}
 
-			editor.on('doubleclick', event => {
+			editor.on('doubleclick', function(event) {
 				var element = event.data.element;
 
 				var type;
@@ -317,7 +317,7 @@
 			});
 
 			if (editor.contextMenu) {
-				editor.contextMenu.addListener(element => {
+				editor.contextMenu.addListener(function(element) {
 					var value = {};
 
 					if (!element.isReadOnly()) {
@@ -423,7 +423,7 @@
 
 				divNode.getChild(1).remove();
 
-				AUI().use('aui-node', A => {
+				AUI().use('aui-node', function(A) {
 					var scriptNode = A.Node.create(
 						'<script type="text/javascript">' +
 							scriptContent +

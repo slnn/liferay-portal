@@ -13,27 +13,26 @@
  */
 
 import '../../common/InfoItemSelector.es';
-
 import {debounce, PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
-import {
-	ADD_MAPPED_ASSET_ENTRY,
-	UPDATE_CONFIG_ATTRIBUTES
-} from '../../../actions/actions.es';
+import {MAPPING_SOURCE_TYPE_IDS, TARGET_TYPES} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../../../actions/saveChanges.es';
-import getConnectedComponent from '../../../store/ConnectedComponent.es';
-import {openItemSelector} from '../../../utils/FragmentsEditorDialogUtils';
-import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
-import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
-import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {MAPPING_SOURCE_TYPE_IDS, TARGET_TYPES} from '../../../utils/constants';
 import templates from './FloatingToolbarLinkPanel.soy';
+import {
+	ADD_MAPPED_ASSET_ENTRY,
+	UPDATE_CONFIG_ATTRIBUTES
+} from '../../../actions/actions.es';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
+import {openItemSelector} from '../../../utils/FragmentsEditorDialogUtils';
 
 /**
  * FloatingToolbarLinkPanel
@@ -409,10 +408,11 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	_selectAssetEntry(assetEntry) {
 		this._selectedAssetEntry = assetEntry;
 
-		this.store.dispatch({
-			...this._selectedAssetEntry,
-			type: ADD_MAPPED_ASSET_ENTRY
-		});
+		this.store.dispatch(
+			Object.assign({}, this._selectedAssetEntry, {
+				type: ADD_MAPPED_ASSET_ENTRY
+			})
+		);
 
 		this._loadFields();
 	}

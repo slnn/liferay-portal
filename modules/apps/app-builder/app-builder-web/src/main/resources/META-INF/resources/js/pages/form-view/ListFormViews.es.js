@@ -14,7 +14,6 @@
 
 import moment from 'moment';
 import React, {useContext} from 'react';
-
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';

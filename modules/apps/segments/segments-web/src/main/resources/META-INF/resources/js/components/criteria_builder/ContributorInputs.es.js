@@ -14,7 +14,6 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import {CONJUNCTIONS} from '../../utils/constants.es';
 import {initialContributorShape} from '../../utils/types.es';
 

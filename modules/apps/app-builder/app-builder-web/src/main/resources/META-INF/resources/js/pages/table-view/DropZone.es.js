@@ -13,9 +13,8 @@
  */
 
 import classNames from 'classnames';
-import {useDrop} from 'react-dnd';
 import React from 'react';
-
+import {useDrop} from 'react-dnd';
 import Button from '../../components/button/Button.es';
 import Table from '../../components/table/Table.es';
 import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
@@ -72,7 +71,7 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 	return (
 		<Table
 			actions={[]}
-			columns={fields.map(({label: {en_US: label}, name}) => ({
+			columns={fields.map(({name, label: {en_US: label}}) => ({
 				key: label,
 				value: (
 					<div className="container p-0">

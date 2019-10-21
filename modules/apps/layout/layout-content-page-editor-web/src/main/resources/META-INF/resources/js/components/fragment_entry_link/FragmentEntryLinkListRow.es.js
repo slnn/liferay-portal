@@ -17,19 +17,18 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import '../floating_toolbar/background_color/FloatingToolbarBackgroundColorPanel.es';
-
 import '../floating_toolbar/layout_background_image/FloatingToolbarLayoutBackgroundImagePanel.es';
-
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
-
 import './ColumnOverlayGrid.es';
-
 import './FragmentEntryLink.es';
-import {removeRowAction} from '../../actions/removeRow.es';
-import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import {
+	FLOATING_TOOLBAR_BUTTONS,
+	FRAGMENTS_EDITOR_ITEM_TYPES,
+	FRAGMENTS_EDITOR_ROW_TYPES
+} from '../../utils/constants';
 import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {
 	getItemMoveDirection,
 	getItemPath,
@@ -42,13 +41,10 @@ import {
 	removeItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
-import {
-	FLOATING_TOOLBAR_BUTTONS,
-	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES
-} from '../../utils/constants';
-import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkListRow.soy';
+import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
+import {removeRowAction} from '../../actions/removeRow.es';
 
 /**
  * Creates a Fragment Entry Link List Row component.

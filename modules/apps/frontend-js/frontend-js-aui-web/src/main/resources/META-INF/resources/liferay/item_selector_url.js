@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-item-selector-url',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var ITEM_LINK_TPL =

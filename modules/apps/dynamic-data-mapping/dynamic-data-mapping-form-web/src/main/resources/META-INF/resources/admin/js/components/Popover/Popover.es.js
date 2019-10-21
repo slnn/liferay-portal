@@ -12,13 +12,12 @@
  * details.
  */
 
-import getCN from 'classnames';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 import Component, {Config} from 'metal-jsx';
-import {Align} from 'metal-position';
-
+import dom from 'metal-dom';
+import getCN from 'classnames';
 import PopoverBase from './PopoverBase.es';
+import {Align} from 'metal-position';
+import {EventHandler} from 'metal-events';
 
 const POSITIONS = ['top', 'left', 'right', 'bottom'];
 

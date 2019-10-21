@@ -12,9 +12,9 @@
  * details.
  */
 
-import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
-import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
+import {DEBOUNCE} from '../utils/constants';
+import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 

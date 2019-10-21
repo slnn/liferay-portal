@@ -13,18 +13,17 @@
  */
 
 import React, {useContext} from 'react';
-
-import {UpperToolbarInput} from '../../components/upper-toolbar/UpperToolbar.es';
 import EditAppContext, {UPDATE_NAME} from './EditAppContext.es';
+import {UpperToolbarInput} from '../../components/upper-toolbar/UpperToolbar.es';
 
 export default () => {
 	const {
-		dispatch,
 		state: {
 			app: {
 				name: {en_US: appName}
 			}
-		}
+		},
+		dispatch
 	} = useContext(EditAppContext);
 
 	const onAppNameChange = event => {

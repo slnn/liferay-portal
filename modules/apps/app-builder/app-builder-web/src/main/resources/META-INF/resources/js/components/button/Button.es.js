@@ -14,13 +14,13 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
-import {Link} from 'react-router-dom';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Button = props => {
 	const {
-		children,
 		className,
+		children,
 		forwardRef,
 		href,
 		symbol,

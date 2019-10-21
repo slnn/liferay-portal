@@ -13,19 +13,16 @@
  */
 
 import '../FieldBase/FieldBase.es';
-
 import '../KeyValue/KeyValue.es';
-
 import './OptionsRegister.soy.js';
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
 import Component from 'metal-component';
 import dom from 'metal-dom';
-import {Drag, DragDrop} from 'metal-drag-drop';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-
 import templates from './Options.soy.js';
+import {Config} from 'metal-state';
+import {Drag, DragDrop} from 'metal-drag-drop';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
 
 /**
  * Options.
@@ -304,7 +301,7 @@ class Options extends Component {
 		return parseInt(name.replace(/[^\d]/gi, ''), 10);
 	}
 
-	_handleDragDropEvent({source, target}) {
+	_handleDragDropEvent({target, source}) {
 		const lastSource = document.querySelector('.ddm-source-dragging');
 		const sourceIndex = parseInt(source.dataset.index, 10);
 

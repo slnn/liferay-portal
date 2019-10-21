@@ -12,7 +12,8 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
+import {ItemSelectorDialog} from 'frontend-js-web';
+import {PortletBase} from 'frontend-js-web';
 
 class SharedAssets extends PortletBase {
 	constructor(config, ...args) {

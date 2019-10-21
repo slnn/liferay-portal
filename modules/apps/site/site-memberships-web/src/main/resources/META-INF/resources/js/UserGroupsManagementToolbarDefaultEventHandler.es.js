@@ -12,8 +12,8 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
 import dom from 'metal-dom';
+import {DefaultEventHandler} from 'frontend-js-web';
 
 class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedUserGroups() {
@@ -44,12 +44,12 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 				title: Liferay.Language.get('select-site-role'),
 				uri: itemData.selectRolesURL
 			},
-			event => {
+			function(event) {
 				location.href = Liferay.Util.addParams(
 					`${this.ns('roleId')}=${event.id}`,
 					itemData.viewRoleURL
 				);
-			}
+			}.bind(this)
 		);
 	}
 

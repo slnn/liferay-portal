@@ -12,36 +12,35 @@
  * details.
  */
 
+import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
-import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
+import Component from 'metal-jsx';
+import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
+import core from 'metal';
+import dom from 'metal-dom';
+import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
+import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
+import Notifications from './util/Notifications.es';
+import PreviewButton from './components/PreviewButton/PreviewButton.es';
+import PublishButton from './components/PublishButton/PublishButton.es';
+import RuleBuilder from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RuleBuilder.es';
+import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
+import StateSyncronizer from './util/StateSyncronizer.es';
 import withActionableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withActionableFields.es';
 import withEditablePageHeader from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withEditablePageHeader.es';
 import withMoveableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMoveableFields.es';
 import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
 import withResizeableColumns from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withResizeableColumns.es';
-import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
-import RuleBuilder from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RuleBuilder.es';
-import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
-import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
+import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
+import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import {
 	isKeyInSet,
 	isModifyingKey
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
-import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
-import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
+import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
-import Component from 'metal-jsx';
-import {Config} from 'metal-state';
-import core from 'metal';
-
-import PreviewButton from './components/PreviewButton/PreviewButton.es';
-import PublishButton from './components/PublishButton/PublishButton.es';
-import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
-import AutoSave from './util/AutoSave.es';
-import Notifications from './util/Notifications.es';
-import StateSyncronizer from './util/StateSyncronizer.es';
+import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 /**
  * Form.
@@ -204,7 +203,7 @@ class Form extends Component {
 			}
 		});
 
-		store.on('pagesChanged', ({newVal, prevVal}) => {
+		store.on('pagesChanged', ({prevVal, newVal}) => {
 			if (
 				newVal &&
 				prevVal &&
@@ -904,7 +903,7 @@ class Form extends Component {
 		);
 	}
 
-	_updateAutoSaveMessage({modifiedDate, savedAsDraft}) {
+	_updateAutoSaveMessage({savedAsDraft, modifiedDate}) {
 		const {namespace} = this.props;
 
 		let message = '';

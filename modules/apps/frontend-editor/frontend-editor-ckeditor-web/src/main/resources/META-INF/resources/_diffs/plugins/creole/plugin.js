@@ -24,7 +24,7 @@
 				CKEDITOR.getUrl(path + 'creole_parser.js')
 			];
 
-			CKEDITOR.scriptLoader.load(dependencies, () => {
+			CKEDITOR.scriptLoader.load(dependencies, function() {
 				var creoleDataProcessor = CKEDITOR.plugins.get(
 					'creole_data_processor'
 				);

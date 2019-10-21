@@ -113,7 +113,7 @@ class SelectLayout extends Component {
 	 */
 
 	_selectedNodeChange(event) {
-		var data = event.newVal.map(node => {
+		var data = event.newVal.map(function(node) {
 			return {
 				groupId: node.groupId,
 				id: node.id,

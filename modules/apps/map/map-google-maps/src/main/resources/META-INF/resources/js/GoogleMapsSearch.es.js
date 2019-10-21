@@ -12,9 +12,10 @@
  * details.
  */
 
-import {isInputNode} from 'map-common/js/validators.es';
-import {toElement} from 'metal-dom';
 import State, {Config} from 'metal-state';
+import {toElement} from 'metal-dom';
+
+import {isInputNode} from 'map-common/js/validators.es';
 
 /**
  * GoogleMapsSearch

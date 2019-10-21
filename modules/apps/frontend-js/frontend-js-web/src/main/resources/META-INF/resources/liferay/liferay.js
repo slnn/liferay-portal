@@ -52,7 +52,7 @@ Liferay = window.Liferay || {};
 		type: 'POST'
 	});
 
-	$.ajaxPrefilter(options => {
+	$.ajaxPrefilter(function(options) {
 		if (options.crossDomain) {
 			options.contents.script = false;
 		}
@@ -72,7 +72,7 @@ Liferay = window.Liferay || {};
 		return new jqueryInit(selector, context, root);
 	};
 
-	$(document).on('show.bs.collapse', event => {
+	$(document).on('show.bs.collapse', function(event) {
 		var target = $(event.target);
 
 		var ancestor = target.parents('.panel-group');
@@ -99,13 +99,13 @@ Liferay = window.Liferay || {};
 		}
 	});
 
-	$(document).on('show.bs.dropdown', () => {
+	$(document).on('show.bs.dropdown', function() {
 		Liferay.fire('dropdownShow', {
 			src: 'BootstrapDropdown'
 		});
 	});
 
-	Liferay.on('dropdownShow', event => {
+	Liferay.on('dropdownShow', function(event) {
 		if (event.src !== 'BootstrapDropdown') {
 			$(
 				'.dropdown.show .dropdown-toggle[data-toggle="dropdown"]'
@@ -252,14 +252,16 @@ Liferay = window.Liferay || {};
 		var cmd = JSON.stringify(payload);
 		var p_auth = Liferay.authToken;
 
-		ioConfig = {
-			data: {
-				cmd,
-				p_auth
+		ioConfig = Object.assign(
+			{
+				data: {
+					cmd,
+					p_auth
+				},
+				dataType: 'JSON'
 			},
-			dataType: 'JSON',
-			...ioConfig
-		};
+			ioConfig
+		);
 
 		if (ioConfig.form) {
 			if (
@@ -273,7 +275,7 @@ Liferay = window.Liferay || {};
 			} else {
 				$(ioConfig.form)
 					.serializeArray()
-					.forEach(item => {
+					.forEach(function(item) {
 						ioConfig.data[item.name] = item.value;
 					});
 			}

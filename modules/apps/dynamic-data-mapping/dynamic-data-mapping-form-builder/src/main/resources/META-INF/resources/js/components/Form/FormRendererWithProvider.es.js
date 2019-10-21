@@ -12,9 +12,8 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
-
 import FormRenderer from './FormRenderer.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
 
 class FormRendererWithProvider extends FormRenderer {
 	_handleFieldEdited(properties) {

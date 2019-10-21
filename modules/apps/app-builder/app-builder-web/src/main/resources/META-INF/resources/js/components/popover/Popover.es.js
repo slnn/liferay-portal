@@ -12,12 +12,11 @@
  * details.
  */
 
+import PopoverBase from './PopoverBase.es';
 import classNames from 'classnames';
 import {Align} from 'metal-position';
-import {PropTypes} from 'prop-types';
 import React, {useEffect, useState} from 'react';
-
-import PopoverBase from './PopoverBase.es';
+import {PropTypes} from 'prop-types';
 
 const ALIGNMENTS_MAP = {
 	bottom: Align.Bottom,

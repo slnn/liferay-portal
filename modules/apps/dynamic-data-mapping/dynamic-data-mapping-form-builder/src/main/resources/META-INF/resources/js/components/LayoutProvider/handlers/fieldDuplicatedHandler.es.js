@@ -13,10 +13,9 @@
  */
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-
-import {sub} from '../../../util/strings.es';
 import {getFieldLocalizedValue} from '../util/fields.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {sub} from '../../../util/strings.es';
 
 const handleFieldDuplicated = (
 	{editingLanguageId, fieldNameGenerator},

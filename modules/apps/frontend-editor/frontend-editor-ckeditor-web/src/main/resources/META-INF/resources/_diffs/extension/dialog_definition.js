@@ -12,7 +12,7 @@
  * details.
  */
 
-CKEDITOR.on('dialogDefinition', event => {
+CKEDITOR.on('dialogDefinition', function(event) {
 	if (event.editor === ckEditor) {
 		var dialogDefinition = event.data.definition;
 

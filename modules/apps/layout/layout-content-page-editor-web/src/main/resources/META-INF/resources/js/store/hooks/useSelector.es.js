@@ -13,7 +13,6 @@
  */
 
 import {useContext} from 'react';
-
 import StateContext from '../StateContext.es';
 
 function useSelector(selector) {

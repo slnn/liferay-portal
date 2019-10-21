@@ -12,9 +12,8 @@
  * details.
  */
 
-import Soy from 'metal-soy';
-
 import FormRenderer from '../../components/FormRenderer/FormRenderer.es';
+import Soy from 'metal-soy';
 import templates from '../../components/FormRenderer/FormRenderer.soy';
 import withStore from '../../store/withStore.es';
 

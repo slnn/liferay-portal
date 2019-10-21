@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-ddm-form',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 
 		var AObject = A.Object;
@@ -256,7 +256,7 @@ AUI.add(
 
 				var fields = [];
 
-				instance.getFieldNodes().each(item => {
+				instance.getFieldNodes().each(function(item) {
 					fields.push(instance._getField(item));
 				});
 
@@ -338,7 +338,7 @@ AUI.add(
 
 				var root;
 
-				instance.eachParent(parent => {
+				instance.eachParent(function(parent) {
 					root = parent;
 				});
 
@@ -429,7 +429,7 @@ AUI.add(
 						originalField
 					});
 
-					newField.get('fields').forEach(item => {
+					newField.get('fields').forEach(function(item) {
 						var name = item.get('name');
 
 						var originalChildField = originalField.getFirstFieldByName(
@@ -530,7 +530,7 @@ AUI.add(
 				_removeFieldValidation(field) {
 					var instance = this;
 
-					field.get('fields').forEach(item => {
+					field.get('fields').forEach(function(item) {
 						instance._removeFieldValidation(item);
 					});
 
@@ -680,7 +680,7 @@ AUI.add(
 						fields = definition.fields;
 					}
 
-					return AArray.find(fields, item => {
+					return AArray.find(fields, function(item) {
 						return item.name === name;
 					});
 				},
@@ -698,7 +698,7 @@ AUI.add(
 				getFirstFieldByName(name) {
 					var instance = this;
 
-					return AArray.find(instance.get('fields'), item => {
+					return AArray.find(instance.get('fields'), function(item) {
 						return item.get('name') === name;
 					});
 				},
@@ -768,7 +768,7 @@ AUI.add(
 				getRepeatedSiblings() {
 					var instance = this;
 
-					return instance.getSiblings().filter(item => {
+					return instance.getSiblings().filter(function(item) {
 						return item.get('name') === instance.get('name');
 					});
 				},
@@ -878,13 +878,13 @@ AUI.add(
 
 					var definition = instance.get('definition');
 
-					definition.fields.forEach(field => {
+					definition.fields.forEach(function(field) {
 						if (field.type === 'select') {
 							field.options.shift();
 						}
 					});
 
-					instance._getTemplate(fieldTemplate => {
+					instance._getTemplate(function(fieldTemplate) {
 						var field = instance.createField(fieldTemplate);
 
 						var displayLocale = instance.get('displayLocale');
@@ -1182,7 +1182,7 @@ AUI.add(
 						zIndex: 65535
 					}).render();
 
-					colorPicker.on('select', event => {
+					colorPicker.on('select', function(event) {
 						selectorInput.setStyle('backgroundColor', event.color);
 
 						valueField.val(event.color);
@@ -1190,7 +1190,7 @@ AUI.add(
 						instance.validateField(valueField);
 					});
 
-					colorPicker.after('visibleChange', event => {
+					colorPicker.after('visibleChange', function(event) {
 						if (!event.newVal) {
 							instance.validateField(valueField);
 						}
@@ -1279,14 +1279,14 @@ AUI.add(
 				repeat() {
 					var instance = this;
 
-					instance._getTemplate(fieldTemplate => {
+					instance._getTemplate(function(fieldTemplate) {
 						var field = instance.createField(fieldTemplate);
 
 						var inputNode = field.getInputNode();
 
 						Liferay.after(
 							inputNode.attr('id') + 'DatePicker:registered',
-							() => {
+							function() {
 								field.renderUI();
 							}
 						);
@@ -1632,7 +1632,7 @@ AUI.add(
 							title: Liferay.Language.get('journal-article'),
 							uri: instance.getWebContentSelectorURL()
 						},
-						event => {
+						function(event) {
 							if (event.details.length > 0) {
 								var selectedWebContent = event.details[0];
 
@@ -2514,7 +2514,7 @@ AUI.add(
 
 					listNode.empty();
 
-					layouts.forEach(layout => {
+					layouts.forEach(function(layout) {
 						var selected =
 							selectedLayout &&
 							layout.layoutId === selectedLayout.layoutId;
@@ -2596,7 +2596,7 @@ AUI.add(
 						instance._requestSiblingLayouts(
 							groupId,
 							privateLayout,
-							layouts => {
+							function(layouts) {
 								var key = [
 									instance._currentParentLayoutId,
 									groupId,
@@ -3409,7 +3409,7 @@ AUI.add(
 					var instance = this;
 
 					Liferay.componentReady(instance.getInputName()).then(
-						map => {
+						function(map) {
 							map.on(
 								'positionChange',
 								instance.onPositionChange,
@@ -3583,7 +3583,7 @@ AUI.add(
 
 					var fieldDefinition = instance.getFieldDefinition();
 
-					container.all('label').each((item, index) => {
+					container.all('label').each(function(item, index) {
 						var optionDefinition = fieldDefinition.options[index];
 
 						var inputNode = item.one('input');
@@ -3705,7 +3705,7 @@ AUI.add(
 					instance
 						.getInputNode()
 						.all('option')
-						.each((item, index) => {
+						.each(function(item, index) {
 							var optionDefinition = options[index];
 
 							var optionLabel =
@@ -3735,7 +3735,7 @@ AUI.add(
 					instance
 						.getInputNode()
 						.all('option')
-						.each(item => {
+						.each(function(item) {
 							item.set(
 								'selected',
 								value.indexOf(item.val()) > -1
@@ -3839,7 +3839,7 @@ AUI.add(
 
 					var oldIndex = -1;
 
-					parentField.get('fields').some((item, index) => {
+					parentField.get('fields').some(function(item, index) {
 						oldIndex = index;
 
 						return (
@@ -3958,7 +3958,7 @@ AUI.add(
 						'availableLanguageIds'
 					);
 
-					availableLanguageIds.forEach(item => {
+					availableLanguageIds.forEach(function(item) {
 						if (currentAvailableLanguageIds.indexOf(item) == -1) {
 							currentAvailableLanguageIds.push(item);
 						}
@@ -4023,7 +4023,7 @@ AUI.add(
 
 					instance.eventHandlers = null;
 
-					A.each(instance.repeatableInstances, item => {
+					A.each(instance.repeatableInstances, function(item) {
 						item.destroy();
 					});
 
@@ -4035,24 +4035,26 @@ AUI.add(
 
 					var defaultLocale = instance.getDefaultLocale();
 
-					Object.keys(instance.newRepeatableInstances).forEach(x => {
-						var field = instance.newRepeatableInstances[x];
+					Object.keys(instance.newRepeatableInstances).forEach(
+						function(x) {
+							var field = instance.newRepeatableInstances[x];
 
-						if (!field.get('localizable')) {
-							return;
+							if (!field.get('localizable')) {
+								return;
+							}
+
+							instance.populateBlankLocalizationMap(
+								defaultLocale,
+								field.originalField,
+								field
+							);
+							instance.populateBlankLocalizationMap(
+								defaultLocale,
+								field,
+								field.originalField
+							);
 						}
-
-						instance.populateBlankLocalizationMap(
-							defaultLocale,
-							field.originalField,
-							field
-						);
-						instance.populateBlankLocalizationMap(
-							defaultLocale,
-							field,
-							field.originalField
-						);
-					});
+					);
 				},
 
 				initializer() {
@@ -4092,7 +4094,7 @@ AUI.add(
 
 					localizations.push(currentLocale);
 
-					localizations.forEach(localization => {
+					localizations.forEach(function(localization) {
 						if (!newFieldLocalizations[localization]) {
 							var localizationValue = '';
 

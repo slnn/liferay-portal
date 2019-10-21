@@ -13,12 +13,11 @@
  */
 
 import React, {useContext} from 'react';
-
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import FormViewContext from './FormViewContext.es';
-import {UPDATE_DATA_LAYOUT_NAME} from './actions.es';
 import saveFormView from './saveFormView.es';
+import {UPDATE_DATA_LAYOUT_NAME} from './actions.es';
 
 export default ({newCustomObject}) => {
 	const [state, dispatch] = useContext(FormViewContext);

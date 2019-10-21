@@ -12,8 +12,8 @@
  * details.
  */
 
-import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import SidebarWidgets from './SidebarWidgets.es';
+import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
 import templates from './SidebarWidgetsPanel.soy';
 
 const SidebarWidgetsPanel = getConnectedReactComponentAdapter(

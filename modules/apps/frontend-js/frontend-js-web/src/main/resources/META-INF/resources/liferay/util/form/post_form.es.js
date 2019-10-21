@@ -14,7 +14,6 @@
 
 import dom from 'metal-dom';
 import {isDef, isObject, isString} from 'metal';
-
 import setFormValues from './set_form_values.es';
 
 /**

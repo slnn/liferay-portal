@@ -13,9 +13,6 @@
  */
 
 import React, {useEffect, useContext} from 'react';
-
-import {getFieldNameFromIndexes} from '../../utils/dataLayoutVisitor.es';
-import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
 import {
@@ -24,8 +21,10 @@ import {
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES
 } from './actions.es';
+import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
+import {getFieldNameFromIndexes} from '../../utils/dataLayoutVisitor.es';
 
-export default ({children, dataLayoutBuilder}) => {
+export default ({dataLayoutBuilder, children}) => {
 	const [{dataDefinition, dataLayout}, dispatch] = useContext(
 		FormViewContext
 	);

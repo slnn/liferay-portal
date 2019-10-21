@@ -15,9 +15,8 @@
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
-
-import Button from '../button/Button.es';
 import DropDownAction from './DropDownAction.es';
+import Button from '../button/Button.es';
 
 const {ItemList} = ClayDropDown;
 

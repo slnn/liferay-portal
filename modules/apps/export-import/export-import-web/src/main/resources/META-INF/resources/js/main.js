@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-export-import-export-import',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var ADate = A.Date;
@@ -72,7 +72,7 @@ AUI.add(
 					if (form) {
 						form.delegate(
 							STR_CLICK,
-							event => {
+							function(event) {
 								var portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
@@ -99,7 +99,7 @@ AUI.add(
 
 						form.delegate(
 							STR_CLICK,
-							event => {
+							function(event) {
 								var portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
@@ -131,10 +131,10 @@ AUI.add(
 
 					Array.prototype.forEach.call(
 						portletConfigurationNodes,
-						portletConfigurationNode => {
+						function(portletConfigurationNode) {
 							portletConfigurationNode.addEventListener(
 								STR_CLICK,
-								() => {
+								function() {
 									if (portletConfigurationNode.checked) {
 										var id = portletConfigurationNode.id;
 
@@ -148,7 +148,7 @@ AUI.add(
 
 										Array.prototype.forEach.call(
 											controlCheckboxes,
-											controlCheckbox => {
+											function(controlCheckbox) {
 												if (!controlCheckbox.checked) {
 													controlCheckbox.click();
 												}
@@ -173,53 +173,52 @@ AUI.add(
 						'[id^=' + instance.ns('PORTLET_DATA') + ']'
 					);
 
-					Array.prototype.forEach.call(
-						portletDataNodes,
-						portletDataNode => {
-							portletDataNode.addEventListener(STR_CLICK, () => {
-								if (portletDataNode.checked) {
-									var id = portletDataNode.id;
+					Array.prototype.forEach.call(portletDataNodes, function(
+						portletDataNode
+					) {
+						portletDataNode.addEventListener(STR_CLICK, function() {
+							if (portletDataNode.checked) {
+								var id = portletDataNode.id;
 
-									var controlCheckboxes = document.querySelectorAll(
-										'[data-root-control-id=' + id + ']'
-									);
+								var controlCheckboxes = document.querySelectorAll(
+									'[data-root-control-id=' + id + ']'
+								);
 
-									if (controlCheckboxes.length === 0) {
-										return;
-									}
-
-									Array.prototype.forEach.call(
-										controlCheckboxes,
-										controlCheckbox => {
-											if (!controlCheckbox.checked) {
-												controlCheckbox.click();
-											}
-										}
-									);
-
-									var portletId = id.replace(
-										instance.ns('PORTLET_DATA') + '_',
-										''
-									);
-
-									instance._setContentLabels(portletId);
-
-									var contentNode = instance.byId(
-										'content_' + portletId
-									);
-
-									instance._storeNodeInputStates(contentNode);
+								if (controlCheckboxes.length === 0) {
+									return;
 								}
-							});
-						}
-					);
+
+								Array.prototype.forEach.call(
+									controlCheckboxes,
+									function(controlCheckbox) {
+										if (!controlCheckbox.checked) {
+											controlCheckbox.click();
+										}
+									}
+								);
+
+								var portletId = id.replace(
+									instance.ns('PORTLET_DATA') + '_',
+									''
+								);
+
+								instance._setContentLabels(portletId);
+
+								var contentNode = instance.byId(
+									'content_' + portletId
+								);
+
+								instance._storeNodeInputStates(contentNode);
+							}
+						});
+					});
 
 					var changeToPublicLayoutsButton = instance.byId(
 						'changeToPublicLayoutsButton'
 					);
 
 					if (changeToPublicLayoutsButton) {
-						changeToPublicLayoutsButton.on(STR_CLICK, () => {
+						changeToPublicLayoutsButton.on(STR_CLICK, function() {
 							instance._changeLayouts(false);
 						});
 					}
@@ -229,7 +228,7 @@ AUI.add(
 					);
 
 					if (changeToPrivateLayoutsButton) {
-						changeToPrivateLayoutsButton.on(STR_CLICK, () => {
+						changeToPrivateLayoutsButton.on(STR_CLICK, function() {
 							instance._changeLayouts(true);
 						});
 					}
@@ -239,7 +238,7 @@ AUI.add(
 					);
 
 					if (contentOptionsLink) {
-						contentOptionsLink.on(STR_CLICK, () => {
+						contentOptionsLink.on(STR_CLICK, function() {
 							var contentOptionsDialog = instance._getContentOptionsDialog();
 
 							contentOptionsDialog.show();
@@ -249,7 +248,7 @@ AUI.add(
 					var deletionsNode = instance.get('deletionsNode');
 
 					if (deletionsNode) {
-						deletionsNode.on('change', () => {
+						deletionsNode.on('change', function() {
 							instance._refreshDeletions();
 						});
 					}
@@ -259,7 +258,7 @@ AUI.add(
 					);
 
 					if (globalConfigurationLink) {
-						globalConfigurationLink.on(STR_CLICK, () => {
+						globalConfigurationLink.on(STR_CLICK, function() {
 							var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
 
 							globalConfigurationDialog.show();
@@ -269,7 +268,7 @@ AUI.add(
 					var rangeLink = instance.byId('rangeLink');
 
 					if (rangeLink) {
-						rangeLink.on(STR_CLICK, () => {
+						rangeLink.on(STR_CLICK, function() {
 							instance._preventNameRequiredChecking();
 
 							instance._updateDateRange();
@@ -281,7 +280,7 @@ AUI.add(
 					);
 
 					if (scheduledPublishingEventsLink) {
-						scheduledPublishingEventsLink.on(STR_CLICK, () => {
+						scheduledPublishingEventsLink.on(STR_CLICK, function() {
 							var scheduledPublishingEventsDialog = instance._getScheduledPublishingEventsDialog();
 
 							scheduledPublishingEventsDialog.show();
@@ -694,13 +693,13 @@ AUI.add(
 				_initLabels() {
 					var instance = this;
 
-					instance.all('.configuration-link').each(item => {
+					instance.all('.configuration-link').each(function(item) {
 						instance._setConfigurationLabels(
 							item.attr('data-portletid')
 						);
 					});
 
-					instance.all('.content-link').each(item => {
+					instance.all('.content-link').each(function(item) {
 						instance._setContentLabels(item.attr('data-portletid'));
 					});
 
@@ -798,11 +797,11 @@ AUI.add(
 					var instance = this;
 
 					if (instance._isChecked('deletionsNode')) {
-						instance.all('.deletions').each(item => {
+						instance.all('.deletions').each(function(item) {
 							item.show();
 						});
 					} else {
-						instance.all('.deletions').each(item => {
+						instance.all('.deletions').each(function(item) {
 							item.hide();
 						});
 					}
@@ -946,14 +945,14 @@ AUI.add(
 				_restoreNodeHiddenState(node, state) {
 					var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
-					hiddenList.each(hiddenNode => {
+					hiddenList.each(function(hiddenNode) {
 						hiddenNode.removeClass(STR_HIDE);
 					});
 
 					hiddenList = state.hiddenList;
 
 					if (hiddenList !== null) {
-						hiddenList.each(node => {
+						hiddenList.each(function(node) {
 							node.addClass(STR_HIDE);
 						});
 					}
@@ -970,7 +969,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(node => {
+					inputNodes.each(function(node) {
 						var id = node.get('id');
 
 						var state = inputStates[id];
@@ -1009,7 +1008,7 @@ AUI.add(
 
 					var selectedConfiguration = [];
 
-					inputs.each(item => {
+					inputs.each(function(item) {
 						var checked = item.attr(STR_CHECKED);
 
 						if (checked) {
@@ -1047,7 +1046,7 @@ AUI.add(
 
 					var selectedContent = [];
 
-					inputs.each(item => {
+					inputs.each(function(item) {
 						var checked = item.attr(STR_CHECKED);
 
 						if (checked) {
@@ -1108,40 +1107,39 @@ AUI.add(
 						'[id^=' + instance.ns('PORTLET_DATA') + ']'
 					);
 
-					Array.prototype.forEach.call(
-						portletDataNodes,
-						portletDataNode => {
-							if (portletDataNode.type === 'checkbox') {
-								var id = portletDataNode.id;
+					Array.prototype.forEach.call(portletDataNodes, function(
+						portletDataNode
+					) {
+						if (portletDataNode.type === 'checkbox') {
+							var id = portletDataNode.id;
 
-								var controlCheckboxes = document.querySelectorAll(
-									'[data-root-control-id=' + id + ']'
-								);
+							var controlCheckboxes = document.querySelectorAll(
+								'[data-root-control-id=' + id + ']'
+							);
 
-								if (controlCheckboxes.length === 0) {
-									return;
-								}
-
-								Array.prototype.forEach.call(
-									controlCheckboxes,
-									controlCheckbox => {
-										if (
-											controlCheckbox.disabled &&
-											controlCheckbox.checked
-										) {
-											portletURL.setParameter(
-												controlCheckbox.name.replace(
-													instance.NS,
-													''
-												),
-												'true'
-											);
-										}
-									}
-								);
+							if (controlCheckboxes.length === 0) {
+								return;
 							}
+
+							Array.prototype.forEach.call(
+								controlCheckboxes,
+								function(controlCheckbox) {
+									if (
+										controlCheckbox.disabled &&
+										controlCheckbox.checked
+									) {
+										portletURL.setParameter(
+											controlCheckbox.name.replace(
+												instance.NS,
+												''
+											),
+											'true'
+										);
+									}
+								}
+							);
 						}
-					);
+					});
 				},
 
 				_setGlobalConfigurationLabels() {
@@ -1217,7 +1215,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(node => {
+					inputNodes.each(function(node) {
 						var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
 						var id = node.get('id');

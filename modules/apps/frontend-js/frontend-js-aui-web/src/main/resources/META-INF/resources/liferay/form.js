@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-form',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 
 		var Lang = A.Lang;
@@ -215,7 +215,7 @@ AUI.add(
 				_findRuleIndex(fieldRules, fieldName, validatorName) {
 					var ruleIndex = -1;
 
-					AArray.some(fieldRules, (element, index) => {
+					AArray.some(fieldRules, function(element, index) {
 						if (
 							element.fieldName === fieldName &&
 							element.validatorName === validatorName
@@ -249,7 +249,9 @@ AUI.add(
 								'data-tabs-namespace'
 							);
 
-							var tabNames = AArray.map(tabs._nodes, tab => {
+							var tabNames = AArray.map(tabs._nodes, function(
+								tab
+							) {
 								return tab.getAttribute('data-tab-name');
 							});
 
@@ -257,7 +259,9 @@ AUI.add(
 								.getAttribute('id')
 								.slice(0, -TABS_SECTION_STR.length);
 
-							var fieldTabId = AArray.find(tabs._nodes, tab => {
+							var fieldTabId = AArray.find(tabs._nodes, function(
+								tab
+							) {
 								return (
 									tab
 										.getAttribute('id')
@@ -298,7 +302,7 @@ AUI.add(
 
 					event.preventDefault();
 
-					setTimeout(() => {
+					setTimeout(function() {
 						instance._defaultSubmitFn(event);
 					}, 0);
 				},
@@ -310,7 +314,7 @@ AUI.add(
 						'.panel-collapse'
 					);
 
-					collapsiblePanels.each(panel => {
+					collapsiblePanels.each(function(panel) {
 						var errorFields = panel
 							.get('children')
 							.all('.has-error');

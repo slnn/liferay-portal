@@ -13,7 +13,6 @@
  */
 
 import React from 'react';
-
 import {sub} from '../../utils/utils.es';
 
 export default function EmptyPlaceholder() {

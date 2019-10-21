@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-navigation',
-	A => {
+	function(A) {
 		var ANode = A.Node;
 		var Lang = A.Lang;
 

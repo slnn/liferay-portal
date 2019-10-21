@@ -13,21 +13,22 @@
  */
 
 import {ClayAlert} from 'clay-alert';
-import {render} from 'frontend-js-react-web';
-import {PortletBase} from 'frontend-js-web';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
-import React from 'react';
+import {PortletBase} from 'frontend-js-web';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
+import {render} from 'frontend-js-react-web';
+
+import React from 'react';
 
 const STR_DRAG_LEAVE = 'dragleave';
 const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
 const statusCode = Liferay.STATUS_CODE;
 
-const uploadItemLinkTpl = ({preview, returnType, title, value}) =>
+const uploadItemLinkTpl = ({returnType, value, preview, title}) =>
 	`<a data-returnType="${returnType}" data-value="${value}" href="${preview}" title="${title}"></a>`;
 
 /**

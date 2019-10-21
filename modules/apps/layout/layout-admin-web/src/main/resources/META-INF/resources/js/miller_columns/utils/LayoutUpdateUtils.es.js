@@ -12,7 +12,6 @@
  * details.
  */
 
-import {setIn} from '../../utils/utils.es';
 import {DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 import {
 	getColumnActiveItem,
@@ -20,6 +19,7 @@ import {
 	getItemColumn,
 	getItemColumnIndex
 } from './LayoutGetUtils.es';
+import {setIn} from '../../utils/utils.es';
 
 /**
  * Append an item to a column and returns a new array of columns

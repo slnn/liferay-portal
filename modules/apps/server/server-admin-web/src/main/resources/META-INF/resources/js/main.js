@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-admin',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var MAP_DATA_PARAMS = {
@@ -61,7 +61,7 @@ AUI.add(
 
 					var form = instance.get(STR_FORM);
 
-					var inputsArray = A.Object.map(data, (value, key) => {
+					var inputsArray = A.Object.map(data, function(value, key) {
 						key = MAP_DATA_PARAMS[key] || key;
 
 						var nsKey = instance.ns(key);

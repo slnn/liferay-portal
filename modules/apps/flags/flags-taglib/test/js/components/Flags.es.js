@@ -13,16 +13,15 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {act} from 'react-dom/test-utils';
 import {
 	cleanup,
 	fireEvent,
 	render,
 	waitForElement
 } from '@testing-library/react';
-import {act} from 'react-dom/test-utils';
-import React from 'react';
-
 import Flags from '../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
+import React from 'react';
 
 const formDataToObject = formData =>
 	Array.from(formData).reduce(
@@ -62,7 +61,7 @@ describe('Flags', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {getByRole, getByText} = _renderFlagsComponent();
+		const {getByText, getByRole} = _renderFlagsComponent();
 
 		expect(getByText('report'));
 		expect(getByRole('button'));

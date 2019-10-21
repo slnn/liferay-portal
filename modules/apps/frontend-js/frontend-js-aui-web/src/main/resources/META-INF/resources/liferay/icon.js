@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-icon',
-	A => {
+	function(A) {
 		var _ICON_REGISTRY = {};
 
 		var Icon = {
@@ -118,7 +118,7 @@ AUI.add(
 					);
 				}
 
-				Liferay.once('screenLoad', () => {
+				Liferay.once('screenLoad', function() {
 					delete _ICON_REGISTRY[config.id];
 				});
 			}

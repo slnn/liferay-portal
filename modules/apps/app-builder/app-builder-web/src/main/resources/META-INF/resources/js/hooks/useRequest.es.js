@@ -13,7 +13,6 @@
  */
 
 import {useEffect, useState} from 'react';
-
 import {request} from '../utils/client.es';
 
 export default endpoint => {

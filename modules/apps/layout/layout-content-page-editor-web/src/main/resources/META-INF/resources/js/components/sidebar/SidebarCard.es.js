@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 

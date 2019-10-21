@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-dynamic-select',
-	A => {
+	function(A) {
 		var sortByValue = function(a, b) {
 			var pos = a.indexOf('">');
 
@@ -57,7 +57,7 @@ AUI.add(
 
 			instance.array = array;
 
-			array.forEach((item, index) => {
+			array.forEach(function(item, index) {
 				var id = item.select;
 				var select = A.one('#' + id);
 				var selectData = item.selectData;
@@ -71,7 +71,7 @@ AUI.add(
 						prevSelectVal = array[index - 1].selectVal;
 					}
 
-					selectData(list => {
+					selectData(function(list) {
 						instance._updateSelect(index, list);
 					}, prevSelectVal);
 
@@ -79,7 +79,7 @@ AUI.add(
 						select.attr('name', id);
 					}
 
-					select.on('change', () => {
+					select.on('change', function() {
 						instance._callSelectData(index);
 					});
 				}
@@ -96,7 +96,7 @@ AUI.add(
 					var curSelect = A.one('#' + array[i].select);
 					var nextSelectData = array[i + 1].selectData;
 
-					nextSelectData(list => {
+					nextSelectData(function(list) {
 						instance._updateSelect(i + 1, list);
 					}, curSelect && curSelect.val());
 				}
@@ -122,7 +122,7 @@ AUI.add(
 					selectOptions.push('<option selected value="0"></option>');
 				}
 
-				list.forEach(item => {
+				list.forEach(function(item) {
 					var key = item[selectId];
 					var value = item[selectDesc];
 

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-widget-zindex',
-	A => {
+	function(A) {
 		var STR_HOST = 'host';
 
 		var WidgetZIndex = A.Component.create({
@@ -42,7 +42,7 @@ AUI.add(
 						instance._setHostZIndex();
 					}
 
-					instance.onHostEvent('visibleChange', event => {
+					instance.onHostEvent('visibleChange', function(event) {
 						if (event.newVal) {
 							instance._setHostZIndex();
 						}

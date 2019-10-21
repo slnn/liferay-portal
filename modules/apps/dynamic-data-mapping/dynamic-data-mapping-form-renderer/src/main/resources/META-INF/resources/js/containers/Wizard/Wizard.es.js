@@ -14,9 +14,8 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-
 import templates from './Wizard.soy.js';
+import {Config} from 'metal-state';
 
 class Wizard extends Component {
 	_handleItemClicked({delegateTarget: {dataset}}) {

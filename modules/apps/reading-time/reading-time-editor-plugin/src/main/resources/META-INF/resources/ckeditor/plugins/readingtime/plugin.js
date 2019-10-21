@@ -17,10 +17,10 @@
 
 	CKEDITOR.plugins.add('readingtime', {
 		init(editor) {
-			AUI().use('aui-debounce', A => {
+			AUI().use('aui-debounce', function(A) {
 				editor.on(
 					'change',
-					A.debounce(() => {
+					A.debounce(function() {
 						const formData = new FormData();
 
 						formData.append(
@@ -38,10 +38,10 @@
 							credentials: 'same-origin',
 							method: 'POST'
 						})
-							.then(response => {
+							.then(function(response) {
 								return response.json();
 							})
-							.then(message => {
+							.then(function(message) {
 								var readingTimeElement = A.one(
 									'#' + editor.config.readingTime.elementId
 								);

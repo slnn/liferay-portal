@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-reminders',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var STR_BLANK = '';

@@ -15,11 +15,10 @@
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import {DragSource as dragSource} from 'react-dnd';
 import React, {Component} from 'react';
-
-import {PROPERTY_TYPES} from '../../utils/constants.es';
+import {DragSource as dragSource} from 'react-dnd';
 import {DragTypes} from '../../utils/drag-types.es';
+import {PROPERTY_TYPES} from '../../utils/constants.es';
 
 const TYPE_ICON_MAP = {
 	[PROPERTY_TYPES.BOOLEAN]: 'text',

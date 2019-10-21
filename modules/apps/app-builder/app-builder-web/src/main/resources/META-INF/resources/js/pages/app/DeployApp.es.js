@@ -13,7 +13,6 @@
  */
 
 import React from 'react';
-
 import ProductMenuSettings from './ProductMenuSettings.es';
 import Settings from './Settings.es';
 import WidgetSettings from './WidgetSettings.es';

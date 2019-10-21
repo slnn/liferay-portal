@@ -12,10 +12,10 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {fetch} from 'frontend-js-web';
 import {isObject} from 'metal';
 
 import templates from './DiffVersionComparator.soy';
@@ -84,7 +84,9 @@ class DiffVersionComparator extends Component {
 				resultsLength++;
 			}
 
-			return {...diffVersion, hidden};
+			return Object.assign({}, diffVersion, {
+				hidden
+			});
 		});
 
 		this.diffVersions = diffVersions;

@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import React, {createContext, useState} from 'react';
+import ClayAlert from '@clayui/alert';
 
 const ToastContext = createContext();
 

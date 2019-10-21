@@ -13,11 +13,8 @@
  */
 
 import 'clay-alert';
-
 import 'clay-button';
-
 import 'clay-select';
-
 import 'clay-sticker';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';

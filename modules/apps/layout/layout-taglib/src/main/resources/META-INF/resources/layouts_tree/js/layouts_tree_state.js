@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree-state',
-	A => {
+	function(A) {
 		var AArray = A.Array;
 
 		var Lang = A.Lang;
@@ -194,14 +194,14 @@ AUI.add(
 							cmd: 'get',
 							key
 						},
-						responseData => {
+						function(responseData) {
 							try {
 								paginationMap = JSON.parse(responseData);
 							} catch (e) {}
 
 							updatePaginationMap(paginationMap, target);
 
-							target.eachParent(parent => {
+							target.eachParent(function(parent) {
 								updatePaginationMap(paginationMap, parent);
 							});
 
@@ -356,7 +356,7 @@ AUI.add(
 							? undefined
 							: checked;
 
-						A.each(children, child => {
+						A.each(children, function(child) {
 							instance._updateCheckedNodes({
 								checked: childrenChecked,
 								forceChildrenState,

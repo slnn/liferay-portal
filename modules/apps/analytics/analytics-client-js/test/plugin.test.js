@@ -12,10 +12,9 @@
  * details.
  */
 
+import AnalyticsClient from '../src/analytics';
 import {assert} from 'chai';
 import fetchMock from 'fetch-mock';
-
-import AnalyticsClient from '../src/analytics';
 
 let Analytics;
 
@@ -35,7 +34,7 @@ describe('Analytics Plugin Integration', () => {
 			Analytics.registerPlugin.should.be.a('function');
 		});
 
-		it('processes the given plugin and execute its initialisation logic', () => {
+		it('processes the given plugin and execute its initialisation logic', function() {
 			const plugin = analytics => {
 				analytics.should.be.equal(Analytics);
 			};

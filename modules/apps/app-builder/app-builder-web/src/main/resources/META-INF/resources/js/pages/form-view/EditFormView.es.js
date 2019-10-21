@@ -12,14 +12,13 @@
  * details.
  */
 
-import {createPortal} from 'react-dom';
 import React, {useState} from 'react';
-
 import CustomObjectSidebar from './CustomObjectSidebar.es';
 import DataLayoutBuilderDragAndDrop from './DataLayoutBuilderDragAndDrop.es';
 import DataLayoutBuilderSidebar from './DataLayoutBuilderSidebar.es';
-import FormViewContextProvider from './FormViewContextProvider.es';
+import {createPortal} from 'react-dom';
 import FormViewUpperToolbar from './FormViewUpperToolbar.es';
+import FormViewContextProvider from './FormViewContextProvider.es';
 
 const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
 	...props,

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -147,7 +147,7 @@ AUI.add(
 
 				var urls = instance.get('urls');
 
-				urls.forEach(item => {
+				urls.forEach(function(item) {
 					data[item.name] = A.Lang.sub(item.value, {
 						selPlid: data.plid
 					});
@@ -193,7 +193,7 @@ AUI.add(
 			_formatJSONResults(json) {
 				var instance = this;
 
-				var output = json.layouts.map(node => {
+				var output = json.layouts.map(function(node) {
 					return instance._formatNode(node);
 				});
 

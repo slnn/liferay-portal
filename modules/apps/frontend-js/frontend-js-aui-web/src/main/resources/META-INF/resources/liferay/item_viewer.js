@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-item-viewer',
-	A => {
+	function(A) {
 		var Do = A.Do;
 
 		var Lang = A.Lang;
@@ -418,7 +418,7 @@ AUI.add(
 
 					metadata = JSON.parse(metadata);
 
-					metadata.groups.forEach((group, index) => {
+					metadata.groups.forEach(function(group, index) {
 						var groupId = A.guid();
 
 						var tabTitleNode = A.Node.create(
@@ -431,20 +431,21 @@ AUI.add(
 
 						sidenavTabList.append(tabTitleNode);
 
-						var dataStr = group.data.reduce(
-							(previousValue, currentValue) => {
-								return (
-									previousValue +
-									Lang.sub(TPL_INFO_TAB_BODY_CONTENT, {
-										dd: currentValue.value,
-										ddClassName: '',
-										dt: currentValue.key,
-										dtClassName: 'h5'
-									})
-								);
-							},
-							STR_BLANK
-						);
+						var dataStr = group.data.reduce(function(
+							previousValue,
+							currentValue
+						) {
+							return (
+								previousValue +
+								Lang.sub(TPL_INFO_TAB_BODY_CONTENT, {
+									dd: currentValue.value,
+									ddClassName: '',
+									dt: currentValue.key,
+									dtClassName: 'h5'
+								})
+							);
+						},
+						STR_BLANK);
 
 						var tabContentNode = A.Node.create(
 							Lang.sub(TPL_INFO_TAB_BODY, {
@@ -561,7 +562,7 @@ AUI.add(
 
 					var sources = [];
 
-					links.each(item => {
+					links.each(function(item) {
 						sources.push(
 							item.attr('href') || item.attr('data-href')
 						);
@@ -680,7 +681,7 @@ AUI.add(
 					newLink.setAttribute('data-value', imageData.file.url);
 					newLink.setAttribute('data-url', imageData.file.url);
 
-					newLink.all('[style]').each(node => {
+					newLink.all('[style]').each(function(node) {
 						var styleAttr = node.getAttribute('style');
 
 						if (styleAttr) {

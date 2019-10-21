@@ -13,9 +13,8 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import React from 'react';
-
 import CriteriaSidebar from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebar.es';
+import React from 'react';
 
 describe('CriteriaSidebar', () => {
 	afterEach(cleanup);

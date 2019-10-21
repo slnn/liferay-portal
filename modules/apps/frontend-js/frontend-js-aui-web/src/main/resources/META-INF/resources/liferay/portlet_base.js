@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-base',
-	A => {
+	function(A) {
 		var PortletBase = function(config) {
 			var instance = this;
 

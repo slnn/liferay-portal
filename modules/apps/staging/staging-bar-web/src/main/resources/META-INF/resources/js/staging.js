@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-staging',
-	A => {
+	function(A) {
 		var StagingBar = {
 			init(config) {
 				var instance = this;
@@ -35,7 +35,7 @@ AUI.add(
 					fireOnce: true
 				});
 
-				Liferay.after('initStagingBar', () => {
+				Liferay.after('initStagingBar', function() {
 					var body = A.getBody();
 
 					if (body.hasClass('has-staging-bar')) {

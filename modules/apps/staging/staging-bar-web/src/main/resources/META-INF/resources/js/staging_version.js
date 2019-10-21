@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-staging-version',
-	A => {
+	function(A) {
 		var StagingBar = Liferay.StagingBar;
 
 		var MAP_CMD_REVISION = {
@@ -105,7 +105,7 @@ AUI.add(
 
 				if (layoutRevisionDetails) {
 					eventHandles.push(
-						Liferay.after('updatedLayout', () => {
+						Liferay.after('updatedLayout', function() {
 							Liferay.Util.fetch(
 								instance.markAsReadyForPublicationURL
 							)
@@ -131,7 +131,7 @@ AUI.add(
 				}
 
 				if (layoutRevisionStatus) {
-					Liferay.after('updatedStatus', () => {
+					Liferay.after('updatedStatus', function() {
 						Liferay.Util.fetch(instance.layoutRevisionStatusURL)
 							.then(response => {
 								return response.text();

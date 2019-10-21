@@ -14,9 +14,8 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render, fireEvent, wait} from '@testing-library/react';
-import React from 'react';
-
 import SegmentEdit from '../../../../src/main/resources/META-INF/resources/js/components/segment_edit/SegmentEdit.es';
+import React from 'react';
 import {SOURCES} from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const SOURCE_ICON_TESTID = 'source-icon';
@@ -201,7 +200,7 @@ describe('SegmentEdit', () => {
 
 		fireEvent.change(localizedInput, {target: {value: 'A'}});
 
-		wait(() => expect(localizedInput.value).toBe('A')).then(() => {
+		wait(() => expect(localizedInput.value).toBe('A')).then(function() {
 			expect(cancelButton).not.toBe(null);
 
 			fireEvent.click(cancelButton);

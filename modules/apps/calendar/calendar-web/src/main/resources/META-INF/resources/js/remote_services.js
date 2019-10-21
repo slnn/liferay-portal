@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-remote-services',
-	A => {
+	function(A) {
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
