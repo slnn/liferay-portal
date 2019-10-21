@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -99,6 +100,11 @@ public interface Store {
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel);
+
+	public File getFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException;
 
 	/**
 	 * Returns the file as an {@link InputStream} object.

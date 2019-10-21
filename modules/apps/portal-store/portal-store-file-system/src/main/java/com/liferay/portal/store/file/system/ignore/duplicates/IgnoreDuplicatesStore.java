@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -73,6 +74,15 @@ public class IgnoreDuplicatesStore implements Store {
 		String versionLabel) {
 
 		_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+	}
+
+	@Override
+	public File getFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException {
+
+		return _store.getFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
