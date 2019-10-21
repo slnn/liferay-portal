@@ -260,6 +260,19 @@ public class FileSystemStore extends BaseStore {
 		}
 	}
 
+	protected File getCompanyDir(long companyId) {
+		File companyDir = new File(_rootDir + StringPool.SLASH + companyId);
+
+		try {
+			FileUtil.mkdirs(companyDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+
+		return companyDir;
+	}
+
 	protected File getDirNameDir(
 		long companyId, long repositoryId, String dirName) {
 
@@ -341,8 +354,10 @@ public class FileSystemStore extends BaseStore {
 		File repositoryDir = _repositoryDirs.get(repositoryDirKey);
 
 		if (repositoryDir == null) {
+			File companyDir = getCompanyDir(companyId);
+
 			repositoryDir = new File(
-				_rootDir, companyId + StringPool.SLASH + repositoryId);
+				companyDir + StringPool.SLASH + repositoryId);
 
 			try {
 				FileUtil.mkdirs(repositoryDir);
