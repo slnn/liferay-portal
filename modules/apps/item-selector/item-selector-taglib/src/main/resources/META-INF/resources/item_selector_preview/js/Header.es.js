@@ -56,7 +56,11 @@ const Header = ({
 				</ClayNavigationBar.Item>
 
 				<ClayNavigationBar.Item className="btn-group-item">
-					<ClayButton borderless displayType="secondary" monospaced>
+					<ClayButton
+						borderless
+						displayType="secondary"
+						monospaced
+					>
 						<ClayIcon symbol="info-panel-open" />
 					</ClayButton>
 				</ClayNavigationBar.Item>
