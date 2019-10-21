@@ -255,8 +255,7 @@ public class FileSystemStore extends BaseStore {
 		throws PortalException {
 
 		try {
-			File file = getFile(
-				companyId, repositoryId, fileName, StringPool.BLANK);
+			File file = getFile(companyId, repositoryId, fileName);
 
 			return Files.readAllBytes(file.toPath());
 		}

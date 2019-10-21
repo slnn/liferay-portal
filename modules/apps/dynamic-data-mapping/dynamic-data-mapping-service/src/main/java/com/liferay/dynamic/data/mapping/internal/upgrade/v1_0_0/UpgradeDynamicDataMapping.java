@@ -2570,8 +2570,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		protected File fetchFile(String filePath) throws PortalException {
 			try {
 				return _store.getFile(
-					_companyId, CompanyConstants.SYSTEM, filePath,
-					StringPool.BLANK);
+					_companyId, CompanyConstants.SYSTEM, filePath);
 			}
 			catch (PortalException pe) {
 				_log.error(
