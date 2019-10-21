@@ -122,6 +122,11 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
+	public boolean hasFile(long companyId, long repositoryId, String fileName) {
+		return _store.hasFile(companyId, repositoryId, fileName);
+	}
+
+	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

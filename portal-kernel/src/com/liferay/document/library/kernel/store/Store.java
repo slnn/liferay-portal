@@ -160,6 +160,8 @@ public interface Store {
 	public boolean hasDirectory(
 		long companyId, long repositoryId, String dirName);
 
+	public boolean hasFile(long companyId, long repositoryId, String fileName);
+
 	/**
 	 * Returns <code>true</code> if the file exists.
 	 *
