@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -39,7 +38,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -243,24 +241,6 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return fileNameVersionFile.length();
-	}
-
-	@Override
-	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-
-		if (!fileNameDir.exists()) {
-			return StringPool.EMPTY_ARRAY;
-		}
-
-		String[] versions = FileUtil.listFiles(fileNameDir);
-
-		Arrays.sort(versions);
-
-		return versions;
 	}
 
 	@Override

@@ -124,10 +124,6 @@ public interface Store {
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException;
 
-	public String[] getFileVersions(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException;
-
 	/**
 	 * Returns <code>true</code> if the file exists.
 	 *
