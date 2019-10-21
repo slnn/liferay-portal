@@ -190,7 +190,7 @@ public class DLStoreImpl implements DLStore {
 			is = new UnsyncByteArrayInputStream(new byte[0]);
 		}
 
-		store.addFile(companyId, repositoryId, fileName, toVersionLabel, is);
+		store.updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 	}
 
 	@Override
@@ -387,7 +387,8 @@ public class DLStoreImpl implements DLStore {
 		Store store = _storeFactory.getStore();
 
 		try (InputStream is = new FileInputStream(file)) {
-			store.addFile(companyId, repositoryId, fileName, versionLabel, is);
+			store.updateFile(
+				companyId, repositoryId, fileName, versionLabel, is);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -418,7 +419,8 @@ public class DLStoreImpl implements DLStore {
 
 			Store store = _storeFactory.getStore();
 
-			store.addFile(companyId, repositoryId, fileName, versionLabel, is);
+			store.updateFile(
+				companyId, repositoryId, fileName, versionLabel, is);
 
 			return;
 		}
@@ -440,7 +442,7 @@ public class DLStoreImpl implements DLStore {
 				AntivirusScannerUtil.scan(tempFile);
 
 				try (InputStream fis = new FileInputStream(tempFile)) {
-					store.addFile(
+					store.updateFile(
 						companyId, repositoryId, fileName, versionLabel, fis);
 				}
 			}
@@ -456,7 +458,7 @@ public class DLStoreImpl implements DLStore {
 		}
 		else {
 			try {
-				store.addFile(
+				store.updateFile(
 					companyId, repositoryId, fileName, versionLabel, is);
 			}
 			catch (AccessDeniedException ade) {
@@ -480,7 +482,7 @@ public class DLStoreImpl implements DLStore {
 			is = new UnsyncByteArrayInputStream(new byte[0]);
 		}
 
-		store.addFile(companyId, repositoryId, fileName, toVersionLabel, is);
+		store.updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 
 		store.deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}
