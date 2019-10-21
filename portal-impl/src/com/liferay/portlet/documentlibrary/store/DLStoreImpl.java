@@ -129,14 +129,30 @@ public class DLStoreImpl implements DLStore {
 			File tempFile = null;
 
 			try {
-				tempFile = FileUtil.createTempFile();
+				if (is.markSupported()) {
+					is.mark(is.available() + 1);
 
-				FileUtil.write(tempFile, is);
+					AntivirusScannerUtil.scan(is);
 
-				AntivirusScannerUtil.scan(tempFile);
+					is.reset();
 
-				try (InputStream fis = new FileInputStream(tempFile)) {
-					store.addFile(companyId, repositoryId, fileName, fis);
+					try {
+						store.addFile(companyId, repositoryId, fileName, is);
+					}
+					catch (AccessDeniedException ade) {
+						throw new PrincipalException(ade);
+					}
+				}
+				else {
+					tempFile = FileUtil.createTempFile();
+
+					FileUtil.write(tempFile, is);
+
+					AntivirusScannerUtil.scan(tempFile);
+
+					try (InputStream fis = new FileInputStream(tempFile)) {
+						store.addFile(companyId, repositoryId, fileName, fis);
+					}
 				}
 			}
 			catch (IOException ioe) {
@@ -501,14 +517,33 @@ public class DLStoreImpl implements DLStore {
 			File tempFile = null;
 
 			try {
-				tempFile = FileUtil.createTempFile();
+				if (is.markSupported()) {
+					is.mark(is.available() + 1);
 
-				FileUtil.write(tempFile, is);
+					AntivirusScannerUtil.scan(is);
 
-				AntivirusScannerUtil.scan(tempFile);
+					is.reset();
 
-				store.updateFile(
-					companyId, repositoryId, fileName, versionLabel, tempFile);
+					try {
+						store.updateFile(
+							companyId, repositoryId, fileName, versionLabel,
+							is);
+					}
+					catch (AccessDeniedException ade) {
+						throw new PrincipalException(ade);
+					}
+				}
+				else {
+					tempFile = FileUtil.createTempFile();
+
+					FileUtil.write(tempFile, is);
+
+					AntivirusScannerUtil.scan(tempFile);
+
+					store.updateFile(
+						companyId, repositoryId, fileName, versionLabel,
+						tempFile);
+				}
 			}
 			catch (IOException ioe) {
 				throw new SystemException(
