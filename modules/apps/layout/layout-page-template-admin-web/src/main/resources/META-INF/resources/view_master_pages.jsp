@@ -62,8 +62,3 @@ MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= masterPageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/MasterPageManagementToolbarDefaultEventHandler.es"
-/>
