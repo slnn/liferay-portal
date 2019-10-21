@@ -490,19 +490,9 @@ public class DLStoreImpl implements DLStore {
 
 			File file = byteArrayFileInputStream.getFile();
 
-			validate(
-				fileName, fileExtension, sourceFileName, validateFileExtension);
-
-			DLValidatorUtil.validateVersionLabel(versionLabel);
-
-			if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
-				AntivirusScannerUtil.scan(file);
-			}
-
-			Store store = _storeFactory.getStore();
-
-			store.updateFile(
-				companyId, repositoryId, fileName, versionLabel, file);
+			updateFile(
+				companyId, repositoryId, fileName, fileExtension,
+				validateFileExtension, versionLabel, sourceFileName, file);
 
 			return;
 		}
