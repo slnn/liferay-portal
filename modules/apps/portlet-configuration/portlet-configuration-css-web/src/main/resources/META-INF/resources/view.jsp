@@ -58,9 +58,7 @@
 					for (let i = 0; i < inputs.length; i++) {
 						const input = inputs[i];
 
-						input.disabled = disableOnChecked
-							? !toggle.checked
-							: toggle.checked;
+						input.disabled = disableOnChecked ? !toggle.checked : toggle.checked;
 					}
 				}
 			);
