@@ -159,51 +159,47 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 	var getFieldsMap = function() {
 		var fieldsMap = {};
 
-		keys.forEach(function(key) {
-			var field = A.one('[name="<portlet:namespace />' + key + '"]');
+		keys.forEach(
+			function(key) {
+				var field = A.one('[name="<portlet:namespace />' + key + '"]');
 
-			if (
-				field &&
-				(field.attr('type') === 'checkbox' ||
-					field.attr('type') === 'radio')
-			) {
-				field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
+				if (field && ((field.attr('type') === 'checkbox') || (field.attr('type') === 'radio'))) {
+					field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
 
-				fieldsMap[key] = '';
+					fieldsMap[key] = '';
 
-				if (field) {
-					fieldsMap[key] = field.val();
+					if (field) {
+						fieldsMap[key] = field.val();
+					}
 				}
-			} else {
-				fieldsMap[key] = (field && field.val()) || '';
-			}
-		});
+				else {
+					fieldsMap[key] = (field && field.val()) || '';
+				}
+			});
 
 		return fieldsMap;
-	};
+	}
 
 	var validateField = function(key) {
 		var fieldsMap = getFieldsMap();
 
 		var field = A.one('[name="<portlet:namespace />' + key + '"]');
 
-		if (field && field.attr('type') === 'radio') {
-			var uncheckedOptions = A.all(
-				'[name="<portlet:namespace />' + key + '"]:not(:checked)'
-			);
+		if (field && (field.attr('type') === 'radio')) {
+			var uncheckedOptions = A.all('[name="<portlet:namespace />' + key + '"]:not(:checked)');
 
-			uncheckedOptions.each(function(option) {
-				option.removeAttribute('aria-invalid');
-			});
+			uncheckedOptions.each(
+				function(option) {
+					option.removeAttribute('aria-invalid');
+				}
+			);
 
 			field = A.one('[name="<portlet:namespace />' + key + '"]:checked');
 		}
 
 		var currentFieldValue = fieldsMap[key];
 
-		var optionalFieldError = A.one(
-			'#<portlet:namespace />fieldOptionalError' + key
-		);
+		var optionalFieldError = A.one('#<portlet:namespace />fieldOptionalError' + key);
 		var validationError = A.one('#<portlet:namespace />validationError' + key);
 
 		if (!fieldOptional[key] && currentFieldValue.match(/^\s*$/)) {
@@ -221,7 +217,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			if (field) {
 				field.attr('aria-invalid', true);
 			}
-		} else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
+		}
+		else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
 			A.all('.alert-success').hide();
 
 			if (optionalFieldError) {
@@ -236,7 +233,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			if (field) {
 				field.attr('aria-invalid', true);
 			}
-		} else {
+		}
+		else {
 			if (optionalFieldError) {
 				optionalFieldError.hide();
 			}
@@ -253,7 +251,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		}
 
 		return false;
-	};
+	}
 
 	<%
 	int i = 1;
@@ -272,13 +270,12 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		keys[<%= i %>] = fieldKey;
 
 		fieldLabels[fieldKey] = '<%= HtmlUtil.escapeJS(fieldLabel) %>';
-		fieldValidationErrorMessages[fieldKey] =
-			'<%= HtmlUtil.escapeJS(fieldValidationErrorMessage) %>';
+		fieldValidationErrorMessages[fieldKey] = '<%= HtmlUtil.escapeJS(fieldValidationErrorMessage) %>';
 
 		function fieldValidationFunction<%= i %>(currentFieldValue, fieldsMap) {
 			<c:choose>
 				<c:when test="<%= webFormServiceConfiguration.validationScriptEnable() && Validator.isNotNull(fieldValidationScript) %>">
-					<%= fieldValidationScript %>;
+					<%= fieldValidationScript %>
 				</c:when>
 				<c:otherwise>
 					return true;
@@ -297,37 +294,45 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 	}
 	%>
 
-	keys.forEach(function(key) {
-		var fields = A.all('[name="<portlet:namespace />' + key + '"]');
+	keys.forEach(
+		function(key) {
+			var fields = A.all('[name="<portlet:namespace />' + key + '"]');
 
-		var addOnBlurFieldValidation = function(field) {
-			field.on('blur', function(event) {
-				if (!validateField(key)) {
-					event.halt();
-					event.stopImmediatePropagation();
-				}
-			});
-		};
+			var addOnBlurFieldValidation = function(field) {
+				field.on(
+					'blur',
+					function(event) {
+						if (!validateField(key)) {
+							event.halt();
+							event.stopImmediatePropagation();
+						}
+					}
+				);
+			};
 
-		fields.each(addOnBlurFieldValidation);
-	});
+			fields.each(addOnBlurFieldValidation);
+		}
+	);
 
 	var form = A.one('#<portlet:namespace />fm');
 
 	if (form) {
-		form.on('submit', function(event) {
-			var validationErrors = false;
+		form.on(
+			'submit',
+			function(event) {
+				var validationErrors = false;
 
-			for (var i = 1; i < keys.length; i++) {
-				if (!validateField(keys[i])) {
-					validationErrors = true;
+				for (var i = 1; i < keys.length; i++) {
+					if (!validateField(keys[i])) {
+						validationErrors = true;
+					}
+				}
+
+				if (validationErrors) {
+					event.halt();
+					event.stopImmediatePropagation();
 				}
 			}
-
-			if (validationErrors) {
-				event.halt();
-				event.stopImmediatePropagation();
-			}
-		});
+		);
 	}
 </aui:script>

@@ -142,8 +142,5 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectGroupFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

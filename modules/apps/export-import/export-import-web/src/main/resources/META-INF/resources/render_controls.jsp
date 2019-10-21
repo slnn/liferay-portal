@@ -91,12 +91,7 @@ for (int i = 0; i < controls.length; i++) {
 					</ul>
 
 					<aui:script>
-						Liferay.Util.toggleBoxes(
-							'<portlet:namespace /><%= controlName %>',
-							'<portlet:namespace /><%= controlName %>Controls',
-							false,
-							true
-						);
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= controlName %>', '<portlet:namespace /><%= controlName %>Controls', false, true);
 					</aui:script>
 				</c:if>
 			</c:when>

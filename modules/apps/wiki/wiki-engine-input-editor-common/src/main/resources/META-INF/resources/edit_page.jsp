@@ -50,23 +50,26 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 		%>
 
 		<aui:script use="liferay-util-window">
-			var helpPageLink = A.one(
-				'#<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>'
+			var helpPageLink = A.one('#<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>');
+
+			helpPageLink.on(
+				'click',
+				function(event) {
+					event.preventDefault();
+
+					var helpPageDialog = Liferay.Util.Window.getWindow(
+						{
+							dialog: {
+								bodyContent: '<%= HtmlUtil.escapeJS(helpPageHTML) %>',
+								destroyOnHide: true
+							},
+							title: '<%= HtmlUtil.escapeJS(helpPageTitle) %>'
+						}
+					);
+
+					helpPageDialog.render();
+				}
 			);
-
-			helpPageLink.on('click', function(event) {
-				event.preventDefault();
-
-				var helpPageDialog = Liferay.Util.Window.getWindow({
-					dialog: {
-						bodyContent: '<%= HtmlUtil.escapeJS(helpPageHTML) %>',
-						destroyOnHide: true
-					},
-					title: '<%= HtmlUtil.escapeJS(helpPageTitle) %>'
-				});
-
-				helpPageDialog.render();
-			});
 		</aui:script>
 	</c:if>
 </div>

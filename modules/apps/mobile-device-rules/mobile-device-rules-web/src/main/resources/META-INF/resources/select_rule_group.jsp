@@ -191,8 +191,5 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectRuleGroupFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectRuleGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

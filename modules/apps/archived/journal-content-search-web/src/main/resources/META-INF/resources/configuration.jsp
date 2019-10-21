@@ -54,9 +54,5 @@
 </liferay-frontend:edit-form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />showListed',
-		'<portlet:namespace />webContentDisplay',
-		true
-	);
+	Liferay.Util.toggleBoxes('<portlet:namespace />showListed', '<portlet:namespace />webContentDisplay', true);
 </aui:script>

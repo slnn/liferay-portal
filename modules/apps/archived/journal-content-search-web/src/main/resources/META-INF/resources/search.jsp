@@ -115,8 +115,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 <aui:script>
 	function <portlet:namespace />search() {
-		var keywords =
-			document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
+		var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
 
 		keywords = keywords.replace(/^\s+|\s+$/, '');
 

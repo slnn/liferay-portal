@@ -87,8 +87,5 @@
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectDDMFormFm',
-		'<%= HtmlUtil.escapeJS(ddmFormBrowserDisplayContext.getEventName()) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDDMFormFm', '<%= HtmlUtil.escapeJS(ddmFormBrowserDisplayContext.getEventName()) %>');
 </aui:script>

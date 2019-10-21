@@ -125,8 +125,5 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 </aui:form>
 
 <aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectGroupFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

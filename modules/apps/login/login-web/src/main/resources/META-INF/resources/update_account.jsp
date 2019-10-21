@@ -105,9 +105,7 @@ String jobTitle = BeanParamUtil.getString(selUser, request, "jobTitle");
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var cmd = form.querySelector(
-				'#<portlet:namespace /><%= Constants.CMD %>'
-			);
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 			if (cmd) {
 				cmd.setAttribute('value', '<%= Constants.RESET %>');
@@ -121,9 +119,7 @@ String jobTitle = BeanParamUtil.getString(selUser, request, "jobTitle");
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var cmd = form.querySelector(
-				'#<portlet:namespace /><%= Constants.CMD %>'
-			);
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 			if (cmd) {
 				cmd.setAttribute('value', '<%= Constants.UPDATE %>');

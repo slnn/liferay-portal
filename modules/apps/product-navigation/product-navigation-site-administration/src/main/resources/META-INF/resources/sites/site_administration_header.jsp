@@ -49,24 +49,27 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 	%>
 
 	<aui:script sandbox="<%= true %>">
-		$('#<portlet:namespace />manageSitesLink').on('click', function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
+		$('#<portlet:namespace />manageSitesLink').on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
+						},
+						eventName: '<%= eventName %>',
+						id: '<portlet:namespace />selectSite',
+						title: '<liferay-ui:message key="select-site" />',
+						uri: '<%= itemSelectorURL.toString() %>'
 					},
-					eventName: '<%= eventName %>',
-					id: '<portlet:namespace />selectSite',
-					title: '<liferay-ui:message key="select-site" />',
-					uri: '<%= itemSelectorURL.toString() %>'
-				},
-				function(event) {
-					location.href = event.url;
-				}
-			);
-		});
+					function(event) {
+						location.href = event.url;
+					}
+				);
+			}
+		);
 	</aui:script>
 </c:if>
 

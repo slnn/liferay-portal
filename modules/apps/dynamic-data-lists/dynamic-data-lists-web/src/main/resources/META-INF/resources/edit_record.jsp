@@ -263,7 +263,8 @@ else {
 	function <portlet:namespace />setWorkflowAction(draft) {
 		if (draft) {
 			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
-		} else {
+		}
+		else {
 			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
 		}
 	}

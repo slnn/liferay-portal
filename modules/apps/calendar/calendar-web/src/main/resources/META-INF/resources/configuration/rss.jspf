@@ -30,8 +30,5 @@
 </aui:fieldset>
 
 <aui:script>
-	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />enableRss',
-		'<portlet:namespace />rssTimeIntervalContainer'
-	);
+	Liferay.Util.toggleBoxes('<portlet:namespace />enableRss', '<portlet:namespace />rssTimeIntervalContainer');
 </aui:script>

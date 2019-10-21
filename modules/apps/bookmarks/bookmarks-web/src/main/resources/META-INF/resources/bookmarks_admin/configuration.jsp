@@ -179,41 +179,37 @@ catch (NoSuchFolderException nsfe) {
 				</liferay-frontend:fieldset-group>
 
 				<aui:script>
-					var <portlet:namespace />selectFolderButton = document.getElementById(
-						'<portlet:namespace />selectFolderButton'
-					);
+					var <portlet:namespace />selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 					if (<portlet:namespace />selectFolderButton) {
-						<portlet:namespace />selectFolderButton.addEventListener('click', function(
-							event
-						) {
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										constrain: true,
-										destroyOnHide: true,
-										modal: true,
-										width: 830
+						<portlet:namespace />selectFolderButton.addEventListener(
+							'click',
+							function(event) {
+								Liferay.Util.selectEntity(
+									{
+										dialog: {
+											constrain: true,
+											destroyOnHide: true,
+											modal: true,
+											width: 830
+										},
+										id: '<%= HtmlUtil.escapeJS(PortalUtil.getPortletNamespace(portletResource)) %>selectFolder',
+										title: '<liferay-ui:message arguments="folder" key="select-x" />',
+										uri: '<liferay-portlet:renderURL portletName="<%= portletResource %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 									},
-									id:
-										'<%= HtmlUtil.escapeJS(PortalUtil.getPortletNamespace(portletResource)) %>selectFolder',
-									title:
-										'<liferay-ui:message arguments="folder" key="select-x" />',
-									uri:
-										'<liferay-portlet:renderURL portletName="<%= portletResource %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-								},
-								function(event) {
-									var folderData = {
-										idString: 'rootFolderId',
-										idValue: event.entityid,
-										nameString: 'rootFolderName',
-										nameValue: event.entityname
-									};
+									function(event) {
+										var folderData = {
+											idString: 'rootFolderId',
+											idValue: event.entityid,
+											nameString: 'rootFolderName',
+											nameValue: event.entityname
+										};
 
-									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-								}
-							);
-						});
+										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+									}
+								);
+							}
+						);
 					}
 				</aui:script>
 			</liferay-ui:section>
@@ -272,23 +268,15 @@ catch (NoSuchFolderException nsfe) {
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var currentFolderColumns = form.querySelector(
-				'#<portlet:namespace />currentFolderColumns'
-			);
-			var folderColumns = form.querySelector(
-				'#<portlet:namespace />folderColumns'
-			);
+			var currentFolderColumns = form.querySelector('#<portlet:namespace />currentFolderColumns');
+			var folderColumns = form.querySelector('#<portlet:namespace />folderColumns');
 
 			if (currentFolderColumns && folderColumns) {
 				folderColumns.value = Util.listSelect(currentFolderColumns);
 			}
 
-			var currentEntryColumns = form.querySelector(
-				'#<portlet:namespace />currentEntryColumns'
-			);
-			var entryColumns = form.querySelector(
-				'#<portlet:namespace />entryColumns'
-			);
+			var currentEntryColumns = form.querySelector('#<portlet:namespace />currentEntryColumns');
+			var entryColumns = form.querySelector('#<portlet:namespace />entryColumns');
 
 			if (currentEntryColumns && entryColumns) {
 				entryColumns.value = Util.listSelect(currentEntryColumns);

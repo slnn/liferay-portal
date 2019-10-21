@@ -37,9 +37,7 @@ boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry
 		function <portlet:namespace />hideVersionNotes(event) {
 			var fieldset = event.currentTarget.closest('fieldset');
 
-			var versionNotes = fieldset.querySelector(
-				'#<portlet:namespace />versionDetailsChangeLog'
-			);
+			var versionNotes = fieldset.querySelector('#<portlet:namespace />versionDetailsChangeLog');
 
 			if (versionNotes) {
 				versionNotes.parentElement.classList.add('hide');
@@ -49,9 +47,7 @@ boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry
 		function <portlet:namespace />showVersionNotes(event) {
 			var fieldset = event.currentTarget.closest('fieldset');
 
-			var versionNotes = fieldset.querySelector(
-				'#<portlet:namespace />versionDetailsChangeLog'
-			);
+			var versionNotes = fieldset.querySelector('#<portlet:namespace />versionDetailsChangeLog');
 
 			if (versionNotes) {
 				versionNotes.parentElement.classList.remove('hide');

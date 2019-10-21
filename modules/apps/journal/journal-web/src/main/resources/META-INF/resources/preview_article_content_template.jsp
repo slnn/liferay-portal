@@ -78,18 +78,10 @@ JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDispl
 
 <script>
 	function previewArticleContentTemplate() {
-		var ddmTemplateId = document.getElementById(
-			'<portlet:namespace />ddmTemplateId'
-		);
+		var ddmTemplateId = document.getElementById('<portlet:namespace />ddmTemplateId');
 
-		location.href = Liferay.Util.addParams(
-			'<portlet:namespace />ddmTemplateId=' + ddmTemplateId.value,
-			'<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>'
-		);
+		location.href = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + ddmTemplateId.value, '<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>');
 	}
 
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />previewFm',
-		'<%= HtmlUtil.escapeJS(journalPreviewArticleContentTemplateDisplayContext.getEventName()) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />previewFm', '<%= HtmlUtil.escapeJS(journalPreviewArticleContentTemplateDisplayContext.getEventName()) %>');
 </script>

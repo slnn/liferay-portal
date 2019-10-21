@@ -243,14 +243,6 @@ if ((selUser == null) && layoutSetPrototypes.isEmpty()) {
 		return currentValue != '';
 	}
 
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />publicLayoutSetPrototypeId',
-		<portlet:namespace />isVisible,
-		'<portlet:namespace />publicLayoutSetPrototypeIdOptions'
-	);
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />privateLayoutSetPrototypeId',
-		<portlet:namespace />isVisible,
-		'<portlet:namespace />privateLayoutSetPrototypeIdOptions'
-	);
+	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
 </aui:script>

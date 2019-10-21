@@ -206,17 +206,18 @@ if ((backgroundTask != null) && backgroundTask.isInProgress()) {
 	function <portlet:namespace />viewBackgroundTaskDetails(backgroundTaskId) {
 		var title = '';
 
-		var backgroundTaskNameElement = document.getElementById(
-			'<portlet:namespace />backgroundTaskName' + backgroundTaskId
-		);
+		var backgroundTaskNameElement = document.getElementById('<portlet:namespace />backgroundTaskName' + backgroundTaskId);
 
 		if (backgroundTaskNameElement) {
 			title = backgroundTaskNameElement.textContent;
 		}
 
-		Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {
-			nodeId: 'backgroundTaskStatusMessage' + backgroundTaskId,
-			title: title
-		});
+		Liferay.fire(
+			'<portlet:namespace />viewBackgroundTaskDetails',
+			{
+				nodeId: 'backgroundTaskStatusMessage' + backgroundTaskId,
+				title: title
+			}
+		);
 	}
 </script>

@@ -33,7 +33,10 @@ String buttonComponentId = randomNamespace + "shareButton";
 <aui:script>
 	var button = document.getElementById('<%= buttonComponentId %>');
 
-	button.addEventListener('click', function() {
-		<%= request.getAttribute("liferay-sharing:button:onClick") %>;
-	});
+	button.addEventListener(
+		'click',
+		function() {
+			<%= request.getAttribute("liferay-sharing:button:onClick") %>
+		}
+	);
 </aui:script>

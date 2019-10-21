@@ -123,13 +123,12 @@
 
 	const openingLiferay = Util.getOpener().Liferay;
 
-	openingLiferay.fire('<portlet:namespace />enableRemovedSites', {
-		selectors: document.querySelectorAll('.selector-button:disabled')
-	});
-
-	Util.selectEntityHandler(
-		'#<portlet:namespace />selectGroupFm',
-		'<%= HtmlUtil.escapeJS(siteBrowserDisplayContext.getEventName()) %>',
-		<%= siteBrowserDisplayContext.getSelUser() != null %>
+	openingLiferay.fire(
+		'<portlet:namespace />enableRemovedSites',
+		{
+			selectors: document.querySelectorAll('.selector-button:disabled')
+		}
 	);
+
+	Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(siteBrowserDisplayContext.getEventName()) %>', <%= siteBrowserDisplayContext.getSelUser() != null %>);
 </aui:script>

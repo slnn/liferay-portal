@@ -164,29 +164,34 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 </aui:fieldset>
 
 <script>
-	var friendlyURL = document.getElementById(
-		'<portlet:namespace />groupFriendlyURL'
-	);
+	var friendlyURL = document.getElementById('<portlet:namespace />groupFriendlyURL');
 
 	if (friendlyURL) {
-		friendlyURL.addEventListener('change', function(event) {
-			var value = friendlyURL.value.trim();
+		friendlyURL.addEventListener(
+			'change',
+			function(event) {
+				var value = friendlyURL.value.trim();
 
-			if (value == '/') {
-				value = '';
-			} else {
-				value = value.replace(/^[^\/]|\/$/g, function(match, index) {
-					var str = '';
+				if (value == '/') {
+					value = '';
+				}
+				else {
+					value = value.replace(
+						/^[^\/]|\/$/g,
+						function(match, index) {
+							var str = '';
 
-					if (index == 0) {
-						str = '/' + match;
-					}
+							if (index == 0) {
+								str = '/' + match;
+							}
 
-					return str;
-				});
+							return str;
+						}
+					);
+				}
+
+				friendlyURL.value = value;
 			}
-
-			friendlyURL.value = value;
-		});
+		);
 	}
 </script>

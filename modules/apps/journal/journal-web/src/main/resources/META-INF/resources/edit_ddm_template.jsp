@@ -109,39 +109,32 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 </aui:form>
 
 <aui:script>
-	Liferay.after('<portlet:namespace />saveTemplate', function() {
-		submitForm(document.<portlet:namespace />fm);
-	});
-
-	var contextualSidebarButton = document.getElementById(
-		'<portlet:namespace />contextualSidebarButton'
-	);
-	var contextualSidebarContainer = document.getElementById(
-		'<portlet:namespace />contextualSidebarContainer'
+	Liferay.after(
+		'<portlet:namespace />saveTemplate',
+		function() {
+			submitForm(document.<portlet:namespace />fm);
+		}
 	);
 
-	if (
-		contextualSidebarContainer &&
-		window.innerWidth > Liferay.BREAKPOINTS.PHONE
-	) {
+	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
+
+	if (contextualSidebarContainer && (window.innerWidth > Liferay.BREAKPOINTS.PHONE)) {
 		contextualSidebarContainer.classList.add('contextual-sidebar-visible');
 	}
 
 	if (contextualSidebarButton) {
-		contextualSidebarButton.addEventListener('click', function(event) {
-			if (
-				contextualSidebarContainer.classList.contains(
-					'contextual-sidebar-visible'
-				)
-			) {
-				contextualSidebarContainer.classList.remove(
-					'contextual-sidebar-visible'
-				);
-			} else {
-				contextualSidebarContainer.classList.add(
-					'contextual-sidebar-visible'
-				);
+		contextualSidebarButton.addEventListener(
+			'click',
+			function(event) {
+				if (contextualSidebarContainer.classList.contains('contextual-sidebar-visible')) {
+					contextualSidebarContainer.classList.remove('contextual-sidebar-visible');
+
+				}
+				else {
+					contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+				}
 			}
-		});
+		);
 	}
 </aui:script>

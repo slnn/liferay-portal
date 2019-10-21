@@ -71,9 +71,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	window[
-		'<%= PortalUtil.getPortletNamespace(PortletKeys.MY_ACCOUNT) %>changeLogo'
-	] = function(logoURL) {
+	window['<%= PortalUtil.getPortletNamespace(PortletKeys.MY_ACCOUNT) %>changeLogo'] = function(logoURL) {
 		var avatarDialog = A.one('#<portlet:namespace />userProfileImage .avatar');
 
 		if (avatarDialog) {
@@ -91,5 +89,5 @@ User selUser = (User)request.getAttribute("user.selUser");
 		if (avatarDockbar) {
 			avatarDockbar.attr('src', logoURL);
 		}
-	};
+	}
 </aui:script>

@@ -314,19 +314,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								var geolocationField = {
 									init: function() {
 										Liferay.MapBase.get(
-											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>',
+											"<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>",
 											function(map) {
-												map.on(
-													'positionChange',
-													geolocationField.onPositionChange,
-													geolocationField
-												);
+												map.on('positionChange', geolocationField.onPositionChange, geolocationField);
 											}
 										);
 									},
 									onPositionChange: function(event) {
-										var inputName =
-											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>';
+										var inputName = "<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>";
 										var inputNode = document.querySelector('[name="' + inputName + '"]');
 
 										var location = event.newVal.location;
@@ -334,10 +329,12 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 										if (inputNode) {
 											inputNode.setAttribute(
 												'value',
-												JSON.stringify({
-													latitude: location.lat,
-													longitude: location.lng
-												})
+												JSON.stringify(
+													{
+														latitude: location.lat,
+														longitude: location.lng
+													}
+												)
 											);
 										}
 
@@ -825,18 +822,20 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 						<aui:script require="map-common/js/MapBase.es as MapBase">
 							Liferay.MapBase.get(
-								'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>',
+								"<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>",
 								function(map) {
-									map.once('positionChange', function(event) {
-										var inputName =
-											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>';
+									map.once(
+										'positionChange',
+										function(event) {
+											var inputName = "<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>";
 
-										var locationNode = document.getElementById(inputName + 'Location');
+											var locationNode = document.getElementById(inputName + 'Location');
 
-										if (locationNode) {
-											locationNode.innerHTML = event.newVal.address;
+											if (locationNode) {
+												locationNode.innerHTML = event.newVal.address;
+											}
 										}
-									});
+									);
 								}
 							);
 						</aui:script>

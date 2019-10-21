@@ -98,40 +98,37 @@ renderResponse.setTitle(headerTitle);
 							<aui:button name="selectFolderButton" value="select" />
 
 							<aui:script>
-								var <portlet:namespace />selectFolderButton = document.getElementById(
-									'<portlet:namespace />selectFolderButton'
-								);
+								var <portlet:namespace />selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 								if (<portlet:namespace />selectFolderButton) {
-									<portlet:namespace />selectFolderButton.addEventListener('click', function(
-										event
-									) {
-										Liferay.Util.selectEntity(
-											{
-												dialog: {
-													constrain: true,
-													destroyOnHide: true,
-													modal: true,
-													width: 680
+									<portlet:namespace />selectFolderButton.addEventListener(
+										'click',
+										function(event) {
+											Liferay.Util.selectEntity(
+												{
+													dialog: {
+														constrain: true,
+														destroyOnHide: true,
+														modal: true,
+														width: 680
+													},
+													id: '<portlet:namespace />selectFolder',
+													title: '<liferay-ui:message arguments="folder" key="select-x" />',
+													uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 												},
-												id: '<portlet:namespace />selectFolder',
-												title:
-													'<liferay-ui:message arguments="folder" key="select-x" />',
-												uri:
-													'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-											},
-											function(event) {
-												var folderData = {
-													idString: 'folderId',
-													idValue: event.entityid,
-													nameString: 'folderName',
-													nameValue: event.entityname
-												};
+												function(event) {
+													var folderData = {
+														idString: 'folderId',
+														idValue: event.entityid,
+														nameString: 'folderName',
+														nameValue: event.entityname
+													};
 
-												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-											}
-										);
-									});
+													Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+												}
+											);
+										}
+									);
 								}
 							</aui:script>
 
@@ -205,15 +202,10 @@ renderResponse.setTitle(headerTitle);
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var cmd = form.querySelector(
-				'#<portlet:namespace /><%= Constants.CMD %>'
-			);
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 			if (cmd) {
-				cmd.setAttribute(
-					'value',
-					'<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>'
-				);
+				cmd.setAttribute('value', '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>');
 
 				submitForm(form);
 			}

@@ -129,103 +129,87 @@ else {
 <aui:script use="aui-base,aui-io-deprecated,aui-io-upload">
 	var form = A.one('#<portlet:namespace />fm');
 
-	form.one('.send-message').on('click', function(event) {
-		Liferay.Mail.setStatus(
-			'info',
-			'<liferay-ui:message key="sending-message" />',
-			true
-		);
+	form.one('.send-message').on(
+		'click',
+		function(event) {
 
-		var editor = A.one('#_<%= MailPortletKeys.MAIL %>_editor').getDOM()
-			.contentWindow;
+			Liferay.Mail.setStatus('info', '<liferay-ui:message key="sending-message" />', true);
 
-		document.<portlet:namespace />fm.<portlet:namespace />body.value = window.<portlet:namespace />editor.getHTML();
+			var editor = A.one('#_<%= MailPortletKeys.MAIL %>_editor').getDOM().contentWindow;
 
-		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/send_message', {
-			dataType: 'JSON',
-			form: {
-				id: form.getDOMNode(),
-				upload: true
-			},
-			method: 'POST',
-			on: {
-				complete: function(event, id, obj) {
-					try {
-						var responseData = JSON.parse(obj.responseText);
+			document.<portlet:namespace />fm.<portlet:namespace />body.value = window.<portlet:namespace />editor.getHTML();
 
-						Liferay.Mail.setStatus(
-							responseData.status,
-							responseData.message
-						);
+			A.io.request(
+				themeDisplay.getLayoutURL() + '/-/mail/send_message',
+				{
+					dataType: 'JSON',
+					form: {
+						id: form.getDOMNode(),
+						upload: true
+					},
+					method: 'POST',
+					on: {
+						complete: function(event, id, obj) {
+							try {
+								var responseData = JSON.parse(obj.responseText);
 
-						if (responseData.status == 'success') {
-							Liferay.Mail.loadMessages(
-								Liferay.Mail.folderId,
-								Liferay.Mail.pageNumber,
-								Liferay.Mail.orderByField,
-								Liferay.Mail.orderByType,
-								Liferay.Mail.keywords
-							);
+								Liferay.Mail.setStatus(responseData.status, responseData.message);
+
+								if (responseData.status == 'success') {
+									Liferay.Mail.loadMessages(Liferay.Mail.folderId, Liferay.Mail.pageNumber, Liferay.Mail.orderByField, Liferay.Mail.orderByType, Liferay.Mail.keywords);
+								}
+							}
+							catch (e) {
+								Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-send-message" />');
+							}
 						}
-					} catch (e) {
-						Liferay.Mail.setStatus(
-							'error',
-							'<liferay-ui:message key="unable-to-send-message" />'
-						);
 					}
 				}
-			}
-		});
-	});
+			);
+		}
+	);
 
-	form.one('.save-draft').on('click', function(event) {
-		document.<portlet:namespace />fm.<portlet:namespace />body.value = window.<portlet:namespace />editor.getHTML();
+	form.one('.save-draft').on(
+		'click',
+		function(event) {
+			document.<portlet:namespace />fm.<portlet:namespace />body.value = window.<portlet:namespace />editor.getHTML();
 
-		Liferay.Mail.setStatus(
-			'info',
-			'<liferay-ui:message key="saving-draft" />',
-			true
-		);
+			Liferay.Mail.setStatus('info', '<liferay-ui:message key="saving-draft" />', true);
 
-		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/save_draft', {
-			dataType: 'JSON',
-			form: {
-				id: form.getDOMNode()
-			},
-			on: {
-				failure: function(event, id, obj) {
-					Liferay.Mail.setStatus(
-						'error',
-						'<liferay-ui:message key="unable-to-save-draft" />'
-					);
-				},
-				success: function(event, id, obj) {
-					var responseData = this.get('responseData');
+			A.io.request(
+				themeDisplay.getLayoutURL() + '/-/mail/save_draft',
+				{
+					dataType: 'JSON',
+					form: {
+						id: form.getDOMNode()
+					},
+					on: {
+						failure: function(event, id, obj) {
+							Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-save-draft" />');
+						},
+						success: function(event, id, obj) {
+							var responseData = this.get('responseData');
 
-					Liferay.Mail.setStatus(
-						responseData.status,
-						responseData.message
-					);
+							Liferay.Mail.setStatus(responseData.status, responseData.message);
+						}
+					}
 				}
-			}
-		});
-	});
+			);
+		}
+	);
 
-	form.one('.add-attachment').on('click', function(event) {
-		var countNode = form.one(
-			'input[name=<portlet:namespace />attachmentCount]'
-		);
+	form.one('.add-attachment').on(
+		'click',
+		function(event) {
+			var countNode = form.one('input[name=<portlet:namespace />attachmentCount]');
 
-		var count = parseInt(countNode.val()) + 1;
+			var count = parseInt(countNode.val()) + 1;
 
-		form.one('.attachments').append(
-			'<div><input name="<portlet:namespace />attachment' +
-				count +
-				'" size="30" type="file" /></div>'
-		);
+			form.one('.attachments').append('<div><input name="<portlet:namespace />attachment' + count + '" size="30" type="file" /></div>');
 
-		countNode.setAttribute('value', count);
-	});
+			countNode.setAttribute('value', count);
+		}
+	);
 </aui:script>
 
 <%!

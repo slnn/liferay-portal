@@ -78,32 +78,23 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	function <portlet:namespace />saveRuleGroupInstancesPriorities(event) {
 		event.preventDefault();
 
-		var ruleGroupsInstancesJSONElement = document.getElementById(
-			'<portlet:namespace />ruleGroupsInstancesJSON'
-		);
+		var ruleGroupsInstancesJSONElement = document.getElementById('<portlet:namespace />ruleGroupsInstancesJSON');
 
 		if (ruleGroupsInstancesJSONElement) {
-			var ruleGroupInstanceNodes = document.querySelectorAll(
-				'#<portlet:namespace />ruleGroupInstancesPriorities [data-rule-group-instance-id]'
+			var ruleGroupInstanceNodes = document.querySelectorAll('#<portlet:namespace />ruleGroupInstancesPriorities [data-rule-group-instance-id]');
+
+			var ruleGroupInstanceNodesArray = Array.prototype.slice.call(ruleGroupInstanceNodes);
+
+			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(
+				function(item, index) {
+					return {
+						priority: index,
+						ruleGroupInstanceId: item.dataset.ruleGroupInstanceId
+					};
+				}
 			);
 
-			var ruleGroupInstanceNodesArray = Array.prototype.slice.call(
-				ruleGroupInstanceNodes
-			);
-
-			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(function(
-				item,
-				index
-			) {
-				return {
-					priority: index,
-					ruleGroupInstanceId: item.dataset.ruleGroupInstanceId
-				};
-			});
-
-			ruleGroupsInstancesJSONElement.value = JSON.stringify(
-				ruleGroupInstances
-			);
+			ruleGroupsInstancesJSONElement.value = JSON.stringify(ruleGroupInstances);
 		}
 
 		submitForm(document.<portlet:namespace />fm);
@@ -114,64 +105,70 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	var container = A.one('#<portlet:namespace />ruleGroupInstancesPriorities');
 
 	if (container) {
-		var sortable = new A.Sortable({
-			container: container,
-			handles: ['.rule-group-handle'],
-			nodes: '.list-group-item',
-			on: {
-				moved: function(event) {
-					var instance = this;
+		var sortable = new A.Sortable(
+			{
+				container: container,
+				handles: ['.rule-group-handle'],
+				nodes: '.list-group-item',
+				on: {
+					moved: function(event) {
+						var instance = this;
 
-					var delegate = instance.delegate;
+						var delegate = instance.delegate;
 
-					var nodes = container.all('.list-group-item');
+						var nodes = container.all('.list-group-item');
 
-					var dragNode = event.drag.get('dragNode');
+						var dragNode = event.drag.get('dragNode');
 
-					var priorityNode = dragNode.one(
-						'.rule-group-instance-priority-value'
-					);
+						var priorityNode = dragNode.one('.rule-group-instance-priority-value');
 
-					if (priorityNode) {
-						var currentNode = delegate.get('currentNode');
+						if (priorityNode) {
+							var currentNode = delegate.get('currentNode');
 
-						priorityNode.html(nodes.indexOf(currentNode));
+							priorityNode.html(nodes.indexOf(currentNode));
+						}
 					}
-				}
-			},
-			opacity: '.4'
-		});
+				},
+				opacity: '.4'
+			}
+		);
 
 		var sortableDD = sortable.delegate.dd;
 
-		sortableDD.after({
-			'drag:end': function(event) {
-				var drag = event.target;
-				var dragNode = drag.get('dragNode');
+		sortableDD.after(
+			{
+				'drag:end': function(event) {
+					var drag = event.target;
+					var dragNode = drag.get('dragNode');
 
-				var nodes = container.all('.list-group-item');
+					var nodes = container.all('.list-group-item');
 
-				nodes.each(function(item, index, collection) {
-					var priorityNode = item.one(
-						'.rule-group-instance-priority-value'
+					nodes.each(
+						function(item, index, collection) {
+							var priorityNode = item.one('.rule-group-instance-priority-value');
+
+							priorityNode.html(index);
+						}
 					);
 
-					priorityNode.html(index);
-				});
+					dragNode.removeClass('rule-group-instance-dragging');
+				},
+				'drag:start': function(event) {
+					var drag = event.target;
+					var dragNode = drag.get('dragNode');
 
-				dragNode.removeClass('rule-group-instance-dragging');
-			},
-			'drag:start': function(event) {
-				var drag = event.target;
-				var dragNode = drag.get('dragNode');
-
-				dragNode.addClass('rule-group-instance-dragging');
+					dragNode.addClass('rule-group-instance-dragging');
+				}
 			}
-		});
 
-		sortableDD.plug(A.Plugin.DDConstrained, {
-			constrain: container,
-			stickY: true
-		});
+		);
+
+		sortableDD.plug(
+			A.Plugin.DDConstrained,
+			{
+				constrain: container,
+				stickY: true
+			}
+		);
 	}
 </aui:script>

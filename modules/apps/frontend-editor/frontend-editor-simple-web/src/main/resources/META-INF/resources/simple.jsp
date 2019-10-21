@@ -76,9 +76,9 @@ name = HtmlUtil.escapeJS(name);
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		} else {
-			data =
-				'<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
+		else {
+			data = '<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
 
 		return data;
@@ -142,9 +142,11 @@ name = HtmlUtil.escapeJS(name);
 
 			if (textArea.nodeName.toLowerCase() === 'textarea' && textArea.value) {
 				value = textArea.value;
-			} else if (window['<%= name %>'].instanceReady) {
+			}
+			else if (window['<%= name %>'].instanceReady) {
 				value = document.getElementById('<%= name %>').value;
-			} else {
+			}
+			else {
 				value = getInitialContent();
 			}
 
@@ -154,8 +156,7 @@ name = HtmlUtil.escapeJS(name);
 		initEditor: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 
-				var initEditorFunction =
-					window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'];
+				var initEditorFunction = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'];
 
 				if (typeof initEditorFunction === 'function') {
 					<%= name %>.setHTML(initEditorFunction());
@@ -163,20 +164,22 @@ name = HtmlUtil.escapeJS(name);
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-				onInputHandle = A.one('#<%= name %>').on(
-					'input',
-					A.bind(onInput, this)
-				);
+				onInputHandle = A.one('#<%= name %>').on('input', A.bind(onInput, this));
 			</c:if>
 
 			<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">
-				setTimeout(function() {
-					new A.Resize({
-						handles: 'br',
-						node: '#<%= name %>Container',
-						wrap: true
-					});
-				}, 0);
+				setTimeout(
+					function() {
+						new A.Resize(
+							{
+								handles: 'br',
+								node: '#<%= name %>Container',
+								wrap: true
+							}
+						);
+					},
+					0
+				);
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
@@ -187,11 +190,7 @@ name = HtmlUtil.escapeJS(name);
 
 			Liferay.component('<%= name %>', window['<%= name %>']);
 
-			Liferay.on(
-				'inputLocalized:localeChanged',
-				this._onLocaleChangedHandler,
-				this
-			);
+			Liferay.on('inputLocalized:localeChanged', this._onLocaleChangedHandler, this)
 		},
 
 		instanceReady: false,
@@ -215,10 +214,13 @@ name = HtmlUtil.escapeJS(name);
 		}
 	};
 
-	Liferay.fire('editorAPIReady', {
-		editor: window['<%= name %>'],
-		editorName: '<%= name %>'
-	});
+	Liferay.fire(
+		'editorAPIReady',
+		{
+			editor: window['<%= name %>'],
+			editorName: '<%= name %>'
+		}
+	);
 
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();
@@ -228,7 +230,9 @@ name = HtmlUtil.escapeJS(name);
 		if (event.portletId === '<%= portletId %>') {
 			try {
 				window['<%= name %>'].destroy();
-			} catch (e) {}
+			}
+			catch (e) {
+			}
 
 			Liferay.detach('destroyPortlet', destroyInstance);
 		}

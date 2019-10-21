@@ -28,10 +28,13 @@
 
 <script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		Liferay.Util.postForm(document.<portlet:namespace />fm, {
-			data: {
-				cmd: 'selection-style'
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					cmd: 'selection-style'
+				}
 			}
-		});
+		);
 	}
 </script>

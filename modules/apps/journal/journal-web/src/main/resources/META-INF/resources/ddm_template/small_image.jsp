@@ -71,14 +71,6 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 </div>
 
 <aui:script>
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />smallImageSource',
-		'url',
-		'<portlet:namespace />smallImageURLContainer'
-	);
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />smallImageSource',
-		'file',
-		'<portlet:namespace />smallImageFileContainer'
-	);
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'url', '<portlet:namespace />smallImageURLContainer');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'file', '<portlet:namespace />smallImageFileContainer');
 </aui:script>

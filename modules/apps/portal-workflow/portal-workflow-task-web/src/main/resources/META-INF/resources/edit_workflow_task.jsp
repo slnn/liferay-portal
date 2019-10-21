@@ -285,8 +285,5 @@ renderResponse.setTitle(headerTitle);
 <aui:script use="liferay-workflow-tasks">
 	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '');
 
-	Liferay.delegateClick(
-		'<portlet:namespace /><%= randomId %>taskAssignLink',
-		onTaskClickFn
-	);
+	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskAssignLink', onTaskClickFn);
 </aui:script>

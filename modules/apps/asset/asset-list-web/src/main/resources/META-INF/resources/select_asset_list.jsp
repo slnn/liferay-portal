@@ -79,8 +79,5 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />assetLists',
-		'<%= HtmlUtil.escapeJS(selectAssetListDisplayContext.getEventName()) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />assetLists', '<%= HtmlUtil.escapeJS(selectAssetListDisplayContext.getEventName()) %>');
 </aui:script>

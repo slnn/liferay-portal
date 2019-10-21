@@ -138,9 +138,6 @@ if (deployed && oAuthEnabled) {
 
 <aui:script>
 	function <portlet:namespace />updatePreferences() {
-		submitForm(
-			document.<portlet:namespace />fm,
-			'<portlet:actionURL name="updatePreferences" />'
-		);
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="updatePreferences" />');
 	}
 </aui:script>

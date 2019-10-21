@@ -283,24 +283,12 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		function(event) {
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
-					dom.removeClasses(
-						document.querySelectorAll('.form-check-card.active'),
-						'active'
-					);
-					dom.addClasses(
-						dom.closest(event.delegateTarget, '.form-check-card'),
-						'active'
-					);
+					dom.removeClasses(document.querySelectorAll('.form-check-card.active'), 'active');
+					dom.addClasses(dom.closest(event.delegateTarget, '.form-check-card'), 'active');
 				</c:when>
 				<c:otherwise>
-					dom.removeClasses(
-						document.querySelectorAll('.articles.active'),
-						'active'
-					);
-					dom.addClasses(
-						dom.closest(event.delegateTarget, '.articles'),
-						'active'
-					);
+					dom.removeClasses(document.querySelectorAll('.articles.active'), 'active');
+					dom.addClasses(dom.closest(event.delegateTarget, '.articles'), 'active');
 				</c:otherwise>
 			</c:choose>
 
@@ -308,8 +296,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 				'<%= journalArticleItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
 				{
 					data: {
-						returnType:
-							'<%= InfoItemItemSelectorReturnType.class.getName() %>',
+						returnType: '<%= InfoItemItemSelectorReturnType.class.getName() %>',
 						value: event.delegateTarget.dataset.value
 					}
 				}
@@ -317,9 +304,12 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		}
 	);
 
-	Liferay.on('destroyPortlet', function removeListener() {
-		selectArticleHandler.removeListener();
+	Liferay.on(
+		'destroyPortlet',
+		function removeListener() {
+			selectArticleHandler.removeListener();
 
-		Liferay.detach('destroyPortlet', removeListener);
-	});
+			Liferay.detach('destroyPortlet', removeListener);
+		}
+	);
 </aui:script>

@@ -97,8 +97,5 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 </div>
 
 <aui:script>
-	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />enableRss',
-		'<portlet:namespace />rssOptions'
-	);
+	Liferay.Util.toggleBoxes('<portlet:namespace />enableRss','<portlet:namespace />rssOptions');
 </aui:script>

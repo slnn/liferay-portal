@@ -263,10 +263,12 @@ if (liveLayout != null) {
 
 	<c:if test="<%= !branchingEnabled %>">
 		<aui:script use="liferay-staging">
-			Liferay.StagingBar.init({
-				namespace: '<portlet:namespace />',
-				portletId: '<%= portletDisplay.getId() %>'
-			});
+			Liferay.StagingBar.init(
+				{
+					namespace: '<portlet:namespace />',
+					portletId: '<%= portletDisplay.getId() %>'
+				}
+			);
 		</aui:script>
 	</c:if>
 
@@ -276,27 +278,31 @@ if (liveLayout != null) {
 		var controlMenuLevelTwo = document.querySelector('.control-menu-level-2');
 
 		if (controlMenuLevelTwo && viewPageStagingOptions) {
-			viewPageStagingOptions.addEventListener('click', function(event) {
-				event.preventDefault();
+			viewPageStagingOptions.addEventListener(
+				'click',
+				function(event) {
+					event.preventDefault();
 
-				controlMenuLevelTwo.classList.add('open');
-			});
+					controlMenuLevelTwo.classList.add('open');
+				}
+			);
 		}
 
 		var closeStagingOptions = document.getElementById('closeStagingOptions');
 
 		if (closeStagingOptions && controlMenuLevelTwo) {
-			closeStagingOptions.addEventListener('click', function(event) {
-				event.preventDefault();
+			closeStagingOptions.addEventListener(
+				'click',
+				function(event) {
+					event.preventDefault();
 
-				controlMenuLevelTwo.classList.remove('open');
-			});
+					controlMenuLevelTwo.classList.remove('open');
+				}
+			);
 		}
 
 		var stagingLink = document.getElementById('<portlet:namespace />stagingLink');
-		var warningMessage = document.getElementById(
-			'<portlet:namespace />warningMessage'
-		);
+		var warningMessage = document.getElementById('<portlet:namespace />warningMessage');
 
 		var checkBackgroundTasks = function() {
 			Liferay.Service(
@@ -304,8 +310,7 @@ if (liveLayout != null) {
 				{
 					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',
-					taskExecutorClassName:
-						'<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>'
+					taskExecutorClassName: '<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>'
 				},
 				function(obj) {
 					var incomplete = obj > 0;
@@ -320,7 +325,8 @@ if (liveLayout != null) {
 						}
 
 						setTimeout(checkBackgroundTasks, 5000);
-					} else {
+					}
+					else {
 						if (stagingLink) {
 							stagingLink.classList.remove('hide');
 						}

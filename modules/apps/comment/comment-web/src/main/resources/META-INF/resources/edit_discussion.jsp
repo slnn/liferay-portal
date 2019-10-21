@@ -125,10 +125,13 @@ if (comment instanceof WorkflowableComment) {
 
 <aui:script>
 	function <portlet:namespace />saveComment() {
-		Liferay.Util.postForm(document.<portlet:namespace />fm, {
-			data: {
-				body: window.<portlet:namespace />bodyEditor.getHTML()
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					body: window.<portlet:namespace />bodyEditor.getHTML()
+				}
 			}
-		});
+		);
 	}
 </aui:script>

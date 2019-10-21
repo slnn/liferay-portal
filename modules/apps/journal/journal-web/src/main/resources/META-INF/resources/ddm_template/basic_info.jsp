@@ -75,37 +75,32 @@ sb.append(StringPool.CLOSE_PARENTHESIS);
 
 <c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
 	<aui:script>
-		var selectDDMStructure = document.getElementById(
-			'<portlet:namespace />selectDDMStructure'
-		);
+		var selectDDMStructure = document.getElementById('<portlet:namespace />selectDDMStructure');
 
 		if (selectDDMStructure) {
-			selectDDMStructure.addEventListener('click', function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							modal: true
+			selectDDMStructure.addEventListener(
+				'click',
+				function(event) {
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								modal: true
+							},
+							eventName: '<portlet:namespace />selectDDMStructure',
+							title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
 						},
-						eventName: '<portlet:namespace />selectDDMStructure',
-						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-						uri:
-							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
-					},
-					function(event) {
-						if (
-							document.<portlet:namespace />fm
-								.<portlet:namespace />classPK.value !=
-							event.ddmstructureid
-						) {
-							document.<portlet:namespace />fm.<portlet:namespace />classPK.value =
-								event.ddmstructureid;
+						function(event) {
+							if (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid) {
+								document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
 
-							Liferay.fire('<portlet:namespace />refreshEditor');
+								Liferay.fire('<portlet:namespace />refreshEditor');
+							}
 						}
-					}
-				);
-			});
+					);
+				}
+			);
 		}
 	</aui:script>
 </c:if>

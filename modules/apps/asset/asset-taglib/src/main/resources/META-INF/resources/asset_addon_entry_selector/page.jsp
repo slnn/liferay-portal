@@ -67,11 +67,13 @@
 	for (AssetAddonEntry assetAddonEntry : assetAddonEntries) {
 	%>
 
-		assetAddonEntries.push({
-			icon: '<%= assetAddonEntry.getIcon() %>',
-			key: '<%= assetAddonEntry.getKey() %>',
-			label: '<%= assetAddonEntry.getLabel(locale) %>'
-		});
+		assetAddonEntries.push(
+			{
+				icon: '<%= assetAddonEntry.getIcon() %>',
+				key: '<%= assetAddonEntry.getKey() %>',
+				label: '<%= assetAddonEntry.getLabel(locale) %>'
+			}
+		);
 
 	<%
 	}
@@ -89,10 +91,12 @@
 	}
 	%>
 
-	new Liferay.AssetAddonEntrySelector({
-		assetAddonEntries: assetAddonEntries,
-		dialogTitle: '<liferay-ui:message key="<%= title %>" />',
-		rootNode: '#<%= namespace + id %>assetAddonEntrySelector',
-		selectedAssetAddonEntries: selectedAssetAddonEntries
-	});
+	new Liferay.AssetAddonEntrySelector(
+		{
+			assetAddonEntries: assetAddonEntries,
+			dialogTitle: '<liferay-ui:message key="<%= title %>" />',
+			rootNode: '#<%= namespace + id %>assetAddonEntrySelector',
+			selectedAssetAddonEntries: selectedAssetAddonEntries
+		}
+	);
 </aui:script>

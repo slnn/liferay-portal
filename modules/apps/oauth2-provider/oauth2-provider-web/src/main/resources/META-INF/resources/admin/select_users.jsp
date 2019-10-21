@@ -70,8 +70,5 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectUser',
-		'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectUser', '<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>');
 </aui:script>

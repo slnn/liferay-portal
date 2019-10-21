@@ -243,11 +243,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	var submitButton = A.one('#<portlet:namespace />fm_submit');
 
 	if (submitButton) {
-		submitButton.on('click', function(event) {
-			if (form) {
-				form.submit();
+		submitButton.on(
+			'click',
+			function(event) {
+				if (form) {
+					form.submit();
+				}
 			}
-		});
+		);
 	}
 </aui:script>
 
@@ -265,10 +268,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 			var displayRecordSetId = A.one('.displaying-record-set-id');
 
-			displayRecordSetId.set(
-				'innerHTML',
-				recordSetName + ' (<liferay-ui:message key="modified" />)'
-			);
+			displayRecordSetId.set('innerHTML', recordSetName + ' (<liferay-ui:message key="modified" />)');
 			displayRecordSetId.addClass('modified');
 		},
 		['aui-base']

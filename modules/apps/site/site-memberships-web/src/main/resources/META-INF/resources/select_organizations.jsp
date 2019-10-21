@@ -53,24 +53,22 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />organizations'
-	);
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizations');
 
-	searchContainer.on('rowToggled', function(event) {
-		var result = {};
+	searchContainer.on(
+		'rowToggled',
+		function(event) {
+			var result = {};
 
-		var data = event.elements.allSelectedElements.getDOMNodes();
+			var data = event.elements.allSelectedElements.getDOMNodes();
 
-		if (data.length) {
-			result = {
-				data: data
-			};
+			if (data.length) {
+				result = {
+					data: data
+				};
+			}
+
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(selectOrganizationsDisplayContext.getEventName()) %>', result);
 		}
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(selectOrganizationsDisplayContext.getEventName()) %>',
-			result
-		);
-	});
+	);
 </aui:script>

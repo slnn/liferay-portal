@@ -229,40 +229,15 @@ int index = 0;
 <aui:script>
 	var form = document.<portlet:namespace />fm;
 
-	var dayFromInput = Liferay.Util.getFormElement(
-		form,
-		'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom'
-	);
-	var monthFromInput = Liferay.Util.getFormElement(
-		form,
-		'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom'
-	);
-	var yearFromInput = Liferay.Util.getFormElement(
-		form,
-		'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom'
-	);
+	var dayFromInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom');
+	var monthFromInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom');
+	var yearFromInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom');
 
-	var dayToInput = Liferay.Util.getFormElement(
-		form,
-		'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo'
-	);
-	var monthToInput = Liferay.Util.getFormElement(
-		form,
-		'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo'
-	);
-	var yearToInput = Liferay.Util.getFormElement(
-		form,
-		'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo'
-	);
+	var dayToInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo');
+	var monthToInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo');
+	var yearToInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo');
 
-	if (
-		dayFromInput &&
-		monthFromInput &&
-		yearFromInput &&
-		dayToInput &&
-		monthToInput &&
-		yearToInput
-	) {
+	if (dayFromInput && monthFromInput && yearFromInput && dayToInput && monthToInput && yearToInput) {
 		Liferay.Util.toggleDisabled(dayFromInput, true);
 		Liferay.Util.toggleDisabled(monthFromInput, true);
 		Liferay.Util.toggleDisabled(yearFromInput, true);
@@ -271,9 +246,7 @@ int index = 0;
 		Liferay.Util.toggleDisabled(monthToInput, true);
 		Liferay.Util.toggleDisabled(yearToInput, true);
 
-		function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(
-			selection
-		) {
+		function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
 			var A = AUI();
 			var Lang = A.Lang;
 			var LString = Lang.String;
@@ -286,23 +259,17 @@ int index = 0;
 			var monthTo = Lang.toInt(monthToInput.value) + 1;
 			var yearTo = yearToInput.value;
 
-			var range =
-				'[' +
-				yearFrom +
-				LString.padNumber(monthFrom, 2) +
-				LString.padNumber(dayFrom, 2) +
-				'000000 TO ' +
-				yearTo +
-				LString.padNumber(monthTo, 2) +
-				LString.padNumber(dayTo, 2) +
-				'235959]';
+			var range = '[' + yearFrom + LString.padNumber(monthFrom, 2) + LString.padNumber(dayFrom, 2) + '000000 TO ' + yearTo + LString.padNumber(monthTo, 2) + LString.padNumber(dayTo, 2) + '235959]';
 
-			Liferay.Util.postForm(form, {
-				data: {
-					<%= HtmlUtil.escapeJS(facet.getFieldId()) %>: range,
-					<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection: selection
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>': range,
+						'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection': selection
+					}
 				}
-			});
+			);
 		}
 	}
 </aui:script>
@@ -310,12 +277,8 @@ int index = 0;
 <aui:script use="aui-form-validator">
 	var Util = Liferay.Util;
 
-	var customRangeFrom = Liferay.component(
-		'<%= renderResponse.getNamespace() %>modifiedfromDatePicker'
-	);
-	var customRangeTo = Liferay.component(
-		'<%= renderResponse.getNamespace() %>modifiedtoDatePicker'
-	);
+	var customRangeFrom = Liferay.component('<%= renderResponse.getNamespace() %>modifiedfromDatePicker');
+	var customRangeTo = Liferay.component('<%= renderResponse.getNamespace() %>modifiedtoDatePicker');
 	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
 	var preventKeyboardDateChange = function(event) {
@@ -324,20 +287,15 @@ int index = 0;
 		}
 	};
 
-	A.one(
-		'#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'
-	).on('keydown', preventKeyboardDateChange);
-	A.one(
-		'#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'
-	).on('keydown', preventKeyboardDateChange);
+	A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from').on('keydown', preventKeyboardDateChange);
+	A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to').on('keydown', preventKeyboardDateChange);
 
 	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
 		{
-			<portlet:namespace />dateRange:
-				'<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>'
+			<portlet:namespace />dateRange: '<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>'
 		},
 		true
 	);
@@ -346,35 +304,34 @@ int index = 0;
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
 			<portlet:namespace />dateRange: function(val, fieldNode, ruleValue) {
-				return A.Date.isGreaterOrEqual(
-					customRangeTo.getDate(),
-					customRangeFrom.getDate()
-				);
+				return A.Date.isGreaterOrEqual(customRangeTo.getDate(), customRangeFrom.getDate());
 			}
 		},
 		true
 	);
 
-	var customRangeValidator = new A.FormValidator({
-		boundingBox: document.<portlet:namespace />fm,
-		fieldContainer: 'div',
-		on: {
-			errorField: function(event) {
-				Util.toggleDisabled(searchButton, true);
+	var customRangeValidator = new A.FormValidator(
+		{
+			boundingBox: document.<portlet:namespace />fm,
+			fieldContainer: 'div',
+			on: {
+				errorField: function(event) {
+					Util.toggleDisabled(searchButton, true);
+				},
+				validField: function(event) {
+					Util.toggleDisabled(searchButton, false);
+				}
 			},
-			validField: function(event) {
-				Util.toggleDisabled(searchButton, false);
-			}
-		},
-		rules: {
-			<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from: {
-				<portlet:namespace />dateRange: true
-			},
-			<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to: {
-				<portlet:namespace />dateRange: true
+			rules: {
+				'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from': {
+					<portlet:namespace />dateRange: true
+				},
+				'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to': {
+					<portlet:namespace />dateRange: true
+				}
 			}
 		}
-	});
+	);
 
 	var onRangeSelectionChange = function(event) {
 		customRangeValidator.validate();
@@ -383,11 +340,12 @@ int index = 0;
 	customRangeFrom.on('selectionChange', onRangeSelectionChange);
 	customRangeTo.on('selectionChange', onRangeSelectionChange);
 
-	A.one('.<%= randomNamespace %>custom-range-toggle').on('click', function(
-		event
-	) {
-		event.halt();
+	A.one('.<%= randomNamespace %>custom-range-toggle').on(
+		'click',
+		function(event) {
+			event.halt();
 
-		A.one('#<%= randomNamespace + "customRange" %>').toggle();
-	});
+			A.one('#<%= randomNamespace + "customRange" %>').toggle();
+		}
+	);
 </aui:script>

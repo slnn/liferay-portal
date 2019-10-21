@@ -39,24 +39,15 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 
 <aui:script sandbox="<%= true %>">
 	var deleteFormInstances = function() {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>'
-			);
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var searchContainer = document.getElementById('<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>');
 
 			if (searchContainer) {
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
-							deleteFormInstanceIds: Liferay.Util.listCheckedExcept(
-								searchContainer,
-								'<portlet:namespace />allRowIds'
-							)
+							deleteFormInstanceIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
 						},
 
 						<portlet:actionURL name="deleteFormInstance" var="deleteFormInstanceURL">
@@ -72,24 +63,15 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 	};
 
 	var deleteStructures = function() {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>'
-			);
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var searchContainer = document.getElementById('<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>');
 
 			if (searchContainer) {
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
-							deleteStructureIds: Liferay.Util.listCheckedExcept(
-								searchContainer,
-								'<portlet:namespace />allRowIds'
-							)
+							deleteStructureIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
 						},
 
 						<portlet:actionURL name="deleteStructure" var="deleteStructureURL">
@@ -106,19 +88,22 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 	};
 
 	var ACTIONS = {
-		deleteFormInstances: deleteFormInstances,
-		deleteStructures: deleteStructures
+		'deleteFormInstances': deleteFormInstances,
+		'deleteStructures': deleteStructures
 	};
 
-	Liferay.componentReady('ddmFormManagementToolbar').then(function(
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function(event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('ddmFormManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				['actionItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

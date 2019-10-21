@@ -239,10 +239,11 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 
 			var optionsDiv = formRow.one('.options');
 
-			if (value === 'options' || value === 'radio') {
+			if ((value === 'options') || (value === 'radio')) {
 				optionsDiv.all('label').show();
 				optionsDiv.show();
-			} else {
+			}
+			else {
 				optionsDiv.hide();
 			}
 
@@ -257,9 +258,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 
 				var formFieldsIndex = instance.attr('id').match(/\d+$/);
 
-				inputName.val(
-					'<liferay-ui:message key="paragraph" />' + formFieldsIndex
-				);
+				inputName.val('<liferay-ui:message key="paragraph" />' + formFieldsIndex);
 				inputName.fire('change');
 			}
 
@@ -298,18 +297,20 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 			'.label-name input'
 		);
 
-		new Liferay.AutoFields({
-			contentBox: webFields,
-			fieldIndexes: '<portlet:namespace />formFieldsIndexes',
-			namespace: '<portlet:namespace />',
-			sortable: true,
-			sortableHandle: '.lfr-form-row',
+		new Liferay.AutoFields(
+			{
+				contentBox: webFields,
+				fieldIndexes: '<portlet:namespace />formFieldsIndexes',
+				namespace: '<portlet:namespace />',
+				sortable: true,
+				sortableHandle: '.lfr-form-row',
 
-			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="editFieldURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-			</liferay-portlet:renderURL>
+				<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="editFieldURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+				</liferay-portlet:renderURL>
 
-			url: '<%= editFieldURL %>'
-		}).render();
+				url: '<%= editFieldURL %>'
+			}
+		).render();
 	</aui:script>
 </c:if>

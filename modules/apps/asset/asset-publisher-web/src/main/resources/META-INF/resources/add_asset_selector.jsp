@@ -86,11 +86,7 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 				</div>
 
 				<aui:script>
-					Liferay.Util.toggleSelectBox(
-						'<portlet:namespace />selectScope',
-						'<%= groupId %>',
-						'<portlet:namespace /><%= groupId %>'
-					);
+					Liferay.Util.toggleSelectBox('<portlet:namespace />selectScope', '<%= groupId %>', '<portlet:namespace /><%= groupId %>');
 				</aui:script>
 
 			<%
@@ -111,12 +107,11 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 	function <portlet:namespace />addAssetEntry() {
 		const visibleItem = document.querySelector('.asset-entry-type:not(.hide)');
 
-		const assetEntryTypeSelector = visibleItem.querySelector(
-			'.asset-entry-type-select'
-		);
+		const assetEntryTypeSelector = visibleItem.querySelector('.asset-entry-type-select');
 
-		const selectedOption =
-			assetEntryTypeSelector.options[assetEntryTypeSelector.selectedIndex];
+		const selectedOption = assetEntryTypeSelector.options[
+			assetEntryTypeSelector.selectedIndex
+		];
 
 		Liferay.Util.navigate(selectedOption.dataset.url);
 	}

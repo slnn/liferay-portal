@@ -157,14 +157,10 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					Liferay.Forms.instance = new packageName.Form(
 						{
 							context: context,
-							dataProviderInstanceParameterSettingsURL:
-								'<%= dataProviderInstanceParameterSettingsURL %>',
-							dataProviderInstancesURL:
-								'<%= dataProviderInstancesURL %>',
-							defaultLanguageId:
-								'<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							fieldSetDefinitionURL:
-								'<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
+							dataProviderInstanceParameterSettingsURL: '<%= dataProviderInstanceParameterSettingsURL %>',
+							dataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
+							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							fieldSetDefinitionURL: '<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
 							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
 							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
 							groupId: <%= groupId %>,
@@ -190,19 +186,19 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.Forms.App.dispose();
 
-			var translationManager = Liferay.component(
-				'<portlet:namespace />translationManager'
-			);
+			var translationManager = Liferay.component('<portlet:namespace />translationManager');
 
-			Liferay.destroyComponents(function(component) {
-				var destroy = false;
+			Liferay.destroyComponents(
+				function(component) {
+					var destroy = false;
 
-				if (component === translationManager) {
-					destroy = true;
+					if (component === translationManager) {
+						destroy = true;
+					}
+
+					return destroy;
 				}
-
-				return destroy;
-			});
+			);
 
 			Liferay.detach('destroyPortlet', clearPortletHandlers);
 		}
@@ -212,9 +208,13 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 	if (Liferay.DMMFieldTypesReady) {
 		Liferay.Forms.App.start();
-	} else {
-		Liferay.onceAfter('DMMFieldTypesReady', function() {
-			Liferay.Forms.App.start();
-		});
+	}
+	else {
+		Liferay.onceAfter(
+			'DMMFieldTypesReady',
+			function() {
+				Liferay.Forms.App.start();
+			}
+		);
 	}
 </aui:script>

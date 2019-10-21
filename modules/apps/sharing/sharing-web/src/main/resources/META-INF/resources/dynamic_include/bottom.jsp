@@ -28,20 +28,22 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 
 <aui:script sandbox="<%= true %>">
 	function showDialog(uri, title) {
-		Liferay.Util.openWindow({
-			dialog: {
-				centered: true,
-				constrain: true,
-				cssClass: 'sharing-dialog',
-				destroyOnHide: true,
-				modal: true,
-				height: 540,
-				width: 600
-			},
-			id: 'sharingDialog',
-			title: title,
-			uri: uri
-		});
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					constrain: true,
+					cssClass: 'sharing-dialog',
+					destroyOnHide: true,
+					modal: true,
+					height: 540,
+					width: 600
+				},
+				id: 'sharingDialog',
+				title: title,
+				uri: uri
+			}
+		);
 	}
 
 	var Sharing = {};
@@ -79,10 +81,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 				manageCollaboratorsParameters
 			);
 
-			showDialog(
-				manageCollaboratorsURL.toString(),
-				'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
-			);
+			showDialog(manageCollaboratorsURL.toString(), '<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>');
 		},
 		['liferay-util-window']
 	);

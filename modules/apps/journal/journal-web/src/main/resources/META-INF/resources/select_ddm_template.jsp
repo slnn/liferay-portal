@@ -96,8 +96,5 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectDDMTemplateFm',
-		'<%= HtmlUtil.escapeJS(journalSelectDDMTemplateDisplayContext.getEventName()) %>'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDDMTemplateFm', '<%= HtmlUtil.escapeJS(journalSelectDDMTemplateDisplayContext.getEventName()) %>');
 </aui:script>

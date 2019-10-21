@@ -112,9 +112,5 @@ String redirect = ParamUtil.getString(request, "redirect");
 		}
 	}
 
-	Liferay.Util.toggleBoxes(
-		'<portlet:namespace />showThumbnail',
-		'<portlet:namespace />videoPreferences',
-		'<%= youTubeDisplayContext.isShowThumbnail() %>'
-	);
+	Liferay.Util.toggleBoxes('<portlet:namespace />showThumbnail','<portlet:namespace />videoPreferences','<%= youTubeDisplayContext.isShowThumbnail() %>');
 </aui:script>

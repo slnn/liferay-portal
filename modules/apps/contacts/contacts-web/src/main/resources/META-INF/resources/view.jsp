@@ -415,45 +415,47 @@ portletURL.setWindowState(WindowState.NORMAL);
 		<aui:script use="aui-loading-mask-deprecated,datatype-number,liferay-contacts-center">
 			var searchInput = A.one('.contacts-portlet #<portlet:namespace />name');
 
-			Liferay.component('contactsCenter', function() {
-				return new Liferay.ContactsCenter({
-					baseActionURL:
-						'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
-					baseRenderURL:
-						'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE) %>',
-					contactsResult: '.contacts-portlet .contacts-result',
-					contactsResultURL:
-						'<portlet:resourceURL id="getContacts"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:resourceURL>',
-					contactsSearchInput: '#<portlet:namespace />name',
-					defaultMessageError:
-						'<liferay-ui:message key="an-error-occurred-while-retrieving-the-users-information" unicode="<%= true %>" />',
-					defaultMessageSuccess:
-						'<liferay-ui:message key="your-request-completed-successfully" unicode="<%= true %>" />',
-					getSelectedContactsURL:
-						'<portlet:resourceURL id="getSelectedContacts" />',
-					maxResultCount: <%= ContactsConstants.MAX_RESULT_COUNT %>,
-					namespace: '<portlet:namespace />',
-					showIcon: '<%= showIcon %>'
-				});
-			});
+			Liferay.component(
+				'contactsCenter',
+				function() {
+					return new Liferay.ContactsCenter(
+						{
+							baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
+							baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE) %>',
+							contactsResult: '.contacts-portlet .contacts-result',
+							contactsResultURL: '<portlet:resourceURL id="getContacts"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:resourceURL>',
+							contactsSearchInput: '#<portlet:namespace />name',
+							defaultMessageError: '<liferay-ui:message key="an-error-occurred-while-retrieving-the-users-information" unicode="<%= true %>" />',
+							defaultMessageSuccess: '<liferay-ui:message key="your-request-completed-successfully" unicode="<%= true %>" />',
+							getSelectedContactsURL: '<portlet:resourceURL id="getSelectedContacts" />',
+							maxResultCount: <%= ContactsConstants.MAX_RESULT_COUNT %>,
+							namespace: '<portlet:namespace />',
+							showIcon: '<%= showIcon %>'
+						}
+					);
+				}
+			);
 
 			var contactsCenter = Liferay.component('contactsCenter');
 
-			Liferay.once('beforeNavigate', function() {
-				Liferay.destroyComponent('contactsCenter');
-			});
+			Liferay.once(
+				'beforeNavigate',
+				function() {
+					Liferay.destroyComponent('contactsCenter');
+				}
+			);
 
 			<c:if test="<%= !userPublicPage %>">
 				var contactFilterSelect = A.one('#<portlet:namespace />filterBy');
 
-				contactFilterSelect.on('change', function(event) {
-					searchInput.set('value', '');
+				contactFilterSelect.on(
+					'change',
+					function(event) {
+						searchInput.set('value', '');
 
-					contactsCenter.updateContacts(
-						searchInput.get('value'),
-						contactFilterSelect.get('value')
-					);
-				});
+						contactsCenter.updateContacts(searchInput.get('value'), contactFilterSelect.get('value'));
+					}
+				);
 			</c:if>
 
 			var contactsCenterNode = A.one('#p_p_id<portlet:namespace />');
@@ -461,9 +463,12 @@ portletURL.setWindowState(WindowState.NORMAL);
 			var toggleUser = A.one('.contacts-portlet .toggle-user');
 
 			if (toggleUser) {
-				toggleUser.on('click', function(event) {
-					contactsCenterNode.toggleClass('show-user', false);
-				});
+				toggleUser.on(
+				'click',
+					function(event) {
+						contactsCenterNode.toggleClass('show-user', false);
+					}
+				);
 			}
 
 			var contactsResult = A.one('.contacts-portlet .contacts-result');
@@ -481,22 +486,25 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					var node = event.currentTarget;
 
-					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL'))
-						.then(function(response) {
+					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL')).then(
+						function(response) {
 							return response.text();
-						})
-						.then(function(data) {
+						}
+					).then(
+						function(data) {
 							contactsCenter.renderContent(data, true);
 
-							window.scrollTo(0, 0);
+							window.scrollTo(0,0);
 
 							contactsContainer.loadingmask.hide();
-						})
-						.catch(function() {
+						}
+					).catch(
+						function() {
 							contactsContainer.loadingmask.hide();
 
 							contactsCenter.showMessage(false);
-						});
+						}
+					);
 				},
 				'.lfr-contact-grid-item'
 			);
@@ -513,9 +521,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					var data = new URLSearchParams({
 						<portlet:namespace />end: end,
-						<portlet:namespace />filterBy:
-							contactFilterSelect.get('value') ||
-							'<%= ContactsConstants.FILTER_BY_DEFAULT %>',
+						<portlet:namespace />filterBy: contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>',
 						<portlet:namespace />keywords: searchInput.get('value'),
 						<portlet:namespace />start: start
 					});
@@ -526,13 +532,11 @@ portletURL.setWindowState(WindowState.NORMAL);
 							body: data,
 							method: 'POST'
 						}
-					)
-						.then(function(response) {
-							return response.json();
-						})
-						.then(function(data) {
-							contactsCenter.showMoreResult(data, lastNameAnchor);
-						});
+					).then(function(response) {
+						return response.json();
+					}).then(function(data) {
+						contactsCenter.showMoreResult(data, lastNameAnchor);
+					});
 				},
 				'.more-results a'
 			);
@@ -555,16 +559,15 @@ portletURL.setWindowState(WindowState.NORMAL);
 								body: data,
 								method: 'POST'
 							}
-						)
-							.then(function(response) {
-								return response.json();
-							})
-							.then(function(data) {
-								if (data.success) {
-									contactsCenter.addContactResult(data);
-								}
-							});
-					} else {
+						).then(function(response) {
+							return response.json();
+						}).then(function(data) {
+							if (data.success) {
+								contactsCenter.addContactResult(data);
+							}
+						});
+					}
+					else {
 						contactsCenter.deleteContactResult(userId);
 					}
 				},
@@ -586,16 +589,13 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL'), {
 						body: data
-					})
-						.then(function(response) {
-							return response.text();
-						})
-						.then(function(data) {
-							contactsCenter.renderContent(data);
-						})
-						.catch(function() {
-							contactsCenter.showMessage(false);
-						});
+					}).then(function(response) {
+						return response.text();
+					}).then(function(data) {
+						contactsCenter.renderContent(data);
+					}).catch(function() {
+						contactsCenter.showMessage(false);
+					});
 				},
 				'.lfr-contact-grid-item'
 			);
@@ -607,12 +607,12 @@ portletURL.setWindowState(WindowState.NORMAL);
 					var addContact = A.one('#<portlet:namespace />addContact');
 
 					if (addContact) {
-						addContact.on('click', function(event) {
-							contactsCenter.showPopup(
-								'<%= LanguageUtil.get(request, "add-contact") %>',
-								'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/contacts_center/edit_entry.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
-							);
-						});
+						addContact.on(
+							'click',
+							function(event) {
+								contactsCenter.showPopup('<%= LanguageUtil.get(request, "add-contact") %>', '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/contacts_center/edit_entry.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
+							}
+						);
 					}
 
 					var contacts = contactsCenterHome.one('.contacts');
@@ -621,15 +621,9 @@ portletURL.setWindowState(WindowState.NORMAL);
 						contacts.on(
 							'click',
 							function(event) {
-								contactFilterSelect.set(
-									'value',
-									'<%= ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS %>'
-								);
+								contactFilterSelect.set('value', '<%= ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS %>');
 
-								contactsCenter.updateContacts(
-									searchInput.get('value'),
-									contactFilterSelect.get('value')
-								);
+								contactsCenter.updateContacts(searchInput.get('value'), contactFilterSelect.get('value'));
 							},
 							'a'
 						);
@@ -642,15 +636,9 @@ portletURL.setWindowState(WindowState.NORMAL);
 					connections.on(
 						'click',
 						function(event) {
-							contactFilterSelect.set(
-								'value',
-								'<%= ContactsConstants.FILTER_BY_TYPE_BI_CONNECTION %>'
-							);
+							contactFilterSelect.set('value', '<%= ContactsConstants.FILTER_BY_TYPE_BI_CONNECTION %>');
 
-							contactsCenter.updateContacts(
-								searchInput.get('value'),
-								contactFilterSelect.get('value')
-							);
+							contactsCenter.updateContacts(searchInput.get('value'), contactFilterSelect.get('value'));
 						},
 						'a'
 					);
@@ -662,15 +650,9 @@ portletURL.setWindowState(WindowState.NORMAL);
 					following.on(
 						'click',
 						function(event) {
-							contactFilterSelect.set(
-								'value',
-								'<%= ContactsConstants.FILTER_BY_TYPE_UNI_FOLLOWER %>'
-							);
+							contactFilterSelect.set('value', '<%= ContactsConstants.FILTER_BY_TYPE_UNI_FOLLOWER %>');
 
-							contactsCenter.updateContacts(
-								searchInput.get('value'),
-								contactFilterSelect.get('value')
-							);
+							contactsCenter.updateContacts(searchInput.get('value'), contactFilterSelect.get('value'));
 						},
 						'a'
 					);
@@ -682,15 +664,9 @@ portletURL.setWindowState(WindowState.NORMAL);
 					followers.on(
 						'click',
 						function(event) {
-							contactFilterSelect.set(
-								'value',
-								'<%= ContactsConstants.FILTER_BY_FOLLOWERS %>'
-							);
+							contactFilterSelect.set('value', '<%= ContactsConstants.FILTER_BY_FOLLOWERS %>');
 
-							contactsCenter.updateContacts(
-								searchInput.get('value'),
-								contactFilterSelect.get('value')
-							);
+							contactsCenter.updateContacts(searchInput.get('value'), contactFilterSelect.get('value'));
 						},
 						'a'
 					);
@@ -702,17 +678,11 @@ portletURL.setWindowState(WindowState.NORMAL);
 					all.on(
 						'click',
 						function(event) {
-							contactFilterSelect.set(
-								'value',
-								'<%= ContactsConstants.FILTER_BY_DEFAULT %>'
-							);
+							contactFilterSelect.set('value', '<%= ContactsConstants.FILTER_BY_DEFAULT %>');
 
 							searchInput.set('value', '');
 
-							contactsCenter.updateContacts(
-								searchInput.get('value'),
-								contactFilterSelect.get('value')
-							);
+							contactsCenter.updateContacts(searchInput.get('value'), contactFilterSelect.get('value'));
 						},
 						'a'
 					);

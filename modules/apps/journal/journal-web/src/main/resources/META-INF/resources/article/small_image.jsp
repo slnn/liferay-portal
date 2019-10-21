@@ -58,14 +58,6 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 </div>
 
 <aui:script>
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />smallImageSource',
-		'url',
-		'<portlet:namespace />smallImageURLContainer'
-	);
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />smallImageSource',
-		'file',
-		'<portlet:namespace />smallFileContainer'
-	);
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'url', '<portlet:namespace />smallImageURLContainer');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'file', '<portlet:namespace />smallFileContainer');
 </aui:script>
