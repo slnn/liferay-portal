@@ -111,6 +111,10 @@ public interface Store {
 			String versionLabel)
 		throws PortalException;
 
+	public InputStream getFileAsStream(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException;
+
 	/**
 	 * Returns the file as an {@link InputStream} object.
 	 *
