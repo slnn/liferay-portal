@@ -179,12 +179,8 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 										}
 									);
 
-									<portlet:renderURL var="redirectURL">
-										<portlet:param name="tabs1" value="page-templates" />
-									</portlet:renderURL>
-
 									<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout_page_template/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-										<portlet:param name="redirect" value="<%= redirectURL %>" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</liferay-portlet:actionURL>
 
 									submitForm(
