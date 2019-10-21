@@ -120,7 +120,7 @@ public class FileSystemStore extends BaseStore {
 
 		_repositoryDirs.remove(repositoryDirKey);
 
-		deleteEmptyAncestors(-1, -1, parentFile);
+		deleteEmptyAncestors(parentFile);
 	}
 
 	@Override
@@ -235,6 +235,10 @@ public class FileSystemStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		return fileNameVersionFile.exists();
+	}
+
+	protected void deleteEmptyAncestors(File file) {
+		deleteEmptyAncestors(-1, -1, file);
 	}
 
 	protected void deleteEmptyAncestors(
