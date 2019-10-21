@@ -31,13 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
-import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.TaskContainer;
@@ -70,15 +68,9 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 		_addTaskYarnFormat(project);
 		_addTaskYarnLock(project);
 
-		Gradle gradle = project.getGradle();
-
-		StartParameter startParameter = gradle.getStartParameter();
-
-		if (!startParameter.isParallelProjectExecutionEnabled()) {
-			for (Project subproject : project.getSubprojects()) {
-				_configureTasksNpmInstall(
-					subproject, yarnInstallTask, nodeExtension);
-			}
+		for (Project subproject : project.getSubprojects()) {
+			_configureTasksNpmInstall(
+				subproject, yarnInstallTask, nodeExtension);
 		}
 	}
 
