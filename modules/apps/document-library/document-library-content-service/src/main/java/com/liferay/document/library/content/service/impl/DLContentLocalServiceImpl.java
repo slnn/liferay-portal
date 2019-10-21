@@ -157,10 +157,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			long companyId, long repositoryId, String path, String version)
 		throws NoSuchContentException {
 
-		if (version.isEmpty()) {
-			return getContent(companyId, repositoryId, path);
-		}
-
 		return dlContentPersistence.findByC_R_P_V(
 			companyId, repositoryId, path, version);
 	}
