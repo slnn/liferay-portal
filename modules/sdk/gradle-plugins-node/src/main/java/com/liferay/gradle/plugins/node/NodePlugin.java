@@ -984,9 +984,7 @@ public class NodePlugin implements Plugin<Project> {
 		VersionNumber versionNumber = VersionNumber.parse(
 			(String)devDependencies.get("liferay-npm-scripts"));
 
-		int majorVersion = versionNumber.getMajor();
-
-		if (majorVersion < _liferayNpmScripts12VersionNumber.getMajor()) {
+		if (_liferayNpmScripts12VersionNumber.compareTo(versionNumber) > 0) {
 			return false;
 		}
 
