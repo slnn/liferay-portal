@@ -1,8 +1,8 @@
 {
 	"config": {
 		"imports": {
-			"map-common": {
-				"/": ">=3.0.2"
+			"dynamic-data-mapping-form-builder": {
+				"/": ">=2.0.0"
 			}
 		}
 	},
