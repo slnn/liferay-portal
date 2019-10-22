@@ -9,6 +9,6 @@
 			"test/**/*"
 		]
 	},
-	"output": "build/node/packageRunBuild/resources",
+	"output": "classes/META-INF/resources",
 	"preset": "liferay-npm-bundler-preset-standard"
 }
