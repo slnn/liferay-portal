@@ -194,7 +194,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -2208,10 +2207,6 @@ public class DataFactory {
 		return newGroupModel(
 			_counter.get(), getClassNameId(User.class), userModel.getUserId(),
 			userModel.getScreenName(), false);
-	}
-
-	public IntegerWrapper newInteger() {
-		return new IntegerWrapper();
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
