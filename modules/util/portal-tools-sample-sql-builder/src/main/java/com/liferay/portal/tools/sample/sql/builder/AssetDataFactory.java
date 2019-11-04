@@ -16,6 +16,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
@@ -50,6 +51,9 @@ import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
+import com.liferay.view.count.model.ViewCountEntryModel;
+import com.liferay.view.count.model.impl.ViewCountEntryModelImpl;
+import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
@@ -431,6 +435,32 @@ public class AssetDataFactory extends BaseDataFactory {
 			wikiPageModel.getModifiedDate(), classNameModel.getClassNameId(),
 			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
 			String.valueOf(wikiPageModel.getGroupId()));
+	}
+	
+	public ViewCountEntryModel newViewCountEntryModel(
+		AssetEntryModel assetEntryModel) {
+
+		return newViewCountEntryModel(
+			assetEntryModel.getCompanyId(), getClassNameId(AssetEntry.class),
+			assetEntryModel.getPrimaryKey(), 0);
+	}
+	
+	protected ViewCountEntryModel newViewCountEntryModel(
+		long companyId, long classNameId, long classPK, long viewCount) {
+
+		ViewCountEntryModel viewCountEntryModel = new ViewCountEntryModelImpl();
+
+		ViewCountEntryPK viewCountEntryPK = new ViewCountEntryPK();
+
+		viewCountEntryModel.setCompanyId(companyId);
+		viewCountEntryModel.setClassNameId(classNameId);
+		viewCountEntryModel.setClassPK(classPK);
+
+		viewCountEntryModel.setPrimaryKey(viewCountEntryPK);
+
+		viewCountEntryModel.setViewCount(viewCount);
+
+		return viewCountEntryModel;
 	}
 
 	private SimpleCounter _getSimpleCounter(
