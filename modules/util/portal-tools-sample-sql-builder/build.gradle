@@ -1,3 +1,15 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.jar.Attributes
 import java.util.jar.JarFile
 
@@ -25,9 +37,7 @@ classes {
 
 dependencies {
 	compile group: "com.liferay.commerce", name: "com.liferay.commerce.currency.api", version: "2.0.0"
-	compile group: "com.liferay.commerce", name: "com.liferay.commerce.currency.service", version: "1.0.13"
 	compile group: "com.liferay.commerce", name: "com.liferay.commerce.product.api", version: "10.0.0"
-	compile group: "com.liferay.commerce", name: "com.liferay.commerce.product.service", version: "2.0.0"
 	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	compile group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
 	compile project(":apps:asset:asset-entry-rel-service")
@@ -49,6 +59,9 @@ dependencies {
 	compile project(":apps:subscription:subscription-service")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")
+
+	compileInclude group: "com.liferay.commerce", name: "com.liferay.commerce.currency.service", version: "1.0.13"
+	compileInclude group: "com.liferay.commerce", name: "com.liferay.commerce.product.service", version: "2.0.0"
 
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
