@@ -235,7 +235,6 @@ import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
@@ -686,7 +685,7 @@ public class DataFactory {
 			(List<AssetVocabularyModel>[])new List<?>[_maxGroupCount];
 		_defaultAssetVocabularyModel = newAssetVocabularyModel(
 			_globalGroupId, _defaultUserId, null,
-			PropsValues.ASSET_VOCABULARY_DEFAULT);
+			com.liferay.portal.util.PropsValues.ASSET_VOCABULARY_DEFAULT);
 
 		StringBundler sb = new StringBundler(4);
 
