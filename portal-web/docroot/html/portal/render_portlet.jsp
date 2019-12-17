@@ -144,7 +144,9 @@ catch (RuntimeException re) {
 	_log.error(re, re);
 }
 
-if (!portletId.equals(rootPortletId)) {
+String layoutType = layout.getType();
+
+if (layoutType.equals("content") && !portletId.equals(rootPortletId)) {
 	Map<String, String[]> parameterMap = request.getParameterMap();
 
 	for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
