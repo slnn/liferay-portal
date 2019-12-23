@@ -355,6 +355,8 @@ public class SampleSQLBuilder {
 		return HashMapBuilder.<String, Object>put(
 			"dataFactory", new DataFactory()
 		).put(
+			"dLDataFactory", new DLDataFactory()
+		).put(
 			"journalDataFactory", new JournalDataFactory()
 		).build();
 	}
