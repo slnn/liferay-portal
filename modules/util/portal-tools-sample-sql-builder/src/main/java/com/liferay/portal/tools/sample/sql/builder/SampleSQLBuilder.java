@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
@@ -39,7 +40,6 @@ import java.io.Writer;
 import java.nio.channels.FileChannel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,17 +56,14 @@ public class SampleSQLBuilder {
 		System.setProperty("properties.file.path", args[0]);
 
 		try {
-			DataFactory dataFactory = new DataFactory();
-
-			new SampleSQLBuilder(dataFactory);
+			new SampleSQLBuilder();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public SampleSQLBuilder(DataFactory dataFactory) throws Exception {
-		_dataFactory = dataFactory;
+	public SampleSQLBuilder() throws Exception {
 
 		// Generic
 
@@ -261,16 +258,14 @@ public class SampleSQLBuilder {
 							new File(PropsValues.OUTPUT_DIR, "sample.sql")));
 
 					FreeMarkerUtil.process(
-						PropsValues.SCRIPT,
-						Collections.singletonMap("dataFactory", _dataFactory),
-						sampleSQLWriter);
+						PropsValues.SCRIPT, _createContext(), sampleSQLWriter);
 				}
 				catch (Throwable t) {
 					_freeMarkerThrowable = t;
 				}
 				finally {
 					try {
-						_dataFactory.closeCSVWriters();
+						DataFactory.closeCSVWriters();
 					}
 					catch (IOException ioe) {
 						ioe.printStackTrace();
@@ -356,11 +351,18 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
+	private Map<String, Object> _createContext() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"dataFactory", new DataFactory()
+		).put(
+			"journalDataFactory", new JournalDataFactory()
+		).build();
+	}
+
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
-	private final DataFactory _dataFactory;
 	private volatile Throwable _freeMarkerThrowable;
 
 }
