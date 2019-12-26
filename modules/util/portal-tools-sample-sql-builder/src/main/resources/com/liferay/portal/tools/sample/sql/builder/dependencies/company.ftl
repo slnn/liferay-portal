@@ -1,9 +1,9 @@
-<#assign companyModel = dataFactory.newCompanyModel() />
+<#assign companyModel = userDataFactory.newCompanyModel() />
 
 ${dataFactory.toInsertSQL(companyModel)}
 
-${dataFactory.toInsertSQL(dataFactory.newAccountModel())}
+${dataFactory.toInsertSQL(userDataFactory.newAccountModel())}
 
-${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel())}
+${dataFactory.toInsertSQL(userDataFactory.newVirtualHostModel())}
 
 ${dataFactory.getCSVWriter("company").write(companyModel.companyId + "\n")}
