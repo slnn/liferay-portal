@@ -365,6 +365,8 @@ public class SampleSQLBuilder {
 		).put(
 			"messageBoardDataFactory", new MessageBoardDataFactory()
 		).put(
+			"userDataFactory", new UserDataFactory()
+		).put(
 			"wikiDataFactory", new WikiDataFactory()
 		).build();
 	}
