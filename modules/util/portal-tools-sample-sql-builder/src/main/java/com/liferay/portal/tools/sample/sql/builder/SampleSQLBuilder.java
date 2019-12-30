@@ -353,6 +353,8 @@ public class SampleSQLBuilder {
 
 	private Map<String, Object> _createContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"blogDataFactory", new BlogDataFactory()
+		).put(
 			"dataFactory", new DataFactory()
 		).put(
 			"dDLDDMDataFactory", new DDLDDMDataFactory()
