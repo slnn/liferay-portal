@@ -21,7 +21,7 @@ ${resourcePermissionDataFactory.toInsertSQL(commerceDataFactory.newCommerceCurre
 <#list commerceDataFactory.newCPFriendlyURLEntryModels() as cpFriendlyURLEntryModel>
 	${resourcePermissionDataFactory.toInsertSQL(cpFriendlyURLEntryModel)}
 
-	${dataFactory.getCSVWriter("cpFriendlyURLEntry").write(cpFriendlyURLEntryModel.urlTitle + "\n")}
+	${commerceDataFactory.getCSVWriter("cpFriendlyURLEntry").write(cpFriendlyURLEntryModel.urlTitle + "\n")}
 </#list>
 
 <#list commerceDataFactory.newCPInstanceModels() as cpInstanceModel>
