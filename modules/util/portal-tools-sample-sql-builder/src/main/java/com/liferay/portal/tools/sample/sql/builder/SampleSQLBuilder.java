@@ -265,7 +265,7 @@ public class SampleSQLBuilder {
 				}
 				finally {
 					try {
-						DataFactory.closeCSVWriters();
+						BaseDataFactory.closeCSVWriters();
 					}
 					catch (IOException ioe) {
 						ioe.printStackTrace();
@@ -353,6 +353,8 @@ public class SampleSQLBuilder {
 
 	private Map<String, Object> _createContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"assetDataFactory", new AssetDataFactory()
+		).put(
 			"blogDataFactory", new BlogDataFactory()
 		).put(
 			"commerceDataFactory", new CommerceDataFactory()
