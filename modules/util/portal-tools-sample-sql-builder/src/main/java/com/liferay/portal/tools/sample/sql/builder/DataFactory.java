@@ -2129,6 +2129,7 @@ public class DataFactory {
 		fragmentEntryModel.setCss(StringPool.BLANK);
 		fragmentEntryModel.setHtml(_readFile("web_content.html"));
 		fragmentEntryModel.setJs(StringPool.BLANK);
+		fragmentEntryModel.setCacheable(true);
 		fragmentEntryModel.setType(FragmentConstants.TYPE_COMPONENT);
 		fragmentEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
 
