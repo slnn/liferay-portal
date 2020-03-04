@@ -44,7 +44,7 @@ APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m" "-agentpath:/opt/YourKit-JavaProfiler-2019.1/bin/linux-x86-64/libyjpagent.so=disablestacktelemetry,exceptions=disable,delay=10000,listen=all" "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=6006" '
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
