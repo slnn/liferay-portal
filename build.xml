@@ -340,6 +340,7 @@ message.
 							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 							<arg value="-Dbuild.profile=${build.profile}" />
+							<arg value="-Dgradle.build.scan.enabled=true" />
 							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 						</gradle-execute>
 					</then>
