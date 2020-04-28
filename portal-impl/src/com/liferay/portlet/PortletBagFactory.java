@@ -203,7 +203,8 @@ public class PortletBagFactory {
 			portlet.getPortletName(), _servletContext, portletInstance,
 			portlet.getResourceBundle(), friendlyURLMapperTracker,
 			serviceRegistrations);
-
+		System.out.println("###########PortletBagFactory PortletBagPool.put portlet.getRootPortletId()= " + portlet.getRootPortletId());
+		System.out.println("###########PortletBagFactory PortletBagPool.put current thread= " + Thread.currentThread().getName());
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
 		try {

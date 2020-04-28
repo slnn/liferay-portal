@@ -1419,9 +1419,12 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public PortletDataHandler getPortletDataHandlerInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
+		System.out.println("###########PortletImpl PortletBagPool.get getRootPortletId()= " + getRootPortletId());
+		System.out.println("###########PortletImpl PortletBagPool.get current thread= " + Thread.currentThread().getName());
 		if (portletBag == null) {
 			_log.error("No portlet bag for " + toString());
+			System.out.println("@@@@@@@@@@@PortletImpl PortletBagPool.get portletId= " + getRootPortletId());
+			System.out.println("@@@@@@@@@@@PortletImpl PortletBagPool.get current thread= " + Thread.currentThread().getName());
 
 			throw new IllegalStateException("No portlet bag for " + toString());
 		}

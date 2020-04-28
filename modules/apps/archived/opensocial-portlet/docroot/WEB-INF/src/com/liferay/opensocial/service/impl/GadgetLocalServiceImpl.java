@@ -345,7 +345,8 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 
 		portletBag.setPortletName(portletId);
 		portletBag.setPortletInstance(new GadgetPortlet());
-
+		System.out.println("###########GadgetLocalServiceImpl PortletBagPool.put portletId= " + portletId);
+		System.out.println("###########GadgetLocalServiceImpl PortletBagPool.put current thread= " + Thread.currentThread().getName());
 		PortletBagPool.put(portletId, portletBag);
 
 		return portlet;
