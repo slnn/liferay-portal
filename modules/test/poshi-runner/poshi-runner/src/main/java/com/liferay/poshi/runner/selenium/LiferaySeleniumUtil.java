@@ -133,7 +133,9 @@ public class LiferaySeleniumUtil {
 
 				sb.append("LIFERAY_ERROR: ");
 				sb.append(messageText);
-
+				sb.append("########start#####################");
+				sb.append(content);
+				sb.append("########end#####################");
 				System.out.println(sb.toString());
 
 				exceptions.add(new PoshiRunnerWarningException(sb.toString()));
