@@ -2411,7 +2411,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void updateThreadStatus(
+	protected MBThread updateThreadStatus(
 			MBThread thread, MBMessage message, User user, int oldStatus,
 			Date modifiedDate)
 		throws PortalException {
@@ -2419,7 +2419,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int status = message.getStatus();
 
 		if (status == oldStatus) {
-			return;
+			return thread;
 		}
 
 		if (thread.getRootMessageId() == message.getMessageId()) {
@@ -2442,6 +2442,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBThread.class);
 
 		indexer.reindex(thread);
+
+		return thread;
 	}
 
 	protected void validate(String subject, String body)
@@ -2614,7 +2616,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			updateThreadStatus(
+			thread = updateThreadStatus(
 				thread, message, userLocalService.getUser(userId), oldStatus,
 				modifiedDate);
 
@@ -2655,7 +2657,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
-			_mbThreadLocalService.updateMBThread(thread);
+			thread = _mbThreadLocalService.updateMBThread(thread);
 
 			updatePriorities(thread.getThreadId(), priority);
 		}
