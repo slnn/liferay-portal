@@ -16,24 +16,47 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.UserModel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Lily Chi
  */
 public class CTDataFactory extends BaseDataFactory {
 
-	protected CTCollectionModel newCTCollectionModel(UserModel userModel) {
+	public List<CTCollectionModel> newCTCollectionModels(UserModel userModel) {
+		List<CTCollectionModel> cTCollectionModels = new ArrayList<>(
+			PropsValues.MAX_CT_COUNT);
+
+		for (int i = 0; i < PropsValues.MAX_CT_COUNT; i++) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Change List ");
+			sb.append(i + 1);
+			sb.append(" of ");
+			sb.append(userModel.getScreenName());
+
+			cTCollectionModels.add(
+				newCTCollectionModel(userModel, sb.toString()));
+		}
+
+		return cTCollectionModels;
+	}
+
+	protected CTCollectionModel newCTCollectionModel(
+		UserModel userModel, String name) {
+
 		CTCollectionModel cTCollectionModel = new CTCollectionModelImpl();
 
 		cTCollectionModel.setCtCollectionId(cTCollectionCounter.get());
 		cTCollectionModel.setCompanyId(userModel.getCompanyId());
 		cTCollectionModel.setCreateDate(new Date());
 		cTCollectionModel.setModifiedDate(new Date());
-		cTCollectionModel.setName(
-			"Change List of " + userModel.getScreenName());
+		cTCollectionModel.setName(name);
 		cTCollectionModel.setStatus(2);
 		cTCollectionModel.setStatusByUserId(0);
 
