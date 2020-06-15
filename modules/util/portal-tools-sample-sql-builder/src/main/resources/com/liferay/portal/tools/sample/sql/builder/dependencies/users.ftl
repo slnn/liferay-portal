@@ -10,8 +10,13 @@
 		userGroupModel = dataFactory.newGroupModel(userModel)
 
 		layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
+		
+		cTCollectionModels = cTDataFactory.newCTCollectionModels(userModel)
 	/>
 
+	<#list cTCollectionModels as cTCollectionModel>
+		${dataFactory.toInsertSQL(cTCollectionModel)}
+	</#list>
 	<@insertLayout _layoutModel=layoutModel />
 
 	<@insertGroup _groupModel=userGroupModel />
