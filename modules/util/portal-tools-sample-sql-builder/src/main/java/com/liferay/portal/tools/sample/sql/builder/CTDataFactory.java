@@ -59,6 +59,7 @@ public class CTDataFactory extends BaseDataFactory {
 		cTCollectionModel.setName(name);
 		cTCollectionModel.setStatus(2);
 		cTCollectionModel.setStatusByUserId(0);
+		cTCollectionModel.setUserId(userModel.getUserId());
 
 		return cTCollectionModel;
 	}
