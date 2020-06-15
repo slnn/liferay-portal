@@ -1860,7 +1860,7 @@ public class DataFactory extends BaseDataFactory {
 	public UserModel newDefaultUserModel() {
 		return newUserModel(
 			DEFAULT_USER_ID, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, true);
+			StringPool.BLANK, true, 0);
 	}
 
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
@@ -2108,7 +2108,7 @@ public class DataFactory extends BaseDataFactory {
 	}
 
 	public UserModel newGuestUserModel() {
-		return newUserModel(counter.get(), "Test", "Test", "Test", false);
+		return newUserModel(counter.get(), "Test", "Test", "Test", false, 0);
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
@@ -3020,7 +3020,7 @@ public class DataFactory extends BaseDataFactory {
 	public UserModel newSampleUserModel() {
 		return newUserModel(
 			SAMPLE_USER_ID, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
-			_SAMPLE_USER_NAME, false);
+			_SAMPLE_USER_NAME, false, 0);
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -3126,7 +3126,7 @@ public class DataFactory extends BaseDataFactory {
 			userModels.add(
 				newUserModel(
 					counter.get(), userName[0], userName[1],
-					"test" + _userScreenNameCounter.get(), false));
+					"test" + _userScreenNameCounter.get(), false, 0));
 		}
 
 		return userModels;
@@ -4112,7 +4112,7 @@ public class DataFactory extends BaseDataFactory {
 
 	protected UserModel newUserModel(
 		long userId, String firstName, String lastName, String screenName,
-		boolean defaultUser) {
+		boolean defaultUser, long ctCollectionId) {
 
 		if (Validator.isNull(screenName)) {
 			screenName = String.valueOf(userId);
@@ -4123,6 +4123,7 @@ public class DataFactory extends BaseDataFactory {
 		userModel.setUuid(SequentialUUID.generate());
 		userModel.setUserId(userId);
 		userModel.setCompanyId(COMPANY_ID);
+		userModel.setCtCollectionId(ctCollectionId);
 		userModel.setCreateDate(new Date());
 		userModel.setModifiedDate(new Date());
 		userModel.setDefaultUser(defaultUser);
