@@ -3001,11 +3001,11 @@ public class DataFactory extends BaseDataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		PortletPreferencesModel portletPreferencesModel) {
 
-		String portletId = portletPreferencesModel.getPortletId();
-
 		if (portletPreferencesModel.getCtCollectionId() != 0) {
-			return newResourcePermissionModels(portletId, portletId, 0, 0);
+			return null;
 		}
+
+		String portletId = portletPreferencesModel.getPortletId();
 
 		String name = portletId;
 
@@ -3279,13 +3279,18 @@ public class DataFactory extends BaseDataFactory {
 					Method method = DataFactory.class.getMethod(
 						"newResourcePermissionModels", modelClass);
 
-					for (ResourcePermissionModel resourcePermissionModel :
-							(List<ResourcePermissionModel>)method.invoke(
-								this, baseModel)) {
+					List<ResourcePermissionModel> resourcePermissionModels =
+						(List<ResourcePermissionModel>)method.invoke(
+							this, baseModel);
 
-						sb.append("\n");
+					if (resourcePermissionModels != null) {
+						for (ResourcePermissionModel resourcePermissionModel :
+								resourcePermissionModels) {
 
-						toInsertSQL(sb, resourcePermissionModel);
+							sb.append("\n");
+
+							toInsertSQL(sb, resourcePermissionModel);
+						}
 					}
 				}
 				catch (NoSuchMethodException noSuchMethodException) {
