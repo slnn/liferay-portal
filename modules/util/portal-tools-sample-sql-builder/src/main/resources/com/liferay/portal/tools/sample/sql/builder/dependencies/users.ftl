@@ -5,18 +5,23 @@
 	userModels = dataFactory.newUserModels()
 />
 
+${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
+
 <#list userModels as userModel>
 	<#assign
 		userGroupModel = dataFactory.newGroupModel(userModel)
 
 		layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
-		
+
 		cTCollectionModels = cTDataFactory.newCTCollectionModels(userModel)
 	/>
 
 	<#list cTCollectionModels as cTCollectionModel>
 		${dataFactory.toInsertSQL(cTCollectionModel)}
 	</#list>
+
+	${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionModels))}
+
 	<@insertLayout _layoutModel=layoutModel />
 
 	<@insertGroup _groupModel=userGroupModel />
