@@ -3003,6 +3003,10 @@ public class DataFactory extends BaseDataFactory {
 
 		String portletId = portletPreferencesModel.getPortletId();
 
+		if (portletPreferencesModel.getCtCollectionId() != 0) {
+			return newResourcePermissionModels(portletId, portletId, 0, 0);
+		}
+
 		String name = portletId;
 
 		int index = portletId.indexOf(StringPool.UNDERLINE);
@@ -4059,6 +4063,14 @@ public class DataFactory extends BaseDataFactory {
 	protected ResourcePermissionModel newResourcePermissionModel(
 		String name, String primKey, long roleId, long ownerId) {
 
+		return newResourcePermissionModel(
+			name, primKey, roleId, ownerId, GetterUtil.getLong(primKey));
+	}
+
+	protected ResourcePermissionModel newResourcePermissionModel(
+		String name, String primKey, long roleId, long ownerId,
+		long primKeyId) {
+
 		ResourcePermissionModel resourcePermissionModel =
 			new ResourcePermissionModelImpl();
 
@@ -4068,7 +4080,7 @@ public class DataFactory extends BaseDataFactory {
 		resourcePermissionModel.setName(name);
 		resourcePermissionModel.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermissionModel.setPrimKey(primKey);
-		resourcePermissionModel.setPrimKeyId(GetterUtil.getLong(primKey));
+		resourcePermissionModel.setPrimKeyId(primKeyId);
 		resourcePermissionModel.setRoleId(roleId);
 		resourcePermissionModel.setOwnerId(ownerId);
 		resourcePermissionModel.setActionIds(1);
@@ -4092,6 +4104,26 @@ public class DataFactory extends BaseDataFactory {
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
 				name, primKey, _siteMemberRoleModel.getRoleId(), 0));
+
+		return resourcePermissionModels;
+	}
+
+	protected List<ResourcePermissionModel> newResourcePermissionModels(
+		String name, String primKey, long ownerId, long primKeyId) {
+
+		List<ResourcePermissionModel> resourcePermissionModels =
+			new ArrayList<>(3);
+
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _guestRoleModel.getRoleId(), 0, primKeyId));
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _ownerRoleModel.getRoleId(), ownerId,
+				primKeyId));
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _siteMemberRoleModel.getRoleId(), 0, primKeyId));
 
 		return resourcePermissionModels;
 	}

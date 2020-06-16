@@ -28,6 +28,7 @@ ${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 	</#list>
 
 	${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionModels))}
+	${dataFactory.toInsertSQL(cTDataFactory.newPortletPreferencesModel(cTCollectionModels, groupId))}
 
 	<@insertLayout _layoutModel=layoutModel />
 

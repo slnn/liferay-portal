@@ -37,11 +37,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
+import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
@@ -126,6 +130,16 @@ public class CTDataFactory extends BaseDataFactory {
 		}
 
 		return journalFolderModels;
+	}
+
+	public PortletPreferencesModel newPortletPreferencesModel(
+		List<CTCollectionModel> cTCollectionModels, long plid) {
+
+		return newPortletPreferencesModel(
+			plid,
+			ProductNavigationProductMenuPortletKeys.
+				PRODUCT_NAVIGATION_PRODUCT_MENU,
+			"<portlet-preferences />", cTCollectionModels);
 	}
 
 	protected AssetEntryModel newAssetEntryModel(
@@ -213,6 +227,28 @@ public class CTDataFactory extends BaseDataFactory {
 		journalFolderModel.setName(name);
 
 		return journalFolderModel;
+	}
+
+	protected PortletPreferencesModel newPortletPreferencesModel(
+		long plid, String portletId, String preferences,
+		List<CTCollectionModel> cTCollectionModels) {
+
+		PortletPreferencesModel portletPreferencesModel =
+			new PortletPreferencesModelImpl();
+
+		CTCollectionModel cTCollectionModel = cTCollectionModels.get(0);
+		portletPreferencesModel.setCompanyId(COMPANY_ID);
+		portletPreferencesModel.setCtCollectionId(
+			cTCollectionModel.getCtCollectionId());
+		portletPreferencesModel.setPortletPreferencesId(counter.get());
+		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		portletPreferencesModel.setOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferencesModel.setPlid(plid);
+		portletPreferencesModel.setPortletId(portletId);
+		portletPreferencesModel.setPreferences(preferences);
+
+		return portletPreferencesModel;
 	}
 
 	private static void _initJournalArticleClassNames() {
