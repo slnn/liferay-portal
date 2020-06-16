@@ -129,6 +129,8 @@ import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.journal.model.JournalContentSearchModel;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
@@ -2961,6 +2963,15 @@ public class DataFactory extends BaseDataFactory {
 			JournalArticle.class.getName(),
 			String.valueOf(journalArticleResourceModel.getResourcePrimKey()),
 			SAMPLE_USER_ID);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		JournalFolderModel journalFolderModel) {
+
+		return newResourcePermissionModels(
+			JournalFolder.class.getName(),
+			String.valueOf(journalFolderModel.getFolderId()),
+			journalFolderModel.getUserId());
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

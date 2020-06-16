@@ -20,9 +20,16 @@ ${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 		${dataFactory.toInsertSQL(cTCollectionModel)}
 
 		<#assign journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId) />
+
 		<#list journalFolderModels as journalFolderModel>
 			${dataFactory.toInsertSQL(journalFolderModel)}
 			${dataFactory.toInsertSQL(cTDataFactory.newAssetEntryModel(journalFolderModel, cTCollectionModel))}
+
+			<#assign resourcePermissionModels = dataFactory.newResourcePermissionModels(journalFolderModel) />
+
+			<#list resourcePermissionModels as resourcePermissionModel>
+				${dataFactory.toInsertSQL(resourcePermissionModel)}
+			</#list>
 		</#list>
 	</#list>
 
