@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
@@ -133,9 +134,31 @@ public class CTDataFactory extends BaseDataFactory {
 		boolean visible, String mimeType, String title,
 		CTCollectionModel cTCollectionModel) {
 
-		return newAssetEntryModel(
-			groupId, createDate, modifiedDate, classNameId, classPK, uuid,
-			classTypeId, listable, visible, mimeType, title, cTCollectionModel);
+		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
+
+		assetEntryModel.setEntryId(counter.get());
+		assetEntryModel.setGroupId(groupId);
+		assetEntryModel.setCompanyId(COMPANY_ID);
+		assetEntryModel.setCtCollectionId(
+			cTCollectionModel.getCtCollectionId());
+		assetEntryModel.setUserId(SAMPLE_USER_ID);
+		assetEntryModel.setUserName(SAMPLE_USER_NAME);
+		assetEntryModel.setCreateDate(createDate);
+		assetEntryModel.setModifiedDate(modifiedDate);
+		assetEntryModel.setClassNameId(classNameId);
+		assetEntryModel.setClassPK(classPK);
+		assetEntryModel.setClassUuid(uuid);
+		assetEntryModel.setClassTypeId(classTypeId);
+		assetEntryModel.setListable(listable);
+		assetEntryModel.setVisible(visible);
+		assetEntryModel.setStartDate(createDate);
+		assetEntryModel.setEndDate(nextFutureDate());
+		assetEntryModel.setPublishDate(createDate);
+		assetEntryModel.setExpirationDate(nextFutureDate());
+		assetEntryModel.setMimeType(mimeType);
+		assetEntryModel.setTitle(title);
+
+		return assetEntryModel;
 	}
 
 	protected CTCollectionModel newCTCollectionModel(

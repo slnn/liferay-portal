@@ -240,6 +240,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
+import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
@@ -3424,9 +3425,29 @@ public class DataFactory extends BaseDataFactory {
 		long classPK, String uuid, long classTypeId, boolean listable,
 		boolean visible, String mimeType, String title) {
 
-		return newAssetEntryModel(
-			groupId, createDate, modifiedDate, classNameId, classPK, uuid,
-			classTypeId, listable, visible, mimeType, title, null);
+		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
+
+		assetEntryModel.setEntryId(counter.get());
+		assetEntryModel.setGroupId(groupId);
+		assetEntryModel.setCompanyId(COMPANY_ID);
+		assetEntryModel.setUserId(SAMPLE_USER_ID);
+		assetEntryModel.setUserName(SAMPLE_USER_NAME);
+		assetEntryModel.setCreateDate(createDate);
+		assetEntryModel.setModifiedDate(modifiedDate);
+		assetEntryModel.setClassNameId(classNameId);
+		assetEntryModel.setClassPK(classPK);
+		assetEntryModel.setClassUuid(uuid);
+		assetEntryModel.setClassTypeId(classTypeId);
+		assetEntryModel.setListable(listable);
+		assetEntryModel.setVisible(visible);
+		assetEntryModel.setStartDate(createDate);
+		assetEntryModel.setEndDate(nextFutureDate());
+		assetEntryModel.setPublishDate(createDate);
+		assetEntryModel.setExpirationDate(nextFutureDate());
+		assetEntryModel.setMimeType(mimeType);
+		assetEntryModel.setTitle(title);
+
+		return assetEntryModel;
 	}
 
 	protected AssetVocabularyModel newAssetVocabularyModel(
