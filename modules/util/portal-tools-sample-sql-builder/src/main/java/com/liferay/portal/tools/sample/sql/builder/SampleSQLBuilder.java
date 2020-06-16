@@ -263,7 +263,8 @@ public class SampleSQLBuilder {
 								"sample.sql")));
 
 					FreeMarkerUtil.process(
-						BenchmarksPropsValues.SCRIPT, _createContext(), sampleSQLWriter);
+						BenchmarksPropsValues.SCRIPT, _createContext(),
+						sampleSQLWriter);
 				}
 				catch (Throwable t) {
 					_freeMarkerThrowable = t;
