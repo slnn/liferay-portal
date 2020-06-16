@@ -719,7 +719,7 @@ public class DataFactory extends BaseDataFactory {
 		_assetCategoryModelsArray =
 			(List<AssetCategoryModel>[])
 				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		_assetCategoryModelsMaps =
+		assetCategoryModelsMaps =
 			(Map<Long, List<AssetCategoryModel>>[])
 				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 		_assetVocabularyModelsArray =
