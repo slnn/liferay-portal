@@ -92,17 +92,17 @@ public class BenchmarksPropsValues {
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT));
 
 	public static final int MAX_CT_COUNT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.MAX_CT_COUNT));
+		PropsUtil.get(BenchmarksPropsKeys.MAX_CT_COUNT));
 
 	public static final int MAX_CT_JOURNAL_ARTICLE_COUNT =
 		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.MAX_CT_JOURNAL_ARTICLE_COUNT));
+			PropsUtil.get(BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_COUNT));
 
 	public static final int MAX_CT_JOURNAL_FOLDER_COUNT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.MAX_CT_JOURNAL_FOLDER_COUNT));
+		PropsUtil.get(BenchmarksPropsKeys.MAX_CT_JOURNAL_FOLDER_COUNT));
 
 	public static final int MAX_CT_PAGE_COUNT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.MAX_CT_PAGE_COUNT));
+		PropsUtil.get(BenchmarksPropsKeys.MAX_CT_PAGE_COUNT));
 
 	public static final int MAX_DDL_CUSTOM_FIELD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT));
