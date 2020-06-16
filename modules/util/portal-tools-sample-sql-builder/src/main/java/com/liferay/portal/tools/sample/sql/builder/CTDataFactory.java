@@ -16,6 +16,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTPreferencesModel;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
@@ -50,6 +52,19 @@ import java.util.List;
  * @author Lily Chi
  */
 public class CTDataFactory extends BaseDataFactory {
+
+	public AssetEntryModel newAssetEntryModel(
+		JournalFolderModel journalFolderModel,
+		CTCollectionModel cTCollectionModel) {
+
+		return newAssetEntryModel(
+			journalFolderModel.getGroupId(), journalFolderModel.getCreateDate(),
+			journalFolderModel.getModifiedDate(),
+			getClassNameId(JournalFolder.class),
+			journalFolderModel.getFoldeeId(), journalFolderModel.getUuid(), 0,
+			true, true, ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
+			cTCollectionModel);
+	}
 
 	public List<CTCollectionModel> newCTCollectionModels(UserModel userModel) {
 		List<CTCollectionModel> cTCollectionModels = new ArrayList<>(
@@ -101,13 +116,26 @@ public class CTDataFactory extends BaseDataFactory {
 		List<JournalFolderModel> journalFolderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
 
-		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT; i++) {
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT;
+			 i++) {
+
 			journalFolderModels.add(
 				newJournalFolderModel(
 					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
 		}
 
 		return journalFolderModels;
+	}
+
+	protected AssetEntryModel newAssetEntryModel(
+		long groupId, Date createDate, Date modifiedDate, long classNameId,
+		long classPK, String uuid, long classTypeId, boolean listable,
+		boolean visible, String mimeType, String title,
+		CTCollectionModel cTCollectionModel) {
+
+		return newAssetEntryModel(
+			groupId, createDate, modifiedDate, classNameId, classPK, uuid,
+			classTypeId, listable, visible, mimeType, title, cTCollectionModel);
 	}
 
 	protected CTCollectionModel newCTCollectionModel(
