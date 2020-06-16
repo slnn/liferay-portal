@@ -61,7 +61,7 @@ public class CTDataFactory extends BaseDataFactory {
 			journalFolderModel.getGroupId(), journalFolderModel.getCreateDate(),
 			journalFolderModel.getModifiedDate(),
 			getClassNameId(JournalFolder.class),
-			journalFolderModel.getFoldeeId(), journalFolderModel.getUuid(), 0,
+			journalFolderModel.getFolderId(), journalFolderModel.getUuid(), 0,
 			true, true, ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
 			cTCollectionModel);
 	}
