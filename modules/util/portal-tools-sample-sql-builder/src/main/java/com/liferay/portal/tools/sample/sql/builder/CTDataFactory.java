@@ -15,7 +15,9 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.change.tracking.model.CTCollectionModel;
+import com.liferay.change.tracking.model.CTPreferencesModel;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
+import com.liferay.change.tracking.model.impl.CTPreferencesModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.UserModel;
 
@@ -47,6 +49,31 @@ public class CTDataFactory extends BaseDataFactory {
 		return cTCollectionModels;
 	}
 
+	public CTPreferencesModel newCTPreferencesModel() {
+		CTPreferencesModel cTPreferencesModel = new CTPreferencesModelImpl();
+
+		cTPreferencesModel.setCtPreferencesId(cTPreferencesCounter.get());
+		cTPreferencesModel.setCompanyId(COMPANY_ID);
+
+		return cTPreferencesModel;
+	}
+
+	public CTPreferencesModel newCTPreferencesModel(
+		List<CTCollectionModel> cTCollectionModels) {
+
+		CTPreferencesModel cTPreferencesModel = new CTPreferencesModelImpl();
+
+		CTCollectionModel cTCollectionModel = cTCollectionModels.get(0);
+
+		cTPreferencesModel.setCtPreferencesId(cTPreferencesCounter.get());
+		cTPreferencesModel.setCompanyId(cTCollectionModel.getCompanyId());
+		cTPreferencesModel.setUserId(cTCollectionModel.getUserId());
+		cTPreferencesModel.setCtCollectionId(
+			cTCollectionModel.getCtCollectionId());
+
+		return cTPreferencesModel;
+	}
+
 	protected CTCollectionModel newCTCollectionModel(
 		UserModel userModel, String name) {
 
@@ -62,6 +89,20 @@ public class CTDataFactory extends BaseDataFactory {
 		cTCollectionModel.setUserId(userModel.getUserId());
 
 		return cTCollectionModel;
+	}
+
+	protected CTPreferencesModel newCTPreferencesModel(
+		CTCollectionModel cTCollectionModel) {
+
+		CTPreferencesModel cTPreferencesModel = new CTPreferencesModelImpl();
+
+		cTPreferencesModel.setCtPreferencesId(cTPreferencesCounter.get());
+		cTPreferencesModel.setCompanyId(cTCollectionModel.getCompanyId());
+		cTPreferencesModel.setUserId(cTCollectionModel.getUserId());
+		cTPreferencesModel.setCtCollectionId(
+			cTCollectionModel.getCtCollectionId());
+
+		return cTPreferencesModel;
 	}
 
 }
