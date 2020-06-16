@@ -15,12 +15,10 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.asset.kernel.model.AssetCategoryModel;
-import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.model.CTPreferences;
@@ -40,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
-import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.model.WikiPage;
 
@@ -124,43 +121,6 @@ public abstract class BaseDataFactory {
 
 		return classLoader.getResourceAsStream(
 			_DEPENDENCIES_DIR + resourceName);
-	}
-
-	protected AssetEntryModel newAssetEntryModel(
-		long groupId, Date createDate, Date modifiedDate, long classNameId,
-		long classPK, String uuid, long classTypeId, boolean listable,
-		boolean visible, String mimeType, String title,
-		CTCollectionModel cTCollectionModel) {
-
-		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
-
-		assetEntryModel.setEntryId(counter.get());
-		assetEntryModel.setGroupId(groupId);
-		assetEntryModel.setCompanyId(COMPANY_ID);
-
-		if (cTCollectionModel != null) {
-			assetEntryModel.setCtCollectionId(
-				cTCollectionModel.getCtCollectionId());
-		}
-
-		assetEntryModel.setUserId(SAMPLE_USER_ID);
-		assetEntryModel.setUserName(SAMPLE_USER_NAME);
-		assetEntryModel.setCreateDate(createDate);
-		assetEntryModel.setModifiedDate(modifiedDate);
-		assetEntryModel.setClassNameId(classNameId);
-		assetEntryModel.setClassPK(classPK);
-		assetEntryModel.setClassUuid(uuid);
-		assetEntryModel.setClassTypeId(classTypeId);
-		assetEntryModel.setListable(listable);
-		assetEntryModel.setVisible(visible);
-		assetEntryModel.setStartDate(createDate);
-		assetEntryModel.setEndDate(nextFutureDate());
-		assetEntryModel.setPublishDate(createDate);
-		assetEntryModel.setExpirationDate(nextFutureDate());
-		assetEntryModel.setMimeType(mimeType);
-		assetEntryModel.setTitle(title);
-
-		return assetEntryModel;
 	}
 
 	protected String readFile(String resourceName) throws IOException {
