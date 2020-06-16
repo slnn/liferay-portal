@@ -238,7 +238,6 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
-import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
@@ -749,7 +748,7 @@ public class DataFactory extends BaseDataFactory {
 
 				AssetVocabularyModel assetVocabularyModel =
 					newAssetVocabularyModel(
-						i, SAMPLE_USER_ID, _SAMPLE_USER_NAME, sb.toString());
+						i, SAMPLE_USER_ID, SAMPLE_USER_NAME, sb.toString());
 
 				assetVocabularyModels.add(assetVocabularyModel);
 
@@ -819,7 +818,7 @@ public class DataFactory extends BaseDataFactory {
 				assetTagModel.setGroupId(i);
 				assetTagModel.setCompanyId(COMPANY_ID);
 				assetTagModel.setUserId(SAMPLE_USER_ID);
-				assetTagModel.setUserName(_SAMPLE_USER_NAME);
+				assetTagModel.setUserName(SAMPLE_USER_NAME);
 				assetTagModel.setCreateDate(new Date());
 				assetTagModel.setModifiedDate(new Date());
 				assetTagModel.setName(
@@ -858,7 +857,7 @@ public class DataFactory extends BaseDataFactory {
 
 		_commerceCatalogModel.setCommerceCatalogId(counter.get());
 		_commerceCatalogModel.setCompanyId(COMPANY_ID);
-		_commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
+		_commerceCatalogModel.setUserName(SAMPLE_USER_NAME);
 		_commerceCatalogModel.setCreateDate(new Date());
 		_commerceCatalogModel.setModifiedDate(new Date());
 		_commerceCatalogModel.setName("Master");
@@ -874,11 +873,11 @@ public class DataFactory extends BaseDataFactory {
 		_commerceChannelModel.setCommerceChannelId(counter.get());
 		_commerceChannelModel.setCompanyId(COMPANY_ID);
 		_commerceChannelModel.setUserId(SAMPLE_USER_ID);
-		_commerceChannelModel.setUserName(_SAMPLE_USER_NAME);
+		_commerceChannelModel.setUserName(SAMPLE_USER_NAME);
 		_commerceChannelModel.setCreateDate(new Date());
 		_commerceChannelModel.setModifiedDate(new Date());
 		_commerceChannelModel.setSiteGroupId(1);
-		_commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
+		_commerceChannelModel.setName(SAMPLE_USER_NAME + " Channel");
 		_commerceChannelModel.setType("site");
 		_commerceChannelModel.setTypeSettings(String.valueOf(GUEST_GROUP_ID));
 		_commerceChannelModel.setCommerceCurrencyCode(
@@ -892,7 +891,7 @@ public class DataFactory extends BaseDataFactory {
 		_commerceCurrencyModel.setCommerceCurrencyId(counter.get());
 		_commerceCurrencyModel.setCompanyId(COMPANY_ID);
 		_commerceCurrencyModel.setUserId(SAMPLE_USER_ID);
-		_commerceCurrencyModel.setUserName(_SAMPLE_USER_NAME);
+		_commerceCurrencyModel.setUserName(SAMPLE_USER_NAME);
 		_commerceCurrencyModel.setCreateDate(new Date());
 		_commerceCurrencyModel.setModifiedDate(new Date());
 		_commerceCurrencyModel.setCode("USD");
@@ -1424,7 +1423,7 @@ public class DataFactory extends BaseDataFactory {
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(COMPANY_ID);
 		layoutModel.setUserId(SAMPLE_USER_ID);
-		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setUserName(SAMPLE_USER_NAME);
 		layoutModel.setCreateDate(new Date());
 		layoutModel.setModifiedDate(new Date());
 		layoutModel.setLayoutId(simpleCounter.get());
@@ -1625,9 +1624,9 @@ public class DataFactory extends BaseDataFactory {
 		ddlRecordModel.setGroupId(dDLRecordSetModel.getGroupId());
 		ddlRecordModel.setCompanyId(COMPANY_ID);
 		ddlRecordModel.setUserId(SAMPLE_USER_ID);
-		ddlRecordModel.setUserName(_SAMPLE_USER_NAME);
+		ddlRecordModel.setUserName(SAMPLE_USER_NAME);
 		ddlRecordModel.setVersionUserId(SAMPLE_USER_ID);
-		ddlRecordModel.setVersionUserName(_SAMPLE_USER_NAME);
+		ddlRecordModel.setVersionUserName(SAMPLE_USER_NAME);
 		ddlRecordModel.setCreateDate(new Date());
 		ddlRecordModel.setModifiedDate(new Date());
 		ddlRecordModel.setDDMStorageId(counter.get());
@@ -1650,7 +1649,7 @@ public class DataFactory extends BaseDataFactory {
 		ddlRecordSetModel.setGroupId(ddmStructureModel.getGroupId());
 		ddlRecordSetModel.setCompanyId(COMPANY_ID);
 		ddlRecordSetModel.setUserId(SAMPLE_USER_ID);
-		ddlRecordSetModel.setUserName(_SAMPLE_USER_NAME);
+		ddlRecordSetModel.setUserName(SAMPLE_USER_NAME);
 		ddlRecordSetModel.setCreateDate(new Date());
 		ddlRecordSetModel.setModifiedDate(new Date());
 		ddlRecordSetModel.setDDMStructureId(ddmStructureModel.getStructureId());
@@ -1686,7 +1685,7 @@ public class DataFactory extends BaseDataFactory {
 		ddlRecordVersionModel.setGroupId(dDLRecordModel.getGroupId());
 		ddlRecordVersionModel.setCompanyId(COMPANY_ID);
 		ddlRecordVersionModel.setUserId(SAMPLE_USER_ID);
-		ddlRecordVersionModel.setUserName(_SAMPLE_USER_NAME);
+		ddlRecordVersionModel.setUserName(SAMPLE_USER_NAME);
 		ddlRecordVersionModel.setCreateDate(dDLRecordModel.getModifiedDate());
 		ddlRecordVersionModel.setDDMStorageId(dDLRecordModel.getDDMStorageId());
 		ddlRecordVersionModel.setRecordSetId(dDLRecordModel.getRecordSetId());
@@ -1809,7 +1808,7 @@ public class DataFactory extends BaseDataFactory {
 		ddmStructureVersionModel.setGroupId(ddmStructureModel.getGroupId());
 		ddmStructureVersionModel.setCompanyId(COMPANY_ID);
 		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
-		ddmStructureVersionModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setUserName(SAMPLE_USER_NAME);
 		ddmStructureVersionModel.setCreateDate(nextFutureDate());
 		ddmStructureVersionModel.setStructureId(
 			ddmStructureModel.getStructureId());
@@ -1830,7 +1829,7 @@ public class DataFactory extends BaseDataFactory {
 		ddmStructureVersionModel.setStorageType(StorageType.JSON.toString());
 		ddmStructureVersionModel.setStatusByUserId(
 			ddmStructureModel.getUserId());
-		ddmStructureVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setStatusByUserName(SAMPLE_USER_NAME);
 		ddmStructureVersionModel.setStatusDate(nextFutureDate());
 
 		return ddmStructureVersionModel;
@@ -1937,7 +1936,7 @@ public class DataFactory extends BaseDataFactory {
 		dlFileVersionModel.setGroupId(dlFileEntryModel.getGroupId());
 		dlFileVersionModel.setCompanyId(COMPANY_ID);
 		dlFileVersionModel.setUserId(SAMPLE_USER_ID);
-		dlFileVersionModel.setUserName(_SAMPLE_USER_NAME);
+		dlFileVersionModel.setUserName(SAMPLE_USER_NAME);
 		dlFileVersionModel.setCreateDate(nextFutureDate());
 		dlFileVersionModel.setModifiedDate(nextFutureDate());
 		dlFileVersionModel.setRepositoryId(dlFileEntryModel.getRepositoryId());
@@ -1997,7 +1996,7 @@ public class DataFactory extends BaseDataFactory {
 		fragmentEntryLinkModel.setGroupId(fragmentEntryModel.getGroupId());
 		fragmentEntryLinkModel.setCompanyId(COMPANY_ID);
 		fragmentEntryLinkModel.setUserId(SAMPLE_USER_ID);
-		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryLinkModel.setUserName(SAMPLE_USER_NAME);
 		fragmentEntryLinkModel.setCreateDate(new Date());
 		fragmentEntryLinkModel.setModifiedDate(new Date());
 		fragmentEntryLinkModel.setFragmentEntryId(
@@ -2025,7 +2024,7 @@ public class DataFactory extends BaseDataFactory {
 		fragmentEntryModel.setGroupId(groupId);
 		fragmentEntryModel.setCompanyId(COMPANY_ID);
 		fragmentEntryModel.setUserId(SAMPLE_USER_ID);
-		fragmentEntryModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryModel.setUserName(SAMPLE_USER_NAME);
 		fragmentEntryModel.setCreateDate(new Date());
 		fragmentEntryModel.setModifiedDate(new Date());
 		fragmentEntryModel.setFragmentCollectionId(
@@ -2182,7 +2181,7 @@ public class DataFactory extends BaseDataFactory {
 			journalArticleResourceModel.getGroupId());
 		journalArticleModel.setCompanyId(COMPANY_ID);
 		journalArticleModel.setUserId(SAMPLE_USER_ID);
-		journalArticleModel.setUserName(_SAMPLE_USER_NAME);
+		journalArticleModel.setUserName(SAMPLE_USER_NAME);
 		journalArticleModel.setCreateDate(new Date());
 		journalArticleModel.setModifiedDate(new Date());
 		journalArticleModel.setClassNameId(
@@ -2304,7 +2303,7 @@ public class DataFactory extends BaseDataFactory {
 		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
 		layoutFriendlyURLEntryModel.setCompanyId(COMPANY_ID);
 		layoutFriendlyURLEntryModel.setUserId(SAMPLE_USER_ID);
-		layoutFriendlyURLEntryModel.setUserName(_SAMPLE_USER_NAME);
+		layoutFriendlyURLEntryModel.setUserName(SAMPLE_USER_NAME);
 		layoutFriendlyURLEntryModel.setCreateDate(new Date());
 		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
 		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
@@ -2334,7 +2333,7 @@ public class DataFactory extends BaseDataFactory {
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(COMPANY_ID);
 		layoutModel.setUserId(SAMPLE_USER_ID);
-		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setUserName(SAMPLE_USER_NAME);
 		layoutModel.setCreateDate(new Date());
 		layoutModel.setModifiedDate(new Date());
 		layoutModel.setLayoutId(simpleCounter.get());
@@ -2374,7 +2373,7 @@ public class DataFactory extends BaseDataFactory {
 		layoutPageTemplateStructureModel.setGroupId(layoutModel.getGroupId());
 		layoutPageTemplateStructureModel.setCompanyId(COMPANY_ID);
 		layoutPageTemplateStructureModel.setUserId(SAMPLE_USER_ID);
-		layoutPageTemplateStructureModel.setUserName(_SAMPLE_USER_NAME);
+		layoutPageTemplateStructureModel.setUserName(SAMPLE_USER_NAME);
 		layoutPageTemplateStructureModel.setCreateDate(new Date());
 		layoutPageTemplateStructureModel.setModifiedDate(new Date());
 		layoutPageTemplateStructureModel.setClassNameId(
@@ -2401,7 +2400,7 @@ public class DataFactory extends BaseDataFactory {
 			layoutPageTemplateStructureModel.getGroupId());
 		layoutPageTemplateStructureRelModel.setCompanyId(COMPANY_ID);
 		layoutPageTemplateStructureRelModel.setUserId(SAMPLE_USER_ID);
-		layoutPageTemplateStructureRelModel.setUserName(_SAMPLE_USER_NAME);
+		layoutPageTemplateStructureRelModel.setUserName(SAMPLE_USER_NAME);
 		layoutPageTemplateStructureRelModel.setCreateDate(new Date());
 		layoutPageTemplateStructureRelModel.setModifiedDate(new Date());
 		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureId(
@@ -2479,7 +2478,7 @@ public class DataFactory extends BaseDataFactory {
 		mbDiscussionModel.setGroupId(groupId);
 		mbDiscussionModel.setCompanyId(COMPANY_ID);
 		mbDiscussionModel.setUserId(SAMPLE_USER_ID);
-		mbDiscussionModel.setUserName(_SAMPLE_USER_NAME);
+		mbDiscussionModel.setUserName(SAMPLE_USER_NAME);
 		mbDiscussionModel.setCreateDate(new Date());
 		mbDiscussionModel.setModifiedDate(new Date());
 		mbDiscussionModel.setClassNameId(classNameId);
@@ -2500,7 +2499,7 @@ public class DataFactory extends BaseDataFactory {
 		mbMailingListModel.setGroupId(mbCategoryModel.getGroupId());
 		mbMailingListModel.setCompanyId(COMPANY_ID);
 		mbMailingListModel.setUserId(SAMPLE_USER_ID);
-		mbMailingListModel.setUserName(_SAMPLE_USER_NAME);
+		mbMailingListModel.setUserName(SAMPLE_USER_NAME);
 		mbMailingListModel.setCreateDate(new Date());
 		mbMailingListModel.setModifiedDate(new Date());
 		mbMailingListModel.setCategoryId(mbCategoryModel.getCategoryId());
@@ -2611,7 +2610,7 @@ public class DataFactory extends BaseDataFactory {
 		mbThreadFlagModel.setGroupId(mbThreadModel.getGroupId());
 		mbThreadFlagModel.setCompanyId(COMPANY_ID);
 		mbThreadFlagModel.setUserId(SAMPLE_USER_ID);
-		mbThreadFlagModel.setUserName(_SAMPLE_USER_NAME);
+		mbThreadFlagModel.setUserName(SAMPLE_USER_NAME);
 		mbThreadFlagModel.setCreateDate(new Date());
 		mbThreadFlagModel.setModifiedDate(new Date());
 		mbThreadFlagModel.setThreadId(mbThreadModel.getThreadId());
@@ -3049,8 +3048,8 @@ public class DataFactory extends BaseDataFactory {
 
 	public UserModel newSampleUserModel() {
 		return newUserModel(
-			SAMPLE_USER_ID, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
-			_SAMPLE_USER_NAME, false, 0);
+			SAMPLE_USER_ID, SAMPLE_USER_NAME, SAMPLE_USER_NAME,
+			SAMPLE_USER_NAME, false, 0);
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -3385,7 +3384,7 @@ public class DataFactory extends BaseDataFactory {
 		assetCategoryModel.setGroupId(groupId);
 		assetCategoryModel.setCompanyId(COMPANY_ID);
 		assetCategoryModel.setUserId(SAMPLE_USER_ID);
-		assetCategoryModel.setUserName(_SAMPLE_USER_NAME);
+		assetCategoryModel.setUserName(SAMPLE_USER_NAME);
 		assetCategoryModel.setCreateDate(new Date());
 		assetCategoryModel.setModifiedDate(new Date());
 		assetCategoryModel.setParentCategoryId(
@@ -3414,29 +3413,9 @@ public class DataFactory extends BaseDataFactory {
 		long classPK, String uuid, long classTypeId, boolean listable,
 		boolean visible, String mimeType, String title) {
 
-		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
-
-		assetEntryModel.setEntryId(counter.get());
-		assetEntryModel.setGroupId(groupId);
-		assetEntryModel.setCompanyId(COMPANY_ID);
-		assetEntryModel.setUserId(SAMPLE_USER_ID);
-		assetEntryModel.setUserName(_SAMPLE_USER_NAME);
-		assetEntryModel.setCreateDate(createDate);
-		assetEntryModel.setModifiedDate(modifiedDate);
-		assetEntryModel.setClassNameId(classNameId);
-		assetEntryModel.setClassPK(classPK);
-		assetEntryModel.setClassUuid(uuid);
-		assetEntryModel.setClassTypeId(classTypeId);
-		assetEntryModel.setListable(listable);
-		assetEntryModel.setVisible(visible);
-		assetEntryModel.setStartDate(createDate);
-		assetEntryModel.setEndDate(nextFutureDate());
-		assetEntryModel.setPublishDate(createDate);
-		assetEntryModel.setExpirationDate(nextFutureDate());
-		assetEntryModel.setMimeType(mimeType);
-		assetEntryModel.setTitle(title);
-
-		return assetEntryModel;
+		return newAssetEntryModel(
+			groupId, createDate, modifiedDate, classNameId, classPK, uuid,
+			classTypeId, listable, visible, mimeType, title, null);
 	}
 
 	protected AssetVocabularyModel newAssetVocabularyModel(
@@ -3479,7 +3458,7 @@ public class DataFactory extends BaseDataFactory {
 		blogsEntryModel.setGroupId(groupId);
 		blogsEntryModel.setCompanyId(COMPANY_ID);
 		blogsEntryModel.setUserId(SAMPLE_USER_ID);
-		blogsEntryModel.setUserName(_SAMPLE_USER_NAME);
+		blogsEntryModel.setUserName(SAMPLE_USER_NAME);
 		blogsEntryModel.setCreateDate(new Date());
 		blogsEntryModel.setModifiedDate(new Date());
 		blogsEntryModel.setTitle("Test Blog " + index);
@@ -3532,7 +3511,7 @@ public class DataFactory extends BaseDataFactory {
 		cpDefinitionModel.setGroupId(groupId);
 		cpDefinitionModel.setCompanyId(COMPANY_ID);
 		cpDefinitionModel.setUserId(SAMPLE_USER_ID);
-		cpDefinitionModel.setUserName(_SAMPLE_USER_NAME);
+		cpDefinitionModel.setUserName(SAMPLE_USER_NAME);
 		cpDefinitionModel.setCreateDate(new Date());
 		cpDefinitionModel.setModifiedDate(new Date());
 		cpDefinitionModel.setCProductId(cProductId);
@@ -3563,7 +3542,7 @@ public class DataFactory extends BaseDataFactory {
 		cpDefinitionModel.setVersion(version);
 		cpDefinitionModel.setStatus(WorkflowConstants.STATUS_APPROVED);
 		cpDefinitionModel.setStatusByUserId(SAMPLE_USER_ID);
-		cpDefinitionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpDefinitionModel.setStatusByUserName(SAMPLE_USER_NAME);
 		cpDefinitionModel.setStatusDate(new Date());
 
 		return cpDefinitionModel;
@@ -3589,7 +3568,7 @@ public class DataFactory extends BaseDataFactory {
 		cpFriendlyURLEntryModel.setGroupId(groupId);
 		cpFriendlyURLEntryModel.setCompanyId(COMPANY_ID);
 		cpFriendlyURLEntryModel.setUserId(SAMPLE_USER_ID);
-		cpFriendlyURLEntryModel.setUserName(_SAMPLE_USER_NAME);
+		cpFriendlyURLEntryModel.setUserName(SAMPLE_USER_NAME);
 		cpFriendlyURLEntryModel.setCreateDate(new Date());
 		cpFriendlyURLEntryModel.setModifiedDate(new Date());
 		cpFriendlyURLEntryModel.setClassNameId(classNameId);
@@ -3611,7 +3590,7 @@ public class DataFactory extends BaseDataFactory {
 		cpInstanceModel.setGroupId(groupId);
 		cpInstanceModel.setCompanyId(COMPANY_ID);
 		cpInstanceModel.setUserId(SAMPLE_USER_ID);
-		cpInstanceModel.setUserName(_SAMPLE_USER_NAME);
+		cpInstanceModel.setUserName(SAMPLE_USER_NAME);
 		cpInstanceModel.setCreateDate(new Date());
 		cpInstanceModel.setModifiedDate(new Date());
 		cpInstanceModel.setCPDefinitionId(cpDefinitionId);
@@ -3644,7 +3623,7 @@ public class DataFactory extends BaseDataFactory {
 		cpInstanceModel.setMaxSubscriptionCycles(0);
 		cpInstanceModel.setStatus(WorkflowConstants.STATUS_APPROVED);
 		cpInstanceModel.setStatusByUserId(SAMPLE_USER_ID);
-		cpInstanceModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpInstanceModel.setStatusByUserName(SAMPLE_USER_NAME);
 		cpInstanceModel.setStatusDate(new Date());
 
 		return cpInstanceModel;
@@ -3660,7 +3639,7 @@ public class DataFactory extends BaseDataFactory {
 		cProductModel.setGroupId(groupId);
 		cProductModel.setCompanyId(COMPANY_ID);
 		cProductModel.setUserId(SAMPLE_USER_ID);
-		cProductModel.setUserName(_SAMPLE_USER_NAME);
+		cProductModel.setUserName(SAMPLE_USER_NAME);
 		cProductModel.setCreateDate(new Date());
 		cProductModel.setModifiedDate(new Date());
 		cProductModel.setPublishedCPDefinitionId(publishedCPDefinitionId);
@@ -3676,7 +3655,7 @@ public class DataFactory extends BaseDataFactory {
 		cpTaxCategoryModel.setCPTaxCategoryId(counter.get());
 		cpTaxCategoryModel.setCompanyId(COMPANY_ID);
 		cpTaxCategoryModel.setUserId(SAMPLE_USER_ID);
-		cpTaxCategoryModel.setUserName(_SAMPLE_USER_NAME);
+		cpTaxCategoryModel.setUserName(SAMPLE_USER_NAME);
 		cpTaxCategoryModel.setCreateDate(new Date());
 		cpTaxCategoryModel.setModifiedDate(new Date());
 		cpTaxCategoryModel.setName(
@@ -3700,7 +3679,7 @@ public class DataFactory extends BaseDataFactory {
 		ddmContentModel.setGroupId(groupId);
 		ddmContentModel.setCompanyId(COMPANY_ID);
 		ddmContentModel.setUserId(SAMPLE_USER_ID);
-		ddmContentModel.setUserName(_SAMPLE_USER_NAME);
+		ddmContentModel.setUserName(SAMPLE_USER_NAME);
 		ddmContentModel.setCreateDate(nextFutureDate());
 		ddmContentModel.setModifiedDate(nextFutureDate());
 		ddmContentModel.setName(DDMStorageLink.class.getName());
@@ -3720,7 +3699,7 @@ public class DataFactory extends BaseDataFactory {
 		ddmStructureLayoutModel.setGroupId(groupId);
 		ddmStructureLayoutModel.setCompanyId(COMPANY_ID);
 		ddmStructureLayoutModel.setUserId(userId);
-		ddmStructureLayoutModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureLayoutModel.setUserName(SAMPLE_USER_NAME);
 		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
 		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
 		ddmStructureLayoutModel.setStructureLayoutKey(
@@ -3756,9 +3735,9 @@ public class DataFactory extends BaseDataFactory {
 		ddmStructureModel.setGroupId(groupId);
 		ddmStructureModel.setCompanyId(COMPANY_ID);
 		ddmStructureModel.setUserId(userId);
-		ddmStructureModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureModel.setUserName(SAMPLE_USER_NAME);
 		ddmStructureModel.setVersionUserId(userId);
-		ddmStructureModel.setVersionUserName(_SAMPLE_USER_NAME);
+		ddmStructureModel.setVersionUserName(SAMPLE_USER_NAME);
 		ddmStructureModel.setCreateDate(nextFutureDate());
 		ddmStructureModel.setModifiedDate(nextFutureDate());
 		ddmStructureModel.setClassNameId(classNameId);
@@ -3799,7 +3778,7 @@ public class DataFactory extends BaseDataFactory {
 		ddmTemplateModel.setTemplateKey("BASIC-WEB-CONTENT");
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 		ddmTemplateModel.setVersionUserId(userId);
-		ddmTemplateModel.setVersionUserName(_SAMPLE_USER_NAME);
+		ddmTemplateModel.setVersionUserName(SAMPLE_USER_NAME);
 
 		StringBundler sb = new StringBundler(3);
 
@@ -3830,7 +3809,7 @@ public class DataFactory extends BaseDataFactory {
 		dlFileEntryModel.setGroupId(dlFolderModel.getGroupId());
 		dlFileEntryModel.setCompanyId(COMPANY_ID);
 		dlFileEntryModel.setUserId(SAMPLE_USER_ID);
-		dlFileEntryModel.setUserName(_SAMPLE_USER_NAME);
+		dlFileEntryModel.setUserName(SAMPLE_USER_NAME);
 		dlFileEntryModel.setCreateDate(nextFutureDate());
 		dlFileEntryModel.setModifiedDate(nextFutureDate());
 		dlFileEntryModel.setRepositoryId(dlFolderModel.getRepositoryId());
@@ -3859,7 +3838,7 @@ public class DataFactory extends BaseDataFactory {
 		dlFolderModel.setGroupId(groupId);
 		dlFolderModel.setCompanyId(COMPANY_ID);
 		dlFolderModel.setUserId(SAMPLE_USER_ID);
-		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
+		dlFolderModel.setUserName(SAMPLE_USER_NAME);
 		dlFolderModel.setCreateDate(nextFutureDate());
 		dlFolderModel.setModifiedDate(nextFutureDate());
 		dlFolderModel.setRepositoryId(groupId);
@@ -3930,7 +3909,7 @@ public class DataFactory extends BaseDataFactory {
 		mbCategoryModel.setGroupId(groupId);
 		mbCategoryModel.setCompanyId(COMPANY_ID);
 		mbCategoryModel.setUserId(SAMPLE_USER_ID);
-		mbCategoryModel.setUserName(_SAMPLE_USER_NAME);
+		mbCategoryModel.setUserName(SAMPLE_USER_NAME);
 		mbCategoryModel.setCreateDate(new Date());
 		mbCategoryModel.setModifiedDate(new Date());
 		mbCategoryModel.setParentCategoryId(
@@ -3962,7 +3941,7 @@ public class DataFactory extends BaseDataFactory {
 		mBMessageModel.setGroupId(groupId);
 		mBMessageModel.setCompanyId(COMPANY_ID);
 		mBMessageModel.setUserId(SAMPLE_USER_ID);
-		mBMessageModel.setUserName(_SAMPLE_USER_NAME);
+		mBMessageModel.setUserName(SAMPLE_USER_NAME);
 		mBMessageModel.setCreateDate(new Date());
 		mBMessageModel.setModifiedDate(new Date());
 		mBMessageModel.setClassNameId(classNameId);
@@ -3992,7 +3971,7 @@ public class DataFactory extends BaseDataFactory {
 		mbThreadModel.setGroupId(groupId);
 		mbThreadModel.setCompanyId(COMPANY_ID);
 		mbThreadModel.setUserId(SAMPLE_USER_ID);
-		mbThreadModel.setUserName(_SAMPLE_USER_NAME);
+		mbThreadModel.setUserName(SAMPLE_USER_NAME);
 		mbThreadModel.setCreateDate(new Date());
 		mbThreadModel.setModifiedDate(new Date());
 		mbThreadModel.setCategoryId(categoryId);
@@ -4092,7 +4071,7 @@ public class DataFactory extends BaseDataFactory {
 		roleModel.setRoleId(counter.get());
 		roleModel.setCompanyId(COMPANY_ID);
 		roleModel.setUserId(SAMPLE_USER_ID);
-		roleModel.setUserName(_SAMPLE_USER_NAME);
+		roleModel.setUserName(SAMPLE_USER_NAME);
 		roleModel.setCreateDate(new Date());
 		roleModel.setModifiedDate(new Date());
 		roleModel.setClassNameId(getClassNameId(Role.class));
@@ -4130,7 +4109,7 @@ public class DataFactory extends BaseDataFactory {
 		subscriptionModel.setSubscriptionId(counter.get());
 		subscriptionModel.setCompanyId(COMPANY_ID);
 		subscriptionModel.setUserId(SAMPLE_USER_ID);
-		subscriptionModel.setUserName(_SAMPLE_USER_NAME);
+		subscriptionModel.setUserName(SAMPLE_USER_NAME);
 		subscriptionModel.setCreateDate(new Date());
 		subscriptionModel.setModifiedDate(new Date());
 		subscriptionModel.setClassNameId(classNameId);
@@ -4200,7 +4179,7 @@ public class DataFactory extends BaseDataFactory {
 		wikiNodeModel.setGroupId(groupId);
 		wikiNodeModel.setCompanyId(COMPANY_ID);
 		wikiNodeModel.setUserId(SAMPLE_USER_ID);
-		wikiNodeModel.setUserName(_SAMPLE_USER_NAME);
+		wikiNodeModel.setUserName(SAMPLE_USER_NAME);
 		wikiNodeModel.setCreateDate(new Date());
 		wikiNodeModel.setModifiedDate(new Date());
 		wikiNodeModel.setName("Test Node " + index);
@@ -4222,7 +4201,7 @@ public class DataFactory extends BaseDataFactory {
 		wikiPageModel.setGroupId(wikiNodeModel.getGroupId());
 		wikiPageModel.setCompanyId(COMPANY_ID);
 		wikiPageModel.setUserId(SAMPLE_USER_ID);
-		wikiPageModel.setUserName(_SAMPLE_USER_NAME);
+		wikiPageModel.setUserName(SAMPLE_USER_NAME);
 		wikiPageModel.setCreateDate(new Date());
 		wikiPageModel.setModifiedDate(new Date());
 		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
@@ -4345,8 +4324,6 @@ public class DataFactory extends BaseDataFactory {
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
-
-	private static final String _SAMPLE_USER_NAME = "Sample";
 
 	private final long _accountId;
 	private RoleModel _administratorRoleModel;
