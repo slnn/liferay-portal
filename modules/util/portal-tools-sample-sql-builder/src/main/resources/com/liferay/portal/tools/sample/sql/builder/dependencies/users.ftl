@@ -22,6 +22,7 @@ ${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 		<#assign journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId) />
 		<#list journalFolderModels as journalFolderModel>
 			${dataFactory.toInsertSQL(journalFolderModel)}
+			${dataFactory.toInsertSQL(cTDataFactory.newAssetEntryModel(journalFolderModel, cTCollectionModel))}
 		</#list>
 	</#list>
 
