@@ -53,9 +53,9 @@ public class CTDataFactory extends BaseDataFactory {
 
 	public List<CTCollectionModel> newCTCollectionModels(UserModel userModel) {
 		List<CTCollectionModel> cTCollectionModels = new ArrayList<>(
-			PropsValues.MAX_CT_COUNT);
+			BenchmarksPropsValues.MAX_CT_COUNT);
 
-		for (int i = 0; i < PropsValues.MAX_CT_COUNT; i++) {
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_COUNT; i++) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Change List ");
@@ -99,9 +99,9 @@ public class CTDataFactory extends BaseDataFactory {
 		CTCollectionModel cTCollectionModel, long groupId) {
 
 		List<JournalFolderModel> journalFolderModels = new ArrayList<>(
-			PropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+			BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
 
-		for (int i = 0; i < PropsValues.MAX_CT_JOURNAL_FOLDER_COUNT; i++) {
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT; i++) {
 			journalFolderModels.add(
 				newJournalFolderModel(
 					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
