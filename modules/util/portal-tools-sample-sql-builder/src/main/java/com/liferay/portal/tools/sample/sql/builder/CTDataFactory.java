@@ -30,6 +30,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderModel;
+import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -93,6 +95,21 @@ public class CTDataFactory extends BaseDataFactory {
 		return cTPreferencesModel;
 	}
 
+	public List<JournalFolderModel> newJournalFolderModels(
+		CTCollectionModel cTCollectionModel, long groupId) {
+
+		List<JournalFolderModel> journalFolderModels = new ArrayList<>(
+			PropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		for (int i = 0; i < PropsValues.MAX_CT_JOURNAL_FOLDER_COUNT; i++) {
+			journalFolderModels.add(
+				newJournalFolderModel(
+					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
+		}
+
+		return journalFolderModels;
+	}
+
 	protected CTCollectionModel newCTCollectionModel(
 		UserModel userModel, String name) {
 
@@ -122,6 +139,29 @@ public class CTDataFactory extends BaseDataFactory {
 			cTCollectionModel.getCtCollectionId());
 
 		return cTPreferencesModel;
+	}
+
+	protected JournalFolderModel newJournalFolderModel(
+		CTCollectionModel cTCollectionModel, long groupId, String name) {
+
+		JournalFolderModel journalFolderModel = new JournalFolderModelImpl();
+
+		long folderId = counter.get();
+
+		journalFolderModel.setUuid(SequentialUUID.generate());
+		journalFolderModel.setCtCollectionId(
+			cTCollectionModel.getCtCollectionId());
+		journalFolderModel.setFolderId(folderId);
+		journalFolderModel.setGroupId(groupId);
+		journalFolderModel.setCompanyId(cTCollectionModel.getCompanyId());
+		journalFolderModel.setUserId(cTCollectionModel.getUserId());
+		journalFolderModel.setCreateDate(new Date());
+		journalFolderModel.setModifiedDate(new Date());
+		journalFolderModel.setParentFolderId(0);
+		journalFolderModel.setTreePath("/" + folderId + "/");
+		journalFolderModel.setName(name);
+
+		return journalFolderModel;
 	}
 
 	private static void _initJournalArticleClassNames() {

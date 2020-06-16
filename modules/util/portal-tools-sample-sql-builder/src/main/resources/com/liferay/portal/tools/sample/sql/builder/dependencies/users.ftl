@@ -18,6 +18,11 @@ ${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 
 	<#list cTCollectionModels as cTCollectionModel>
 		${dataFactory.toInsertSQL(cTCollectionModel)}
+
+		<#assign journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId) />
+		<#list journalFolderModels as journalFolderModel>
+			${dataFactory.toInsertSQL(journalFolderModel)}
+		</#list>
 	</#list>
 
 	${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionModels))}
