@@ -75,6 +75,46 @@ public class CTDataFactory extends BaseDataFactory {
 	}
 
 	public List<AssetEntryModel> newAssetEntryModel(
+		List<JournalArticleModel> journalArticleModels,
+		List<JournalArticleLocalizationModel>
+			journalArticleLocalizationModels) {
+
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>();
+
+		for (int i = 0; i < journalArticleModels.size(); i++) {
+			JournalArticleModel journalArticleModel = journalArticleModels.get(
+				i);
+
+			JournalArticleLocalizationModel journalArticleLocalizationModel =
+				journalArticleLocalizationModels.get(i);
+
+			long resourcePrimKey = journalArticleModel.getResourcePrimKey();
+
+			String resourceUUID = journalArticleResourceUUIDs.get(
+				resourcePrimKey);
+
+			assetEntryModels.add(
+				newAssetEntryModel(
+					journalArticleModel.getGroupId(),
+					journalArticleModel.getCreateDate(),
+					journalArticleModel.getModifiedDate(),
+					getClassNameId(JournalArticle.class), resourcePrimKey,
+					resourceUUID,
+					defaultJournalDDMStructureModel.getStructureId(),
+					journalArticleModel.isIndexable(), true,
+					ContentTypes.TEXT_HTML,
+					journalArticleLocalizationModel.getTitle(),
+					journalArticleModel.getCtCollectionId(),
+					journalArticleModel.getUserId()));
+		}
+
+		_cTEntryMap.put(
+			AssetEntry.class.getName() + "-article", assetEntryModels);
+
+		return assetEntryModels;
+	}
+
+	public List<AssetEntryModel> newAssetEntryModel(
 		List<JournalFolderModel> journalFolderModels) {
 
 		List<AssetEntryModel> assetEntryModels = new ArrayList<>();
@@ -92,7 +132,8 @@ public class CTDataFactory extends BaseDataFactory {
 					journalFolderModel.getCtCollectionId(),
 					journalFolderModel.getUserId())));
 
-		_cTEntryMap.put(AssetEntry.class.getName(), assetEntryModels);
+		_cTEntryMap.put(
+			AssetEntry.class.getName() + "-folder", assetEntryModels);
 
 		return assetEntryModels;
 	}
@@ -140,7 +181,7 @@ public class CTDataFactory extends BaseDataFactory {
 									modelClassPK));
 						});
 				}
-				else if (className.equals(AssetEntry.class.getName())) {
+				else if (className.contains(AssetEntry.class.getName())) {
 					baseModels.forEach(
 						baseModel -> {
 							AssetEntryModel assetEntryModel =

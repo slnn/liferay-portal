@@ -5,13 +5,14 @@
 
 	<#assign
 		journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId)
-		asstEntryModels = cTDataFactory.newAssetEntryModel(journalFolderModels)
+		folderAsstEntryModels = cTDataFactory.newAssetEntryModel(journalFolderModels)
 		journalArticleResourceModels = cTDataFactory.newJournalArticleResourceModels(groupId, journalFolderModels)
 		journalArticleModels = cTDataFactory.newJournalArticleModels(journalArticleResourceModels, journalFolderModels)
 		journalArticleLocalizationModels = cTDataFactory.newJournalArticleLocalizationModels(journalArticleModels, journalFolderModels)
 		dDMTemplateLinkModels = cTDataFactory.newDDMTemplateLinkModels(journalArticleModels, ddmTemplateModel.templateId)
 		dDMStorageLinkModels = cTDataFactory.newDDMStorageLinkModels(journalArticleModels, ddmStructureModel.structureId)
 		socialActivityModels = cTDataFactory.newSocialActivityModels(journalArticleModels)
+		articleAssetEntryModels = cTDataFactory.newAssetEntryModel(journalArticleModels, journalArticleLocalizationModels)
 		cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
 	/>
 
@@ -21,8 +22,8 @@
 		<#assign cTJournalArticleCounts = dataFactory.getSequence(dataFactory.maxCTJournalArticleCount) />
 	</#list>
 
-	<#list asstEntryModels as asstEntryModel>
-		${dataFactory.toInsertSQL(asstEntryModel)}
+	<#list folderAsstEntryModels as folderAsstEntryModel>
+		${dataFactory.toInsertSQL(folderAsstEntryModel)}
 	</#list>
 
 	<#list journalArticleResourceModels as journalArticleResourceModel>
@@ -47,6 +48,10 @@
 
 	<#list socialActivityModels as socialActivityModel>
 		${dataFactory.toInsertSQL(socialActivityModel)}
+	</#list>
+
+	<#list articleAssetEntryModels as articleAssetEntryModel>
+		${dataFactory.toInsertSQL(articleAssetEntryModel)}
 	</#list>
 
 	<#list cTEntryModels as cTEntryModel>
