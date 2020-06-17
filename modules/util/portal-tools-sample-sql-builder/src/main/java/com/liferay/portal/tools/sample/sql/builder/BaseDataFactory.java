@@ -26,21 +26,26 @@ import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -131,6 +136,28 @@ public abstract class BaseDataFactory {
 		return writer;
 	}
 
+	public DDMStorageLinkModel newDDMStorageLinkModel(
+		JournalArticleModel journalArticleModel, long structureId) {
+
+		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
+
+		if (journalArticleModel.getCtCollectionId() != 0) {
+			ddmStorageLinkModel.setCtCollectionId(
+				journalArticleModel.getCtCollectionId());
+		}
+
+		ddmStorageLinkModel.setUuid(SequentialUUID.generate());
+		ddmStorageLinkModel.setStorageLinkId(counter.get());
+		ddmStorageLinkModel.setClassNameId(
+			getClassNameId(JournalArticle.class));
+		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
+		ddmStorageLinkModel.setStructureId(structureId);
+		ddmStorageLinkModel.setStructureVersionId(
+			defaultJournalDDMStructureVersionModel.getStructureVersionId());
+
+		return ddmStorageLinkModel;
+	}
+
 	public DDMStructureVersionModel newDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
 
@@ -166,6 +193,27 @@ public abstract class BaseDataFactory {
 		ddmStructureVersionModel.setStatusDate(nextFutureDate());
 
 		return ddmStructureVersionModel;
+	}
+
+	public DDMTemplateLinkModel newDDMTemplateLinkModel(
+		JournalArticleModel journalArticleModel, long templateId) {
+
+		DDMTemplateLinkModel ddmTemplateLinkModel =
+			new DDMTemplateLinkModelImpl();
+
+		if (journalArticleModel.getCtCollectionId() != 0) {
+			ddmTemplateLinkModel.setCtCollectionId(
+				journalArticleModel.getCtCollectionId());
+		}
+
+		ddmTemplateLinkModel.setCompanyId(COMPANY_ID);
+		ddmTemplateLinkModel.setTemplateLinkId(counter.get());
+		ddmTemplateLinkModel.setClassNameId(
+			getClassNameId(JournalArticle.class));
+		ddmTemplateLinkModel.setClassPK(journalArticleModel.getId());
+		ddmTemplateLinkModel.setTemplateId(templateId);
+
+		return ddmTemplateLinkModel;
 	}
 
 	public DDMTemplateVersionModel newDDMTemplateVersionModel(
@@ -344,6 +392,8 @@ public abstract class BaseDataFactory {
 		BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT *
 			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT;
 
+	protected static final long CURRENT_TIME = System.currentTimeMillis();
+
 	protected static final long DEFAULT_JOURNAL_DDM_STRUCTURE_ID;
 
 	protected static final long DEFAULT_USER_ID;
@@ -381,6 +431,7 @@ public abstract class BaseDataFactory {
 		new SimpleCounter();
 	protected static final SimpleCounter socialActivityCounter =
 		new SimpleCounter();
+	protected static final SimpleCounter timeCounter = new SimpleCounter();
 
 	protected final PortletPreferencesImpl
 		defaultAssetPublisherPortletPreferencesImpl;

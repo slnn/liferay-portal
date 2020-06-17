@@ -90,13 +90,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
 import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollectionModel;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
@@ -295,7 +293,6 @@ public class DataFactory extends BaseDataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
-		_timeCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
 
 		_accountId = counter.get();
@@ -1647,28 +1644,6 @@ public class DataFactory extends BaseDataFactory {
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
-		JournalArticleModel journalArticleModel, long structureId) {
-
-		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
-
-		if (journalArticleModel.getCtCollectionId() != 0) {
-			ddmStorageLinkModel.setCtCollectionId(
-				journalArticleModel.getCtCollectionId());
-		}
-
-		ddmStorageLinkModel.setUuid(SequentialUUID.generate());
-		ddmStorageLinkModel.setStorageLinkId(counter.get());
-		ddmStorageLinkModel.setClassNameId(
-			getClassNameId(JournalArticle.class));
-		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
-		ddmStorageLinkModel.setStructureId(structureId);
-		ddmStorageLinkModel.setStructureVersionId(
-			defaultJournalDDMStructureVersionModel.getStructureVersionId());
-
-		return ddmStorageLinkModel;
-	}
-
-	public DDMStorageLinkModel newDDMStorageLinkModel(
 		long ddmStorageLinkId, DDMContentModel ddmContentModel,
 		long structureId) {
 
@@ -1701,27 +1676,6 @@ public class DataFactory extends BaseDataFactory {
 			getClassNameId(DLFileEntryMetadata.class),
 			dLFileEntryMetadataModel.getFileEntryMetadataId(),
 			dLFileEntryMetadataModel.getDDMStructureId());
-	}
-
-	public DDMTemplateLinkModel newDDMTemplateLinkModel(
-		JournalArticleModel journalArticleModel, long templateId) {
-
-		DDMTemplateLinkModel ddmTemplateLinkModel =
-			new DDMTemplateLinkModelImpl();
-
-		if (journalArticleModel.getCtCollectionId() != 0) {
-			ddmTemplateLinkModel.setCtCollectionId(
-				journalArticleModel.getCtCollectionId());
-		}
-
-		ddmTemplateLinkModel.setCompanyId(COMPANY_ID);
-		ddmTemplateLinkModel.setTemplateLinkId(counter.get());
-		ddmTemplateLinkModel.setClassNameId(
-			getClassNameId(JournalArticle.class));
-		ddmTemplateLinkModel.setClassPK(journalArticleModel.getId());
-		ddmTemplateLinkModel.setTemplateId(templateId);
-
-		return ddmTemplateLinkModel;
 	}
 
 	public UserModel newDefaultUserModel() {
@@ -2928,15 +2882,6 @@ public class DataFactory extends BaseDataFactory {
 			type = JournalActivityKeys.ADD_ARTICLE;
 		}
 
-		if (journalArticleModel.getCtCollectionId() != 0) {
-			return newSocialActivityModel(
-				journalArticleModel.getGroupId(),
-				getClassNameId(JournalArticle.class),
-				journalArticleModel.getResourcePrimKey(), type,
-				"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}",
-				journalArticleModel.getCtCollectionId());
-		}
-
 		return newSocialActivityModel(
 			journalArticleModel.getGroupId(),
 			getClassNameId(JournalArticle.class),
@@ -3871,27 +3816,7 @@ public class DataFactory extends BaseDataFactory {
 		socialActivityModel.setGroupId(groupId);
 		socialActivityModel.setCompanyId(COMPANY_ID);
 		socialActivityModel.setUserId(SAMPLE_USER_ID);
-		socialActivityModel.setCreateDate(_CURRENT_TIME + _timeCounter.get());
-		socialActivityModel.setClassNameId(classNameId);
-		socialActivityModel.setClassPK(classPK);
-		socialActivityModel.setType(type);
-		socialActivityModel.setExtraData(extraData);
-
-		return socialActivityModel;
-	}
-
-	protected SocialActivityModel newSocialActivityModel(
-		long groupId, long classNameId, long classPK, int type,
-		String extraData, long ctCollectionId) {
-
-		SocialActivityModel socialActivityModel = new SocialActivityModelImpl();
-
-		socialActivityModel.setActivityId(socialActivityCounter.get());
-		socialActivityModel.setCtCollectionId(ctCollectionId);
-		socialActivityModel.setGroupId(groupId);
-		socialActivityModel.setCompanyId(COMPANY_ID);
-		socialActivityModel.setUserId(SAMPLE_USER_ID);
-		socialActivityModel.setCreateDate(_CURRENT_TIME + _timeCounter.get());
+		socialActivityModel.setCreateDate(CURRENT_TIME + timeCounter.get());
 		socialActivityModel.setClassNameId(classNameId);
 		socialActivityModel.setClassPK(classPK);
 		socialActivityModel.setType(type);
@@ -4122,8 +4047,6 @@ public class DataFactory extends BaseDataFactory {
 		return sb.toString();
 	}
 
-	private static final long _CURRENT_TIME = System.currentTimeMillis();
-
 	private final long _accountId;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
@@ -4158,7 +4081,6 @@ public class DataFactory extends BaseDataFactory {
 	private List<RoleModel> _roleModels;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;
-	private final SimpleCounter _timeCounter;
 	private final long _userPersonalSiteGroupId;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
