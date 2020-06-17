@@ -89,7 +89,8 @@ public class CTDataFactory extends BaseDataFactory {
 					journalFolderModel.getFolderId(),
 					journalFolderModel.getUuid(), 0, true, true,
 					ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
-					journalFolderModel.getCtCollectionId())));
+					journalFolderModel.getCtCollectionId(),
+					journalFolderModel.getUserId())));
 
 		_cTEntryMap.put(AssetEntry.class.getName(), assetEntryModels);
 
@@ -438,7 +439,8 @@ public class CTDataFactory extends BaseDataFactory {
 	protected AssetEntryModel newAssetEntryModel(
 		long groupId, Date createDate, Date modifiedDate, long classNameId,
 		long classPK, String uuid, long classTypeId, boolean listable,
-		boolean visible, String mimeType, String title, long ctCollectionId) {
+		boolean visible, String mimeType, String title, long ctCollectionId,
+		long userId) {
 
 		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
 
@@ -446,8 +448,7 @@ public class CTDataFactory extends BaseDataFactory {
 		assetEntryModel.setGroupId(groupId);
 		assetEntryModel.setCompanyId(COMPANY_ID);
 		assetEntryModel.setCtCollectionId(ctCollectionId);
-		assetEntryModel.setUserId(SAMPLE_USER_ID);
-		assetEntryModel.setUserName(SAMPLE_USER_NAME);
+		assetEntryModel.setUserId(userId);
 		assetEntryModel.setCreateDate(createDate);
 		assetEntryModel.setModifiedDate(modifiedDate);
 		assetEntryModel.setClassNameId(classNameId);
@@ -653,12 +654,13 @@ public class CTDataFactory extends BaseDataFactory {
 			getClassNameId(JournalArticle.class),
 			journalArticleModel.getResourcePrimKey(), type,
 			"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}",
-			journalArticleModel.getCtCollectionId());
+			journalArticleModel.getCtCollectionId(),
+			journalArticleModel.getUserId());
 	}
 
 	protected SocialActivityModel newSocialActivityModel(
 		long groupId, long classNameId, long classPK, int type,
-		String extraData, long ctCollectionId) {
+		String extraData, long ctCollectionId, long userId) {
 
 		SocialActivityModel socialActivityModel = new SocialActivityModelImpl();
 
@@ -666,7 +668,7 @@ public class CTDataFactory extends BaseDataFactory {
 		socialActivityModel.setCtCollectionId(ctCollectionId);
 		socialActivityModel.setGroupId(groupId);
 		socialActivityModel.setCompanyId(COMPANY_ID);
-		socialActivityModel.setUserId(SAMPLE_USER_ID);
+		socialActivityModel.setUserId(userId);
 		socialActivityModel.setCreateDate(CURRENT_TIME + timeCounter.get());
 		socialActivityModel.setClassNameId(classNameId);
 		socialActivityModel.setClassPK(classPK);
