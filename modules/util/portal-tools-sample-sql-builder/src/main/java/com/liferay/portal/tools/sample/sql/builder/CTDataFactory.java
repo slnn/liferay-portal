@@ -164,6 +164,12 @@ public class CTDataFactory extends BaseDataFactory {
 
 		_cTEntryMap.forEach(
 			(className, baseModels) -> {
+				if (className.contains("-")) {
+					int endIndex = className.lastIndexOf('-');
+
+					className = className.substring(0, endIndex);
+				}
+
 				long modelClassNameId = getClassNameId(className);
 
 				if (className.equals(JournalFolder.class.getName())) {
