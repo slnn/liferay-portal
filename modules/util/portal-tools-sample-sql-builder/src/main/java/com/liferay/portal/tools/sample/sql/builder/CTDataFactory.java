@@ -319,12 +319,15 @@ public class CTDataFactory extends BaseDataFactory {
 		int i = 0;
 
 		for (JournalFolderModel journalFolderModel : journalFolderModels) {
+			int j = 0;
+
 			while (true) {
 				journalArticleLocalizationModels.add(
 					newJournalArticleLocalizationModel(
-						journalArticleModels.get(i), i + 1,
+						journalArticleModels.get(i), j + 1,
 						journalFolderModel));
 				i++;
+				j++;
 
 				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
 						0) {
@@ -351,12 +354,15 @@ public class CTDataFactory extends BaseDataFactory {
 		int i = 0;
 
 		for (JournalFolderModel journalFolderModel : journalFolderModels) {
+			int j = 0;
+
 			while (true) {
 				journalArticleModels.add(
 					newJournalArticleModel(
-						journalArticleResourceModels.get(i), i + 1,
+						journalArticleResourceModels.get(i), j + 1,
 						journalFolderModel));
 				i++;
+				j++;
 
 				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
 						0) {
