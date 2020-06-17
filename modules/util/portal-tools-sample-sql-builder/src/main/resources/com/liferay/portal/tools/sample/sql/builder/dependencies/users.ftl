@@ -19,11 +19,22 @@ ${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 	<#list cTCollectionModels as cTCollectionModel>
 		${dataFactory.toInsertSQL(cTCollectionModel)}
 
-		<#assign journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId) />
+		<#assign
+			journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId)
+			asstEntryModels = cTDataFactory.newAssetEntryModel(journalFolderModels)
+			cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
+		/>
 
 		<#list journalFolderModels as journalFolderModel>
 			${dataFactory.toInsertSQL(journalFolderModel)}
-			${dataFactory.toInsertSQL(cTDataFactory.newAssetEntryModel(journalFolderModel, cTCollectionModel))}
+		</#list>
+
+		<#list asstEntryModels as asstEntryModel>
+			${dataFactory.toInsertSQL(asstEntryModel)}
+		</#list>
+
+		<#list cTEntryModels as cTEntryModel>
+			${dataFactory.toInsertSQL(cTEntryModel)}
 		</#list>
 	</#list>
 

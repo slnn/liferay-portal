@@ -18,8 +18,10 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.change.tracking.model.CTCollectionModel;
+import com.liferay.change.tracking.model.CTEntryModel;
 import com.liferay.change.tracking.model.CTPreferencesModel;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
+import com.liferay.change.tracking.model.impl.CTEntryModelImpl;
 import com.liferay.change.tracking.model.impl.CTPreferencesModelImpl;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
@@ -47,24 +49,35 @@ import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Lily Chi
  */
 public class CTDataFactory extends BaseDataFactory {
 
-	public AssetEntryModel newAssetEntryModel(
-		JournalFolderModel journalFolderModel,
-		CTCollectionModel cTCollectionModel) {
+	public List<AssetEntryModel> newAssetEntryModel(
+		List<JournalFolderModel> journalFolderModels) {
 
-		return newAssetEntryModel(
-			journalFolderModel.getGroupId(), journalFolderModel.getCreateDate(),
-			journalFolderModel.getModifiedDate(),
-			getClassNameId(JournalFolder.class),
-			journalFolderModel.getFolderId(), journalFolderModel.getUuid(), 0,
-			true, true, ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
-			cTCollectionModel);
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>();
+
+		journalFolderModels.forEach(
+			journalFolderModel -> assetEntryModels.add(
+				newAssetEntryModel(
+					journalFolderModel.getGroupId(),
+					journalFolderModel.getCreateDate(),
+					journalFolderModel.getModifiedDate(),
+					getClassNameId(JournalFolder.class),
+					journalFolderModel.getFolderId(),
+					journalFolderModel.getUuid(), 0, true, true,
+					ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
+					journalFolderModel.getCtCollectionId())));
+
+		_journalFolderMap.put(AssetEntry.class.getName(), assetEntryModels);
+
+		return assetEntryModels;
 	}
 
 	public List<CTCollectionModel> newCTCollectionModels(UserModel userModel) {
@@ -84,6 +97,49 @@ public class CTDataFactory extends BaseDataFactory {
 		}
 
 		return cTCollectionModels;
+	}
+
+	public List<CTEntryModel> newCTEntryModels(
+		CTCollectionModel cTCollectionModel) {
+
+		List<CTEntryModel> cTEntryModels = new ArrayList<>();
+
+		_journalFolderMap.forEach(
+			(className, baseModels) -> {
+				long modelClassNameId = getClassNameId(className);
+
+				if (className.equals(JournalFolder.class.getName())) {
+					baseModels.forEach(
+						baseModel -> {
+							JournalFolderModel journalFolderModel =
+								(JournalFolderModel)baseModel;
+
+							long modelClassPK =
+								journalFolderModel.getFolderId();
+
+							cTEntryModels.add(
+								newCTEntryModel(
+									cTCollectionModel, modelClassNameId,
+									modelClassPK));
+						});
+				}
+				else {
+					baseModels.forEach(
+						baseModel -> {
+							AssetEntryModel assetEntryModel =
+								(AssetEntryModel)baseModel;
+
+							long modelClassPK = assetEntryModel.getEntryId();
+
+							cTEntryModels.add(
+								newCTEntryModel(
+									cTCollectionModel, modelClassNameId,
+									modelClassPK));
+						});
+				}
+			});
+
+		return cTEntryModels;
 	}
 
 	public CTPreferencesModel newCTPreferencesModel() {
@@ -125,22 +181,23 @@ public class CTDataFactory extends BaseDataFactory {
 					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
 		}
 
+		_journalFolderMap.put(
+			JournalFolder.class.getName(), journalFolderModels);
+
 		return journalFolderModels;
 	}
 
 	protected AssetEntryModel newAssetEntryModel(
 		long groupId, Date createDate, Date modifiedDate, long classNameId,
 		long classPK, String uuid, long classTypeId, boolean listable,
-		boolean visible, String mimeType, String title,
-		CTCollectionModel cTCollectionModel) {
+		boolean visible, String mimeType, String title, long ctCollectionId) {
 
 		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
 
 		assetEntryModel.setEntryId(counter.get());
 		assetEntryModel.setGroupId(groupId);
 		assetEntryModel.setCompanyId(COMPANY_ID);
-		assetEntryModel.setCtCollectionId(
-			cTCollectionModel.getCtCollectionId());
+		assetEntryModel.setCtCollectionId(ctCollectionId);
 		assetEntryModel.setUserId(SAMPLE_USER_ID);
 		assetEntryModel.setUserName(SAMPLE_USER_NAME);
 		assetEntryModel.setCreateDate(createDate);
@@ -176,6 +233,24 @@ public class CTDataFactory extends BaseDataFactory {
 		cTCollectionModel.setUserId(userModel.getUserId());
 
 		return cTCollectionModel;
+	}
+
+	protected CTEntryModel newCTEntryModel(
+		CTCollectionModel cTCollectionModel, long modelClassNameId,
+		long modelClassPK) {
+
+		CTEntryModel cTEntryModel = new CTEntryModelImpl();
+
+		cTEntryModel.setCtEntryId(cTEntryCounter.get());
+		cTEntryModel.setCompanyId(cTCollectionModel.getCompanyId());
+		cTEntryModel.setUserId(cTCollectionModel.getUserId());
+		cTEntryModel.setCreateDate(new Date());
+		cTEntryModel.setModifiedDate(new Date());
+		cTEntryModel.setCtCollectionId(cTCollectionModel.getCtCollectionId());
+		cTEntryModel.setModelClassNameId(modelClassNameId);
+		cTEntryModel.setModelClassPK(modelClassPK);
+
+		return cTEntryModel;
 	}
 
 	protected CTPreferencesModel newCTPreferencesModel(
@@ -236,8 +311,8 @@ public class CTDataFactory extends BaseDataFactory {
 	}
 
 	private static void _initJournalFolderClassNames() {
-		_journalFolderClassNames.add(ResourcePermission.class.getName());
-		_journalFolderClassNames.add(PortletPreferences.class.getName());
+		//_journalFolderClassNames.add(ResourcePermission.class.getName());
+		//_journalFolderClassNames.add(PortletPreferences.class.getName());
 		_journalFolderClassNames.add(JournalFolder.class.getName());
 		_journalFolderClassNames.add(AssetEntry.class.getName());
 	}
@@ -262,6 +337,8 @@ public class CTDataFactory extends BaseDataFactory {
 		new ArrayList<>();
 	private static final List<String> _journalFolderClassNames =
 		new ArrayList<>();
+	private static final Map<String, List<?>> _journalFolderMap =
+		new HashMap<>();
 	private static final List<String> _webContentDisplayClassNames =
 		new ArrayList<>();
 	private static final List<String> _widgetPageClassNames = new ArrayList<>();
