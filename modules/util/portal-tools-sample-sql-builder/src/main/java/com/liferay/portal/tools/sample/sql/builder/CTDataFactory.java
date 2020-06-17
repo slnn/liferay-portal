@@ -30,12 +30,12 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalArticleResourceModel;
-import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
@@ -43,7 +43,6 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -291,8 +290,7 @@ public class CTDataFactory extends BaseDataFactory {
 					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
 		}
 
-		_cTEntryMap.put(
-			JournalFolder.class.getName(), journalFolderModels);
+		_cTEntryMap.put(JournalFolder.class.getName(), journalFolderModels);
 
 		return journalFolderModels;
 	}
@@ -443,12 +441,11 @@ public class CTDataFactory extends BaseDataFactory {
 		_widgetPageClassNames.add(AssetEntry.class.getName());
 	}
 
+	private static final Map<String, List<?>> _cTEntryMap = new HashMap<>();
 	private static final List<String> _journalArticleClassNames =
 		new ArrayList<>();
 	private static final List<String> _journalFolderClassNames =
 		new ArrayList<>();
-	private static final Map<String, List<?>> _cTEntryMap =
-		new HashMap<>();
 	private static final List<String> _webContentDisplayClassNames =
 		new ArrayList<>();
 	private static final List<String> _widgetPageClassNames = new ArrayList<>();

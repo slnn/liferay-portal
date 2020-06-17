@@ -26,29 +26,17 @@ import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.model.DDMContent;
-import com.liferay.dynamic.data.mapping.model.DDMContentModel;
-import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
-import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
-import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
@@ -143,10 +131,6 @@ public abstract class BaseDataFactory {
 		return writer;
 	}
 
-	public Date nextFutureDate() {
-		return new Date(_FUTURE_TIME + (_FUTURE_COUNTER.get() * Time.SECOND));
-	}
-	
 	public DDMStructureVersionModel newDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
 
@@ -183,7 +167,7 @@ public abstract class BaseDataFactory {
 
 		return ddmStructureVersionModel;
 	}
-	
+
 	public DDMTemplateVersionModel newDDMTemplateVersionModel(
 		DDMTemplateModel ddmTemplateModel) {
 
@@ -219,6 +203,10 @@ public abstract class BaseDataFactory {
 		return ddmTemplateVersionModelImpl;
 	}
 
+	public Date nextFutureDate() {
+		return new Date(_FUTURE_TIME + (_FUTURE_COUNTER.get() * Time.SECOND));
+	}
+
 	protected static String getMBDiscussionCombinedClassName(Class<?> clazz) {
 		return StringBundler.concat(
 			MBDiscussion.class.getName(), StringPool.UNDERLINE,
@@ -243,6 +231,28 @@ public abstract class BaseDataFactory {
 
 		return classLoader.getResourceAsStream(
 			_DEPENDENCIES_DIR + resourceName);
+	}
+
+	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
+		long groupId, long userId, long structureVersionId, String definition) {
+
+		DDMStructureLayoutModel ddmStructureLayoutModel =
+			new DDMStructureLayoutModelImpl();
+
+		ddmStructureLayoutModel.setUuid(SequentialUUID.generate());
+		ddmStructureLayoutModel.setStructureLayoutId(counter.get());
+		ddmStructureLayoutModel.setGroupId(groupId);
+		ddmStructureLayoutModel.setCompanyId(COMPANY_ID);
+		ddmStructureLayoutModel.setUserId(userId);
+		ddmStructureLayoutModel.setUserName(SAMPLE_USER_NAME);
+		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
+		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
+		ddmStructureLayoutModel.setStructureLayoutKey(
+			String.valueOf(counter.get()));
+		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
+		ddmStructureLayoutModel.setDefinition(definition);
+
+		return ddmStructureLayoutModel;
 	}
 
 	protected DDMStructureModel newDDMStructureModel(
@@ -280,29 +290,7 @@ public abstract class BaseDataFactory {
 
 		return ddmStructureModel;
 	}
-	
-	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
-		long groupId, long userId, long structureVersionId, String definition) {
 
-		DDMStructureLayoutModel ddmStructureLayoutModel =
-			new DDMStructureLayoutModelImpl();
-
-		ddmStructureLayoutModel.setUuid(SequentialUUID.generate());
-		ddmStructureLayoutModel.setStructureLayoutId(counter.get());
-		ddmStructureLayoutModel.setGroupId(groupId);
-		ddmStructureLayoutModel.setCompanyId(COMPANY_ID);
-		ddmStructureLayoutModel.setUserId(userId);
-		ddmStructureLayoutModel.setUserName(SAMPLE_USER_NAME);
-		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
-		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
-		ddmStructureLayoutModel.setStructureLayoutKey(
-			String.valueOf(counter.get()));
-		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
-		ddmStructureLayoutModel.setDefinition(definition);
-
-		return ddmStructureLayoutModel;
-	}
-	
 	protected DDMTemplateModel newDDMTemplateModel(
 		long groupId, long userId, long structureId, long sourceClassNameId) {
 
