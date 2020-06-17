@@ -23,21 +23,55 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMContentModel;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
+import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
+import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
+import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
+import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
 import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.model.WikiPage;
 
@@ -72,6 +106,22 @@ public abstract class BaseDataFactory {
 		return classNameModel.getClassNameId();
 	}
 
+	public BaseDataFactory() throws Exception {
+		_dlDDMStructureContent = readFile("ddm_structure_basic_document.json");
+		_dlDDMStructureLayoutContent = readFile(
+			"ddm_structure_layout_basic_document.json");
+		_journalDDMStructureContent = readFile(
+			"ddm_structure_basic_web_content.json");
+		_journalDDMStructureLayoutContent = readFile(
+			"ddm_structure_layout_basic_web_content.json");
+
+		defaultAssetPublisherPortletPreferencesImpl =
+			(PortletPreferencesImpl)portletPreferencesFactory.fromDefaultXML(
+				readFile("default_asset_publisher_preference.xml"));
+		_initDLFileEntryTypeModel();
+		_initJournalArticleContent();
+	}
+
 	public long getClassNameId(String className) {
 		ClassNameModel classNameModel = _classNameModels.get(className);
 
@@ -95,6 +145,78 @@ public abstract class BaseDataFactory {
 
 	public Date nextFutureDate() {
 		return new Date(_FUTURE_TIME + (_FUTURE_COUNTER.get() * Time.SECOND));
+	}
+	
+	public DDMStructureVersionModel newDDMStructureVersionModel(
+		DDMStructureModel ddmStructureModel) {
+
+		DDMStructureVersionModel ddmStructureVersionModel =
+			new DDMStructureVersionModelImpl();
+
+		ddmStructureVersionModel.setStructureVersionId(counter.get());
+		ddmStructureVersionModel.setGroupId(ddmStructureModel.getGroupId());
+		ddmStructureVersionModel.setCompanyId(COMPANY_ID);
+		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
+		ddmStructureVersionModel.setUserName(SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setCreateDate(nextFutureDate());
+		ddmStructureVersionModel.setStructureId(
+			ddmStructureModel.getStructureId());
+		ddmStructureVersionModel.setVersion(
+			DDMStructureConstants.VERSION_DEFAULT);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(ddmStructureModel.getStructureKey());
+		sb.append("</name></root>");
+
+		ddmStructureVersionModel.setName(sb.toString());
+
+		ddmStructureVersionModel.setDefinition(
+			ddmStructureModel.getDefinition());
+		ddmStructureVersionModel.setStorageType(StorageType.JSON.toString());
+		ddmStructureVersionModel.setStatusByUserId(
+			ddmStructureModel.getUserId());
+		ddmStructureVersionModel.setStatusByUserName(SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setStatusDate(nextFutureDate());
+
+		return ddmStructureVersionModel;
+	}
+	
+	public DDMTemplateVersionModel newDDMTemplateVersionModel(
+		DDMTemplateModel ddmTemplateModel) {
+
+		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
+			new DDMTemplateVersionModelImpl();
+
+		ddmTemplateVersionModelImpl.setTemplateVersionId(counter.get());
+		ddmTemplateVersionModelImpl.setGroupId(ddmTemplateModel.getGroupId());
+		ddmTemplateVersionModelImpl.setCompanyId(COMPANY_ID);
+		ddmTemplateVersionModelImpl.setUserId(ddmTemplateModel.getUserId());
+		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
+		ddmTemplateVersionModelImpl.setTemplateId(
+			ddmTemplateModel.getTemplateId());
+		ddmTemplateVersionModelImpl.setClassPK(ddmTemplateModel.getClassPK());
+		ddmTemplateVersionModelImpl.setClassNameId(
+			ddmTemplateModel.getClassNameId());
+		ddmTemplateVersionModelImpl.setVersion(
+			DDMTemplateConstants.VERSION_DEFAULT);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(ddmTemplateModel.getTemplateKey());
+		sb.append("</name></root>");
+
+		ddmTemplateVersionModelImpl.setName(sb.toString());
+
+		ddmTemplateVersionModelImpl.setStatusByUserId(
+			ddmTemplateModel.getUserId());
+		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
+
+		return ddmTemplateVersionModelImpl;
 	}
 
 	protected static String getMBDiscussionCombinedClassName(Class<?> clazz) {
@@ -121,6 +243,103 @@ public abstract class BaseDataFactory {
 
 		return classLoader.getResourceAsStream(
 			_DEPENDENCIES_DIR + resourceName);
+	}
+
+	protected DDMStructureModel newDDMStructureModel(
+		long groupId, long userId, long classNameId, String structureKey,
+		String definition) {
+
+		DDMStructureModel ddmStructureModel = new DDMStructureModelImpl();
+
+		ddmStructureModel.setUuid(SequentialUUID.generate());
+		ddmStructureModel.setStructureId(counter.get());
+		ddmStructureModel.setGroupId(groupId);
+		ddmStructureModel.setCompanyId(COMPANY_ID);
+		ddmStructureModel.setUserId(userId);
+		ddmStructureModel.setUserName(SAMPLE_USER_NAME);
+		ddmStructureModel.setVersionUserId(userId);
+		ddmStructureModel.setVersionUserName(SAMPLE_USER_NAME);
+		ddmStructureModel.setCreateDate(nextFutureDate());
+		ddmStructureModel.setModifiedDate(nextFutureDate());
+		ddmStructureModel.setClassNameId(classNameId);
+		ddmStructureModel.setStructureKey(structureKey);
+		ddmStructureModel.setVersion(DDMStructureConstants.VERSION_DEFAULT);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(structureKey);
+		sb.append("</name></root>");
+
+		ddmStructureModel.setName(sb.toString());
+
+		ddmStructureModel.setDefinition(definition);
+		ddmStructureModel.setStorageType(StorageType.JSON.toString());
+		ddmStructureModel.setLastPublishDate(nextFutureDate());
+
+		return ddmStructureModel;
+	}
+	
+	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
+		long groupId, long userId, long structureVersionId, String definition) {
+
+		DDMStructureLayoutModel ddmStructureLayoutModel =
+			new DDMStructureLayoutModelImpl();
+
+		ddmStructureLayoutModel.setUuid(SequentialUUID.generate());
+		ddmStructureLayoutModel.setStructureLayoutId(counter.get());
+		ddmStructureLayoutModel.setGroupId(groupId);
+		ddmStructureLayoutModel.setCompanyId(COMPANY_ID);
+		ddmStructureLayoutModel.setUserId(userId);
+		ddmStructureLayoutModel.setUserName(SAMPLE_USER_NAME);
+		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
+		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
+		ddmStructureLayoutModel.setStructureLayoutKey(
+			String.valueOf(counter.get()));
+		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
+		ddmStructureLayoutModel.setDefinition(definition);
+
+		return ddmStructureLayoutModel;
+	}
+	
+	protected DDMTemplateModel newDDMTemplateModel(
+		long groupId, long userId, long structureId, long sourceClassNameId) {
+
+		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
+
+		ddmTemplateModel.setUuid(SequentialUUID.generate());
+		ddmTemplateModel.setTemplateId(counter.get());
+		ddmTemplateModel.setGroupId(groupId);
+		ddmTemplateModel.setCompanyId(COMPANY_ID);
+		ddmTemplateModel.setUserId(userId);
+		ddmTemplateModel.setCreateDate(nextFutureDate());
+		ddmTemplateModel.setModifiedDate(nextFutureDate());
+		ddmTemplateModel.setClassNameId(getClassNameId(DDMStructure.class));
+		ddmTemplateModel.setClassPK(structureId);
+		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
+		ddmTemplateModel.setTemplateKey("BASIC-WEB-CONTENT");
+		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
+		ddmTemplateModel.setVersionUserId(userId);
+		ddmTemplateModel.setVersionUserName(SAMPLE_USER_NAME);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append("Basic Web Content</name></root>");
+
+		ddmTemplateModel.setName(sb.toString());
+
+		ddmTemplateModel.setType(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+		ddmTemplateModel.setMode(DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+		ddmTemplateModel.setLanguage(TemplateConstants.LANG_TYPE_FTL);
+		ddmTemplateModel.setScript("${content.getData()}");
+		ddmTemplateModel.setCacheable(true);
+		ddmTemplateModel.setSmallImage(false);
+		ddmTemplateModel.setLastPublishDate(nextFutureDate());
+
+		return ddmTemplateModel;
 	}
 
 	protected String readFile(String resourceName) throws IOException {
@@ -161,6 +380,11 @@ public abstract class BaseDataFactory {
 	protected static final SimpleCounter cTEntryCounter = new SimpleCounter();
 	protected static final SimpleCounter cTPreferencesCounter =
 		new SimpleCounter();
+	protected static DDMStructureLayoutModel defaultDLDDMStructureLayoutModel;
+	protected static DDMStructureModel defaultDLDDMStructureModel;
+	protected static DDMStructureVersionModel defaultDLDDMStructureVersionModel;
+	protected static DLFileEntryTypeModel defaultDLFileEntryTypeModel;
+	protected static String journalArticleContent;
 	protected static final Map<Long, String> journalArticleResourceUUIDs =
 		new HashMap<>();
 	protected static final PortletPreferencesFactory portletPreferencesFactory =
@@ -169,6 +393,14 @@ public abstract class BaseDataFactory {
 		new SimpleCounter();
 	protected static final SimpleCounter socialActivityCounter =
 		new SimpleCounter();
+
+	protected final PortletPreferencesImpl
+		defaultAssetPublisherPortletPreferencesImpl;
+	protected DDMStructureLayoutModel defaultJournalDDMStructureLayoutModel;
+	protected DDMStructureModel defaultJournalDDMStructureModel;
+	protected DDMStructureVersionModel defaultJournalDDMStructureVersionModel;
+	protected DDMTemplateModel defaultJournalDDMTemplateModel;
+	protected DDMTemplateVersionModel defaultJournalDDMTemplateVersionModel;
 
 	private static void _initClassNameModels() {
 		List<String> models = ModelHintsUtil.getModels();
@@ -230,6 +462,91 @@ public abstract class BaseDataFactory {
 		}
 	}
 
+	private void _initDLFileEntryTypeModel() {
+		defaultDLFileEntryTypeModel = new DLFileEntryTypeModelImpl();
+
+		defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
+		defaultDLFileEntryTypeModel.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
+		defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
+		defaultDLFileEntryTypeModel.setFileEntryTypeKey(
+			StringUtil.toUpperCase(
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+		sb.append("</name></root>");
+
+		defaultDLFileEntryTypeModel.setName(sb.toString());
+
+		defaultDLFileEntryTypeModel.setLastPublishDate(nextFutureDate());
+
+		defaultDLDDMStructureModel = newDDMStructureModel(
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID, getClassNameId(DLFileEntry.class),
+			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent);
+
+		defaultDLDDMStructureVersionModel = newDDMStructureVersionModel(
+			defaultDLDDMStructureModel);
+
+		defaultDLDDMStructureLayoutModel = newDDMStructureLayoutModel(
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID,
+			defaultDLDDMStructureVersionModel.getStructureVersionId(),
+			_dlDDMStructureLayoutContent);
+
+		defaultJournalDDMStructureModel = newDDMStructureModel(
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID,
+			getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT",
+			_journalDDMStructureContent);
+
+		defaultJournalDDMStructureVersionModel = newDDMStructureVersionModel(
+			defaultJournalDDMStructureModel);
+
+		defaultJournalDDMStructureLayoutModel = newDDMStructureLayoutModel(
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID,
+			defaultJournalDDMStructureVersionModel.getStructureVersionId(),
+			_journalDDMStructureLayoutContent);
+
+		defaultJournalDDMTemplateModel = newDDMTemplateModel(
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID,
+			defaultJournalDDMStructureModel.getStructureId(),
+			getClassNameId(JournalArticle.class));
+
+		defaultJournalDDMTemplateVersionModel = newDDMTemplateVersionModel(
+			defaultJournalDDMTemplateModel);
+	}
+
+	private void _initJournalArticleContent() {
+		int maxJournalArticleSize =
+			BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_SIZE;
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><dynamic-element name=\"content");
+		sb.append("\" type=\"text_area\" index-type=\"keyword\" index=\"0\">");
+		sb.append("<dynamic-content language-id=\"en_US\"><![CDATA[");
+
+		if (maxJournalArticleSize <= 0) {
+			maxJournalArticleSize = 1;
+		}
+
+		char[] chars = new char[maxJournalArticleSize];
+
+		for (int i = 0; i < maxJournalArticleSize; i++) {
+			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
+		}
+
+		sb.append(new String(chars));
+
+		sb.append("]]></dynamic-content></dynamic-element></root>");
+
+		journalArticleContent = sb.toString();
+	}
+
 	private static final String _DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
 
@@ -261,5 +578,10 @@ public abstract class BaseDataFactory {
 		SAMPLE_USER_ID = counter.get();
 		DEFAULT_JOURNAL_DDM_STRUCTURE_ID = counter.get();
 	}
+
+	private final String _dlDDMStructureContent;
+	private final String _dlDDMStructureLayoutContent;
+	private final String _journalDDMStructureContent;
+	private final String _journalDDMStructureLayoutContent;
 
 }

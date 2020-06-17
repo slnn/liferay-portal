@@ -31,11 +31,20 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalization;
+import com.liferay.journal.model.JournalArticleLocalizationModel;
+import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.model.JournalArticleResourceModel;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderModel;
+import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
+import com.liferay.journal.model.impl.JournalArticleModelImpl;
+import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -58,6 +67,9 @@ import java.util.Map;
  */
 public class CTDataFactory extends BaseDataFactory {
 
+	public CTDataFactory() throws Exception {
+	}
+
 	public List<AssetEntryModel> newAssetEntryModel(
 		List<JournalFolderModel> journalFolderModels) {
 
@@ -75,7 +87,7 @@ public class CTDataFactory extends BaseDataFactory {
 					ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
 					journalFolderModel.getCtCollectionId())));
 
-		_journalFolderMap.put(AssetEntry.class.getName(), assetEntryModels);
+		_cTEntryMap.put(AssetEntry.class.getName(), assetEntryModels);
 
 		return assetEntryModels;
 	}
@@ -104,7 +116,7 @@ public class CTDataFactory extends BaseDataFactory {
 
 		List<CTEntryModel> cTEntryModels = new ArrayList<>();
 
-		_journalFolderMap.forEach(
+		_cTEntryMap.forEach(
 			(className, baseModels) -> {
 				long modelClassNameId = getClassNameId(className);
 
@@ -167,6 +179,104 @@ public class CTDataFactory extends BaseDataFactory {
 		return cTPreferencesModel;
 	}
 
+	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
+		JournalArticleModel journalArticleModel, int articleIndex,
+		JournalFolderModel journalFolderModel) {
+
+		JournalArticleLocalizationModel journalArticleLocalizationModel =
+			new JournalArticleLocalizationModelImpl();
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+
+		journalArticleLocalizationModel.setArticleLocalizationId(counter.get());
+		journalArticleLocalizationModel.setCompanyId(
+			journalArticleModel.getCompanyId());
+		journalArticleLocalizationModel.setCtCollectionId(
+			journalFolderModel.getCtCollectionId());
+		journalArticleLocalizationModel.setArticlePK(
+			journalArticleModel.getId());
+		journalArticleLocalizationModel.setTitle(sb.toString());
+		journalArticleLocalizationModel.setLanguageId(
+			journalArticleModel.getDefaultLanguageId());
+
+		return journalArticleLocalizationModel;
+	}
+
+	public JournalArticleModel newJournalArticleModel(
+			JournalArticleResourceModel journalArticleResourceModel,
+			int articleIndex, JournalFolderModel journalFolderModel)
+		throws PortalException {
+
+		JournalArticleModel journalArticleModel = new JournalArticleModelImpl();
+
+		journalArticleModel.setUuid(SequentialUUID.generate());
+		journalArticleModel.setId(counter.get());
+		journalArticleModel.setResourcePrimKey(
+			journalArticleResourceModel.getResourcePrimKey());
+		journalArticleModel.setGroupId(
+			journalArticleResourceModel.getGroupId());
+		journalArticleModel.setCompanyId(COMPANY_ID);
+		journalArticleModel.setCtCollectionId(
+			journalFolderModel.getCtCollectionId());
+		journalArticleModel.setUserId(journalFolderModel.getUserId());
+		journalArticleModel.setUserName(journalFolderModel.getUserName());
+		journalArticleModel.setCreateDate(new Date());
+		journalArticleModel.setModifiedDate(new Date());
+		journalArticleModel.setClassNameId(
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+		journalArticleModel.setArticleId(
+			journalArticleResourceModel.getArticleId());
+		journalArticleModel.setFolderId(journalFolderModel.getFolderId());
+		journalArticleModel.setTreePath(
+			"/" + journalFolderModel.getFolderId() + "/");
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+
+		journalArticleModel.setUrlTitle(sb.toString());
+
+		journalArticleModel.setContent(journalArticleContent);
+		journalArticleModel.setDefaultLanguageId("en_US");
+		journalArticleModel.setDDMStructureKey(
+			defaultJournalDDMStructureModel.getStructureKey());
+		journalArticleModel.setDDMTemplateKey(
+			defaultJournalDDMTemplateModel.getTemplateKey());
+		journalArticleModel.setDisplayDate(new Date());
+		journalArticleModel.setExpirationDate(nextFutureDate());
+		journalArticleModel.setReviewDate(new Date());
+		journalArticleModel.setIndexable(true);
+		journalArticleModel.setLastPublishDate(new Date());
+		journalArticleModel.setStatusDate(new Date());
+
+		return journalArticleModel;
+	}
+
+	public JournalArticleResourceModel newJournalArticleResourceModel(
+		long groupId, JournalFolderModel journalFolderModel) {
+
+		JournalArticleResourceModel journalArticleResourceModel =
+			new JournalArticleResourceModelImpl();
+
+		journalArticleResourceModel.setUuid(SequentialUUID.generate());
+		journalArticleResourceModel.setResourcePrimKey(counter.get());
+		journalArticleResourceModel.setGroupId(groupId);
+		journalArticleResourceModel.setCompanyId(COMPANY_ID);
+		journalArticleResourceModel.setCtCollectionId(
+			journalFolderModel.getCtCollectionId());
+		journalArticleResourceModel.setArticleId(String.valueOf(counter.get()));
+
+		journalArticleResourceUUIDs.put(
+			journalArticleResourceModel.getPrimaryKey(),
+			journalArticleResourceModel.getUuid());
+
+		return journalArticleResourceModel;
+	}
+
 	public List<JournalFolderModel> newJournalFolderModels(
 		CTCollectionModel cTCollectionModel, long groupId) {
 
@@ -181,7 +291,7 @@ public class CTDataFactory extends BaseDataFactory {
 					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
 		}
 
-		_journalFolderMap.put(
+		_cTEntryMap.put(
 			JournalFolder.class.getName(), journalFolderModels);
 
 		return journalFolderModels;
@@ -337,7 +447,7 @@ public class CTDataFactory extends BaseDataFactory {
 		new ArrayList<>();
 	private static final List<String> _journalFolderClassNames =
 		new ArrayList<>();
-	private static final Map<String, List<?>> _journalFolderMap =
+	private static final Map<String, List<?>> _cTEntryMap =
 		new HashMap<>();
 	private static final List<String> _webContentDisplayClassNames =
 		new ArrayList<>();

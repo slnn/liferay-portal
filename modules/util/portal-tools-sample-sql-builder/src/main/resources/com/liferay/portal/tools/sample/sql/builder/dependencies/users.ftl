@@ -12,33 +12,9 @@ ${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 		userGroupModel = dataFactory.newGroupModel(userModel)
 
 		layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
-
-		cTCollectionModels = cTDataFactory.newCTCollectionModels(userModel)
 	/>
 
-	<#list cTCollectionModels as cTCollectionModel>
-		${dataFactory.toInsertSQL(cTCollectionModel)}
-
-		<#assign
-			journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId)
-			asstEntryModels = cTDataFactory.newAssetEntryModel(journalFolderModels)
-			cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
-		/>
-
-		<#list journalFolderModels as journalFolderModel>
-			${dataFactory.toInsertSQL(journalFolderModel)}
-		</#list>
-
-		<#list asstEntryModels as asstEntryModel>
-			${dataFactory.toInsertSQL(asstEntryModel)}
-		</#list>
-
-		<#list cTEntryModels as cTEntryModel>
-			${dataFactory.toInsertSQL(cTEntryModel)}
-		</#list>
-	</#list>
-
-	${dataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionModels))}
+	<#include "changelist_journal_article.ftl">
 
 	<@insertLayout _layoutModel=layoutModel />
 
