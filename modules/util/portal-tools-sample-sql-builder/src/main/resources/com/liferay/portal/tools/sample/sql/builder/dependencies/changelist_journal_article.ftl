@@ -5,14 +5,14 @@
 
 	<#assign
 		journalFolderModels = cTDataFactory.newJournalFolderModels(cTCollectionModel, groupId)
-		folderAsstEntryModels = cTDataFactory.newAssetEntryModel(journalFolderModels)
+		folderAsstEntryModels = cTDataFactory.newAssetEntryModels(journalFolderModels)
 		journalArticleResourceModels = cTDataFactory.newJournalArticleResourceModels(groupId, journalFolderModels)
 		journalArticleModels = cTDataFactory.newJournalArticleModels(journalArticleResourceModels, journalFolderModels)
 		journalArticleLocalizationModels = cTDataFactory.newJournalArticleLocalizationModels(journalArticleModels, journalFolderModels)
 		dDMTemplateLinkModels = cTDataFactory.newDDMTemplateLinkModels(journalArticleModels, ddmTemplateModel.templateId)
 		dDMStorageLinkModels = cTDataFactory.newDDMStorageLinkModels(journalArticleModels, ddmStructureModel.structureId)
 		socialActivityModels = cTDataFactory.newSocialActivityModels(journalArticleModels)
-		articleAssetEntryModels = cTDataFactory.newAssetEntryModel(journalArticleModels, journalArticleLocalizationModels)
+		articleAssetEntryModels = cTDataFactory.newAssetEntryModels(journalArticleModels, journalArticleLocalizationModels)
 		layoutModels = cTDataFactory.newLayoutModels(groupId, cTCollectionModel)
 		layoutFriendlyURLModels = cTDataFactory.newLayoutFriendlyURLModels(layoutModels)
 		layoutAssetEntryModels = cTDataFactory.newLayoutAssetEntryModels(layoutModels)

@@ -108,7 +108,7 @@ public class CTDataFactory extends BaseDataFactory {
 		return sb.toString();
 	}
 
-	public List<AssetEntryModel> newAssetEntryModel(
+	public List<AssetEntryModel> newAssetEntryModels(
 		List<JournalArticleModel> journalArticleModels,
 		List<JournalArticleLocalizationModel>
 			journalArticleLocalizationModels) {
@@ -148,7 +148,7 @@ public class CTDataFactory extends BaseDataFactory {
 		return assetEntryModels;
 	}
 
-	public List<AssetEntryModel> newAssetEntryModel(
+	public List<AssetEntryModel> newAssetEntryModels(
 		List<JournalFolderModel> journalFolderModels) {
 
 		List<AssetEntryModel> assetEntryModels = new ArrayList<>();
