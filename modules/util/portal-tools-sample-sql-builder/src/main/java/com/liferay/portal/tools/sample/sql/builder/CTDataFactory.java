@@ -32,6 +32,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.journal.constants.JournalActivityKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleLocalization;
@@ -54,14 +55,18 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.LayoutModelImpl;
+import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -354,6 +359,24 @@ public class CTDataFactory extends BaseDataFactory {
 									modelClassPK));
 						});
 				}
+				else if (className.contains(
+							PortletPreferences.class.getName())) {
+
+					baseModels.forEach(
+						baseModel -> {
+							PortletPreferencesModel portletPreferencesModel =
+								(PortletPreferencesModel)baseModel;
+
+							long modelClassPK =
+								portletPreferencesModel.
+									getPortletPreferencesId();
+
+							cTEntryModels.add(
+								newCTEntryModel(
+									cTCollectionModel, modelClassNameId,
+									modelClassPK));
+						});
+				}
 			});
 
 		return cTEntryModels;
@@ -523,6 +546,25 @@ public class CTDataFactory extends BaseDataFactory {
 		_cTEntryMap.put(JournalFolder.class.getName(), journalFolderModels);
 
 		return journalFolderModels;
+	}
+
+	public List<PortletPreferencesModel> newJournalPortletPreferencesModels(
+		List<LayoutModel> layoutModels) {
+
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<>();
+
+		layoutModels.forEach(
+			layoutModel -> portletPreferencesModels.add(
+				newPortletPreferencesModel(
+					layoutModel, JournalPortletKeys.JOURNAL,
+					PortletConstants.DEFAULT_PREFERENCES)));
+
+		_cTEntryMap.put(
+			PortletPreferences.class.getName() + "-journalPage",
+			portletPreferencesModels);
+
+		return portletPreferencesModels;
 	}
 
 	public List<LayoutFriendlyURLModel> newLayoutFriendlyURLModels(
@@ -820,6 +862,26 @@ public class CTDataFactory extends BaseDataFactory {
 		layoutModel.setLastPublishDate(new Date());
 
 		return layoutModel;
+	}
+
+	protected PortletPreferencesModel newPortletPreferencesModel(
+		LayoutModel layoutModel, String portletId, String preferences) {
+
+		PortletPreferencesModel portletPreferencesModel =
+			new PortletPreferencesModelImpl();
+
+		portletPreferencesModel.setCompanyId(COMPANY_ID);
+		portletPreferencesModel.setCtCollectionId(
+			layoutModel.getCtCollectionId());
+		portletPreferencesModel.setPortletPreferencesId(counter.get());
+		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		portletPreferencesModel.setOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferencesModel.setPlid(layoutModel.getPlid());
+		portletPreferencesModel.setPortletId(portletId);
+		portletPreferencesModel.setPreferences(preferences);
+
+		return portletPreferencesModel;
 	}
 
 	protected SocialActivityModel newSocialActivityModel(
