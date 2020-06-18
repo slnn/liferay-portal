@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -338,6 +339,21 @@ public class CTDataFactory extends BaseDataFactory {
 									modelClassPK));
 						});
 				}
+				else if (className.equals(LayoutFriendlyURL.class.getName())) {
+					baseModels.forEach(
+						baseModel -> {
+							LayoutFriendlyURLModel layoutFriendlyURLModel =
+								(LayoutFriendlyURLModel)baseModel;
+
+							long modelClassPK =
+								layoutFriendlyURLModel.getLayoutFriendlyURLId();
+
+							cTEntryModels.add(
+								newCTEntryModel(
+									cTCollectionModel, modelClassNameId,
+									modelClassPK));
+						});
+				}
 			});
 
 		return cTEntryModels;
@@ -507,6 +523,22 @@ public class CTDataFactory extends BaseDataFactory {
 		_cTEntryMap.put(JournalFolder.class.getName(), journalFolderModels);
 
 		return journalFolderModels;
+	}
+
+	public List<LayoutFriendlyURLModel> newLayoutFriendlyURLModels(
+		List<LayoutModel> layoutModels) {
+
+		List<LayoutFriendlyURLModel> layoutFriendlyURLModels = new ArrayList<>(
+			layoutModels.size());
+
+		layoutModels.forEach(
+			layoutModel -> layoutFriendlyURLModels.add(
+				newLayoutFriendlyURLModel(layoutModel)));
+
+		_cTEntryMap.put(
+			LayoutFriendlyURL.class.getName(), layoutFriendlyURLModels);
+
+		return layoutFriendlyURLModels;
 	}
 
 	public List<LayoutModel> newLayoutModels(

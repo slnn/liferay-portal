@@ -171,7 +171,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -214,7 +213,6 @@ import com.liferay.portal.model.impl.AccountModelImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
-import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
@@ -2082,29 +2080,6 @@ public class DataFactory extends BaseDataFactory {
 			newPortletPreferencesModel(
 				plid, JournalPortletKeys.JOURNAL,
 				PortletConstants.DEFAULT_PREFERENCES));
-	}
-
-	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(
-		LayoutModel layoutModel) {
-
-		LayoutFriendlyURLModel layoutFriendlyURLEntryModel =
-			new LayoutFriendlyURLModelImpl();
-
-		layoutFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
-		layoutFriendlyURLEntryModel.setLayoutFriendlyURLId(counter.get());
-		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
-		layoutFriendlyURLEntryModel.setCompanyId(COMPANY_ID);
-		layoutFriendlyURLEntryModel.setUserId(SAMPLE_USER_ID);
-		layoutFriendlyURLEntryModel.setUserName(SAMPLE_USER_NAME);
-		layoutFriendlyURLEntryModel.setCreateDate(new Date());
-		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
-		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
-		layoutFriendlyURLEntryModel.setFriendlyURL(
-			layoutModel.getFriendlyURL());
-		layoutFriendlyURLEntryModel.setLanguageId("en_US");
-		layoutFriendlyURLEntryModel.setLastPublishDate(new Date());
-
-		return layoutFriendlyURLEntryModel;
 	}
 
 	public LayoutModel newLayoutModel(

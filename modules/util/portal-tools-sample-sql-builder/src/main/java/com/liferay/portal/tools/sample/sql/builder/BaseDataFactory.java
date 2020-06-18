@@ -55,6 +55,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
+import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
+import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
@@ -249,6 +252,34 @@ public abstract class BaseDataFactory {
 		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
 
 		return ddmTemplateVersionModelImpl;
+	}
+
+	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(
+		LayoutModel layoutModel) {
+
+		LayoutFriendlyURLModel layoutFriendlyURLEntryModel =
+			new LayoutFriendlyURLModelImpl();
+
+		if (layoutModel.getCtCollectionId() != 0) {
+			layoutFriendlyURLEntryModel.setCtCollectionId(
+				layoutModel.getCtCollectionId());
+		}
+
+		layoutFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
+		layoutFriendlyURLEntryModel.setLayoutFriendlyURLId(counter.get());
+		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
+		layoutFriendlyURLEntryModel.setCompanyId(COMPANY_ID);
+		layoutFriendlyURLEntryModel.setUserId(SAMPLE_USER_ID);
+		layoutFriendlyURLEntryModel.setUserName(SAMPLE_USER_NAME);
+		layoutFriendlyURLEntryModel.setCreateDate(new Date());
+		layoutFriendlyURLEntryModel.setModifiedDate(new Date());
+		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
+		layoutFriendlyURLEntryModel.setFriendlyURL(
+			layoutModel.getFriendlyURL());
+		layoutFriendlyURLEntryModel.setLanguageId("en_US");
+		layoutFriendlyURLEntryModel.setLastPublishDate(new Date());
+
+		return layoutFriendlyURLEntryModel;
 	}
 
 	public Date nextFutureDate() {

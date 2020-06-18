@@ -14,6 +14,7 @@
 		socialActivityModels = cTDataFactory.newSocialActivityModels(journalArticleModels)
 		articleAssetEntryModels = cTDataFactory.newAssetEntryModel(journalArticleModels, journalArticleLocalizationModels)
 		layoutModels = cTDataFactory.newLayoutModels(groupId, cTCollectionModel)
+		layoutFriendlyURLModels = cTDataFactory.newLayoutFriendlyURLModels(layoutModels)
 		cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
 	/>
 
@@ -57,6 +58,10 @@
 
 	<#list layoutModels as layoutModel>
 		${dataFactory.toInsertSQL(layoutModel)}
+	</#list>
+
+	<#list layoutFriendlyURLModels as layoutFriendlyURLModel>
+		${dataFactory.toInsertSQL(layoutFriendlyURLModel)}
 	</#list>
 
 	<#list cTEntryModels as cTEntryModel>
