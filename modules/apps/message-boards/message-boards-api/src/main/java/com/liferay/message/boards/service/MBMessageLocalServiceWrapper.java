@@ -429,6 +429,13 @@ public class MBMessageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.message.boards.model.MBMessage fetchLastMessage(
+		long threadId, int status) {
+
+		return _mbMessageLocalService.fetchLastMessage(threadId, status);
+	}
+
+	@Override
 	public com.liferay.message.boards.model.MBMessage fetchMBMessage(
 		long messageId) {
 

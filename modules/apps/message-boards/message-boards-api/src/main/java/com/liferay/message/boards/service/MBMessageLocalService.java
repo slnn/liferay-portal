@@ -297,6 +297,9 @@ public interface MBMessageLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage fetchLastMessage(long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchMBMessage(long messageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

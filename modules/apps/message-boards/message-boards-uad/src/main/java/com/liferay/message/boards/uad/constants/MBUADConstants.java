@@ -29,7 +29,7 @@ public class MBUADConstants {
 	};
 
 	public static final String[] USER_ID_FIELD_NAMES_MB_THREAD = {
-		"userId", "rootMessageUserId", "lastPostByUserId", "statusByUserId"
+		"userId", "rootMessageUserId", "statusByUserId"
 	};
 
 }

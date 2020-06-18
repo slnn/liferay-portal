@@ -128,7 +128,6 @@ create table MBThread (
 	rootMessageId LONG,
 	rootMessageUserId LONG,
 	title VARCHAR(75) null,
-	lastPostByUserId LONG,
 	lastPostDate DATE null,
 	priority DOUBLE,
 	question BOOLEAN,

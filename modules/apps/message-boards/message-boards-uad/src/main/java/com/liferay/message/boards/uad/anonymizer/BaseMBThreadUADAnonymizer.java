@@ -57,10 +57,6 @@ public abstract class BaseMBThreadUADAnonymizer
 			mbThread.setRootMessageUserId(anonymousUser.getUserId());
 		}
 
-		if (mbThread.getLastPostByUserId() == userId) {
-			mbThread.setLastPostByUserId(anonymousUser.getUserId());
-		}
-
 		if (mbThread.getStatusByUserId() == userId) {
 			mbThread.setStatusByUserId(anonymousUser.getUserId());
 			mbThread.setStatusByUserName(anonymousUser.getFullName());

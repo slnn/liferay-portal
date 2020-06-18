@@ -55,7 +55,6 @@ public class MBThreadWrapper
 		attributes.put("rootMessageId", getRootMessageId());
 		attributes.put("rootMessageUserId", getRootMessageUserId());
 		attributes.put("title", getTitle());
-		attributes.put("lastPostByUserId", getLastPostByUserId());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("priority", getPriority());
 		attributes.put("question", isQuestion());
@@ -140,12 +139,6 @@ public class MBThreadWrapper
 
 		if (title != null) {
 			setTitle(title);
-		}
-
-		Long lastPostByUserId = (Long)attributes.get("lastPostByUserId");
-
-		if (lastPostByUserId != null) {
-			setLastPostByUserId(lastPostByUserId);
 		}
 
 		Date lastPostDate = (Date)attributes.get("lastPostDate");
@@ -277,24 +270,9 @@ public class MBThreadWrapper
 		return model.getGroupId();
 	}
 
-	/**
-	 * Returns the last post by user ID of this message boards thread.
-	 *
-	 * @return the last post by user ID of this message boards thread
-	 */
 	@Override
 	public long getLastPostByUserId() {
 		return model.getLastPostByUserId();
-	}
-
-	/**
-	 * Returns the last post by user uuid of this message boards thread.
-	 *
-	 * @return the last post by user uuid of this message boards thread
-	 */
-	@Override
-	public String getLastPostByUserUuid() {
-		return model.getLastPostByUserUuid();
 	}
 
 	/**
@@ -744,26 +722,6 @@ public class MBThreadWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
-	}
-
-	/**
-	 * Sets the last post by user ID of this message boards thread.
-	 *
-	 * @param lastPostByUserId the last post by user ID of this message boards thread
-	 */
-	@Override
-	public void setLastPostByUserId(long lastPostByUserId) {
-		model.setLastPostByUserId(lastPostByUserId);
-	}
-
-	/**
-	 * Sets the last post by user uuid of this message boards thread.
-	 *
-	 * @param lastPostByUserUuid the last post by user uuid of this message boards thread
-	 */
-	@Override
-	public void setLastPostByUserUuid(String lastPostByUserUuid) {
-		model.setLastPostByUserUuid(lastPostByUserUuid);
 	}
 
 	/**

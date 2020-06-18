@@ -65,6 +65,8 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public long getLastPostByUserId();
+
 	public com.liferay.portal.kernel.lock.Lock getLock();
 
 	public int getMessageCount();

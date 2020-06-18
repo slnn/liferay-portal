@@ -61,7 +61,7 @@ public class MBThreadCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,8 +87,6 @@ public class MBThreadCacheModel
 		sb.append(rootMessageUserId);
 		sb.append(", title=");
 		sb.append(title);
-		sb.append(", lastPostByUserId=");
-		sb.append(lastPostByUserId);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
 		sb.append(", priority=");
@@ -158,8 +156,6 @@ public class MBThreadCacheModel
 			mbThreadImpl.setTitle(title);
 		}
 
-		mbThreadImpl.setLastPostByUserId(lastPostByUserId);
-
 		if (lastPostDate == Long.MIN_VALUE) {
 			mbThreadImpl.setLastPostDate(null);
 		}
@@ -220,8 +216,6 @@ public class MBThreadCacheModel
 
 		rootMessageUserId = objectInput.readLong();
 		title = objectInput.readUTF();
-
-		lastPostByUserId = objectInput.readLong();
 		lastPostDate = objectInput.readLong();
 
 		priority = objectInput.readDouble();
@@ -276,7 +270,6 @@ public class MBThreadCacheModel
 			objectOutput.writeUTF(title);
 		}
 
-		objectOutput.writeLong(lastPostByUserId);
 		objectOutput.writeLong(lastPostDate);
 
 		objectOutput.writeDouble(priority);
@@ -310,7 +303,6 @@ public class MBThreadCacheModel
 	public long rootMessageId;
 	public long rootMessageUserId;
 	public String title;
-	public long lastPostByUserId;
 	public long lastPostDate;
 	public double priority;
 	public boolean question;

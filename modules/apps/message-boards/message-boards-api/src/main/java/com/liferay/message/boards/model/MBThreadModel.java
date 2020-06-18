@@ -279,34 +279,6 @@ public interface MBThreadModel
 	public void setTitle(String title);
 
 	/**
-	 * Returns the last post by user ID of this message boards thread.
-	 *
-	 * @return the last post by user ID of this message boards thread
-	 */
-	public long getLastPostByUserId();
-
-	/**
-	 * Sets the last post by user ID of this message boards thread.
-	 *
-	 * @param lastPostByUserId the last post by user ID of this message boards thread
-	 */
-	public void setLastPostByUserId(long lastPostByUserId);
-
-	/**
-	 * Returns the last post by user uuid of this message boards thread.
-	 *
-	 * @return the last post by user uuid of this message boards thread
-	 */
-	public String getLastPostByUserUuid();
-
-	/**
-	 * Sets the last post by user uuid of this message boards thread.
-	 *
-	 * @param lastPostByUserUuid the last post by user uuid of this message boards thread
-	 */
-	public void setLastPostByUserUuid(String lastPostByUserUuid);
-
-	/**
 	 * Returns the last post date of this message boards thread.
 	 *
 	 * @return the last post date of this message boards thread

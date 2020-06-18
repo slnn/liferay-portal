@@ -55,7 +55,7 @@ public abstract class BaseMBThreadUADExporter
 
 	@Override
 	protected String toXmlString(MBThread mbThread) {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.message.boards.model.MBThread");
@@ -76,10 +76,6 @@ public abstract class BaseMBThreadUADExporter
 		sb.append(
 			"<column><column-name>rootMessageUserId</column-name><column-value><![CDATA[");
 		sb.append(mbThread.getRootMessageUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPostByUserId</column-name><column-value><![CDATA[");
-		sb.append(mbThread.getLastPostByUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");

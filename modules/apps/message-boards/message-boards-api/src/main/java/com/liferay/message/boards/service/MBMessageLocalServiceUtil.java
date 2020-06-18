@@ -403,6 +403,12 @@ public class MBMessageLocalServiceUtil {
 		return getService().fetchFirstMessage(threadId, parentMessageId);
 	}
 
+	public static com.liferay.message.boards.model.MBMessage fetchLastMessage(
+		long threadId, int status) {
+
+		return getService().fetchLastMessage(threadId, status);
+	}
+
 	public static com.liferay.message.boards.model.MBMessage fetchMBMessage(
 		long messageId) {
 
