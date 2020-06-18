@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
+import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -504,6 +505,46 @@ public class CTDataFactory extends BaseDataFactory {
 		return journalArticleModels;
 	}
 
+	public List<PortletPreferencesModel>
+			newJournalArticlePortletPreferencesModels(
+				List<LayoutModel> layoutModels,
+				List<JournalArticleResourceModel> journalArticleResourceModels)
+		throws Exception {
+
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<>();
+
+		int i = 0;
+
+		for (LayoutModel layoutModel : layoutModels) {
+			int pageCount = 1;
+			int articleCount = 1;
+
+			while (i < BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) {
+				portletPreferencesModels.add(
+					newPortletPreferencesModel(
+						layoutModel, pageCount, articleCount,
+						journalArticleResourceModels.get(i)));
+				i++;
+				articleCount++;
+
+				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
+						0) {
+
+					break;
+				}
+			}
+
+			pageCount++;
+		}
+
+		_cTEntryMap.put(
+			PortletPreferences.class.getName() + "-journalArticle",
+			portletPreferencesModels);
+
+		return portletPreferencesModels;
+	}
+
 	public List<JournalArticleResourceModel> newJournalArticleResourceModels(
 		long groupId, List<JournalFolderModel> journalFolderModels) {
 
@@ -862,6 +903,29 @@ public class CTDataFactory extends BaseDataFactory {
 		layoutModel.setLastPublishDate(new Date());
 
 		return layoutModel;
+	}
+
+	protected PortletPreferencesModel newPortletPreferencesModel(
+			LayoutModel layoutModel, int pageCount, int articleCount,
+			JournalArticleResourceModel journalArticleResourceModel)
+		throws Exception {
+
+		String portletId = StringBundler.concat(
+			"com_liferay_journal_content_web_portlet_",
+			"JournalContentPortlet_INSTANCE_TEST_", pageCount, articleCount);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			new PortletPreferencesImpl();
+
+		jxPortletPreferences.setValue(
+			"articleId", journalArticleResourceModel.getArticleId());
+		jxPortletPreferences.setValue(
+			"groupId",
+			String.valueOf(journalArticleResourceModel.getGroupId()));
+
+		return newPortletPreferencesModel(
+			layoutModel, portletId,
+			portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
 	protected PortletPreferencesModel newPortletPreferencesModel(
