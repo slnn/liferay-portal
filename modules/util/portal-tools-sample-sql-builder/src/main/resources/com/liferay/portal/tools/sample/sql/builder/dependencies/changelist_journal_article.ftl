@@ -15,6 +15,7 @@
 		articleAssetEntryModels = cTDataFactory.newAssetEntryModel(journalArticleModels, journalArticleLocalizationModels)
 		layoutModels = cTDataFactory.newLayoutModels(groupId, cTCollectionModel)
 		layoutFriendlyURLModels = cTDataFactory.newLayoutFriendlyURLModels(layoutModels)
+		layoutAssetEntryModels = cTDataFactory.newLayoutAssetEntryModels(layoutModels)
 		journalPagePortletPreferencesModels = cTDataFactory.newJournalPortletPreferencesModels(layoutModels)
 		journalArticlePortletPreferencesModels = cTDataFactory.newJournalArticlePortletPreferencesModels(layoutModels, journalArticleResourceModels)
 		cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
@@ -64,6 +65,10 @@
 
 	<#list layoutFriendlyURLModels as layoutFriendlyURLModel>
 		${dataFactory.toInsertSQL(layoutFriendlyURLModel)}
+	</#list>
+
+	<#list layoutAssetEntryModels as layoutAssetEntryModel>
+		${dataFactory.toInsertSQL(layoutAssetEntryModel)}
 	</#list>
 
 	<#list journalPagePortletPreferencesModels as journalPagePortletPreferencesModel>

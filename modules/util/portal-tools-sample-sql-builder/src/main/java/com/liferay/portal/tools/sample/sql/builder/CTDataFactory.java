@@ -608,6 +608,33 @@ public class CTDataFactory extends BaseDataFactory {
 		return portletPreferencesModels;
 	}
 
+	public List<AssetEntryModel> newLayoutAssetEntryModels(
+		List<LayoutModel> layoutModels) {
+
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>();
+
+		layoutModels.forEach(
+			layoutModel -> {
+				String title = layoutModel.getFriendlyURL();
+
+				title = title.substring(1);
+
+				assetEntryModels.add(
+					newAssetEntryModel(
+						layoutModel.getGroupId(), layoutModel.getCreateDate(),
+						layoutModel.getModifiedDate(),
+						getClassNameId(Layout.class), layoutModel.getPlid(),
+						layoutModel.getUuid(), 0, true, false,
+						ContentTypes.TEXT_HTML, title,
+						layoutModel.getCtCollectionId(),
+						layoutModel.getUserId()));
+			});
+
+		_cTEntryMap.put(AssetEntry.class.getName() + "-page", assetEntryModels);
+
+		return assetEntryModels;
+	}
+
 	public List<LayoutFriendlyURLModel> newLayoutFriendlyURLModels(
 		List<LayoutModel> layoutModels) {
 
