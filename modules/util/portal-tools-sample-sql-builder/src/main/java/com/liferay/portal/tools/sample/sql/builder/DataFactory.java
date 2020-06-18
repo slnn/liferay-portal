@@ -1305,12 +1305,12 @@ public class DataFactory extends BaseDataFactory {
 	public LayoutModel newContentLayoutModel(
 		long groupId, String name, String fragmentEntries) {
 
-		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+		SimpleCounter simpleCounter = layoutCounters.get(groupId);
 
 		if (simpleCounter == null) {
 			simpleCounter = new SimpleCounter();
 
-			_layoutCounters.put(groupId, simpleCounter);
+			layoutCounters.put(groupId, simpleCounter);
 		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
@@ -2110,12 +2110,12 @@ public class DataFactory extends BaseDataFactory {
 	public LayoutModel newLayoutModel(
 		long groupId, String name, String column1, String column2) {
 
-		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+		SimpleCounter simpleCounter = layoutCounters.get(groupId);
 
 		if (simpleCounter == null) {
 			simpleCounter = new SimpleCounter();
 
-			_layoutCounters.put(groupId, simpleCounter);
+			layoutCounters.put(groupId, simpleCounter);
 		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
@@ -4075,7 +4075,6 @@ public class DataFactory extends BaseDataFactory {
 	private List<String> _firstNames;
 	private RoleModel _guestRoleModel;
 	private List<String> _lastNames;
-	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private List<RoleModel> _roleModels;

@@ -13,6 +13,7 @@
 		dDMStorageLinkModels = cTDataFactory.newDDMStorageLinkModels(journalArticleModels, ddmStructureModel.structureId)
 		socialActivityModels = cTDataFactory.newSocialActivityModels(journalArticleModels)
 		articleAssetEntryModels = cTDataFactory.newAssetEntryModel(journalArticleModels, journalArticleLocalizationModels)
+		layoutModels = cTDataFactory.newLayoutModels(groupId, cTCollectionModel)
 		cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
 	/>
 
@@ -52,6 +53,10 @@
 
 	<#list articleAssetEntryModels as articleAssetEntryModel>
 		${dataFactory.toInsertSQL(articleAssetEntryModel)}
+	</#list>
+
+	<#list layoutModels as layoutModel>
+		${dataFactory.toInsertSQL(layoutModel)}
 	</#list>
 
 	<#list cTEntryModels as cTEntryModel>

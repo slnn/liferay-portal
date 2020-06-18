@@ -425,6 +425,8 @@ public abstract class BaseDataFactory {
 	protected static String journalArticleContent;
 	protected static final Map<Long, String> journalArticleResourceUUIDs =
 		new HashMap<>();
+	protected static final Map<Long, SimpleCounter> layoutCounters =
+		new HashMap<>();
 	protected static final PortletPreferencesFactory portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 	protected static final SimpleCounter resourcePermissionCounter =

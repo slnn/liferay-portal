@@ -46,19 +46,27 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutModel;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityModel;
 import com.liferay.social.kernel.model.SocialActivitySet;
+import com.liferay.util.SimpleCounter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,6 +80,25 @@ import java.util.Map;
 public class CTDataFactory extends BaseDataFactory {
 
 	public CTDataFactory() throws Exception {
+	}
+
+	public String getJournalArticleLayoutColumn(int pageCount) {
+		StringBundler sb = new StringBundler(
+			3 * BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT);
+
+		String portletPrefix = StringBundler.concat(
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet",
+			"_INSTANCE_TEST_", pageCount, "_");
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT;
+			 i++) {
+
+			sb.append(portletPrefix);
+			sb.append(i);
+			sb.append(StringPool.COMMA);
+		}
+
+		return sb.toString();
 	}
 
 	public List<AssetEntryModel> newAssetEntryModel(
@@ -283,7 +310,7 @@ public class CTDataFactory extends BaseDataFactory {
 									modelClassPK));
 						});
 				}
-				else {
+				else if (className.equals(SocialActivity.class.getName())) {
 					baseModels.forEach(
 						baseModel -> {
 							SocialActivityModel socialActivityModel =
@@ -291,6 +318,19 @@ public class CTDataFactory extends BaseDataFactory {
 
 							long modelClassPK =
 								socialActivityModel.getActivityId();
+
+							cTEntryModels.add(
+								newCTEntryModel(
+									cTCollectionModel, modelClassNameId,
+									modelClassPK));
+						});
+				}
+				else if (className.equals(Layout.class.getName())) {
+					baseModels.forEach(
+						baseModel -> {
+							LayoutModel layoutModel = (LayoutModel)baseModel;
+
+							long modelClassPK = layoutModel.getPlid();
 
 							cTEntryModels.add(
 								newCTEntryModel(
@@ -467,6 +507,26 @@ public class CTDataFactory extends BaseDataFactory {
 		_cTEntryMap.put(JournalFolder.class.getName(), journalFolderModels);
 
 		return journalFolderModels;
+	}
+
+	public List<LayoutModel> newLayoutModels(
+		long groupId, CTCollectionModel cTCollectionModel) {
+
+		List<LayoutModel> layoutModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_PAGE_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_PAGE_COUNT; i++) {
+			String name = groupId + "_journal_article_" + (i + 1);
+
+			String column2 = getJournalArticleLayoutColumn(i + 1);
+
+			layoutModels.add(
+				newLayoutModel(groupId, name, "", column2, cTCollectionModel));
+		}
+
+		_cTEntryMap.put(Layout.class.getName(), layoutModels);
+
+		return layoutModels;
 	}
 
 	public List<SocialActivityModel> newSocialActivityModels(
@@ -683,6 +743,51 @@ public class CTDataFactory extends BaseDataFactory {
 		journalFolderModel.setName(name);
 
 		return journalFolderModel;
+	}
+
+	protected LayoutModel newLayoutModel(
+		long groupId, String name, String column1, String column2,
+		CTCollectionModel cTCollectionModel) {
+
+		SimpleCounter simpleCounter = layoutCounters.get(groupId);
+
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			layoutCounters.put(groupId, simpleCounter);
+		}
+
+		LayoutModel layoutModel = new LayoutModelImpl();
+
+		layoutModel.setUuid(SequentialUUID.generate());
+		layoutModel.setPlid(counter.get());
+		layoutModel.setGroupId(groupId);
+		layoutModel.setCompanyId(COMPANY_ID);
+		layoutModel.setCtCollectionId(cTCollectionModel.getCtCollectionId());
+		layoutModel.setUserId(cTCollectionModel.getUserId());
+		layoutModel.setCreateDate(new Date());
+		layoutModel.setModifiedDate(new Date());
+		layoutModel.setLayoutId(simpleCounter.get());
+		layoutModel.setName(
+			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
+		layoutModel.setType(LayoutConstants.TYPE_PORTLET);
+		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
+
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
+
+		typeSettingsUnicodeProperties.setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "2_columns_ii");
+		typeSettingsUnicodeProperties.setProperty("column-1", column1);
+		typeSettingsUnicodeProperties.setProperty("column-2", column2);
+
+		layoutModel.setTypeSettings(
+			StringUtil.replace(
+				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
+
+		layoutModel.setLastPublishDate(new Date());
+
+		return layoutModel;
 	}
 
 	protected SocialActivityModel newSocialActivityModel(
