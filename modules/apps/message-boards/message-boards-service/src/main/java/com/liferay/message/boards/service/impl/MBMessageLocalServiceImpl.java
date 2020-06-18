@@ -464,9 +464,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(userId, message, serviceContext);
-
-		return message;
+		return startWorkflowInstance(userId, message, serviceContext);
 	}
 
 	@Override
@@ -2374,7 +2372,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void startWorkflowInstance(
+	protected MBMessage startWorkflowInstance(
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2384,7 +2382,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				getMessageURL(message, serviceContext)
 			).build();
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			message.getCompanyId(), message.getGroupId(), userId,
 			message.getWorkflowClassName(), message.getMessageId(), message,
 			serviceContext, workflowContext);
@@ -2750,9 +2748,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(userId, message, serviceContext);
-
-		return message;
+		return startWorkflowInstance(userId, message, serviceContext);
 	}
 
 	private void _updateSocialActivity(
