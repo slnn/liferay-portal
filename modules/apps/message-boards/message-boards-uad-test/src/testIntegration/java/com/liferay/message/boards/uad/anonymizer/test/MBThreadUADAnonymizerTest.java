@@ -115,7 +115,6 @@ public class MBThreadUADAnonymizerTest
 		if ((mbThread.getUserId() != user.getUserId()) &&
 			!userName.equals(user.getFullName()) &&
 			(mbThread.getRootMessageUserId() != user.getUserId()) &&
-			(mbThread.getLastPostByUserId() != user.getUserId()) &&
 			(mbThread.getStatusByUserId() != user.getUserId()) &&
 			!statusByUserName.equals(user.getFullName()) &&
 			isAssetEntryAutoAnonymized(

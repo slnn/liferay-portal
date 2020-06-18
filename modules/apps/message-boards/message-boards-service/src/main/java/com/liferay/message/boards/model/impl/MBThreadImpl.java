@@ -125,6 +125,18 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	}
 
 	@Override
+	public long getLastPostByUserId() {
+		MBMessage message = MBMessageLocalServiceUtil.fetchLastMessage(
+			getThreadId(), WorkflowConstants.STATUS_APPROVED);
+
+		if ((message == null) || message.isAnonymous()) {
+			return 0;
+		}
+
+		return message.getUserId();
+	}
+
+	@Override
 	public Lock getLock() {
 		try {
 			return LockManagerUtil.getLock(

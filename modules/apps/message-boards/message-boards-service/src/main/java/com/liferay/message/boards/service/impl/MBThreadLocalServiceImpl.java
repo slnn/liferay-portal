@@ -116,14 +116,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setRootMessageId(message.getMessageId());
 		thread.setRootMessageUserId(message.getUserId());
 		thread.setTitle(message.getSubject());
-
-		if (message.isAnonymous()) {
-			thread.setLastPostByUserId(0);
-		}
-		else {
-			thread.setLastPostByUserId(message.getUserId());
-		}
-
 		thread.setLastPostDate(message.getModifiedDate());
 
 		if (message.getPriority() != MBThreadConstants.PRIORITY_NOT_GIVEN) {

@@ -782,8 +782,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							WorkflowConstants.STATUS_APPROVED, comparator);
 
 					if (prevAndNextMessages[2] == null) {
-						thread.setLastPostByUserId(
-							prevAndNextMessages[0].getUserId());
 						thread.setLastPostDate(
 							prevAndNextMessages[0].getModifiedDate());
 
@@ -911,6 +909,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return mbMessagePersistence.fetchByT_P_First(
 			threadId, parentMessageId, null);
+	}
+
+	@Override
+	public MBMessage fetchLastMessage(long threadId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbMessagePersistence.fetchByThreadId_Last(threadId, null);
+		}
+
+		return mbMessagePersistence.fetchByT_S_Last(threadId, status, null);
 	}
 
 	@Override
@@ -2424,13 +2431,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if (message.isAnonymous()) {
-				thread.setLastPostByUserId(0);
-			}
-			else {
-				thread.setLastPostByUserId(message.getUserId());
-			}
-
 			thread.setLastPostDate(modifiedDate);
 		}
 

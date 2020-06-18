@@ -4080,7 +4080,6 @@ public class DataFactory {
 		mbThreadModel.setCategoryId(categoryId);
 		mbThreadModel.setRootMessageId(rootMessageId);
 		mbThreadModel.setRootMessageUserId(_sampleUserId);
-		mbThreadModel.setLastPostByUserId(_sampleUserId);
 		mbThreadModel.setLastPostDate(new Date());
 		mbThreadModel.setLastPublishDate(new Date());
 		mbThreadModel.setStatusDate(new Date());
