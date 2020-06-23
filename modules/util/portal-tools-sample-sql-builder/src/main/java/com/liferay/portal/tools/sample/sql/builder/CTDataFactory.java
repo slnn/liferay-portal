@@ -515,28 +515,15 @@ public class CTDataFactory extends BaseDataFactory {
 		List<PortletPreferencesModel> portletPreferencesModels =
 			new ArrayList<>();
 
-		int i = 0;
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_PAGE_COUNT; i++) {
+			for (int j = 0;
+				 j < BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT; j++) {
 
-		for (LayoutModel layoutModel : layoutModels) {
-			int pageCount = 1;
-			int articleCount = 1;
-
-			while (i < BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) {
 				portletPreferencesModels.add(
 					newPortletPreferencesModel(
-						layoutModel, pageCount, articleCount,
-						journalArticleResourceModels.get(i)));
-				i++;
-				articleCount++;
-
-				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
-						0) {
-
-					break;
-				}
+						layoutModels.get(i), i + 1, j + 1,
+						journalArticleResourceModels));
 			}
-
-			pageCount++;
 		}
 
 		_cTEntryMap.put(
@@ -952,12 +939,16 @@ public class CTDataFactory extends BaseDataFactory {
 
 	protected PortletPreferencesModel newPortletPreferencesModel(
 			LayoutModel layoutModel, int pageCount, int articleCount,
-			JournalArticleResourceModel journalArticleResourceModel)
+			List<JournalArticleResourceModel> journalArticleResourceModels)
 		throws Exception {
 
 		String portletId = StringBundler.concat(
 			"com_liferay_journal_content_web_portlet_",
-			"JournalContentPortlet_INSTANCE_TEST_", pageCount, articleCount);
+			"JournalContentPortlet_INSTANCE_TEST_", pageCount, "_",
+			articleCount);
+
+		JournalArticleResourceModel journalArticleResourceModel =
+			journalArticleResourceModels.get(articleCount);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			new PortletPreferencesImpl();
