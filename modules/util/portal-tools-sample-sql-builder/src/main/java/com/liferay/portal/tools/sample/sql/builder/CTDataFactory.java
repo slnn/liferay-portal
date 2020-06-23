@@ -836,6 +836,7 @@ public class CTDataFactory extends BaseDataFactory {
 		journalArticleModel.setFolderId(journalFolderModel.getFolderId());
 		journalArticleModel.setTreePath(
 			"/" + journalFolderModel.getFolderId() + "/");
+		journalArticleModel.setVersion(1);
 
 		StringBundler sb = new StringBundler(2);
 
