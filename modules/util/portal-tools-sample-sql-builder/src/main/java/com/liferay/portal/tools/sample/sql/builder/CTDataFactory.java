@@ -81,6 +81,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author Lily Chi
@@ -517,7 +518,8 @@ public class CTDataFactory extends BaseDataFactory {
 
 		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_PAGE_COUNT; i++) {
 			for (int j = 0;
-				 j < BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT; j++) {
+				 j < BenchmarksPropsValues.MAX_CT_WEBCONTENT_DISPLAY_COUNT;
+				 j++) {
 
 				portletPreferencesModels.add(
 					newPortletPreferencesModel(
@@ -938,14 +940,19 @@ public class CTDataFactory extends BaseDataFactory {
 	}
 
 	protected PortletPreferencesModel newPortletPreferencesModel(
-			LayoutModel layoutModel, int pageCount, int articleCount,
+			LayoutModel layoutModel, int pageCount, int dispalyCount,
 			List<JournalArticleResourceModel> journalArticleResourceModels)
 		throws Exception {
 
 		String portletId = StringBundler.concat(
 			"com_liferay_journal_content_web_portlet_",
 			"JournalContentPortlet_INSTANCE_TEST_", pageCount, "_",
-			articleCount);
+			dispalyCount);
+
+		Random random = new Random();
+
+		int articleCount = random.nextInt(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT);
 
 		JournalArticleResourceModel journalArticleResourceModel =
 			journalArticleResourceModels.get(articleCount);
