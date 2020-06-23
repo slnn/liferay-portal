@@ -44,8 +44,11 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleModel;
+import com.liferay.journal.model.JournalContentSearchModel;
+import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -252,6 +255,24 @@ public abstract class BaseDataFactory {
 		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
 
 		return ddmTemplateVersionModelImpl;
+	}
+
+	public JournalContentSearchModel newJournalContentSearchModel(
+		JournalArticleModel journalArticleModel, long layoutId) {
+
+		JournalContentSearchModel journalContentSearchModel =
+			new JournalContentSearchModelImpl();
+
+		journalContentSearchModel.setContentSearchId(counter.get());
+		journalContentSearchModel.setGroupId(journalArticleModel.getGroupId());
+		journalContentSearchModel.setCompanyId(COMPANY_ID);
+		journalContentSearchModel.setLayoutId(layoutId);
+		journalContentSearchModel.setPortletId(
+			JournalContentPortletKeys.JOURNAL_CONTENT);
+		journalContentSearchModel.setArticleId(
+			journalArticleModel.getArticleId());
+
+		return journalContentSearchModel;
 	}
 
 	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(

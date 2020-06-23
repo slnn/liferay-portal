@@ -40,6 +40,7 @@ import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalArticleResourceModel;
+import com.liferay.journal.model.JournalContentSearchModel;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
@@ -568,6 +569,22 @@ public class CTDataFactory extends BaseDataFactory {
 			journalArticleResourceModels);
 
 		return journalArticleResourceModels;
+	}
+
+	public List<JournalContentSearchModel> newJournalContentSearchModels(
+		List<JournalArticleModel> journalArticleModels,
+		List<LayoutModel> layoutModels) {
+
+		List<JournalContentSearchModel> journalContentSearchModels =
+			new ArrayList<>();
+
+		layoutModels.forEach(
+			layoutModel -> journalArticleModels.forEach(
+				journalArticleModel -> journalContentSearchModels.add(
+					newJournalContentSearchModel(
+						journalArticleModel, layoutModel.getLayoutId()))));
+
+		return journalContentSearchModels;
 	}
 
 	public List<JournalFolderModel> newJournalFolderModels(

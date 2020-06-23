@@ -18,6 +18,7 @@
 		layoutAssetEntryModels = cTDataFactory.newLayoutAssetEntryModels(layoutModels)
 		journalPagePortletPreferencesModels = cTDataFactory.newJournalPortletPreferencesModels(layoutModels)
 		journalArticlePortletPreferencesModels = cTDataFactory.newJournalArticlePortletPreferencesModels(layoutModels, journalArticleResourceModels)
+		journalContentSearchModels = cTDataFactory.newJournalContentSearchModels(journalArticleModels, layoutModels)
 		cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
 	/>
 
@@ -77,6 +78,10 @@
 
 	<#list journalArticlePortletPreferencesModels as journalArticlePortletPreferencesModel>
 		${dataFactory.toInsertSQL(journalArticlePortletPreferencesModel)}
+	</#list>
+
+	<#list journalContentSearchModels as journalContentSearchModel>
+		${dataFactory.toInsertSQL(journalContentSearchModel)}
 	</#list>
 
 	<#list cTEntryModels as cTEntryModel>
