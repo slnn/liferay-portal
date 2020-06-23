@@ -105,6 +105,11 @@ public class BenchmarksPropsValues {
 	public static final int MAX_CT_PAGE_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CT_PAGE_COUNT));
 
+	public static final int MAX_CT_WEBCONTENT_DISPLAY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_CT_WEBCONTENT_DISPLAY_COUNT));
+
 	public static final int MAX_DDL_CUSTOM_FIELD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT));
 

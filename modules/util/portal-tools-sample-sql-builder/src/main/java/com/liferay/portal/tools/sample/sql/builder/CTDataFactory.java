@@ -98,8 +98,8 @@ public class CTDataFactory extends BaseDataFactory {
 			"com_liferay_journal_content_web_portlet_JournalContentPortlet",
 			"_INSTANCE_TEST_", pageCount, "_");
 
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT;
-			 i++) {
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_CT_WEBCONTENT_DISPLAY_COUNT; i++) {
 
 			sb.append(portletPrefix);
 			sb.append(i);

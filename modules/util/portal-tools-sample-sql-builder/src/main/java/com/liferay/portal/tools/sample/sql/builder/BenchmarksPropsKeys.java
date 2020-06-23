@@ -69,6 +69,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_CT_PAGE_COUNT =
 		"sample.sql.max.ct.page.count";
 
+	public static final String MAX_CT_WEBCONTENT_DISPLAY_COUNT =
+		"sample.sql.max.ct.webcontent.display.count";
+
 	public static final String MAX_DDL_CUSTOM_FIELD_COUNT =
 		"sample.sql.max.ddl.custom.field.count";
 
