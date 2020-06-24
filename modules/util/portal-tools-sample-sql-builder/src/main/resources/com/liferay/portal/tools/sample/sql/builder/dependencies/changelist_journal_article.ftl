@@ -60,7 +60,7 @@
 
 	<#list layoutModels as layoutModel>
 		${dataFactory.toInsertSQL(layoutModel)}
-		${dataFactory.getCSVWriter("cTLayout").write(layoutModel.friendlyURL + "\n")}
+		${dataFactory.getCSVWriter("cTLayout").write(userModel.screenName + "," + layoutModel.friendlyURL + "," + layoutModel.ctCollectionId + "\n")}
 	</#list>
 
 	<#list layoutFriendlyURLModels as layoutFriendlyURLModel>
