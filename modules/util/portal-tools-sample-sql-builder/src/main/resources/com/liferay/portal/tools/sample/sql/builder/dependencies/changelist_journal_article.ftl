@@ -24,8 +24,6 @@
 
 	<#list journalFolderModels as journalFolderModel>
 		${dataFactory.toInsertSQL(journalFolderModel)}
-
-		<#assign cTJournalArticleCounts = dataFactory.getSequence(dataFactory.maxCTJournalArticleCount) />
 	</#list>
 
 	<#list folderAsstEntryModels as folderAsstEntryModel>
