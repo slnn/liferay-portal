@@ -27,8 +27,12 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,6 +138,51 @@ public class MBThreadFlagLocalServiceImpl
 		}
 
 		return mbThreadFlagPersistence.fetchByU_T(userId, thread.getThreadId());
+	}
+
+	@Override
+	public Map<MBThread, Boolean> getThreadFlagMap(
+			long userId, List<MBThread> threads)
+		throws PortalException {
+
+		if ((threads == null) || threads.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<MBThread, Boolean> threadFlagMap = new HashMap<>();
+
+		User user = _userLocalService.getUser(userId);
+
+		if (user.isDefaultUser()) {
+			for (MBThread thread : threads) {
+				threadFlagMap.put(thread, Boolean.TRUE);
+			}
+
+			return threadFlagMap;
+		}
+
+		List<MBThreadFlag> threadFlags =
+			mbThreadFlagPersistence.findByU_ThreadIds(
+				userId, ListUtil.toLongArray(threads, MBThread::getThreadId));
+
+		for (MBThreadFlag threadFlag : threadFlags) {
+			for (MBThread thread : threads) {
+				if (thread.getThreadId() != threadFlag.getThreadId()) {
+					continue;
+				}
+
+				if (DateUtil.equals(
+						threadFlag.getModifiedDate(),
+						thread.getLastPostDate())) {
+
+					threadFlagMap.put(thread, Boolean.TRUE);
+				}
+
+				break;
+			}
+		}
+
+		return threadFlagMap;
 	}
 
 	@Override
