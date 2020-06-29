@@ -21,6 +21,8 @@ Map<MBThread, Boolean> threadFlagMap = MBThreadFlagLocalServiceUtil.getThreadFla
 <liferay-ui:search-container
 	searchContainer="<%= threadEntriesSearchContainer %>"
 >
+<%String messageInfo = ""; %>
+
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.model.MBThread"
 		escapedModel="<%= true %>"
@@ -42,6 +44,7 @@ Map<MBThread, Boolean> threadFlagMap = MBThreadFlagLocalServiceUtil.getThreadFla
 
 			row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+			messageInfo += thread.getCategoryId() + "," + thread.getThreadId() + "," + thread.getRootMessageId() + "|";
 		}
 		%>
 
@@ -181,8 +184,12 @@ Map<MBThread, Boolean> threadFlagMap = MBThreadFlagLocalServiceUtil.getThreadFla
 				path="/message_boards/message_action.jsp"
 			/>
 		</c:if>
+		<%} while ((messageInfo.length() == 0) && mvcRenderCommandName.equals("/message_boards/view_recent_posts")); %>
 	</liferay-ui:search-container-row>
 
+	<c:if test="<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts")%>">
+		<p><%= "@@@" + messageInfo.substring(0, messageInfo.length() - 1) + "$$$"%></p>
+	</c:if>
 	<liferay-ui:search-iterator
 		displayStyle="descriptive"
 		markupView="lexicon"
