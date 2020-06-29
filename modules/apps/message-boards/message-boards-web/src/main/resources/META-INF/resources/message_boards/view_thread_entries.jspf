@@ -31,6 +31,7 @@ Map<MBThread, Boolean> threadFlagMap = MBThreadFlagLocalServiceUtil.getThreadFla
 	>
 
 		<%
+		do {
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
 
 		if (message == null) {
