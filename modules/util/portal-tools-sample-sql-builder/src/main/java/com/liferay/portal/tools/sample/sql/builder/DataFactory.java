@@ -4150,6 +4150,7 @@ public class DataFactory {
 		fragmentEntryLinkModel.setFragmentEntryId(0);
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
+		fragmentEntryLinkModel.setPlid(layoutModel.getPlid());
 		fragmentEntryLinkModel.setRendererKey(renderKey);
 		fragmentEntryLinkModel.setConfiguration(configuration);
 		fragmentEntryLinkModel.setCss(css);
