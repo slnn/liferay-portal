@@ -48,7 +48,7 @@
 
 	<@insertGroup _groupModel=groupModel />
 
-	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
+	${csvWriterHolder.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>
 
 <@insertContentLayout _layoutModels=dataFactory.newHomePageLayoutModels(guestGroupModel.groupId) />
