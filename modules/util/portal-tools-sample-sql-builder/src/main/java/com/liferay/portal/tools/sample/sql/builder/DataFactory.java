@@ -110,7 +110,6 @@ import com.liferay.friendly.url.model.FriendlyURLEntryModel;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
-import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -119,13 +118,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
-import com.liferay.journal.model.JournalContentSearchModel;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderModel;
-import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
-import com.liferay.journal.model.impl.JournalArticleModelImpl;
-import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
-import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
@@ -164,11 +158,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
@@ -1742,11 +1734,11 @@ public class DataFactory extends BaseDataFactory {
 		DLFolderModel dlFolderModel = new DLFolderModelImpl();
 
 		dlFolderModel.setUuid(SequentialUUID.generate());
-		dlFolderModel.setFolderId(_counter.get());
+		dlFolderModel.setFolderId(counter.get());
 		dlFolderModel.setGroupId(groupId);
-		dlFolderModel.setCompanyId(_companyId);
-		dlFolderModel.setUserId(_sampleUserId);
-		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
+		dlFolderModel.setCompanyId(COMPANY_ID);
+		dlFolderModel.setUserId(SAMPLE_USER_ID);
+		dlFolderModel.setUserName(SAMPLE_USER_NAME);
 		dlFolderModel.setCreateDate(nextFutureDate());
 		dlFolderModel.setModifiedDate(nextFutureDate());
 		dlFolderModel.setRepositoryId(groupId);
@@ -1754,7 +1746,7 @@ public class DataFactory extends BaseDataFactory {
 		dlFolderModel.setName("Test Folder");
 		dlFolderModel.setLastPostDate(nextFutureDate());
 		dlFolderModel.setDefaultFileEntryTypeId(
-			_defaultDLFileEntryTypeModel.getFileEntryTypeId());
+			defaultDLFileEntryTypeModel.getFileEntryTypeId());
 		dlFolderModel.setLastPublishDate(nextFutureDate());
 		dlFolderModel.setStatusDate(nextFutureDate());
 
@@ -1838,23 +1830,23 @@ public class DataFactory extends BaseDataFactory {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, "", "", "", "",
-					_readFile("loginPortlet_editValue.json"), 0,
+					readFile("loginPortlet_editValue.json"), 0,
 					nameSpaces.get("LoginPortlet")));
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _HEADING_RENDER_KEY, _readFile("heading.css"),
-					_readFile("heading.html"),
-					_readFile("heading_configuration.json"),
-					_readFile("heading_editValue.json"), 0,
+					layoutModel, _HEADING_RENDER_KEY, readFile("heading.css"),
+					readFile("heading.html"),
+					readFile("heading_configuration.json"),
+					readFile("heading_editValue.json"), 0,
 					nameSpaces.get(_HEADING_RENDER_KEY)));
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _PARAGRAPH_RENDER_KEY,
-					_readFile("paragraph.css"), _readFile("paragraph.html"),
-					_readFile("paragraph_configuration.json"),
-					_readFile("paragraph_editValue.json"), 0,
+					readFile("paragraph.css"), readFile("paragraph.html"),
+					readFile("paragraph_configuration.json"),
+					readFile("paragraph_editValue.json"), 0,
 					nameSpaces.get(_PARAGRAPH_RENDER_KEY)));
 		}
 
@@ -2066,22 +2058,22 @@ public class DataFactory extends BaseDataFactory {
 	public LayoutModel newLayoutModel(
 		long groupId, String name, long classNameId) {
 
-		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+		SimpleCounter simpleCounter = layoutCounters.get(groupId);
 
 		if (simpleCounter == null) {
 			simpleCounter = new SimpleCounter();
 
-			_layoutCounters.put(groupId, simpleCounter);
+			layoutCounters.put(groupId, simpleCounter);
 		}
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
 		layoutModel.setUuid(SequentialUUID.generate());
-		layoutModel.setPlid(_counter.get());
+		layoutModel.setPlid(counter.get());
 		layoutModel.setGroupId(groupId);
-		layoutModel.setCompanyId(_companyId);
-		layoutModel.setUserId(_sampleUserId);
-		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setCompanyId(COMPANY_ID);
+		layoutModel.setUserId(SAMPLE_USER_ID);
+		layoutModel.setUserName(SAMPLE_USER_NAME);
 		layoutModel.setCreateDate(new Date());
 		layoutModel.setModifiedDate(new Date());
 		layoutModel.setLayoutId(simpleCounter.get());
@@ -2206,12 +2198,12 @@ public class DataFactory extends BaseDataFactory {
 
 		layoutPageTemplateStructureRelModel.setUuid(SequentialUUID.generate());
 		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureRelId(
-			_counter.get());
+			counter.get());
 		layoutPageTemplateStructureRelModel.setGroupId(
 			layoutPageTemplateStructureModel.getGroupId());
-		layoutPageTemplateStructureRelModel.setCompanyId(_companyId);
-		layoutPageTemplateStructureRelModel.setUserId(_sampleUserId);
-		layoutPageTemplateStructureRelModel.setUserName(_SAMPLE_USER_NAME);
+		layoutPageTemplateStructureRelModel.setCompanyId(COMPANY_ID);
+		layoutPageTemplateStructureRelModel.setUserId(SAMPLE_USER_ID);
+		layoutPageTemplateStructureRelModel.setUserName(SAMPLE_USER_NAME);
 		layoutPageTemplateStructureRelModel.setCreateDate(new Date());
 		layoutPageTemplateStructureRelModel.setModifiedDate(new Date());
 		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureId(
@@ -2453,8 +2445,7 @@ public class DataFactory extends BaseDataFactory {
 			mbThreadModels.add(
 				newMBThreadModel(
 					counter.get(), mbCategoryModel.getGroupId(),
-					mbCategoryModel.getCategoryId(), counter.get(),
-					BenchmarksPropsValues.MAX_MB_MESSAGE_COUNT));
+					mbCategoryModel.getCategoryId(), counter.get()));
 		}
 
 		return mbThreadModels;
@@ -3592,11 +3583,11 @@ public class DataFactory extends BaseDataFactory {
 			new FragmentEntryLinkModelImpl();
 
 		fragmentEntryLinkModel.setUuid(SequentialUUID.generate());
-		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
+		fragmentEntryLinkModel.setFragmentEntryLinkId(counter.get());
 		fragmentEntryLinkModel.setGroupId(layoutModel.getGroupId());
-		fragmentEntryLinkModel.setCompanyId(_companyId);
-		fragmentEntryLinkModel.setUserId(_sampleUserId);
-		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryLinkModel.setCompanyId(COMPANY_ID);
+		fragmentEntryLinkModel.setUserId(SAMPLE_USER_ID);
+		fragmentEntryLinkModel.setUserName(SAMPLE_USER_NAME);
 		fragmentEntryLinkModel.setCreateDate(new Date());
 		fragmentEntryLinkModel.setModifiedDate(new Date());
 		fragmentEntryLinkModel.setFragmentEntryId(0);
@@ -3732,7 +3723,6 @@ public class DataFactory extends BaseDataFactory {
 		mbThreadModel.setCategoryId(categoryId);
 		mbThreadModel.setRootMessageId(rootMessageId);
 		mbThreadModel.setRootMessageUserId(SAMPLE_USER_ID);
-		mbThreadModel.setMessageCount(messageCount);
 		mbThreadModel.setLastPostByUserId(SAMPLE_USER_ID);
 		mbThreadModel.setLastPostDate(new Date());
 		mbThreadModel.setLastPublishDate(new Date());
@@ -4154,7 +4144,7 @@ public class DataFactory extends BaseDataFactory {
 
 		return layoutStructure;
 	}
-	
+
 	private String _getResourcePermissionModelName(String... classNames) {
 		if (ArrayUtil.isEmpty(classNames)) {
 			return StringPool.BLANK;
