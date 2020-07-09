@@ -271,7 +271,7 @@ public class SampleSQLBuilder {
 				}
 				finally {
 					try {
-						DataFactory.closeCSVWriters();
+						BaseDataFactory.closeCSVWriters();
 					}
 					catch (IOException ioException) {
 						ioException.printStackTrace();
@@ -366,8 +366,6 @@ public class SampleSQLBuilder {
 			"commerceDataFactory", new CommerceDataFactory()
 		).put(
 			"counterDataFactory", new CounterDataFactory()
-		).put(
-			"dataFactory", new DataFactory()
 		).put(
 			"dDLDDMDataFactory", new DDLDDMDataFactory()
 		).put(

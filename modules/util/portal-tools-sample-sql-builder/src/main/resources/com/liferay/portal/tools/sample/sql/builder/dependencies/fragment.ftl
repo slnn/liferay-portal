@@ -14,5 +14,5 @@ ${resourcePermissionDataFactory.toInsertSQL(fragmentEntryModel)}
 		_layoutModel=contentLayoutModel
 	/>
 
-	${dataFactory.getCSVWriter("fragment").write(contentLayoutModel.friendlyURL + "\n")}
+	${fragmentDataFactory.getCSVWriter("fragment").write(contentLayoutModel.friendlyURL + "\n")}
 </#list>

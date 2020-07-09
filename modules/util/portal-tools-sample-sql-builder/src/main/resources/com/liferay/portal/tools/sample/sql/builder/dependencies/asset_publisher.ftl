@@ -7,7 +7,7 @@
 		layoutModel = layoutDataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
 
-	${dataFactory.getCSVWriter("assetPublisher").write(layoutModel.friendlyURL + "\n")}
+	${assetDataFactory.getCSVWriter("assetPublisher").write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 
