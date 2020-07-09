@@ -22,7 +22,7 @@
 		<#list mbMessageModels as mbMessageModel>
 			<@insertMBMessage _mbMessageModel=mbMessageModel />
 
-			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
+			${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel))}
 		</#list>
 
 		${dataFactory.getCSVWriter("mbThread").write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
