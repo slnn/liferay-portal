@@ -370,6 +370,8 @@ public class SampleSQLBuilder {
 			"journalDataFactory", new JournalDataFactory()
 		).put(
 			"messageBoardDataFactory", new MessageBoardDataFactory()
+		).put(
+			"wikiDataFactory", new WikiDataFactory()
 		).build();
 	}
 
