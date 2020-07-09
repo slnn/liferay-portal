@@ -369,6 +369,8 @@ public class SampleSQLBuilder {
 		).put(
 			"dLDataFactory", new DLDataFactory()
 		).put(
+			"fragmentDataFactory", new FragmentDataFactory()
+		).put(
 			"journalDataFactory", new JournalDataFactory()
 		).put(
 			"messageBoardDataFactory", new MessageBoardDataFactory()
