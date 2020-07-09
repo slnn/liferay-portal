@@ -361,6 +361,8 @@ public class SampleSQLBuilder {
 		return HashMapBuilder.<String, Object>put(
 			"blogDataFactory", new BlogDataFactory()
 		).put(
+			"commerceDataFactory", new CommerceDataFactory()
+		).put(
 			"dataFactory", new DataFactory()
 		).put(
 			"dDLDDMDataFactory", new DDLDDMDataFactory()
