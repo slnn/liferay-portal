@@ -25,13 +25,13 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
@@ -68,6 +68,24 @@ public abstract class BaseDataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
+	}
+
+	public String getJournalArticleLayoutColumn(
+		int pageCount, int dispalyCount) {
+
+		StringBundler sb = new StringBundler(3 * dispalyCount);
+
+		String portletPrefix = StringBundler.concat(
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet",
+			"_INSTANCE_TEST_", pageCount, "_");
+
+		for (int i = 1; i <= dispalyCount; i++) {
+			sb.append(portletPrefix);
+			sb.append(i);
+			sb.append(StringPool.COMMA);
+		}
+
+		return sb.toString();
 	}
 
 	public Date nextFutureDate() {
