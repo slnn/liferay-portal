@@ -36,6 +36,9 @@ import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.social.WikiActivityKeys;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Lily Chi
  */
@@ -74,11 +77,21 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 			type = JournalActivityKeys.ADD_ARTICLE;
 		}
 
+		if (journalArticleModel.getCtCollectionId() == 0) {
+			return newSocialActivityModel(
+				journalArticleModel.getGroupId(),
+				getClassNameId(JournalArticle.class),
+				journalArticleModel.getResourcePrimKey(), type,
+				"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}");
+		}
+
 		return newSocialActivityModel(
 			journalArticleModel.getGroupId(),
 			getClassNameId(JournalArticle.class),
 			journalArticleModel.getResourcePrimKey(), type,
-			"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}");
+			"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}",
+			journalArticleModel.getUserId(),
+			journalArticleModel.getCtCollectionId());
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -119,6 +132,19 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 
 		return newSocialActivityModel(
 			mbMessageModel.getGroupId(), classNameId, classPK, type, extraData);
+	}
+
+	public List<SocialActivityModel> newSocialActivityModels(
+		List<JournalArticleModel> journalArticleModels) {
+
+		List<SocialActivityModel> socialActivityModels = new ArrayList<>(
+			totalArticleCount);
+
+		journalArticleModels.forEach(
+			journalArticleModel -> socialActivityModels.add(
+				newSocialActivityModel(journalArticleModel)));
+
+		return socialActivityModels;
 	}
 
 	protected SocialActivityModel newSocialActivityModel(

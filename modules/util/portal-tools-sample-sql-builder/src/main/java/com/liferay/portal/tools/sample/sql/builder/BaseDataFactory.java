@@ -171,6 +171,9 @@ public abstract class BaseDataFactory {
 		new SimpleCounter();
 	protected static final SimpleCounter socialActivityCounter =
 		new SimpleCounter();
+	protected static int totalArticleCount =
+		BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+			BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT;
 
 	private static void _initClassNameModels() {
 		List<String> models = ModelHintsUtil.getModels();
