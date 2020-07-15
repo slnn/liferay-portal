@@ -25,6 +25,8 @@
 
 	<#include "ddl.ftl">
 
+	<#include "dl.ftl">
+
 	<#include "journal_article.ftl">
 
 	<#include "fragment.ftl">
@@ -34,13 +36,6 @@
 	<#include "users.ftl">
 
 	<#include "wiki.ftl">
-
-	<@insertDLFolder
-		_ddmStructureId=dataFactory.defaultDLDDMStructureId
-		_dlFolderDepth=1
-		_groupId=groupId
-		_parentDLFolderId=0
-	/>
 
 	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId) />
 
