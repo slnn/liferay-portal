@@ -1,12 +1,12 @@
 <#-- Default user -->
 
-<@insertUser _userModel=dataFactory.newDefaultUserModel() />
+<@insertUser _userModel = dataFactory.newDefaultUserModel() />
 
 <#-- Guest user -->
 
 <#assign guestUserModel = dataFactory.newGuestUserModel() />
 
-<@insertGroup _groupModel=dataFactory.newGroupModel(guestUserModel) />
+<@insertGroup _groupModel = dataFactory.newGroupModel(guestUserModel) />
 
 <#assign
 	groupIds = [guestGroupModel.groupId]
@@ -14,9 +14,9 @@
 />
 
 <@insertUser
-	_groupIds=groupIds
-	_roleIds=roleIds
-	_userModel=guestUserModel
+	_groupIds = groupIds
+	_roleIds = roleIds
+	_userModel = guestUserModel
 />
 
 <#-- Sample user -->
@@ -41,9 +41,9 @@
 />
 
 <@insertUser
-	_groupIds=groupIds
-	_roleIds=roleIds
-	_userModel=sampleUserModel
+	_groupIds = groupIds
+	_roleIds = roleIds
+	_userModel = sampleUserModel
 />
 
 <#list groupIds as groupId>

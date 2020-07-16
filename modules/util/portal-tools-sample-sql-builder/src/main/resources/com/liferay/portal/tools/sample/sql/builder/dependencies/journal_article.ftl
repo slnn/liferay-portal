@@ -1,9 +1,9 @@
 <#assign ddmStructureModel = dataFactory.defaultJournalDDMStructureModel />
 
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.defaultJournalDDMStructureLayoutModel
-	_ddmStructureModel=ddmStructureModel
-	_ddmStructureVersionModel=dataFactory.defaultJournalDDMStructureVersionModel
+	_ddmStructureLayoutModel = dataFactory.defaultJournalDDMStructureLayoutModel
+	_ddmStructureModel = ddmStructureModel
+	_ddmStructureVersionModel = dataFactory.defaultJournalDDMStructureVersionModel
 />
 
 <#assign ddmTemplateModel = dataFactory.defaultJournalDDMTemplateModel />
@@ -33,7 +33,7 @@ ${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
 
 	${csvFileWriter.write("layout", layoutModel.friendlyURL + "\n")}
 
-	<@insertLayout _layoutModel=layoutModel />
+	<@insertLayout _layoutModel = layoutModel />
 
 	<#assign portletPreferencesModels = dataFactory.newJournalPortletPreferencesModels(layoutModel.plid) />
 
@@ -67,19 +67,19 @@ ${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
 
 			<#if versionCount = dataFactory.maxJournalArticleVersionCount>
 				<@insertAssetEntry
-					_categoryAndTag=true
-					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+					_categoryAndTag = true
+					_entry = dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
 				/>
 			</#if>
 		</#list>
 
 		<@insertMBDiscussion
-			_classNameId=dataFactory.journalArticleClassNameId
-			_classPK=journalArticleResourceModel.resourcePrimKey
-			_groupId=groupId
-			_maxCommentCount=0
-			_mbRootMessageId=dataFactory.getCounterNext()
-			_mbThreadId=dataFactory.getCounterNext()
+			_classNameId = dataFactory.journalArticleClassNameId
+			_classPK = journalArticleResourceModel.resourcePrimKey
+			_groupId = groupId
+			_maxCommentCount = 0
+			_mbRootMessageId = dataFactory.getCounterNext()
+			_mbThreadId = dataFactory.getCounterNext()
 		/>
 
 		${dataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}

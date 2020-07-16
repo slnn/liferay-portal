@@ -10,8 +10,8 @@ ${dataFactory.toInsertSQL(fragmentEntryModel)}
 
 <#list contentLayoutModels as contentLayoutModel>
 	<@insertContentLayout
-		_fragmentEntryModel=fragmentEntryModel
-		_layoutModel=contentLayoutModel
+		_fragmentEntryModel = fragmentEntryModel
+		_layoutModel = contentLayoutModel
 	/>
 
 	${csvFileWriter.write("fragment", contentLayoutModel.friendlyURL + "\n")}
