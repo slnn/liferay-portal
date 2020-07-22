@@ -62,6 +62,7 @@ ${insertSQLBuilder.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionM
 
 		<#list layoutModels as layoutModel>
 			${insertSQLBuilder.toInsertSQL(layoutModel)}
+			${csvFileWriter.write("cTLayout", userModel.screenName + "," + layoutModel.friendlyURL + "," + layoutModel.ctCollectionId + "\n")}
 		</#list>
 
 		<#list layoutFriendlyURLModels as layoutFriendlyURLModel>
