@@ -1,39 +1,39 @@
-<#list dataFactory.newCPDefinitionAssetEntryModels() as assetEntryModel>
-	${dataFactory.toInsertSQL(assetEntryModel)}
+<#list assetDataFactory.newCPDefinitionAssetEntryModels() as assetEntryModel>
+	${resourcePermissionDataFactory.toInsertSQL(assetEntryModel)}
 </#list>
 
-${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogModel())}
+${resourcePermissionDataFactory.toInsertSQL(commerceDataFactory.newCommerceCatalogModel())}
 
-${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermission())}
+${resourcePermissionDataFactory.toInsertSQL(resourcePermissionDataFactory.newCommerceCatalogResourcePermission())}
 
-${dataFactory.toInsertSQL(dataFactory.newCommerceChannelModel())}
+${resourcePermissionDataFactory.toInsertSQL(commerceDataFactory.newCommerceChannelModel())}
 
-${dataFactory.toInsertSQL(dataFactory.newCommerceCurrencyModel())}
+${resourcePermissionDataFactory.toInsertSQL(commerceDataFactory.newCommerceCurrencyModel())}
 
-<#list dataFactory.newCPDefinitionLocalizationModels() as cpDefinitionLocalizationModel>
-	${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
+<#list commerceDataFactory.newCPDefinitionLocalizationModels() as cpDefinitionLocalizationModel>
+	${resourcePermissionDataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
 </#list>
 
-<#list dataFactory.newCPDefinitionModels() as cpDefinitionModel>
-	${dataFactory.toInsertSQL(cpDefinitionModel)}
+<#list commerceDataFactory.newCPDefinitionModels() as cpDefinitionModel>
+	${resourcePermissionDataFactory.toInsertSQL(cpDefinitionModel)}
 </#list>
 
-<#list dataFactory.newCPFriendlyURLEntryModels() as cpFriendlyURLEntryModel>
-	${dataFactory.toInsertSQL(cpFriendlyURLEntryModel)}
+<#list commerceDataFactory.newCPFriendlyURLEntryModels() as cpFriendlyURLEntryModel>
+	${resourcePermissionDataFactory.toInsertSQL(cpFriendlyURLEntryModel)}
 
 	${csvFileWriter.write("cpFriendlyURLEntry", cpFriendlyURLEntryModel.urlTitle + "\n")}
 </#list>
 
-<#list dataFactory.newCPInstanceModels() as cpInstanceModel>
-	${dataFactory.toInsertSQL(cpInstanceModel)}
+<#list commerceDataFactory.newCPInstanceModels() as cpInstanceModel>
+	${resourcePermissionDataFactory.toInsertSQL(cpInstanceModel)}
 </#list>
 
-<#list dataFactory.newCProductModels() as cProductModel>
-	${dataFactory.toInsertSQL(cProductModel)}
+<#list commerceDataFactory.newCProductModels() as cProductModel>
+	${resourcePermissionDataFactory.toInsertSQL(cProductModel)}
 </#list>
 
-${dataFactory.toInsertSQL(dataFactory.newCPTaxCategoryModel())}
+${resourcePermissionDataFactory.toInsertSQL(commerceDataFactory.newCPTaxCategoryModel())}
 
-<@insertGroup _groupModel=dataFactory.newCommerceCatalogGroupModel() />
+<@insertGroup _groupModel=userDataFactory.newCommerceCatalogGroupModel() />
 
-<@insertGroup _groupModel=dataFactory.newCommerceChannelGroupModel() />
+<@insertGroup _groupModel=userDataFactory.newCommerceChannelGroupModel() />
