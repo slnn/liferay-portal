@@ -42,6 +42,8 @@ import com.liferay.message.boards.model.MBThreadModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupModel;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.util.PropsValues;
@@ -368,6 +370,31 @@ public class AssetDataFactory extends BaseDataFactory {
 			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
 			true, true, "text/plain",
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
+	}
+
+	public List<AssetEntryModel> newLayoutAssetEntryModels(
+		List<LayoutModel> layoutModels) {
+
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
+			layoutModels.size());
+
+		layoutModels.forEach(
+			layoutModel -> {
+				String title = layoutModel.getFriendlyURL();
+
+				title = title.substring(1);
+
+				assetEntryModels.add(
+					newAssetEntryModel(
+						layoutModel.getGroupId(), layoutModel.getCreateDate(),
+						layoutModel.getModifiedDate(),
+						getClassNameId(Layout.class), layoutModel.getPlid(),
+						layoutModel.getUuid(), 0, true, false,
+						ContentTypes.TEXT_HTML, title, layoutModel.getUserId(),
+						layoutModel.getCtCollectionId()));
+			});
+
+		return assetEntryModels;
 	}
 
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
