@@ -30,11 +30,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
+import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityModel;
 import com.liferay.util.SimpleCounter;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.social.WikiActivityKeys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Lily Chi
@@ -121,16 +125,41 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 			mbMessageModel.getGroupId(), classNameId, classPK, type, extraData);
 	}
 
+	public List<SocialActivityModel> newSocialActivityModels(
+		List<JournalArticleModel> journalArticleModels) {
+
+		List<SocialActivityModel> socialActivityModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalArticleModels.forEach(
+			journalArticleModel -> socialActivityModels.add(
+				newSocialActivityModel(journalArticleModel)));
+
+		cTEntryMap.put(SocialActivity.class.getName(), socialActivityModels);
+
+		return socialActivityModels;
+	}
+
 	protected SocialActivityModel newSocialActivityModel(
 		long groupId, long classNameId, long classPK, int type,
 		String extraData) {
 
+		return newSocialActivityModel(
+			groupId, classNameId, classPK, type, extraData, SAMPLE_USER_ID, 0);
+	}
+
+	protected SocialActivityModel newSocialActivityModel(
+		long groupId, long classNameId, long classPK, int type,
+		String extraData, long userId, long ctCollectionId) {
+
 		SocialActivityModel socialActivityModel = new SocialActivityModelImpl();
 
 		socialActivityModel.setActivityId(socialActivityCounter.get());
+		socialActivityModel.setCtCollectionId(ctCollectionId);
 		socialActivityModel.setGroupId(groupId);
 		socialActivityModel.setCompanyId(COMPANY_ID);
-		socialActivityModel.setUserId(SAMPLE_USER_ID);
+		socialActivityModel.setUserId(userId);
 		socialActivityModel.setCreateDate(_CURRENT_TIME + _timeCounter.get());
 		socialActivityModel.setClassNameId(classNameId);
 		socialActivityModel.setClassPK(classPK);

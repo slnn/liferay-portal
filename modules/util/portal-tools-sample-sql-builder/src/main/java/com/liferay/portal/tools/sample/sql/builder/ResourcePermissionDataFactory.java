@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
@@ -33,6 +35,8 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResourceModel;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBCategoryModel;
 import com.liferay.message.boards.model.MBMessage;
@@ -127,6 +131,16 @@ public class ResourcePermissionDataFactory extends BaseDataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CTCollectionModel cTCollectionModel) {
+
+		return Collections.singletonList(
+			newResourcePermissionModel(
+				CTCollection.class.getName(),
+				String.valueOf(cTCollectionModel.getCtCollectionId()),
+				OWNER_ROLE_ID, cTCollectionModel.getUserId()));
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDLRecordSetModel ddlRecordSetModel) {
 
 		return Collections.singletonList(
@@ -212,6 +226,15 @@ public class ResourcePermissionDataFactory extends BaseDataFactory {
 			JournalArticle.class.getName(),
 			String.valueOf(journalArticleResourceModel.getResourcePrimKey()),
 			SAMPLE_USER_ID);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		JournalFolderModel journalFolderModel) {
+
+		return newResourcePermissionModels(
+			JournalFolder.class.getName(),
+			String.valueOf(journalFolderModel.getFolderId()),
+			journalFolderModel.getUserId());
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

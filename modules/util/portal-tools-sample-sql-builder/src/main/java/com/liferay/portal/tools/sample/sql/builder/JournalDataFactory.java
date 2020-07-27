@@ -14,12 +14,15 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
@@ -31,18 +34,24 @@ import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.journal.model.JournalContentSearchModel;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
+import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -52,7 +61,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -73,19 +84,9 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return getClassNameId(JournalArticle.class);
 	}
 
-	public String getJournalArticleLayoutColumn(String portletPrefix) {
-		StringBundler sb = new StringBundler(
-			3 * BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_COUNT);
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_COUNT;
-			 i++) {
-
-			sb.append(portletPrefix);
-			sb.append(i);
-			sb.append(StringPool.COMMA);
-		}
-
-		return sb.toString();
+	public String getJournalArticleLayoutColumn(int pageCount) {
+		return getJournalArticleLayoutColumn(
+			pageCount, BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_COUNT);
 	}
 
 	public int getMaxJournalArticleCount() {
@@ -105,6 +106,11 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
 
+		if (journalArticleModel.getCtCollectionId() != 0) {
+			ddmStorageLinkModel.setCtCollectionId(
+				journalArticleModel.getCtCollectionId());
+		}
+
 		ddmStorageLinkModel.setUuid(SequentialUUID.generate());
 		ddmStorageLinkModel.setStorageLinkId(counter.get());
 		ddmStorageLinkModel.setClassNameId(
@@ -117,11 +123,32 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return ddmStorageLinkModel;
 	}
 
+	public List<DDMStorageLinkModel> newDDMStorageLinkModels(
+		List<JournalArticleModel> journalArticleModels, long templateId) {
+
+		List<DDMStorageLinkModel> dDMStorageLinkModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalArticleModels.forEach(
+			journalArticleModel -> dDMStorageLinkModels.add(
+				newDDMStorageLinkModel(journalArticleModel, templateId)));
+
+		cTEntryMap.put(DDMStorageLink.class.getName(), dDMStorageLinkModels);
+
+		return dDMStorageLinkModels;
+	}
+
 	public DDMTemplateLinkModel newDDMTemplateLinkModel(
 		JournalArticleModel journalArticleModel, long templateId) {
 
 		DDMTemplateLinkModel ddmTemplateLinkModel =
 			new DDMTemplateLinkModelImpl();
+
+		if (journalArticleModel.getCtCollectionId() != 0) {
+			ddmTemplateLinkModel.setCtCollectionId(
+				journalArticleModel.getCtCollectionId());
+		}
 
 		ddmTemplateLinkModel.setCompanyId(COMPANY_ID);
 		ddmTemplateLinkModel.setTemplateLinkId(counter.get());
@@ -131,6 +158,22 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		ddmTemplateLinkModel.setTemplateId(templateId);
 
 		return ddmTemplateLinkModel;
+	}
+
+	public List<DDMTemplateLinkModel> newDDMTemplateLinkModels(
+		List<JournalArticleModel> journalArticleModels, long templateId) {
+
+		List<DDMTemplateLinkModel> dDMTemplateLinkModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalArticleModels.forEach(
+			journalArticleModel -> dDMTemplateLinkModels.add(
+				newDDMTemplateLinkModel(journalArticleModel, templateId)));
+
+		cTEntryMap.put(DDMTemplateLink.class.getName(), dDMTemplateLinkModels);
+
+		return dDMTemplateLinkModels;
 	}
 
 	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel() {
@@ -196,6 +239,14 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		JournalArticleModel journalArticleModel, int articleIndex,
 		int versionIndex) {
 
+		return newJournalArticleLocalizationModel(
+			journalArticleModel, articleIndex, versionIndex, 0);
+	}
+
+	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
+		JournalArticleModel journalArticleModel, int articleIndex,
+		int versionIndex, long ctCollectionId) {
+
 		JournalArticleLocalizationModel journalArticleLocalizationModel =
 			new JournalArticleLocalizationModelImpl();
 
@@ -209,6 +260,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		journalArticleLocalizationModel.setArticleLocalizationId(counter.get());
 		journalArticleLocalizationModel.setCompanyId(
 			journalArticleModel.getCompanyId());
+		journalArticleLocalizationModel.setCtCollectionId(ctCollectionId);
 		journalArticleLocalizationModel.setArticlePK(
 			journalArticleModel.getId());
 		journalArticleLocalizationModel.setTitle(sb.toString());
@@ -218,50 +270,52 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return journalArticleLocalizationModel;
 	}
 
+	public List<JournalArticleLocalizationModel>
+		newJournalArticleLocalizationModels(
+			List<JournalArticleModel> journalArticleModels,
+			List<JournalFolderModel> journalFolderModels) {
+
+		List<JournalArticleLocalizationModel> journalArticleLocalizationModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+					BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		int i = 0;
+
+		for (JournalFolderModel journalFolderModel : journalFolderModels) {
+			int j = 0;
+
+			while (true) {
+				journalArticleLocalizationModels.add(
+					newJournalArticleLocalizationModel(
+						journalArticleModels.get(i), j + 1, CT_ARTICLE_VERSION,
+						journalFolderModel.getCtCollectionId()));
+				i++;
+				j++;
+
+				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
+						0) {
+
+					break;
+				}
+			}
+		}
+
+		cTEntryMap.put(
+			JournalArticleLocalization.class.getName(),
+			journalArticleLocalizationModels);
+
+		return journalArticleLocalizationModels;
+	}
+
 	public JournalArticleModel newJournalArticleModel(
 			JournalArticleResourceModel journalArticleResourceModel,
 			int articleIndex, int versionIndex)
 		throws PortalException {
 
-		JournalArticleModel journalArticleModel = new JournalArticleModelImpl();
-
-		journalArticleModel.setUuid(SequentialUUID.generate());
-		journalArticleModel.setId(counter.get());
-		journalArticleModel.setResourcePrimKey(
-			journalArticleResourceModel.getResourcePrimKey());
-		journalArticleModel.setGroupId(
-			journalArticleResourceModel.getGroupId());
-		journalArticleModel.setCompanyId(COMPANY_ID);
-		journalArticleModel.setUserId(SAMPLE_USER_ID);
-		journalArticleModel.setUserName(SAMPLE_USER_NAME);
-		journalArticleModel.setCreateDate(new Date());
-		journalArticleModel.setModifiedDate(new Date());
-		journalArticleModel.setClassNameId(
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
-		journalArticleModel.setArticleId(
-			journalArticleResourceModel.getArticleId());
-		journalArticleModel.setTreePath("/");
-		journalArticleModel.setVersion(versionIndex);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("TestJournalArticle_");
-		sb.append(articleIndex);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(versionIndex);
-
-		journalArticleModel.setUrlTitle(sb.toString());
-
-		journalArticleModel.setContent(_journalArticleContent);
-		journalArticleModel.setDefaultLanguageId("en_US");
-		journalArticleModel.setDDMStructureKey(_JOURNAL_STRUCTURE_KEY);
-		journalArticleModel.setDDMTemplateKey(_JOURNAL_STRUCTURE_KEY);
-		journalArticleModel.setDisplayDate(new Date());
-		journalArticleModel.setExpirationDate(nextFutureDate());
-		journalArticleModel.setReviewDate(new Date());
-		journalArticleModel.setIndexable(true);
-		journalArticleModel.setLastPublishDate(new Date());
-		journalArticleModel.setStatusDate(new Date());
+		JournalArticleModel journalArticleModel = newJournalArticleModel(
+			journalArticleResourceModel, articleIndex, versionIndex, 0,
+			SAMPLE_USER_ID, SAMPLE_USER_NAME, 0, "/");
 
 		if (Validator.isNull(_defaultJournalArticleId)) {
 			_defaultJournalArticleId = journalArticleModel.getArticleId();
@@ -270,8 +324,54 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return journalArticleModel;
 	}
 
+	public List<JournalArticleModel> newJournalArticleModels(
+			List<JournalArticleResourceModel> journalArticleResourceModels,
+			List<JournalFolderModel> journalFolderModels)
+		throws PortalException {
+
+		List<JournalArticleModel> journalArticleModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		int i = 0;
+
+		for (JournalFolderModel journalFolderModel : journalFolderModels) {
+			int j = 0;
+
+			while (true) {
+				journalArticleModels.add(
+					newJournalArticleModel(
+						journalArticleResourceModels.get(i), j + 1,
+						CT_ARTICLE_VERSION,
+						journalFolderModel.getCtCollectionId(),
+						journalFolderModel.getUserId(),
+						journalFolderModel.getUserName(),
+						journalFolderModel.getFolderId(),
+						"/" + journalFolderModel.getFolderId() + "/"));
+				i++;
+				j++;
+
+				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
+						0) {
+
+					break;
+				}
+			}
+		}
+
+		cTEntryMap.put(JournalArticle.class.getName(), journalArticleModels);
+
+		return journalArticleModels;
+	}
+
 	public JournalArticleResourceModel newJournalArticleResourceModel(
 		long groupId) {
+
+		return newJournalArticleResourceModel(groupId, 0);
+	}
+
+	public JournalArticleResourceModel newJournalArticleResourceModel(
+		long groupId, long ctCollectionId) {
 
 		JournalArticleResourceModel journalArticleResourceModel =
 			new JournalArticleResourceModelImpl();
@@ -280,6 +380,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		journalArticleResourceModel.setResourcePrimKey(counter.get());
 		journalArticleResourceModel.setGroupId(groupId);
 		journalArticleResourceModel.setCompanyId(COMPANY_ID);
+		journalArticleResourceModel.setCtCollectionId(ctCollectionId);
 		journalArticleResourceModel.setArticleId(String.valueOf(counter.get()));
 
 		journalArticleResourceUUIDs.put(
@@ -287,6 +388,33 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 			journalArticleResourceModel.getUuid());
 
 		return journalArticleResourceModel;
+	}
+
+	public List<JournalArticleResourceModel> newJournalArticleResourceModels(
+		long groupId, List<JournalFolderModel> journalFolderModels) {
+
+		List<JournalArticleResourceModel> journalArticleResourceModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+					BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalFolderModels.forEach(
+			journalFolderModel -> {
+				for (int i = 0;
+					 i < BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT;
+					 i++) {
+
+					journalArticleResourceModels.add(
+						newJournalArticleResourceModel(
+							groupId, journalFolderModel.getCtCollectionId()));
+				}
+			});
+
+		cTEntryMap.put(
+			JournalArticleResource.class.getName(),
+			journalArticleResourceModels);
+
+		return journalArticleResourceModels;
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
@@ -333,6 +461,41 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return journalContentSearchModel;
 	}
 
+	public List<JournalContentSearchModel> newJournalContentSearchModels(
+		List<JournalArticleModel> journalArticleModels,
+		List<LayoutModel> layoutModels) {
+
+		List<JournalContentSearchModel> journalContentSearchModels =
+			new ArrayList<>(layoutModels.size());
+
+		layoutModels.forEach(
+			layoutModel -> journalArticleModels.forEach(
+				journalArticleModel -> journalContentSearchModels.add(
+					newJournalContentSearchModel(
+						journalArticleModel, layoutModel.getLayoutId()))));
+
+		return journalContentSearchModels;
+	}
+
+	public List<JournalFolderModel> newJournalFolderModels(
+		CTCollectionModel cTCollectionModel, long groupId) {
+
+		List<JournalFolderModel> journalFolderModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT;
+			 i++) {
+
+			journalFolderModels.add(
+				newJournalFolderModel(
+					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
+		}
+
+		cTEntryMap.put(JournalFolder.class.getName(), journalFolderModels);
+
+		return journalFolderModels;
+	}
+
 	public <K, V> ObjectValuePair<K, V> newObjectValuePair(K key, V value) {
 		return new ObjectValuePair<>(key, value);
 	}
@@ -375,6 +538,84 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		ddmTemplateModel.setLastPublishDate(nextFutureDate());
 
 		return ddmTemplateModel;
+	}
+
+	protected JournalArticleModel newJournalArticleModel(
+			JournalArticleResourceModel journalArticleResourceModel,
+			int articleIndex, int versionIndex, long ctCollectionId,
+			long userId, String userName, long folderId, String treePath)
+		throws PortalException {
+
+		JournalArticleModel journalArticleModel = new JournalArticleModelImpl();
+
+		journalArticleModel.setUuid(SequentialUUID.generate());
+		journalArticleModel.setId(counter.get());
+		journalArticleModel.setResourcePrimKey(
+			journalArticleResourceModel.getResourcePrimKey());
+		journalArticleModel.setGroupId(
+			journalArticleResourceModel.getGroupId());
+		journalArticleModel.setCompanyId(COMPANY_ID);
+		journalArticleModel.setCtCollectionId(ctCollectionId);
+		journalArticleModel.setUserId(userId);
+		journalArticleModel.setUserName(userName);
+		journalArticleModel.setCreateDate(new Date());
+		journalArticleModel.setModifiedDate(new Date());
+		journalArticleModel.setClassNameId(
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+		journalArticleModel.setArticleId(
+			journalArticleResourceModel.getArticleId());
+		journalArticleModel.setFolderId(folderId);
+		journalArticleModel.setTreePath(treePath);
+		journalArticleModel.setVersion(versionIndex);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(versionIndex);
+
+		journalArticleModel.setUrlTitle(sb.toString());
+
+		journalArticleModel.setContent(_journalArticleContent);
+		journalArticleModel.setDefaultLanguageId("en_US");
+		journalArticleModel.setDDMStructureKey(_JOURNAL_STRUCTURE_KEY);
+		journalArticleModel.setDDMTemplateKey(_JOURNAL_STRUCTURE_KEY);
+		journalArticleModel.setDisplayDate(new Date());
+		journalArticleModel.setExpirationDate(nextFutureDate());
+		journalArticleModel.setReviewDate(new Date());
+		journalArticleModel.setIndexable(true);
+		journalArticleModel.setLastPublishDate(new Date());
+		journalArticleModel.setStatusDate(new Date());
+
+		if (Validator.isNull(_defaultJournalArticleId)) {
+			_defaultJournalArticleId = journalArticleModel.getArticleId();
+		}
+
+		return journalArticleModel;
+	}
+
+	protected JournalFolderModel newJournalFolderModel(
+		CTCollectionModel cTCollectionModel, long groupId, String name) {
+
+		JournalFolderModel journalFolderModel = new JournalFolderModelImpl();
+
+		long folderId = counter.get();
+
+		journalFolderModel.setUuid(SequentialUUID.generate());
+		journalFolderModel.setCtCollectionId(
+			cTCollectionModel.getCtCollectionId());
+		journalFolderModel.setFolderId(folderId);
+		journalFolderModel.setGroupId(groupId);
+		journalFolderModel.setCompanyId(cTCollectionModel.getCompanyId());
+		journalFolderModel.setUserId(cTCollectionModel.getUserId());
+		journalFolderModel.setCreateDate(new Date());
+		journalFolderModel.setModifiedDate(new Date());
+		journalFolderModel.setParentFolderId(0);
+		journalFolderModel.setTreePath("/" + folderId + "/");
+		journalFolderModel.setName(name);
+
+		return journalFolderModel;
 	}
 
 	private void _initJournalArticleContent() {

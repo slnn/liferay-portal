@@ -15,13 +15,16 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
@@ -107,6 +110,11 @@ public class LayoutDataFactory extends BaseDataFactory {
 		LayoutFriendlyURLModel layoutFriendlyURLEntryModel =
 			new LayoutFriendlyURLModelImpl();
 
+		if (layoutModel.getCtCollectionId() != 0) {
+			layoutFriendlyURLEntryModel.setCtCollectionId(
+				layoutModel.getCtCollectionId());
+		}
+
 		layoutFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
 		layoutFriendlyURLEntryModel.setLayoutFriendlyURLId(counter.get());
 		layoutFriendlyURLEntryModel.setGroupId(layoutModel.getGroupId());
@@ -124,8 +132,33 @@ public class LayoutDataFactory extends BaseDataFactory {
 		return layoutFriendlyURLEntryModel;
 	}
 
+	public List<LayoutFriendlyURLModel> newLayoutFriendlyURLModels(
+		List<LayoutModel> layoutModels) {
+
+		List<LayoutFriendlyURLModel> layoutFriendlyURLModels = new ArrayList<>(
+			layoutModels.size());
+
+		layoutModels.forEach(
+			layoutModel -> layoutFriendlyURLModels.add(
+				newLayoutFriendlyURLModel(layoutModel)));
+
+		cTEntryMap.put(
+			LayoutFriendlyURL.class.getName(), layoutFriendlyURLModels);
+
+		return layoutFriendlyURLModels;
+	}
+
 	public LayoutModel newLayoutModel(
 		long groupId, String name, String column1, String column2) {
+
+		return newLayoutModel(
+			groupId, name, column1, column2, SAMPLE_USER_ID, SAMPLE_USER_NAME,
+			0);
+	}
+
+	public LayoutModel newLayoutModel(
+		long groupId, String name, String column1, String column2, long userId,
+		String userName, long ctCollectionId) {
 
 		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
 
@@ -141,8 +174,9 @@ public class LayoutDataFactory extends BaseDataFactory {
 		layoutModel.setPlid(counter.get());
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(COMPANY_ID);
-		layoutModel.setUserId(SAMPLE_USER_ID);
-		layoutModel.setUserName(SAMPLE_USER_NAME);
+		layoutModel.setCtCollectionId(ctCollectionId);
+		layoutModel.setUserId(userId);
+		layoutModel.setUserName(userName);
 		layoutModel.setCreateDate(new Date());
 		layoutModel.setModifiedDate(new Date());
 		layoutModel.setLayoutId(simpleCounter.get());
@@ -166,6 +200,29 @@ public class LayoutDataFactory extends BaseDataFactory {
 		layoutModel.setLastPublishDate(new Date());
 
 		return layoutModel;
+	}
+
+	public List<LayoutModel> newLayoutModels(
+		long groupId, CTCollectionModel cTCollectionModel) {
+
+		List<LayoutModel> layoutModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_PAGE_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_PAGE_COUNT; i++) {
+			String name = groupId + "_journal_article_" + (i + 1);
+
+			String column2 = getJournalArticleLayoutColumn(
+				i + 1, BenchmarksPropsValues.MAX_CT_WEBCONTENT_DISPLAY_COUNT);
+
+			layoutModels.add(
+				newLayoutModel(
+					groupId, name, "", column2, cTCollectionModel.getUserId(),
+					"", cTCollectionModel.getCtCollectionId()));
+		}
+
+		cTEntryMap.put(Layout.class.getName(), layoutModels);
+
+		return layoutModels;
 	}
 
 	public List<LayoutSetModel> newLayoutSetModels(long groupId) {
