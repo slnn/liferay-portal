@@ -2,8 +2,6 @@
 
 <#include "default_user.ftl">
 
-<@insertLayout _layoutModel=layoutDataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
-
 <@insertGroup _groupModel=userDataFactory.newGlobalGroupModel() />
 
 <@insertGroup _groupModel=guestGroupModel />
@@ -36,6 +34,8 @@
 		_parentDLFolderId=0
 	/>
 
+	<@insertContentLayout _layoutModels=layoutDataFactory.newHomePageLayoutModels(groupId) />
+
 	<#assign publicLayoutModels = layoutDataFactory.newPublicLayoutModels(groupId) />
 
 	<#list publicLayoutModels as publicLayoutModel>
@@ -46,3 +46,5 @@
 
 	${csvFileWriter.write("repository", groupId + ", " + groupModel.name + "\n")}
 </#list>
+
+<@insertContentLayout _layoutModels=layoutDataFactory.newHomePageLayoutModels(guestGroupModel.groupId) />

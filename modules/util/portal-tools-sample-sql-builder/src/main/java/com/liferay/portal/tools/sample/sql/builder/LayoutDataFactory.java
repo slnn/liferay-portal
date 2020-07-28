@@ -18,8 +18,6 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
-import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -104,6 +102,16 @@ public class LayoutDataFactory extends BaseDataFactory {
 		return layoutModels;
 	}
 
+	public List<LayoutModel> newHomePageLayoutModels(long groupId) {
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		layoutModels.add(newLayoutModel(groupId, "welcome", 0));
+		layoutModels.add(
+			newLayoutModel(groupId, "welcome1", getClassNameId(Layout.class)));
+
+		return layoutModels;
+	}
+
 	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(
 		LayoutModel layoutModel) {
 
@@ -146,6 +154,53 @@ public class LayoutDataFactory extends BaseDataFactory {
 			LayoutFriendlyURL.class.getName(), layoutFriendlyURLModels);
 
 		return layoutFriendlyURLModels;
+	}
+
+	public LayoutModel newLayoutModel(
+		long groupId, String name, long classNameId) {
+
+		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(groupId, simpleCounter);
+		}
+
+		LayoutModel layoutModel = new LayoutModelImpl();
+
+		layoutModel.setUuid(SequentialUUID.generate());
+		layoutModel.setPlid(counter.get());
+		layoutModel.setGroupId(groupId);
+		layoutModel.setCompanyId(COMPANY_ID);
+		layoutModel.setUserId(SAMPLE_USER_ID);
+		layoutModel.setUserName(SAMPLE_USER_NAME);
+		layoutModel.setCreateDate(new Date());
+		layoutModel.setModifiedDate(new Date());
+		layoutModel.setLayoutId(simpleCounter.get());
+		layoutModel.setName(
+			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
+		layoutModel.setType(LayoutConstants.TYPE_CONTENT);
+		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
+		layoutModel.setClassNameId(classNameId);
+
+		if (classNameId != 0) {
+			layoutModel.setHidden(true);
+			layoutModel.setSystem(true);
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
+
+		typeSettingsUnicodeProperties.setProperty("published", "true");
+
+		layoutModel.setTypeSettings(
+			StringUtil.replace(
+				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
+
+		layoutModel.setLastPublishDate(new Date());
+
+		return layoutModel;
 	}
 
 	public LayoutModel newLayoutModel(
@@ -237,10 +292,6 @@ public class LayoutDataFactory extends BaseDataFactory {
 	public List<LayoutModel> newPublicLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "welcome", LoginPortletKeys.LOGIN + ",",
-				HelloWorldPortletKeys.HELLO_WORLD + ","));
 		layoutModels.add(
 			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(
