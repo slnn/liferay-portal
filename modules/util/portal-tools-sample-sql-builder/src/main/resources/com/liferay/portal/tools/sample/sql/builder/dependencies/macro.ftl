@@ -48,6 +48,30 @@
 	${resourcePermissionDataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 </#macro>
 
+<#macro insertContentLayout
+	_layoutModels
+>
+	<#local fragmentEntryLinkModels = fragmentDataFactory.newFragmentEntryLinkModels(_layoutModels)>
+
+	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+		${resourcePermissionDataFactory.toInsertSQL(fragmentEntryLinkModel)}
+	</#list>
+
+	<#list _layoutModels as layoutModel>
+		${resourcePermissionDataFactory.toInsertSQL(layoutModel)}
+
+		${resourcePermissionDataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(layoutModel))}
+
+		<#local layoutPageTemplateStructureModel = fragmentDataFactory.newLayoutPageTemplateStructureModel(layoutModel)>
+
+		${resourcePermissionDataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
+
+		<#local layoutPageTemplateStructureRelModel = fragmentDataFactory.newLayoutPageTemplateStructureRelModel(layoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels)>
+
+		${resourcePermissionDataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+	</#list>
+</#macro>
+
 <#macro insertDDMContent
 	_ddmStorageLinkId
 	_ddmStructureId

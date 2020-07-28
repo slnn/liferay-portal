@@ -211,6 +211,28 @@ public class DLDataFactory extends BaseDDMDataFactory {
 		return dlFileVersionModel;
 	}
 
+	public DLFolderModel newDLFolderModel(long groupId, long parentFolderId) {
+		DLFolderModel dlFolderModel = new DLFolderModelImpl();
+
+		dlFolderModel.setUuid(SequentialUUID.generate());
+		dlFolderModel.setFolderId(counter.get());
+		dlFolderModel.setGroupId(groupId);
+		dlFolderModel.setCompanyId(COMPANY_ID);
+		dlFolderModel.setUserId(SAMPLE_USER_ID);
+		dlFolderModel.setUserName(SAMPLE_USER_NAME);
+		dlFolderModel.setCreateDate(nextFutureDate());
+		dlFolderModel.setModifiedDate(nextFutureDate());
+		dlFolderModel.setRepositoryId(groupId);
+		dlFolderModel.setParentFolderId(parentFolderId);
+		dlFolderModel.setName("Test Folder");
+		dlFolderModel.setLastPostDate(nextFutureDate());
+		dlFolderModel.setDefaultFileEntryTypeId(_defaultDLFileEntryTypeId);
+		dlFolderModel.setLastPublishDate(nextFutureDate());
+		dlFolderModel.setStatusDate(nextFutureDate());
+
+		return dlFolderModel;
+	}
+
 	public List<DLFolderModel> newDLFolderModels(
 		long groupId, long parentFolderId) {
 
