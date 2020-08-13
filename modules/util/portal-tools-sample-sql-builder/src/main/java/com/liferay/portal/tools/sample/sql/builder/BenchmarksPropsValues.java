@@ -39,6 +39,9 @@ public class BenchmarksPropsValues {
 	public static final String ACTUAL_PROPERTIES_CONTENT =
 		PropertiesHolder._ACTUAL_PROPERTIES_CONTENT;
 
+	public static final int CT_INDEX = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.CT_INDEX));
+
 	public static final DBType DB_TYPE = DBType.valueOf(
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
@@ -90,6 +93,25 @@ public class BenchmarksPropsValues {
 
 	public static final int MAX_CONTENT_LAYOUT_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT));
+
+	public static final int MAX_CT_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CT_COUNT));
+
+	public static final int MAX_CT_JOURNAL_ARTICLE_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_COUNT));
+
+	public static final int MAX_CT_JOURNAL_FOLDER_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CT_JOURNAL_FOLDER_COUNT));
+
+	public static final int MAX_CT_PAGE_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CT_PAGE_COUNT));
+
+	public static final int MAX_CT_WEBCONTENT_DISPLAY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_CT_WEBCONTENT_DISPLAY_COUNT));
 
 	public static final int MAX_DDL_CUSTOM_FIELD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT));

@@ -31,6 +31,8 @@ import com.liferay.document.library.kernel.model.DLFolderModel;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
@@ -40,6 +42,8 @@ import com.liferay.message.boards.model.MBThreadModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupModel;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.util.PropsValues;
@@ -296,6 +300,72 @@ public class AssetDataFactory extends BaseDataFactory {
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
+	public List<AssetEntryModel> newAssetEntryModels(
+		List<JournalArticleModel> journalArticleModels,
+		List<JournalArticleLocalizationModel>
+			journalArticleLocalizationModels) {
+
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		for (int i = 0; i < journalArticleModels.size(); i++) {
+			JournalArticleModel journalArticleModel = journalArticleModels.get(
+				i);
+
+			JournalArticleLocalizationModel journalArticleLocalizationModel =
+				journalArticleLocalizationModels.get(i);
+
+			long resourcePrimKey = journalArticleModel.getResourcePrimKey();
+
+			String resourceUUID = journalArticleResourceUUIDs.get(
+				resourcePrimKey);
+
+			assetEntryModels.add(
+				_newAssetEntryModel(
+					journalArticleModel.getGroupId(),
+					journalArticleModel.getCreateDate(),
+					journalArticleModel.getModifiedDate(),
+					getClassNameId(JournalArticle.class), resourcePrimKey,
+					resourceUUID, DEFAULT_JOURNAL_DDM_STRUCTURE_ID,
+					journalArticleModel.isIndexable(), true,
+					ContentTypes.TEXT_HTML,
+					journalArticleLocalizationModel.getTitle(),
+					journalArticleModel.getUserId(),
+					journalArticleModel.getCtCollectionId()));
+		}
+
+		cTEntryMap.put(
+			AssetEntry.class.getName() + "-article", assetEntryModels);
+
+		return assetEntryModels;
+	}
+
+	public List<AssetEntryModel> newAssetEntryModels(
+		List<JournalFolderModel> journalFolderModels) {
+
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalFolderModels.forEach(
+			journalFolderModel -> assetEntryModels.add(
+				_newAssetEntryModel(
+					journalFolderModel.getGroupId(),
+					journalFolderModel.getCreateDate(),
+					journalFolderModel.getModifiedDate(),
+					getClassNameId(JournalFolder.class),
+					journalFolderModel.getFolderId(),
+					journalFolderModel.getUuid(), 0, true, true,
+					ContentTypes.TEXT_PLAIN, journalFolderModel.getName(),
+					journalFolderModel.getUserId(),
+					journalFolderModel.getCtCollectionId())));
+
+		cTEntryMap.put(
+			AssetEntry.class.getName() + "-folder", assetEntryModels);
+
+		return assetEntryModels;
+	}
+
 	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
 		CPDefinitionModel cpDefinitionModel,
 		GroupModel commerceCatalogGroupModel) {
@@ -306,6 +376,33 @@ public class AssetDataFactory extends BaseDataFactory {
 			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
 			true, true, "text/plain",
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
+	}
+
+	public List<AssetEntryModel> newLayoutAssetEntryModels(
+		List<LayoutModel> layoutModels) {
+
+		List<AssetEntryModel> assetEntryModels = new ArrayList<>(
+			layoutModels.size());
+
+		layoutModels.forEach(
+			layoutModel -> {
+				String title = layoutModel.getFriendlyURL();
+
+				title = title.substring(1);
+
+				assetEntryModels.add(
+					_newAssetEntryModel(
+						layoutModel.getGroupId(), layoutModel.getCreateDate(),
+						layoutModel.getModifiedDate(),
+						getClassNameId(Layout.class), layoutModel.getPlid(),
+						layoutModel.getUuid(), 0, true, false,
+						ContentTypes.TEXT_HTML, title, layoutModel.getUserId(),
+						layoutModel.getCtCollectionId()));
+			});
+
+		cTEntryMap.put(AssetEntry.class.getName() + "-page", assetEntryModels);
+
+		return assetEntryModels;
 	}
 
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
@@ -600,6 +697,17 @@ public class AssetDataFactory extends BaseDataFactory {
 		long classPK, String uuid, long classTypeId, boolean listable,
 		boolean visible, String mimeType, String title) {
 
+		return _newAssetEntryModel(
+			groupId, createDate, modifiedDate, classNameId, classPK, uuid,
+			classTypeId, listable, visible, mimeType, title, SAMPLE_USER_ID, 0);
+	}
+
+	private AssetEntryModel _newAssetEntryModel(
+		long groupId, Date createDate, Date modifiedDate, long classNameId,
+		long classPK, String uuid, long classTypeId, boolean listable,
+		boolean visible, String mimeType, String title, long userId,
+		long ctCollectionId) {
+
 		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
 
 		// PK fields
@@ -613,7 +721,7 @@ public class AssetDataFactory extends BaseDataFactory {
 		// Audit fields
 
 		assetEntryModel.setCompanyId(COMPANY_ID);
-		assetEntryModel.setUserId(SAMPLE_USER_ID);
+		assetEntryModel.setUserId(userId);
 		assetEntryModel.setUserName(SAMPLE_USER_NAME);
 		assetEntryModel.setCreateDate(createDate);
 		assetEntryModel.setModifiedDate(modifiedDate);
@@ -632,6 +740,10 @@ public class AssetDataFactory extends BaseDataFactory {
 		assetEntryModel.setExpirationDate(nextFutureDate());
 		assetEntryModel.setMimeType(mimeType);
 		assetEntryModel.setTitle(title);
+
+		// Autogenerated fields
+
+		assetEntryModel.setCtCollectionId(ctCollectionId);
 
 		return assetEntryModel;
 	}
