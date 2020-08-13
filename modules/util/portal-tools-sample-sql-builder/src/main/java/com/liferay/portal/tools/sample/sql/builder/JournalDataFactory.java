@@ -16,11 +16,13 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
@@ -32,8 +34,10 @@ import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.journal.model.JournalContentSearchModel;
 import com.liferay.journal.model.JournalFolder;
@@ -140,6 +144,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		journalArticleModels.forEach(
 			journalArticleModel -> dDMStorageLinkModels.add(
 				newDDMStorageLinkModel(journalArticleModel, templateId)));
+		cTEntryMap.put(DDMStorageLink.class.getName(), dDMStorageLinkModels);
 
 		return dDMStorageLinkModels;
 	}
@@ -185,6 +190,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		journalArticleModels.forEach(
 			journalArticleModel -> dDMTemplateLinkModels.add(
 				newDDMTemplateLinkModel(journalArticleModel, templateId)));
+
+		cTEntryMap.put(DDMTemplateLink.class.getName(), dDMTemplateLinkModels);
 
 		return dDMTemplateLinkModels;
 	}
@@ -298,6 +305,10 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 			}
 		}
 
+		cTEntryMap.put(
+			JournalArticleLocalization.class.getName(),
+			journalArticleLocalizationModels);
+
 		return journalArticleLocalizationModels;
 	}
 
@@ -351,6 +362,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 				}
 			}
 		}
+
+		cTEntryMap.put(JournalArticle.class.getName(), journalArticleModels);
 
 		return journalArticleModels;
 	}
@@ -417,6 +430,10 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 							groupId, journalFolderModel.getCtCollectionId()));
 				}
 			});
+
+		cTEntryMap.put(
+			JournalArticleResource.class.getName(),
+			journalArticleResourceModels);
 
 		return journalArticleResourceModels;
 	}
@@ -510,6 +527,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 				_newJournalFolderModel(
 					cTCollectionModel, groupId, "Journal Folder " + (i + 1)));
 		}
+
+		cTEntryMap.put(JournalFolder.class.getName(), journalFolderModels);
 
 		return journalFolderModels;
 	}

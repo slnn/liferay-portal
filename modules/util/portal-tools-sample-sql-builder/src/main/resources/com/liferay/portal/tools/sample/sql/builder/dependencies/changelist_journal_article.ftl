@@ -21,6 +21,7 @@ ${insertSQLBuilder.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionM
 			journalPagePortletPreferencesModels = portletPreferenceDataFactory.newJournalPortletPreferencesModels(layoutModels)
 			journalArticlePortletPreferencesModels = portletPreferenceDataFactory.newJournalArticlePortletPreferencesModels(layoutModels, journalArticleResourceModels)
 			journalContentSearchModels = journalDataFactory.newJournalContentSearchModels(journalArticleModels, layoutModels)
+			cTEntryModels = cTDataFactory.newCTEntryModels(cTCollectionModel)
 		/>
 
 		<#list journalFolderModels as journalFolderModel>
@@ -81,5 +82,9 @@ ${insertSQLBuilder.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionM
 
 		<#list journalContentSearchModels as journalContentSearchModel>
 			${insertSQLBuilder.toInsertSQL(journalContentSearchModel)}
+		</#list>
+
+		<#list cTEntryModels as cTEntryModel>
+			${insertSQLBuilder.toInsertSQL(cTEntryModel)}
 		</#list>
 </#list>
