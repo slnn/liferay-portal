@@ -6,7 +6,7 @@
 />
 
 <#if cTDataFactory.maxCTCount gt 0>
-	${resourcePermissionDataFactory.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
+	${insertSQLBuilder.toInsertSQL(cTDataFactory.newCTPreferencesModel())}
 </#if>
 
 <#list userModels as userModel>
