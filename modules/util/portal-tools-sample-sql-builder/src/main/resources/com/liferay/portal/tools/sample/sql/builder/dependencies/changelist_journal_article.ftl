@@ -15,6 +15,12 @@ ${insertSQLBuilder.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionM
 			dDMStorageLinkModels = journalDataFactory.newDDMStorageLinkModels(journalArticleModels, ddmStructureModel.structureId)
 			socialActivityModels = socialActivityDataFactory.newSocialActivityModels(journalArticleModels)
 			articleAssetEntryModels = assetDataFactory.newAssetEntryModels(journalArticleModels, journalArticleLocalizationModels)
+			layoutModels = layoutDataFactory.newLayoutModels(groupId, cTCollectionModel)
+			layoutFriendlyURLModels = layoutDataFactory.newLayoutFriendlyURLModels(layoutModels)
+			layoutAssetEntryModels = assetDataFactory.newLayoutAssetEntryModels(layoutModels)
+			journalPagePortletPreferencesModels = portletPreferenceDataFactory.newJournalPortletPreferencesModels(layoutModels)
+			journalArticlePortletPreferencesModels = portletPreferenceDataFactory.newJournalArticlePortletPreferencesModels(layoutModels, journalArticleResourceModels)
+			journalContentSearchModels = journalDataFactory.newJournalContentSearchModels(journalArticleModels, layoutModels)
 		/>
 
 		<#list journalFolderModels as journalFolderModel>
@@ -51,5 +57,29 @@ ${insertSQLBuilder.toInsertSQL(cTDataFactory.newCTPreferencesModel(cTCollectionM
 
 		<#list articleAssetEntryModels as articleAssetEntryModel>
 			${insertSQLBuilder.toInsertSQL(articleAssetEntryModel)}
+		</#list>
+
+		<#list layoutModels as layoutModel>
+			${insertSQLBuilder.toInsertSQL(layoutModel)}
+		</#list>
+
+		<#list layoutFriendlyURLModels as layoutFriendlyURLModel>
+			${insertSQLBuilder.toInsertSQL(layoutFriendlyURLModel)}
+		</#list>
+
+		<#list layoutAssetEntryModels as layoutAssetEntryModel>
+			${insertSQLBuilder.toInsertSQL(layoutAssetEntryModel)}
+		</#list>
+
+		<#list journalPagePortletPreferencesModels as journalPagePortletPreferencesModel>
+			${insertSQLBuilder.toInsertSQL(journalPagePortletPreferencesModel)}
+		</#list>
+
+		<#list journalArticlePortletPreferencesModels as journalArticlePortletPreferencesModel>
+			${insertSQLBuilder.toInsertSQL(journalArticlePortletPreferencesModel)}
+		</#list>
+
+		<#list journalContentSearchModels as journalContentSearchModel>
+			${insertSQLBuilder.toInsertSQL(journalContentSearchModel)}
 		</#list>
 </#list>
