@@ -538,15 +538,6 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		JournalFolderModel journalFolderModel) {
-
-		return newResourcePermissionModels(
-			JournalFolder.class.getName(),
-			String.valueOf(journalFolderModel.getFolderId()),
-			journalFolderModel.getUserId());
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
 		String name, long primKey) {
 
 		return newResourcePermissionModels(
