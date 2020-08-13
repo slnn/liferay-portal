@@ -14,8 +14,19 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTPreferencesModel;
+import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
 import com.liferay.change.tracking.model.impl.CTPreferencesModelImpl;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.ResourcePermissionModel;
+import com.liferay.portal.kernel.model.UserModel;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Lily Chi
@@ -27,6 +38,25 @@ public class CTDataFactory extends BaseDataFactory {
 
 	public int getMaxCTCount() {
 		return BenchmarksPropsValues.MAX_CT_COUNT;
+	}
+
+	public List<CTCollectionModel> newCTCollectionModels(UserModel userModel) {
+		List<CTCollectionModel> cTCollectionModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_CT_COUNT; i++) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Change List ");
+			sb.append(i + 1);
+			sb.append(" of ");
+			sb.append(userModel.getScreenName());
+
+			cTCollectionModels.add(
+				_newCTCollectionModel(userModel, sb.toString()));
+		}
+
+		return cTCollectionModels;
 	}
 
 	public CTPreferencesModel newCTPreferencesModel() {
@@ -41,6 +71,41 @@ public class CTDataFactory extends BaseDataFactory {
 		cTPreferencesModel.setCompanyId(COMPANY_ID);
 
 		return cTPreferencesModel;
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CTCollectionModel cTCollectionModel) {
+
+		return Collections.singletonList(
+			newResourcePermissionModel(
+				CTCollection.class.getName(),
+				String.valueOf(cTCollectionModel.getCtCollectionId()),
+				OWNER_ROLE_ID, cTCollectionModel.getUserId()));
+	}
+
+	private CTCollectionModel _newCTCollectionModel(
+		UserModel userModel, String name) {
+
+		CTCollectionModel cTCollectionModel = new CTCollectionModelImpl();
+
+		// PK fields
+
+		cTCollectionModel.setCtCollectionId(cTCollectionCounter.get());
+
+		// Audit fields
+
+		cTCollectionModel.setCompanyId(userModel.getCompanyId());
+		cTCollectionModel.setCreateDate(new Date());
+		cTCollectionModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cTCollectionModel.setName(name);
+		cTCollectionModel.setStatus(2);
+		cTCollectionModel.setStatusByUserId(0);
+		cTCollectionModel.setUserId(userModel.getUserId());
+
+		return cTCollectionModel;
 	}
 
 }
