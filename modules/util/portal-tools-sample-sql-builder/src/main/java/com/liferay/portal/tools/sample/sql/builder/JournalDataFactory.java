@@ -139,6 +139,20 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return ddmStorageLinkModel;
 	}
 
+	public List<DDMStorageLinkModel> newDDMStorageLinkModels(
+		List<JournalArticleModel> journalArticleModels, long templateId) {
+
+		List<DDMStorageLinkModel> dDMStorageLinkModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalArticleModels.forEach(
+			journalArticleModel -> dDMStorageLinkModels.add(
+				newDDMStorageLinkModel(journalArticleModel, templateId)));
+
+		return dDMStorageLinkModels;
+	}
+
 	public DDMTemplateLinkModel newDDMTemplateLinkModel(
 		JournalArticleModel journalArticleModel, long templateId) {
 
@@ -168,6 +182,20 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		}
 
 		return ddmTemplateLinkModel;
+	}
+
+	public List<DDMTemplateLinkModel> newDDMTemplateLinkModels(
+		List<JournalArticleModel> journalArticleModels, long templateId) {
+
+		List<DDMTemplateLinkModel> dDMTemplateLinkModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalArticleModels.forEach(
+			journalArticleModel -> dDMTemplateLinkModels.add(
+				newDDMTemplateLinkModel(journalArticleModel, templateId)));
+
+		return dDMTemplateLinkModels;
 	}
 
 	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel() {
@@ -244,34 +272,42 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		JournalArticleModel journalArticleModel, int articleIndex,
 		int versionIndex) {
 
-		JournalArticleLocalizationModel journalArticleLocalizationModel =
-			new JournalArticleLocalizationModelImpl();
+		return _newJournalArticleLocalizationModel(
+			journalArticleModel, articleIndex, versionIndex, 0);
+	}
 
-		StringBundler sb = new StringBundler(4);
+	public List<JournalArticleLocalizationModel>
+		newJournalArticleLocalizationModels(
+			List<JournalArticleModel> journalArticleModels,
+			List<JournalFolderModel> journalFolderModels) {
 
-		sb.append("TestJournalArticle_");
-		sb.append(articleIndex);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(versionIndex);
+		List<JournalArticleLocalizationModel> journalArticleLocalizationModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+					BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
 
-		// PK fields
+		int i = 0;
 
-		journalArticleLocalizationModel.setArticleLocalizationId(counter.get());
+		for (JournalFolderModel journalFolderModel : journalFolderModels) {
+			int j = 0;
 
-		// Audit fields
+			while (true) {
+				journalArticleLocalizationModels.add(
+					_newJournalArticleLocalizationModel(
+						journalArticleModels.get(i), j + 1, _CT_ARTICLE_VERSION,
+						journalFolderModel.getCtCollectionId()));
+				i++;
+				j++;
 
-		journalArticleLocalizationModel.setCompanyId(
-			journalArticleModel.getCompanyId());
+				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
+						0) {
 
-		// Other fields
+					break;
+				}
+			}
+		}
 
-		journalArticleLocalizationModel.setArticlePK(
-			journalArticleModel.getId());
-		journalArticleLocalizationModel.setTitle(sb.toString());
-		journalArticleLocalizationModel.setLanguageId(
-			journalArticleModel.getDefaultLanguageId());
-
-		return journalArticleLocalizationModel;
+		return journalArticleLocalizationModels;
 	}
 
 	public JournalArticleModel newJournalArticleModel(
@@ -288,6 +324,44 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		}
 
 		return journalArticleModel;
+	}
+
+	public List<JournalArticleModel> newJournalArticleModels(
+			List<JournalArticleResourceModel> journalArticleResourceModels,
+			List<JournalFolderModel> journalFolderModels)
+		throws PortalException {
+
+		List<JournalArticleModel> journalArticleModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+				BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		int i = 0;
+
+		for (JournalFolderModel journalFolderModel : journalFolderModels) {
+			int j = 0;
+
+			while (true) {
+				journalArticleModels.add(
+					_newJournalArticleModel(
+						journalArticleResourceModels.get(i), j + 1,
+						_CT_ARTICLE_VERSION,
+						journalFolderModel.getCtCollectionId(),
+						journalFolderModel.getUserId(),
+						journalFolderModel.getUserName(),
+						journalFolderModel.getFolderId(),
+						"/" + journalFolderModel.getFolderId() + "/"));
+				i++;
+				j++;
+
+				if ((i % BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT) ==
+						0) {
+
+					break;
+				}
+			}
+		}
+
+		return journalArticleModels;
 	}
 
 	public JournalArticleResourceModel newJournalArticleResourceModel(
@@ -331,6 +405,29 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 			journalArticleResourceModel.getUuid());
 
 		return journalArticleResourceModel;
+	}
+
+	public List<JournalArticleResourceModel> newJournalArticleResourceModels(
+		long groupId, List<JournalFolderModel> journalFolderModels) {
+
+		List<JournalArticleResourceModel> journalArticleResourceModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT *
+					BenchmarksPropsValues.MAX_CT_JOURNAL_FOLDER_COUNT);
+
+		journalFolderModels.forEach(
+			journalFolderModel -> {
+				for (int i = 0;
+					 i < BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT;
+					 i++) {
+
+					journalArticleResourceModels.add(
+						newJournalArticleResourceModel(
+							groupId, journalFolderModel.getCtCollectionId()));
+				}
+			});
+
+		return journalArticleResourceModels;
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
@@ -519,6 +616,44 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return ddmTemplateModel;
 	}
 
+	private JournalArticleLocalizationModel _newJournalArticleLocalizationModel(
+		JournalArticleModel journalArticleModel, int articleIndex,
+		int versionIndex, long ctCollectionId) {
+
+		JournalArticleLocalizationModel journalArticleLocalizationModel =
+			new JournalArticleLocalizationModelImpl();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(versionIndex);
+
+		// PK fields
+
+		journalArticleLocalizationModel.setArticleLocalizationId(counter.get());
+
+		// Audit fields
+
+		journalArticleLocalizationModel.setCompanyId(
+			journalArticleModel.getCompanyId());
+
+		// Other fields
+
+		journalArticleLocalizationModel.setArticlePK(
+			journalArticleModel.getId());
+		journalArticleLocalizationModel.setTitle(sb.toString());
+		journalArticleLocalizationModel.setLanguageId(
+			journalArticleModel.getDefaultLanguageId());
+
+		// Autogenerated fields
+
+		journalArticleLocalizationModel.setCtCollectionId(ctCollectionId);
+
+		return journalArticleLocalizationModel;
+	}
+
 	private JournalArticleModel _newJournalArticleModel(
 			JournalArticleResourceModel journalArticleResourceModel,
 			int articleIndex, int versionIndex, long ctCollectionId,
@@ -633,6 +768,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		return journalFolderModel;
 	}
+
+	private static final int _CT_ARTICLE_VERSION = 1;
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 
