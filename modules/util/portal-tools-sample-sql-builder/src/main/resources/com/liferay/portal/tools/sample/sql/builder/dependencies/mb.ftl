@@ -13,7 +13,10 @@
 
 		${insertSQLBuilder.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(mbThreadModel))}
 
-		<@insertAssetEntry _entry=mbThreadModel />
+		<@insertAssetEntry
+			_classNameIds=[classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBThread")]
+			_entry=mbThreadModel
+		/>
 
 		${insertSQLBuilder.toInsertSQL(messageBoardDataFactory.newMBThreadFlagModel(mbThreadModel))}
 

@@ -3,12 +3,15 @@
 <#list wikiNodeModels as wikiNodeModel>
 	${insertSQLBuilder.toInsertSQL(wikiNodeModel)}
 
-	<#assign wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel) />
+	<#assign
+		wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel)
+		wikiPageClassNameId = classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage")
+	/>
 
 	<#list wikiPageModels as wikiPageModel>
 		${insertSQLBuilder.toInsertSQL(wikiPageModel)}
 
-		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel))}
+		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel), wikiPageClassNameId)}
 
 		${insertSQLBuilder.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel))}
 
@@ -16,6 +19,7 @@
 
 		<@insertAssetEntry
 			_categoryAndTag=true
+			_classNameIds=[classNameDataFactory.wikiPageClassNameId]
 			_entry=wikiPageModel
 		/>
 

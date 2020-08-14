@@ -5,7 +5,10 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 <#list blogsEntryModels as blogsEntryModel>
 	${insertSQLBuilder.toInsertSQL(blogsEntryModel)}
 
-	<#assign friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel) />
+	<#assign
+		friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel)
+		blogsEntryClassNameId = classNameDataFactory.getClassNameId("com.liferay.blogs.model.BlogsEntry")
+	/>
 
 	${insertSQLBuilder.toInsertSQL(friendlyURLEntryModel)}
 
@@ -13,10 +16,11 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 
 	${insertSQLBuilder.toInsertSQL(blogDataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
 
-	${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(blogsEntryModel))}
+	${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(blogsEntryModel, blogsEntryClassNameId))}
 
 	<@insertAssetEntry
 		_categoryAndTag=true
+		_classNameIds=[blogsEntryClassNameId]
 		_entry=blogsEntryModel
 	/>
 

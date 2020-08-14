@@ -16,26 +16,17 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionModel;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderModel;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.model.MBDiscussion;
-import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageModel;
-import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,10 +39,6 @@ import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.util.SimpleCounter;
-import com.liferay.view.count.model.ViewCountEntryModel;
-import com.liferay.view.count.model.impl.ViewCountEntryModelImpl;
-import com.liferay.view.count.service.persistence.ViewCountEntryPK;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
 
 import java.util.ArrayList;
@@ -207,47 +194,50 @@ public class AssetDataFactory extends BaseDataFactory {
 		return BenchmarksPropsValues.MAX_ASSETPUBLISHER_PAGE_COUNT;
 	}
 
-	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
+	public AssetEntryModel newAssetEntryModel(
+		BlogsEntryModel blogsEntryModel, long[] classNameIds) {
+
 		return _newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(),
-			ClassNameBuilder.getClassNameId(BlogsEntry.class),
+			blogsEntryModel.getModifiedDate(), classNameIds[0],
 			blogsEntryModel.getEntryId(), blogsEntryModel.getUuid(), 0, true,
 			true, ContentTypes.TEXT_HTML, blogsEntryModel.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(
-		DLFileEntryModel dLFileEntryModel) {
+		DLFileEntryModel dLFileEntryModel, long[] classNameIds) {
 
 		return _newAssetEntryModel(
 			dLFileEntryModel.getGroupId(), dLFileEntryModel.getCreateDate(),
-			dLFileEntryModel.getModifiedDate(),
-			ClassNameBuilder.getClassNameId(DLFileEntry.class),
+			dLFileEntryModel.getModifiedDate(), classNameIds[0],
 			dLFileEntryModel.getFileEntryId(), dLFileEntryModel.getUuid(),
 			dLFileEntryModel.getFileEntryTypeId(), true, true,
 			dLFileEntryModel.getMimeType(), dLFileEntryModel.getTitle());
 	}
 
-	public AssetEntryModel newAssetEntryModel(DLFolderModel dLFolderModel) {
+	public AssetEntryModel newAssetEntryModel(
+		DLFolderModel dLFolderModel, long[] classNameIds) {
+
 		return _newAssetEntryModel(
 			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
-			dLFolderModel.getModifiedDate(),
-			ClassNameBuilder.getClassNameId(DLFolder.class),
+			dLFolderModel.getModifiedDate(), classNameIds[0],
 			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
 			null, dLFolderModel.getName());
 	}
 
-	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
+	public AssetEntryModel newAssetEntryModel(
+		MBMessageModel mbMessageModel, long[] classNameIds) {
+
 		long classNameId = 0;
 		boolean visible = false;
 
 		if (mbMessageModel.getCategoryId() ==
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
 
-			classNameId = ClassNameBuilder.getClassNameId(MBDiscussion.class);
+			classNameId = classNameIds[0];
 		}
 		else {
-			classNameId = ClassNameBuilder.getClassNameId(MBMessage.class);
+			classNameId = classNameIds[1];
 			visible = true;
 		}
 
@@ -258,11 +248,12 @@ public class AssetDataFactory extends BaseDataFactory {
 			visible, ContentTypes.TEXT_HTML, mbMessageModel.getSubject());
 	}
 
-	public AssetEntryModel newAssetEntryModel(MBThreadModel mbThreadModel) {
+	public AssetEntryModel newAssetEntryModel(
+		MBThreadModel mbThreadModel, long[] classNameIds) {
+
 		return _newAssetEntryModel(
 			mbThreadModel.getGroupId(), mbThreadModel.getCreateDate(),
-			mbThreadModel.getModifiedDate(),
-			ClassNameBuilder.getClassNameId(MBThread.class),
+			mbThreadModel.getModifiedDate(), classNameIds[0],
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
 			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
@@ -270,7 +261,8 @@ public class AssetDataFactory extends BaseDataFactory {
 
 	public AssetEntryModel newAssetEntryModel(
 		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
-			objectValuePair) {
+			objectValuePair,
+		long[] classNameIds) {
 
 		JournalArticleModel journalArticleModel = objectValuePair.getKey();
 		JournalArticleLocalizationModel journalArticleLocalizationModel =
@@ -283,63 +275,51 @@ public class AssetDataFactory extends BaseDataFactory {
 		return _newAssetEntryModel(
 			journalArticleModel.getGroupId(),
 			journalArticleModel.getCreateDate(),
-			journalArticleModel.getModifiedDate(),
-			ClassNameBuilder.getClassNameId(JournalArticle.class),
+			journalArticleModel.getModifiedDate(), classNameIds[0],
 			resourcePrimKey, resourceUUID, DEFAULT_JOURNAL_DDM_STRUCTURE_ID,
 			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
 			journalArticleLocalizationModel.getTitle());
 	}
 
-	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
+	public AssetEntryModel newAssetEntryModel(
+		WikiPageModel wikiPageModel, long[] classNameIds) {
+
 		return _newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(),
-			ClassNameBuilder.getClassNameId(WikiPage.class),
+			wikiPageModel.getModifiedDate(), classNameIds[0],
 			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
 	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
 		CPDefinitionModel cpDefinitionModel,
-		GroupModel commerceCatalogGroupModel) {
+		GroupModel commerceCatalogGroupModel, long classNameId) {
 
 		return _newAssetEntryModel(
 			commerceCatalogGroupModel.getGroupId(), new Date(), new Date(),
-			ClassNameBuilder.getClassNameId(CPDefinition.class),
-			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
-			true, true, "text/plain",
+			classNameId, cpDefinitionModel.getCPDefinitionId(),
+			SequentialUUID.generate(), 0, true, true, "text/plain",
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
 	}
 
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
-		BlogsEntryModel blogsEntryModel) {
+		BlogsEntryModel blogsEntryModel, long classNameId) {
 
 		return _newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(),
-			ClassNameBuilder.getCombinedClassNameId(BlogsEntry.class),
+			blogsEntryModel.getModifiedDate(), classNameId,
 			blogsEntryModel.getEntryId(), "", 0, true, false, "",
 			String.valueOf(blogsEntryModel.getGroupId()));
 	}
 
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
-		WikiPageModel wikiPageModel) {
+		WikiPageModel wikiPageModel, long classNameId) {
 
 		return _newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(),
-			ClassNameBuilder.getCombinedClassNameId(WikiPage.class),
+			wikiPageModel.getModifiedDate(), classNameId,
 			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
 			String.valueOf(wikiPageModel.getGroupId()));
-	}
-
-	public ViewCountEntryModel newViewCountEntryModel(
-		AssetEntryModel assetEntryModel) {
-
-		return _newViewCountEntryModel(
-			assetEntryModel.getCompanyId(),
-			ClassNameBuilder.getClassNameId(AssetEntry.class),
-			assetEntryModel.getPrimaryKey(), 0);
 	}
 
 	protected AssetVocabularyModel newAssetVocabularyModel(
@@ -643,28 +623,6 @@ public class AssetDataFactory extends BaseDataFactory {
 		assetEntryModel.setTitle(title);
 
 		return assetEntryModel;
-	}
-
-	private ViewCountEntryModel _newViewCountEntryModel(
-		long companyId, long classNameId, long classPK, long viewCount) {
-
-		ViewCountEntryModel viewCountEntryModel = new ViewCountEntryModelImpl();
-
-		// PK fields
-
-		viewCountEntryModel.setCompanyId(companyId);
-		viewCountEntryModel.setClassNameId(classNameId);
-		viewCountEntryModel.setClassPK(classPK);
-
-		// Other fields
-
-		viewCountEntryModel.setViewCount(viewCount);
-
-		// Autogenerated fields
-
-		viewCountEntryModel.setPrimaryKey(new ViewCountEntryPK());
-
-		return viewCountEntryModel;
 	}
 
 	private static AssetDataFactory _assetDataFactory = new AssetDataFactory();
