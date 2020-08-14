@@ -6,8 +6,8 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 	${insertSQLBuilder.toInsertSQL(blogsEntryModel)}
 
 	<#assign
-		friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel)
 		blogsEntryClassNameId = classNameDataFactory.getClassNameId("com.liferay.blogs.model.BlogsEntry")
+		friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel, blogsEntryClassNameId)
 	/>
 
 	${insertSQLBuilder.toInsertSQL(friendlyURLEntryModel)}
@@ -27,7 +27,7 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 	<#assign mbRootMessageId = counterDataFactory.getCounterNext() />
 
 	<@insertMBDiscussion
-		_classNameId=blogDataFactory.blogsEntryClassNameId
+		_classNameId=blogsEntryClassNameId
 		_classPK=blogsEntryModel.entryId
 		_groupId=groupId
 		_maxCommentCount=blogDataFactory.maxBlogsEntryCommentCount
