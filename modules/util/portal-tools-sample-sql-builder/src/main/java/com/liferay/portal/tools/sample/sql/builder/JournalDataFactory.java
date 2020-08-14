@@ -63,12 +63,8 @@ import javax.portlet.PortletPreferences;
  */
 public class JournalDataFactory extends BaseDDMDataFactory {
 
-	public JournalDataFactory() throws Exception {
-		_defaultJournalDDMStructureVersionId = counter.get();
-		_defaultJournalDDMTemplateId = counter.get();
-
-		_initJournalArticleContent();
-		_initJournalDDMStructureContent();
+	public static JournalDataFactory getInstance() {
+		return _journalDataFactory;
 	}
 
 	public long getJournalArticleClassNameId() {
@@ -428,6 +424,14 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 			name, String.valueOf(primKey), SAMPLE_USER_ID);
 	}
 
+	private JournalDataFactory() {
+		_defaultJournalDDMStructureVersionId = counter.get();
+		_defaultJournalDDMTemplateId = counter.get();
+
+		_initJournalArticleContent();
+		_initJournalDDMStructureContent();
+	}
+
 	private void _initJournalArticleContent() {
 		int maxJournalArticleSize =
 			BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_SIZE;
@@ -456,7 +460,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		_journalArticleContent = sb.toString();
 	}
 
-	private void _initJournalDDMStructureContent() throws Exception {
+	private void _initJournalDDMStructureContent() {
 		_journalDDMStructureContent = readFile(
 			"ddm_structure_basic_web_content.json");
 		_journalDDMStructureLayoutContent = readFile(
@@ -518,6 +522,9 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	}
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
+
+	private static JournalDataFactory _journalDataFactory =
+		new JournalDataFactory();
 
 	private String _defaultJournalArticleId;
 	private final long _defaultJournalDDMStructureVersionId;

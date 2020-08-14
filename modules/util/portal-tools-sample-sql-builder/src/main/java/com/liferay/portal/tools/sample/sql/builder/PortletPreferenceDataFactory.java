@@ -44,10 +44,8 @@ import javax.portlet.PortletPreferences;
  */
 public class PortletPreferenceDataFactory extends BaseDataFactory {
 
-	public PortletPreferenceDataFactory() throws Exception {
-		_defaultAssetPublisherPortletPreferencesImpl =
-			(PortletPreferencesImpl)portletPreferencesFactory.fromDefaultXML(
-				readFile("default_asset_publisher_preference.xml"));
+	public static PortletPreferenceDataFactory getInstance() {
+		return _portletPreferenceDataFactory;
 	}
 
 	public long getNextAssetClassNameId(long groupId) {
@@ -240,6 +238,12 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 			portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
+	private PortletPreferenceDataFactory() {
+		_defaultAssetPublisherPortletPreferencesImpl =
+			(PortletPreferencesImpl)portletPreferencesFactory.fromDefaultXML(
+				readFile("default_asset_publisher_preference.xml"));
+	}
+
 	private ObjectValuePair<String[], Integer>
 		_getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
@@ -313,6 +317,9 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 		return portletPreferencesModel;
 	}
+
+	private static PortletPreferenceDataFactory _portletPreferenceDataFactory =
+		new PortletPreferenceDataFactory();
 
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();

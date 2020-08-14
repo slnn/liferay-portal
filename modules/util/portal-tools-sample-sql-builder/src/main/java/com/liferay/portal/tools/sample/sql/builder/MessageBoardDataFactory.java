@@ -41,6 +41,10 @@ import java.util.List;
  */
 public class MessageBoardDataFactory extends BaseDataFactory {
 
+	public static MessageBoardDataFactory getInstance() {
+		return _messageBoardDataFactory;
+	}
+
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
 		List<MBCategoryModel> mbCategoryModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_MB_CATEGORY_COUNT);
@@ -280,6 +284,9 @@ public class MessageBoardDataFactory extends BaseDataFactory {
 		return mbThreadModels;
 	}
 
+	private MessageBoardDataFactory() {
+	}
+
 	private MBCategoryModel _newMBCategoryModel(long groupId, int index) {
 		MBCategoryModel mbCategoryModel = new MBCategoryModelImpl();
 
@@ -398,5 +405,8 @@ public class MessageBoardDataFactory extends BaseDataFactory {
 
 		return mbThreadModel;
 	}
+
+	private static MessageBoardDataFactory _messageBoardDataFactory =
+		new MessageBoardDataFactory();
 
 }

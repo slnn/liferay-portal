@@ -50,6 +50,10 @@ import java.util.Date;
  */
 public class CommerceDataFactory extends BaseDataFactory {
 
+	public static CommerceDataFactory getInstance() {
+		return _commerceDataFactory;
+	}
+
 	public int getMaxCommerceProductCount() {
 		return BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT;
 	}
@@ -420,6 +424,9 @@ public class CommerceDataFactory extends BaseDataFactory {
 		return cpTaxCategoryModel;
 	}
 
+	private CommerceDataFactory() {
+	}
+
 	private CPFriendlyURLEntryModel _newCPFriendlyURLEntryModel(
 		long groupId, long classNameId, long classPK, String urlTitle) {
 
@@ -456,5 +463,8 @@ public class CommerceDataFactory extends BaseDataFactory {
 
 		return cpFriendlyURLEntryModel;
 	}
+
+	private static CommerceDataFactory _commerceDataFactory =
+		new CommerceDataFactory();
 
 }

@@ -47,13 +47,8 @@ import java.util.List;
  */
 public class DLDataFactory extends BaseDDMDataFactory {
 
-	public DLDataFactory() throws Exception {
-		_defaultDLDDMStructureId = counter.get();
-		_defaultDLDDMStructureVersionId = counter.get();
-
-		_dlDDMStructureContent = readFile("ddm_structure_basic_document.json");
-		_dlDDMStructureLayoutContent = readFile(
-			"ddm_structure_layout_basic_document.json");
+	public static DLDataFactory getInstance() {
+		return _dlDataFactory;
 	}
 
 	public long getDefaultDLDDMStructureId() {
@@ -265,6 +260,15 @@ public class DLDataFactory extends BaseDDMDataFactory {
 		return dlFolderModels;
 	}
 
+	private DLDataFactory() {
+		_defaultDLDDMStructureId = counter.get();
+		_defaultDLDDMStructureVersionId = counter.get();
+
+		_dlDDMStructureContent = readFile("ddm_structure_basic_document.json");
+		_dlDDMStructureLayoutContent = readFile(
+			"ddm_structure_layout_basic_document.json");
+	}
+
 	private DLFileEntryModel _newDlFileEntryModel(
 		DLFolderModel dlFolderModel, int index) {
 
@@ -345,6 +349,8 @@ public class DLDataFactory extends BaseDDMDataFactory {
 
 		return dlFolderModel;
 	}
+
+	private static DLDataFactory _dlDataFactory = new DLDataFactory();
 
 	private final long _defaultDLDDMStructureId;
 	private final long _defaultDLDDMStructureVersionId;

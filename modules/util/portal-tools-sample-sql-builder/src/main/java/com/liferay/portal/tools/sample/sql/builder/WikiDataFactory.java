@@ -33,6 +33,10 @@ import java.util.List;
  */
 public class WikiDataFactory extends BaseDataFactory {
 
+	public static WikiDataFactory getInstance() {
+		return _wikiDataFactory;
+	}
+
 	public int getMaxWikiPageCommentCount() {
 		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
 	}
@@ -84,6 +88,9 @@ public class WikiDataFactory extends BaseDataFactory {
 		wikiPageResourceModel.setTitle(wikiPageModel.getTitle());
 
 		return wikiPageResourceModel;
+	}
+
+	private WikiDataFactory() {
 	}
 
 	private WikiNodeModel _newWikiNodeModel(long groupId, int index) {
@@ -163,5 +170,7 @@ public class WikiDataFactory extends BaseDataFactory {
 
 		return wikiPageModel;
 	}
+
+	private static WikiDataFactory _wikiDataFactory = new WikiDataFactory();
 
 }

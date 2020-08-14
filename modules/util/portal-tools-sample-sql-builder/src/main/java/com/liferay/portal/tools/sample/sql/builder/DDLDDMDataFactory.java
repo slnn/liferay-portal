@@ -43,8 +43,8 @@ import java.util.Date;
  */
 public class DDLDDMDataFactory extends BaseDDMDataFactory {
 
-	public DDLDDMDataFactory() {
-		_defaultDDLDDMStructureVersionId = counter.get();
+	public static DDLDDMDataFactory getInstance() {
+		return _ddlDDMDataFactory;
 	}
 
 	public int getMaxDDLRecordCount() {
@@ -297,6 +297,10 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 			ddmStructureModel, _defaultDDLDDMStructureVersionId);
 	}
 
+	private DDLDDMDataFactory() {
+		_defaultDDLDDMStructureVersionId = counter.get();
+	}
+
 	private DDMStructureLinkModel _newDDMStructureLinkModel(
 		long classNameId, long classPK, long structureId) {
 
@@ -326,6 +330,9 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 
 		return sb.toString();
 	}
+
+	private static DDLDDMDataFactory _ddlDDMDataFactory =
+		new DDLDDMDataFactory();
 
 	private final long _defaultDDLDDMStructureVersionId;
 

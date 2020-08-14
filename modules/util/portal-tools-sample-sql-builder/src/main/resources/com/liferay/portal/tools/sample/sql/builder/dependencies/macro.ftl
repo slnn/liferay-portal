@@ -1,5 +1,24 @@
 <#setting number_format = "computer">
 
+<#assign
+	assetDataFactory = dataFactory.getDataFactoryInstance("assetDataFactory")
+	blogDataFactory = dataFactory.getDataFactoryInstance("blogDataFactory")
+	commerceDataFactory = dataFactory.getDataFactoryInstance("commerceDataFactory")
+	counterDataFactory = dataFactory.getDataFactoryInstance("counterDataFactory")
+	ddlDDMDataFactory = dataFactory.getDataFactoryInstance("ddlDDMDataFactory")
+	dlDataFactory = dataFactory.getDataFactoryInstance("dlDataFactory")
+	fragmentDataFactory = dataFactory.getDataFactoryInstance("fragmentDataFactory")
+	journalDataFactory = dataFactory.getDataFactoryInstance("journalDataFactory")
+	layoutDataFactory = dataFactory.getDataFactoryInstance("layoutDataFactory")
+	messageBoardDataFactory = dataFactory.getDataFactoryInstance("messageBoardDataFactory")
+	portletPreferenceDataFactory = dataFactory.getDataFactoryInstance("portletPreferenceDataFactory")
+	releaseDataFactory = dataFactory.getDataFactoryInstance("releaseDataFactory")
+	socialActivityDataFactory = dataFactory.getDataFactoryInstance("socialActivityDataFactory")
+	subscriptionDataFactory = dataFactory.getDataFactoryInstance("subscriptionDataFactory")
+	userDataFactory = dataFactory.getDataFactoryInstance("userDataFactory")
+	wikiDataFactory = dataFactory.getDataFactoryInstance("wikiDataFactory")
+/>
+
 <#macro insertAssetEntry
 	_entry
 	_categoryAndTag = false

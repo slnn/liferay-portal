@@ -45,6 +45,10 @@ import java.util.Map;
  */
 public class LayoutDataFactory extends BaseDataFactory {
 
+	public static LayoutDataFactory getInstance() {
+		return _layoutDataFactory;
+	}
+
 	public LayoutModel newContentLayoutModel(
 		long groupId, String name, String fragmentEntries) {
 
@@ -245,6 +249,9 @@ public class LayoutDataFactory extends BaseDataFactory {
 		return layoutModels;
 	}
 
+	private LayoutDataFactory() {
+	}
+
 	private LayoutSetModel _newLayoutSetModel(
 		long groupId, boolean privateLayout) {
 
@@ -272,6 +279,9 @@ public class LayoutDataFactory extends BaseDataFactory {
 
 		return layoutSetModel;
 	}
+
+	private static LayoutDataFactory _layoutDataFactory =
+		new LayoutDataFactory();
 
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
 

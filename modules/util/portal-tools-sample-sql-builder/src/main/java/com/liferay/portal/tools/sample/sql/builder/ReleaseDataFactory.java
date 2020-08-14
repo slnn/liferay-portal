@@ -38,6 +38,10 @@ import java.util.List;
  */
 public class ReleaseDataFactory extends BaseDataFactory {
 
+	public static ReleaseDataFactory getInstance() {
+		return _releaseDataFactory;
+	}
+
 	public List<ReleaseModel> newReleaseModels() throws IOException {
 		List<ReleaseModel> releases = new ArrayList<>();
 
@@ -77,6 +81,9 @@ public class ReleaseDataFactory extends BaseDataFactory {
 		return releases;
 	}
 
+	private ReleaseDataFactory() {
+	}
+
 	private ReleaseModelImpl _newReleaseModel(
 			long releaseId, String servletContextName, String schemaVersion,
 			int buildNumber, boolean verified, String testString)
@@ -104,5 +111,8 @@ public class ReleaseDataFactory extends BaseDataFactory {
 
 		return releaseModelImpl;
 	}
+
+	private static ReleaseDataFactory _releaseDataFactory =
+		new ReleaseDataFactory();
 
 }

@@ -31,6 +31,10 @@ import java.util.Date;
  */
 public class SubscriptionDataFactory extends BaseDataFactory {
 
+	public static SubscriptionDataFactory getInstance() {
+		return _subscriptionDataFactory;
+	}
+
 	public SubscriptionModel newSubscriptionModel(
 		BlogsEntryModel blogsEntryModel) {
 
@@ -46,6 +50,9 @@ public class SubscriptionDataFactory extends BaseDataFactory {
 	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
 		return _newSubscriptionModel(
 			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
+	}
+
+	private SubscriptionDataFactory() {
 	}
 
 	private SubscriptionModel _newSubscriptionModel(
@@ -73,5 +80,8 @@ public class SubscriptionDataFactory extends BaseDataFactory {
 
 		return subscriptionModel;
 	}
+
+	private static SubscriptionDataFactory _subscriptionDataFactory =
+		new SubscriptionDataFactory();
 
 }
