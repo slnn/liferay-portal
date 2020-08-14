@@ -24,7 +24,7 @@ ${insertSQLBuilder.toInsertSQL(commerceCurrencyModel)}
 	<#list counterDataFactory.getSequence(commerceDataFactory.maxCommerceProductDefinitionCount) as commerceProductDefinitionCount>
 		<#assign
 			cpDefinitionModel = commerceDataFactory.newCPDefinitionModel(cpTaxCategoryModel, cProductModel, commerceCatalogGroupModel, commerceProductDefinitionCount)
-			cpFriendlyURLEntryModel = commerceDataFactory.newCPFriendlyURLEntryModel(cProductModel)
+			cpFriendlyURLEntryModel = commerceDataFactory.newCPFriendlyURLEntryModel(cProductModel, classNameDataFactory.getClassNameId("com.liferay.commerce.product.model.CProduct"))
 		/>
 
 		${insertSQLBuilder.toInsertSQL(cpDefinitionModel)}
