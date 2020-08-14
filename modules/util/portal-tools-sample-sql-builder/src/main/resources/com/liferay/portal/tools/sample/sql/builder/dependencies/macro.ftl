@@ -54,13 +54,13 @@
 
 	${insertSQLBuilder.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 
-	<#local fragmentEntryLinkModel = fragmentDataFactory.newFragmentEntryLinkModel(_layoutModel, _fragmentEntryModel)>
+	<#local fragmentEntryLinkModel = fragmentDataFactory.newFragmentEntryLinkModel(_layoutModel, _fragmentEntryModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Layout"))>
 
 	${insertSQLBuilder.toInsertSQL(fragmentEntryLinkModel)}
 
 	${insertSQLBuilder.toInsertSQL(journalDataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel))}
 
-	<#local layoutPageTemplateStructureModel = fragmentDataFactory.newLayoutPageTemplateStructureModel(_layoutModel)>
+	<#local layoutPageTemplateStructureModel = fragmentDataFactory.newLayoutPageTemplateStructureModel(_layoutModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Layout"))>
 
 	${insertSQLBuilder.toInsertSQL(layoutPageTemplateStructureModel)}
 

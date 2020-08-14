@@ -28,7 +28,6 @@ import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRe
 import com.liferay.layout.util.template.LayoutData;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -77,7 +76,8 @@ public class FragmentDataFactory extends BaseDataFactory {
 	}
 
 	public FragmentEntryLinkModel newFragmentEntryLinkModel(
-		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel) {
+		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel,
+		long classNameId) {
 
 		FragmentEntryLinkModel fragmentEntryLinkModel =
 			new FragmentEntryLinkModelImpl();
@@ -106,8 +106,7 @@ public class FragmentDataFactory extends BaseDataFactory {
 
 		fragmentEntryLinkModel.setFragmentEntryId(
 			fragmentEntryModel.getFragmentEntryId());
-		fragmentEntryLinkModel.setClassNameId(
-			ClassNameBuilder.getClassNameId(Layout.class));
+		fragmentEntryLinkModel.setClassNameId(classNameId);
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
 		fragmentEntryLinkModel.setCss(fragmentEntryModel.getCss());
 		fragmentEntryLinkModel.setHtml(fragmentEntryModel.getHtml());
@@ -161,7 +160,7 @@ public class FragmentDataFactory extends BaseDataFactory {
 	}
 
 	public LayoutPageTemplateStructureModel newLayoutPageTemplateStructureModel(
-		LayoutModel layoutModel) {
+		LayoutModel layoutModel, long classNameId) {
 
 		LayoutPageTemplateStructureModel layoutPageTemplateStructureModel =
 			new LayoutPageTemplateStructureModelImpl();
@@ -189,8 +188,7 @@ public class FragmentDataFactory extends BaseDataFactory {
 
 		// Other fields
 
-		layoutPageTemplateStructureModel.setClassNameId(
-			ClassNameBuilder.getClassNameId(Layout.class));
+		layoutPageTemplateStructureModel.setClassNameId(classNameId);
 		layoutPageTemplateStructureModel.setClassPK(layoutModel.getPlid());
 
 		return layoutPageTemplateStructureModel;
