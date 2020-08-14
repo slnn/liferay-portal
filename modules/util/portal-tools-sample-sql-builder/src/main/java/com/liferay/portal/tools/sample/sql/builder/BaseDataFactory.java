@@ -18,20 +18,13 @@ import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.message.boards.model.MBDiscussion;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ClassNameModel;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
-import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.util.SimpleCounter;
@@ -41,7 +34,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,41 +44,8 @@ import java.util.Map;
  */
 public abstract class BaseDataFactory {
 
-	public static long getClassNameId(Class<?> clazz) {
-		ClassNameModel classNameModel = _classNameModels.get(clazz.getName());
-
-		return classNameModel.getClassNameId();
-	}
-
-	public long getClassNameId(String className) {
-		ClassNameModel classNameModel = _classNameModels.get(className);
-
-		return classNameModel.getClassNameId();
-	}
-
-	public Collection<ClassNameModel> getClassNameModels() {
-		return _classNameModels.values();
-	}
-
 	public Date nextFutureDate() {
 		return new Date(_FUTURE_TIME + (_FUTURE_COUNTER.get() * Time.SECOND));
-	}
-
-	protected static String getMBDiscussionCombinedClassName(Class<?> clazz) {
-		return StringBundler.concat(
-			MBDiscussion.class.getName(), StringPool.UNDERLINE,
-			clazz.getName());
-	}
-
-	protected String getClassName(long classNameId) {
-		for (ClassNameModel classNameModel : _classNameModels.values()) {
-			if (classNameModel.getClassNameId() == classNameId) {
-				return classNameModel.getValue();
-			}
-		}
-
-		throw new RuntimeException(
-			"Unable to find class name for id " + classNameId);
 	}
 
 	protected InputStream getResourceInputStream(String resourceName) {
@@ -198,44 +157,14 @@ public abstract class BaseDataFactory {
 	protected static final SimpleCounter socialActivityCounter =
 		new SimpleCounter();
 
-	private static void _initClassNameModels() {
-		List<String> models = ModelHintsUtil.getModels();
-
-		models.add(Layout.class.getName());
-		models.add(UserPersonalSite.class.getName());
-
-		models.add(getMBDiscussionCombinedClassName(BlogsEntry.class));
-		models.add(getMBDiscussionCombinedClassName(WikiPage.class));
-
-		for (String model : models) {
-			ClassNameModel classNameModel = new ClassNameModelImpl();
-
-			classNameModel.setClassNameId(counter.get());
-			classNameModel.setValue(model);
-
-			_classNameModels.put(model, classNameModel);
-		}
-	}
-
-	private static final String _DEPENDENCIES_DIR =
-		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
-
-	private static final SimpleCounter _FUTURE_COUNTER = new SimpleCounter();
-
-	private static final long _FUTURE_TIME =
-		System.currentTimeMillis() + Time.YEAR;
-
-	private static final Map<String, ClassNameModel> _classNameModels =
-		new HashMap<>();
-
 	static {
 		counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
 
-		_initClassNameModels();
-
-		assetClassNameIds[0] = getClassNameId(BlogsEntry.class);
-		assetClassNameIds[1] = getClassNameId(JournalArticle.class);
-		assetClassNameIds[2] = getClassNameId(WikiPage.class);
+		assetClassNameIds[0] = ClassNameBuilder.getClassNameId(
+			BlogsEntry.class);
+		assetClassNameIds[1] = ClassNameBuilder.getClassNameId(
+			JournalArticle.class);
+		assetClassNameIds[2] = ClassNameBuilder.getClassNameId(WikiPage.class);
 
 		COMPANY_ID = counter.get();
 		DEFAULT_USER_ID = counter.get();
@@ -250,5 +179,13 @@ public abstract class BaseDataFactory {
 		SITE_MEMBER_ROLE_ID = counter.get();
 		USER_ROLE_ID = counter.get();
 	}
+
+	private static final String _DEPENDENCIES_DIR =
+		"com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
+
+	private static final SimpleCounter _FUTURE_COUNTER = new SimpleCounter();
+
+	private static final long _FUTURE_TIME =
+		System.currentTimeMillis() + Time.YEAR;
 
 }

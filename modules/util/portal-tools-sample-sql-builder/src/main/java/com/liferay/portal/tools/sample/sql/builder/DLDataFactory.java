@@ -56,7 +56,7 @@ public class DLDataFactory extends BaseDDMDataFactory {
 	}
 
 	public long getDLFileEntryClassNameId() {
-		return getClassNameId(DLFileEntry.class);
+		return ClassNameBuilder.getClassNameId(DLFileEntry.class);
 	}
 
 	public int getMaxDLFolderDepth() {
@@ -95,7 +95,8 @@ public class DLDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmStorageLinkModel.setClassNameId(getClassNameId(DDMContent.class));
+		ddmStorageLinkModel.setClassNameId(
+			ClassNameBuilder.getClassNameId(DDMContent.class));
 		ddmStorageLinkModel.setClassPK(ddmContentModel.getContentId());
 		ddmStorageLinkModel.setStructureId(structureId);
 		ddmStorageLinkModel.setStructureVersionId(
@@ -112,7 +113,7 @@ public class DLDataFactory extends BaseDDMDataFactory {
 
 	public DDMStructureModel newDefaultDLDDMStructureModel() {
 		return newDDMStructureModel(
-			GLOBAL_GROUP_ID, DEFAULT_USER_ID, getClassNameId(DLFileEntry.class),
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID, getDLFileEntryClassNameId(),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
 			_defaultDLDDMStructureId);
 	}

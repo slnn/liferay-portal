@@ -26,6 +26,9 @@ public class DataFactory {
 		else if (name.equals("blogDataFactory")) {
 			return BlogDataFactory.getInstance();
 		}
+		else if (name.equals("classNameDataFactory")) {
+			return ClassNameDataFactory.getInstance();
+		}
 		else if (name.equals("commerceDataFactory")) {
 			return CommerceDataFactory.getInstance();
 		}

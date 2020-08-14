@@ -133,7 +133,8 @@ public class UserDataFactory extends BaseDataFactory {
 		CommerceCatalogModel commerceCatalogModel) {
 
 		return _newGroupModel(
-			counter.get(), getClassNameId(CommerceCatalog.class),
+			counter.get(),
+			ClassNameBuilder.getClassNameId(CommerceCatalog.class),
 			commerceCatalogModel.getCommerceCatalogId(),
 			commerceCatalogModel.getName(), false);
 	}
@@ -142,7 +143,8 @@ public class UserDataFactory extends BaseDataFactory {
 		CommerceChannelModel commerceChannelModel) {
 
 		return _newGroupModel(
-			counter.get(), getClassNameId(CommerceChannel.class),
+			counter.get(),
+			ClassNameBuilder.getClassNameId(CommerceChannel.class),
 			commerceChannelModel.getCommerceChannelId(),
 			commerceChannelModel.getName(), false);
 	}
@@ -189,7 +191,8 @@ public class UserDataFactory extends BaseDataFactory {
 
 		// Other fields
 
-		contactModel.setClassNameId(getClassNameId(User.class));
+		contactModel.setClassNameId(
+			ClassNameBuilder.getClassNameId(User.class));
 		contactModel.setClassPK(userModel.getUserId());
 		contactModel.setAccountId(_accountId);
 		contactModel.setParentContactId(
@@ -211,14 +214,14 @@ public class UserDataFactory extends BaseDataFactory {
 
 	public GroupModel newGlobalGroupModel() {
 		return _newGroupModel(
-			GLOBAL_GROUP_ID, getClassNameId(Company.class), COMPANY_ID,
-			GroupConstants.GLOBAL, false);
+			GLOBAL_GROUP_ID, ClassNameBuilder.getClassNameId(Company.class),
+			COMPANY_ID, GroupConstants.GLOBAL, false);
 	}
 
 	public GroupModel newGroupModel(UserModel userModel) {
 		return _newGroupModel(
-			counter.get(), getClassNameId(User.class), userModel.getUserId(),
-			userModel.getScreenName(), false);
+			counter.get(), ClassNameBuilder.getClassNameId(User.class),
+			userModel.getUserId(), userModel.getScreenName(), false);
 	}
 
 	public List<GroupModel> newGroupModels() {
@@ -228,7 +231,8 @@ public class UserDataFactory extends BaseDataFactory {
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
 			groupModels.add(
 				_newGroupModel(
-					i, getClassNameId(Group.class), i, "Site " + i, true));
+					i, ClassNameBuilder.getClassNameId(Group.class), i,
+					"Site " + i, true));
 		}
 
 		return groupModels;
@@ -236,8 +240,8 @@ public class UserDataFactory extends BaseDataFactory {
 
 	public GroupModel newGuestGroupModel() {
 		return _newGroupModel(
-			GUEST_GROUP_ID, getClassNameId(Group.class), GUEST_GROUP_ID,
-			GroupConstants.GUEST, true);
+			GUEST_GROUP_ID, ClassNameBuilder.getClassNameId(Group.class),
+			GUEST_GROUP_ID, GroupConstants.GUEST, true);
 	}
 
 	public UserModel newGuestUserModel() {
@@ -268,7 +272,8 @@ public class UserDataFactory extends BaseDataFactory {
 
 	public GroupModel newUserPersonalSiteGroupModel() {
 		return _newGroupModel(
-			_userPersonalSiteGroupId, getClassNameId(UserPersonalSite.class),
+			_userPersonalSiteGroupId,
+			ClassNameBuilder.getClassNameId(UserPersonalSite.class),
 			DEFAULT_USER_ID, GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
@@ -478,7 +483,7 @@ public class UserDataFactory extends BaseDataFactory {
 
 		// Other fields
 
-		roleModel.setClassNameId(getClassNameId(Role.class));
+		roleModel.setClassNameId(ClassNameBuilder.getClassNameId(Role.class));
 		roleModel.setClassPK(roleModel.getRoleId());
 		roleModel.setName(name);
 		roleModel.setType(type);
