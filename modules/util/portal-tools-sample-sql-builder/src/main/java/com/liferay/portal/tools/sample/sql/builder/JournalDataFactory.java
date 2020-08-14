@@ -16,7 +16,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
@@ -30,7 +29,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
@@ -67,10 +65,6 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		return _journalDataFactory;
 	}
 
-	public long getJournalArticleClassNameId() {
-		return ClassNameBuilder.getClassNameId(JournalArticle.class);
-	}
-
 	public String getJournalArticleLayoutColumn(String portletPrefix) {
 		StringBundler sb = new StringBundler(
 			3 * BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_COUNT);
@@ -99,7 +93,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
-		JournalArticleModel journalArticleModel, long structureId) {
+		JournalArticleModel journalArticleModel, long structureId,
+		long classNameId) {
 
 		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
 
@@ -113,7 +108,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmStorageLinkModel.setClassNameId(getJournalArticleClassNameId());
+		ddmStorageLinkModel.setClassNameId(classNameId);
 		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
 		ddmStorageLinkModel.setStructureId(structureId);
 		ddmStorageLinkModel.setStructureVersionId(
@@ -123,7 +118,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	}
 
 	public DDMTemplateLinkModel newDDMTemplateLinkModel(
-		JournalArticleModel journalArticleModel, long templateId) {
+		JournalArticleModel journalArticleModel, long templateId,
+		long classNameId) {
 
 		DDMTemplateLinkModel ddmTemplateLinkModel =
 			new DDMTemplateLinkModelImpl();
@@ -138,7 +134,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmTemplateLinkModel.setClassNameId(getJournalArticleClassNameId());
+		ddmTemplateLinkModel.setClassNameId(classNameId);
 		ddmTemplateLinkModel.setClassPK(journalArticleModel.getId());
 		ddmTemplateLinkModel.setTemplateId(templateId);
 
@@ -152,9 +148,11 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 			_journalDDMStructureLayoutContent);
 	}
 
-	public DDMStructureModel newDefaultJournalDDMStructureModel() {
+	public DDMStructureModel newDefaultJournalDDMStructureModel(
+		long classNameId) {
+
 		return newDDMStructureModel(
-			GLOBAL_GROUP_ID, DEFAULT_USER_ID, getJournalArticleClassNameId(),
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID, classNameId,
 			_JOURNAL_STRUCTURE_KEY, _journalDDMStructureContent,
 			DEFAULT_JOURNAL_DDM_STRUCTURE_ID);
 	}
@@ -166,13 +164,18 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 			ddmStructureModel, _defaultJournalDDMStructureVersionId);
 	}
 
-	public DDMTemplateModel newDefaultJournalDDMTemplateModel() {
+	public DDMTemplateModel newDefaultJournalDDMTemplateModel(
+		long journalArticleClassNameId, long ddmStructureClassNameId) {
+
 		return _newDDMTemplateModel(
 			GLOBAL_GROUP_ID, DEFAULT_USER_ID, DEFAULT_JOURNAL_DDM_STRUCTURE_ID,
-			getJournalArticleClassNameId(), _defaultJournalDDMTemplateId);
+			journalArticleClassNameId, _defaultJournalDDMTemplateId,
+			ddmStructureClassNameId);
 	}
 
-	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel() {
+	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel(
+		long classNameId) {
+
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			new DDMTemplateVersionModelImpl();
 
@@ -192,8 +195,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmTemplateVersionModelImpl.setClassNameId(
-			ClassNameBuilder.getClassNameId(DDMStructure.class));
+		ddmTemplateVersionModelImpl.setClassNameId(classNameId);
 		ddmTemplateVersionModelImpl.setClassPK(
 			DEFAULT_JOURNAL_DDM_STRUCTURE_ID);
 		ddmTemplateVersionModelImpl.setTemplateId(_defaultJournalDDMTemplateId);
@@ -467,7 +469,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 	private DDMTemplateModel _newDDMTemplateModel(
 		long groupId, long userId, long structureId, long sourceClassNameId,
-		long templateId) {
+		long templateId, long classNameId) {
 
 		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
 
@@ -494,8 +496,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmTemplateModel.setClassNameId(
-			ClassNameBuilder.getClassNameId(DDMStructure.class));
+		ddmTemplateModel.setClassNameId(classNameId);
 		ddmTemplateModel.setClassPK(structureId);
 		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
 		ddmTemplateModel.setTemplateKey(_JOURNAL_STRUCTURE_KEY);

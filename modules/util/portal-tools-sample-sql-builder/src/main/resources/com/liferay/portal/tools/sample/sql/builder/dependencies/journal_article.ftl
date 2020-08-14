@@ -1,4 +1,8 @@
-<#assign ddmStructureModel = journalDataFactory.newDefaultJournalDDMStructureModel() />
+<#assign
+	journalArticleClassNameId = classNameDataFactory.getClassNameId("com.liferay.journal.model.JournalArticle")
+	ddmStructureClassNameId = classNameDataFactory.getClassNameId("com.liferay.dynamic.data.mapping.model.DDMStructure")
+	ddmStructureModel = journalDataFactory.newDefaultJournalDDMStructureModel(journalArticleClassNameId)
+/>
 
 <@insertDDMStructure
 	_ddmStructureLayoutModel=journalDataFactory.newDefaultJournalDDMStructureLayoutModel()
@@ -6,11 +10,11 @@
 	_ddmStructureVersionModel=journalDataFactory.newDefaultJournalDDMStructureVersionModel(ddmStructureModel)
 />
 
-<#assign ddmTemplateModel = journalDataFactory.newDefaultJournalDDMTemplateModel() />
+<#assign ddmTemplateModel = journalDataFactory.newDefaultJournalDDMTemplateModel(journalArticleClassNameId, ddmStructureClassNameId) />
 
 ${insertSQLBuilder.toInsertSQL(ddmTemplateModel)}
 
-${insertSQLBuilder.toInsertSQL(journalDataFactory.newDefaultJournalDDMTemplateVersionModel())}
+${insertSQLBuilder.toInsertSQL(journalDataFactory.newDefaultJournalDDMTemplateVersionModel(ddmStructureClassNameId))}
 
 <#assign
 	journalArticlePageCounts = counterDataFactory.getSequence(journalDataFactory.maxJournalArticlePageCount)
@@ -57,9 +61,9 @@ ${insertSQLBuilder.toInsertSQL(journalDataFactory.newDefaultJournalDDMTemplateVe
 
 			${insertSQLBuilder.toInsertSQL(journalArticleLocalizationModel)}
 
-			${insertSQLBuilder.toInsertSQL(journalDataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId))}
+			${insertSQLBuilder.toInsertSQL(journalDataFactory.newDDMTemplateLinkModel(journalArticleModel, ddmTemplateModel.templateId, journalArticleClassNameId))}
 
-			${insertSQLBuilder.toInsertSQL(journalDataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId))}
+			${insertSQLBuilder.toInsertSQL(journalDataFactory.newDDMStorageLinkModel(journalArticleModel, ddmStructureModel.structureId, journalArticleClassNameId))}
 
 			${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(journalArticleModel))}
 
@@ -73,7 +77,7 @@ ${insertSQLBuilder.toInsertSQL(journalDataFactory.newDefaultJournalDDMTemplateVe
 		</#list>
 
 		<@insertMBDiscussion
-			_classNameId=journalDataFactory.journalArticleClassNameId
+			_classNameId=journalArticleClassNameId
 			_classPK=journalArticleResourceModel.resourcePrimKey
 			_groupId=groupId
 			_maxCommentCount=0
