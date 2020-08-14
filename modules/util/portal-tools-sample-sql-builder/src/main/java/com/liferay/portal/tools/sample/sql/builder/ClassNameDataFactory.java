@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Lily Chi
  */
 public class ClassNameDataFactory extends BaseDataFactory {
-	
+
 	public static ClassNameDataFactory getInstance() {
 		return _classNameDataFactory;
 	}
@@ -50,12 +50,6 @@ public class ClassNameDataFactory extends BaseDataFactory {
 			"Unable to find class name for id " + classNameId);
 	}
 
-	public long getClassNameId(Class<?> clazz) {
-		ClassNameModel classNameModel = _classNameModels.get(clazz.getName());
-
-		return classNameModel.getClassNameId();
-	}
-
 	public long getClassNameId(String className) {
 		ClassNameModel classNameModel = _classNameModels.get(className);
 
@@ -69,7 +63,13 @@ public class ClassNameDataFactory extends BaseDataFactory {
 	public long getCombinedClassNameId(Class<?> clazz) {
 		return getClassNameId(_getMBDiscussionCombinedClassName(clazz));
 	}
-	
+
+	private static String _getMBDiscussionCombinedClassName(Class<?> clazz) {
+		return StringBundler.concat(
+			MBDiscussion.class.getName(), StringPool.UNDERLINE,
+			clazz.getName());
+	}
+
 	private ClassNameDataFactory() {
 		List<String> models = ModelHintsUtil.getModels();
 
@@ -89,14 +89,8 @@ public class ClassNameDataFactory extends BaseDataFactory {
 		}
 	}
 
-	private static String _getMBDiscussionCombinedClassName(Class<?> clazz) {
-		return StringBundler.concat(
-			MBDiscussion.class.getName(), StringPool.UNDERLINE,
-			clazz.getName());
-	}
-
-	private static ClassNameDataFactory _classNameDataFactory = new ClassNameDataFactory();
-
+	private static ClassNameDataFactory _classNameDataFactory =
+		new ClassNameDataFactory();
 	private static final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 
