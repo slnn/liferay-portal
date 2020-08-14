@@ -83,7 +83,7 @@
 
 	${insertSQLBuilder.toInsertSQL(ddmContentModel)}
 
-	${insertSQLBuilder.toInsertSQL(dlDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
+	${insertSQLBuilder.toInsertSQL(dlDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId, classNameDataFactory.getClassNameId("com.liferay.dynamic.data.mapping.model.DDMContent")))}
 </#macro>
 
 <#macro insertDDMStructure
@@ -138,7 +138,7 @@
 				/>
 
 				<@insertMBDiscussion
-					_classNameId=dlDataFactory.DLFileEntryClassNameId
+					_classNameId=classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")
 					_classPK=dlFileEntryModel.fileEntryId
 					_groupId=dlFileEntryModel.groupId
 					_maxCommentCount=0
