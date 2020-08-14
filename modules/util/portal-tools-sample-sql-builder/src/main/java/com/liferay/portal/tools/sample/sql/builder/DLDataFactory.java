@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataModel;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
@@ -22,7 +21,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
 import com.liferay.document.library.kernel.model.DLFileVersionModel;
 import com.liferay.document.library.kernel.model.DLFolderModel;
-import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMContentModel;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
@@ -55,10 +53,6 @@ public class DLDataFactory extends BaseDDMDataFactory {
 		return _defaultDLDDMStructureId;
 	}
 
-	public long getDLFileEntryClassNameId() {
-		return ClassNameBuilder.getClassNameId(DLFileEntry.class);
-	}
-
 	public int getMaxDLFolderDepth() {
 		return BenchmarksPropsValues.MAX_DL_FOLDER_DEPTH;
 	}
@@ -81,7 +75,7 @@ public class DLDataFactory extends BaseDDMDataFactory {
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
 		long ddmStorageLinkId, DDMContentModel ddmContentModel,
-		long structureId) {
+		long structureId, long classNameId) {
 
 		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
 
@@ -95,8 +89,7 @@ public class DLDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmStorageLinkModel.setClassNameId(
-			ClassNameBuilder.getClassNameId(DDMContent.class));
+		ddmStorageLinkModel.setClassNameId(classNameId);
 		ddmStorageLinkModel.setClassPK(ddmContentModel.getContentId());
 		ddmStorageLinkModel.setStructureId(structureId);
 		ddmStorageLinkModel.setStructureVersionId(
@@ -111,9 +104,9 @@ public class DLDataFactory extends BaseDDMDataFactory {
 			_dlDDMStructureLayoutContent);
 	}
 
-	public DDMStructureModel newDefaultDLDDMStructureModel() {
+	public DDMStructureModel newDefaultDLDDMStructureModel(long classNameId) {
 		return newDDMStructureModel(
-			GLOBAL_GROUP_ID, DEFAULT_USER_ID, getDLFileEntryClassNameId(),
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID, classNameId,
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
 			_defaultDLDDMStructureId);
 	}
