@@ -210,7 +210,8 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
 		return _newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), getClassNameId(BlogsEntry.class),
+			blogsEntryModel.getModifiedDate(),
+			ClassNameBuilder.getClassNameId(BlogsEntry.class),
 			blogsEntryModel.getEntryId(), blogsEntryModel.getUuid(), 0, true,
 			true, ContentTypes.TEXT_HTML, blogsEntryModel.getTitle());
 	}
@@ -221,7 +222,7 @@ public class AssetDataFactory extends BaseDataFactory {
 		return _newAssetEntryModel(
 			dLFileEntryModel.getGroupId(), dLFileEntryModel.getCreateDate(),
 			dLFileEntryModel.getModifiedDate(),
-			getClassNameId(DLFileEntry.class),
+			ClassNameBuilder.getClassNameId(DLFileEntry.class),
 			dLFileEntryModel.getFileEntryId(), dLFileEntryModel.getUuid(),
 			dLFileEntryModel.getFileEntryTypeId(), true, true,
 			dLFileEntryModel.getMimeType(), dLFileEntryModel.getTitle());
@@ -230,7 +231,8 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetEntryModel newAssetEntryModel(DLFolderModel dLFolderModel) {
 		return _newAssetEntryModel(
 			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
-			dLFolderModel.getModifiedDate(), getClassNameId(DLFolder.class),
+			dLFolderModel.getModifiedDate(),
+			ClassNameBuilder.getClassNameId(DLFolder.class),
 			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
 			null, dLFolderModel.getName());
 	}
@@ -242,10 +244,10 @@ public class AssetDataFactory extends BaseDataFactory {
 		if (mbMessageModel.getCategoryId() ==
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
 
-			classNameId = getClassNameId(MBDiscussion.class);
+			classNameId = ClassNameBuilder.getClassNameId(MBDiscussion.class);
 		}
 		else {
-			classNameId = getClassNameId(MBMessage.class);
+			classNameId = ClassNameBuilder.getClassNameId(MBMessage.class);
 			visible = true;
 		}
 
@@ -259,7 +261,8 @@ public class AssetDataFactory extends BaseDataFactory {
 	public AssetEntryModel newAssetEntryModel(MBThreadModel mbThreadModel) {
 		return _newAssetEntryModel(
 			mbThreadModel.getGroupId(), mbThreadModel.getCreateDate(),
-			mbThreadModel.getModifiedDate(), getClassNameId(MBThread.class),
+			mbThreadModel.getModifiedDate(),
+			ClassNameBuilder.getClassNameId(MBThread.class),
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
 			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
@@ -281,16 +284,17 @@ public class AssetDataFactory extends BaseDataFactory {
 			journalArticleModel.getGroupId(),
 			journalArticleModel.getCreateDate(),
 			journalArticleModel.getModifiedDate(),
-			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUUID,
-			DEFAULT_JOURNAL_DDM_STRUCTURE_ID, journalArticleModel.isIndexable(),
-			true, ContentTypes.TEXT_HTML,
+			ClassNameBuilder.getClassNameId(JournalArticle.class),
+			resourcePrimKey, resourceUUID, DEFAULT_JOURNAL_DDM_STRUCTURE_ID,
+			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
 			journalArticleLocalizationModel.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
 		return _newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), getClassNameId(WikiPage.class),
+			wikiPageModel.getModifiedDate(),
+			ClassNameBuilder.getClassNameId(WikiPage.class),
 			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
@@ -301,7 +305,7 @@ public class AssetDataFactory extends BaseDataFactory {
 
 		return _newAssetEntryModel(
 			commerceCatalogGroupModel.getGroupId(), new Date(), new Date(),
-			getClassNameId(CPDefinition.class),
+			ClassNameBuilder.getClassNameId(CPDefinition.class),
 			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
 			true, true, "text/plain",
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
@@ -313,7 +317,7 @@ public class AssetDataFactory extends BaseDataFactory {
 		return _newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
 			blogsEntryModel.getModifiedDate(),
-			getClassNameId(getMBDiscussionCombinedClassName(BlogsEntry.class)),
+			ClassNameBuilder.getCombinedClassNameId(BlogsEntry.class),
 			blogsEntryModel.getEntryId(), "", 0, true, false, "",
 			String.valueOf(blogsEntryModel.getGroupId()));
 	}
@@ -324,7 +328,7 @@ public class AssetDataFactory extends BaseDataFactory {
 		return _newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
 			wikiPageModel.getModifiedDate(),
-			getClassNameId(getMBDiscussionCombinedClassName(WikiPage.class)),
+			ClassNameBuilder.getCombinedClassNameId(WikiPage.class),
 			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
 			String.valueOf(wikiPageModel.getGroupId()));
 	}
@@ -333,7 +337,8 @@ public class AssetDataFactory extends BaseDataFactory {
 		AssetEntryModel assetEntryModel) {
 
 		return _newViewCountEntryModel(
-			assetEntryModel.getCompanyId(), getClassNameId(AssetEntry.class),
+			assetEntryModel.getCompanyId(),
+			ClassNameBuilder.getClassNameId(AssetEntry.class),
 			assetEntryModel.getPrimaryKey(), 0);
 	}
 

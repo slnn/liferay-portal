@@ -113,7 +113,8 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 		sb.append("]}");
 
 		return newDDMStructureModel(
-			groupId, SAMPLE_USER_ID, getClassNameId(DDLRecordSet.class),
+			groupId, SAMPLE_USER_ID,
+			ClassNameBuilder.getClassNameId(DDLRecordSet.class),
 			"Test DDM Structure", sb.toString(), counter.get());
 	}
 
@@ -276,7 +277,7 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 		DDLRecordSetModel ddlRecordSetModel) {
 
 		return _newDDMStructureLinkModel(
-			getClassNameId(DDLRecordSet.class),
+			ClassNameBuilder.getClassNameId(DDLRecordSet.class),
 			ddlRecordSetModel.getRecordSetId(),
 			ddlRecordSetModel.getDDMStructureId());
 	}
@@ -285,7 +286,7 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 		DLFileEntryMetadataModel dLFileEntryMetadataModel) {
 
 		return _newDDMStructureLinkModel(
-			getClassNameId(DLFileEntryMetadata.class),
+			ClassNameBuilder.getClassNameId(DLFileEntryMetadata.class),
 			dLFileEntryMetadataModel.getFileEntryMetadataId(),
 			dLFileEntryMetadataModel.getDDMStructureId());
 	}

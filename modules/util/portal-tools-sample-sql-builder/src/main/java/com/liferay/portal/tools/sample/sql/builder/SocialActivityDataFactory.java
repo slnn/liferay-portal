@@ -49,7 +49,8 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		BlogsEntryModel blogsEntryModel) {
 
 		return _newSocialActivityModel(
-			blogsEntryModel.getGroupId(), getClassNameId(BlogsEntry.class),
+			blogsEntryModel.getGroupId(),
+			ClassNameBuilder.getClassNameId(BlogsEntry.class),
 			blogsEntryModel.getEntryId(), BlogsActivityKeys.ADD_ENTRY,
 			"{\"title\":\"" + blogsEntryModel.getTitle() + "\"}");
 	}
@@ -58,7 +59,8 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		DLFileEntryModel dlFileEntryModel) {
 
 		return _newSocialActivityModel(
-			dlFileEntryModel.getGroupId(), getClassNameId(DLFileEntry.class),
+			dlFileEntryModel.getGroupId(),
+			ClassNameBuilder.getClassNameId(DLFileEntry.class),
 			dlFileEntryModel.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
 			StringPool.BLANK);
 	}
@@ -76,7 +78,7 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 
 		return _newSocialActivityModel(
 			journalArticleModel.getGroupId(),
-			getClassNameId(JournalArticle.class),
+			ClassNameBuilder.getClassNameId(JournalArticle.class),
 			journalArticleModel.getResourcePrimKey(), type,
 			"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}");
 	}
@@ -90,7 +92,7 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		int type = 0;
 		String extraData = null;
 
-		if (classNameId == getClassNameId(WikiPage.class)) {
+		if (classNameId == ClassNameBuilder.getClassNameId(WikiPage.class)) {
 			extraData = "{\"version\":1}";
 
 			type = WikiActivityKeys.ADD_PAGE;
@@ -100,7 +102,7 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 
 			type = MBActivityKeys.ADD_MESSAGE;
 
-			classNameId = getClassNameId(MBMessage.class);
+			classNameId = ClassNameBuilder.getClassNameId(MBMessage.class);
 			classPK = mbMessageModel.getMessageId();
 		}
 		else {

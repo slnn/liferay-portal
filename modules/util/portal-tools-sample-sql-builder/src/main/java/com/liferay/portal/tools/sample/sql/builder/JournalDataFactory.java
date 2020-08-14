@@ -68,7 +68,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	}
 
 	public long getJournalArticleClassNameId() {
-		return getClassNameId(JournalArticle.class);
+		return ClassNameBuilder.getClassNameId(JournalArticle.class);
 	}
 
 	public String getJournalArticleLayoutColumn(String portletPrefix) {
@@ -113,8 +113,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmStorageLinkModel.setClassNameId(
-			getClassNameId(JournalArticle.class));
+		ddmStorageLinkModel.setClassNameId(getJournalArticleClassNameId());
 		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
 		ddmStorageLinkModel.setStructureId(structureId);
 		ddmStorageLinkModel.setStructureVersionId(
@@ -139,8 +138,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmTemplateLinkModel.setClassNameId(
-			getClassNameId(JournalArticle.class));
+		ddmTemplateLinkModel.setClassNameId(getJournalArticleClassNameId());
 		ddmTemplateLinkModel.setClassPK(journalArticleModel.getId());
 		ddmTemplateLinkModel.setTemplateId(templateId);
 
@@ -156,9 +154,9 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 	public DDMStructureModel newDefaultJournalDDMStructureModel() {
 		return newDDMStructureModel(
-			GLOBAL_GROUP_ID, DEFAULT_USER_ID,
-			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
-			_journalDDMStructureContent, DEFAULT_JOURNAL_DDM_STRUCTURE_ID);
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID, getJournalArticleClassNameId(),
+			_JOURNAL_STRUCTURE_KEY, _journalDDMStructureContent,
+			DEFAULT_JOURNAL_DDM_STRUCTURE_ID);
 	}
 
 	public DDMStructureVersionModel newDefaultJournalDDMStructureVersionModel(
@@ -171,7 +169,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	public DDMTemplateModel newDefaultJournalDDMTemplateModel() {
 		return _newDDMTemplateModel(
 			GLOBAL_GROUP_ID, DEFAULT_USER_ID, DEFAULT_JOURNAL_DDM_STRUCTURE_ID,
-			getClassNameId(JournalArticle.class), _defaultJournalDDMTemplateId);
+			getJournalArticleClassNameId(), _defaultJournalDDMTemplateId);
 	}
 
 	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel() {
@@ -195,7 +193,7 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 		// Other fields
 
 		ddmTemplateVersionModelImpl.setClassNameId(
-			getClassNameId(DDMStructure.class));
+			ClassNameBuilder.getClassNameId(DDMStructure.class));
 		ddmTemplateVersionModelImpl.setClassPK(
 			DEFAULT_JOURNAL_DDM_STRUCTURE_ID);
 		ddmTemplateVersionModelImpl.setTemplateId(_defaultJournalDDMTemplateId);
@@ -496,7 +494,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 
 		// Other fields
 
-		ddmTemplateModel.setClassNameId(getClassNameId(DDMStructure.class));
+		ddmTemplateModel.setClassNameId(
+			ClassNameBuilder.getClassNameId(DDMStructure.class));
 		ddmTemplateModel.setClassPK(structureId);
 		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
 		ddmTemplateModel.setTemplateKey(_JOURNAL_STRUCTURE_KEY);

@@ -106,7 +106,8 @@ public class FragmentDataFactory extends BaseDataFactory {
 
 		fragmentEntryLinkModel.setFragmentEntryId(
 			fragmentEntryModel.getFragmentEntryId());
-		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
+		fragmentEntryLinkModel.setClassNameId(
+			ClassNameBuilder.getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
 		fragmentEntryLinkModel.setCss(fragmentEntryModel.getCss());
 		fragmentEntryLinkModel.setHtml(fragmentEntryModel.getHtml());
@@ -189,7 +190,7 @@ public class FragmentDataFactory extends BaseDataFactory {
 		// Other fields
 
 		layoutPageTemplateStructureModel.setClassNameId(
-			getClassNameId(Layout.class));
+			ClassNameBuilder.getClassNameId(Layout.class));
 		layoutPageTemplateStructureModel.setClassPK(layoutModel.getPlid());
 
 		return layoutPageTemplateStructureModel;

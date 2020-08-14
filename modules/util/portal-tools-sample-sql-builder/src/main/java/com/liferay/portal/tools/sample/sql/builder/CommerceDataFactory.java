@@ -292,7 +292,8 @@ public class CommerceDataFactory extends BaseDataFactory {
 		CProductModel cProductModel) {
 
 		return _newCPFriendlyURLEntryModel(
-			0, getClassNameId(CProduct.class), cProductModel.getCProductId(),
+			0, ClassNameBuilder.getClassNameId(CProduct.class),
+			cProductModel.getCProductId(),
 			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
 				"Definition " + cProductModel.getPublishedCPDefinitionId()));
 	}

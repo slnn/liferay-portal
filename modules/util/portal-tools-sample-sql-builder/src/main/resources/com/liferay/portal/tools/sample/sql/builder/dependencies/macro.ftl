@@ -3,6 +3,7 @@
 <#assign
 	assetDataFactory = dataFactory.getDataFactoryInstance("assetDataFactory")
 	blogDataFactory = dataFactory.getDataFactoryInstance("blogDataFactory")
+	classNameDataFactory = dataFactory.getDataFactoryInstance("classNameDataFactory")
 	commerceDataFactory = dataFactory.getDataFactoryInstance("commerceDataFactory")
 	counterDataFactory = dataFactory.getDataFactoryInstance("counterDataFactory")
 	ddlDDMDataFactory = dataFactory.getDataFactoryInstance("ddlDDMDataFactory")

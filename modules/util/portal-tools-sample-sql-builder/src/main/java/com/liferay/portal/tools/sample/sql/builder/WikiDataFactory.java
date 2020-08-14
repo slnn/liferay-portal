@@ -42,7 +42,7 @@ public class WikiDataFactory extends BaseDataFactory {
 	}
 
 	public long getWikiPageClassNameId() {
-		return getClassNameId(WikiPage.class);
+		return ClassNameBuilder.getClassNameId(WikiPage.class);
 	}
 
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {

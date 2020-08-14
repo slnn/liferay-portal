@@ -1,3 +1,3 @@
-<#list userDataFactory.classNameModels as classNameModel>
+<#list classNameDataFactory.classNameModels as classNameModel>
 	${insertSQLBuilder.toInsertSQL(classNameModel)}
 </#list>
