@@ -1,9 +1,12 @@
-<#assign ddlRecordSetCounts = counterDataFactory.getSequence(ddlDDMDataFactory.maxDDLRecordSetCount) />
+<#assign
+	ddlRecordSetCounts = counterDataFactory.getSequence(ddlDDMDataFactory.maxDDLRecordSetCount) \
+	ddlRecordSetClassNameId = classNameDataFactory.getClassNameId("com.liferay.dynamic.data.lists.model.DDLRecordSet")
+/>
 
 <#list ddlRecordSetCounts as ddlRecordSetCount>
 	<#if ddlRecordSetCount = 1>
 		<#assign
-			ddmStructureModel = ddlDDMDataFactory.newDDLDDMStructureModel(groupId)
+			ddmStructureModel = ddlDDMDataFactory.newDDLDDMStructureModel(groupId, ddlRecordSetClassNameId)
 			ddmStructureVersionModel = ddlDDMDataFactory.newDDMStructureVersionModel(ddmStructureModel)
 		/>
 
@@ -27,7 +30,7 @@
 
 	${insertSQLBuilder.toInsertSQL(ddlRecordSetModel)}
 
-	${insertSQLBuilder.toInsertSQL(ddlDDMDataFactory.newDDMStructureLinkModel(ddlRecordSetModel))}
+	${insertSQLBuilder.toInsertSQL(ddlDDMDataFactory.newDDMStructureLinkModel(ddlRecordSetModel, ddlRecordSetClassNameId))}
 
 	<#assign ddlRecordCounts = counterDataFactory.getSequence(ddlDDMDataFactory.maxDDLRecordCount) />
 

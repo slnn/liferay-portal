@@ -14,12 +14,10 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataModel;
 import com.liferay.dynamic.data.lists.constants.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordModel;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetModel;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersionModel;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl;
@@ -85,7 +83,9 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 			ddmStructureVersionModel.getStructureVersionId(), sb.toString());
 	}
 
-	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
+	public DDMStructureModel newDDLDDMStructureModel(
+		long groupId, long classNameId) {
+
 		StringBundler sb = new StringBundler(
 			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 9));
 
@@ -113,9 +113,8 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 		sb.append("]}");
 
 		return newDDMStructureModel(
-			groupId, SAMPLE_USER_ID,
-			ClassNameBuilder.getClassNameId(DDLRecordSet.class),
-			"Test DDM Structure", sb.toString(), counter.get());
+			groupId, SAMPLE_USER_ID, classNameId, "Test DDM Structure",
+			sb.toString(), counter.get());
 	}
 
 	public DDLRecordModel newDDLRecordModel(
@@ -274,20 +273,18 @@ public class DDLDDMDataFactory extends BaseDDMDataFactory {
 	}
 
 	public DDMStructureLinkModel newDDMStructureLinkModel(
-		DDLRecordSetModel ddlRecordSetModel) {
+		DDLRecordSetModel ddlRecordSetModel, long classNameId) {
 
 		return _newDDMStructureLinkModel(
-			ClassNameBuilder.getClassNameId(DDLRecordSet.class),
-			ddlRecordSetModel.getRecordSetId(),
+			classNameId, ddlRecordSetModel.getRecordSetId(),
 			ddlRecordSetModel.getDDMStructureId());
 	}
 
 	public DDMStructureLinkModel newDDMStructureLinkModel(
-		DLFileEntryMetadataModel dLFileEntryMetadataModel) {
+		DLFileEntryMetadataModel dLFileEntryMetadataModel, long classNameId) {
 
 		return _newDDMStructureLinkModel(
-			ClassNameBuilder.getClassNameId(DLFileEntryMetadata.class),
-			dLFileEntryMetadataModel.getFileEntryMetadataId(),
+			classNameId, dLFileEntryMetadataModel.getFileEntryMetadataId(),
 			dLFileEntryMetadataModel.getDDMStructureId());
 	}
 
