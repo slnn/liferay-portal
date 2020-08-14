@@ -29,11 +29,11 @@ import java.util.List;
  */
 public class CounterDataFactory extends BaseDataFactory {
 
-	public long getCounterNext() {
-		return counter.get();
+	public static CounterDataFactory getInstance() {
+		return _counterDataFactory;
 	}
 
-	public List<Integer> getSequence(int size) {
+	public static List<Integer> getSequence(int size) {
 		List<Integer> sequence = new ArrayList<>(size);
 
 		for (int i = 1; i <= size; i++) {
@@ -41,6 +41,10 @@ public class CounterDataFactory extends BaseDataFactory {
 		}
 
 		return sequence;
+	}
+
+	public long getCounterNext() {
+		return counter.get();
 	}
 
 	public List<CounterModel> newCounterModels() {
@@ -84,5 +88,11 @@ public class CounterDataFactory extends BaseDataFactory {
 
 		return counterModels;
 	}
+
+	private CounterDataFactory() {
+	}
+
+	private static CounterDataFactory _counterDataFactory =
+		new CounterDataFactory();
 
 }

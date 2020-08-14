@@ -39,6 +39,10 @@ import java.util.List;
  */
 public class BlogDataFactory extends BaseDataFactory {
 
+	public static BlogDataFactory getInstance() {
+		return _blogFactory;
+	}
+
 	public long getBlogsEntryClassNameId() {
 		return getClassNameId(BlogsEntry.class);
 	}
@@ -210,6 +214,9 @@ public class BlogDataFactory extends BaseDataFactory {
 		return userNotificationDeliveryModel;
 	}
 
+	private BlogDataFactory() {
+	}
+
 	private BlogsEntryModel _newBlogsEntryModel(long groupId, int index) {
 		BlogsEntryModel blogsEntryModel = new BlogsEntryModelImpl();
 
@@ -246,5 +253,7 @@ public class BlogDataFactory extends BaseDataFactory {
 
 		return blogsEntryModel;
 	}
+
+	private static BlogDataFactory _blogFactory = new BlogDataFactory();
 
 }

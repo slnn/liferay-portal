@@ -41,6 +41,10 @@ import java.util.List;
  */
 public class FragmentDataFactory extends BaseDataFactory {
 
+	public static FragmentDataFactory getInstance() {
+		return _fragmentDataFactory;
+	}
+
 	public FragmentCollectionModel newFragmentCollectionModel(long groupId) {
 		FragmentCollectionModel fragmentCollectionModel =
 			new FragmentCollectionModelImpl();
@@ -247,5 +251,11 @@ public class FragmentDataFactory extends BaseDataFactory {
 
 		return layoutPageTemplateStructureRelModel;
 	}
+
+	private FragmentDataFactory() {
+	}
+
+	private static FragmentDataFactory _fragmentDataFactory =
+		new FragmentDataFactory();
 
 }

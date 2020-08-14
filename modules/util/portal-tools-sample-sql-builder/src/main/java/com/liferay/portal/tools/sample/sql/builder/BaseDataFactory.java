@@ -143,10 +143,15 @@ public abstract class BaseDataFactory {
 		return resourcePermissionModels;
 	}
 
-	protected String readFile(String resourceName) throws IOException {
+	protected String readFile(String resourceName) {
 		List<String> lines = new ArrayList<>();
 
-		StringUtil.readLines(getResourceInputStream(resourceName), lines);
+		try {
+			StringUtil.readLines(getResourceInputStream(resourceName), lines);
+		}
+		catch (IOException ioException) {
+			ioException.getStackTrace();
+		}
 
 		return StringUtil.merge(lines, StringPool.SPACE);
 	}

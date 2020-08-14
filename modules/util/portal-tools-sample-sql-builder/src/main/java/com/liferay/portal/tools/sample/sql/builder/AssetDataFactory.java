@@ -66,9 +66,8 @@ import java.util.Map;
  */
 public class AssetDataFactory extends BaseDataFactory {
 
-	public AssetDataFactory() {
-		_initAssetCategoryModels();
-		_initAssetTagModels();
+	public static AssetDataFactory getInstance() {
+		return _assetDataFactory;
 	}
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
@@ -384,6 +383,11 @@ public class AssetDataFactory extends BaseDataFactory {
 		return assetVocabularyModel;
 	}
 
+	private AssetDataFactory() {
+		_initAssetCategoryModels();
+		_initAssetTagModels();
+	}
+
 	private SimpleCounter _getSimpleCounter(
 		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
 		long classNameId) {
@@ -657,6 +661,8 @@ public class AssetDataFactory extends BaseDataFactory {
 
 		return viewCountEntryModel;
 	}
+
+	private static AssetDataFactory _assetDataFactory = new AssetDataFactory();
 
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private List<AssetCategoryModel>[] _assetCategoryModelsArray;

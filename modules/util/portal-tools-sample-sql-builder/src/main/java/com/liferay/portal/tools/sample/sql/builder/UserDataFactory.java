@@ -48,6 +48,7 @@ import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
 import com.liferay.util.SimpleCounter;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
@@ -59,15 +60,8 @@ import java.util.List;
  */
 public class UserDataFactory extends BaseDataFactory {
 
-	public UserDataFactory() throws Exception {
-		_userScreenNameCounter = new SimpleCounter();
-
-		_accountId = counter.get();
-
-		_userPersonalSiteGroupId = counter.get();
-
-		_initRoleModels();
-		_initUserNames();
+	public static UserDataFactory getInstance() {
+		return _userDataFactory;
 	}
 
 	public long getAdministratorRoleId() {
@@ -296,6 +290,17 @@ public class UserDataFactory extends BaseDataFactory {
 		return virtualHostModel;
 	}
 
+	private UserDataFactory() {
+		_userScreenNameCounter = new SimpleCounter();
+
+		_accountId = counter.get();
+
+		_userPersonalSiteGroupId = counter.get();
+
+		_initRoleModels();
+		_initUserNames();
+	}
+
 	private void _initRoleModels() {
 		_roleModels = new ArrayList<>();
 
@@ -380,30 +385,37 @@ public class UserDataFactory extends BaseDataFactory {
 		_roleModels.add(_userRoleModel);
 	}
 
-	private void _initUserNames() throws Exception {
+	private void _initUserNames() {
 		_firstNames = new ArrayList<>();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("first_names.txt")));
+		_lastNames = new ArrayList<>();
 
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			_firstNames.add(line);
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("first_names.txt")))) {
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				_firstNames.add(line);
+			}
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 
-		unsyncBufferedReader.close();
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getResourceInputStream("last_names.txt")))) {
 
-		_lastNames = new ArrayList<>();
-
-		unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getResourceInputStream("last_names.txt")));
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			_lastNames.add(line);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				_lastNames.add(line);
+			}
 		}
-
-		unsyncBufferedReader.close();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
 	}
 
 	private GroupModel _newGroupModel(
@@ -531,6 +543,8 @@ public class UserDataFactory extends BaseDataFactory {
 
 		return userName;
 	}
+
+	private static UserDataFactory _userDataFactory = new UserDataFactory();
 
 	private final long _accountId;
 	private RoleModel _administratorRoleModel;

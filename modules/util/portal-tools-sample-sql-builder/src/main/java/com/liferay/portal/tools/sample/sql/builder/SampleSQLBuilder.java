@@ -249,45 +249,11 @@ public class SampleSQLBuilder {
 					FreeMarkerUtil.process(
 						BenchmarksPropsValues.SCRIPT,
 						HashMapBuilder.<String, Object>put(
-							"assetDataFactory", new AssetDataFactory()
-						).put(
-							"blogDataFactory", new BlogDataFactory()
-						).put(
-							"commerceDataFactory", new CommerceDataFactory()
-						).put(
-							"counterDataFactory", new CounterDataFactory()
-						).put(
 							"csvFileWriter", csvFileWriter
 						).put(
-							"ddlDDMDataFactory", new DDLDDMDataFactory()
-						).put(
-							"dlDataFactory", new DLDataFactory()
-						).put(
-							"fragmentDataFactory", new FragmentDataFactory()
+							"dataFactory", new DataFactory()
 						).put(
 							"insertSQLBuilder", new InsertSQLBuilder()
-						).put(
-							"journalDataFactory", new JournalDataFactory()
-						).put(
-							"layoutDataFactory", new LayoutDataFactory()
-						).put(
-							"messageBoardDataFactory",
-							new MessageBoardDataFactory()
-						).put(
-							"portletPreferenceDataFactory",
-							new PortletPreferenceDataFactory()
-						).put(
-							"releaseDataFactory", new ReleaseDataFactory()
-						).put(
-							"socialActivityDataFactory",
-							new SocialActivityDataFactory()
-						).put(
-							"subscriptionDataFactory",
-							new SubscriptionDataFactory()
-						).put(
-							"userDataFactory", new UserDataFactory()
-						).put(
-							"wikiDataFactory", new WikiDataFactory()
 						).build(),
 						sampleSQLWriter);
 				}

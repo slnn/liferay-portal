@@ -41,8 +41,8 @@ import com.liferay.wiki.social.WikiActivityKeys;
  */
 public class SocialActivityDataFactory extends BaseDataFactory {
 
-	public SocialActivityDataFactory() {
-		_timeCounter = new SimpleCounter();
+	public static SocialActivityDataFactory getInstance() {
+		return _socialActivityDataFactory;
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -121,6 +121,10 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 			mbMessageModel.getGroupId(), classNameId, classPK, type, extraData);
 	}
 
+	private SocialActivityDataFactory() {
+		_timeCounter = new SimpleCounter();
+	}
+
 	private SocialActivityModel _newSocialActivityModel(
 		long groupId, long classNameId, long classPK, int type,
 		String extraData) {
@@ -152,6 +156,9 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
+
+	private static SocialActivityDataFactory _socialActivityDataFactory =
+		new SocialActivityDataFactory();
 
 	private final SimpleCounter _timeCounter;
 
