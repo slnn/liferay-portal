@@ -660,7 +660,9 @@
 				"label": "background-image",
 				"name": "backgroundImage",
 				"responsive": false,
-				"type": "imageSelector"
+				"type": "imageSelector",
+				"validValues": [
+				]
 			}
 		]
 	},
@@ -680,7 +682,9 @@
 					"validation": {
 						"type": "number"
 					}
-				}
+				},
+				"validValues": [
+				]
 			},
 			{
 				"dataType": "string",
