@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
+public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	public ContainerLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
@@ -134,9 +134,7 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		JSONObject jsonObject = super.getItemConfigJSONObject();
-
-		return jsonObject.put(
+		return JSONUtil.put(
 			"align", _align
 		).put(
 			"backgroundColorCssClass", _backgroundColorCssClass
@@ -356,8 +354,6 @@ public class ContainerLayoutStructureItem extends StyledLayoutStructureItem {
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-		super.updateItemConfig(itemConfigJSONObject);
-
 		if (itemConfigJSONObject.has("align")) {
 			setAlign(itemConfigJSONObject.getString("align"));
 		}
