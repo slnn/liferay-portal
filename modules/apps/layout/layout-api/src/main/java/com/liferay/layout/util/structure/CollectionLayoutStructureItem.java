@@ -24,10 +24,9 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class CollectionStyledLayoutStructureItem
-	extends StyledLayoutStructureItem {
+public class CollectionLayoutStructureItem extends StyledLayoutStructureItem {
 
-	public CollectionStyledLayoutStructureItem(String parentItemId) {
+	public CollectionLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
 
@@ -37,25 +36,23 @@ public class CollectionStyledLayoutStructureItem
 			return true;
 		}
 
-		if (!(object instanceof CollectionStyledLayoutStructureItem)) {
+		if (!(object instanceof CollectionLayoutStructureItem)) {
 			return false;
 		}
 
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				(CollectionStyledLayoutStructureItem)object;
+		CollectionLayoutStructureItem collectionLayoutStructureItem =
+			(CollectionLayoutStructureItem)object;
 
 		if (!Objects.equals(
 				_collectionJSONObject,
-				collectionStyledLayoutStructureItem._collectionJSONObject) ||
+				collectionLayoutStructureItem._collectionJSONObject) ||
 			!Objects.equals(
-				_listStyle, collectionStyledLayoutStructureItem._listStyle) ||
+				_listStyle, collectionLayoutStructureItem._listStyle) ||
 			!Objects.equals(
 				_numberOfColumns,
-				collectionStyledLayoutStructureItem._numberOfColumns) ||
+				collectionLayoutStructureItem._numberOfColumns) ||
 			!Objects.equals(
-				_numberOfItems,
-				collectionStyledLayoutStructureItem._numberOfItems)) {
+				_numberOfItems, collectionLayoutStructureItem._numberOfItems)) {
 
 			return false;
 		}

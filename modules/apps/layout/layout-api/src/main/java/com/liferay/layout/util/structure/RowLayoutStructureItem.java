@@ -28,9 +28,9 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
+public class RowLayoutStructureItem extends StyledLayoutStructureItem {
 
-	public RowStyledLayoutStructureItem(String parentItemId) {
+	public RowLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
 
@@ -40,24 +40,23 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			return true;
 		}
 
-		if (!(object instanceof RowStyledLayoutStructureItem)) {
+		if (!(object instanceof RowLayoutStructureItem)) {
 			return false;
 		}
 
-		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
-			(RowStyledLayoutStructureItem)object;
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)object;
 
-		if (!Objects.equals(_gutters, rowStyledLayoutStructureItem._gutters) ||
+		if (!Objects.equals(_gutters, rowLayoutStructureItem._gutters) ||
 			!Objects.equals(
-				_modulesPerRow, rowStyledLayoutStructureItem._modulesPerRow) ||
+				_modulesPerRow, rowLayoutStructureItem._modulesPerRow) ||
 			!Objects.equals(
-				_numberOfColumns,
-				rowStyledLayoutStructureItem._numberOfColumns) ||
+				_numberOfColumns, rowLayoutStructureItem._numberOfColumns) ||
 			!Objects.equals(
-				_reverseOrder, rowStyledLayoutStructureItem._reverseOrder) ||
+				_reverseOrder, rowLayoutStructureItem._reverseOrder) ||
 			!Objects.equals(
 				_verticalAlignment,
-				rowStyledLayoutStructureItem._verticalAlignment)) {
+				rowLayoutStructureItem._verticalAlignment)) {
 
 			return false;
 		}

@@ -22,7 +22,7 @@ import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.page.template.util.ShadowConverter;
-import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -59,8 +59,8 @@ public class ContainerLayoutStructureItemImporter
 			Set<String> warningMessages)
 		throws Exception {
 
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
-			(ContainerStyledLayoutStructureItem)
+		ContainerLayoutStructureItem containerLayoutStructureItem =
+			(ContainerLayoutStructureItem)
 				layoutStructure.addContainerLayoutStructureItem(
 					parentItemId, position);
 
@@ -68,7 +68,7 @@ public class ContainerLayoutStructureItemImporter
 			pageElement.getDefinition());
 
 		if (definitionMap != null) {
-			containerStyledLayoutStructureItem.setBackgroundColorCssClass(
+			containerLayoutStructureItem.setBackgroundColorCssClass(
 				(String)definitionMap.get("backgroundColor"));
 
 			Map<String, Object> backgroundFragmentImageMap =
@@ -101,7 +101,7 @@ public class ContainerLayoutStructureItemImporter
 						jsonObject, (Map<String, Object>)urlMap.get("mapping"));
 				}
 
-				containerStyledLayoutStructureItem.setBackgroundImageJSONObject(
+				containerLayoutStructureItem.setBackgroundImageJSONObject(
 					jsonObject);
 			}
 
@@ -109,12 +109,12 @@ public class ContainerLayoutStructureItemImporter
 				(Map<String, Object>)definitionMap.get("layout");
 
 			if (containerLayout != null) {
-				containerStyledLayoutStructureItem.setAlign(
+				containerLayoutStructureItem.setAlign(
 					AlignConverter.convertToInternalValue(
 						(String)containerLayout.get("align")));
-				containerStyledLayoutStructureItem.setBorderColor(
+				containerLayoutStructureItem.setBorderColor(
 					(String)containerLayout.get("borderColor"));
-				containerStyledLayoutStructureItem.setBorderRadius(
+				containerLayoutStructureItem.setBorderRadius(
 					BorderRadiusConverter.convertToInternalValue(
 						(String)containerLayout.get("borderRadius")));
 
@@ -122,58 +122,54 @@ public class ContainerLayoutStructureItemImporter
 					"borderWidth");
 
 				if (borderWidth != null) {
-					containerStyledLayoutStructureItem.setBorderWidth(
-						borderWidth);
+					containerLayoutStructureItem.setBorderWidth(borderWidth);
 				}
 
-				containerStyledLayoutStructureItem.setContentDisplay(
+				containerLayoutStructureItem.setContentDisplay(
 					StringUtil.toLowerCase(
 						(String)containerLayout.get("contentDisplay")));
-				containerStyledLayoutStructureItem.setJustify(
+				containerLayoutStructureItem.setJustify(
 					JustifyConverter.convertToInternalValue(
 						(String)containerLayout.get("justify")));
 				Integer marginBottom = MarginConverter.convertToInternalValue(
 					(Integer)containerLayout.get("marginBottom"));
 
 				if (marginBottom != null) {
-					containerStyledLayoutStructureItem.setMarginBottom(
-						marginBottom);
+					containerLayoutStructureItem.setMarginBottom(marginBottom);
 				}
 
 				Integer marginLeft = MarginConverter.convertToInternalValue(
 					(Integer)containerLayout.get("marginLeft"));
 
 				if (marginLeft != null) {
-					containerStyledLayoutStructureItem.setMarginLeft(
-						marginLeft);
+					containerLayoutStructureItem.setMarginLeft(marginLeft);
 				}
 
 				Integer marginRight = MarginConverter.convertToInternalValue(
 					(Integer)containerLayout.get("marginRight"));
 
 				if (marginRight != null) {
-					containerStyledLayoutStructureItem.setMarginRight(
-						marginRight);
+					containerLayoutStructureItem.setMarginRight(marginRight);
 				}
 
 				Integer marginTop = MarginConverter.convertToInternalValue(
 					(Integer)containerLayout.get("marginTop"));
 
 				if (marginTop != null) {
-					containerStyledLayoutStructureItem.setMarginTop(marginTop);
+					containerLayoutStructureItem.setMarginTop(marginTop);
 				}
 
 				Integer opacity = (Integer)containerLayout.get("opacity");
 
 				if (opacity != null) {
-					containerStyledLayoutStructureItem.setOpacity(opacity);
+					containerLayoutStructureItem.setOpacity(opacity);
 				}
 
 				Integer paddingBottom = PaddingConverter.convertToInternalValue(
 					(Integer)containerLayout.get("paddingBottom"));
 
 				if (paddingBottom != null) {
-					containerStyledLayoutStructureItem.setPaddingBottom(
+					containerLayoutStructureItem.setPaddingBottom(
 						paddingBottom);
 				}
 
@@ -186,20 +182,18 @@ public class ContainerLayoutStructureItemImporter
 					(Integer)containerLayout.get("paddingRight"));
 
 				if (paddingLeft != null) {
-					containerStyledLayoutStructureItem.setPaddingLeft(
-						paddingLeft);
+					containerLayoutStructureItem.setPaddingLeft(paddingLeft);
 				}
 				else if (paddingHorizontal != null) {
-					containerStyledLayoutStructureItem.setPaddingLeft(
+					containerLayoutStructureItem.setPaddingLeft(
 						paddingHorizontal);
 				}
 
 				if (paddingRight != null) {
-					containerStyledLayoutStructureItem.setPaddingRight(
-						paddingRight);
+					containerLayoutStructureItem.setPaddingRight(paddingRight);
 				}
 				else if (paddingHorizontal != null) {
-					containerStyledLayoutStructureItem.setPaddingRight(
+					containerLayoutStructureItem.setPaddingRight(
 						paddingHorizontal);
 				}
 
@@ -207,11 +201,10 @@ public class ContainerLayoutStructureItemImporter
 					(Integer)containerLayout.get("paddingTop"));
 
 				if (paddingTop != null) {
-					containerStyledLayoutStructureItem.setPaddingTop(
-						paddingTop);
+					containerLayoutStructureItem.setPaddingTop(paddingTop);
 				}
 
-				containerStyledLayoutStructureItem.setShadow(
+				containerLayoutStructureItem.setShadow(
 					ShadowConverter.convertToInternalValue(
 						(String)containerLayout.get("shadow")));
 
@@ -221,11 +214,10 @@ public class ContainerLayoutStructureItemImporter
 					(String)containerLayout.get("widthType"));
 
 				if (widthType != null) {
-					containerStyledLayoutStructureItem.setWidthType(widthType);
+					containerLayoutStructureItem.setWidthType(widthType);
 				}
 				else if (containerType != null) {
-					containerStyledLayoutStructureItem.setWidthType(
-						containerType);
+					containerLayoutStructureItem.setWidthType(containerType);
 				}
 			}
 
@@ -236,7 +228,7 @@ public class ContainerLayoutStructureItemImporter
 				JSONObject jsonObject = JSONUtil.put(
 					"styles", _toStylesJSONObject(styles));
 
-				containerStyledLayoutStructureItem.updateItemConfig(jsonObject);
+				containerLayoutStructureItem.updateItemConfig(jsonObject);
 			}
 
 			Map<String, Object> fragmentLinkMap =
@@ -268,12 +260,11 @@ public class ContainerLayoutStructureItemImporter
 						StringPool.UNDERLINE + StringUtil.toLowerCase(target));
 				}
 
-				containerStyledLayoutStructureItem.setLinkJSONObject(
-					jsonObject);
+				containerLayoutStructureItem.setLinkJSONObject(jsonObject);
 			}
 		}
 
-		return containerStyledLayoutStructureItem;
+		return containerLayoutStructureItem;
 	}
 
 	@Override
