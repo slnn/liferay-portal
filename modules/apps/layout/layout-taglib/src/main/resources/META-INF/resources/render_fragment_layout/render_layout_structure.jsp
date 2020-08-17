@@ -33,10 +33,6 @@ for (String childrenItemId : childrenItemIds) {
 	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(childrenItemId);
 %>
 
-	<c:if test="<%= layoutStructureItem instanceof StyledLayoutStructureItem %>">
-		<div class="<%= renderFragmentLayoutDisplayContext.getCssClass((StyledLayoutStructureItem)layoutStructureItem) %>" style="<%= renderFragmentLayoutDisplayContext.getStyle((StyledLayoutStructureItem)layoutStructureItem) %>">
-	</c:if>
-
 	<c:choose>
 		<c:when test="<%= layoutStructureItem instanceof CollectionLayoutStructureItem %>">
 
@@ -129,11 +125,14 @@ for (String childrenItemId : childrenItemIds) {
 				</c:when>
 			</c:choose>
 
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
+			<div class="<%= renderFragmentLayoutDisplayContext.getCssClass(containerLayoutStructureItem) %>" style="<%= renderFragmentLayoutDisplayContext.getStyle(containerLayoutStructureItem) %>">
 
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+				<%
+				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+				%>
+
+				<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+			</div>
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(containerLinkHref) %>">
@@ -259,10 +258,6 @@ for (String childrenItemId : childrenItemIds) {
 			</c:choose>
 		</c:when>
 	</c:choose>
-
-	<c:if test="<%= layoutStructureItem instanceof StyledLayoutStructureItem %>">
-		</div>
-	</c:if>
 
 <%
 }
