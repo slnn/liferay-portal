@@ -221,7 +221,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "visible",
+				"defaultValue": "overflow-auto",
 				"dependencies": [
 				],
 				"label": "overflow",
@@ -230,20 +230,12 @@
 				"type": "select",
 				"validValues": [
 					{
-						"label": "visible",
-						"value": "visible"
+						"label": "auto",
+						"value": "overflow-auto"
 					},
 					{
 						"label": "hidden",
-						"value": "hidden"
-					},
-					{
-						"label": "scroll",
-						"value": "scroll"
-					},
-					{
-						"label": "auto",
-						"value": "auto"
+						"value": "overflow-hidden"
 					}
 				]
 			}
