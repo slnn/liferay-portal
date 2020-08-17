@@ -98,7 +98,7 @@ public class ContainerLayoutStructureItemExporter
 									containerLayoutStructureItem.
 										getItemConfigJSONObject();
 
-								return _toStyles(
+								return _toStylesMap(
 									itemConfigJSONObject.getJSONObject(
 										"styles"),
 									saveMappingConfiguration);
@@ -541,7 +541,7 @@ public class ContainerLayoutStructureItemExporter
 		};
 	}
 
-	private Map<String, Object> _toStyles(
+	private Map<String, Object> _toStylesMap(
 		JSONObject jsonObject, boolean saveMappingConfiguration) {
 
 		return new HashMap<String, Object>() {
