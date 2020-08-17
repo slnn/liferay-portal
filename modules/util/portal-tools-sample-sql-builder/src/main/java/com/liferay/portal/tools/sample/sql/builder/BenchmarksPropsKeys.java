@@ -20,7 +20,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 public interface BenchmarksPropsKeys {
 
 	public static final String CT_INDEX =
-		"sample.sql.change.list.collection_index";
+		"sample.sql.change.list.collection.index";
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
