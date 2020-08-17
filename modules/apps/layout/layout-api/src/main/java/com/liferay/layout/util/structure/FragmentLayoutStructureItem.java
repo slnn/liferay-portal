@@ -14,14 +14,9 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Objects;
 
@@ -65,12 +60,6 @@ public class FragmentLayoutStructureItem extends StyledLayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
-		if (_fragmentConfigurationJSONObject != null) {
-			for (String key : _fragmentConfigurationJSONObject.keySet()) {
-				jsonObject.put(key, _fragmentConfigurationJSONObject.get(key));
-			}
-		}
-
 		return jsonObject.put(
 			"fragmentEntryLinkId", String.valueOf(_fragmentEntryLinkId));
 	}
@@ -87,25 +76,6 @@ public class FragmentLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {
 		_fragmentEntryLinkId = fragmentEntryLinkId;
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
-
-		if (fragmentEntryLink != null) {
-			try {
-				JSONObject editablesJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues());
-
-				_fragmentConfigurationJSONObject =
-					editablesJSONObject.getJSONObject(
-						_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-			}
-			catch (Exception exception) {
-				_log.error("Unable to parse editable values", exception);
-			}
-		}
 	}
 
 	@Override
@@ -118,14 +88,6 @@ public class FragmentLayoutStructureItem extends StyledLayoutStructureItem {
 		}
 	}
 
-	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.freemarker." +
-			"FreeMarkerFragmentEntryProcessor";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentLayoutStructureItem.class);
-
-	private JSONObject _fragmentConfigurationJSONObject;
 	private long _fragmentEntryLinkId;
 
 }
