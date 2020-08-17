@@ -41,7 +41,8 @@ for (String childrenItemId : childrenItemIds) {
 		<c:when test="<%= layoutStructureItem instanceof CollectionStyledLayoutStructureItem %>">
 
 			<%
-			CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem = (CollectionStyledLayoutStructureItem)layoutStructureItem;
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem = (CollectionStyledLayoutStructureItem)layoutStructureItem;
 
 			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderFragmentLayoutDisplayContext.getInfoListRenderer(collectionStyledLayoutStructureItem);
 			%>
@@ -101,7 +102,8 @@ for (String childrenItemId : childrenItemIds) {
 			<%
 			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
 
-			RowStyledLayoutStructureItem rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructure.getLayoutStructureItem(columnLayoutStructureItem.getParentItemId());
+			RowStyledLayoutStructureItem
+				rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructure.getLayoutStructureItem(columnLayoutStructureItem.getParentItemId());
 			%>
 
 			<clay:col
@@ -118,7 +120,8 @@ for (String childrenItemId : childrenItemIds) {
 		<c:when test="<%= layoutStructureItem instanceof ContainerStyledLayoutStructureItem %>">
 
 			<%
-			ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem = (ContainerStyledLayoutStructureItem)layoutStructureItem;
+			ContainerStyledLayoutStructureItem
+				containerStyledLayoutStructureItem = (ContainerStyledLayoutStructureItem)layoutStructureItem;
 
 			String containerLinkHref = renderFragmentLayoutDisplayContext.getContainerLinkHref(containerStyledLayoutStructureItem, request.getAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
 			%>
@@ -160,7 +163,8 @@ for (String childrenItemId : childrenItemIds) {
 		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
 
 			<%
-			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
 
 			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
 				continue;
@@ -204,7 +208,8 @@ for (String childrenItemId : childrenItemIds) {
 		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">
 
 			<%
-			RowStyledLayoutStructureItem rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructureItem;
+			RowStyledLayoutStructureItem
+				rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructureItem;
 
 			LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rowStyledLayoutStructureItem.getParentItemId());
 
