@@ -1,14 +1,14 @@
-<#assign blogsEntryModels = blogDataFactory.newBlogsEntryModels(groupId) />
+<#assign
+	blogsEntryModels = blogDataFactory.newBlogsEntryModels(groupId)
+	blogsEntryClassNameId = classNameDataFactory.getClassNameId("com.liferay.blogs.model.BlogsEntry")
+/>
 
 ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel("com_liferay_comment_web_portlet_CommentPortlet"))}
 
 <#list blogsEntryModels as blogsEntryModel>
 	${insertSQLBuilder.toInsertSQL(blogsEntryModel)}
 
-	<#assign
-		blogsEntryClassNameId = classNameDataFactory.getClassNameId("com.liferay.blogs.model.BlogsEntry")
-		friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel, blogsEntryClassNameId)
-	/>
+	<#assign friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel, blogsEntryClassNameId) />
 
 	${insertSQLBuilder.toInsertSQL(friendlyURLEntryModel)}
 
@@ -37,7 +37,7 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 
 	${insertSQLBuilder.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel))}
 
-	${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel))}
+	${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel, blogsEntryClassNameId))}
 
 	${csvFileWriter.write("blog", blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbRootMessageId + "\n")}
 </#list>

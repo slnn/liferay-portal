@@ -14,16 +14,12 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
 import com.liferay.blogs.social.BlogsActivityKeys;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalArticleConstants;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleModel;
-import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageModel;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.petra.string.StringBundler;
@@ -33,7 +29,6 @@ import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityModel;
 import com.liferay.util.SimpleCounter;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.social.WikiActivityKeys;
 
 /**
@@ -46,27 +41,25 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 	}
 
 	public SocialActivityModel newSocialActivityModel(
-		BlogsEntryModel blogsEntryModel) {
+		BlogsEntryModel blogsEntryModel, long classNameId) {
 
 		return _newSocialActivityModel(
-			blogsEntryModel.getGroupId(),
-			ClassNameBuilder.getClassNameId(BlogsEntry.class),
+			blogsEntryModel.getGroupId(), classNameId,
 			blogsEntryModel.getEntryId(), BlogsActivityKeys.ADD_ENTRY,
 			"{\"title\":\"" + blogsEntryModel.getTitle() + "\"}");
 	}
 
 	public SocialActivityModel newSocialActivityModel(
-		DLFileEntryModel dlFileEntryModel) {
+		DLFileEntryModel dlFileEntryModel, long classNameId) {
 
 		return _newSocialActivityModel(
-			dlFileEntryModel.getGroupId(),
-			ClassNameBuilder.getClassNameId(DLFileEntry.class),
+			dlFileEntryModel.getGroupId(), classNameId,
 			dlFileEntryModel.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
 			StringPool.BLANK);
 	}
 
 	public SocialActivityModel newSocialActivityModel(
-		JournalArticleModel journalArticleModel) {
+		JournalArticleModel journalArticleModel, long classNameId) {
 
 		int type = JournalActivityKeys.UPDATE_ARTICLE;
 
@@ -77,14 +70,14 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		}
 
 		return _newSocialActivityModel(
-			journalArticleModel.getGroupId(),
-			ClassNameBuilder.getClassNameId(JournalArticle.class),
+			journalArticleModel.getGroupId(), classNameId,
 			journalArticleModel.getResourcePrimKey(), type,
 			"{\"title\":\"" + journalArticleModel.getUrlTitle() + "\"}");
 	}
 
 	public SocialActivityModel newSocialActivityModel(
-		MBMessageModel mbMessageModel) {
+		MBMessageModel mbMessageModel, long wikiPageClassNameId,
+		long mbMessageClassNameId) {
 
 		long classNameId = mbMessageModel.getClassNameId();
 		long classPK = mbMessageModel.getClassPK();
@@ -92,7 +85,7 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 		int type = 0;
 		String extraData = null;
 
-		if (classNameId == ClassNameBuilder.getClassNameId(WikiPage.class)) {
+		if (classNameId == wikiPageClassNameId) {
 			extraData = "{\"version\":1}";
 
 			type = WikiActivityKeys.ADD_PAGE;
@@ -102,7 +95,7 @@ public class SocialActivityDataFactory extends BaseDataFactory {
 
 			type = MBActivityKeys.ADD_MESSAGE;
 
-			classNameId = ClassNameBuilder.getClassNameId(MBMessage.class);
+			classNameId = mbMessageClassNameId;
 			classPK = mbMessageModel.getMessageId();
 		}
 		else {
