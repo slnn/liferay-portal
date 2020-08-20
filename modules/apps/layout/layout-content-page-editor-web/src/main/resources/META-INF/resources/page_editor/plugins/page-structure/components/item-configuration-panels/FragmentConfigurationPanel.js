@@ -27,7 +27,7 @@ import updateFragmentConfiguration from '../../../../app/thunks/updateFragmentCo
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 import {FieldSet} from './FieldSet';
 
-export const FragmentGeneralPanel = ({item}) => {
+export const FragmentConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 
 	const fragmentEntryLink = useSelectorCallback(
@@ -93,7 +93,7 @@ export const FragmentGeneralPanel = ({item}) => {
 	);
 };
 
-FragmentGeneralPanel.propTypes = {
+FragmentConfigurationPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({
 			fragmentEntryLinkId: PropTypes.string.isRequired,
