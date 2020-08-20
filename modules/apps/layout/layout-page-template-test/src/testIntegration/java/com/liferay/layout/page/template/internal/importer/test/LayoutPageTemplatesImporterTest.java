@@ -263,11 +263,11 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertEquals(
 			"fluid", containerStyledLayoutStructureItem.getContainerType());
 		Assert.assertEquals(
-			0, containerStyledLayoutStructureItem.getMarginRight());
-		Assert.assertEquals(
 			5, containerStyledLayoutStructureItem.getPaddingBottom());
 		Assert.assertEquals(
 			5, containerStyledLayoutStructureItem.getPaddingLeft());
+		Assert.assertEquals(
+			0, containerStyledLayoutStructureItem.getMarginRight());
 		Assert.assertEquals(
 			5, containerStyledLayoutStructureItem.getPaddingTop());
 		Assert.assertEquals(
