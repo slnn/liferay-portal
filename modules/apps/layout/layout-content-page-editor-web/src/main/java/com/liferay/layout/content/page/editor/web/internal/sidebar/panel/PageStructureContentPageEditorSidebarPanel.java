@@ -53,7 +53,7 @@ public class PageStructureContentPageEditorSidebarPanel
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "selection");
+		return LanguageUtil.get(resourceBundle, "page-structure");
 	}
 
 	@Override
