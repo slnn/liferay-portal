@@ -10,9 +10,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "General",
+			key_navItem = "Configuration",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+			value1 = "Configuration");
 
 		Click(
 			colorPalette = "${colorPalette}",
@@ -31,9 +31,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "General",
+			key_navItem = "Configuration",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+			value1 = "Configuration");
 
 		while (!IsTextEqual(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT", value1 = "${optionValue}")) {
 			Select(
@@ -54,9 +54,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "General",
+			key_navItem = "Configuration",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+			value1 = "Configuration");
 
 		FormFields.editText(
 			fieldName = "${textConfigName}",
@@ -79,9 +79,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "General",
+			key_navItem = "Configuration",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+			value1 = "Configuration");
 
 		while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "${checkboxName}", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.clickAtNotVisible(
