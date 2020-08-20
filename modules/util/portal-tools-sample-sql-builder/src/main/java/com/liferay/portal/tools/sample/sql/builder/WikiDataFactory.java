@@ -17,7 +17,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.model.WikiNodeModel;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
 import com.liferay.wiki.model.WikiPageResourceModel;
 import com.liferay.wiki.model.impl.WikiNodeModelImpl;
@@ -39,10 +38,6 @@ public class WikiDataFactory extends BaseDataFactory {
 
 	public int getMaxWikiPageCommentCount() {
 		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
-	}
-
-	public long getWikiPageClassNameId() {
-		return ClassNameBuilder.getClassNameId(WikiPage.class);
 	}
 
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {

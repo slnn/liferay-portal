@@ -6,7 +6,7 @@
 
 <#assign guestUserModel = userDataFactory.newGuestUserModel() />
 
-<@insertGroup _groupModel=userDataFactory.newGroupModel(guestUserModel) />
+<@insertGroup _groupModel=userDataFactory.newGroupModel(guestUserModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.User")) />
 
 <#assign
 	groupIds = [guestGroupModel.groupId]
