@@ -91,7 +91,7 @@
 	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
 >
-	${insertSQLBuilder.toInsertSQL(_ddmStructureModel)}
+	${insertSQLBuilder.toInsertSQL(_ddmStructureModel, classNameDataFactory.getClassName(_ddmStructureModel))}
 
 	${insertSQLBuilder.toInsertSQL(_ddmStructureLayoutModel)}
 

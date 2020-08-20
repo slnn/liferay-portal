@@ -117,6 +117,46 @@ public class InsertSQLBuilder {
 		}
 	}
 
+	public String toInsertSQL(BaseModel<?> baseModel, String className) {
+		try {
+			StringBundler sb = new StringBundler();
+
+			toInsertSQL(sb, baseModel);
+
+			Class<?> clazz = baseModel.getClass();
+
+			for (Class<?> modelClass : clazz.getInterfaces()) {
+				try {
+					Class<?>[] classArg = new Class<?>[2];
+
+					classArg[0] = modelClass;
+					classArg[1] = String.class;
+
+					Method method =
+						ResourcePermissionDataFactory.class.getMethod(
+							"newResourcePermissionModels", classArg);
+
+					for (ResourcePermissionModel resourcePermissionModel :
+							(List<ResourcePermissionModel>)method.invoke(
+								_resourcePermissionDataFactory, baseModel,
+								className)) {
+
+						sb.append("\n");
+
+						toInsertSQL(sb, resourcePermissionModel);
+					}
+				}
+				catch (NoSuchMethodException noSuchMethodException) {
+				}
+			}
+
+			return sb.toString();
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			return ReflectionUtil.throwException(reflectiveOperationException);
+		}
+	}
+
 	public String toInsertSQL(
 		String mappingTableName, long companyId, long leftPrimaryKey,
 		long rightPrimaryKey) {
@@ -279,15 +319,13 @@ public class InsertSQLBuilder {
 		}
 
 		public List<ResourcePermissionModel> newResourcePermissionModels(
-			DDMStructureModel ddmStructureModel) {
+			DDMStructureModel ddmStructureModel, String className) {
 
 			List<ResourcePermissionModel> resourcePermissionModels =
 				new ArrayList<>(3);
 
 			String name = _getResourcePermissionModelName(
-				DDMStructure.class.getName(),
-				ClassNameBuilder.getClassName(
-					ddmStructureModel.getClassNameId()));
+				DDMStructure.class.getName(), className);
 			String primKey = String.valueOf(ddmStructureModel.getStructureId());
 
 			resourcePermissionModels.add(
@@ -303,15 +341,13 @@ public class InsertSQLBuilder {
 		}
 
 		public List<ResourcePermissionModel> newResourcePermissionModels(
-			DDMTemplateModel ddmTemplateModel) {
+			DDMTemplateModel ddmTemplateModel, String className) {
 
 			List<ResourcePermissionModel> resourcePermissionModels =
 				new ArrayList<>(3);
 
 			String name = _getResourcePermissionModelName(
-				DDMTemplate.class.getName(),
-				ClassNameBuilder.getClassName(
-					ddmTemplateModel.getResourceClassNameId()));
+				DDMTemplate.class.getName(), className);
 			String primKey = String.valueOf(ddmTemplateModel.getTemplateId());
 
 			resourcePermissionModels.add(

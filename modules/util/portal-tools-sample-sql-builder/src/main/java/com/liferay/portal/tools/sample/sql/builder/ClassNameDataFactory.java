@@ -15,9 +15,12 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -39,7 +42,20 @@ public class ClassNameDataFactory extends BaseDataFactory {
 		return _classNameDataFactory;
 	}
 
-	public String getClassName(long classNameId) {
+	public String getClassName(BaseModel<?> baseModel) {
+		long classNameId;
+
+		if (baseModel instanceof DDMStructureModel) {
+			DDMStructureModel ddmStructureModel = (DDMStructureModel)baseModel;
+
+			classNameId = ddmStructureModel.getClassNameId();
+		}
+		else {
+			DDMTemplateModel ddmTemplateModel = (DDMTemplateModel)baseModel;
+
+			classNameId = ddmTemplateModel.getResourceClassNameId();
+		}
+
 		for (ClassNameModel classNameModel : _classNameModels.values()) {
 			if (classNameModel.getClassNameId() == classNameId) {
 				return classNameModel.getValue();
