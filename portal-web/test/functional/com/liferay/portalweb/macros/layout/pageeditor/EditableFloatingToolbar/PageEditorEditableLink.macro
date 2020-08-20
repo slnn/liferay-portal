@@ -33,7 +33,7 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		PageEditor.gotoTab(tabName = "Selection");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		AssertClick(
 			key_navItem = "Link",
@@ -61,7 +61,7 @@ definition {
 			value1 = "${url}");
 
 		Click(
-			key_sidebarButton = "Selection",
+			key_sidebarButton = "Page Structure",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		PageEditor.waitForAutoSave();
