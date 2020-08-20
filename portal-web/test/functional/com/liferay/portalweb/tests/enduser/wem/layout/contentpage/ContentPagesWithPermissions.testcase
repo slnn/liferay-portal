@@ -718,7 +718,7 @@ definition {
 
 		Click(locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]");
 
-		PageEditor.gotoTab(tabName = "Selection");
+		PageEditor.gotoTab(tabName = "Page Structure");
 
 		var key_navItem = "Mapping";
 
