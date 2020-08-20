@@ -68,10 +68,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return GetterUtil.getString(_getStyleProperty("align"));
 	}
 
-	public String getBackgroundColor() {
-		return _getColor("backgroundColor");
-	}
-
 	public String getBackgroundColorCssClass() {
 		return _getColorCssClass("backgroundColor");
 	}
@@ -81,10 +77,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getBorderColor() {
-		return _getColor("borderColor");
-	}
-
-	public String getBorderColorCssClass() {
 		return _getColorCssClass("borderColor");
 	}
 
@@ -203,10 +195,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return GetterUtil.getString(_getStyleProperty("textAlign"));
 	}
 
-	public String getTextColor() {
-		return _getColor("textColor");
-	}
-
 	public String getTextColorCssClass() {
 		return _getColorCssClass("textColor");
 	}
@@ -251,45 +239,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	protected JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
-
-	private String _getColor(String property) {
-		JSONObject configJSONObject = getItemConfigJSONObject();
-
-		Object configColorObject = configJSONObject.get(property);
-
-		Object styleColorObject = stylesJSONObject.get(property);
-
-		if ((styleColorObject == null) && (configColorObject != null)) {
-			if (configColorObject instanceof String) {
-				return GetterUtil.getString(configColorObject);
-			}
-
-			JSONObject configColorJSONObject = configJSONObject.getJSONObject(
-				property);
-
-			return configColorJSONObject.getString(
-				"color",
-				configColorJSONObject.getString("rgbValue", StringPool.BLANK));
-		}
-
-		if ((styleColorObject != null) &&
-			(styleColorObject instanceof String)) {
-
-			return GetterUtil.getString(styleColorObject);
-		}
-		else if ((styleColorObject != null) &&
-				 (styleColorObject instanceof JSONObject)) {
-
-			JSONObject styleColorJSONObject = stylesJSONObject.getJSONObject(
-				property);
-
-			return styleColorJSONObject.getString(
-				"color",
-				styleColorJSONObject.getString("rgbValue", StringPool.BLANK));
-		}
-
-		return StringPool.BLANK;
-	}
 
 	private String _getColorCssClass(String property) {
 		JSONObject configJSONObject = getItemConfigJSONObject();
