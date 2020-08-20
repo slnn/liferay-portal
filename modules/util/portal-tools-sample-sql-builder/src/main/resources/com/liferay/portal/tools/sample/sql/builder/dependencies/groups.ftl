@@ -1,16 +1,19 @@
-<#assign guestGroupModel = userDataFactory.newGuestGroupModel() />
+<#assign
+	groupClassNameId = classNameDataFactory.getClassNameId("import com.liferay.portal.kernel.model.Group")
+	guestGroupModel = userDataFactory.newGuestGroupModel(groupClassNameId)
+/>
 
 <#include "default_user.ftl">
 
 <@insertLayout _layoutModel=layoutDataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
 
-<@insertGroup _groupModel=userDataFactory.newGlobalGroupModel() />
+<@insertGroup _groupModel=userDataFactory.newGlobalGroupModel(classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Company")) />
 
 <@insertGroup _groupModel=guestGroupModel />
 
-<@insertGroup _groupModel=userDataFactory.newUserPersonalSiteGroupModel() />
+<@insertGroup _groupModel=userDataFactory.newUserPersonalSiteGroupModel(classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.UserPersonalSite")) />
 
-<#list userDataFactory.newGroupModels() as groupModel>
+<#list userDataFactory.newGroupModels(groupClassNameId) as groupModel>
 	<#assign groupId = groupModel.groupId />
 
 	<#include "asset_publisher.ftl">

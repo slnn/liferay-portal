@@ -6,7 +6,7 @@
 />
 
 <#list userModels as userModel>
-	<#assign userGroupModel = userDataFactory.newGroupModel(userModel) />
+	<#assign userGroupModel = userDataFactory.newGroupModel(userModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.User")) />
 
 	<@insertLayout _layoutModel=layoutDataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "") />
 

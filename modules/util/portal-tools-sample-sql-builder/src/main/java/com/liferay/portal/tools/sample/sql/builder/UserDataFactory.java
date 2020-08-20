@@ -14,25 +14,18 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceCatalogModel;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.AccountModel;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.ContactModel;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupModel;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
-import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
@@ -100,10 +93,6 @@ public class UserDataFactory extends BaseDataFactory {
 		return POWER_USER_ROLE_ID;
 	}
 
-	public List<RoleModel> getRoleModels() {
-		return _roleModels;
-	}
-
 	public long getUserRoleId() {
 		return USER_ROLE_ID;
 	}
@@ -130,21 +119,19 @@ public class UserDataFactory extends BaseDataFactory {
 	}
 
 	public GroupModel newCommerceCatalogGroupModel(
-		CommerceCatalogModel commerceCatalogModel) {
+		CommerceCatalogModel commerceCatalogModel, long classNameId) {
 
 		return _newGroupModel(
-			counter.get(),
-			ClassNameBuilder.getClassNameId(CommerceCatalog.class),
+			counter.get(), classNameId,
 			commerceCatalogModel.getCommerceCatalogId(),
 			commerceCatalogModel.getName(), false);
 	}
 
 	public GroupModel newCommerceChannelGroupModel(
-		CommerceChannelModel commerceChannelModel) {
+		CommerceChannelModel commerceChannelModel, long classNameId) {
 
 		return _newGroupModel(
-			counter.get(),
-			ClassNameBuilder.getClassNameId(CommerceChannel.class),
+			counter.get(), classNameId,
 			commerceChannelModel.getCommerceChannelId(),
 			commerceChannelModel.getName(), false);
 	}
@@ -166,7 +153,7 @@ public class UserDataFactory extends BaseDataFactory {
 		return companyModel;
 	}
 
-	public ContactModel newContactModel(UserModel userModel) {
+	public ContactModel newContactModel(UserModel userModel, long classNameId) {
 		ContactModel contactModel = new ContactModelImpl();
 
 		// PK fields
@@ -191,8 +178,7 @@ public class UserDataFactory extends BaseDataFactory {
 
 		// Other fields
 
-		contactModel.setClassNameId(
-			ClassNameBuilder.getClassNameId(User.class));
+		contactModel.setClassNameId(classNameId);
 		contactModel.setClassPK(userModel.getUserId());
 		contactModel.setAccountId(_accountId);
 		contactModel.setParentContactId(
@@ -212,40 +198,121 @@ public class UserDataFactory extends BaseDataFactory {
 			StringPool.BLANK, true);
 	}
 
-	public GroupModel newGlobalGroupModel() {
+	public GroupModel newGlobalGroupModel(long classNameId) {
 		return _newGroupModel(
-			GLOBAL_GROUP_ID, ClassNameBuilder.getClassNameId(Company.class),
-			COMPANY_ID, GroupConstants.GLOBAL, false);
+			GLOBAL_GROUP_ID, classNameId, COMPANY_ID, GroupConstants.GLOBAL,
+			false);
 	}
 
-	public GroupModel newGroupModel(UserModel userModel) {
+	public GroupModel newGroupModel(UserModel userModel, long classNameId) {
 		return _newGroupModel(
-			counter.get(), ClassNameBuilder.getClassNameId(User.class),
-			userModel.getUserId(), userModel.getScreenName(), false);
+			counter.get(), classNameId, userModel.getUserId(),
+			userModel.getScreenName(), false);
 	}
 
-	public List<GroupModel> newGroupModels() {
+	public List<GroupModel> newGroupModels(long classNameId) {
 		List<GroupModel> groupModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_GROUP_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
 			groupModels.add(
-				_newGroupModel(
-					i, ClassNameBuilder.getClassNameId(Group.class), i,
-					"Site " + i, true));
+				_newGroupModel(i, classNameId, i, "Site " + i, true));
 		}
 
 		return groupModels;
 	}
 
-	public GroupModel newGuestGroupModel() {
+	public GroupModel newGuestGroupModel(long classNameId) {
 		return _newGroupModel(
-			GUEST_GROUP_ID, ClassNameBuilder.getClassNameId(Group.class),
-			GUEST_GROUP_ID, GroupConstants.GUEST, true);
+			GUEST_GROUP_ID, classNameId, GUEST_GROUP_ID, GroupConstants.GUEST,
+			true);
 	}
 
 	public UserModel newGuestUserModel() {
 		return _newUserModel(counter.get(), "Test", "Test", "Test", false);
+	}
+
+	public List<RoleModel> newRoleModels(long classNameId) {
+		_roleModels = new ArrayList<>();
+
+		// Administrator
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR,
+				ADMINISTRATOR_ROLE_ID, classNameId));
+
+		// Guest
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.GUEST, RoleConstants.TYPE_REGULAR, GUEST_ROLE_ID,
+				classNameId));
+
+		// Organization Administrator
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.ORGANIZATION_ADMINISTRATOR,
+				RoleConstants.TYPE_ORGANIZATION, counter.get(), classNameId));
+
+		// Organization Owner
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.ORGANIZATION_OWNER,
+				RoleConstants.TYPE_ORGANIZATION, counter.get(), classNameId));
+
+		// Organization User
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.ORGANIZATION_USER,
+				RoleConstants.TYPE_ORGANIZATION, counter.get(), classNameId));
+
+		// Owner
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.OWNER, RoleConstants.TYPE_REGULAR, OWNER_ROLE_ID,
+				classNameId));
+
+		// Power User
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR,
+				POWER_USER_ROLE_ID, classNameId));
+
+		// Site Administrator
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE,
+				counter.get(), classNameId));
+
+		// Site Member
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE,
+				SITE_MEMBER_ROLE_ID, classNameId));
+
+		// Site Owner
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE,
+				counter.get(), classNameId));
+
+		// User
+
+		_roleModels.add(
+			_newRoleModel(
+				RoleConstants.USER, RoleConstants.TYPE_REGULAR, USER_ROLE_ID,
+				classNameId));
+
+		return _roleModels;
 	}
 
 	public UserModel newSampleUserModel() {
@@ -270,11 +337,10 @@ public class UserDataFactory extends BaseDataFactory {
 		return userModels;
 	}
 
-	public GroupModel newUserPersonalSiteGroupModel() {
+	public GroupModel newUserPersonalSiteGroupModel(long classNameId) {
 		return _newGroupModel(
-			_userPersonalSiteGroupId,
-			ClassNameBuilder.getClassNameId(UserPersonalSite.class),
-			DEFAULT_USER_ID, GroupConstants.USER_PERSONAL_SITE, false);
+			_userPersonalSiteGroupId, classNameId, DEFAULT_USER_ID,
+			GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
 	public VirtualHostModel newVirtualHostModel() {
@@ -302,92 +368,7 @@ public class UserDataFactory extends BaseDataFactory {
 
 		_userPersonalSiteGroupId = counter.get();
 
-		_initRoleModels();
 		_initUserNames();
-	}
-
-	private void _initRoleModels() {
-		_roleModels = new ArrayList<>();
-
-		// Administrator
-
-		_administratorRoleModel = _newRoleModel(
-			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR,
-			ADMINISTRATOR_ROLE_ID);
-
-		_roleModels.add(_administratorRoleModel);
-
-		// Guest
-
-		_guestRoleModel = _newRoleModel(
-			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR, GUEST_ROLE_ID);
-
-		_roleModels.add(_guestRoleModel);
-
-		// Organization Administrator
-
-		_roleModels.add(
-			_newRoleModel(
-				RoleConstants.ORGANIZATION_ADMINISTRATOR,
-				RoleConstants.TYPE_ORGANIZATION, counter.get()));
-
-		// Organization Owner
-
-		_roleModels.add(
-			_newRoleModel(
-				RoleConstants.ORGANIZATION_OWNER,
-				RoleConstants.TYPE_ORGANIZATION, counter.get()));
-
-		// Organization User
-
-		_roleModels.add(
-			_newRoleModel(
-				RoleConstants.ORGANIZATION_USER,
-				RoleConstants.TYPE_ORGANIZATION, counter.get()));
-
-		// Owner
-
-		_ownerRoleModel = _newRoleModel(
-			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR, OWNER_ROLE_ID);
-
-		_roleModels.add(_ownerRoleModel);
-
-		// Power User
-
-		_powerUserRoleModel = _newRoleModel(
-			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR,
-			POWER_USER_ROLE_ID);
-
-		_roleModels.add(_powerUserRoleModel);
-
-		// Site Administrator
-
-		_roleModels.add(
-			_newRoleModel(
-				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE,
-				counter.get()));
-
-		// Site Member
-
-		_siteMemberRoleModel = _newRoleModel(
-			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE,
-			SITE_MEMBER_ROLE_ID);
-
-		_roleModels.add(_siteMemberRoleModel);
-
-		// Site Owner
-
-		_roleModels.add(
-			_newRoleModel(
-				RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE,
-				counter.get()));
-
-		// User
-
-		_userRoleModel = _newRoleModel(
-			RoleConstants.USER, RoleConstants.TYPE_REGULAR, USER_ROLE_ID);
-
-		_roleModels.add(_userRoleModel);
 	}
 
 	private void _initUserNames() {
@@ -462,7 +443,9 @@ public class UserDataFactory extends BaseDataFactory {
 		return groupModel;
 	}
 
-	private RoleModel _newRoleModel(String name, int type, long roleId) {
+	private RoleModel _newRoleModel(
+		String name, int type, long roleId, long classNameId) {
+
 		RoleModel roleModel = new RoleModelImpl();
 
 		// UUID
@@ -483,7 +466,7 @@ public class UserDataFactory extends BaseDataFactory {
 
 		// Other fields
 
-		roleModel.setClassNameId(ClassNameBuilder.getClassNameId(Role.class));
+		roleModel.setClassNameId(classNameId);
 		roleModel.setClassPK(roleModel.getRoleId());
 		roleModel.setName(name);
 		roleModel.setType(type);
@@ -552,16 +535,10 @@ public class UserDataFactory extends BaseDataFactory {
 	private static UserDataFactory _userDataFactory = new UserDataFactory();
 
 	private final long _accountId;
-	private RoleModel _administratorRoleModel;
 	private List<String> _firstNames;
-	private RoleModel _guestRoleModel;
 	private List<String> _lastNames;
-	private RoleModel _ownerRoleModel;
-	private RoleModel _powerUserRoleModel;
 	private List<RoleModel> _roleModels;
-	private RoleModel _siteMemberRoleModel;
 	private final long _userPersonalSiteGroupId;
-	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 
 }

@@ -1,12 +1,12 @@
-<#assign wikiNodeModels = wikiDataFactory.newWikiNodeModels(groupId) />
+<#assign
+	wikiNodeModels = wikiDataFactory.newWikiNodeModels(groupId)
+	wikiPageClassNameId = classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage")
+/>
 
 <#list wikiNodeModels as wikiNodeModel>
 	${insertSQLBuilder.toInsertSQL(wikiNodeModel)}
 
-	<#assign
-		wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel)
-		wikiPageClassNameId = classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage")
-	/>
+	<#assign wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel) />
 
 	<#list wikiPageModels as wikiPageModel>
 		${insertSQLBuilder.toInsertSQL(wikiPageModel)}
@@ -26,7 +26,7 @@
 		<#assign mbRootMessageId = counterDataFactory.getCounterNext() />
 
 		<@insertMBDiscussion
-			_classNameId=wikiDataFactory.wikiPageClassNameId
+			_classNameId=ikiPageClassNameId
 			_classPK=wikiPageModel.resourcePrimKey
 			_groupId=groupId
 			_maxCommentCount=wikiDataFactory.maxWikiPageCommentCount
