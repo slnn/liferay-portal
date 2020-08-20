@@ -14,14 +14,11 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
-import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadModel;
 import com.liferay.subscription.constants.SubscriptionConstants;
 import com.liferay.subscription.model.SubscriptionModel;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageModel;
 
 import java.util.Date;
@@ -36,23 +33,22 @@ public class SubscriptionDataFactory extends BaseDataFactory {
 	}
 
 	public SubscriptionModel newSubscriptionModel(
-		BlogsEntryModel blogsEntryModel) {
+		BlogsEntryModel blogsEntryModel, long classNameId) {
 
-		return _newSubscriptionModel(
-			ClassNameBuilder.getClassNameId(BlogsEntry.class),
-			blogsEntryModel.getEntryId());
+		return _newSubscriptionModel(classNameId, blogsEntryModel.getEntryId());
 	}
 
-	public SubscriptionModel newSubscriptionModel(MBThreadModel mBThreadModel) {
-		return _newSubscriptionModel(
-			ClassNameBuilder.getClassNameId(MBThread.class),
-			mBThreadModel.getThreadId());
+	public SubscriptionModel newSubscriptionModel(
+		MBThreadModel mBThreadModel, long classNameId) {
+
+		return _newSubscriptionModel(classNameId, mBThreadModel.getThreadId());
 	}
 
-	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
+	public SubscriptionModel newSubscriptionModel(
+		WikiPageModel wikiPageModel, long classNameId) {
+
 		return _newSubscriptionModel(
-			ClassNameBuilder.getClassNameId(WikiPage.class),
-			wikiPageModel.getResourcePrimKey());
+			classNameId, wikiPageModel.getResourcePrimKey());
 	}
 
 	private SubscriptionDataFactory() {
