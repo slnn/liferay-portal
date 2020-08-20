@@ -146,7 +146,7 @@
 					_mbThreadId=counterDataFactory.getCounterNext()
 				/>
 
-				${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel))}
+				${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")))}
 
 				<#local dlFileEntryMetadataModel = dlDataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
