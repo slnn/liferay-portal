@@ -31,7 +31,6 @@ import updateRowColumns from '../../../../app/thunks/updateRowColumns';
 import {getResponsiveConfig} from '../../../../app/utils/getResponsiveConfig';
 import {useId} from '../../../../app/utils/useId';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
-import {FieldSet} from './FieldSet';
 
 const CUSTOM_ROW = 'custom';
 
@@ -70,19 +69,17 @@ export const RowStylesPanel = ({item}) => {
 	const setCustomRow = useSetCustomRowContext();
 	const customRow = useCustomRowContext();
 
-	const {commonStyles} = config;
-
-	const onCustomStylesValueSelect = (identifier, value) => {
+	const handleConfigurationValueChanged = (identifier, value) => {
 		setCustomRow(false);
 		setUpdatedLayoutData(null);
 
-		let itemStyles = {[identifier]: value};
+		let itemConfig = {[identifier]: value};
 
 		if (
 			selectedViewportSize !== VIEWPORT_SIZES.desktop &&
 			identifier !== ROW_STYLE_IDENTIFIERS.gutters
 		) {
-			itemStyles = {[selectedViewportSize]: itemStyles};
+			itemConfig = {[selectedViewportSize]: itemConfig};
 		}
 
 		if (identifier === ROW_STYLE_IDENTIFIERS.numberOfColumns) {
@@ -113,25 +110,12 @@ export const RowStylesPanel = ({item}) => {
 
 		dispatch(
 			updateItemConfig({
-				itemConfig: itemStyles,
+				itemConfig,
 				itemId: item.itemId,
 				segmentsExperienceId,
 			})
 		);
 	};
-
-	const onCommonStylesValueSelect = (name, value) =>
-		dispatch(
-			updateItemConfig({
-				itemConfig: {
-					styles: {
-						[name]: value,
-					},
-				},
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
 
 	const getModulesPerRowOptionLabel = (value) => {
 		return value > 1
@@ -152,63 +136,47 @@ export const RowStylesPanel = ({item}) => {
 				{viewportSize.label}
 			</p>
 
-			<div className="page-editor__page-structure__section__custom-styles">
-				<Select
-					configurationKey="modulesPerRow"
-					handleChange={onCustomStylesValueSelect}
-					label={Liferay.Language.get('layout')}
-					options={modulesPerRowOptions[
-						rowConfig.numberOfColumns - 1
-					].map((option) => ({
-						disabled: option === CUSTOM_ROW,
-						label:
-							option === CUSTOM_ROW
-								? Liferay.Language.get('custom')
-								: Liferay.Util.sub(
-										getModulesPerRowOptionLabel(option),
-										option
-								  ),
-						value: option,
-					}))}
-					value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
-				/>
+			<Select
+				configurationKey="modulesPerRow"
+				handleChange={handleConfigurationValueChanged}
+				label={Liferay.Language.get('layout')}
+				options={modulesPerRowOptions[
+					rowConfig.numberOfColumns - 1
+				].map((option) => ({
+					disabled: option === CUSTOM_ROW,
+					label:
+						option === CUSTOM_ROW
+							? Liferay.Language.get('custom')
+							: Liferay.Util.sub(
+									getModulesPerRowOptionLabel(option),
+									option
+							  ),
+					value: option,
+				}))}
+				value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
+			/>
 
-				{rowConfig.numberOfColumns === 2 &&
-					rowConfig.modulesPerRow === 1 && (
-						<ClayCheckbox
-							checked={rowConfig.reverseOrder}
-							label={Liferay.Language.get('inverse-order')}
-							onChange={({target: {checked}}) =>
-								onCustomStylesValueSelect(
-									'reverseOrder',
-									checked
-								)
-							}
-						/>
-					)}
+			{rowConfig.numberOfColumns === 2 &&
+				rowConfig.modulesPerRow === 1 && (
+					<ClayCheckbox
+						checked={rowConfig.reverseOrder}
+						label={Liferay.Language.get('inverse-order')}
+						onChange={({target: {checked}}) =>
+							handleConfigurationValueChanged(
+								'reverseOrder',
+								checked
+							)
+						}
+					/>
+				)}
 
-				<Select
-					configurationKey="verticalAlignment"
-					handleChange={onCustomStylesValueSelect}
-					label={Liferay.Language.get('vertical-alignment')}
-					options={VERTICAL_ALIGNMENT_OPTIONS}
-					value={rowConfig.verticalAlignment}
-				/>
-			</div>
-
-			<div className="page-editor__row-styles-panel__common-styles">
-				{commonStyles.map((fieldSet, index) => {
-					return (
-						<FieldSet
-							fields={fieldSet.styles}
-							key={index}
-							label={fieldSet.label}
-							onValueSelect={onCommonStylesValueSelect}
-							values={item.config.styles}
-						/>
-					);
-				})}
-			</div>
+			<Select
+				configurationKey="verticalAlignment"
+				handleChange={handleConfigurationValueChanged}
+				label={Liferay.Language.get('vertical-alignment')}
+				options={VERTICAL_ALIGNMENT_OPTIONS}
+				value={rowConfig.verticalAlignment}
+			/>
 		</>
 	);
 };
