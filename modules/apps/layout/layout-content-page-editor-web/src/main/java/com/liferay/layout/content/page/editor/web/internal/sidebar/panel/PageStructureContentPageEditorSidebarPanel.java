@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=700",
+	immediate = true, property = "service.ranking:Integer=300",
 	service = ContentPageEditorSidebarPanel.class
 )
 public class PageStructureContentPageEditorSidebarPanel
