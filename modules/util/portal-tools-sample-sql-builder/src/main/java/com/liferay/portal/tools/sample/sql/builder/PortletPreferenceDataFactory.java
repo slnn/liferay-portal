@@ -48,20 +48,6 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 		return _portletPreferenceDataFactory;
 	}
 
-	public long getNextAssetClassNameId(long groupId) {
-		Integer index = assetClassNameIdsIndexes.get(groupId);
-
-		if (index == null) {
-			index = 0;
-		}
-
-		long classNameId = assetClassNameIds[index % assetClassNameIds.length];
-
-		assetClassNameIdsIndexes.put(groupId, ++index);
-
-		return classNameId;
-	}
-
 	public String getPortletId(String portletPrefix) {
 		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
 	}
@@ -147,7 +133,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 				assetCategoryModelsMaps[(int)groupId - 1];
 
 			List<AssetCategoryModel> assetCategoryModels =
-				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
+				assetCategoryModelsMap.get(_getNextAssetClassNameId(groupId));
 
 			if ((assetCategoryModels == null) ||
 				assetCategoryModels.isEmpty()) {
@@ -164,7 +150,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 				assetTagModelsMaps[(int)groupId - 1];
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
-				getNextAssetClassNameId(groupId));
+				_getNextAssetClassNameId(groupId));
 
 			if ((assetTagModels == null) || assetTagModels.isEmpty()) {
 				return _newPortletPreferencesModel(
@@ -290,6 +276,20 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 		return new ObjectValuePair<>(
 			assetTagNames,
 			index + BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT);
+	}
+
+	private long _getNextAssetClassNameId(long groupId) {
+		Integer index = assetClassNameIdsIndexes.get(groupId);
+
+		if (index == null) {
+			index = 0;
+		}
+
+		long classNameId = assetClassNameIds[index % assetClassNameIds.length];
+
+		assetClassNameIdsIndexes.put(groupId, ++index);
+
+		return classNameId;
 	}
 
 	private PortletPreferencesModel _newPortletPreferencesModel(
