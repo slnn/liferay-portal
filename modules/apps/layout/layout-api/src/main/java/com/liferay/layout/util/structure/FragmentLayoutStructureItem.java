@@ -28,10 +28,9 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentStyledLayoutStructureItem
-	extends StyledLayoutStructureItem {
+public class FragmentLayoutStructureItem extends StyledLayoutStructureItem {
 
-	public FragmentStyledLayoutStructureItem(String parentItemId) {
+	public FragmentLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
 
@@ -41,16 +40,16 @@ public class FragmentStyledLayoutStructureItem
 			return true;
 		}
 
-		if (!(object instanceof FragmentStyledLayoutStructureItem)) {
+		if (!(object instanceof FragmentLayoutStructureItem)) {
 			return false;
 		}
 
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			(FragmentStyledLayoutStructureItem)object;
+		FragmentLayoutStructureItem fragmentLayoutStructureItem =
+			(FragmentLayoutStructureItem)object;
 
 		if (!Objects.equals(
 				_fragmentEntryLinkId,
-				fragmentStyledLayoutStructureItem._fragmentEntryLinkId)) {
+				fragmentLayoutStructureItem._fragmentEntryLinkId)) {
 
 			return false;
 		}
@@ -121,7 +120,7 @@ public class FragmentStyledLayoutStructureItem
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentStyledLayoutStructureItem.class);
+		FragmentLayoutStructureItem.class);
 
 	private JSONObject _fragmentConfigurationJSONObject;
 	private long _fragmentEntryLinkId;

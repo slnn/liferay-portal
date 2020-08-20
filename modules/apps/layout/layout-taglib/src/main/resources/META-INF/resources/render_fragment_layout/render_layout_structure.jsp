@@ -38,20 +38,19 @@ for (String childrenItemId : childrenItemIds) {
 	</c:if>
 
 	<c:choose>
-		<c:when test="<%= layoutStructureItem instanceof CollectionStyledLayoutStructureItem %>">
+		<c:when test="<%= layoutStructureItem instanceof CollectionLayoutStructureItem %>">
 
 			<%
-			CollectionStyledLayoutStructureItem
-				collectionStyledLayoutStructureItem = (CollectionStyledLayoutStructureItem)layoutStructureItem;
+			CollectionLayoutStructureItem collectionLayoutStructureItem = (CollectionLayoutStructureItem)layoutStructureItem;
 
-			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderFragmentLayoutDisplayContext.getInfoListRenderer(collectionStyledLayoutStructureItem);
+			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderFragmentLayoutDisplayContext.getInfoListRenderer(collectionLayoutStructureItem);
 			%>
 
 			<c:choose>
 				<c:when test="<%= infoListRenderer != null %>">
 
 					<%
-					infoListRenderer.render(renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem, segmentsExperienceIds), renderFragmentLayoutDisplayContext.getInfoListRendererContext(collectionStyledLayoutStructureItem.getListItemStyle(), collectionStyledLayoutStructureItem.getTemplateKey()));
+					infoListRenderer.render(renderFragmentLayoutDisplayContext.getCollection(collectionLayoutStructureItem, segmentsExperienceIds), renderFragmentLayoutDisplayContext.getInfoListRendererContext(collectionLayoutStructureItem.getListItemStyle(), collectionLayoutStructureItem.getTemplateKey()));
 					%>
 
 				</c:when>
@@ -62,15 +61,15 @@ for (String childrenItemId : childrenItemIds) {
 						InfoDisplayContributor<?> currentInfoDisplayContributor = (InfoDisplayContributor<?>)request.getAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
 
 						try {
-							request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, renderFragmentLayoutDisplayContext.getCollectionInfoDisplayContributor(collectionStyledLayoutStructureItem));
+							request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, renderFragmentLayoutDisplayContext.getCollectionInfoDisplayContributor(collectionLayoutStructureItem));
 
-							for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem, segmentsExperienceIds)) {
+							for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionLayoutStructureItem, segmentsExperienceIds)) {
 								request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
 								request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 						%>
 
 								<clay:col
-									md="<%= String.valueOf(12 / collectionStyledLayoutStructureItem.getNumberOfColumns()) %>"
+									md="<%= String.valueOf(12 / collectionLayoutStructureItem.getNumberOfColumns()) %>"
 								>
 									<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 								</clay:col>
@@ -102,12 +101,11 @@ for (String childrenItemId : childrenItemIds) {
 			<%
 			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
 
-			RowStyledLayoutStructureItem
-				rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructure.getLayoutStructureItem(columnLayoutStructureItem.getParentItemId());
+			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructure.getLayoutStructureItem(columnLayoutStructureItem.getParentItemId());
 			%>
 
 			<clay:col
-				cssClass="<%= ResponsiveLayoutStructureUtil.getColumnCssClass(rowStyledLayoutStructureItem, columnLayoutStructureItem) %>"
+				cssClass="<%= ResponsiveLayoutStructureUtil.getColumnCssClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
 			>
 
 				<%
@@ -117,18 +115,17 @@ for (String childrenItemId : childrenItemIds) {
 				<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 			</clay:col>
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof ContainerStyledLayoutStructureItem %>">
+		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
 
 			<%
-			ContainerStyledLayoutStructureItem
-				containerStyledLayoutStructureItem = (ContainerStyledLayoutStructureItem)layoutStructureItem;
+			ContainerLayoutStructureItem containerLayoutStructureItem = (ContainerLayoutStructureItem)layoutStructureItem;
 
-			String containerLinkHref = renderFragmentLayoutDisplayContext.getContainerLinkHref(containerStyledLayoutStructureItem, request.getAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
+			String containerLinkHref = renderFragmentLayoutDisplayContext.getContainerLinkHref(containerLayoutStructureItem, request.getAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
 			%>
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(containerLinkHref) %>">
-					<a href="<%= containerLinkHref %>" style="color: inherit; text-decoration: none;" target="<%= renderFragmentLayoutDisplayContext.getContainerLinkTarget(containerStyledLayoutStructureItem) %>">
+					<a href="<%= containerLinkHref %>" style="color: inherit; text-decoration: none;" target="<%= renderFragmentLayoutDisplayContext.getContainerLinkTarget(containerLayoutStructureItem) %>">
 				</c:when>
 			</c:choose>
 
@@ -160,17 +157,16 @@ for (String childrenItemId : childrenItemIds) {
 
 			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
+		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 
 			<%
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
+			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
-			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
 				continue;
 			}
 
-			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
 			if (fragmentEntryLink == null) {
 				continue;
@@ -190,7 +186,7 @@ for (String childrenItemId : childrenItemIds) {
 			defaultFragmentRendererContext.setPreviewVersion(previewVersion);
 			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 
-			if (LayoutStructureItemUtil.hasAncestor(fragmentStyledLayoutStructureItem.getItemId(), LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM, layoutStructure)) {
+			if (LayoutStructureItemUtil.hasAncestor(fragmentLayoutStructureItem.getItemId(), LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM, layoutStructure)) {
 				defaultFragmentRendererContext.setUseCachedContent(false);
 			}
 			%>
@@ -205,13 +201,12 @@ for (String childrenItemId : childrenItemIds) {
 
 			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">
+		<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
 
 			<%
-			RowStyledLayoutStructureItem
-				rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructureItem;
+			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructureItem;
 
-			LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rowStyledLayoutStructureItem.getParentItemId());
+			LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rowLayoutStructureItem.getParentItemId());
 
 			boolean includeContainer = false;
 
@@ -238,7 +233,7 @@ for (String childrenItemId : childrenItemIds) {
 						fluid="<%= true %>"
 					>
 						<clay:row
-							cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowStyledLayoutStructureItem) %>"
+							cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
 						>
 
 							<%
@@ -251,7 +246,7 @@ for (String childrenItemId : childrenItemIds) {
 				</c:when>
 				<c:otherwise>
 					<clay:row
-						cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowStyledLayoutStructureItem) %>"
+						cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
 					>
 
 						<%
