@@ -398,9 +398,6 @@ public class AssetDataFactory extends BaseDataFactory {
 	}
 
 	private void _initAssetCategoryModels() {
-		_assetCategoryModelsArray =
-			(List<AssetCategoryModel>[])
-				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 		assetCategoryModelsMaps =
 			(Map<Long, List<AssetCategoryModel>>[])
 				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
@@ -453,7 +450,6 @@ public class AssetDataFactory extends BaseDataFactory {
 				}
 			}
 
-			_assetCategoryModelsArray[i - 1] = assetCategoryModels;
 			_assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
 
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
@@ -481,9 +477,6 @@ public class AssetDataFactory extends BaseDataFactory {
 	}
 
 	private void _initAssetTagModels() {
-		_assetTagModelsArray =
-			(List<AssetTagModel>[])
-				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 		assetTagModelsMaps =
 			(Map<Long, List<AssetTagModel>>[])
 				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
@@ -511,8 +504,6 @@ public class AssetDataFactory extends BaseDataFactory {
 
 				assetTagModels.add(assetTagModel);
 			}
-
-			_assetTagModelsArray[i - 1] = assetTagModels;
 
 			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
 
@@ -628,9 +619,7 @@ public class AssetDataFactory extends BaseDataFactory {
 	private static AssetDataFactory _assetDataFactory = new AssetDataFactory();
 
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private List<AssetCategoryModel>[] _assetCategoryModelsArray;
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private List<AssetTagModel>[] _assetTagModelsArray;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
 
