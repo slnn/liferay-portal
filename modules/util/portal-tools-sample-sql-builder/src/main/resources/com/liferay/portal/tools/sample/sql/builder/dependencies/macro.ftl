@@ -22,6 +22,7 @@
 
 <#macro insertAssetEntry
 	_assetCategoryModelsMaps
+	_assetTagModelsMaps
 	_entry
 	_classNameIds = []
 	_categoryAndTag = false
@@ -39,7 +40,7 @@
 			insert into AssetEntryAssetCategoryRel values (0, 0, ${assetEntryAssetCategoryRelId}, ${assetEntryModel.companyId}, ${assetEntryModel.entryId}, ${assetCategoryId}, 0);
 		</#list>
 
-		<#local assetTagIds = assetDataFactory.getAssetTagIds(assetEntryModel)>
+		<#local assetTagIds = assetDataFactory.getAssetTagIds(assetEntryModel, _assetTagModelsMaps)>
 
 		<#list assetTagIds as assetTagId>
 			${insertSQLBuilder.toInsertSQL("AssetEntries_AssetTags", assetEntryModel.companyId, assetEntryModel.entryId, assetTagId)}

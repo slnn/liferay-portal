@@ -19,6 +19,7 @@
 
 		<@insertAssetEntry
 			_assetCategoryModelsMaps=assetCategoryModelsMaps
+			_assetTagModelsMaps=assetTagModelsMaps
 			_categoryAndTag=true
 			_classNameIds=[classNameDataFactory.wikiPageClassNameId]
 			_entry=wikiPageModel
