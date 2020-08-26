@@ -108,7 +108,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 	public PortletPreferencesModel newPortletPreferencesModel(
 			long plid, long groupId, String portletId, int currentIndex,
 			long blogsEntryClassNameId, long journalArticleClassNameId,
-			long wikiPageClassNameId)
+			long wikiPageClassNameId,
+			Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps)
 		throws Exception {
 
 		long[] assetClassNameIds = new long[3];

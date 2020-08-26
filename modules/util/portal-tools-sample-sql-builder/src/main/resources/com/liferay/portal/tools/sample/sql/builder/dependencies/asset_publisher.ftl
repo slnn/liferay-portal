@@ -22,5 +22,5 @@
 		${insertSQLBuilder.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	${insertSQLBuilder.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, blogsEntryClassNameId, journalArticleClassNameId, wikiPageClassNameId))}
+	${insertSQLBuilder.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, blogsEntryClassNameId, journalArticleClassNameId, wikiPageClassNameId, assetCategoryModelsMaps))}
 </#list>
