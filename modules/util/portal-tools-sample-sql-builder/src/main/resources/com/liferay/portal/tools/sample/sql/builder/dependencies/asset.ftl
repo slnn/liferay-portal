@@ -2,6 +2,7 @@
 	assetClassNameIds = classNameDataFactory.AssetClassNameIds
 	assetVocabularyModelsArray = assetDataFactory.newAssetVocabularyModelsArray()
 	assetCategoryModelsMaps = assetDataFactory.newAssetCategoryModelsMaps(assetVocabularyModelsArray, assetClassNameIds)
+	assetTagModelsMaps = assetDataFactory.newAssetTagModelsMaps(assetClassNameIds)
 />
 
 <#list assetDataFactory.getAssetVocabularyModels(assetDataFactory.newDefaultAssetVocabularyModel(), assetVocabularyModelsArray) as assetVocabularyModel>

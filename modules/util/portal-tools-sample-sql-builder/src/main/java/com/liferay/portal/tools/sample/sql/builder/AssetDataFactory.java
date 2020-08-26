@@ -365,6 +365,61 @@ public class AssetDataFactory extends BaseDataFactory {
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
+	public Map<Long, List<AssetTagModel>>[] newAssetTagModelsMaps(
+		long[] assetClassNameIds) {
+
+		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps =
+			(Map<Long, List<AssetTagModel>>[])
+				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+			List<AssetTagModel> assetTagModels = new ArrayList<>(
+				BenchmarksPropsValues.MAX_ASSET_TAG_COUNT);
+
+			for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_TAG_COUNT;
+				 j++) {
+
+				AssetTagModel assetTagModel = new AssetTagModelImpl();
+
+				assetTagModel.setUuid(SequentialUUID.generate());
+				assetTagModel.setTagId(counter.get());
+				assetTagModel.setGroupId(i);
+				assetTagModel.setCompanyId(COMPANY_ID);
+				assetTagModel.setUserId(SAMPLE_USER_ID);
+				assetTagModel.setUserName(SAMPLE_USER_NAME);
+				assetTagModel.setCreateDate(new Date());
+				assetTagModel.setModifiedDate(new Date());
+				assetTagModel.setName(
+					StringBundler.concat("TestTag_", i, "_", j));
+				assetTagModel.setLastPublishDate(new Date());
+
+				assetTagModels.add(assetTagModel);
+			}
+
+			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
+
+			int pageSize = assetTagModels.size() / assetClassNameIds.length;
+
+			for (int j = 0; j < assetClassNameIds.length; j++) {
+				int fromIndex = j * pageSize;
+
+				int toIndex = (j + 1) * pageSize;
+
+				if (j == (assetClassNameIds.length - 1)) {
+					toIndex = assetTagModels.size();
+				}
+
+				assetTagModelsMap.put(
+					assetClassNameIds[j],
+					assetTagModels.subList(fromIndex, toIndex));
+			}
+
+			assetTagModelsMaps[i - 1] = assetTagModelsMap;
+		}
+
+		return assetTagModelsMaps;
+	}
+
 	public List<AssetVocabularyModel>[] newAssetVocabularyModelsArray() {
 		List<AssetVocabularyModel>[] assetVocabularyModelsArray =
 			(List<AssetVocabularyModel>[])
@@ -483,7 +538,6 @@ public class AssetDataFactory extends BaseDataFactory {
 	}
 
 	private AssetDataFactory() {
-		_initAssetTagModels();
 	}
 
 	private SimpleCounter _getSimpleCounter(
@@ -508,57 +562,6 @@ public class AssetDataFactory extends BaseDataFactory {
 		}
 
 		return simpleCounter;
-	}
-
-	private void _initAssetTagModels() {
-		assetTagModelsMaps =
-			(Map<Long, List<AssetTagModel>>[])
-				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
-			List<AssetTagModel> assetTagModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_TAG_COUNT);
-
-			for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_TAG_COUNT;
-				 j++) {
-
-				AssetTagModel assetTagModel = new AssetTagModelImpl();
-
-				assetTagModel.setUuid(SequentialUUID.generate());
-				assetTagModel.setTagId(counter.get());
-				assetTagModel.setGroupId(i);
-				assetTagModel.setCompanyId(COMPANY_ID);
-				assetTagModel.setUserId(SAMPLE_USER_ID);
-				assetTagModel.setUserName(SAMPLE_USER_NAME);
-				assetTagModel.setCreateDate(new Date());
-				assetTagModel.setModifiedDate(new Date());
-				assetTagModel.setName(
-					StringBundler.concat("TestTag_", i, "_", j));
-				assetTagModel.setLastPublishDate(new Date());
-
-				assetTagModels.add(assetTagModel);
-			}
-
-			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
-
-			int pageSize = assetTagModels.size() / assetClassNameIds.length;
-
-			for (int j = 0; j < assetClassNameIds.length; j++) {
-				int fromIndex = j * pageSize;
-
-				int toIndex = (j + 1) * pageSize;
-
-				if (j == (assetClassNameIds.length - 1)) {
-					toIndex = assetTagModels.size();
-				}
-
-				assetTagModelsMap.put(
-					assetClassNameIds[j],
-					assetTagModels.subList(fromIndex, toIndex));
-			}
-
-			assetTagModelsMaps[i - 1] = assetTagModelsMap;
-		}
 	}
 
 	private AssetCategoryModel _newAssetCategoryModel(
@@ -655,5 +658,4 @@ public class AssetDataFactory extends BaseDataFactory {
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
 
-	//private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -139,7 +138,6 @@ public abstract class BaseDataFactory {
 
 	protected static final Map<Long, Integer> assetClassNameIdsIndexes =
 		new HashMap<>();
-	protected static Map<Long, List<AssetTagModel>>[] assetTagModelsMaps;
 	protected static final SimpleCounter counter;
 	protected static final Map<Long, String> journalArticleResourceUUIDs =
 		new HashMap<>();
