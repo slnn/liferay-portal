@@ -18,6 +18,7 @@
 		${insertSQLBuilder.toInsertSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry
+			_assetCategoryModelsMaps=assetCategoryModelsMaps
 			_categoryAndTag=true
 			_classNameIds=[classNameDataFactory.wikiPageClassNameId]
 			_entry=wikiPageModel

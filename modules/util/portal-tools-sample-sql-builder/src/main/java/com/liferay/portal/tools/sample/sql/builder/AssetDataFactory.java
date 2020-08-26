@@ -57,7 +57,10 @@ public class AssetDataFactory extends BaseDataFactory {
 		return _assetDataFactory;
 	}
 
-	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
+	public List<Long> getAssetCategoryIds(
+		AssetEntryModel assetEntryModel,
+		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps) {
+
 		Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
 			assetCategoryModelsMaps[(int)assetEntryModel.getGroupId() - 1];
 
