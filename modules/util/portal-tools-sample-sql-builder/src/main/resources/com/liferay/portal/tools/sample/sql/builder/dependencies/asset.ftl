@@ -1,3 +1,7 @@
+<#assign
+	assetClassNameIds = classNameDataFactory.AssetClassNameIds
+/>
+
 <#list assetDataFactory.assetVocabularyModels as assetVocabularyModel>
 	${insertSQLBuilder.toInsertSQL(assetVocabularyModel)}
 </#list>
