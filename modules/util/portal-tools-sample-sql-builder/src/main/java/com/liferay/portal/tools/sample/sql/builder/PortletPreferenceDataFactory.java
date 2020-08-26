@@ -25,9 +25,11 @@ import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
+import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
@@ -50,6 +52,10 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 	public String getPortletId(String portletPrefix) {
 		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
+	}
+
+	public PortletPreferencesFactory getPortletPreferencesFactory() {
+		return _portletPreferencesFactory;
 	}
 
 	public List<PortletPreferencesModel>
@@ -198,7 +204,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 		return _newPortletPreferencesModel(
 			plid, portletId,
-			portletPreferencesFactory.toXML(jxPortletPreferences));
+			_portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
@@ -214,7 +220,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 		return _newPortletPreferencesModel(
 			plid, portletId,
-			portletPreferencesFactory.toXML(jxPortletPreferences));
+			_portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
@@ -232,12 +238,12 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 		return _newPortletPreferencesModel(
 			plid, portletId,
-			portletPreferencesFactory.toXML(jxPortletPreferences));
+			_portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
 	private PortletPreferenceDataFactory() {
 		_defaultAssetPublisherPortletPreferencesImpl =
-			(PortletPreferencesImpl)portletPreferencesFactory.fromDefaultXML(
+			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
 				readFile("default_asset_publisher_preference.xml"));
 	}
 
@@ -333,6 +339,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 	private static PortletPreferenceDataFactory _portletPreferenceDataFactory =
 		new PortletPreferenceDataFactory();
+	private static final PortletPreferencesFactory _portletPreferencesFactory =
+		new PortletPreferencesFactoryImpl();
 
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();

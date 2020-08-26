@@ -51,6 +51,7 @@
 <#macro insertContentLayout
 	_layoutModel
 	_fragmentEntryModel
+	_portletPreferencesFactory
 >
 	${insertSQLBuilder.toInsertSQL(_layoutModel)}
 
@@ -60,7 +61,7 @@
 
 	${insertSQLBuilder.toInsertSQL(fragmentEntryLinkModel)}
 
-	${insertSQLBuilder.toInsertSQL(journalDataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel))}
+	${insertSQLBuilder.toInsertSQL(journalDataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel, _portletPreferencesFactory))}
 
 	<#local layoutPageTemplateStructureModel = fragmentDataFactory.newLayoutPageTemplateStructureModel(_layoutModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Layout"))>
 

@@ -17,12 +17,10 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
-import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.util.SimpleCounter;
 
 import java.io.IOException;
@@ -139,8 +137,6 @@ public abstract class BaseDataFactory {
 	protected static final SimpleCounter counter;
 	protected static final Map<Long, String> journalArticleResourceUUIDs =
 		new HashMap<>();
-	protected static final PortletPreferencesFactory portletPreferencesFactory =
-		new PortletPreferencesFactoryImpl();
 	protected static final SimpleCounter resourcePermissionCounter =
 		new SimpleCounter();
 	protected static final SimpleCounter socialActivityCounter =
