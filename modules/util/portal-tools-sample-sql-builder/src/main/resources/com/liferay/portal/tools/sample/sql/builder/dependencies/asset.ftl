@@ -2,7 +2,7 @@
 	assetClassNameIds = classNameDataFactory.AssetClassNameIds
 />
 
-<#list assetDataFactory.assetVocabularyModels as assetVocabularyModel>
+<#list assetDataFactory.getAssetVocabularyModels(assetDataFactory.newDefaultAssetVocabularyModel()) as assetVocabularyModel>
 	${insertSQLBuilder.toInsertSQL(assetVocabularyModel)}
 </#list>
 

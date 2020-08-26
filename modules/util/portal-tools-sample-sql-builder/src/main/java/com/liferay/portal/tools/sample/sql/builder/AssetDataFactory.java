@@ -176,10 +176,10 @@ public class AssetDataFactory extends BaseDataFactory {
 		return allAssetTagModels;
 	}
 
-	public List<AssetVocabularyModel> getAssetVocabularyModels() {
+	public List<AssetVocabularyModel> getAssetVocabularyModels(AssetVocabularyModel defaultAssetVocabularyModel) {
 		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
 
-		allAssetVocabularyModels.add(_defaultAssetVocabularyModel);
+		allAssetVocabularyModels.add(defaultAssetVocabularyModel);
 
 		for (List<AssetVocabularyModel> assetVocabularyModels :
 				_assetVocabularyModelsArray) {
@@ -410,9 +410,6 @@ public class AssetDataFactory extends BaseDataFactory {
 		_assetVocabularyModelsArray =
 			(List<AssetVocabularyModel>[])
 				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		_defaultAssetVocabularyModel = newAssetVocabularyModel(
-			GLOBAL_GROUP_ID, DEFAULT_USER_ID, null,
-			PropsValues.ASSET_VOCABULARY_DEFAULT);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -627,6 +624,4 @@ public class AssetDataFactory extends BaseDataFactory {
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
-	private AssetVocabularyModel _defaultAssetVocabularyModel;
-
 }
