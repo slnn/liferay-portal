@@ -123,7 +123,10 @@ public class AssetDataFactory extends BaseDataFactory {
 		return allAssetCategoryModels;
 	}
 
-	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
+	public List<Long> getAssetTagIds(
+		AssetEntryModel assetEntryModel,
+		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps) {
+
 		Map<Long, List<AssetTagModel>> assetTagModelsMap =
 			assetTagModelsMaps[(int)assetEntryModel.getGroupId() - 1];
 

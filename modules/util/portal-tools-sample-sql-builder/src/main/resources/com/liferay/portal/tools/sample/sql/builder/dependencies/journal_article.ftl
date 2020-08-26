@@ -72,6 +72,7 @@ ${insertSQLBuilder.toInsertSQL(journalDataFactory.newDefaultJournalDDMTemplateVe
 			<#if versionCount = journalDataFactory.maxJournalArticleVersionCount>
 				<@insertAssetEntry
 					_assetCategoryModelsMaps=assetCategoryModelsMaps
+					_assetTagModelsMaps=assetTagModelsMaps
 					_categoryAndTag=true
 					_classNameIds=[classNameDataFactory.getClassNameId("com.liferay.journal.model.JournalArticle")]
 					_entry=journalDataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)

@@ -20,6 +20,7 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 
 	<@insertAssetEntry
 		_assetCategoryModelsMaps=assetCategoryModelsMaps
+		_assetTagModelsMaps=assetTagModelsMaps
 		_categoryAndTag=true
 		_classNameIds=[blogsEntryClassNameId]
 		_entry=blogsEntryModel

@@ -15,6 +15,7 @@
 
 		<@insertAssetEntry
 			_assetCategoryModelsMaps=assetCategoryModelsMaps
+			_assetTagModelsMaps=assetTagModelsMaps
 			_classNameIds=[classNameDataFactory.getClassNameataFactory.getClassNameId("com.liferay.message.boards.model.MBThread")]
 			_entry=mbThreadModel
 		/>
