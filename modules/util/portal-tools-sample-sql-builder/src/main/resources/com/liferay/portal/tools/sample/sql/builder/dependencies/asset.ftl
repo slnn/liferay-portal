@@ -13,6 +13,6 @@
 	${insertSQLBuilder.toInsertSQL(assetCategoryModel)}
 </#list>
 
-<#list assetDataFactory.assetTagModels as assetTagModel>
+<#list assetDataFactory.getAssetTagModels(assetTagModelsMaps) as assetTagModel>
 	${insertSQLBuilder.toInsertSQL(assetTagModel)}
 </#list>

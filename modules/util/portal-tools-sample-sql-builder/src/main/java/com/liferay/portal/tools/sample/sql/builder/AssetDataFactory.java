@@ -165,7 +165,9 @@ public class AssetDataFactory extends BaseDataFactory {
 		return assetTagIds;
 	}
 
-	public List<AssetTagModel> getAssetTagModels() {
+	public List<AssetTagModel> getAssetTagModels(
+		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps) {
+
 		List<AssetTagModel> allAssetTagModels = new ArrayList<>();
 
 		for (Map<Long, List<AssetTagModel>> assetTagModelsMap :
