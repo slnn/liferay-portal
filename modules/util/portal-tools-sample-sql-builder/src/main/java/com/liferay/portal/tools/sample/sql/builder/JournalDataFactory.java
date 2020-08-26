@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -354,7 +355,8 @@ public class JournalDataFactory extends BaseDDMDataFactory {
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
-			FragmentEntryLinkModel fragmentEntryLinkModel)
+			FragmentEntryLinkModel fragmentEntryLinkModel,
+			PortletPreferencesFactory portletPreferencesFactory)
 		throws Exception {
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
