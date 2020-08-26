@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -138,8 +137,6 @@ public abstract class BaseDataFactory {
 
 	protected static final long USER_ROLE_ID;
 
-	protected static Map<Long, List<AssetCategoryModel>>[]
-		assetCategoryModelsMaps;
 	protected static final Map<Long, Integer> assetClassNameIdsIndexes =
 		new HashMap<>();
 	protected static Map<Long, List<AssetTagModel>>[] assetTagModelsMaps;

@@ -176,13 +176,16 @@ public class AssetDataFactory extends BaseDataFactory {
 		return allAssetTagModels;
 	}
 
-	public List<AssetVocabularyModel> getAssetVocabularyModels(AssetVocabularyModel defaultAssetVocabularyModel) {
+	public List<AssetVocabularyModel> getAssetVocabularyModels(
+		AssetVocabularyModel defaultAssetVocabularyModel,
+		List<AssetVocabularyModel>[] assetVocabularyModelsArray) {
+
 		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
 
 		allAssetVocabularyModels.add(defaultAssetVocabularyModel);
 
 		for (List<AssetVocabularyModel> assetVocabularyModels :
-				_assetVocabularyModelsArray) {
+				assetVocabularyModelsArray) {
 
 			allAssetVocabularyModels.addAll(assetVocabularyModels);
 		}
@@ -192,6 +195,72 @@ public class AssetDataFactory extends BaseDataFactory {
 
 	public int getMaxAssetPublisherPageCount() {
 		return BenchmarksPropsValues.MAX_ASSETPUBLISHER_PAGE_COUNT;
+	}
+
+	public Map<Long, List<AssetCategoryModel>>[] newAssetCategoryModelsMaps(
+		List<AssetVocabularyModel>[] assetVocabularyModelsArray,
+		long[] assetClassNameIds) {
+
+		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps =
+			(Map<Long, List<AssetCategoryModel>>[])
+				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		StringBundler sb = new StringBundler(4);
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+			List<AssetVocabularyModel> assetVocabularyModels =
+				assetVocabularyModelsArray[i - 1];
+			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
+				BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT *
+					BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT);
+
+			for (int j = 0;
+				 j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT; j++) {
+
+				AssetVocabularyModel assetVocabularyModel =
+					assetVocabularyModels.get(j);
+
+				for (int k = 0;
+					 k < BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT; k++) {
+
+					sb.setIndex(0);
+
+					sb.append("TestCategory_");
+					sb.append(assetVocabularyModel.getVocabularyId());
+					sb.append(StringPool.UNDERLINE);
+					sb.append(k);
+
+					assetCategoryModels.add(
+						_newAssetCategoryModel(
+							i, sb.toString(),
+							assetVocabularyModel.getVocabularyId()));
+				}
+			}
+
+			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
+				new HashMap<>();
+
+			int pageSize =
+				assetCategoryModels.size() / assetClassNameIds.length;
+
+			for (int j = 0; j < assetClassNameIds.length; j++) {
+				int fromIndex = j * pageSize;
+
+				int toIndex = (j + 1) * pageSize;
+
+				if (j == (assetClassNameIds.length - 1)) {
+					toIndex = assetCategoryModels.size();
+				}
+
+				assetCategoryModelsMap.put(
+					assetClassNameIds[j],
+					assetCategoryModels.subList(fromIndex, toIndex));
+			}
+
+			assetCategoryModelsMaps[i - 1] = assetCategoryModelsMap;
+		}
+
+		return assetCategoryModelsMaps;
 	}
 
 	public AssetEntryModel newAssetEntryModel(
@@ -291,6 +360,40 @@ public class AssetDataFactory extends BaseDataFactory {
 			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
+	public List<AssetVocabularyModel>[] newAssetVocabularyModelsArray() {
+		List<AssetVocabularyModel>[] assetVocabularyModelsArray =
+			(List<AssetVocabularyModel>[])
+				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		StringBundler sb = new StringBundler(4);
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+			List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>(
+				BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT);
+
+			for (int j = 0;
+				 j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT; j++) {
+
+				sb.setIndex(0);
+
+				sb.append("TestVocabulary_");
+				sb.append(i);
+				sb.append(StringPool.UNDERLINE);
+				sb.append(j);
+
+				AssetVocabularyModel assetVocabularyModel =
+					newAssetVocabularyModel(
+						i, SAMPLE_USER_ID, SAMPLE_USER_NAME, sb.toString());
+
+				assetVocabularyModels.add(assetVocabularyModel);
+			}
+
+			assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
+		}
+
+		return assetVocabularyModelsArray;
+	}
+
 	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
 		CPDefinitionModel cpDefinitionModel,
 		GroupModel commerceCatalogGroupModel, long classNameId) {
@@ -375,7 +478,6 @@ public class AssetDataFactory extends BaseDataFactory {
 	}
 
 	private AssetDataFactory() {
-		_initAssetCategoryModels();
 		_initAssetTagModels();
 	}
 
@@ -401,82 +503,6 @@ public class AssetDataFactory extends BaseDataFactory {
 		}
 
 		return simpleCounter;
-	}
-
-	private void _initAssetCategoryModels() {
-		assetCategoryModelsMaps =
-			(Map<Long, List<AssetCategoryModel>>[])
-				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		_assetVocabularyModelsArray =
-			(List<AssetVocabularyModel>[])
-				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		StringBundler sb = new StringBundler(4);
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
-			List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT);
-			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT *
-					BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT);
-
-			for (int j = 0;
-				 j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT; j++) {
-
-				sb.setIndex(0);
-
-				sb.append("TestVocabulary_");
-				sb.append(i);
-				sb.append(StringPool.UNDERLINE);
-				sb.append(j);
-
-				AssetVocabularyModel assetVocabularyModel =
-					newAssetVocabularyModel(
-						i, SAMPLE_USER_ID, SAMPLE_USER_NAME, sb.toString());
-
-				assetVocabularyModels.add(assetVocabularyModel);
-
-				for (int k = 0;
-					 k < BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT; k++) {
-
-					sb.setIndex(0);
-
-					sb.append("TestCategory_");
-					sb.append(assetVocabularyModel.getVocabularyId());
-					sb.append(StringPool.UNDERLINE);
-					sb.append(k);
-
-					assetCategoryModels.add(
-						_newAssetCategoryModel(
-							i, sb.toString(),
-							assetVocabularyModel.getVocabularyId()));
-				}
-			}
-
-			_assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
-
-			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				new HashMap<>();
-
-			int pageSize =
-				assetCategoryModels.size() / assetClassNameIds.length;
-
-			for (int j = 0; j < assetClassNameIds.length; j++) {
-				int fromIndex = j * pageSize;
-
-				int toIndex = (j + 1) * pageSize;
-
-				if (j == (assetClassNameIds.length - 1)) {
-					toIndex = assetCategoryModels.size();
-				}
-
-				assetCategoryModelsMap.put(
-					assetClassNameIds[j],
-					assetCategoryModels.subList(fromIndex, toIndex));
-			}
-
-			assetCategoryModelsMaps[i - 1] = assetCategoryModelsMap;
-		}
 	}
 
 	private void _initAssetTagModels() {
@@ -623,5 +649,6 @@ public class AssetDataFactory extends BaseDataFactory {
 
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
+
+	//private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 }
