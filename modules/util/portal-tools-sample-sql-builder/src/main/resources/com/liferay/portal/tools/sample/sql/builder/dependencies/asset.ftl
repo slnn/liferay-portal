@@ -1,8 +1,10 @@
 <#assign
 	assetClassNameIds = classNameDataFactory.AssetClassNameIds
+	assetVocabularyModelsArray = assetDataFactory.newAssetVocabularyModelsArray()
+	assetCategoryModelsMaps = assetDataFactory.newAssetCategoryModelsMaps(assetVocabularyModelsArray, assetClassNameIds)
 />
 
-<#list assetDataFactory.getAssetVocabularyModels(assetDataFactory.newDefaultAssetVocabularyModel()) as assetVocabularyModel>
+<#list assetDataFactory.getAssetVocabularyModels(assetDataFactory.newDefaultAssetVocabularyModel(), assetVocabularyModelsArray) as assetVocabularyModel>
 	${insertSQLBuilder.toInsertSQL(assetVocabularyModel)}
 </#list>
 
