@@ -302,6 +302,12 @@ public class AssetDataFactory extends BaseDataFactory {
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
 	}
 
+	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
+		return newAssetVocabularyModel(
+			GLOBAL_GROUP_ID, DEFAULT_USER_ID, null,
+			PropsValues.ASSET_VOCABULARY_DEFAULT);
+	}
+
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
 		BlogsEntryModel blogsEntryModel, long classNameId) {
 
