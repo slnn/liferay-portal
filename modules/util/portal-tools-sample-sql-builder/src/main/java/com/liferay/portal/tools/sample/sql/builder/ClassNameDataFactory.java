@@ -17,6 +17,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -40,6 +41,23 @@ public class ClassNameDataFactory extends BaseDataFactory {
 
 	public static ClassNameDataFactory getInstance() {
 		return _classNameDataFactory;
+	}
+
+	public long[] getAssetClassNameIds() {
+		long[] assetClassNameIds = new long[3];
+
+		ClassNameModel blogEntrysClassNameModel = _classNameModels.get(
+			BlogsEntry.class.getName());
+		ClassNameModel journalArticleClassNameModel = _classNameModels.get(
+			JournalArticle.class.getName());
+		ClassNameModel wikiPageClassNameModel = _classNameModels.get(
+			WikiPage.class.getName());
+
+		assetClassNameIds[0] = blogEntrysClassNameModel.getClassNameId();
+		assetClassNameIds[1] = journalArticleClassNameModel.getClassNameId();
+		assetClassNameIds[2] = wikiPageClassNameModel.getClassNameId();
+
+		return assetClassNameIds;
 	}
 
 	public String getClassName(BaseModel<?> baseModel) {
