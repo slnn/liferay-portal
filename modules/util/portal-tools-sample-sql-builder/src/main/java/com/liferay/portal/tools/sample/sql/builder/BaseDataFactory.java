@@ -136,8 +136,6 @@ public abstract class BaseDataFactory {
 
 	protected static final long USER_ROLE_ID;
 
-	protected static final Map<Long, Integer> assetClassNameIdsIndexes =
-		new HashMap<>();
 	protected static final SimpleCounter counter;
 	protected static final Map<Long, String> journalArticleResourceUUIDs =
 		new HashMap<>();

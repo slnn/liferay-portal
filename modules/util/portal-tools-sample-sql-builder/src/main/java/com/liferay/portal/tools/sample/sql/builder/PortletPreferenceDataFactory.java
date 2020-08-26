@@ -292,7 +292,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 	private long _getNextAssetClassNameId(
 		long groupId, long[] assetClassNameIds) {
 
-		Integer index = assetClassNameIdsIndexes.get(groupId);
+		Integer index = _assetClassNameIdsIndexes.get(groupId);
 
 		if (index == null) {
 			index = 0;
@@ -300,7 +300,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 		long classNameId = assetClassNameIds[index % assetClassNameIds.length];
 
-		assetClassNameIdsIndexes.put(groupId, ++index);
+		_assetClassNameIdsIndexes.put(groupId, ++index);
 
 		return classNameId;
 	}
@@ -334,6 +334,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 	private static PortletPreferenceDataFactory _portletPreferenceDataFactory =
 		new PortletPreferenceDataFactory();
 
+	private final Map<Long, Integer> _assetClassNameIdsIndexes =
+		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private final PortletPreferencesImpl
