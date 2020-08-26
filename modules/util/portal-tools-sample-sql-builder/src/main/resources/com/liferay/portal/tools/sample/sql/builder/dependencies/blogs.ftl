@@ -19,6 +19,7 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 	${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(blogsEntryModel, blogsEntryClassNameId))}
 
 	<@insertAssetEntry
+		_assetCategoryModelsMaps=assetCategoryModelsMaps
 		_categoryAndTag=true
 		_classNameIds=[blogsEntryClassNameId]
 		_entry=blogsEntryModel

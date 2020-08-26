@@ -21,6 +21,7 @@
 />
 
 <#macro insertAssetEntry
+	_assetCategoryModelsMaps
 	_entry
 	_classNameIds = []
 	_categoryAndTag = false
@@ -30,7 +31,7 @@
 	${insertSQLBuilder.toInsertSQL(assetEntryModel)}
 
 	<#if _categoryAndTag>
-		<#local assetCategoryIds = assetDataFactory.getAssetCategoryIds(assetEntryModel)>
+		<#local assetCategoryIds = assetDataFactory.getAssetCategoryIds(assetEntryModel, _assetCategoryModelsMaps)>
 
 		<#list assetCategoryIds as assetCategoryId>
 			<#local assetEntryAssetCategoryRelId = counterDataFactory.getCounterNext()>
