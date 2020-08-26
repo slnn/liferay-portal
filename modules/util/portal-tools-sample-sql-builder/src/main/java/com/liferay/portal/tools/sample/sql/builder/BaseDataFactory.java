@@ -16,8 +16,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.util.SimpleCounter;
-import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -143,7 +140,6 @@ public abstract class BaseDataFactory {
 
 	protected static Map<Long, List<AssetCategoryModel>>[]
 		assetCategoryModelsMaps;
-	protected static long[] assetClassNameIds = new long[3];
 	protected static final Map<Long, Integer> assetClassNameIdsIndexes =
 		new HashMap<>();
 	protected static Map<Long, List<AssetTagModel>>[] assetTagModelsMaps;
@@ -159,12 +155,6 @@ public abstract class BaseDataFactory {
 
 	static {
 		counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
-
-		assetClassNameIds[0] = ClassNameBuilder.getClassNameId(
-			BlogsEntry.class);
-		assetClassNameIds[1] = ClassNameBuilder.getClassNameId(
-			JournalArticle.class);
-		assetClassNameIds[2] = ClassNameBuilder.getClassNameId(WikiPage.class);
 
 		COMPANY_ID = counter.get();
 		DEFAULT_USER_ID = counter.get();
