@@ -8,7 +8,7 @@
 	${insertSQLBuilder.toInsertSQL(assetVocabularyModel)}
 </#list>
 
-<#list assetDataFactory.assetCategoryModels as assetCategoryModel>
+<#list assetDataFactory.getAssetCategoryModels(assetCategoryModelsMaps) as assetCategoryModel>
 	${insertSQLBuilder.toInsertSQL(assetCategoryModel)}
 </#list>
 

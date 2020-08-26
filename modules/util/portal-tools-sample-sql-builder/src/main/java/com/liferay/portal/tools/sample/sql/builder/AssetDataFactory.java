@@ -102,7 +102,9 @@ public class AssetDataFactory extends BaseDataFactory {
 		return assetCategoryIds;
 	}
 
-	public List<AssetCategoryModel> getAssetCategoryModels() {
+	public List<AssetCategoryModel> getAssetCategoryModels(
+		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps) {
+
 		List<AssetCategoryModel> allAssetCategoryModels = new ArrayList<>();
 
 		for (Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap :
