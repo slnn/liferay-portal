@@ -109,7 +109,8 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 			long plid, long groupId, String portletId, int currentIndex,
 			long blogsEntryClassNameId, long journalArticleClassNameId,
 			long wikiPageClassNameId,
-			Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps)
+			Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps,
+			Map<Long, List<AssetTagModel>>[] assetTagModelsMaps)
 		throws Exception {
 
 		long[] assetClassNameIds = new long[3];
