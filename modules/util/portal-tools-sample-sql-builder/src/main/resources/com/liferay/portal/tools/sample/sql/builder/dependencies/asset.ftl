@@ -1,5 +1,5 @@
 <#assign
-	assetClassNameIds = classNameDataFactory.AssetClassNameIds
+	assetClassNameIds = classNameDataFactory.assetClassNameIds
 	assetVocabularyModelsArray = assetDataFactory.newAssetVocabularyModelsArray()
 	assetCategoryModelsMaps = assetDataFactory.newAssetCategoryModelsMaps(assetVocabularyModelsArray, assetClassNameIds)
 	assetTagModelsMaps = assetDataFactory.newAssetTagModelsMaps(assetClassNameIds)
