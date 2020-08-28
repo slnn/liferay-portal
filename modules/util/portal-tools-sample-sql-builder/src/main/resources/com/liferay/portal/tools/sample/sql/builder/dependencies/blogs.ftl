@@ -34,6 +34,7 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 		_groupId=groupId
 		_maxCommentCount=blogDataFactory.maxBlogsEntryCommentCount
 		_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
+		_mbDiscussionAssetTagModelsMaps=assetTagModelsMaps
 		_mbRootMessageId=mbRootMessageId
 		_mbThreadId=counterDataFactory.getCounterNext()
 	/>

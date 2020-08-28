@@ -32,6 +32,7 @@
 			_groupId=groupId
 			_maxCommentCount=wikiDataFactory.maxWikiPageCommentCount
 			_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
+			_mbDiscussionAssetTagModelsMaps=assetTagModelsMaps
 			_mbRootMessageId=mbRootMessageId
 			_mbThreadId=counterDataFactory.getCounterNext()
 		/>

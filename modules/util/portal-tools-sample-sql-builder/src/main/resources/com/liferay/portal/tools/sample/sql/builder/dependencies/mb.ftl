@@ -27,6 +27,7 @@
 		<#list mbMessageModels as mbMessageModel>
 			<@insertMBMessage
 				_mbMessageAssetCategoryModelsMaps=assetCategoryModelsMaps
+				_mbMessageAssetTagModelsMaps=assetTagModelsMaps
 				_mbMessageModel=mbMessageModel
 			/>
 
