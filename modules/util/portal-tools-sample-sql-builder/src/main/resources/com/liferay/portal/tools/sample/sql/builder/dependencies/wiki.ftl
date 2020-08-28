@@ -21,7 +21,7 @@
 			_assetCategoryModelsMaps=assetCategoryModelsMaps
 			_assetTagModelsMaps=assetTagModelsMaps
 			_categoryAndTag=true
-			_classNameIds=[classNameDataFactory.wikiPageClassNameId]
+			_classNameIds=[wikiPageClassNameId]
 			_entry=wikiPageModel
 		/>
 
