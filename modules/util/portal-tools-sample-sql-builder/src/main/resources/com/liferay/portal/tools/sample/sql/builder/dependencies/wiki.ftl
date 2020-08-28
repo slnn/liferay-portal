@@ -11,7 +11,7 @@
 	<#list wikiPageModels as wikiPageModel>
 		${insertSQLBuilder.toInsertSQL(wikiPageModel)}
 
-		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, wikiPageClassNameId))}
+		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion_com.liferay.wiki.model.WikiPage")))}
 
 		${insertSQLBuilder.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel, wikiPageClassNameId))}
 
