@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ *
  * @author Lily Chi
  */
 public class ClassNameDataFactory extends BaseDataFactory {
@@ -125,7 +126,6 @@ public class ClassNameDataFactory extends BaseDataFactory {
 
 	private static ClassNameDataFactory _classNameDataFactory =
 		new ClassNameDataFactory();
-	private static final Map<String, ClassNameModel> _classNameModels =
+	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
-
 }
