@@ -339,7 +339,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 	private static PortletPreferenceDataFactory _portletPreferenceDataFactory =
 		new PortletPreferenceDataFactory();
-	private static final PortletPreferencesFactory _portletPreferencesFactory =
+	private final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
