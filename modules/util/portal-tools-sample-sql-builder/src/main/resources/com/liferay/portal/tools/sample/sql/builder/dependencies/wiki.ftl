@@ -28,10 +28,10 @@
 		<#assign mbRootMessageId = counterDataFactory.getCounterNext() />
 
 		<@insertMBDiscussion
-			_classNameId=ikiPageClassNameId
 			_classPK=wikiPageModel.resourcePrimKey
 			_groupId=groupId
 			_maxCommentCount=wikiDataFactory.maxWikiPageCommentCount
+			_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 			_mbRootMessageId=mbRootMessageId
 			_mbThreadId=counterDataFactory.getCounterNext()
 		/>

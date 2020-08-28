@@ -33,6 +33,7 @@ ${insertSQLBuilder.toInsertSQL(blogDataFactory.newUserNotificationDeliveryModel(
 		_classPK=blogsEntryModel.entryId
 		_groupId=groupId
 		_maxCommentCount=blogDataFactory.maxBlogsEntryCommentCount
+		_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 		_mbRootMessageId=mbRootMessageId
 		_mbThreadId=counterDataFactory.getCounterNext()
 	/>

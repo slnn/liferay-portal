@@ -85,6 +85,7 @@ ${insertSQLBuilder.toInsertSQL(journalDataFactory.newDefaultJournalDDMTemplateVe
 			_classPK=journalArticleResourceModel.resourcePrimKey
 			_groupId=groupId
 			_maxCommentCount=0
+			_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 			_mbRootMessageId=counterDataFactory.getCounterNext()
 			_mbThreadId=counterDataFactory.getCounterNext()
 		/>

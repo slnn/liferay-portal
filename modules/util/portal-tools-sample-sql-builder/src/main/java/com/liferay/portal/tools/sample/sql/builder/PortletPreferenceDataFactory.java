@@ -339,8 +339,6 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 
 	private static PortletPreferenceDataFactory _portletPreferenceDataFactory =
 		new PortletPreferenceDataFactory();
-	private final PortletPreferencesFactory _portletPreferencesFactory =
-		new PortletPreferencesFactoryImpl();
 
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
@@ -348,5 +346,7 @@ public class PortletPreferenceDataFactory extends BaseDataFactory {
 		new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
+	private final PortletPreferencesFactory _portletPreferencesFactory =
+		new PortletPreferencesFactoryImpl();
 
 }

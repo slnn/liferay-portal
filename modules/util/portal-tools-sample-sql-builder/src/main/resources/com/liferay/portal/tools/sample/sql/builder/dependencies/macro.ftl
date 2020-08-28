@@ -103,6 +103,7 @@
 
 <#macro insertDLFolder
 	_ddmStructureId
+	_dlAssetCategoryModelsMaps
 	_dlFolderDepth
 	_groupId
 	_parentDLFolderId
@@ -114,6 +115,7 @@
 			${insertSQLBuilder.toInsertSQL(dlFolderModel)}
 
 			<@insertAssetEntry
+			    _assetCategoryModelsMaps=_dlAssetCategoryModelsMaps
 				_classNameIds=[classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFolder")]
 				_entry=dlFolderModel
 			/>
@@ -128,6 +130,7 @@
 				${insertSQLBuilder.toInsertSQL(dlFileVersionModel)}
 
 				<@insertAssetEntry
+				    _assetCategoryModelsMaps=_dlAssetCategoryModelsMaps
 					_classNameIds=[classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")]
 					_entry=dlFileEntryModel
 				/>
@@ -145,6 +148,7 @@
 					_classPK=dlFileEntryModel.fileEntryId
 					_groupId=dlFileEntryModel.groupId
 					_maxCommentCount=0
+					_mbDiscussionAssetCategoryModelsMaps=_dlAssetCategoryModelsMaps
 					_mbRootMessageId=counterDataFactory.getCounterNext()
 					_mbThreadId=counterDataFactory.getCounterNext()
 				/>
@@ -162,6 +166,7 @@
 
 			<@insertDLFolder
 				_ddmStructureId=_ddmStructureId
+				_dlAssetCategoryModelsMaps=_dlAssetCategoryModelsMaps
 				_dlFolderDepth=_dlFolderDepth + 1
 				_groupId=groupId
 				_parentDLFolderId=dlFolderModel.folderId
@@ -195,6 +200,7 @@
 	_classPK
 	_groupId
 	_maxCommentCount
+	_mbDiscussionAssetCategoryModelsMaps
 	_mbRootMessageId
 	_mbThreadId
 >
@@ -204,12 +210,18 @@
 
 	<#local mbRootMessageModel = messageBoardDataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
-	<@insertMBMessage _mbMessageModel=mbRootMessageModel />
+	<@insertMBMessage
+		_mbMessageAssetCategoryModelsMaps=_mbDiscussionAssetCategoryModelsMaps
+		_mbMessageModel=mbRootMessageModel
+	/>
 
 	<#local mbMessageModels = messageBoardDataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
 
 	<#list mbMessageModels as mbMessageModel>
-		<@insertMBMessage _mbMessageModel=mbMessageModel />
+		<@insertMBMessage
+			_mbMessageAssetCategoryModelsMaps=_mbDiscussionAssetCategoryModelsMaps
+			_mbMessageModel=mbMessageModel
+		/>
 
 		${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel))}
 	</#list>
@@ -218,11 +230,13 @@
 </#macro>
 
 <#macro insertMBMessage
+	_mbMessageAssetCategoryModelsMaps
 	_mbMessageModel
 >
 	${insertSQLBuilder.toInsertSQL(_mbMessageModel)}
 
 	<@insertAssetEntry
+		_assetCategoryModelsMaps=_mbMessageAssetCategoryModelsMaps
 		_classNameIds=[classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion"), classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")]
 		_entry=_mbMessageModel
 	/>

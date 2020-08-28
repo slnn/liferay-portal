@@ -25,7 +25,10 @@
 		<#assign mbMessageModels = messageBoardDataFactory.newMBMessageModels(mbThreadModel) />
 
 		<#list mbMessageModels as mbMessageModel>
-			<@insertMBMessage _mbMessageModel=mbMessageModel />
+			<@insertMBMessage
+				_mbMessageAssetCategoryModelsMaps=assetCategoryModelsMaps
+				_mbMessageModel=mbMessageModel
+			/>
 
 			${insertSQLBuilder.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel, classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage"), classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
 		</#list>

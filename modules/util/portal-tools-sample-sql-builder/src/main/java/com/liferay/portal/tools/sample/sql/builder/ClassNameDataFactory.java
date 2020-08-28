@@ -126,6 +126,8 @@ public class ClassNameDataFactory extends BaseDataFactory {
 
 	private static ClassNameDataFactory _classNameDataFactory =
 		new ClassNameDataFactory();
+
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
+
 }
