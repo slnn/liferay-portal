@@ -11,7 +11,7 @@
 	<#list wikiPageModels as wikiPageModel>
 		${insertSQLBuilder.toInsertSQL(wikiPageModel)}
 
-		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel), wikiPageClassNameId)}
+		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, wikiPageClassNameId))}
 
 		${insertSQLBuilder.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel, wikiPageClassNameId))}
 
