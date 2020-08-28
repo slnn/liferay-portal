@@ -1,5 +1,5 @@
 <#assign
-	groupClassNameId = classNameDataFactory.getClassNameId("import com.liferay.portal.kernel.model.Group")
+	groupClassNameId = classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Group")
 	guestGroupModel = userDataFactory.newGuestGroupModel(groupClassNameId)
 />
 
