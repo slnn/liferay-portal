@@ -24,7 +24,7 @@
 <#assign
 	sampleUserModel = userDataFactory.newSampleUserModel()
 
-	userGroupModel = userDataFactory.newGroupModel(sampleUserModel)
+	userGroupModel = userDataFactory.newGroupModel(sampleUserModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.User"))
 
 	layoutModel = layoutDataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
 />
