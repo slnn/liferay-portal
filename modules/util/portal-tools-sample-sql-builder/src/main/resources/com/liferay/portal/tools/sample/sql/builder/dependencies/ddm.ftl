@@ -1,6 +1,6 @@
 <#assign
-	journalArticleClassNameId = dataFactory.getClassNameId("com.liferay.journal.model.JournalArticle")
-	ddmStructureClassNameId = dataFactory.getClassNameId("com.liferay.dynamic.data.mapping.model.DDMStructure")
+	journalArticleClassNameId = classNameDataFactory.getClassNameId("com.liferay.journal.model.JournalArticle")
+	ddmStructureClassNameId = classNameDataFactory.getClassNameId("com.liferay.dynamic.data.mapping.model.DDMStructure")
 	defaultJournalDDMStructureModel = dataFactory.newDefaultJournalDDMStructureModel(journalArticleClassNameId)
 />
 
@@ -12,6 +12,6 @@
 
 <#assign defaultJournalDDMTemplateModel = dataFactory.newDefaultJournalDDMTemplateModel(journalArticleClassNameId, ddmStructureClassNameId) />
 
-${dataFactory.toInsertSQL(defaultJournalDDMTemplateModel, dataFactory.getClassName(defaultJournalDDMTemplateModel))}
+${dataFactory.toInsertSQL(defaultJournalDDMTemplateModel, classNameDataFactory.getClassName(defaultJournalDDMTemplateModel))}
 
 ${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(ddmStructureClassNameId))}

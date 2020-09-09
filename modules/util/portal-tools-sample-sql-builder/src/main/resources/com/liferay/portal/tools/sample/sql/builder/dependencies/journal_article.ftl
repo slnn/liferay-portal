@@ -54,7 +54,7 @@
 					_assetCategoryModelsMaps=assetCategoryModelsMaps
 					_assetTagModelsMaps=assetTagModelsMaps
 					_categoryAndTag=true
-					_classNameIds=[dataFactory.getClassNameId("com.liferay.journal.model.JournalArticle")]
+					_classNameIds=[classNameDataFactory.getClassNameId("com.liferay.journal.model.JournalArticle")]
 					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
 				/>
 			</#if>

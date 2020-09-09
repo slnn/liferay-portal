@@ -1,6 +1,6 @@
 <#assign
 	mbCategoryModels = dataFactory.newMBCategoryModels(groupId)
-	mbThreadClassNameId = dataFactory.getClassNameId("com.liferay.message.boards.model.MBThread")
+	mbThreadClassNameId = classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBThread")
 />
 
 <#list mbCategoryModels as mbCategoryModel>
@@ -34,7 +34,7 @@
 				_mbMessageModel=mbMessageModel
 			/>
 
-			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel, wikiPageClassNameId, dataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
+			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel, wikiPageClassNameId, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
 		</#list>
 
 		${csvFileWriter.write("mbThread", mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
