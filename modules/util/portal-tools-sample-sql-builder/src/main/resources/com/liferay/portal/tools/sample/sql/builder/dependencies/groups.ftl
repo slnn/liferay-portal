@@ -34,7 +34,7 @@
 	<#include "wiki.ftl">
 
 	<@insertDLFolder
-		_ddmStructureId=dataFactory.defaultDLDDMStructureId
+		_ddmStructureId=dlDataFactory.defaultDLDDMStructureId
 		_dlAssetCategoryModelsMaps=assetCategoryModelsMaps
 		_dlAssetTagModelsMaps=assetTagModelsMaps
 		_dlFolderDepth=1
