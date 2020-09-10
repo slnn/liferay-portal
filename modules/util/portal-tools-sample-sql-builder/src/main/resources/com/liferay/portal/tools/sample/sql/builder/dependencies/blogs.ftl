@@ -1,15 +1,15 @@
-<#assign blogsEntryModels = dataFactory.newBlogsEntryModels(groupId) />
+<#assign blogsEntryModels = blogDataFactory.newBlogsEntryModels(groupId) />
 
 <#list blogsEntryModels as blogsEntryModel>
 	${dataFactory.toInsertSQL(blogsEntryModel)}
 
-	<#assign friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(blogsEntryModel, blogsEntryClassNameId) />
+	<#assign friendlyURLEntryModel = blogDataFactory.newFriendlyURLEntryModel(blogsEntryModel, blogsEntryClassNameId) />
 
 	${dataFactory.toInsertSQL(friendlyURLEntryModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, blogsEntryModel))}
+	${dataFactory.toInsertSQL(blogDataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, blogsEntryModel))}
 
-	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
+	${dataFactory.toInsertSQL(blogDataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
 
 	${dataFactory.toInsertSQL(dataFactory.newMBDiscussionAssetEntryModel(blogsEntryModel, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion_com.liferay.blogs.model.BlogsEntry")))}
 
@@ -27,7 +27,7 @@
 		_classNameId=blogsEntryClassNameId
 		_classPK=blogsEntryModel.entryId
 		_groupId=groupId
-		_maxCommentCount=dataFactory.maxBlogsEntryCommentCount
+		_maxCommentCount=blogDataFactory.maxBlogsEntryCommentCount
 		_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 		_mbDiscussionAssetTagModelsMaps=assetTagModelsMaps
 		_mbRootMessageId=mbRootMessageId
