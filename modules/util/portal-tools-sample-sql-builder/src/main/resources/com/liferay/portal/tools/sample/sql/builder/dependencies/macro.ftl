@@ -14,6 +14,7 @@
 	messageBoardDataFactory = dataFactory.getDataFactoryInstance("messageBoardDataFactory")
 	portletPreferenceDataFactory = dataFactory.getDataFactoryInstance("portletPreferenceDataFactory")
 	releaseDataFactory = dataFactory.getDataFactoryInstance("releaseDataFactory")
+	resourcePermissionDataFactory = dataFactory.getDataFactoryInstance("resourcePermissionDataFactory")
 	socialActivityDataFactory = dataFactory.getDataFactoryInstance("socialActivityDataFactory")
 	subscriptionDataFactory = dataFactory.getDataFactoryInstance("subscriptionDataFactory")
 	userDataFactory = dataFactory.getDataFactoryInstance("userDataFactory")
@@ -29,7 +30,7 @@
 >
 	<#local assetEntryModel = assetDataFactory.newAssetEntryModel(_entry, _classNameIds)>
 
-	${dataFactory.toInsertSQL(assetEntryModel)}
+	${resourcePermissionDataFactory.toInsertSQL(assetEntryModel)}
 
 	<#if _categoryAndTag>
 		<#local assetCategoryIds = assetDataFactory.getAssetCategoryIds(assetEntryModel, _assetCategoryModelsMaps)>
@@ -43,7 +44,7 @@
 		<#local assetTagIds = assetDataFactory.getAssetTagIds(assetEntryModel, _assetTagModelsMaps)>
 
 		<#list assetTagIds as assetTagId>
-			${dataFactory.toInsertSQL("AssetEntries_AssetTags", assetEntryModel.companyId, assetEntryModel.entryId, assetTagId)}
+			${resourcePermissionDataFactory.toInsertSQL("AssetEntries_AssetTags", assetEntryModel.companyId, assetEntryModel.entryId, assetTagId)}
 		</#list>
 	</#if>
 </#macro>
@@ -53,23 +54,23 @@
 	_fragmentEntryModel
 	_portletPreferencesFactory
 >
-	${dataFactory.toInsertSQL(_layoutModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_layoutModel)}
 
-	${dataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	${resourcePermissionDataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 
 	<#local fragmentEntryLinkModel = fragmentDataFactory.newFragmentEntryLinkModel(_layoutModel, _fragmentEntryModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Layout"))>
 
-	${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+	${resourcePermissionDataFactory.toInsertSQL(fragmentEntryLinkModel)}
 
-	${dataFactory.toInsertSQL(journalDataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel, _portletPreferencesFactory))}
+	${resourcePermissionDataFactory.toInsertSQL(journalDataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel, _portletPreferencesFactory))}
 
 	<#local layoutPageTemplateStructureModel = fragmentDataFactory.newLayoutPageTemplateStructureModel(_layoutModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Layout"))>
 
-	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
+	${resourcePermissionDataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
 	<#local layoutPageTemplateStructureRelModel = fragmentDataFactory.newLayoutPageTemplateStructureRelModel(_layoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModel)>
 
-	${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+	${resourcePermissionDataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
 </#macro>
 
 <#macro insertDDMContent
@@ -84,9 +85,9 @@
 		<#local ddmContentModel = ddlDDMDataFactory.newDDMContentModel(_entry, _currentIndex)>
 	</#if>
 
-	${dataFactory.toInsertSQL(ddmContentModel)}
+	${resourcePermissionDataFactory.toInsertSQL(ddmContentModel)}
 
-	${dataFactory.toInsertSQL(dlDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId, classNameDataFactory.getClassNameId("com.liferay.dynamic.data.mapping.model.DDMContent")))}
+	${resourcePermissionDataFactory.toInsertSQL(dlDataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId, classNameDataFactory.getClassNameId("com.liferay.dynamic.data.mapping.model.DDMContent")))}
 </#macro>
 
 <#macro insertDDMStructure
@@ -94,11 +95,11 @@
 	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
 >
-	${dataFactory.toInsertSQL(_ddmStructureModel, classNameDataFactory.getClassName(_ddmStructureModel))}
+	${resourcePermissionDataFactory.toInsertSQL(_ddmStructureModel, classNameDataFactory.getClassName(_ddmStructureModel))}
 
-	${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_ddmStructureLayoutModel)}
 
-	${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_ddmStructureVersionModel)}
 </#macro>
 
 <#macro insertDLFolder
@@ -113,7 +114,7 @@
 		<#local dlFolderModels = dlDataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
 
 		<#list dlFolderModels as dlFolderModel>
-			${dataFactory.toInsertSQL(dlFolderModel)}
+			${resourcePermissionDataFactory.toInsertSQL(dlFolderModel)}
 
 			<@insertAssetEntry
 				_assetCategoryModelsMaps=_dlAssetCategoryModelsMaps
@@ -125,11 +126,11 @@
 			<#local dlFileEntryModels = dlDataFactory.newDlFileEntryModels(dlFolderModel)>
 
 			<#list dlFileEntryModels as dlFileEntryModel>
-				${dataFactory.toInsertSQL(dlFileEntryModel)}
+				${resourcePermissionDataFactory.toInsertSQL(dlFileEntryModel)}
 
 				<#local dlFileVersionModel = dlDataFactory.newDLFileVersionModel(dlFileEntryModel)>
 
-				${dataFactory.toInsertSQL(dlFileVersionModel)}
+				${resourcePermissionDataFactory.toInsertSQL(dlFileVersionModel)}
 
 				<@insertAssetEntry
 					_assetCategoryModelsMaps=_dlAssetCategoryModelsMaps
@@ -157,13 +158,13 @@
 					_mbThreadId=counterDataFactory.getCounterNext()
 				/>
 
-				${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")))}
+				${resourcePermissionDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")))}
 
 				<#local dlFileEntryMetadataModel = dlDataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
-				${dataFactory.toInsertSQL(dlFileEntryMetadataModel)}
+				${resourcePermissionDataFactory.toInsertSQL(dlFileEntryMetadataModel)}
 
-				${dataFactory.toInsertSQL(ddlDDMDataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntryMetadata")))}
+				${resourcePermissionDataFactory.toInsertSQL(ddlDDMDataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntryMetadata")))}
 
 				${csvFileWriter.write("documentLibrary", dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "\n")}
 			</#list>
@@ -183,21 +184,21 @@
 <#macro insertGroup
 	_groupModel
 >
-	${dataFactory.toInsertSQL(_groupModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_groupModel)}
 
 	<#local layoutSetModels = layoutDataFactory.newLayoutSetModels(_groupModel.groupId)>
 
 	<#list layoutSetModels as layoutSetModel>
-		${dataFactory.toInsertSQL(layoutSetModel)}
+		${resourcePermissionDataFactory.toInsertSQL(layoutSetModel)}
 	</#list>
 </#macro>
 
 <#macro insertLayout
 	_layoutModel
 >
-	${dataFactory.toInsertSQL(_layoutModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_layoutModel)}
 
-	${dataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	${resourcePermissionDataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 </#macro>
 
 <#macro insertMBDiscussion
@@ -212,7 +213,7 @@
 >
 	<#local mbThreadModel = messageBoardDataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId)>
 
-	${dataFactory.toInsertSQL(mbThreadModel)}
+	${resourcePermissionDataFactory.toInsertSQL(mbThreadModel)}
 
 	<#local mbRootMessageModel = messageBoardDataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
@@ -231,10 +232,10 @@
 			_mbMessageModel=mbMessageModel
 		/>
 
-		${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel, classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage"), classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
+		${resourcePermissionDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel, classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage"), classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
 	</#list>
 
-	${dataFactory.toInsertSQL(messageBoardDataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
+	${resourcePermissionDataFactory.toInsertSQL(messageBoardDataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
 </#macro>
 
 <#macro insertMBMessage
@@ -242,7 +243,7 @@
 	_mbMessageAssetTagModelsMaps
 	_mbMessageModel
 >
-	${dataFactory.toInsertSQL(_mbMessageModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_mbMessageModel)}
 
 	<@insertAssetEntry
 		_assetCategoryModelsMaps=_mbMessageAssetCategoryModelsMaps
@@ -257,15 +258,15 @@
 	_groupIds = []
 	_roleIds = []
 >
-	${dataFactory.toInsertSQL(_userModel)}
+	${resourcePermissionDataFactory.toInsertSQL(_userModel)}
 
-	${dataFactory.toInsertSQL(userDataFactory.newContactModel(_userModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.User")))}
+	${resourcePermissionDataFactory.toInsertSQL(userDataFactory.newContactModel(_userModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.User")))}
 
 	<#list _roleIds as roleId>
-		${dataFactory.toInsertSQL("Users_Roles", 0, roleId, _userModel.userId)}
+		${resourcePermissionDataFactory.toInsertSQL("Users_Roles", 0, roleId, _userModel.userId)}
 	</#list>
 
 	<#list _groupIds as groupId>
-		${dataFactory.toInsertSQL("Users_Groups", 0, groupId, _userModel.userId)}
+		${resourcePermissionDataFactory.toInsertSQL("Users_Groups", 0, groupId, _userModel.userId)}
 	</#list>
 </#macro>

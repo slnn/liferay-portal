@@ -4,17 +4,17 @@
 />
 
 <#list mbCategoryModels as mbCategoryModel>
-	${dataFactory.toInsertSQL(mbCategoryModel)}
-	${dataFactory.toInsertSQL(messageBoardDataFactory.newMBMailingListModel(mbCategoryModel, sampleUserModel))}
+	${resourcePermissionDataFactory.toInsertSQL(mbCategoryModel)}
+	${resourcePermissionDataFactory.toInsertSQL(messageBoardDataFactory.newMBMailingListModel(mbCategoryModel, sampleUserModel))}
 
 	${csvFileWriter.write("mbCategory", mbCategoryModel.categoryId + "," + mbCategoryModel.name + "\n")}
 
 	<#assign mbThreadModels = messageBoardDataFactory.newMBThreadModels(mbCategoryModel) />
 
 	<#list mbThreadModels as mbThreadModel>
-		${dataFactory.toInsertSQL(mbThreadModel)}
+		${resourcePermissionDataFactory.toInsertSQL(mbThreadModel)}
 
-		${dataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(mbThreadModel, mbThreadClassNameId))}
+		${resourcePermissionDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(mbThreadModel, mbThreadClassNameId))}
 
 		<@insertAssetEntry
 			_assetCategoryModelsMaps=assetCategoryModelsMaps
@@ -23,7 +23,7 @@
 			_entry=mbThreadModel
 		/>
 
-		${dataFactory.toInsertSQL(messageBoardDataFactory.newMBThreadFlagModel(mbThreadModel))}
+		${resourcePermissionDataFactory.toInsertSQL(messageBoardDataFactory.newMBThreadFlagModel(mbThreadModel))}
 
 		<#assign mbMessageModels = messageBoardDataFactory.newMBMessageModels(mbThreadModel) />
 
@@ -34,7 +34,7 @@
 				_mbMessageModel=mbMessageModel
 			/>
 
-			${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel, wikiPageClassNameId, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
+			${resourcePermissionDataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel, wikiPageClassNameId, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
 		</#list>
 
 		${csvFileWriter.write("mbThread", mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
