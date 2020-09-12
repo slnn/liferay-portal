@@ -10,6 +10,7 @@
 	dlDataFactory = dataFactory.getDataFactoryInstance("dlDataFactory")
 	fragmentDataFactory = dataFactory.getDataFactoryInstance("fragmentDataFactory")
 	journalDataFactory = dataFactory.getDataFactoryInstance("journalDataFactory")
+	layoutDataFactory = dataFactory.getDataFactoryInstance("layoutDataFactory")
 	portletPreferenceDataFactory = dataFactory.getDataFactoryInstance("portletPreferenceDataFactory")
 />
 
@@ -48,7 +49,7 @@
 >
 	${dataFactory.toInsertSQL(_layoutModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	${dataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 
 	<#local fragmentEntryLinkModel = fragmentDataFactory.newFragmentEntryLinkModel(_layoutModel, _fragmentEntryModel, classNameDataFactory.getClassNameId("com.liferay.portal.kernel.model.Layout"))>
 
@@ -178,7 +179,7 @@
 >
 	${dataFactory.toInsertSQL(_groupModel)}
 
-	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId)>
+	<#local layoutSetModels = layoutDataFactory.newLayoutSetModels(_groupModel.groupId)>
 
 	<#list layoutSetModels as layoutSetModel>
 		${dataFactory.toInsertSQL(layoutSetModel)}
@@ -190,7 +191,7 @@
 >
 	${dataFactory.toInsertSQL(_layoutModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	${dataFactory.toInsertSQL(layoutDataFactory.newLayoutFriendlyURLModel(_layoutModel))}
 </#macro>
 
 <#macro insertMBDiscussion
