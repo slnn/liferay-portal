@@ -1,9 +1,9 @@
-<#assign wikiNodeModels = dataFactory.newWikiNodeModels(groupId) />
+<#assign wikiNodeModels = wikiDataFactory.newWikiNodeModels(groupId) />
 
 <#list wikiNodeModels as wikiNodeModel>
 	${dataFactory.toInsertSQL(wikiNodeModel)}
 
-	<#assign wikiPageModels = dataFactory.newWikiPageModels(wikiNodeModel) />
+	<#assign wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel) />
 
 	<#list wikiPageModels as wikiPageModel>
 		${dataFactory.toInsertSQL(wikiPageModel)}
@@ -12,7 +12,7 @@
 
 		${dataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel, wikiPageClassNameId))}
 
-		${dataFactory.toInsertSQL(dataFactory.newWikiPageResourceModel(wikiPageModel))}
+		${dataFactory.toInsertSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry
 			_assetCategoryModelsMaps=assetCategoryModelsMaps
@@ -28,7 +28,7 @@
 			_classNameId=wikiPageClassNameId
 			_classPK=wikiPageModel.resourcePrimKey
 			_groupId=groupId
-			_maxCommentCount=dataFactory.maxWikiPageCommentCount
+			_maxCommentCount=wikiDataFactory.maxWikiPageCommentCount
 			_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 			_mbDiscussionAssetTagModelsMaps=assetTagModelsMaps
 			_mbRootMessageId=mbRootMessageId
