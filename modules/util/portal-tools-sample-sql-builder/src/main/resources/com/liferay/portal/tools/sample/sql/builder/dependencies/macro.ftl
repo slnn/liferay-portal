@@ -14,6 +14,7 @@
 	messageBoardDataFactory = dataFactory.getDataFactoryInstance("messageBoardDataFactory")
 	portletPreferenceDataFactory = dataFactory.getDataFactoryInstance("portletPreferenceDataFactory")
 	releaseDataFactory = dataFactory.getDataFactoryInstance("releaseDataFactory")
+	socialActivityDataFactory = dataFactory.getDataFactoryInstance("socialActivityDataFactory")
 />
 
 <#macro insertAssetEntry
@@ -153,7 +154,7 @@
 					_mbThreadId=counterDataFactory.getCounterNext()
 				/>
 
-				${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(dlFileEntryModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")))}
+				${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(dlFileEntryModel, classNameDataFactory.getClassNameId("com.liferay.document.library.kernel.model.DLFileEntry")))}
 
 				<#local dlFileEntryMetadataModel = dlDataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
@@ -227,7 +228,7 @@
 			_mbMessageModel=mbMessageModel
 		/>
 
-		${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel, classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage"), classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
+		${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(mbMessageModel, classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage"), classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBMessage")))}
 	</#list>
 
 	${dataFactory.toInsertSQL(messageBoardDataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
