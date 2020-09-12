@@ -34,7 +34,7 @@
 		_mbThreadId=counterDataFactory.getCounterNext()
 	/>
 
-	${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel, blogsEntryClassNameId))}
+	${dataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(blogsEntryModel, blogsEntryClassNameId))}
 
 	${dataFactory.toInsertSQL(socialActivityDataFactory.newSocialActivityModel(blogsEntryModel, blogsEntryClassNameId))}
 
