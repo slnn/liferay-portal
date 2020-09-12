@@ -1,18 +1,18 @@
 <#assign wikiNodeModels = wikiDataFactory.newWikiNodeModels(groupId) />
 
 <#list wikiNodeModels as wikiNodeModel>
-	${resourcePermissionDataFactory.toInsertSQL(wikiNodeModel)}
+	${insertSQLBuilder.toInsertSQL(wikiNodeModel)}
 
 	<#assign wikiPageModels = wikiDataFactory.newWikiPageModels(wikiNodeModel) />
 
 	<#list wikiPageModels as wikiPageModel>
-		${resourcePermissionDataFactory.toInsertSQL(wikiPageModel)}
+		${insertSQLBuilder.toInsertSQL(wikiPageModel)}
 
-		${resourcePermissionDataFactory.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion_com.liferay.wiki.model.WikiPage")))}
+		${insertSQLBuilder.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion_com.liferay.wiki.model.WikiPage")))}
 
-		${resourcePermissionDataFactory.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel, wikiPageClassNameId))}
+		${insertSQLBuilder.toInsertSQL(subscriptionDataFactory.newSubscriptionModel(wikiPageModel, wikiPageClassNameId))}
 
-		${resourcePermissionDataFactory.toInsertSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
+		${insertSQLBuilder.toInsertSQL(wikiDataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry
 			_assetCategoryModelsMaps=assetCategoryModelsMaps

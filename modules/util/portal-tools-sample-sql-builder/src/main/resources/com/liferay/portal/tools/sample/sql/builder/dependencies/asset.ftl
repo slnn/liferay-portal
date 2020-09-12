@@ -6,13 +6,13 @@
 />
 
 <#list assetDataFactory.newAssetVocabularyModels(assetDataFactory.newDefaultAssetVocabularyModel(), assetVocabularyModelsArray) as assetVocabularyModel>
-	${resourcePermissionDataFactory.toInsertSQL(assetVocabularyModel)}
+	${insertSQLBuilder.toInsertSQL(assetVocabularyModel)}
 </#list>
 
 <#list assetDataFactory.newAssetCategoryModels(assetCategoryModelsMaps) as assetCategoryModel>
-	${resourcePermissionDataFactory.toInsertSQL(assetCategoryModel)}
+	${insertSQLBuilder.toInsertSQL(assetCategoryModel)}
 </#list>
 
 <#list assetDataFactory.newAssetTagModels(assetTagModelsMaps) as assetTagModel>
-	${resourcePermissionDataFactory.toInsertSQL(assetTagModel)}
+	${insertSQLBuilder.toInsertSQL(assetTagModel)}
 </#list>

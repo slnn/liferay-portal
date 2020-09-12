@@ -17,8 +17,8 @@
 	<#assign portletPreferencesModels = portletPreferenceDataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
-		${resourcePermissionDataFactory.toInsertSQL(portletPreferencesModel)}
+		${insertSQLBuilder.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	${resourcePermissionDataFactory.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, assetClassNameIds, assetCategoryModelsMaps, assetTagModelsMaps))}
+	${insertSQLBuilder.toInsertSQL(portletPreferenceDataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, assetClassNameIds, assetCategoryModelsMaps, assetTagModelsMaps))}
 </#list>
