@@ -8,7 +8,7 @@
 	<#list wikiPageModels as wikiPageModel>
 		${dataFactory.toInsertSQL(wikiPageModel)}
 
-		${dataFactory.toInsertSQL(dataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion_com.liferay.wiki.model.WikiPage")))}
+		${dataFactory.toInsertSQL(assetDataFactory.newMBDiscussionAssetEntryModel(wikiPageModel, classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBDiscussion_com.liferay.wiki.model.WikiPage")))}
 
 		${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(wikiPageModel, wikiPageClassNameId))}
 

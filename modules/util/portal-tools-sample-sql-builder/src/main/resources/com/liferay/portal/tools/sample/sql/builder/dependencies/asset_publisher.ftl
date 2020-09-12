@@ -1,7 +1,7 @@
 <#assign
 	blogsEntryClassNameId = classNameDataFactory.getClassNameId("com.liferay.blogs.model.BlogsEntry")
 	wikiPageClassNameId = classNameDataFactory.getClassNameId("com.liferay.wiki.model.WikiPage")
-	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
+	pageCounts = dataFactory.getSequence(assetDataFactory.maxAssetPublisherPageCount)
 />
 <#list pageCounts as pageCount>
 	<#assign

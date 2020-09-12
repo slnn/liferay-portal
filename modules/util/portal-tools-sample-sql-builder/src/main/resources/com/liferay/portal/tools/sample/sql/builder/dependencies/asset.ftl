@@ -1,18 +1,18 @@
 <#assign
 	assetClassNameIds = classNameDataFactory.assetClassNameIds
-	assetVocabularyModelsArray = dataFactory.newAssetVocabularyModelsArray()
-	assetCategoryModelsMaps = dataFactory.newAssetCategoryModelsMaps(assetVocabularyModelsArray, assetClassNameIds)
-	assetTagModelsMaps = dataFactory.newAssetTagModelsMaps(assetClassNameIds)
+	assetVocabularyModelsArray = assetDataFactory.newAssetVocabularyModelsArray()
+	assetCategoryModelsMaps = assetDataFactory.newAssetCategoryModelsMaps(assetVocabularyModelsArray, assetClassNameIds)
+	assetTagModelsMaps = assetDataFactory.newAssetTagModelsMaps(assetClassNameIds)
 />
 
-<#list dataFactory.newAssetVocabularyModels(dataFactory.newDefaultAssetVocabularyModel(), assetVocabularyModelsArray) as assetVocabularyModel>
+<#list assetDataFactory.newAssetVocabularyModels(assetDataFactory.newDefaultAssetVocabularyModel(), assetVocabularyModelsArray) as assetVocabularyModel>
 	${dataFactory.toInsertSQL(assetVocabularyModel)}
 </#list>
 
-<#list dataFactory.newAssetCategoryModels(assetCategoryModelsMaps) as assetCategoryModel>
+<#list assetDataFactory.newAssetCategoryModels(assetCategoryModelsMaps) as assetCategoryModel>
 	${dataFactory.toInsertSQL(assetCategoryModel)}
 </#list>
 
-<#list dataFactory.newAssetTagModels(assetTagModelsMaps) as assetTagModel>
+<#list assetDataFactory.newAssetTagModels(assetTagModelsMaps) as assetTagModel>
 	${dataFactory.toInsertSQL(assetTagModel)}
 </#list>

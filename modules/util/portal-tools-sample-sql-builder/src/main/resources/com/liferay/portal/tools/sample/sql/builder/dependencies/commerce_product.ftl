@@ -28,7 +28,7 @@ ${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 		${dataFactory.toInsertSQL(cpDefinitionModel)}
 
-		${dataFactory.toInsertSQL(dataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, commerceCatalogGroupModel, classNameDataFactory.getClassNameId("com.liferay.commerce.product.model.CPDefinition")))}
+		${dataFactory.toInsertSQL(assetDataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, commerceCatalogGroupModel, classNameDataFactory.getClassNameId("com.liferay.commerce.product.model.CPDefinition")))}
 
 		${dataFactory.toInsertSQL(commerceDataFactory.newCPDefinitionLocalizationModel(cpDefinitionModel))}
 

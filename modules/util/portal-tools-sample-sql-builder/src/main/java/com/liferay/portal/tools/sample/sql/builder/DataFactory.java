@@ -15,10 +15,7 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
-import com.liferay.asset.kernel.model.AssetEntryModel;
-import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.constants.BlogsPortletKeys;
@@ -26,7 +23,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceCatalogModel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
@@ -49,7 +45,6 @@ import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.login.web.constants.LoginPortletKeys;
@@ -108,11 +103,9 @@ import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -132,11 +125,6 @@ import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
-import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
-import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
-import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -201,105 +189,15 @@ public class DataFactory extends BaseDDMDataFactory {
 		return ADMINISTRATOR_ROLE_ID;
 	}
 
-	public List<Long> getAssetCategoryIds(
-		AssetEntryModel assetEntryModel,
-		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps) {
-
-		Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-			assetCategoryModelsMaps[(int)assetEntryModel.getGroupId() - 1];
-
-		if ((assetCategoryModelsMap == null) ||
-			assetCategoryModelsMap.isEmpty()) {
-
-			return Collections.emptyList();
-		}
-
-		List<AssetCategoryModel> assetCategoryModels =
-			assetCategoryModelsMap.get(assetEntryModel.getClassNameId());
-
-		if ((assetCategoryModels == null) || assetCategoryModels.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		if (_assetCategoryCounters == null) {
-			_assetCategoryCounters =
-				(Map<Long, SimpleCounter>[])
-					new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		}
-
-		SimpleCounter counter = getSimpleCounter(
-			_assetCategoryCounters, assetEntryModel.getGroupId(),
-			assetEntryModel.getClassNameId());
-
-		List<Long> assetCategoryIds = new ArrayList<>(
-			BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT);
-
-		for (int i = 0;
-			 i < BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT;
-			 i++) {
-
-			int index = (int)counter.get() % assetCategoryModels.size();
-
-			AssetCategoryModel assetCategoryModel = assetCategoryModels.get(
-				index);
-
-			assetCategoryIds.add(assetCategoryModel.getCategoryId());
-		}
-
-		return assetCategoryIds;
-	}
-
-	public List<Long> getAssetTagIds(
-		AssetEntryModel assetEntryModel,
-		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps) {
-
-		Map<Long, List<AssetTagModel>> assetTagModelsMap =
-			assetTagModelsMaps[(int)assetEntryModel.getGroupId() - 1];
-
-		if ((assetTagModelsMap == null) || assetTagModelsMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
-			assetEntryModel.getClassNameId());
-
-		if ((assetTagModels == null) || assetTagModels.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		if (_assetTagCounters == null) {
-			_assetTagCounters =
-				(Map<Long, SimpleCounter>[])
-					new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		}
-
-		SimpleCounter counter = getSimpleCounter(
-			_assetTagCounters, assetEntryModel.getGroupId(),
-			assetEntryModel.getClassNameId());
-
-		List<Long> assetTagIds = new ArrayList<>(
-			BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT);
-
-		for (int i = 0;
-			 i < BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT;
-			 i++) {
-
-			int index = (int)counter.get() % assetTagModels.size();
-
-			AssetTagModel assetTagModel = assetTagModels.get(index);
-
-			assetTagIds.add(assetTagModel.getTagId());
-		}
-
-		return assetTagIds;
-	}
-
 	public long getCounterNext() {
 		return counter.get();
 	}
 
 	public BaseDataFactory getDataFactoryInstance(String name) {
-		if (name.equals("blogDataFactory")) {
+		if (name.equals("assetDataFactory")) {
+			return AssetDataFactory.getInstance();
+		}
+		else if (name.equals("blogDataFactory")) {
 			return BlogDataFactory.getInstance();
 		}
 		else if (name.equals("commerceDataFactory")) {
@@ -322,10 +220,6 @@ public class DataFactory extends BaseDDMDataFactory {
 		}
 
 		return ClassNameDataFactory.getInstance();
-	}
-
-	public int getMaxAssetPublisherPageCount() {
-		return BenchmarksPropsValues.MAX_ASSETPUBLISHER_PAGE_COUNT;
 	}
 
 	public int getMaxGroupCount() {
@@ -423,311 +317,6 @@ public class DataFactory extends BaseDDMDataFactory {
 		accountModel.setLegalName("Liferay, Inc.");
 
 		return accountModel;
-	}
-
-	public List<AssetCategoryModel> newAssetCategoryModels(
-		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps) {
-
-		List<AssetCategoryModel> allAssetCategoryModels = new ArrayList<>();
-
-		for (Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap :
-				assetCategoryModelsMaps) {
-
-			for (List<AssetCategoryModel> assetCategoryModels :
-					assetCategoryModelsMap.values()) {
-
-				allAssetCategoryModels.addAll(assetCategoryModels);
-			}
-		}
-
-		return allAssetCategoryModels;
-	}
-
-	public Map<Long, List<AssetCategoryModel>>[] newAssetCategoryModelsMaps(
-		List<AssetVocabularyModel>[] assetVocabularyModelsArray,
-		long[] assetClassNameIds) {
-
-		Map<Long, List<AssetCategoryModel>>[] assetCategoryModelsMaps =
-			(Map<Long, List<AssetCategoryModel>>[])
-				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		StringBundler sb = new StringBundler(4);
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
-			List<AssetVocabularyModel> assetVocabularyModels =
-				assetVocabularyModelsArray[i - 1];
-			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT *
-					BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT);
-
-			for (int j = 0;
-				 j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT; j++) {
-
-				AssetVocabularyModel assetVocabularyModel =
-					assetVocabularyModels.get(j);
-
-				for (int k = 0;
-					 k < BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT; k++) {
-
-					sb.setIndex(0);
-
-					sb.append("TestCategory_");
-					sb.append(assetVocabularyModel.getVocabularyId());
-					sb.append(StringPool.UNDERLINE);
-					sb.append(k);
-
-					assetCategoryModels.add(
-						newAssetCategoryModel(
-							i, sb.toString(),
-							assetVocabularyModel.getVocabularyId()));
-				}
-			}
-
-			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				new HashMap<>();
-
-			int pageSize =
-				assetCategoryModels.size() / assetClassNameIds.length;
-
-			for (int j = 0; j < assetClassNameIds.length; j++) {
-				int fromIndex = j * pageSize;
-
-				int toIndex = (j + 1) * pageSize;
-
-				if (j == (assetClassNameIds.length - 1)) {
-					toIndex = assetCategoryModels.size();
-				}
-
-				assetCategoryModelsMap.put(
-					assetClassNameIds[j],
-					assetCategoryModels.subList(fromIndex, toIndex));
-			}
-
-			assetCategoryModelsMaps[i - 1] = assetCategoryModelsMap;
-		}
-
-		return assetCategoryModelsMaps;
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		BlogsEntryModel blogsEntryModel, long[] classNameIds) {
-
-		return newAssetEntryModel(
-			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), classNameIds[0],
-			blogsEntryModel.getEntryId(), blogsEntryModel.getUuid(), 0, true,
-			true, ContentTypes.TEXT_HTML, blogsEntryModel.getTitle());
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		DLFileEntryModel dLFileEntryModel, long[] classNameIds) {
-
-		return newAssetEntryModel(
-			dLFileEntryModel.getGroupId(), dLFileEntryModel.getCreateDate(),
-			dLFileEntryModel.getModifiedDate(), classNameIds[0],
-			dLFileEntryModel.getFileEntryId(), dLFileEntryModel.getUuid(),
-			dLFileEntryModel.getFileEntryTypeId(), true, true,
-			dLFileEntryModel.getMimeType(), dLFileEntryModel.getTitle());
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		DLFolderModel dLFolderModel, long[] classNameIds) {
-
-		return newAssetEntryModel(
-			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
-			dLFolderModel.getModifiedDate(), classNameIds[0],
-			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
-			null, dLFolderModel.getName());
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		MBMessageModel mbMessageModel, long[] classNameIds) {
-
-		long classNameId = 0;
-		boolean visible = false;
-
-		if (mbMessageModel.getCategoryId() ==
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
-
-			classNameId = classNameIds[0];
-		}
-		else {
-			classNameId = classNameIds[1];
-			visible = true;
-		}
-
-		return newAssetEntryModel(
-			mbMessageModel.getGroupId(), mbMessageModel.getCreateDate(),
-			mbMessageModel.getModifiedDate(), classNameId,
-			mbMessageModel.getMessageId(), mbMessageModel.getUuid(), 0, true,
-			visible, ContentTypes.TEXT_HTML, mbMessageModel.getSubject());
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		MBThreadModel mbThreadModel, long[] classNameIds) {
-
-		return newAssetEntryModel(
-			mbThreadModel.getGroupId(), mbThreadModel.getCreateDate(),
-			mbThreadModel.getModifiedDate(), classNameIds[0],
-			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
-			false, StringPool.BLANK,
-			String.valueOf(mbThreadModel.getRootMessageId()));
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
-			objectValuePair,
-		long[] classNameIds) {
-
-		JournalArticleModel journalArticleModel = objectValuePair.getKey();
-		JournalArticleLocalizationModel journalArticleLocalizationModel =
-			objectValuePair.getValue();
-
-		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
-
-		String resourceUUID = journalArticleResourceUUIDs.get(resourcePrimKey);
-
-		return newAssetEntryModel(
-			journalArticleModel.getGroupId(),
-			journalArticleModel.getCreateDate(),
-			journalArticleModel.getModifiedDate(), classNameIds[0],
-			resourcePrimKey, resourceUUID, DEFAULT_JOURNAL_DDM_STRUCTURE_ID,
-			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
-			journalArticleLocalizationModel.getTitle());
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		WikiPageModel wikiPageModel, long[] classNameIds) {
-
-		return newAssetEntryModel(
-			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), classNameIds[0],
-			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
-			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
-	}
-
-	public List<AssetTagModel> newAssetTagModels(
-		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps) {
-
-		List<AssetTagModel> allAssetTagModels = new ArrayList<>();
-
-		for (Map<Long, List<AssetTagModel>> assetTagModelsMap :
-				assetTagModelsMaps) {
-
-			for (List<AssetTagModel> assetTagModels :
-					assetTagModelsMap.values()) {
-
-				allAssetTagModels.addAll(assetTagModels);
-			}
-		}
-
-		return allAssetTagModels;
-	}
-
-	public Map<Long, List<AssetTagModel>>[] newAssetTagModelsMaps(
-		long[] assetClassNameIds) {
-
-		Map<Long, List<AssetTagModel>>[] assetTagModelsMaps =
-			(Map<Long, List<AssetTagModel>>[])
-				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
-			List<AssetTagModel> assetTagModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_TAG_COUNT);
-
-			for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_TAG_COUNT;
-				 j++) {
-
-				AssetTagModel assetTagModel = new AssetTagModelImpl();
-
-				assetTagModel.setUuid(SequentialUUID.generate());
-				assetTagModel.setTagId(counter.get());
-				assetTagModel.setGroupId(i);
-				assetTagModel.setCompanyId(COMPANY_ID);
-				assetTagModel.setUserId(SAMPLE_USER_ID);
-				assetTagModel.setUserName(SAMPLE_USER_NAME);
-				assetTagModel.setCreateDate(new Date());
-				assetTagModel.setModifiedDate(new Date());
-				assetTagModel.setName(
-					StringBundler.concat("TestTag_", i, "_", j));
-				assetTagModel.setLastPublishDate(new Date());
-
-				assetTagModels.add(assetTagModel);
-			}
-
-			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
-
-			int pageSize = assetTagModels.size() / assetClassNameIds.length;
-
-			for (int j = 0; j < assetClassNameIds.length; j++) {
-				int fromIndex = j * pageSize;
-
-				int toIndex = (j + 1) * pageSize;
-
-				if (j == (assetClassNameIds.length - 1)) {
-					toIndex = assetTagModels.size();
-				}
-
-				assetTagModelsMap.put(
-					assetClassNameIds[j],
-					assetTagModels.subList(fromIndex, toIndex));
-			}
-
-			assetTagModelsMaps[i - 1] = assetTagModelsMap;
-		}
-
-		return assetTagModelsMaps;
-	}
-
-	public List<AssetVocabularyModel> newAssetVocabularyModels(
-		AssetVocabularyModel defaultAssetVocabularyModel,
-		List<AssetVocabularyModel>[] assetVocabularyModelsArray) {
-
-		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
-
-		allAssetVocabularyModels.add(defaultAssetVocabularyModel);
-
-		for (List<AssetVocabularyModel> assetVocabularyModels :
-				assetVocabularyModelsArray) {
-
-			allAssetVocabularyModels.addAll(assetVocabularyModels);
-		}
-
-		return allAssetVocabularyModels;
-	}
-
-	public List<AssetVocabularyModel>[] newAssetVocabularyModelsArray() {
-		List<AssetVocabularyModel>[] assetVocabularyModelsArray =
-			(List<AssetVocabularyModel>[])
-				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		StringBundler sb = new StringBundler(4);
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
-			List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT);
-
-			for (int j = 0;
-				 j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT; j++) {
-
-				sb.setIndex(0);
-
-				sb.append("TestVocabulary_");
-				sb.append(i);
-				sb.append(StringPool.UNDERLINE);
-				sb.append(j);
-
-				AssetVocabularyModel assetVocabularyModel =
-					newAssetVocabularyModel(
-						i, SAMPLE_USER_ID, SAMPLE_USER_NAME, sb.toString());
-
-				assetVocabularyModels.add(assetVocabularyModel);
-			}
-
-			assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
-		}
-
-		return assetVocabularyModelsArray;
 	}
 
 	public GroupModel newCommerceCatalogGroupModel(
@@ -925,23 +514,6 @@ public class DataFactory extends BaseDDMDataFactory {
 		return counterModels;
 	}
 
-	public AssetEntryModel newCPDefinitionModelAssetEntryModel(
-		CPDefinitionModel cpDefinitionModel,
-		GroupModel commerceCatalogGroupModel, long classNameId) {
-
-		return newAssetEntryModel(
-			commerceCatalogGroupModel.getGroupId(), new Date(), new Date(),
-			classNameId, cpDefinitionModel.getCPDefinitionId(),
-			SequentialUUID.generate(), 0, true, true, "text/plain",
-			"Definition " + cpDefinitionModel.getCPDefinitionId());
-	}
-
-	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
-		return newAssetVocabularyModel(
-			GLOBAL_GROUP_ID, DEFAULT_USER_ID, null,
-			PropsValues.ASSET_VOCABULARY_DEFAULT);
-	}
-
 	public UserModel newDefaultUserModel() {
 		return newUserModel(
 			DEFAULT_USER_ID, StringPool.BLANK, StringPool.BLANK,
@@ -1095,26 +667,6 @@ public class DataFactory extends BaseDDMDataFactory {
 		}
 
 		return mbCategoryModels;
-	}
-
-	public AssetEntryModel newMBDiscussionAssetEntryModel(
-		BlogsEntryModel blogsEntryModel, long classNameId) {
-
-		return newAssetEntryModel(
-			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), classNameId,
-			blogsEntryModel.getEntryId(), "", 0, true, false, "",
-			String.valueOf(blogsEntryModel.getGroupId()));
-	}
-
-	public AssetEntryModel newMBDiscussionAssetEntryModel(
-		WikiPageModel wikiPageModel, long classNameId) {
-
-		return newAssetEntryModel(
-			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), classNameId,
-			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
-			String.valueOf(wikiPageModel.getGroupId()));
 	}
 
 	public MBDiscussionModel newMBDiscussionModel(
@@ -1981,165 +1533,6 @@ public class DataFactory extends BaseDDMDataFactory {
 		return sb.toString();
 	}
 
-	protected SimpleCounter getSimpleCounter(
-		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
-		long classNameId) {
-
-		Map<Long, SimpleCounter> simpleCounters =
-			simpleCountersArray[(int)groupId - 1];
-
-		if (simpleCounters == null) {
-			simpleCounters = new HashMap<>();
-
-			simpleCountersArray[(int)groupId - 1] = simpleCounters;
-		}
-
-		SimpleCounter simpleCounter = simpleCounters.get(classNameId);
-
-		if (simpleCounter == null) {
-			simpleCounter = new SimpleCounter(0);
-
-			simpleCounters.put(classNameId, simpleCounter);
-		}
-
-		return simpleCounter;
-	}
-
-	protected AssetCategoryModel newAssetCategoryModel(
-		long groupId, String name, long vocabularyId) {
-
-		AssetCategoryModel assetCategoryModel = new AssetCategoryModelImpl();
-
-		// UUID
-
-		assetCategoryModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		assetCategoryModel.setCategoryId(counter.get());
-
-		// Group instance
-
-		assetCategoryModel.setGroupId(groupId);
-
-		// Audit fields
-
-		assetCategoryModel.setCompanyId(COMPANY_ID);
-		assetCategoryModel.setUserId(SAMPLE_USER_ID);
-		assetCategoryModel.setUserName(SAMPLE_USER_NAME);
-		assetCategoryModel.setCreateDate(new Date());
-		assetCategoryModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		assetCategoryModel.setParentCategoryId(
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-		assetCategoryModel.setTreePath(
-			"/" + assetCategoryModel.getCategoryId() + "/");
-		assetCategoryModel.setName(name);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><Title language-id=\"en_US\">");
-		sb.append(name);
-		sb.append("</Title></root>");
-
-		assetCategoryModel.setTitle(sb.toString());
-
-		assetCategoryModel.setVocabularyId(vocabularyId);
-		assetCategoryModel.setLastPublishDate(new Date());
-
-		return assetCategoryModel;
-	}
-
-	protected AssetEntryModel newAssetEntryModel(
-		long groupId, Date createDate, Date modifiedDate, long classNameId,
-		long classPK, String uuid, long classTypeId, boolean listable,
-		boolean visible, String mimeType, String title) {
-
-		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
-
-		// PK fields
-
-		assetEntryModel.setEntryId(counter.get());
-
-		// Group instance
-
-		assetEntryModel.setGroupId(groupId);
-
-		// Audit fields
-
-		assetEntryModel.setCompanyId(COMPANY_ID);
-		assetEntryModel.setUserId(SAMPLE_USER_ID);
-		assetEntryModel.setUserName(SAMPLE_USER_NAME);
-		assetEntryModel.setCreateDate(createDate);
-		assetEntryModel.setModifiedDate(modifiedDate);
-
-		// Other fields
-
-		assetEntryModel.setClassNameId(classNameId);
-		assetEntryModel.setClassPK(classPK);
-		assetEntryModel.setClassUuid(uuid);
-		assetEntryModel.setClassTypeId(classTypeId);
-		assetEntryModel.setListable(listable);
-		assetEntryModel.setVisible(visible);
-		assetEntryModel.setStartDate(createDate);
-		assetEntryModel.setEndDate(nextFutureDate());
-		assetEntryModel.setPublishDate(createDate);
-		assetEntryModel.setExpirationDate(nextFutureDate());
-		assetEntryModel.setMimeType(mimeType);
-		assetEntryModel.setTitle(title);
-
-		return assetEntryModel;
-	}
-
-	protected AssetVocabularyModel newAssetVocabularyModel(
-		long grouId, long userId, String userName, String name) {
-
-		AssetVocabularyModel assetVocabularyModel =
-			new AssetVocabularyModelImpl();
-
-		// UUID
-
-		assetVocabularyModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		assetVocabularyModel.setVocabularyId(counter.get());
-
-		// Group instance
-
-		assetVocabularyModel.setGroupId(grouId);
-
-		// Audit fields
-
-		assetVocabularyModel.setCompanyId(COMPANY_ID);
-		assetVocabularyModel.setUserId(userId);
-		assetVocabularyModel.setUserName(userName);
-		assetVocabularyModel.setCreateDate(new Date());
-		assetVocabularyModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		assetVocabularyModel.setName(name);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><Title language-id=\"en_US\">");
-		sb.append(name);
-		sb.append("</Title></root>");
-
-		assetVocabularyModel.setTitle(sb.toString());
-
-		assetVocabularyModel.setSettings(
-			"multiValued=true\\nselectedClassNameIds=0");
-		assetVocabularyModel.setLastPublishDate(new Date());
-
-		return assetVocabularyModel;
-	}
-
 	protected GroupModel newGroupModel(
 		long groupId, long classNameId, long classPK, String name,
 		boolean site) {
@@ -2707,8 +2100,6 @@ public class DataFactory extends BaseDDMDataFactory {
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private final long _accountId;
-	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private Map<Long, SimpleCounter>[] _assetTagCounters;
 	private List<String> _firstNames;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
