@@ -1,15 +1,15 @@
 <#assign
-	mbCategoryModels = dataFactory.newMBCategoryModels(groupId)
+	mbCategoryModels = messageBoardDataFactory.newMBCategoryModels(groupId)
 	mbThreadClassNameId = classNameDataFactory.getClassNameId("com.liferay.message.boards.model.MBThread")
 />
 
 <#list mbCategoryModels as mbCategoryModel>
 	${dataFactory.toInsertSQL(mbCategoryModel)}
-	${dataFactory.toInsertSQL(dataFactory.newMBMailingListModel(mbCategoryModel, sampleUserModel))}
+	${dataFactory.toInsertSQL(messageBoardDataFactory.newMBMailingListModel(mbCategoryModel, sampleUserModel))}
 
 	${csvFileWriter.write("mbCategory", mbCategoryModel.categoryId + "," + mbCategoryModel.name + "\n")}
 
-	<#assign mbThreadModels = dataFactory.newMBThreadModels(mbCategoryModel) />
+	<#assign mbThreadModels = messageBoardDataFactory.newMBThreadModels(mbCategoryModel) />
 
 	<#list mbThreadModels as mbThreadModel>
 		${dataFactory.toInsertSQL(mbThreadModel)}
@@ -23,9 +23,9 @@
 			_entry=mbThreadModel
 		/>
 
-		${dataFactory.toInsertSQL(dataFactory.newMBThreadFlagModel(mbThreadModel))}
+		${dataFactory.toInsertSQL(messageBoardDataFactory.newMBThreadFlagModel(mbThreadModel))}
 
-		<#assign mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel) />
+		<#assign mbMessageModels = messageBoardDataFactory.newMBMessageModels(mbThreadModel) />
 
 		<#list mbMessageModels as mbMessageModel>
 			<@insertMBMessage
