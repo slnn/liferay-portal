@@ -22,7 +22,7 @@
 			_entry=wikiPageModel
 		/>
 
-		<#assign mbRootMessageId = dataFactory.getCounterNext() />
+		<#assign mbRootMessageId = counterDataFactory.getCounterNext() />
 
 		<@insertMBDiscussion
 			_classNameId=wikiPageClassNameId
@@ -32,7 +32,7 @@
 			_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 			_mbDiscussionAssetTagModelsMaps=assetTagModelsMaps
 			_mbRootMessageId=mbRootMessageId
-			_mbThreadId=dataFactory.getCounterNext()
+			_mbThreadId=counterDataFactory.getCounterNext()
 		/>
 
 		${csvFileWriter.write("wiki", wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbRootMessageId + "\n")}

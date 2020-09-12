@@ -21,7 +21,7 @@
 		_entry=blogsEntryModel
 	/>
 
-	<#assign mbRootMessageId = dataFactory.getCounterNext() />
+	<#assign mbRootMessageId = counterDataFactory.getCounterNext() />
 
 	<@insertMBDiscussion
 		_classNameId=blogsEntryClassNameId
@@ -31,7 +31,7 @@
 		_mbDiscussionAssetCategoryModelsMaps=assetCategoryModelsMaps
 		_mbDiscussionAssetTagModelsMaps=assetTagModelsMaps
 		_mbRootMessageId=mbRootMessageId
-		_mbThreadId=dataFactory.getCounterNext()
+		_mbThreadId=counterDataFactory.getCounterNext()
 	/>
 
 	${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel, blogsEntryClassNameId))}
