@@ -23,6 +23,8 @@
 
 	<#include "mb.ftl">
 
+	<#include "segments.ftl">
+
 	<#include "users.ftl">
 
 	<#include "wiki.ftl">
