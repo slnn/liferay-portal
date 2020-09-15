@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -53,6 +54,22 @@ public class SampleSQLBuilderTest {
 	@ClassRule
 	public static final LogAssertionTestRule logAssertionTestRule =
 		LogAssertionTestRule.INSTANCE;
+
+	@Test
+	public void testCTFreemarkerTemplateContent() throws Exception {
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource(
+			"/com/liferay/portal/tools/sample/sql/builder/dependencies" +
+				"/changelist_journal_article.ftl");
+
+		String fileContent = new String(
+			Files.readAllBytes(Paths.get(url.toURI())), StringPool.UTF8);
+
+		Assert.assertTrue(
+			"changelist_journal_article.ftl must end with " + _CT_FTL_END,
+			fileContent.endsWith(_CT_FTL_END));
+	}
 
 	@Test
 	public void testFreemarkerTemplateContent() throws Exception {
@@ -125,6 +142,7 @@ public class SampleSQLBuilderTest {
 
 	private void _initProperties(Properties properties, String outputDir) {
 		properties.put(BenchmarksPropsKeys.DB_TYPE, "hypersonic");
+		properties.put(BenchmarksPropsKeys.CT_INDEX, "0");
 		properties.put(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT, "1");
@@ -141,6 +159,12 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_CT_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_CT_JOURNAL_FOLDER_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_CT_PAGE_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_CT_WEBCONTENT_DISPLAY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");
@@ -148,7 +172,7 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_DL_FILE_ENTRY_SIZE, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DL_FOLDER_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DL_FOLDER_DEPTH, "1");
-		properties.put(BenchmarksPropsKeys.MAX_GROUP_COUNT, "2");
+		properties.put(BenchmarksPropsKeys.MAX_GROUP_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_JOURNAL_ARTICLE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_JOURNAL_ARTICLE_PAGE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_JOURNAL_ARTICLE_SIZE, "1");
@@ -165,8 +189,9 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.OPTIMIZE_BUFFER_SIZE, "8192");
 		properties.put(
 			BenchmarksPropsKeys.OUTPUT_CSV_FILE_NAMES,
-			"assetPublisher,blog,company,documentLibrary,dynamicDataList," +
-				"fragment,layout,mbCategory,mbThread,repository,wiki");
+			"assetPublisher,blog,company,cTLayout,documentLibrary," +
+				"dynamicDataList,fragment,layout,mbCategory,mbThread," +
+					"repository,wiki");
 		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
 		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(
@@ -226,6 +251,11 @@ public class SampleSQLBuilderTest {
 
 		db.runSQLTemplateString(connection, sql, true);
 	}
+
+	private static final String _CT_FTL_END = StringBundler.concat(
+		"<#list cTEntryModels as cTEntryModel>\n",
+		"\t\t\t${dataFactory.toInsertSQL(cTEntryModel)}\n", "\t\t</#list>\n",
+		"</#list>");
 
 	private static final String _SAMPLE_FTL_END =
 		"<#include \"counters.ftl\">\n\nCOMMIT_TRANSACTION";
