@@ -5,8 +5,16 @@
 	userModels = dataFactory.newUserModels()
 />
 
+<#if dataFactory.maxCTCount gt 0>
+	${dataFactory.toInsertSQL(dataFactory.newCTPreferencesModel())}
+</#if>
+
 <#list userModels as userModel>
 	<#assign userGroupModel = dataFactory.newGroupModel(userModel) />
+
+	<#if dataFactory.maxCTCount gt 0>
+		<#include "changelist_journal_article.ftl">
+	</#if>
 
 	<@insertLayout _layoutModel=dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "") />
 
