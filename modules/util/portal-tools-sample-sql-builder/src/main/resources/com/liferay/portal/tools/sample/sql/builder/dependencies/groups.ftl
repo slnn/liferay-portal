@@ -2,6 +2,8 @@
 
 <#include "default_user.ftl">
 
+<#include "segments.ftl">
+
 <@insertGroup _groupModel=dataFactory.newGlobalGroupModel() />
 
 <@insertGroup _groupModel=guestGroupModel />
@@ -22,8 +24,6 @@
 	<#include "fragment.ftl">
 
 	<#include "mb.ftl">
-
-	<#include "segments.ftl">
 
 	<#include "users.ftl">
 
