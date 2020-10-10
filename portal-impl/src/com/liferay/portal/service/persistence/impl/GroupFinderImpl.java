@@ -51,6 +51,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -161,10 +162,10 @@ public class GroupFinderImpl
 
 		_serviceRegistration = registry.registerService(
 			FinderPath.class, _finderPathWithoutPaginationFindByC_A,
-			HashMapBuilder.<String, Object>put(
+			Collections.singletonMap(
 				"cache.name",
-				GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION
-			).build());
+				GroupPersistenceImpl.
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION));
 	}
 
 	@Override
