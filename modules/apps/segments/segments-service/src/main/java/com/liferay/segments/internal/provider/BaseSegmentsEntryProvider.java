@@ -37,6 +37,9 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -147,20 +150,44 @@ public abstract class BaseSegmentsEntryProvider
 			return new long[0];
 		}
 
-		Stream<SegmentsEntry> stream = segmentsEntries.stream();
+		List<SegmentsEntry> memberSegmentsEntries = new ArrayList<>();
 
-		return stream.filter(
-			segmentsEntry -> isMember(
-				className, classPK, context, segmentsEntry, segmentsEntryIds)
-		).sorted(
-			(segmentsEntry1, segmentsEntry2) -> {
-				Date modifiedDate = segmentsEntry2.getModifiedDate();
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			if (isMember(
+					className, classPK, context, segmentsEntry,
+					segmentsEntryIds)) {
 
-				return modifiedDate.compareTo(segmentsEntry1.getModifiedDate());
+				memberSegmentsEntries.add(segmentsEntry);
 			}
-		).mapToLong(
-			SegmentsEntry::getSegmentsEntryId
-		).toArray();
+		}
+
+		Collections.sort(
+			memberSegmentsEntries,
+			new Comparator<SegmentsEntry>() {
+
+				@Override
+				public int compare(
+					SegmentsEntry segmentsEntry1,
+					SegmentsEntry segmentsEntry2) {
+
+					Date modifiedDate = segmentsEntry2.getModifiedDate();
+
+					return modifiedDate.compareTo(
+						segmentsEntry1.getModifiedDate());
+				}
+
+			});
+
+		long[] memberSegmentsEntryIds = new long[memberSegmentsEntries.size()];
+
+		for (int i = 0; i < memberSegmentsEntries.size(); i++) {
+			SegmentsEntry memberSegmentsEntry = memberSegmentsEntries.get(i);
+
+			memberSegmentsEntryIds[i] =
+				memberSegmentsEntry.getSegmentsEntryId();
+		}
+
+		return memberSegmentsEntryIds;
 	}
 
 	protected Criteria.Conjunction getConjunction(
