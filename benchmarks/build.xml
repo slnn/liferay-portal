@@ -139,4 +139,11 @@
 			</else>
 		</if>
 	</target>
+	
+	<target name="bundle">
+		<jar destfile="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/lib/portal-impl.jar"
+			 basedir="event"
+			 update="true"
+		/>
+	</target>
 </project>
