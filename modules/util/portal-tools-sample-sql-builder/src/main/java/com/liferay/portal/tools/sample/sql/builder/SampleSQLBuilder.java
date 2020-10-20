@@ -80,6 +80,9 @@ public class SampleSQLBuilder {
 			compressSQL(reader, tempDir);
 
 			// Merge
+			
+			System.out.println("##########OUTPUT_MERGE="+ BenchmarksPropsValues.OUTPUT_MERGE);
+			System.out.println("##########MAX_JOURNAL_ARTICLE_SIZE="+ BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_SIZE);
 
 			if (BenchmarksPropsValues.OUTPUT_MERGE) {
 				File sqlFile = new File(

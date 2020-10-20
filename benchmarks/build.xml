@@ -94,6 +94,9 @@
 			<filelist dir="../sql/indexes/" files="indexes-${sample.sql.db.type}.sql" />
 		</concat>
 
+		<echo>1##########${sample.sql.max.journal.article.size}</echo>
+		<echo>1##########${sample.sql.output.merge}</echo>
+		<echo>1##########${portal.module.dir.list}</echo>
 		<for list="${portal.module.dir.list}" param="module">
 			<sequential>
 				<build-sql dir="@{module}" />
@@ -111,6 +114,8 @@
 	</target>
 
 	<target depends="clean, build-sample-sql" name="merge-sql">
+		<echo>2##########${sample.sql.max.journal.article.size}</echo>
+		<echo>2##########${sample.sql.output.merge}</echo>
 		<if>
 			<equals arg1="${sample.sql.output.merge}" arg2="false" />
 			<then>
