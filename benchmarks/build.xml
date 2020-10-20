@@ -4,7 +4,9 @@
 	<import file="../build-common.xml" />
 
 	<property name="sample.sql.properties.file" value="benchmarks.properties" />
+	<echo>0##########${sample.sql.properties.file}</echo>
 	<property file="${sample.sql.properties.file}" />
+	<echo>01##########${sample.sql.properties.file}</echo>
 	<property file="benchmarks.properties" />
 
 	<property name="sample-data-sql" value="sample-data-${sample.sql.db.type}.sql" />
