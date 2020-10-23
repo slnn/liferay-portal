@@ -1,7 +1,5 @@
 <#assign cTCollectionModels = dataFactory.newCTCollectionModels(userModel) />
 
-${dataFactory.toInsertSQL(dataFactory.newCTPreferencesModel(cTCollectionModels))}
-
 <#list cTCollectionModels as cTCollectionModel>
 	${dataFactory.toInsertSQL(cTCollectionModel)}
 
