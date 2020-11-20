@@ -6,7 +6,25 @@
 	<target name="build-sample-sql">
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
-		<property name="sample.sql.properties.file" value="${basedir}/benchmarks.properties" />
+		<beanshell>
+			InputStream inputStream = new FileInputStream("benchmarks.properties");
+			OutputStream outputStream = new FileOutputStream("benchmarks-merged.properties");
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			for (String propertyKey : properties.stringPropertyNames()) {
+				properties.setProperty(propertyKey, project.getProperty(propertyKey));
+			}
+
+			properties.store(outputStream, "");
+
+			inputStream.close();
+			outputStream.close();
+		</beanshell>
+
+		<property name="sample.sql.properties.file" value="benchmarks-merged.properties" />
 
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilderLauncher"
