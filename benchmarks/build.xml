@@ -8,7 +8,7 @@
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
-		<echoproperties prefix="sample.sql." destfile="benchmarks-merged.properties"/>
+		<echoproperties destfile="benchmarks-merged.properties" prefix="sample.sql." />
 
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilderLauncher"
@@ -80,7 +80,7 @@
 		<delete includeemptydirs="true">
 			<fileset
 				dir="."
-				includes="*.csv,*.sql, benchmarks-merged.properties, liferay/**, output/**,temp/**"
+				includes="*.sql, benchmarks-merged.properties, liferay/**, generated/**,temp/**"
 			/>
 		</delete>
 	</target>
