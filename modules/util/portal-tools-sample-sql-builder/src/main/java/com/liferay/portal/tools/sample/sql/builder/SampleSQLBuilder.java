@@ -52,61 +52,14 @@ import java.util.Map;
  */
 public class SampleSQLBuilder {
 
-	public SampleSQLBuilder() {
+	public SampleSQLBuilder() throws Exception {
 		ToolDependencies.wireBasic();
 
-		// Generic
+		File outputDir = new File(BenchmarksPropsValues.OUTPUT_DIR);
 
-		File tempDir = new File(BenchmarksPropsValues.OUTPUT_DIR, "temp");
+		outputDir.mkdirs();
 
-		tempDir.mkdirs();
-
-		Reader reader = generateSQL();
-
-		try {
-
-			// Specific
-
-			compressSQL(reader, tempDir);
-
-			// Merge
-
-			if (BenchmarksPropsValues.OUTPUT_MERGE) {
-				File sqlFile = new File(
-					BenchmarksPropsValues.OUTPUT_DIR,
-					"sample-" + BenchmarksPropsValues.DB_TYPE + ".sql");
-
-				FileUtil.delete(sqlFile);
-
-				mergeSQL(tempDir, sqlFile);
-			}
-			else {
-				File outputDir = new File(
-					BenchmarksPropsValues.OUTPUT_DIR, "output");
-
-				FileUtil.deltree(outputDir);
-
-				if (!tempDir.renameTo(outputDir)) {
-
-					// This will only happen when temp and output directories
-					// are on different file systems
-
-					FileUtil.copyDirectory(tempDir, outputDir);
-				}
-			}
-
-			FileUtil.write(
-				new File(
-					BenchmarksPropsValues.OUTPUT_DIR,
-					"benchmarks-actual.properties"),
-				BenchmarksPropsValues.ACTUAL_PROPERTIES_CONTENT);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-		finally {
-			FileUtil.deltree(tempDir);
-		}
+		compressSQL(generateSQL(), outputDir);
 	}
 
 	protected void compressSQL(
@@ -274,48 +227,6 @@ public class SampleSQLBuilder {
 		thread.start();
 
 		return charPipe.getReader();
-	}
-
-	protected void mergeSQL(File inputDir, File outputSQLFile)
-		throws IOException {
-
-		FileOutputStream outputSQLFileOutputStream = new FileOutputStream(
-			outputSQLFile);
-
-		try (FileChannel outputFileChannel =
-				outputSQLFileOutputStream.getChannel()) {
-
-			File miscSQLFile = null;
-
-			for (File inputFile : inputDir.listFiles()) {
-				String inputFileName = inputFile.getName();
-
-				if (inputFileName.equals("misc.sql")) {
-					miscSQLFile = inputFile;
-
-					continue;
-				}
-
-				mergeSQL(inputFile, outputFileChannel);
-			}
-
-			if (miscSQLFile != null) {
-				mergeSQL(miscSQLFile, outputFileChannel);
-			}
-		}
-	}
-
-	protected void mergeSQL(File inputFile, FileChannel outputFileChannel)
-		throws IOException {
-
-		FileInputStream inputFileInputStream = new FileInputStream(inputFile);
-
-		try (FileChannel inputFileChannel = inputFileInputStream.getChannel()) {
-			inputFileChannel.transferTo(
-				0, inputFileChannel.size(), outputFileChannel);
-		}
-
-		inputFile.delete();
 	}
 
 	protected void writeToInsertSQLFile(
