@@ -39,9 +39,6 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(9, 2, 0), new UpgradeCountry());
 
 		upgradeProcesses.put(new Version(9, 2, 1), new UpgradeListType());
-
-		upgradeProcesses.put(
-			new Version(10, 0, 0), new UpgradePortletPreferences());
 	}
 
 }
