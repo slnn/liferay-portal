@@ -57,8 +57,4 @@ public interface DDMFieldAttribute extends DDMFieldAttributeModel {
 
 		};
 
-	public String getAttributeValue();
-
-	public void setAttributeValue(String value);
-
 }

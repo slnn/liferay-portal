@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
-import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -57,9 +56,10 @@ public class DDMFieldAttributeTable extends BaseTable<DDMFieldAttributeTable> {
 		createColumn(
 			"smallAttributeValue", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<DDMFieldAttributeTable, Clob> largeAttributeValue =
+	public final Column<DDMFieldAttributeTable, String> largeAttributeValue =
 		createColumn(
-			"largeAttributeValue", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+			"largeAttributeValue", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private DDMFieldAttributeTable() {
 		super("DDMFieldAttribute", DDMFieldAttributeTable::new);

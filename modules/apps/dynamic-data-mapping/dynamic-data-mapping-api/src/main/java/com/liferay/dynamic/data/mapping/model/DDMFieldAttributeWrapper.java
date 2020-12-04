@@ -132,11 +132,6 @@ public class DDMFieldAttributeWrapper
 		return model.getAttributeName();
 	}
 
-	@Override
-	public String getAttributeValue() {
-		return model.getAttributeValue();
-	}
-
 	/**
 	 * Returns the company ID of this ddm field attribute.
 	 *
@@ -245,11 +240,6 @@ public class DDMFieldAttributeWrapper
 	@Override
 	public void setAttributeName(String attributeName) {
 		model.setAttributeName(attributeName);
-	}
-
-	@Override
-	public void setAttributeValue(String value) {
-		model.setAttributeValue(value);
 	}
 
 	/**

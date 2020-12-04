@@ -105,16 +105,6 @@ public class DDMFieldLocalServiceWrapper
 		return _ddmFieldLocalService.deleteDDMField(fieldId);
 	}
 
-	@Override
-	public void deleteDDMFields(long structureId) {
-		_ddmFieldLocalService.deleteDDMFields(structureId);
-	}
-
-	@Override
-	public void deleteDDMFormValues(long storageId) {
-		_ddmFieldLocalService.deleteDDMFormValues(storageId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -274,29 +264,6 @@ public class DDMFieldLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-		getDDMFormValues(
-			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-			long storageId) {
-
-		return _ddmFieldLocalService.getDDMFormValues(ddmForm, storageId);
-	}
-
-	@Override
-	public int getDDMFormValuesCount(long structureId) {
-		return _ddmFieldLocalService.getDDMFormValuesCount(structureId);
-	}
-
-	@Override
-	public int getDDMFormValuesCount(
-		long companyId, String fieldType,
-		java.util.Map<String, Object> attributes) {
-
-		return _ddmFieldLocalService.getDDMFormValuesCount(
-			companyId, fieldType, attributes);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -337,17 +304,6 @@ public class DDMFieldLocalServiceWrapper
 	@Override
 	public DDMField updateDDMField(DDMField ddmField) {
 		return _ddmFieldLocalService.updateDDMField(ddmField);
-	}
-
-	@Override
-	public void updateDDMFormValues(
-			long structureId, long storageId,
-			com.liferay.dynamic.data.mapping.storage.DDMFormValues
-				ddmFormValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_ddmFieldLocalService.updateDDMFormValues(
-			structureId, storageId, ddmFormValues);
 	}
 
 	@Override
