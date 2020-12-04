@@ -385,8 +385,8 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 = connection.prepareStatement(
-				"select portletPreferenceValueId, largeValue, name, " +
-					"readOnly, smallValue from PortletPreferenceValue where " +
+				"select portletPreferenceValueId, name, smallValue, " +
+					"largeValue, readOnly from PortletPreferenceValue where " +
 						"portletPreferencesId = ? order by index_ asc");
 			PreparedStatement ps3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -394,14 +394,14 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 					StringBundler.concat(
 						"insert into PortletPreferenceValue (mvccVersion, ",
 						"ctCollectionId, portletPreferenceValueId, companyId, ",
-						"portletPreferencesId, index_, largeValue, name, ",
-						"readOnly, smallValue) values (0, ?, ?, ?, ?, ?, ?, ",
+						"portletPreferencesId, name, index_, smallValue, ",
+						"largeValue, readOnly) values (0, ?, ?, ?, ?, ?, ?, ",
 						"?, ?, ?)"));
 			PreparedStatement ps4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update PortletPreferenceValue set largeValue = ?, " +
-						"readOnly = ?, smallValue = ? where " +
+					"update PortletPreferenceValue set smallValue = ?, " +
+						"largeValue = ?, readOnly = ? where " +
 							"portletPreferenceValueId = ?");
 			PreparedStatement ps5 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -578,20 +578,17 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 						(newPreferenceValues._readOnly !=
 							oldPreferenceValues._readOnly)) {
 
-						String largeValue = null;
-						String smallValue = null;
-
-						if (value.length() > smallValueMaxLength) {
-							largeValue = value;
+						if (value.length() <= smallValueMaxLength) {
+							updatePreparedStatement.setString(1, value);
+							updatePreparedStatement.setString(2, null);
 						}
 						else {
-							smallValue = value;
+							updatePreparedStatement.setString(1, null);
+							updatePreparedStatement.setString(2, value);
 						}
 
-						updatePreparedStatement.setString(1, largeValue);
 						updatePreparedStatement.setBoolean(
-							2, newPreferenceValues._readOnly);
-						updatePreparedStatement.setString(3, smallValue);
+							3, newPreferenceValues._readOnly);
 
 						updatePreparedStatement.setLong(
 							4,
@@ -602,26 +599,24 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 					}
 				}
 				else {
-					String largeValue = null;
-					String smallValue = null;
-
-					if (value.length() > smallValueMaxLength) {
-						largeValue = value;
-					}
-					else {
-						smallValue = value;
-					}
-
 					insertPreparedStatement.setLong(1, ctCollectionId);
 					insertPreparedStatement.setLong(2, ++batchCounter);
 					insertPreparedStatement.setLong(3, companyId);
 					insertPreparedStatement.setLong(4, portletPreferencesId);
-					insertPreparedStatement.setInt(5, i);
-					insertPreparedStatement.setString(6, largeValue);
-					insertPreparedStatement.setString(7, entry.getKey());
+					insertPreparedStatement.setString(5, entry.getKey());
+					insertPreparedStatement.setInt(6, i);
+
+					if (value.length() <= smallValueMaxLength) {
+						insertPreparedStatement.setString(7, value);
+						insertPreparedStatement.setString(8, null);
+					}
+					else {
+						insertPreparedStatement.setString(7, null);
+						insertPreparedStatement.setString(8, value);
+					}
+
 					insertPreparedStatement.setBoolean(
-						8, newPreferenceValues._readOnly);
-					insertPreparedStatement.setString(9, smallValue);
+						9, newPreferenceValues._readOnly);
 
 					insertPreparedStatement.addBatch();
 				}
