@@ -49,10 +49,10 @@ public class DDMFieldAttributeWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("fieldId", getFieldId());
 		attributes.put("storageId", getStorageId());
-		attributes.put("attributeName", getAttributeName());
 		attributes.put("languageId", getLanguageId());
-		attributes.put("largeAttributeValue", getLargeAttributeValue());
+		attributes.put("attributeName", getAttributeName());
 		attributes.put("smallAttributeValue", getSmallAttributeValue());
+		attributes.put("largeAttributeValue", getLargeAttributeValue());
 
 		return attributes;
 	}
@@ -95,23 +95,16 @@ public class DDMFieldAttributeWrapper
 			setStorageId(storageId);
 		}
 
-		String attributeName = (String)attributes.get("attributeName");
-
-		if (attributeName != null) {
-			setAttributeName(attributeName);
-		}
-
 		String languageId = (String)attributes.get("languageId");
 
 		if (languageId != null) {
 			setLanguageId(languageId);
 		}
 
-		String largeAttributeValue = (String)attributes.get(
-			"largeAttributeValue");
+		String attributeName = (String)attributes.get("attributeName");
 
-		if (largeAttributeValue != null) {
-			setLargeAttributeValue(largeAttributeValue);
+		if (attributeName != null) {
+			setAttributeName(attributeName);
 		}
 
 		String smallAttributeValue = (String)attributes.get(
@@ -119,6 +112,13 @@ public class DDMFieldAttributeWrapper
 
 		if (smallAttributeValue != null) {
 			setSmallAttributeValue(smallAttributeValue);
+		}
+
+		String largeAttributeValue = (String)attributes.get(
+			"largeAttributeValue");
+
+		if (largeAttributeValue != null) {
+			setLargeAttributeValue(largeAttributeValue);
 		}
 	}
 

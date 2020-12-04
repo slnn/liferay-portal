@@ -90,14 +90,14 @@ public class DDMFieldAttributeCacheModel
 		sb.append(fieldId);
 		sb.append(", storageId=");
 		sb.append(storageId);
-		sb.append(", attributeName=");
-		sb.append(attributeName);
 		sb.append(", languageId=");
 		sb.append(languageId);
-		sb.append(", largeAttributeValue=");
-		sb.append(largeAttributeValue);
+		sb.append(", attributeName=");
+		sb.append(attributeName);
 		sb.append(", smallAttributeValue=");
 		sb.append(smallAttributeValue);
+		sb.append(", largeAttributeValue=");
+		sb.append(largeAttributeValue);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,13 +115,6 @@ public class DDMFieldAttributeCacheModel
 		ddmFieldAttributeImpl.setFieldId(fieldId);
 		ddmFieldAttributeImpl.setStorageId(storageId);
 
-		if (attributeName == null) {
-			ddmFieldAttributeImpl.setAttributeName("");
-		}
-		else {
-			ddmFieldAttributeImpl.setAttributeName(attributeName);
-		}
-
 		if (languageId == null) {
 			ddmFieldAttributeImpl.setLanguageId("");
 		}
@@ -129,11 +122,11 @@ public class DDMFieldAttributeCacheModel
 			ddmFieldAttributeImpl.setLanguageId(languageId);
 		}
 
-		if (largeAttributeValue == null) {
-			ddmFieldAttributeImpl.setLargeAttributeValue("");
+		if (attributeName == null) {
+			ddmFieldAttributeImpl.setAttributeName("");
 		}
 		else {
-			ddmFieldAttributeImpl.setLargeAttributeValue(largeAttributeValue);
+			ddmFieldAttributeImpl.setAttributeName(attributeName);
 		}
 
 		if (smallAttributeValue == null) {
@@ -141,6 +134,13 @@ public class DDMFieldAttributeCacheModel
 		}
 		else {
 			ddmFieldAttributeImpl.setSmallAttributeValue(smallAttributeValue);
+		}
+
+		if (largeAttributeValue == null) {
+			ddmFieldAttributeImpl.setLargeAttributeValue("");
+		}
+		else {
+			ddmFieldAttributeImpl.setLargeAttributeValue(largeAttributeValue);
 		}
 
 		ddmFieldAttributeImpl.resetOriginalValues();
@@ -163,10 +163,10 @@ public class DDMFieldAttributeCacheModel
 		fieldId = objectInput.readLong();
 
 		storageId = objectInput.readLong();
-		attributeName = objectInput.readUTF();
 		languageId = objectInput.readUTF();
-		largeAttributeValue = (String)objectInput.readObject();
+		attributeName = objectInput.readUTF();
 		smallAttributeValue = objectInput.readUTF();
+		largeAttributeValue = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -183,13 +183,6 @@ public class DDMFieldAttributeCacheModel
 
 		objectOutput.writeLong(storageId);
 
-		if (attributeName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(attributeName);
-		}
-
 		if (languageId == null) {
 			objectOutput.writeUTF("");
 		}
@@ -197,11 +190,11 @@ public class DDMFieldAttributeCacheModel
 			objectOutput.writeUTF(languageId);
 		}
 
-		if (largeAttributeValue == null) {
-			objectOutput.writeObject("");
+		if (attributeName == null) {
+			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeObject(largeAttributeValue);
+			objectOutput.writeUTF(attributeName);
 		}
 
 		if (smallAttributeValue == null) {
@@ -209,6 +202,13 @@ public class DDMFieldAttributeCacheModel
 		}
 		else {
 			objectOutput.writeUTF(smallAttributeValue);
+		}
+
+		if (largeAttributeValue == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(largeAttributeValue);
 		}
 	}
 
@@ -218,9 +218,9 @@ public class DDMFieldAttributeCacheModel
 	public long companyId;
 	public long fieldId;
 	public long storageId;
-	public String attributeName;
 	public String languageId;
-	public String largeAttributeValue;
+	public String attributeName;
 	public String smallAttributeValue;
+	public String largeAttributeValue;
 
 }
