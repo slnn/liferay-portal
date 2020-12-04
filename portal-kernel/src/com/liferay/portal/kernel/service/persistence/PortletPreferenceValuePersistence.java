@@ -343,63 +343,63 @@ public interface PortletPreferenceValuePersistence
 	public int countByP_N(long portletPreferencesId, String name);
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the matching portlet preference value
 	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
 	 */
-	public PortletPreferenceValue findByP_I_N(
-			long portletPreferencesId, int index, String name)
+	public PortletPreferenceValue findByP_N_I(
+			long portletPreferencesId, String name, int index)
 		throws NoSuchPortletPreferenceValueException;
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
-	public PortletPreferenceValue fetchByP_I_N(
-		long portletPreferencesId, int index, String name);
+	public PortletPreferenceValue fetchByP_N_I(
+		long portletPreferencesId, String name, int index);
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
-	public PortletPreferenceValue fetchByP_I_N(
-		long portletPreferencesId, int index, String name,
+	public PortletPreferenceValue fetchByP_N_I(
+		long portletPreferencesId, String name, int index,
 		boolean useFinderCache);
 
 	/**
-	 * Removes the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; from the database.
+	 * Removes the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the portlet preference value that was removed
 	 */
-	public PortletPreferenceValue removeByP_I_N(
-			long portletPreferencesId, int index, String name)
+	public PortletPreferenceValue removeByP_N_I(
+			long portletPreferencesId, String name, int index)
 		throws NoSuchPortletPreferenceValueException;
 
 	/**
-	 * Returns the number of portlet preference values where portletPreferencesId = &#63; and index = &#63; and name = &#63;.
+	 * Returns the number of portlet preference values where portletPreferencesId = &#63; and name = &#63; and index = &#63;.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the number of matching portlet preference values
 	 */
-	public int countByP_I_N(long portletPreferencesId, int index, String name);
+	public int countByP_N_I(long portletPreferencesId, String name, int index);
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.

@@ -1230,25 +1230,25 @@ public class PortletPreferenceValuePersistenceImpl
 	private static final String _FINDER_COLUMN_P_N_NAME_3 =
 		"(portletPreferenceValue.name IS NULL OR portletPreferenceValue.name = '')";
 
-	private FinderPath _finderPathFetchByP_I_N;
-	private FinderPath _finderPathCountByP_I_N;
+	private FinderPath _finderPathFetchByP_N_I;
+	private FinderPath _finderPathCountByP_N_I;
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the matching portlet preference value
 	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
 	 */
 	@Override
-	public PortletPreferenceValue findByP_I_N(
-			long portletPreferencesId, int index, String name)
+	public PortletPreferenceValue findByP_N_I(
+			long portletPreferencesId, String name, int index)
 		throws NoSuchPortletPreferenceValueException {
 
-		PortletPreferenceValue portletPreferenceValue = fetchByP_I_N(
-			portletPreferencesId, index, name);
+		PortletPreferenceValue portletPreferenceValue = fetchByP_N_I(
+			portletPreferencesId, name, index);
 
 		if (portletPreferenceValue == null) {
 			StringBundler sb = new StringBundler(8);
@@ -1258,11 +1258,11 @@ public class PortletPreferenceValuePersistenceImpl
 			sb.append("portletPreferencesId=");
 			sb.append(portletPreferencesId);
 
-			sb.append(", index=");
-			sb.append(index);
-
 			sb.append(", name=");
 			sb.append(name);
+
+			sb.append(", index=");
+			sb.append(index);
 
 			sb.append("}");
 
@@ -1277,32 +1277,32 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
 	@Override
-	public PortletPreferenceValue fetchByP_I_N(
-		long portletPreferencesId, int index, String name) {
+	public PortletPreferenceValue fetchByP_N_I(
+		long portletPreferencesId, String name, int index) {
 
-		return fetchByP_I_N(portletPreferencesId, index, name, true);
+		return fetchByP_N_I(portletPreferencesId, name, index, true);
 	}
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
 	@Override
-	public PortletPreferenceValue fetchByP_I_N(
-		long portletPreferencesId, int index, String name,
+	public PortletPreferenceValue fetchByP_N_I(
+		long portletPreferencesId, String name, int index,
 		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
@@ -1313,14 +1313,14 @@ public class PortletPreferenceValuePersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {portletPreferencesId, index, name};
+			finderArgs = new Object[] {portletPreferencesId, name, index};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByP_I_N, finderArgs);
+				_finderPathFetchByP_N_I, finderArgs);
 		}
 
 		if (result instanceof PortletPreferenceValue) {
@@ -1329,8 +1329,8 @@ public class PortletPreferenceValuePersistenceImpl
 
 			if ((portletPreferencesId !=
 					portletPreferenceValue.getPortletPreferencesId()) ||
-				(index != portletPreferenceValue.getIndex()) ||
-				!Objects.equals(name, portletPreferenceValue.getName())) {
+				!Objects.equals(name, portletPreferenceValue.getName()) ||
+				(index != portletPreferenceValue.getIndex())) {
 
 				result = null;
 			}
@@ -1341,20 +1341,20 @@ public class PortletPreferenceValuePersistenceImpl
 
 			sb.append(_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_P_I_N_PORTLETPREFERENCESID_2);
-
-			sb.append(_FINDER_COLUMN_P_I_N_INDEX_2);
+			sb.append(_FINDER_COLUMN_P_N_I_PORTLETPREFERENCESID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_I_N_NAME_3);
+				sb.append(_FINDER_COLUMN_P_N_I_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_P_I_N_NAME_2);
+				sb.append(_FINDER_COLUMN_P_N_I_NAME_2);
 			}
+
+			sb.append(_FINDER_COLUMN_P_N_I_INDEX_2);
 
 			String sql = sb.toString();
 
@@ -1369,18 +1369,18 @@ public class PortletPreferenceValuePersistenceImpl
 
 				queryPos.add(portletPreferencesId);
 
-				queryPos.add(index);
-
 				if (bindName) {
 					queryPos.add(name);
 				}
+
+				queryPos.add(index);
 
 				List<PortletPreferenceValue> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
-							_finderPathFetchByP_I_N, finderArgs, list);
+							_finderPathFetchByP_N_I, finderArgs, list);
 					}
 				}
 				else {
@@ -1408,34 +1408,34 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Removes the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; from the database.
+	 * Removes the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the portlet preference value that was removed
 	 */
 	@Override
-	public PortletPreferenceValue removeByP_I_N(
-			long portletPreferencesId, int index, String name)
+	public PortletPreferenceValue removeByP_N_I(
+			long portletPreferencesId, String name, int index)
 		throws NoSuchPortletPreferenceValueException {
 
-		PortletPreferenceValue portletPreferenceValue = findByP_I_N(
-			portletPreferencesId, index, name);
+		PortletPreferenceValue portletPreferenceValue = findByP_N_I(
+			portletPreferencesId, name, index);
 
 		return remove(portletPreferenceValue);
 	}
 
 	/**
-	 * Returns the number of portlet preference values where portletPreferencesId = &#63; and index = &#63; and name = &#63;.
+	 * Returns the number of portlet preference values where portletPreferencesId = &#63; and name = &#63; and index = &#63;.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
 	 * @param name the name
+	 * @param index the index
 	 * @return the number of matching portlet preference values
 	 */
 	@Override
-	public int countByP_I_N(long portletPreferencesId, int index, String name) {
+	public int countByP_N_I(long portletPreferencesId, String name, int index) {
 		name = Objects.toString(name, "");
 
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
@@ -1447,9 +1447,9 @@ public class PortletPreferenceValuePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByP_I_N;
+			finderPath = _finderPathCountByP_N_I;
 
-			finderArgs = new Object[] {portletPreferencesId, index, name};
+			finderArgs = new Object[] {portletPreferencesId, name, index};
 
 			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
@@ -1459,20 +1459,20 @@ public class PortletPreferenceValuePersistenceImpl
 
 			sb.append(_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_P_I_N_PORTLETPREFERENCESID_2);
-
-			sb.append(_FINDER_COLUMN_P_I_N_INDEX_2);
+			sb.append(_FINDER_COLUMN_P_N_I_PORTLETPREFERENCESID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_I_N_NAME_3);
+				sb.append(_FINDER_COLUMN_P_N_I_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_P_I_N_NAME_2);
+				sb.append(_FINDER_COLUMN_P_N_I_NAME_2);
 			}
+
+			sb.append(_FINDER_COLUMN_P_N_I_INDEX_2);
 
 			String sql = sb.toString();
 
@@ -1487,11 +1487,11 @@ public class PortletPreferenceValuePersistenceImpl
 
 				queryPos.add(portletPreferencesId);
 
-				queryPos.add(index);
-
 				if (bindName) {
 					queryPos.add(name);
 				}
+
+				queryPos.add(index);
 
 				count = (Long)query.uniqueResult();
 
@@ -1510,17 +1510,17 @@ public class PortletPreferenceValuePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_P_I_N_PORTLETPREFERENCESID_2 =
+	private static final String _FINDER_COLUMN_P_N_I_PORTLETPREFERENCESID_2 =
 		"portletPreferenceValue.portletPreferencesId = ? AND ";
 
-	private static final String _FINDER_COLUMN_P_I_N_INDEX_2 =
-		"portletPreferenceValue.index = ? AND ";
+	private static final String _FINDER_COLUMN_P_N_I_NAME_2 =
+		"portletPreferenceValue.name = ? AND ";
 
-	private static final String _FINDER_COLUMN_P_I_N_NAME_2 =
-		"portletPreferenceValue.name = ?";
+	private static final String _FINDER_COLUMN_P_N_I_NAME_3 =
+		"(portletPreferenceValue.name IS NULL OR portletPreferenceValue.name = '') AND ";
 
-	private static final String _FINDER_COLUMN_P_I_N_NAME_3 =
-		"(portletPreferenceValue.name IS NULL OR portletPreferenceValue.name = '')";
+	private static final String _FINDER_COLUMN_P_N_I_INDEX_2 =
+		"portletPreferenceValue.index = ?";
 
 	private FinderPath _finderPathWithPaginationFindByP_N_SV;
 	private FinderPath _finderPathWithoutPaginationFindByP_N_SV;
@@ -2241,11 +2241,11 @@ public class PortletPreferenceValuePersistenceImpl
 			portletPreferenceValue.getPrimaryKey(), portletPreferenceValue);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByP_I_N,
+			_finderPathFetchByP_N_I,
 			new Object[] {
 				portletPreferenceValue.getPortletPreferencesId(),
-				portletPreferenceValue.getIndex(),
-				portletPreferenceValue.getName()
+				portletPreferenceValue.getName(),
+				portletPreferenceValue.getIndex()
 			},
 			portletPreferenceValue);
 	}
@@ -2329,14 +2329,14 @@ public class PortletPreferenceValuePersistenceImpl
 
 		Object[] args = new Object[] {
 			portletPreferenceValueModelImpl.getPortletPreferencesId(),
-			portletPreferenceValueModelImpl.getIndex(),
-			portletPreferenceValueModelImpl.getName()
+			portletPreferenceValueModelImpl.getName(),
+			portletPreferenceValueModelImpl.getIndex()
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByP_I_N, args, Long.valueOf(1));
+			_finderPathCountByP_N_I, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByP_I_N, args, portletPreferenceValueModelImpl);
+			_finderPathFetchByP_N_I, args, portletPreferenceValueModelImpl);
 	}
 
 	/**
@@ -2957,11 +2957,11 @@ public class PortletPreferenceValuePersistenceImpl
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("portletPreferencesId");
-		ctStrictColumnNames.add("index_");
-		ctStrictColumnNames.add("largeValue");
 		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("readOnly");
+		ctStrictColumnNames.add("index_");
 		ctStrictColumnNames.add("smallValue");
+		ctStrictColumnNames.add("largeValue");
+		ctStrictColumnNames.add("readOnly");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
@@ -2975,7 +2975,7 @@ public class PortletPreferenceValuePersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"portletPreferencesId", "index_", "name"});
+			new String[] {"portletPreferencesId", "name", "index_"});
 	}
 
 	/**
@@ -3038,21 +3038,21 @@ public class PortletPreferenceValuePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"portletPreferencesId", "name"}, false);
 
-		_finderPathFetchByP_I_N = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_N",
+		_finderPathFetchByP_N_I = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByP_N_I",
 			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
 			},
-			new String[] {"portletPreferencesId", "index_", "name"}, true);
+			new String[] {"portletPreferencesId", "name", "index_"}, true);
 
-		_finderPathCountByP_I_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I_N",
+		_finderPathCountByP_N_I = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N_I",
 			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
 			},
-			new String[] {"portletPreferencesId", "index_", "name"}, false);
+			new String[] {"portletPreferencesId", "name", "index_"}, false);
 
 		_finderPathWithPaginationFindByP_N_SV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N_SV",
