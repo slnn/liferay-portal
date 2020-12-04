@@ -42,9 +42,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[] getPortletIds() {
 					return new String[] {
-						"com_liferay_announcements_web_portlet_AlertsPortlet",
-						"com_liferay_announcements_web_portlet_" +
-							"AnnouncementsPortlet"
+						"1_WAR_soannouncementsportlet", "83", "84"
 					};
 				}
 
