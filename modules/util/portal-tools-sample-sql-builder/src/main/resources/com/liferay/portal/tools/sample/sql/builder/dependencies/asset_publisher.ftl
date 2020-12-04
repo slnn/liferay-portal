@@ -17,13 +17,5 @@
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount) />
-
-	${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
-
-	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount) />
-
-	<#list assetPublisherPortletPreferencesModels as assetPublisherPortletPreferencesModel>
-		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
-	</#list>
+	${dataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount))}
 </#list>
