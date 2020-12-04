@@ -1017,6 +1017,7 @@ create table PortletPreferences (
 	ownerType INTEGER,
 	plid LONG,
 	portletId VARCHAR(200) null,
+	preferences TEXT null,
 	primary key (portletPreferencesId, ctCollectionId)
 );
 

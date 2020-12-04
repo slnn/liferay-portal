@@ -50,6 +50,7 @@ public class PortletPreferencesWrapper
 		attributes.put("ownerType", getOwnerType());
 		attributes.put("plid", getPlid());
 		attributes.put("portletId", getPortletId());
+		attributes.put("preferences", getPreferences());
 
 		return attributes;
 	}
@@ -103,6 +104,12 @@ public class PortletPreferencesWrapper
 
 		if (portletId != null) {
 			setPortletId(portletId);
+		}
+
+		String preferences = (String)attributes.get("preferences");
+
+		if (preferences != null) {
+			setPreferences(preferences);
 		}
 	}
 
@@ -184,6 +191,16 @@ public class PortletPreferencesWrapper
 	@Override
 	public long getPortletPreferencesId() {
 		return model.getPortletPreferencesId();
+	}
+
+	/**
+	 * Returns the preferences of this portlet preferences.
+	 *
+	 * @return the preferences of this portlet preferences
+	 */
+	@Override
+	public String getPreferences() {
+		return model.getPreferences();
 	}
 
 	/**
@@ -279,6 +296,16 @@ public class PortletPreferencesWrapper
 	@Override
 	public void setPortletPreferencesId(long portletPreferencesId) {
 		model.setPortletPreferencesId(portletPreferencesId);
+	}
+
+	/**
+	 * Sets the preferences of this portlet preferences.
+	 *
+	 * @param preferences the preferences of this portlet preferences
+	 */
+	@Override
+	public void setPreferences(String preferences) {
+		model.setPreferences(preferences);
 	}
 
 	/**

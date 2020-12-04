@@ -1197,6 +1197,9 @@
 		<field name="portletId" type="String">
 			<hint name="max-length">200</hint>
 		</field>
+		<field name="preferences" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.portal.kernel.model.PortletPreferenceValue">
 		<field name="mvccVersion" type="long" />
