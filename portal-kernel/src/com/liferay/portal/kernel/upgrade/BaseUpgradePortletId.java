@@ -17,9 +17,8 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -218,27 +217,27 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			String oldRootPortletId, String newRootPortletId)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
-
-		String preferencesExpression = "preferences";
-
-		if (dbType == DBType.SYBASE) {
-			preferencesExpression = "CAST_TEXT(preferences)";
-		}
-
 		runSQL(
 			StringBundler.concat(
 				"update PortletPreferences set portletId = '", newRootPortletId,
 				"' where portletId = '", oldRootPortletId, "'"));
 
-		runSQL(
+		DBTypeToSQLMap cssDBTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(
 				"update PortletPreferences set preferences = replace(",
-				preferencesExpression, ", '#portlet_", oldRootPortletId,
+				"preferences, '#portlet_", oldRootPortletId, "', '#portlet_",
+				newRootPortletId, "') where portletId = '", newRootPortletId,
+				"'"));
+
+		cssDBTypeToSQLMap.add(
+			DBType.SYBASE,
+			StringBundler.concat(
+				"update PortletPreferences set preferences = replace(",
+				"CAST_TEXT(preferences), '#portlet_", oldRootPortletId,
 				"', '#portlet_", newRootPortletId, "') where portletId = '",
 				newRootPortletId, "'"));
+
+		runSQL(cssDBTypeToSQLMap);
 
 		if (!newRootPortletId.contains("_INSTANCE_")) {
 			runSQL(
@@ -248,13 +247,23 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					newRootPortletId, "_INSTANCE_') where portletId like '",
 					oldRootPortletId, "_INSTANCE_%'"));
 
-			runSQL(
+			DBTypeToSQLMap instanceCSSDBTypeToSQLMap = new DBTypeToSQLMap(
 				StringBundler.concat(
 					"update PortletPreferences set preferences = replace(",
-					preferencesExpression, ", '#portlet_", oldRootPortletId,
-					"_INSTANCE_', '#portlet_", newRootPortletId,
+					"preferences, '#portlet_", oldRootPortletId, "_INSTANCE_',",
+					"'#portlet_", newRootPortletId, "_INSTANCE_') where ",
+					"portletId like '", newRootPortletId, "_INSTANCE_%'"));
+
+			instanceCSSDBTypeToSQLMap.add(
+				DBType.SYBASE,
+				StringBundler.concat(
+					"update PortletPreferences set preferences = replace(",
+					"CAST_TEXT(preferences), '#portlet_", oldRootPortletId,
+					"_INSTANCE_','#portlet_", newRootPortletId,
 					"_INSTANCE_') where portletId like '", newRootPortletId,
 					"_INSTANCE_%'"));
+
+			runSQL(instanceCSSDBTypeToSQLMap);
 		}
 
 		runSQL(
@@ -264,13 +273,22 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"_USER_') where portletId like '", oldRootPortletId,
 				"_USER_%'"));
 
-		runSQL(
+		DBTypeToSQLMap userCSSDBTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(
 				"update PortletPreferences set preferences = replace(",
-				preferencesExpression, ", '#portlet_", oldRootPortletId,
-				"_USER_', '#portlet_", newRootPortletId,
-				"_USER_') where portletId like '", newRootPortletId,
-				"_USER_%'"));
+				"preferences, '#portlet_", oldRootPortletId, "_USER_', ",
+				"'#portlet_", newRootPortletId, "_USER_') where portletId ",
+				"like '", newRootPortletId, "_USER_%'"));
+
+		userCSSDBTypeToSQLMap.add(
+			DBType.SYBASE,
+			StringBundler.concat(
+				"update PortletPreferences set preferences = replace(",
+				"CAST_TEXT(preferences), '#portlet_", oldRootPortletId,
+				"_USER_', '#portlet_", newRootPortletId, "_USER_') where ",
+				"portletId like '", newRootPortletId, "_USER_%'"));
+
+		runSQL(userCSSDBTypeToSQLMap);
 	}
 
 	protected void updateLayout(long plid, String typeSettings)
