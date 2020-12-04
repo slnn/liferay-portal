@@ -23,7 +23,7 @@ public class UpgradeSocialMVCCVersion extends UpgradeMVCCVersion {
 
 	@Override
 	protected String[] getExcludedTableNames() {
-		return new String[] {"CompanyInfo", "PortletPreferenceValue"};
+		return new String[] {"CompanyInfo"};
 	}
 
 	@Override
