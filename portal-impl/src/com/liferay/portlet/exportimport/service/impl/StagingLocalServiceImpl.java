@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -1090,15 +1089,11 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				layoutRevision.getLayoutRevisionId());
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				portletPreferenceValueLocalService.getPreferences(
-					portletPreferences);
-
 			portletPreferencesLocalService.addPortletPreferences(
 				layoutRevision.getCompanyId(), portletPreferences.getOwnerId(),
 				portletPreferences.getOwnerType(), layout.getPlid(),
 				portletPreferences.getPortletId(), null,
-				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+				portletPreferences.getPreferences());
 		}
 	}
 

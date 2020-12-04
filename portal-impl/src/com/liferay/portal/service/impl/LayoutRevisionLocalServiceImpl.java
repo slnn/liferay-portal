@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -631,16 +630,12 @@ public class LayoutRevisionLocalServiceImpl
 				parentLayoutRevisionId);
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				portletPreferenceValueLocalService.getPreferences(
-					portletPreferences);
-
 			portletPreferencesLocalService.addPortletPreferences(
 				layoutRevision.getCompanyId(), portletPreferences.getOwnerId(),
 				portletPreferences.getOwnerType(),
 				layoutRevision.getLayoutRevisionId(),
 				portletPreferences.getPortletId(), null,
-				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+				portletPreferences.getPreferences());
 		}
 	}
 

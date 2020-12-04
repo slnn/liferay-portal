@@ -31,9 +31,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -179,27 +177,21 @@ public class SegmentsExperienceUtil {
 				portletPreferences.getOwnerId(),
 				portletPreferences.getOwnerType(), plid, newPortletId);
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
-			PortletPreferenceValueLocalServiceUtil.getPreferences(
-				portletPreferences);
-
 		if (existingPortletPreferences == null) {
 			return Optional.of(
 				PortletPreferencesLocalServiceUtil.addPortletPreferences(
 					portletPreferences.getCompanyId(),
 					portletPreferences.getOwnerId(),
 					portletPreferences.getOwnerType(), plid, newPortletId,
-					portlet,
-					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences)));
+					portlet, portletPreferences.getPreferences()));
 		}
 
+		existingPortletPreferences.setPreferences(
+			portletPreferences.getPreferences());
+
 		return Optional.of(
-			PortletPreferencesLocalServiceUtil.updatePreferences(
-				existingPortletPreferences.getOwnerId(),
-				existingPortletPreferences.getOwnerType(),
-				existingPortletPreferences.getPlid(),
-				existingPortletPreferences.getPortletId(),
-				jxPortletPreferences));
+			PortletPreferencesLocalServiceUtil.updatePortletPreferences(
+				existingPortletPreferences));
 	}
 
 	private static JSONObject _updateLayoutDataJSONObject(

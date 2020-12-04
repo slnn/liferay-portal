@@ -662,10 +662,12 @@ public class PortletImportControllerImpl implements PortletImportController {
 			serviceElement.remove(attribute);
 		}
 
-		_portletPreferencesLocalService.updatePreferences(
-			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),
-			portletPreferences.getPlid(), portletPreferences.getPortletId(),
-			serviceElement.asXML());
+		String xml = serviceElement.asXML();
+
+		portletPreferences.setPreferences(xml);
+
+		_portletPreferencesLocalService.updatePortletPreferences(
+			portletPreferences);
 	}
 
 	@Override

@@ -573,12 +573,7 @@ public class PortletPreferencesLocalServiceImpl
 						ownerId, ownerType, plid, portletId);
 
 				if (portletPreferences != null) {
-					javax.portlet.PortletPreferences jxPortletPreferences =
-						portletPreferenceValueLocalService.getPreferences(
-							portletPreferences);
-
-					preferences = PortletPreferencesFactoryUtil.toXML(
-						jxPortletPreferences);
+					preferences = portletPreferences.getPreferences();
 				}
 			}
 			else {
@@ -588,13 +583,7 @@ public class PortletPreferencesLocalServiceImpl
 					if (portletId.equals(portletPreferences.getPortletId())) {
 						ownerId = portletPreferences.getOwnerId();
 						preferencesPlid = portletPreferences.getPlid();
-
-						javax.portlet.PortletPreferences jxPortletPreferences =
-							portletPreferenceValueLocalService.getPreferences(
-								portletPreferences);
-
-						preferences = PortletPreferencesFactoryUtil.toXML(
-							jxPortletPreferences);
+						preferences = portletPreferences.getPreferences();
 
 						break;
 					}

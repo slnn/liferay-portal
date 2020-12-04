@@ -19,14 +19,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -89,7 +88,7 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 
 	@Test
 	public void testShouldNotReturnItFromAllPortlets() throws Exception {
-		_portletPreferencesLocalService.addPortletPreferences(
+		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			_testNonembeddedPortlet.getPortletId(), _testNonembeddedPortlet,
@@ -104,7 +103,7 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 
 	@Test
 	public void testShouldNotReturnItFromEmbeddedPortlets() throws Exception {
-		_portletPreferencesLocalService.addPortletPreferences(
+		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			_testNonembeddedPortlet.getPortletId(), _testNonembeddedPortlet,
@@ -122,7 +121,7 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 	public void testShouldNotReturnItFromExplicitlyAddedPortlets()
 		throws Exception {
 
-		_portletPreferencesLocalService.addPortletPreferences(
+		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			_testNonembeddedPortlet.getPortletId(), _testNonembeddedPortlet,
@@ -138,19 +137,16 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 
 	@Test
 	public void testShouldReturnItsConfiguration() throws Exception {
-		String defaultPreferences =
-			"<portlet-preferences><preference><name>testName</name><value>" +
-				"testValue1</value><value>testValue2</value>" +
-					"</preference></portlet-preferences>";
+		String defaultPreferences = RandomTestUtil.randomString();
 
-		_portletPreferencesLocalService.addPortletPreferences(
+		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			_testNonembeddedPortlet.getPortletId(), _testNonembeddedPortlet,
 			defaultPreferences);
 
 		List<PortletPreferences> portletPreferences =
-			_portletPreferencesLocalService.getPortletPreferences(
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				layout.getPlid(), _testNonembeddedPortlet.getPortletId());
 
 		Assert.assertEquals(
@@ -159,25 +155,12 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 		PortletPreferences embeddedPortletPreference = portletPreferences.get(
 			0);
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
-			_portletPreferenceValueLocalService.getPreferences(
-				embeddedPortletPreference);
-
-		Assert.assertArrayEquals(
-			new String[] {"testValue1", "testValue2"},
-			jxPortletPreferences.getValues("testName", null));
+		Assert.assertEquals(
+			defaultPreferences, embeddedPortletPreference.getPreferences());
 	}
 
 	private static String[] _layoutStaticPortletsAll;
 	private static LayoutTypePortlet _layoutTypePortlet;
-
-	@Inject
-	private static PortletPreferencesLocalService
-		_portletPreferencesLocalService;
-
-	@Inject
-	private static PortletPreferenceValueLocalService
-		_portletPreferenceValueLocalService;
 
 	private TestNonembeddedPortlet _testNonembeddedPortlet;
 
