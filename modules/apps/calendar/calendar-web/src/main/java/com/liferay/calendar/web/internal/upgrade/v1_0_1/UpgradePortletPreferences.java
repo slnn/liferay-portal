@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_x;
+package com.liferay.calendar.web.internal.upgrade.v1_0_1;
 
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
@@ -26,8 +27,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Bryan Engler
  */
-public class UpgradeCalendarClassNameIdsPortletPreferences
-	extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String getUpdatePortletPreferencesWhereClause() {
@@ -70,10 +70,9 @@ public class UpgradeCalendarClassNameIdsPortletPreferences
 			portletPreferences.getValues(name, null));
 
 		ArrayUtil.replace(
-			values, "com.liferay.portlet.calendar.model.CalEvent",
-			String.valueOf(
-				PortalUtil.getClassNameId(
-					"com.liferay.calendar.model.CalendarBooking")));
+			values,
+			String.valueOf("com.liferay.portlet.calendar.model.CalEvent"),
+			String.valueOf(PortalUtil.getClassNameId(CalendarBooking.class)));
 
 		portletPreferences.setValues(name, values);
 	}

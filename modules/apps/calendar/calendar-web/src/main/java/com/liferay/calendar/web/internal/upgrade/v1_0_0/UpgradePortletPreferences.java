@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_x;
+package com.liferay.calendar.web.internal.upgrade.v1_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -23,8 +23,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Inácio Nery
  */
-public class UpgradeCalendarTimeFormatPortletPreferences
-	extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String getUpdatePortletPreferencesWhereClause() {

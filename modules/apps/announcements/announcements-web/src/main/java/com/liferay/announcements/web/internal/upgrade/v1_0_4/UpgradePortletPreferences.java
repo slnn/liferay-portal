@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_x;
+package com.liferay.announcements.web.internal.upgrade.v1_0_4;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -27,7 +27,7 @@ import java.sql.ResultSet;
 /**
  * @author Roberto Díaz
  */
-public class UpgradeAnnouncementsPortletPreferences extends UpgradeProcess {
+public class UpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
