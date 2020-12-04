@@ -14,8 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.uad.anonymizer;
 
+import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.uad.constants.DDMUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -77,6 +79,16 @@ public class DDMFormInstanceRecordUADAnonymizer
 			_ddmFormInstanceRecordVersionLocalService.
 				updateDDMFormInstanceRecordVersion(
 					ddmFormInstanceRecordVersion);
+
+			DDMContent ddmContent = _ddmContentLocalService.fetchDDMContent(
+				ddmFormInstanceRecordVersion.getStorageId());
+
+			if (ddmContent.getUserId() == userId) {
+				ddmContent.setUserId(anonymousUser.getUserId());
+				ddmContent.setUserName(anonymousUser.getFullName());
+			}
+
+			_ddmContentLocalService.updateDDMContent(ddmContent);
 		}
 	}
 
@@ -117,6 +129,9 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 		return actionableDynamicQuery;
 	}
+
+	@Reference
+	private DDMContentLocalService _ddmContentLocalService;
 
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService

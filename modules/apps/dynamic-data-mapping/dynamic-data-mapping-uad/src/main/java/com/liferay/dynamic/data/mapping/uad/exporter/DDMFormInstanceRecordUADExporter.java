@@ -14,11 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.uad.exporter;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.uad.util.DDMUADUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,16 +70,11 @@ public class DDMFormInstanceRecordUADExporter
 			sb.append("com.liferay.dynamic.data.mapping.model.DDMContent");
 			sb.append("</model-name>");
 
-			DDMFormValuesSerializerSerializeResponse
-				ddmFormValuesSerializerSerializeResponse =
-					_ddmFormValuesSerializer.serialize(
-						DDMFormValuesSerializerSerializeRequest.Builder.
-							newBuilder(
-								ddmFormInstanceRecord.getDDMFormValues()
-							).build());
+			DDMContent ddmContent = _ddmContentLocalService.getDDMContent(
+				ddmFormInstanceRecord.getStorageId());
 
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
-				ddmFormValuesSerializerSerializeResponse.getContent());
+				ddmContent.getData());
 
 			JSONArray fieldValuesJSONArray = dataJSONObject.getJSONArray(
 				"fieldValues");
@@ -143,7 +137,7 @@ public class DDMFormInstanceRecordUADExporter
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordUADExporter.class);
 
-	@Reference(target = "(ddm.form.values.serializer.type=json)")
-	private DDMFormValuesSerializer _ddmFormValuesSerializer;
+	@Reference
+	private DDMContentLocalService _ddmContentLocalService;
 
 }
