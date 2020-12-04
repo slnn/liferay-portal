@@ -38,10 +38,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see DDMContentPersistence
- * @deprecated
  * @generated
  */
-@Deprecated
 public class DDMContentUtil {
 
 	/*

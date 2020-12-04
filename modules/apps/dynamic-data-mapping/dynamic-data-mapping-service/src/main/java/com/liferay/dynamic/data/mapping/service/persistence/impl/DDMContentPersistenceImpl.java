@@ -83,11 +83,9 @@ import org.osgi.service.component.annotations.Reference;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @deprecated
  * @generated
  */
 @Component(service = {DDMContentPersistence.class, BasePersistence.class})
-@Deprecated
 public class DDMContentPersistenceImpl
 	extends BasePersistenceImpl<DDMContent> implements DDMContentPersistence {
 

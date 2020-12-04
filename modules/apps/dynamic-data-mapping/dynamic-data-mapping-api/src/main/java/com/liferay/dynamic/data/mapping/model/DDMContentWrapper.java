@@ -31,10 +31,8 @@ import java.util.function.Function;
  *
  * @author Brian Wing Shun Chan
  * @see DDMContent
- * @deprecated
  * @generated
  */
-@Deprecated
 public class DDMContentWrapper
 	extends BaseModelWrapper<DDMContent>
 	implements DDMContent, ModelWrapper<DDMContent> {
