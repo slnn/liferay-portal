@@ -99,7 +99,7 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 				groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_portal.getClassNameId(DDMFormInstance.class), structureKey,
 				nameMap, descriptionMap, ddmForm, ddmFormLayout,
-				StorageType.DEFAULT.toString(),
+				StorageType.JSON.toString(),
 				DDMStructureConstants.TYPE_FRAGMENT, serviceContext);
 		}
 		else {

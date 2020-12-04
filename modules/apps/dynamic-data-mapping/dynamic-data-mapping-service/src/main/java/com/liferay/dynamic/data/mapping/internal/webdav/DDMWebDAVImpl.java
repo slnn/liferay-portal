@@ -92,7 +92,7 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 			_ddmStructureLocalService.addStructure(
 				webDAVRequest.getUserId(), webDAVRequest.getGroupId(),
 				classNameId, nameMap, null, ddmForm, ddmFormLayout,
-				StorageType.DEFAULT.toString(), serviceContext);
+				StorageType.JSON.toString(), serviceContext);
 
 			return HttpServletResponse.SC_CREATED;
 		}

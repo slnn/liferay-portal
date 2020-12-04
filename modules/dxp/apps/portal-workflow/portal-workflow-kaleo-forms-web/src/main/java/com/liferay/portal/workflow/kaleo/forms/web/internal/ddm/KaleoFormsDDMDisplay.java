@@ -98,7 +98,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStorageType() {
-		return StorageType.DEFAULT.toString();
+		return StorageType.JSON.toString();
 	}
 
 	@Override

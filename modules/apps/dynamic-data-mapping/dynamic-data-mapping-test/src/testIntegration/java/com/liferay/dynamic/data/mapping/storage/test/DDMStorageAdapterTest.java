@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -209,8 +208,7 @@ public class DDMStorageAdapterTest {
 		return ddmStorageAdapterSaveResponse.getPrimaryKey();
 	}
 
-	private static final String _STORAGE_TYPE_JSON =
-		StorageType.DEFAULT.getValue();
+	private static final String _STORAGE_TYPE_JSON = "json";
 
 	private static final String _STORAGE_TYPE_TEST = "test";
 

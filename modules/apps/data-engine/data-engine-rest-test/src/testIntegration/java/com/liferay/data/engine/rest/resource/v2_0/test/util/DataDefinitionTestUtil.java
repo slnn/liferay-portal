@@ -91,7 +91,7 @@ public class DataDefinitionTestUtil {
 				"com.liferay.app.builder.model.AppBuilderApp"),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			read("test-structured-content-structure.json"),
-			StorageType.DEFAULT.getValue());
+			StorageType.JSON.getValue());
 	}
 
 	public static String read(String fileName) throws Exception {

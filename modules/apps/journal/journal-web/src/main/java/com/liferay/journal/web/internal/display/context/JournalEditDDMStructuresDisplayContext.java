@@ -290,7 +290,7 @@ public class JournalEditDDMStructuresDisplayContext {
 	}
 
 	public String getStorageType() {
-		String storageType = StorageType.DEFAULT.getValue();
+		String storageType = StorageType.JSON.getValue();
 
 		try {
 			JournalServiceConfiguration journalServiceConfiguration =

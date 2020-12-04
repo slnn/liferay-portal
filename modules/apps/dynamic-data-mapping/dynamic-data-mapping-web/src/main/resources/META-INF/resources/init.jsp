@@ -168,8 +168,8 @@ if (ddmDisplayContext != null) {
 
 String storageTypeValue = StringPool.BLANK;
 
-if (scopeStorageType.equals("default")) {
-	storageTypeValue = StorageType.DEFAULT.getValue();
+if (scopeStorageType.equals("json")) {
+	storageTypeValue = StorageType.JSON.getValue();
 }
 
 String templateTypeValue = StringPool.BLANK;

@@ -607,7 +607,7 @@ public class DDMFormInstanceLocalServiceImpl
 			return storageType;
 		}
 
-		return StorageType.DEFAULT.toString();
+		return StorageType.JSON.toString();
 	}
 
 	protected long getStructureVersionId(long ddmStructureId)

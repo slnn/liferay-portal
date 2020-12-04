@@ -279,7 +279,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		throws StorageException {
 
 		return getDDMFormValues(
-			ddmForm, storageId, StorageType.DEFAULT.toString());
+			ddmForm, storageId, StorageType.JSON.toString());
 	}
 
 	@Override
@@ -692,7 +692,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	protected DDMStorageAdapter getDDMStorageAdapter(String type) {
 		return _ddmStorageAdapterTracker.getDDMStorageAdapter(
-			GetterUtil.getString(type, StorageType.DEFAULT.toString()));
+			GetterUtil.getString(type, StorageType.JSON.toString()));
 	}
 
 	protected List<DDMFormInstanceRecord> getFormInstanceRecords(Hits hits)

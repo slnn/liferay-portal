@@ -92,7 +92,7 @@ public class DDMFormInstanceTestHelper {
 				"sendEmailNotification", "false"));
 		formInstanceSettingsDDMFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"storageType", StorageType.DEFAULT.getValue()));
+				"storageType", "json"));
 		formInstanceSettingsDDMFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"workflowDefinition", "Single Approver@1"));
@@ -112,7 +112,7 @@ public class DDMFormInstanceTestHelper {
 				PortalUtil.getClassNameId(DDMFormInstance.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.DEFAULT.toString());
+			ddmForm, StorageType.JSON.toString());
 
 		return addDDMFormInstance(ddmStructure);
 	}

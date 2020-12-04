@@ -177,7 +177,7 @@ public class DDMFormInstanceRecordSearchTest {
 				PortalUtil.getClassNameId(DDMFormInstance.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.DEFAULT.toString());
+			ddmForm, StorageType.JSON.toString());
 
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
@@ -228,7 +228,7 @@ public class DDMFormInstanceRecordSearchTest {
 				PortalUtil.getClassNameId(DDMFormInstance.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			createDDMForm(LocaleUtil.US), StorageType.DEFAULT.toString());
+			createDDMForm(LocaleUtil.US), StorageType.JSON.toString());
 
 		return ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
 	}

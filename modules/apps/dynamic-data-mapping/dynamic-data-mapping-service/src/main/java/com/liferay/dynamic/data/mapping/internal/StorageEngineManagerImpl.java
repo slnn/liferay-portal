@@ -179,7 +179,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 	private DDMStorageAdapter _getDDMStorageAdapter() {
 		return _ddmStorageAdapterTracker.getDDMStorageAdapter(
-			StorageType.DEFAULT.toString());
+			StorageType.JSON.toString());
 	}
 
 	private PortalException _translate(PortalException portalException) {

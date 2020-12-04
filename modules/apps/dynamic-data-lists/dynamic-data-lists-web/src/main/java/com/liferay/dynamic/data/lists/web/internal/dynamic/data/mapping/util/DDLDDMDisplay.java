@@ -75,7 +75,7 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStorageType() {
-		return StorageType.DEFAULT.getValue();
+		return StorageType.JSON.getValue();
 	}
 
 	@Override

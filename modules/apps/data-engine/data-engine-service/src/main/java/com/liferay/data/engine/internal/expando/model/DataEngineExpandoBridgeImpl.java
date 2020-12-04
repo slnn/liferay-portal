@@ -22,7 +22,6 @@ import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -102,7 +101,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 					HashMapBuilder.<String, Object>put(
 						"en_US", _className
 					).build());
-				dataDefinition.setStorageType(StorageType.DEFAULT.getValue());
+				dataDefinition.setStorageType("json");
 			}
 			else {
 				throw exception;

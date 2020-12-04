@@ -92,7 +92,7 @@ public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 			return storageType;
 		}
 
-		return StorageType.DEFAULT.toString();
+		return StorageType.JSON.toString();
 	}
 
 	@Override

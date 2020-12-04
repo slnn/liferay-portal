@@ -210,7 +210,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		List<DDMStructure> structures = DDMStructureServiceUtil.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), _group.getGroupId()}, _classNameId,
-			name, description, StorageType.DEFAULT.getValue(),
+			name, description, StorageType.JSON.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
 			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -227,15 +227,14 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			addStructure(
 				0, _classNameId, null, StringUtil.randomString(),
 				StringPool.BLANK, read("test-structure.xsd"),
-				StorageType.DEFAULT.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT,
+				StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT,
 				WorkflowConstants.STATUS_APPROVED));
 
 		_ddmStructures.add(
 			addStructure(
 				0, _classNameId, null, StringUtil.randomString(),
 				StringPool.BLANK, read("test-structure.xsd"),
-				StorageType.DEFAULT.getValue(),
+				StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_APPROVED));
 
@@ -288,7 +287,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		int count = DDMStructureServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), _group.getGroupId()}, _classNameId,
-			name, description, StorageType.DEFAULT.getValue(),
+			name, description, StorageType.JSON.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
 			true);
 
@@ -306,7 +305,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			addStructure(
 				0, _classNameId, null, StringUtil.randomString(),
 				StringPool.BLANK, read("test-structure.xsd"),
-				StorageType.DEFAULT.getValue(),
+				StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_APPROVED));
 

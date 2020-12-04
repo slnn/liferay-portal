@@ -119,7 +119,7 @@ public class DDMStructureTestUtil {
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, parentStructureId,
 			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
-			ddmFormLayout, StorageType.DEFAULT.toString(),
+			ddmFormLayout, StorageType.JSON.toString(),
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 

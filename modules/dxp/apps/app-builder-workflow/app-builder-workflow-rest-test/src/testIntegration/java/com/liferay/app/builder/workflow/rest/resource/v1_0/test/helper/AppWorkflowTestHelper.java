@@ -274,7 +274,7 @@ public class AppWorkflowTestHelper {
 			_portal.getClassNameId(AppBuilderApp.class.getName()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_read("test-structured-content-structure.json"),
-			StorageType.DEFAULT.getValue());
+			StorageType.JSON.getValue());
 	}
 
 	private DDMStructureLayout _addDDMStructureLayout(
