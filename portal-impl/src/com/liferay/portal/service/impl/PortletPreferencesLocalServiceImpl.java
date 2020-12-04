@@ -1029,6 +1029,9 @@ public class PortletPreferencesLocalServiceImpl
 			portletPreferences.setOwnerType(ownerType);
 			portletPreferences.setPlid(plid);
 			portletPreferences.setPortletId(portletId);
+
+			portletPreferences = portletPreferencesPersistence.update(
+				portletPreferences);
 		}
 		else {
 			portletPreferenceValuesMap =
@@ -1041,7 +1044,7 @@ public class PortletPreferencesLocalServiceImpl
 		_updatePortletPreferences(
 			portletPreferences, portletPreferenceValuesMap, preferenceMap);
 
-		return portletPreferencesPersistence.update(portletPreferences);
+		return portletPreferences;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
