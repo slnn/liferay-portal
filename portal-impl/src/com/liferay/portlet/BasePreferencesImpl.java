@@ -80,14 +80,6 @@ public abstract class BasePreferencesImpl implements Serializable {
 		return _ownerType;
 	}
 
-	public Map<String, Preference> getPreferences() {
-		if (_modifiedPreferences != null) {
-			return _modifiedPreferences;
-		}
-
-		return _originalPreferences;
-	}
-
 	public String getValue(String key, String def) {
 		if (key == null) {
 			throw new IllegalArgumentException();
@@ -275,6 +267,14 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 	protected String getOriginalXML() {
 		return _originalXML;
+	}
+
+	protected Map<String, Preference> getPreferences() {
+		if (_modifiedPreferences != null) {
+			return _modifiedPreferences;
+		}
+
+		return _originalPreferences;
 	}
 
 	protected String getXMLSafeValue(String value) {

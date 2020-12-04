@@ -15,40 +15,22 @@
 package com.liferay.portal.model.impl;
 
 /**
- * @author Preston Crary
+ * The extended model implementation for the PortletPreferenceValue service. Represents a row in the &quot;PortletPreferenceValue&quot; database table, with each column mapped to a property of this class.
+ *
+ * <p>
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.kernel.model.PortletPreferenceValue</code> interface.
+ * </p>
+ *
+ * @author Brian Wing Shun Chan
  */
 public class PortletPreferenceValueImpl extends PortletPreferenceValueBaseImpl {
 
-	public static final int SMALL_VALUE_MAX_LENGTH = 75;
-
-	@Override
-	public String getValue() {
-		String value = getSmallValue();
-
-		if (value.isEmpty()) {
-			value = getLargeValue();
-		}
-
-		return value;
-	}
-
-	@Override
-	public void setValue(String value) {
-		if (value == null) {
-			setSmallValue(null);
-
-			setLargeValue(null);
-		}
-		else if (value.length() <= SMALL_VALUE_MAX_LENGTH) {
-			setSmallValue(value);
-
-			setLargeValue(null);
-		}
-		else {
-			setSmallValue(null);
-
-			setLargeValue(value);
-		}
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. All methods that expect a portlet preference value model instance should use the {@link com.liferay.portal.kernel.model.PortletPreferenceValue} interface instead.
+	 */
+	public PortletPreferenceValueImpl() {
 	}
 
 }
