@@ -644,8 +644,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), ddmFormValues
-				).withStructureId(
-					ddmFormInstance.getStructureId()
 				).withUuid(
 					serviceContext.getUuid()
 				).withClassName(
@@ -900,8 +898,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			DDMStorageAdapterSaveRequest.Builder.newBuilder(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				ddmFormValues
-			).withStructureId(
-				ddmFormInstance.getStructureId()
 			).withPrimaryKey(
 				ddmFormInstanceRecordVersion.getStorageId()
 			).build());

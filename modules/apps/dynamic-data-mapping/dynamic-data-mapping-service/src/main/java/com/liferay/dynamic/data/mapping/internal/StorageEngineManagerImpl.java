@@ -71,8 +71,6 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 						serviceContext.getUserId(),
 						serviceContext.getScopeGroupId(),
 						translatedDDMFormValues
-					).withStructureId(
-						ddmStructureId
 					).withUuid(
 						serviceContext.getUuid()
 					).withClassName(
@@ -148,17 +146,12 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 			_validate(translatedDDMFormValues, serviceContext);
 
-			DDMStorageLink ddmStorageLink =
-				_ddmStorageLinkLocalService.getClassStorageLink(classPK);
-
 			DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter();
 
 			ddmStorageAdapter.save(
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), translatedDDMFormValues
-				).withStructureId(
-					ddmStorageLink.getStructureId()
 				).withPrimaryKey(
 					classPK
 				).build());

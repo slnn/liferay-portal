@@ -35,10 +35,6 @@ public final class DDMStorageAdapterSaveRequest {
 		return _scopeGroupId;
 	}
 
-	public long getStructureId() {
-		return _structureId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -79,12 +75,6 @@ public final class DDMStorageAdapterSaveRequest {
 			return this;
 		}
 
-		public Builder withStructureId(long structureId) {
-			_ddmStorageAdapterSaveRequest._structureId = structureId;
-
-			return this;
-		}
-
 		public Builder withUuid(String uuid) {
 			_ddmStorageAdapterSaveRequest._uuid = uuid;
 
@@ -111,7 +101,6 @@ public final class DDMStorageAdapterSaveRequest {
 	private DDMFormValues _ddmFormValues;
 	private long _primaryKey;
 	private long _scopeGroupId;
-	private long _structureId;
 	private long _userId;
 	private String _uuid;
 
