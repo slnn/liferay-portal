@@ -59,17 +59,17 @@
 	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
-		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId)>
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, _entry, _ddmStructureId)>
 
-		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_entry, ddmStorageLinkModel)>
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(ddmStorageLinkModel, _entry)>
 
-		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_entry, ddmFieldModels, ddmStorageLinkModel)>
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(ddmStorageLinkModel, _entry, ddmFieldModels)>
 	<#else>
-		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId)>
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, _entry, _ddmStructureId)>
 
-		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_currentIndex, _entry, ddmStorageLinkModel)>
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(ddmStorageLinkModel, _entry, _currentIndex)>
 
-		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_currentIndex, _entry, ddmFieldModels, ddmStorageLinkModel)>
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(ddmStorageLinkModel, _entry, _currentIndex, ddmFieldModels)>
 	</#if>
 
 	<#list ddmFieldModels as ddmFieldModel>
