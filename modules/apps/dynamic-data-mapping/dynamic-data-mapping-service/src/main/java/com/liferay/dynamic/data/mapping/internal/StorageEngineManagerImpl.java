@@ -63,19 +63,22 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 			_validate(translatedDDMFormValues, serviceContext);
 
+			DDMStorageAdapterSaveRequest.Builder builder =
+				DDMStorageAdapterSaveRequest.Builder.newBuilder(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), translatedDDMFormValues);
+
+			DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest =
+				builder.withUuid(
+					serviceContext.getUuid()
+				).withClassName(
+					DDMStorageLink.class.getName()
+				).build();
+
 			DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter();
 
 			DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
-				ddmStorageAdapter.save(
-					DDMStorageAdapterSaveRequest.Builder.newBuilder(
-						serviceContext.getUserId(),
-						serviceContext.getScopeGroupId(),
-						translatedDDMFormValues
-					).withUuid(
-						serviceContext.getUuid()
-					).withClassName(
-						DDMStorageLink.class.getName()
-					).build());
+				ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 
 			long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
 
@@ -112,11 +115,14 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter();
 
+		DDMStorageAdapterGetRequest.Builder builder =
+			DDMStorageAdapterGetRequest.Builder.newBuilder(classPK, ddmForm);
+
+		DDMStorageAdapterGetRequest ddmStorageAdapterGetRequest =
+			builder.build();
+
 		DDMStorageAdapterGetResponse ddmStorageAdapterGetResponse =
-			ddmStorageAdapter.get(
-				DDMStorageAdapterGetRequest.Builder.newBuilder(
-					classPK, ddmForm
-				).build());
+			ddmStorageAdapter.get(ddmStorageAdapterGetRequest);
 
 		return _ddmBeanTranslator.translate(
 			ddmStorageAdapterGetResponse.getDDMFormValues());
@@ -146,15 +152,19 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 			_validate(translatedDDMFormValues, serviceContext);
 
-			DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter();
-
-			ddmStorageAdapter.save(
+			DDMStorageAdapterSaveRequest.Builder builder =
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
 					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), translatedDDMFormValues
-				).withPrimaryKey(
+					serviceContext.getScopeGroupId(), translatedDDMFormValues);
+
+			DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest =
+				builder.withPrimaryKey(
 					classPK
-				).build());
+				).build();
+
+			DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter();
+
+			ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 		}
 		catch (PortalException portalException) {
 			throw _translate(portalException);
@@ -164,10 +174,13 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	private void _deleteStorage(long storageId) throws StorageException {
 		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter();
 
-		ddmStorageAdapter.delete(
-			DDMStorageAdapterDeleteRequest.Builder.newBuilder(
-				storageId
-			).build());
+		DDMStorageAdapterDeleteRequest.Builder builder =
+			DDMStorageAdapterDeleteRequest.Builder.newBuilder(storageId);
+
+		DDMStorageAdapterDeleteRequest ddmStorageAdapterDeleteRequest =
+			builder.build();
+
+		ddmStorageAdapter.delete(ddmStorageAdapterDeleteRequest);
 	}
 
 	private DDMStorageAdapter _getDDMStorageAdapter() {
