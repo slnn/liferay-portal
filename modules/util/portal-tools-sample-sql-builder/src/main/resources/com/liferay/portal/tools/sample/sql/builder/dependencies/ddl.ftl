@@ -44,6 +44,7 @@
 			_currentIndex=ddlRecordCount
 			_ddmStorageLinkId=dataFactory.getCounterNext()
 			_ddmStructureId=ddmStructureModel.structureId
+			_ddmStructureVersionId=ddmStructureVersionModel.structureVersionId
 			_entry=ddlRecordModel
 		/>
 

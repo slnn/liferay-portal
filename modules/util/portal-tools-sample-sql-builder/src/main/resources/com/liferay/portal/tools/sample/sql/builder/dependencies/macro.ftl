@@ -51,6 +51,7 @@
 <#macro insertDDMContent
 	_ddmStorageLinkId
 	_ddmStructureId
+	_ddmStructureVersionId
 	_entry
 	_currentIndex = -1
 >
@@ -62,7 +63,7 @@
 
 	${dataFactory.toInsertSQL(ddmContentModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
+	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId, _ddmStructureVersionId))}
 </#macro>
 
 <#macro insertDDMStructure

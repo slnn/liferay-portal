@@ -1966,7 +1966,7 @@ public class DataFactory {
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
 		long ddmStorageLinkId, DDMContentModel ddmContentModel,
-		long structureId) {
+		long structureId, long versionId) {
 
 		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
 
@@ -1987,8 +1987,7 @@ public class DataFactory {
 		ddmStorageLinkModel.setClassNameId(getClassNameId(DDMContent.class));
 		ddmStorageLinkModel.setClassPK(ddmContentModel.getContentId());
 		ddmStorageLinkModel.setStructureId(structureId);
-		ddmStorageLinkModel.setStructureVersionId(
-			_defaultDLDDMStructureVersionId);
+		ddmStorageLinkModel.setStructureVersionId(versionId);
 
 		return ddmStorageLinkModel;
 	}
