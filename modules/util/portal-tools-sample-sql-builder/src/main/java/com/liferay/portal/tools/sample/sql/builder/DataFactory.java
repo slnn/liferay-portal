@@ -68,9 +68,11 @@ import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordModel;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetModel;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetVersionModel;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersionModel;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
+import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionModelImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
@@ -1816,6 +1818,43 @@ public class DataFactory {
 		ddlRecordSetModel.setLastPublishDate(new Date());
 
 		return ddlRecordSetModel;
+	}
+
+	public DDLRecordSetVersionModel newDDLRecordSetVersionModel(
+		DDLRecordSetModel ddlRecordSetModel,
+		DDMStructureVersionModel ddmStructureVersionModel) {
+
+		DDLRecordSetVersionModel ddlRecordSetVersionModel =
+			new DDLRecordSetVersionModelImpl();
+
+		// PK fields
+
+		ddlRecordSetVersionModel.setRecordSetVersionId(_counter.get());
+
+		// Group instance
+
+		ddlRecordSetVersionModel.setGroupId(ddlRecordSetModel.getGroupId());
+
+		// Audit fields
+
+		ddlRecordSetVersionModel.setCompanyId(_companyId);
+		ddlRecordSetVersionModel.setUserId(_sampleUserId);
+		ddlRecordSetVersionModel.setUserName(_SAMPLE_USER_NAME);
+		ddlRecordSetVersionModel.setCreateDate(new Date());
+
+		// Other fields
+
+		ddlRecordSetVersionModel.setRecordSetId(
+			ddlRecordSetModel.getRecordSetId());
+		ddlRecordSetVersionModel.setDDMStructureVersionId(
+			ddmStructureVersionModel.getStructureVersionId());
+		ddlRecordSetVersionModel.setName(ddlRecordSetModel.getName());
+		ddlRecordSetVersionModel.setVersion(
+			ddmStructureVersionModel.getVersion());
+		ddlRecordSetVersionModel.setStatusByUserId(_sampleUserId);
+		ddlRecordSetVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+
+		return ddlRecordSetVersionModel;
 	}
 
 	public DDLRecordVersionModel newDDLRecordVersionModel(
