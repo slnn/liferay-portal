@@ -1895,7 +1895,7 @@ public class DataFactory {
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
 		StringBundler sb = new StringBundler(
-			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 7));
+			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 8));
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
@@ -1909,7 +1909,8 @@ public class DataFactory {
 			sb.append(nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			sb.append("\", \"value\": {\"en_US\": \"Test Record ");
 			sb.append(currentIndex);
-			sb.append("\"}},");
+			sb.append("\"}}");
+			sb.append(",");
 		}
 
 		if (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT > 0) {
