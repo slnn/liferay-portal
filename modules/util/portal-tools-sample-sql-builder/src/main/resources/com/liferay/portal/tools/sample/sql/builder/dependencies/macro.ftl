@@ -53,6 +53,7 @@
 	_ddmStructureId
 	_ddmStructureVersionId
 	_entry
+	_ddmStructureVersionId = 0
 	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
