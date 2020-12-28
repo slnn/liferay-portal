@@ -25,31 +25,28 @@
 	</#if>
 </#macro>
 
-<#macro insertContentLayout
-	_layoutModel
-	_fragmentEntryModel
+<#macro insertContentPageLayout
+	_fragmentEntryLinkModels
+	_layoutModels
+	_templateFileName
 >
-	${dataFactory.toInsertSQL(_layoutModel)}
+	<#list _fragmentEntryLinkModels as fragmentEntryLinkModel>
+		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+	</#list>
 
-	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+	<#list _layoutModels as layoutModel>
+		${dataFactory.toInsertSQL(layoutModel)}
 
-	<#local fragmentEntryLinkModel = dataFactory.newFragmentEntryLinkModel(_layoutModel, _fragmentEntryModel)>
+		${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(layoutModel))}
 
-	${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+		<#local layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(layoutModel)>
 
-	<#local journalContentPortletPreferencesModel = dataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel)>
+		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-	${dataFactory.toInsertSQL(journalContentPortletPreferencesModel)}
+		<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(layoutModel, layoutPageTemplateStructureModel, _fragmentEntryLinkModels, _templateFileName)>
 
-	${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferenceValueModel(journalContentPortletPreferencesModel))}
-
-	<#local layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(_layoutModel)>
-
-	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
-	<#local layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(_layoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModel)>
-
-	${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+		${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+	</#list>
 </#macro>
 
 <#macro insertDDMContent
