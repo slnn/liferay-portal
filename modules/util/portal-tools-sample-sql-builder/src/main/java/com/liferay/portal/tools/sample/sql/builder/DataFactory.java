@@ -99,13 +99,8 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentCollectionModel;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
-import com.liferay.fragment.model.FragmentEntryModel;
-import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
-import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
@@ -113,7 +108,6 @@ import com.liferay.friendly.url.model.FriendlyURLEntryModel;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
-import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -131,7 +125,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureModel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureModelImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelModelImpl;
-import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -203,6 +196,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -365,8 +359,6 @@ public class DataFactory {
 			"ddm_structure_basic_web_content.json");
 		_journalDDMStructureLayoutContent = _readFile(
 			"ddm_structure_layout_basic_web_content.json");
-		_layoutPageTemplateStructureRelData = _readFile(
-			"layout_page_template_structure_rel_data.json");
 
 		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
@@ -581,6 +573,10 @@ public class DataFactory {
 
 	public int getMaxCommerceProductInstanceCount() {
 		return BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT;
+	}
+
+	public int getMaxContentLayoutCount() {
+		return BenchmarksPropsValues.MAX_CONTENT_LAYOUT_COUNT;
 	}
 
 	public int getMaxDDLRecordCount() {
@@ -1456,16 +1452,15 @@ public class DataFactory {
 		return layoutModel;
 	}
 
-	public List<LayoutModel> newContentLayoutModels(long groupId) {
+	public List<LayoutModel> newContentPageLayoutModels(
+		long groupId, String name) {
+
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		for (int i = 0; i < BenchmarksPropsValues.MAX_CONTENT_LAYOUT_COUNT;
-			 i++) {
-
-			layoutModels.add(
-				newContentLayoutModel(
-					groupId, i + "_web_content", "web_content"));
-		}
+		layoutModels.add(_newContentPageLayoutModel(groupId, name, 0));
+		layoutModels.add(
+			_newContentPageLayoutModel(
+				groupId, name + "1", getClassNameId(Layout.class)));
 
 		return layoutModels;
 	}
@@ -2531,122 +2526,71 @@ public class DataFactory {
 		return dlFolderModels;
 	}
 
-	public FragmentCollectionModel newFragmentCollectionModel(long groupId) {
-		FragmentCollectionModel fragmentCollectionModel =
-			new FragmentCollectionModelImpl();
-
-		// UUID
-
-		fragmentCollectionModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		fragmentCollectionModel.setFragmentCollectionId(_counter.get());
-
-		// Group instance
-
-		fragmentCollectionModel.setGroupId(groupId);
-
-		// Audit fields
-
-		fragmentCollectionModel.setCompanyId(_companyId);
-		fragmentCollectionModel.setUserId(_sampleUserId);
-		fragmentCollectionModel.setCreateDate(new Date());
-		fragmentCollectionModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		fragmentCollectionModel.setFragmentCollectionKey("fragmentcollection");
-		fragmentCollectionModel.setName("fragmentcollection");
-
-		return fragmentCollectionModel;
-	}
-
-	public FragmentEntryLinkModel newFragmentEntryLinkModel(
-		LayoutModel layoutModel, FragmentEntryModel fragmentEntryModel) {
-
-		FragmentEntryLinkModel fragmentEntryLinkModel =
-			new FragmentEntryLinkModelImpl();
-
-		// UUID
-
-		fragmentEntryLinkModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
-
-		// Group instance
-
-		fragmentEntryLinkModel.setGroupId(fragmentEntryModel.getGroupId());
-
-		// Audit fields
-
-		fragmentEntryLinkModel.setCompanyId(_companyId);
-		fragmentEntryLinkModel.setUserId(_sampleUserId);
-		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
-		fragmentEntryLinkModel.setCreateDate(new Date());
-		fragmentEntryLinkModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		fragmentEntryLinkModel.setFragmentEntryId(
-			fragmentEntryModel.getFragmentEntryId());
-		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
-		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
-		fragmentEntryLinkModel.setCss(fragmentEntryModel.getCss());
-		fragmentEntryLinkModel.setHtml(fragmentEntryModel.getHtml());
-		fragmentEntryLinkModel.setJs(fragmentEntryModel.getJs());
-		fragmentEntryLinkModel.setEditableValues(StringPool.BLANK);
-		fragmentEntryLinkModel.setNamespace(StringUtil.randomId());
-		fragmentEntryLinkModel.setPosition(0);
-
-		return fragmentEntryLinkModel;
-	}
-
-	public FragmentEntryModel newFragmentEntryModel(
-			long groupId, FragmentCollectionModel fragmentCollectionModel)
+	public List<FragmentEntryLinkModel> newFragmentEntryLinkModels(
+			List<LayoutModel> layoutModels)
 		throws Exception {
 
-		FragmentEntryModel fragmentEntryModel = new FragmentEntryModelImpl();
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+			new ArrayList<>();
 
-		// UUID
+		Map<String, String> nameSpaces = HashMapBuilder.put(
+			_HEADING_RENDER_KEY, StringUtil.randomId()
+		).put(
+			_PARAGRAPH_RENDER_KEY, StringUtil.randomId()
+		).put(
+			"LoginPortlet", StringUtil.randomId()
+		).build();
 
-		fragmentEntryModel.setUuid(SequentialUUID.generate());
+		for (LayoutModel layoutModel : layoutModels) {
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, "", "", "", "",
+					_readFile("loginPortlet_editValue.json"), 0,
+					nameSpaces.get("LoginPortlet")));
 
-		// PK fields
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, _HEADING_RENDER_KEY, _readFile("heading.css"),
+					_readFile("heading.html"),
+					_readFile("heading_configuration.json"),
+					_readFile("heading_editValue.json"), 0,
+					nameSpaces.get(_HEADING_RENDER_KEY)));
 
-		fragmentEntryModel.setFragmentEntryId(_counter.get());
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, _PARAGRAPH_RENDER_KEY,
+					_readFile("paragraph.css"), _readFile("paragraph.html"),
+					_readFile("paragraph_configuration.json"),
+					_readFile("paragraph_editValue.json"), 0,
+					nameSpaces.get(_PARAGRAPH_RENDER_KEY)));
+		}
 
-		// Group instance
+		return fragmentEntryLinkModels;
+	}
 
-		fragmentEntryModel.setGroupId(groupId);
+	public List<FragmentEntryLinkModel> newFragmentEntryLinkModels(
+			List<LayoutModel> layoutModels, String renderKey, String css,
+			String html, String configuration, String editValueJsonFileName)
+		throws Exception {
 
-		// Audit fields
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+			new ArrayList<>();
 
-		fragmentEntryModel.setCompanyId(_companyId);
-		fragmentEntryModel.setUserId(_sampleUserId);
-		fragmentEntryModel.setUserName(_SAMPLE_USER_NAME);
-		fragmentEntryModel.setCreateDate(new Date());
-		fragmentEntryModel.setModifiedDate(new Date());
+		String nameSpace = StringUtil.randomId();
 
-		// Other fields
+		for (LayoutModel layoutModel : layoutModels) {
+			String editValue = _readFile(editValueJsonFileName);
 
-		fragmentEntryModel.setFragmentCollectionId(
-			fragmentCollectionModel.getFragmentCollectionId());
-		fragmentEntryModel.setFragmentEntryKey("web_content");
-		fragmentEntryModel.setName("web_content");
-		fragmentEntryModel.setCss(StringPool.BLANK);
-		fragmentEntryModel.setHtml(_readFile("web_content.html"));
-		fragmentEntryModel.setJs(StringPool.BLANK);
-		fragmentEntryModel.setType(FragmentConstants.TYPE_COMPONENT);
-		fragmentEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+			editValue = StringUtil.replace(
+				editValue, "${FragmentEntryLinkNameSpace}", nameSpace);
 
-		// Autogenerated fields
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, renderKey, css, html, configuration, editValue,
+					0, nameSpace));
+		}
 
-		fragmentEntryModel.setHeadId(_counter.get());
-
-		return fragmentEntryModel;
+		return fragmentEntryLinkModels;
 	}
 
 	public FriendlyURLEntryLocalizationModel
@@ -2759,10 +2703,6 @@ public class DataFactory {
 	public List<LayoutModel> newGroupLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "welcome", LoginPortletKeys.LOGIN + ",",
-				HelloWorldPortletKeys.HELLO_WORLD + ","));
 		layoutModels.add(
 			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(
@@ -2991,28 +2931,23 @@ public class DataFactory {
 				String.valueOf(journalArticleResourceModel.getGroupId())));
 	}
 
-	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
-		FragmentEntryLinkModel fragmentEntryLinkModel) {
+	public List<PortletPreferencesModel>
+			newJournalContentPortletPreferencesModels(
+				List<FragmentEntryLinkModel> fragmentEntryLinkModels)
+		throws Exception {
 
-		PortletPreferencesModel portletPreferencesModel =
-			new PortletPreferencesModelImpl();
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<>();
 
-		// PK fields
+		for (FragmentEntryLinkModel fragmentEntryLinkModel :
+				fragmentEntryLinkModels) {
 
-		portletPreferencesModel.setPortletPreferencesId(_counter.get());
+			portletPreferencesModels.add(
+				_newJournalContentPortletPreferencesModel(
+					fragmentEntryLinkModel));
+		}
 
-		// Other fields
-
-		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
-		portletPreferencesModel.setOwnerType(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		portletPreferencesModel.setPlid(fragmentEntryLinkModel.getClassPK());
-		portletPreferencesModel.setPortletId(
-			PortletIdCodec.encode(
-				JournalContentPortletKeys.JOURNAL_CONTENT,
-				fragmentEntryLinkModel.getNamespace()));
-
-		return portletPreferencesModel;
+		return portletPreferencesModels;
 	}
 
 	public PortletPreferenceValueModel
@@ -3140,12 +3075,20 @@ public class DataFactory {
 	}
 
 	public LayoutPageTemplateStructureRelModel
-			newLayoutPageTemplateStructureRelModel(
-				LayoutModel layoutModel,
-				LayoutPageTemplateStructureModel
-					layoutPageTemplateStructureModel,
-				FragmentEntryLinkModel fragmentEntryLinkModel)
-		throws Exception {
+		newLayoutPageTemplateStructureRelModel(
+			LayoutModel layoutModel,
+			LayoutPageTemplateStructureModel layoutPageTemplateStructureModel,
+			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+			String templateFileName) {
+
+		List<FragmentEntryLinkModel> targetFragmentEntryLinkModels =
+			new ArrayList<>();
+
+		for (FragmentEntryLinkModel model : fragmentEntryLinkModels) {
+			if (model.getPlid() == layoutModel.getPlid()) {
+				targetFragmentEntryLinkModels.add(model);
+			}
+		}
 
 		LayoutPageTemplateStructureRelModel
 			layoutPageTemplateStructureRelModel =
@@ -3179,11 +3122,9 @@ public class DataFactory {
 			layoutPageTemplateStructureModel.
 				getLayoutPageTemplateStructureId());
 		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(0L);
+
 		layoutPageTemplateStructureRelModel.setData(
-			StringUtil.replace(
-				_layoutPageTemplateStructureRelData, "${fragmentEntryLinkId}",
-				String.valueOf(
-					fragmentEntryLinkModel.getFragmentEntryLinkId())));
+			_generateJsonData(targetFragmentEntryLinkModels, templateFileName));
 
 		return layoutPageTemplateStructureRelModel;
 	}
@@ -4597,6 +4538,52 @@ public class DataFactory {
 		return dlFolderModel;
 	}
 
+	protected FragmentEntryLinkModel newFragmentEntryLinkModel(
+		LayoutModel layoutModel, String renderKey, String css, String html,
+		String configuration, String editValue, int position,
+		String nameSpace) {
+
+		FragmentEntryLinkModel fragmentEntryLinkModel =
+			new FragmentEntryLinkModelImpl();
+
+		// UUID
+
+		fragmentEntryLinkModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
+
+		// Group instance
+
+		fragmentEntryLinkModel.setGroupId(layoutModel.getGroupId());
+
+		// Audit fields
+
+		fragmentEntryLinkModel.setCompanyId(_companyId);
+		fragmentEntryLinkModel.setUserId(_sampleUserId);
+		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryLinkModel.setCreateDate(new Date());
+		fragmentEntryLinkModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		fragmentEntryLinkModel.setFragmentEntryId(0);
+		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
+		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
+		fragmentEntryLinkModel.setPlid(layoutModel.getPlid());
+		fragmentEntryLinkModel.setRendererKey(renderKey);
+		fragmentEntryLinkModel.setConfiguration(configuration);
+		fragmentEntryLinkModel.setCss(css);
+		fragmentEntryLinkModel.setHtml(html);
+		fragmentEntryLinkModel.setConfiguration(configuration);
+		fragmentEntryLinkModel.setEditableValues(editValue);
+		fragmentEntryLinkModel.setNamespace(nameSpace);
+		fragmentEntryLinkModel.setPosition(position);
+
+		return fragmentEntryLinkModel;
+	}
+
 	protected GroupModel newGroupModel(
 		long groupId, long classNameId, long classPK, String name,
 		boolean site) {
@@ -5293,6 +5280,57 @@ public class DataFactory {
 		}
 	}
 
+	private String _generateJsonData(
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+		String templateFileName) {
+
+		String data = null;
+
+		try {
+			data = _readFile(templateFileName);
+
+			for (FragmentEntryLinkModel fragmentEntryLinkModel :
+					fragmentEntryLinkModels) {
+
+				String rendererKey = fragmentEntryLinkModel.getRendererKey();
+
+				if (rendererKey.equals(_HEADING_RENDER_KEY)) {
+					data = StringUtil.replace(
+						data, "${headingFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else if (rendererKey.equals(_PARAGRAPH_RENDER_KEY)) {
+					data = StringUtil.replace(
+						data, "${paragraphFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else {
+					if (data.contains("${loginPortletFragmentEntryLinkId}")) {
+						data = StringUtil.replace(
+							data, "${loginPortletFragmentEntryLinkId}",
+							String.valueOf(
+								fragmentEntryLinkModel.
+									getFragmentEntryLinkId()));
+					}
+					else {
+						data = StringUtil.replace(
+							data, "${portletFragmentEntryLinkId}",
+							String.valueOf(
+								fragmentEntryLinkModel.
+									getFragmentEntryLinkId()));
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return data;
+	}
+
 	private String _getMBDiscussionCombinedClassName(Class<?> clazz) {
 		return StringBundler.concat(
 			MBDiscussion.class.getName(), StringPool.UNDERLINE,
@@ -5318,6 +5356,91 @@ public class DataFactory {
 		return sb.toString();
 	}
 
+	private LayoutModel _newContentPageLayoutModel(
+		long groupId, String name, long classNameId) {
+
+		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(groupId, simpleCounter);
+		}
+
+		LayoutModel layoutModel = new LayoutModelImpl();
+
+		// UUID
+
+		layoutModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		layoutModel.setPlid(_counter.get());
+
+		// Group instance
+
+		layoutModel.setGroupId(groupId);
+
+		// Audit fields
+
+		layoutModel.setCompanyId(_companyId);
+		layoutModel.setUserId(_sampleUserId);
+		layoutModel.setUserName(_SAMPLE_USER_NAME);
+		layoutModel.setCreateDate(new Date());
+		layoutModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		layoutModel.setLayoutId(simpleCounter.get());
+		layoutModel.setName(
+			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
+		layoutModel.setType(LayoutConstants.TYPE_CONTENT);
+		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
+		layoutModel.setClassNameId(classNameId);
+
+		if (classNameId != 0) {
+			layoutModel.setHidden(true);
+			layoutModel.setSystem(true);
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
+
+		typeSettingsUnicodeProperties.setProperty("published", "true");
+
+		layoutModel.setTypeSettings(
+			StringUtil.replace(
+				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
+
+		layoutModel.setLastPublishDate(new Date());
+
+		return layoutModel;
+	}
+
+	private PortletPreferencesModel _newJournalContentPortletPreferencesModel(
+		FragmentEntryLinkModel fragmentEntryLinkModel) {
+
+		PortletPreferencesModel portletPreferencesModel =
+			new PortletPreferencesModelImpl();
+
+		// PK fields
+
+		portletPreferencesModel.setPortletPreferencesId(_counter.get());
+
+		// Other fields
+
+		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		portletPreferencesModel.setOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferencesModel.setPlid(fragmentEntryLinkModel.getClassPK());
+		portletPreferencesModel.setPortletId(
+			PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				fragmentEntryLinkModel.getNamespace()));
+
+		return portletPreferencesModel;
+	}
+
 	private String _readFile(String resourceName) throws Exception {
 		List<String> lines = new ArrayList<>();
 
@@ -5337,7 +5460,12 @@ public class DataFactory {
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
 
+	private static final String _HEADING_RENDER_KEY = "BASIC_COMPONENT-heading";
+
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
+
+	private static final String _PARAGRAPH_RENDER_KEY =
+		"BASIC_COMPONENT-paragraph";
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
 
@@ -5385,7 +5513,6 @@ public class DataFactory {
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
-	private final String _layoutPageTemplateStructureRelData;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionCounter;
