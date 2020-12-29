@@ -77,8 +77,8 @@
 		</java>
 
 		<concat append="true" destfile="${output.sql.file}">
-			<filelist dir="../sql/portal/" files="portal-${sample.sql.db.type}.sql" />
-			<filelist dir="../sql/indexes/" files="indexes-${sample.sql.db.type}.sql" />
+			<filelist dir="${sample.sql.template.output.dir}/portal-tables" files="portal-tables-${sample.sql.db.type}.sql" />
+			<filelist dir="${sample.sql.template.output.dir}/indexes" files="indexes-${sample.sql.db.type}.sql" />
 		</concat>
 
 		<for list="${portal.module.dir.list}" param="module">

@@ -23,8 +23,11 @@ import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
 import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
@@ -77,10 +80,10 @@ public class SampleSQLBuilder {
 		templateDir.mkdirs();
 
 		File coreSQLTemplateFile = new File(
-			templateDir, "core-" + _CORE_SQL_FILE_NAME);
+			templateDir, _CORE_SQL_FILE_NAME + ".sql");
 
 		File coreIndexsTemplateFile = new File(
-			templateDir, "core-" + _INDEX_SQL_FILE_NAME);
+			templateDir, _INDEX_SQL_FILE_NAME + ".sql");
 
 		Class<?> clazz = getClass();
 
@@ -90,7 +93,7 @@ public class SampleSQLBuilder {
 
 		StringUtil.readLines(
 			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME),
+				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME + ".sql"),
 			lines);
 
 		try (BufferedWriter coreSQLFileBufferWriter = new BufferedWriter(
@@ -114,7 +117,7 @@ public class SampleSQLBuilder {
 
 		StringUtil.readLines(
 			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME),
+				_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME + ".sql"),
 			lines);
 
 		try (BufferedWriter coreIndexsFileBufferWriter = new BufferedWriter(
@@ -133,6 +136,11 @@ public class SampleSQLBuilder {
 
 			coreIndexsFileBufferWriter.flush();
 		}
+
+		generateCreateSQLFile(
+			templateDir.getAbsolutePath(), _CORE_SQL_FILE_NAME);
+		generateCreateSQLFile(
+			templateDir.getAbsolutePath(), _INDEX_SQL_FILE_NAME);
 	}
 
 	protected void compressSQL(
@@ -266,6 +274,68 @@ public class SampleSQLBuilder {
 		return new UnsyncBufferedWriter(writer, _WRITER_BUFFER_SIZE);
 	}
 
+	protected void generateCreateSQLFile(String sqlDir, String fileName)
+		throws IOException, SQLException {
+
+		String template = FileUtil.read(
+			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
+
+		if (fileName.contains("portal")) {
+			StringBundler sb = new StringBundler();
+
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(
+						new UnsyncStringReader(template))) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					if (line.startsWith("@include ")) {
+						int pos = line.indexOf(" ");
+
+						String includeFileName = line.substring(pos + 1);
+
+						File includeFile = new File(
+							sqlDir + "/" + includeFileName);
+
+						if (!includeFile.exists()) {
+							continue;
+						}
+
+						sb.append(FileUtil.read(includeFile));
+
+						sb.append("\n\n");
+					}
+					else {
+						sb.append(line);
+						sb.append("\n");
+					}
+				}
+			}
+
+			template = sb.toString();
+		}
+		else if (fileName.contains("indexes")) {
+			if (BenchmarksPropsValues.DB_TYPE == DBType.SYBASE) {
+				template = _removeBooleanIndexes(sqlDir, template);
+			}
+		}
+
+		if (Validator.isNull(template)) {
+			return;
+		}
+
+		DB db = DBManagerUtil.getDB(BenchmarksPropsValues.DB_TYPE, null);
+
+		template = db.buildSQL(template);
+
+		FileUtil.write(
+			StringBundler.concat(
+				sqlDir, "/", fileName, "/", fileName, "-", db.getDBType(),
+				".sql"),
+			template);
+	}
+
 	protected Reader generateSQL(File sampleSQLFile) {
 		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 
@@ -317,12 +387,71 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
+	private String _removeBooleanIndexes(String sqlDir, String data)
+		throws IOException {
+
+		String portalData = FileUtil.read(sqlDir + "/portal-tables.sql");
+
+		if (Validator.isNull(portalData)) {
+			return StringPool.BLANK;
+		}
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
+
+			StringBundler sb = new StringBundler();
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				boolean append = true;
+
+				int x = line.indexOf(" on ");
+
+				if (x != -1) {
+					int y = line.indexOf(" (", x);
+
+					String table = line.substring(x + 4, y);
+
+					x = y + 2;
+
+					y = line.indexOf(")", x);
+
+					String[] columns = StringUtil.split(line.substring(x, y));
+
+					x = portalData.indexOf("create table " + table + " (");
+
+					y = portalData.indexOf(");", x);
+
+					String portalTableData = portalData.substring(x, y);
+
+					for (String column : columns) {
+						if (portalTableData.contains(
+								column.trim() + " BOOLEAN")) {
+
+							append = false;
+
+							break;
+						}
+					}
+				}
+
+				if (append) {
+					sb.append(line);
+					sb.append("\n");
+				}
+			}
+
+			return sb.toString();
+		}
+	}
+
 	private static final String _CORE_DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/sql/dependencies/";
 
-	private static final String _CORE_SQL_FILE_NAME = "portal-tables.sql";
+	private static final String _CORE_SQL_FILE_NAME = "portal-tables";
 
-	private static final String _INDEX_SQL_FILE_NAME = "indexes.sql";
+	private static final String _INDEX_SQL_FILE_NAME = "indexes";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
