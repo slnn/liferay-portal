@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
 import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -69,6 +71,68 @@ public class SampleSQLBuilder {
 		compressSQL(generateSQL(sampleSQLFile), outputDir);
 
 		sampleSQLFile.delete();
+
+		File templateDir = new File(BenchmarksPropsValues.TEMPLATE_OUTPUT_DIR);
+
+		templateDir.mkdirs();
+
+		File coreSQLTemplateFile = new File(
+			templateDir, "core-" + _CORE_SQL_FILE_NAME);
+
+		File coreIndexsTemplateFile = new File(
+			templateDir, "core-" + _INDEX_SQL_FILE_NAME);
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		List<String> lines = new ArrayList<>();
+
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME),
+			lines);
+
+		try (BufferedWriter coreSQLFileBufferWriter = new BufferedWriter(
+				new FileWriter(coreSQLTemplateFile.getAbsoluteFile()))) {
+
+			lines.forEach(
+				line -> {
+					try {
+						coreSQLFileBufferWriter.write(
+							line + System.lineSeparator());
+					}
+					catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				});
+
+			coreSQLFileBufferWriter.flush();
+		}
+
+		lines.clear();
+
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME),
+			lines);
+
+		try (BufferedWriter coreIndexsFileBufferWriter = new BufferedWriter(
+				new FileWriter(coreIndexsTemplateFile.getAbsoluteFile()))) {
+
+			lines.forEach(
+				line -> {
+					try {
+						coreIndexsFileBufferWriter.write(
+							line + System.lineSeparator());
+					}
+					catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				});
+
+			coreIndexsFileBufferWriter.flush();
+		}
 	}
 
 	protected void compressSQL(
@@ -252,6 +316,13 @@ public class SampleSQLBuilder {
 
 		insertSQLWriter.write(insertSQL);
 	}
+
+	private static final String _CORE_DEPENDENCIES_DIR =
+		"com/liferay/portal/tools/sql/dependencies/";
+
+	private static final String _CORE_SQL_FILE_NAME = "portal-tables.sql";
+
+	private static final String _INDEX_SQL_FILE_NAME = "indexes.sql";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 

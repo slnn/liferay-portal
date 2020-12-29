@@ -8,6 +8,7 @@
 
 	<target depends="clean" name="build-sample-sql">
 		<property name="sample.sql.output.dir" value="${basedir}/${build.dir}" />
+		<property name="sample.sql.template.output.dir" value="${sample.sql.output.dir}/templates" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 

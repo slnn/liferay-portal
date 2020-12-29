@@ -163,6 +163,9 @@ public class BenchmarksPropsValues {
 	public static final boolean SEARCH_BAR_ENABLED = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.SEARCH_BAR_ENABLED));
 
+	public static final String TEMPLATE_OUTPUT_DIR = PropertiesHolder._get(
+		BenchmarksPropsKeys.TEMPLATE_OUTPUT_DIR);
+
 	public static final String VIRTUAL_HOST_NAME = PropertiesHolder._get(
 		BenchmarksPropsKeys.VIRTUAL_HOST_NAME);
 
