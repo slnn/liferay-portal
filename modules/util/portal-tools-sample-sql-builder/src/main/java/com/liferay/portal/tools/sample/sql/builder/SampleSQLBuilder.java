@@ -79,7 +79,8 @@ public class SampleSQLBuilder {
 
 		sampleSQLFile.delete();
 
-		File templateDir = new File(BenchmarksPropsValues.TEMPLATE_OUTPUT_DIR);
+		File templateDir = new File(
+			BenchmarksPropsValues.OUTPUT_DIR, "/templates");
 
 		templateDir.mkdirs();
 

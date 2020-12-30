@@ -132,9 +132,6 @@ public interface BenchmarksPropsKeys {
 
 	public static final String SERVICE_JARS_DIR = "sample.sql.service.jars.dir";
 
-	public static final String TEMPLATE_OUTPUT_DIR =
-		"sample.sql.template.output.dir";
-
 	public static final String VIRTUAL_HOST_NAME =
 		"sample.sql.virtual.hostname";
 

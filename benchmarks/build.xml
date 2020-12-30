@@ -8,7 +8,6 @@
 
 	<target depends="clean" name="build-sample-sql">
 		<property name="sample.sql.output.dir" value="${basedir}/${build.dir}" />
-		<property name="sample.sql.template.output.dir" value="${sample.sql.output.dir}/templates" />
 		<property name="sample.sql.service.jars.dir" value="${project.dir}/tools/sdk/dist/" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
@@ -78,13 +77,13 @@
 		</java>
 
 		<concat append="true" destfile="${output.sql.file}">
-			<filelist dir="${sample.sql.template.output.dir}/portal-tables" files="portal-tables-${sample.sql.db.type}.sql" />
-			<filelist dir="${sample.sql.template.output.dir}/indexes" files="indexes-${sample.sql.db.type}.sql" />
+			<filelist dir="${sample.sql.output.dir}/templates/portal-tables" files="portal-tables-${sample.sql.db.type}.sql" />
+			<filelist dir="${sample.sql.output.dir}/templates/indexes" files="indexes-${sample.sql.db.type}.sql" />
 		</concat>
 
 		<concat append="true" destfile="${output.sql.file}">
-			<filelist dir="${sample.sql.template.output.dir}" files="tables-${sample.sql.db.type}.sql" />
-			<filelist dir="${sample.sql.template.output.dir}" files="indexes-${sample.sql.db.type}.sql" />
+			<filelist dir="${sample.sql.output.dir}/templates" files="tables-${sample.sql.db.type}.sql" />
+			<filelist dir="${sample.sql.output.dir}/templates" files="indexes-${sample.sql.db.type}.sql" />
 		</concat>
 
 		<if>
