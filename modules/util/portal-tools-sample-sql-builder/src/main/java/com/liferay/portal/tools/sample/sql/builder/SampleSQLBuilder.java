@@ -100,6 +100,16 @@ public class SampleSQLBuilder {
 				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME + ".sql"),
 			lines);
 
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _CORE_COMMON_SQL_FILE_NAME + ".sql"),
+			lines);
+
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _CORE_CUNTER_SQL_FILE_NAME + ".sql"),
+			lines);
+
 		try (BufferedWriter coreSQLFileBufferWriter = new BufferedWriter(
 				new FileWriter(coreSQLTemplateFile.getAbsoluteFile()))) {
 
@@ -538,6 +548,12 @@ public class SampleSQLBuilder {
 			return sb.toString();
 		}
 	}
+
+	private static final String _CORE_COMMON_SQL_FILE_NAME =
+		"portal-data-common";
+
+	private static final String _CORE_CUNTER_SQL_FILE_NAME =
+		"portal-data-counter";
 
 	private static final String _CORE_DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/sql/dependencies/";
