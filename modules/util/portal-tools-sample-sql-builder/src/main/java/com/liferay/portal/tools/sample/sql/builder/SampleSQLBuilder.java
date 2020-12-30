@@ -79,13 +79,15 @@ public class SampleSQLBuilder {
 
 		sampleSQLFile.delete();
 
-		_TEMPLATE_DIR.mkdirs();
+		File createSQLFile = new File(BenchmarksPropsValues.OUTPUT_FILE);
 
-		_getGenericSQLTemplate();
+		try (BufferedWriter createSQLFileBufferWriter = new BufferedWriter(
+				new FileWriter(createSQLFile.getAbsoluteFile()))) {
 
-		_getModuleCreateSQLFiles();
+			_getGenericSQLTemplate(createSQLFileBufferWriter);
 
-		_mergeCreateSQLFiles();
+			_getModuleCreateSQLFiles(createSQLFileBufferWriter);
+		}
 	}
 
 	protected void compressSQL(
@@ -270,8 +272,7 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
-	private void _generateCreateSQLFile(
-			String sqlDir, String fileName, String... templates)
+	private void _generateCreateSQLFile(Writer writer, String... templates)
 		throws Exception {
 
 		String template = "";
@@ -286,34 +287,19 @@ public class SampleSQLBuilder {
 				String line = null;
 
 				while ((line = unsyncBufferedReader.readLine()) != null) {
-					if (line.startsWith("@include ")) {
-						int pos = line.indexOf(" ");
-
-						String includeFileName = line.substring(pos + 1);
-
-						File includeFile = new File(
-							sqlDir + "/" + includeFileName);
-
-						if (!includeFile.exists()) {
-							continue;
-						}
-
-						sb.append(FileUtil.read(includeFile));
-
-						sb.append("\n\n");
-					}
-					else {
-						sb.append(line);
-						sb.append("\n");
-					}
+					sb.append(line);
+					sb.append("\n");
 				}
 			}
 
 			template = sb.toString();
 		}
-		else if (templates.length == 1) {
+		else if (templates.length == 2) {
 			if (BenchmarksPropsValues.DB_TYPE == DBType.SYBASE) {
 				template = _removeBooleanIndexes(templates[0], templates[1]);
+			}
+			else {
+				template = templates[1];
 			}
 		}
 
@@ -325,14 +311,10 @@ public class SampleSQLBuilder {
 
 		template = db.buildSQL(template);
 
-		FileUtil.write(
-			StringBundler.concat(
-				sqlDir, "/", fileName, "/", fileName, "-", db.getDBType(),
-				".sql"),
-			template);
+		writer.write(template);
 	}
 
-	private void _getGenericSQLTemplate() throws Exception {
+	private void _getGenericSQLTemplate(Writer writer) throws Exception {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -381,9 +363,7 @@ public class SampleSQLBuilder {
 			}
 		}
 
-		_generateCreateSQLFile(
-			_TEMPLATE_DIR.getAbsolutePath(), _CORE_SQL_FILE_NAME,
-			sb1.toString());
+		_generateCreateSQLFile(writer, sb1.toString());
 
 		StringBundler sb2 = new StringBundler();
 
@@ -401,30 +381,11 @@ public class SampleSQLBuilder {
 			}
 		}
 
-		_generateCreateSQLFile(
-			_TEMPLATE_DIR.getAbsolutePath(), _INDEX_SQL_FILE_NAME,
-			sb1.toString(), sb2.toString());
+		_generateCreateSQLFile(writer, sb1.toString(), sb2.toString());
 	}
 
-	private void _getModuleCreateSQLFiles() throws Exception {
+	private void _getModuleCreateSQLFiles(Writer writer) throws Exception {
 		List<String> moduleServiceJarNames = _getModuleServiceJarNames();
-
-		File tablesSQLFile = new File(
-			_TEMPLATE_DIR,
-			StringBundler.concat(
-				_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
-				".sql"));
-
-		File indexesSQLFile = new File(
-			_TEMPLATE_DIR,
-			StringBundler.concat(
-				_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
-				".sql"));
-
-		BufferedWriter tablesSQLFileBufferWriter = new BufferedWriter(
-			new FileWriter(tablesSQLFile.getAbsoluteFile()));
-		BufferedWriter indexesSQLFileBufferWriter = new BufferedWriter(
-			new FileWriter(indexesSQLFile.getAbsoluteFile()));
 
 		for (String jarName : moduleServiceJarNames) {
 			JarFile jarFile = new JarFile(
@@ -447,8 +408,7 @@ public class SampleSQLBuilder {
 				String line;
 
 				while ((line = reader.readLine()) != null) {
-					tablesSQLFileBufferWriter.write(
-						line + System.lineSeparator());
+					writer.write(line + System.lineSeparator());
 				}
 
 				reader.close();
@@ -460,8 +420,7 @@ public class SampleSQLBuilder {
 				String line;
 
 				while ((line = reader.readLine()) != null) {
-					indexesSQLFileBufferWriter.write(
-						line + System.lineSeparator());
+					writer.write(line + System.lineSeparator());
 				}
 
 				reader.close();
@@ -469,9 +428,6 @@ public class SampleSQLBuilder {
 
 			jarFile.close();
 		}
-
-		tablesSQLFileBufferWriter.close();
-		indexesSQLFileBufferWriter.close();
 	}
 
 	private List<String> _getModuleServiceJarNames() throws Exception {
@@ -495,48 +451,6 @@ public class SampleSQLBuilder {
 		}
 
 		return moduleServiceJarNames;
-	}
-
-	private void _mergeCreateSQLFiles() throws Exception {
-		File createSQLFile = new File(BenchmarksPropsValues.OUTPUT_FILE);
-
-		try (BufferedWriter createSQLFileBufferWriter = new BufferedWriter(
-				new FileWriter(createSQLFile.getAbsoluteFile()))) {
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							_TEMPLATE_DIR.getAbsolutePath(), "/",
-							_CORE_SQL_FILE_NAME, "/", _CORE_SQL_FILE_NAME, "-",
-							BenchmarksPropsValues.DB_TYPE, ".sql"))));
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							_TEMPLATE_DIR.getAbsolutePath(), "/",
-							_INDEX_SQL_FILE_NAME, "/", _INDEX_SQL_FILE_NAME,
-							"-", BenchmarksPropsValues.DB_TYPE, ".sql"))));
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							_TEMPLATE_DIR.getAbsolutePath(), "/",
-							_MODULE_SQL_FILE_NAME, "-",
-							BenchmarksPropsValues.DB_TYPE, ".sql"))));
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							_TEMPLATE_DIR.getAbsolutePath(), "/",
-							_INDEX_SQL_FILE_NAME, "-",
-							BenchmarksPropsValues.DB_TYPE, ".sql"))));
-		}
-
-		FileUtil.deltree(_TEMPLATE_DIR);
 	}
 
 	private String _removeBooleanIndexes(String portalData, String indexData)
@@ -614,9 +528,6 @@ public class SampleSQLBuilder {
 	private static final String _MODULE_SQL_PATH = "META-INF/sql/";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
-
-	private static final File _TEMPLATE_DIR = new File(
-		BenchmarksPropsValues.OUTPUT_DIR, "/templates");
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
