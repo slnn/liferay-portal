@@ -83,11 +83,6 @@ public class SampleSQLBuilder {
 
 		_getGenericSQLTemplate();
 
-		_generateCreateSQLFile(
-			_TEMPLATE_DIR.getAbsolutePath(), _CORE_SQL_FILE_NAME);
-		_generateCreateSQLFile(
-			_TEMPLATE_DIR.getAbsolutePath(), _INDEX_SQL_FILE_NAME);
-
 		_getModuleCreateSQLFiles();
 
 		_mergeCreateSQLFiles();
@@ -275,18 +270,18 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
-	private void _generateCreateSQLFile(String sqlDir, String fileName)
+	private void _generateCreateSQLFile(
+			String sqlDir, String fileName, String... templates)
 		throws Exception {
 
-		String template = FileUtil.read(
-			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
+		String template = "";
 
-		if (fileName.contains("portal")) {
+		if (templates.length == 1) {
 			StringBundler sb = new StringBundler();
 
 			try (UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(
-						new UnsyncStringReader(template))) {
+						new UnsyncStringReader(templates[0]))) {
 
 				String line = null;
 
@@ -316,9 +311,9 @@ public class SampleSQLBuilder {
 
 			template = sb.toString();
 		}
-		else if (fileName.contains("indexes")) {
+		else if (templates.length == 1) {
 			if (BenchmarksPropsValues.DB_TYPE == DBType.SYBASE) {
-				template = _removeBooleanIndexes(sqlDir, template);
+				template = _removeBooleanIndexes(templates[0], templates[1]);
 			}
 		}
 
@@ -338,73 +333,77 @@ public class SampleSQLBuilder {
 	}
 
 	private void _getGenericSQLTemplate() throws Exception {
-		File coreSQLTemplateFile = new File(
-			_TEMPLATE_DIR, _CORE_SQL_FILE_NAME + ".sql");
-
-		File coreIndexsTemplateFile = new File(
-			_TEMPLATE_DIR, _INDEX_SQL_FILE_NAME + ".sql");
-
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		List<String> lines = new ArrayList<>();
+		StringBundler sb1 = new StringBundler();
 
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME + ".sql"),
-			lines);
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(
+						_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME +
+							".sql")))) {
 
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_COMMON_SQL_FILE_NAME + ".sql"),
-			lines);
+			String line;
 
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_CUNTER_SQL_FILE_NAME + ".sql"),
-			lines);
-
-		try (BufferedWriter coreSQLFileBufferWriter = new BufferedWriter(
-				new FileWriter(coreSQLTemplateFile.getAbsoluteFile()))) {
-
-			lines.forEach(
-				line -> {
-					try {
-						coreSQLFileBufferWriter.write(
-							line + System.lineSeparator());
-					}
-					catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-				});
-
-			coreSQLFileBufferWriter.flush();
+			while ((line = reader.readLine()) != null) {
+				sb1.append(line);
+				sb1.append(System.lineSeparator());
+			}
 		}
 
-		lines.clear();
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(
+						_CORE_DEPENDENCIES_DIR + _CORE_COMMON_SQL_FILE_NAME +
+							".sql")))) {
 
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME + ".sql"),
-			lines);
+			String line;
 
-		try (BufferedWriter coreIndexsFileBufferWriter = new BufferedWriter(
-				new FileWriter(coreIndexsTemplateFile.getAbsoluteFile()))) {
-
-			lines.forEach(
-				line -> {
-					try {
-						coreIndexsFileBufferWriter.write(
-							line + System.lineSeparator());
-					}
-					catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-				});
-
-			coreIndexsFileBufferWriter.flush();
+			while ((line = reader.readLine()) != null) {
+				sb1.append(line);
+				sb1.append(System.lineSeparator());
+			}
 		}
+
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(
+						_CORE_DEPENDENCIES_DIR + _CORE_CUNTER_SQL_FILE_NAME +
+							".sql")))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				sb1.append(line);
+				sb1.append(System.lineSeparator());
+			}
+		}
+
+		_generateCreateSQLFile(
+			_TEMPLATE_DIR.getAbsolutePath(), _CORE_SQL_FILE_NAME,
+			sb1.toString());
+
+		StringBundler sb2 = new StringBundler();
+
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(
+						_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME +
+							".sql")))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				sb2.append(line);
+				sb2.append(System.lineSeparator());
+			}
+		}
+
+		_generateCreateSQLFile(
+			_TEMPLATE_DIR.getAbsolutePath(), _INDEX_SQL_FILE_NAME,
+			sb1.toString(), sb2.toString());
 	}
 
 	private void _getModuleCreateSQLFiles() throws Exception {
@@ -540,17 +539,15 @@ public class SampleSQLBuilder {
 		FileUtil.deltree(_TEMPLATE_DIR);
 	}
 
-	private String _removeBooleanIndexes(String sqlDir, String data)
+	private String _removeBooleanIndexes(String portalData, String indexData)
 		throws Exception {
-
-		String portalData = FileUtil.read(sqlDir + "/portal-tables.sql");
 
 		if (Validator.isNull(portalData)) {
 			return StringPool.BLANK;
 		}
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
+				new UnsyncBufferedReader(new UnsyncStringReader(indexData))) {
 
 			StringBundler sb = new StringBundler();
 
