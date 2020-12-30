@@ -8,6 +8,7 @@
 
 	<target depends="clean" name="build-sample-sql">
 		<property name="sample.sql.output.dir" value="${basedir}/${build.dir}" />
+		<property name="sample.sql.service.jars.dir" value="${project.dir}/tools/sdk/dist/" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
@@ -74,19 +75,6 @@
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<sysproperty key="sample-sql-properties" value="${basedir}/benchmarks-actual.properties" />
 		</java>
-
-		<for list="${portal.module.dir.list}" param="module">
-			<sequential>
-				<ant antfile="../sql/build.xml" inheritall="false" target="build-db">
-					<property name="db.sql.dir" value="@{module}" />
-				</ant>
-
-				<concat append="true" destfile="${output.sql.file}">
-					<filelist dir="@{module}/tables/" files="tables-${sample.sql.db.type}.sql" />
-					<filelist dir="@{module}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
-				</concat>
-			</sequential>
-		</for>
 
 		<if>
 			<istrue value="${sample.sql.output.merge}" />
