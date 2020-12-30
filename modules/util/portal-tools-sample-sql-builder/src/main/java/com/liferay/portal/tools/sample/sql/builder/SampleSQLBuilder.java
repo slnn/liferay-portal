@@ -32,11 +32,13 @@ import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
 import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -46,6 +48,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * @author Brian Wing Shun Chan
@@ -141,6 +145,72 @@ public class SampleSQLBuilder {
 			templateDir.getAbsolutePath(), _CORE_SQL_FILE_NAME);
 		generateCreateSQLFile(
 			templateDir.getAbsolutePath(), _INDEX_SQL_FILE_NAME);
+
+		List<String> moduleServiceJarNames = _getModuleServiceJarNames();
+
+		File tablesSQLFile = new File(
+			templateDir,
+			StringBundler.concat(
+				_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+				".sql"));
+
+		File indexesSQLFile = new File(
+			templateDir,
+			StringBundler.concat(
+				_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+				".sql"));
+
+		BufferedWriter tablesSQLFileBufferWriter = new BufferedWriter(
+			new FileWriter(tablesSQLFile.getAbsoluteFile()));
+		BufferedWriter indexesSQLFileBufferWriter = new BufferedWriter(
+			new FileWriter(indexesSQLFile.getAbsoluteFile()));
+
+		for (String jarName : moduleServiceJarNames) {
+			JarFile jarFile = new JarFile(
+				BenchmarksPropsValues.SERVICE_JARS_DIR + jarName);
+
+			JarEntry tableEntry = jarFile.getJarEntry(
+				StringBundler.concat(
+					_MODULE_SQL_PATH, _MODULE_SQL_FILE_NAME, "/",
+					_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+					".sql"));
+			JarEntry indexEntry = jarFile.getJarEntry(
+				StringBundler.concat(
+					_MODULE_SQL_PATH, _INDEX_SQL_FILE_NAME, "/",
+					_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+					".sql"));
+
+			if (tableEntry != null) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(jarFile.getInputStream(tableEntry)));
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					tablesSQLFileBufferWriter.write(
+						line + System.lineSeparator());
+				}
+
+				reader.close();
+			}
+
+			if (indexEntry != null) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(jarFile.getInputStream(indexEntry)));
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					indexesSQLFileBufferWriter.write(
+						line + System.lineSeparator());
+				}
+
+				reader.close();
+			}
+
+			jarFile.close();
+		}
+
+		tablesSQLFileBufferWriter.close();
+		indexesSQLFileBufferWriter.close();
 	}
 
 	protected void compressSQL(
@@ -387,6 +457,29 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
+	private List<String> _getModuleServiceJarNames() throws Exception {
+		List<String> moduleServiceJarNames = new ArrayList<>();
+
+		for (String bndFile : BenchmarksPropsValues.MODULE_BND_FILES) {
+			String bndContent = FileUtil.read(bndFile);
+
+			int index1 = bndContent.indexOf("Bundle-SymbolicName: ");
+			int index2 = bndContent.indexOf("Bundle-Version:");
+
+			String bundleSymbolicName = bndContent.substring(
+				index1 + 21, index2 - 1);
+
+			String bundleVersion = bndContent.substring(
+				index2 + 16, index2 + 21);
+
+			moduleServiceJarNames.add(
+				StringBundler.concat(
+					bundleSymbolicName, "-", bundleVersion, ".jar"));
+		}
+
+		return moduleServiceJarNames;
+	}
+
 	private String _removeBooleanIndexes(String sqlDir, String data)
 		throws IOException {
 
@@ -452,6 +545,10 @@ public class SampleSQLBuilder {
 	private static final String _CORE_SQL_FILE_NAME = "portal-tables";
 
 	private static final String _INDEX_SQL_FILE_NAME = "indexes";
+
+	private static final String _MODULE_SQL_FILE_NAME = "tables";
+
+	private static final String _MODULE_SQL_PATH = "META-INF/sql/";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
