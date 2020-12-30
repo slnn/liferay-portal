@@ -79,189 +79,18 @@ public class SampleSQLBuilder {
 
 		sampleSQLFile.delete();
 
-		File templateDir = new File(
-			BenchmarksPropsValues.OUTPUT_DIR, "/templates");
+		_TEMPLATE_DIR.mkdirs();
 
-		templateDir.mkdirs();
+		_getGenericSQLTemplate();
 
-		File coreSQLTemplateFile = new File(
-			templateDir, _CORE_SQL_FILE_NAME + ".sql");
+		_generateCreateSQLFile(
+			_TEMPLATE_DIR.getAbsolutePath(), _CORE_SQL_FILE_NAME);
+		_generateCreateSQLFile(
+			_TEMPLATE_DIR.getAbsolutePath(), _INDEX_SQL_FILE_NAME);
 
-		File coreIndexsTemplateFile = new File(
-			templateDir, _INDEX_SQL_FILE_NAME + ".sql");
+		_getModuleCreateSQLFiles();
 
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		List<String> lines = new ArrayList<>();
-
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME + ".sql"),
-			lines);
-
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_COMMON_SQL_FILE_NAME + ".sql"),
-			lines);
-
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _CORE_CUNTER_SQL_FILE_NAME + ".sql"),
-			lines);
-
-		try (BufferedWriter coreSQLFileBufferWriter = new BufferedWriter(
-				new FileWriter(coreSQLTemplateFile.getAbsoluteFile()))) {
-
-			lines.forEach(
-				line -> {
-					try {
-						coreSQLFileBufferWriter.write(
-							line + System.lineSeparator());
-					}
-					catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-				});
-
-			coreSQLFileBufferWriter.flush();
-		}
-
-		lines.clear();
-
-		StringUtil.readLines(
-			classLoader.getResourceAsStream(
-				_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME + ".sql"),
-			lines);
-
-		try (BufferedWriter coreIndexsFileBufferWriter = new BufferedWriter(
-				new FileWriter(coreIndexsTemplateFile.getAbsoluteFile()))) {
-
-			lines.forEach(
-				line -> {
-					try {
-						coreIndexsFileBufferWriter.write(
-							line + System.lineSeparator());
-					}
-					catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-				});
-
-			coreIndexsFileBufferWriter.flush();
-		}
-
-		generateCreateSQLFile(
-			templateDir.getAbsolutePath(), _CORE_SQL_FILE_NAME);
-		generateCreateSQLFile(
-			templateDir.getAbsolutePath(), _INDEX_SQL_FILE_NAME);
-
-		List<String> moduleServiceJarNames = _getModuleServiceJarNames();
-
-		File tablesSQLFile = new File(
-			templateDir,
-			StringBundler.concat(
-				_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
-				".sql"));
-
-		File indexesSQLFile = new File(
-			templateDir,
-			StringBundler.concat(
-				_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
-				".sql"));
-
-		BufferedWriter tablesSQLFileBufferWriter = new BufferedWriter(
-			new FileWriter(tablesSQLFile.getAbsoluteFile()));
-		BufferedWriter indexesSQLFileBufferWriter = new BufferedWriter(
-			new FileWriter(indexesSQLFile.getAbsoluteFile()));
-
-		for (String jarName : moduleServiceJarNames) {
-			JarFile jarFile = new JarFile(
-				BenchmarksPropsValues.SERVICE_JARS_DIR + jarName);
-
-			JarEntry tableEntry = jarFile.getJarEntry(
-				StringBundler.concat(
-					_MODULE_SQL_PATH, _MODULE_SQL_FILE_NAME, "/",
-					_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
-					".sql"));
-			JarEntry indexEntry = jarFile.getJarEntry(
-				StringBundler.concat(
-					_MODULE_SQL_PATH, _INDEX_SQL_FILE_NAME, "/",
-					_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
-					".sql"));
-
-			if (tableEntry != null) {
-				BufferedReader reader = new BufferedReader(
-					new InputStreamReader(jarFile.getInputStream(tableEntry)));
-				String line;
-
-				while ((line = reader.readLine()) != null) {
-					tablesSQLFileBufferWriter.write(
-						line + System.lineSeparator());
-				}
-
-				reader.close();
-			}
-
-			if (indexEntry != null) {
-				BufferedReader reader = new BufferedReader(
-					new InputStreamReader(jarFile.getInputStream(indexEntry)));
-				String line;
-
-				while ((line = reader.readLine()) != null) {
-					indexesSQLFileBufferWriter.write(
-						line + System.lineSeparator());
-				}
-
-				reader.close();
-			}
-
-			jarFile.close();
-		}
-
-		tablesSQLFileBufferWriter.close();
-		indexesSQLFileBufferWriter.close();
-
-		File createSQLFile = new File(BenchmarksPropsValues.OUTPUT_FILE);
-
-		try (BufferedWriter createSQLFileBufferWriter = new BufferedWriter(
-				new FileWriter(createSQLFile.getAbsoluteFile()))) {
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							templateDir.getAbsolutePath(), "/",
-							_CORE_SQL_FILE_NAME, "/", _CORE_SQL_FILE_NAME, "-",
-							BenchmarksPropsValues.DB_TYPE, ".sql"))));
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							templateDir.getAbsolutePath(), "/",
-							_INDEX_SQL_FILE_NAME, "/", _INDEX_SQL_FILE_NAME,
-							"-", BenchmarksPropsValues.DB_TYPE, ".sql"))));
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							templateDir.getAbsolutePath(), "/",
-							_MODULE_SQL_FILE_NAME, "-",
-							BenchmarksPropsValues.DB_TYPE, ".sql"))));
-
-			createSQLFileBufferWriter.write(
-				FileUtil.read(
-					new File(
-						StringBundler.concat(
-							templateDir.getAbsolutePath(), "/",
-							_INDEX_SQL_FILE_NAME, "-",
-							BenchmarksPropsValues.DB_TYPE, ".sql"))));
-		}
-
-		FileUtil.deltree(templateDir);
+		_mergeCreateSQLFiles();
 	}
 
 	protected void compressSQL(
@@ -395,8 +224,59 @@ public class SampleSQLBuilder {
 		return new UnsyncBufferedWriter(writer, _WRITER_BUFFER_SIZE);
 	}
 
-	protected void generateCreateSQLFile(String sqlDir, String fileName)
-		throws IOException, SQLException {
+	protected Reader generateSQL(File sampleSQLFile) {
+		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
+
+		Thread thread = new Thread(
+			() -> {
+				try (CSVFileWriter csvFileWriter = new CSVFileWriter();
+					Writer sampleSQLWriter = new UnsyncTeeWriter(
+						new UnsyncBufferedWriter(
+							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
+						createFileWriter(sampleSQLFile))) {
+
+					FreeMarkerUtil.process(
+						BenchmarksPropsValues.SCRIPT,
+						HashMapBuilder.<String, Object>put(
+							"csvFileWriter", csvFileWriter
+						).put(
+							"dataFactory", new DataFactory()
+						).build(),
+						sampleSQLWriter);
+				}
+				catch (Throwable throwable) {
+					_freeMarkerThrowable = throwable;
+				}
+				finally {
+					charPipe.close();
+				}
+			});
+
+		thread.start();
+
+		return charPipe.getReader();
+	}
+
+	protected void writeToInsertSQLFile(
+			File dir, String tableName, Map<String, Writer> insertSQLWriters,
+			String insertSQL)
+		throws IOException {
+
+		Writer insertSQLWriter = insertSQLWriters.get(tableName);
+
+		if (insertSQLWriter == null) {
+			File file = new File(dir, tableName + ".sql");
+
+			insertSQLWriter = createFileWriter(file);
+
+			insertSQLWriters.put(tableName, insertSQLWriter);
+		}
+
+		insertSQLWriter.write(insertSQL);
+	}
+
+	private void _generateCreateSQLFile(String sqlDir, String fileName)
+		throws Exception {
 
 		String template = FileUtil.read(
 			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
@@ -457,55 +337,142 @@ public class SampleSQLBuilder {
 			template);
 	}
 
-	protected Reader generateSQL(File sampleSQLFile) {
-		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
+	private void _getGenericSQLTemplate() throws Exception {
+		File coreSQLTemplateFile = new File(
+			_TEMPLATE_DIR, _CORE_SQL_FILE_NAME + ".sql");
 
-		Thread thread = new Thread(
-			() -> {
-				try (CSVFileWriter csvFileWriter = new CSVFileWriter();
-					Writer sampleSQLWriter = new UnsyncTeeWriter(
-						new UnsyncBufferedWriter(
-							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
-						createFileWriter(sampleSQLFile))) {
+		File coreIndexsTemplateFile = new File(
+			_TEMPLATE_DIR, _INDEX_SQL_FILE_NAME + ".sql");
 
-					FreeMarkerUtil.process(
-						BenchmarksPropsValues.SCRIPT,
-						HashMapBuilder.<String, Object>put(
-							"csvFileWriter", csvFileWriter
-						).put(
-							"dataFactory", new DataFactory()
-						).build(),
-						sampleSQLWriter);
-				}
-				catch (Throwable throwable) {
-					_freeMarkerThrowable = throwable;
-				}
-				finally {
-					charPipe.close();
-				}
-			});
+		Class<?> clazz = getClass();
 
-		thread.start();
+		ClassLoader classLoader = clazz.getClassLoader();
 
-		return charPipe.getReader();
-	}
+		List<String> lines = new ArrayList<>();
 
-	protected void writeToInsertSQLFile(
-			File dir, String tableName, Map<String, Writer> insertSQLWriters,
-			String insertSQL)
-		throws IOException {
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _CORE_SQL_FILE_NAME + ".sql"),
+			lines);
 
-		Writer insertSQLWriter = insertSQLWriters.get(tableName);
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _CORE_COMMON_SQL_FILE_NAME + ".sql"),
+			lines);
 
-		if (insertSQLWriter == null) {
-			File file = new File(dir, tableName + ".sql");
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _CORE_CUNTER_SQL_FILE_NAME + ".sql"),
+			lines);
 
-			insertSQLWriter = createFileWriter(file);
+		try (BufferedWriter coreSQLFileBufferWriter = new BufferedWriter(
+				new FileWriter(coreSQLTemplateFile.getAbsoluteFile()))) {
 
-			insertSQLWriters.put(tableName, insertSQLWriter);
+			lines.forEach(
+				line -> {
+					try {
+						coreSQLFileBufferWriter.write(
+							line + System.lineSeparator());
+					}
+					catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				});
+
+			coreSQLFileBufferWriter.flush();
 		}
 
-		insertSQLWriter.write(insertSQL);
+		lines.clear();
+
+		StringUtil.readLines(
+			classLoader.getResourceAsStream(
+				_CORE_DEPENDENCIES_DIR + _INDEX_SQL_FILE_NAME + ".sql"),
+			lines);
+
+		try (BufferedWriter coreIndexsFileBufferWriter = new BufferedWriter(
+				new FileWriter(coreIndexsTemplateFile.getAbsoluteFile()))) {
+
+			lines.forEach(
+				line -> {
+					try {
+						coreIndexsFileBufferWriter.write(
+							line + System.lineSeparator());
+					}
+					catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				});
+
+			coreIndexsFileBufferWriter.flush();
+		}
+	}
+
+	private void _getModuleCreateSQLFiles() throws Exception {
+		List<String> moduleServiceJarNames = _getModuleServiceJarNames();
+
+		File tablesSQLFile = new File(
+			_TEMPLATE_DIR,
+			StringBundler.concat(
+				_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+				".sql"));
+
+		File indexesSQLFile = new File(
+			_TEMPLATE_DIR,
+			StringBundler.concat(
+				_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+				".sql"));
+
+		BufferedWriter tablesSQLFileBufferWriter = new BufferedWriter(
+			new FileWriter(tablesSQLFile.getAbsoluteFile()));
+		BufferedWriter indexesSQLFileBufferWriter = new BufferedWriter(
+			new FileWriter(indexesSQLFile.getAbsoluteFile()));
+
+		for (String jarName : moduleServiceJarNames) {
+			JarFile jarFile = new JarFile(
+				BenchmarksPropsValues.SERVICE_JARS_DIR + jarName);
+
+			JarEntry tableEntry = jarFile.getJarEntry(
+				StringBundler.concat(
+					_MODULE_SQL_PATH, _MODULE_SQL_FILE_NAME, "/",
+					_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+					".sql"));
+			JarEntry indexEntry = jarFile.getJarEntry(
+				StringBundler.concat(
+					_MODULE_SQL_PATH, _INDEX_SQL_FILE_NAME, "/",
+					_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+					".sql"));
+
+			if (tableEntry != null) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(jarFile.getInputStream(tableEntry)));
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					tablesSQLFileBufferWriter.write(
+						line + System.lineSeparator());
+				}
+
+				reader.close();
+			}
+
+			if (indexEntry != null) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(jarFile.getInputStream(indexEntry)));
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					indexesSQLFileBufferWriter.write(
+						line + System.lineSeparator());
+				}
+
+				reader.close();
+			}
+
+			jarFile.close();
+		}
+
+		tablesSQLFileBufferWriter.close();
+		indexesSQLFileBufferWriter.close();
 	}
 
 	private List<String> _getModuleServiceJarNames() throws Exception {
@@ -531,8 +498,50 @@ public class SampleSQLBuilder {
 		return moduleServiceJarNames;
 	}
 
+	private void _mergeCreateSQLFiles() throws Exception {
+		File createSQLFile = new File(BenchmarksPropsValues.OUTPUT_FILE);
+
+		try (BufferedWriter createSQLFileBufferWriter = new BufferedWriter(
+				new FileWriter(createSQLFile.getAbsoluteFile()))) {
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							_TEMPLATE_DIR.getAbsolutePath(), "/",
+							_CORE_SQL_FILE_NAME, "/", _CORE_SQL_FILE_NAME, "-",
+							BenchmarksPropsValues.DB_TYPE, ".sql"))));
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							_TEMPLATE_DIR.getAbsolutePath(), "/",
+							_INDEX_SQL_FILE_NAME, "/", _INDEX_SQL_FILE_NAME,
+							"-", BenchmarksPropsValues.DB_TYPE, ".sql"))));
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							_TEMPLATE_DIR.getAbsolutePath(), "/",
+							_MODULE_SQL_FILE_NAME, "-",
+							BenchmarksPropsValues.DB_TYPE, ".sql"))));
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							_TEMPLATE_DIR.getAbsolutePath(), "/",
+							_INDEX_SQL_FILE_NAME, "-",
+							BenchmarksPropsValues.DB_TYPE, ".sql"))));
+		}
+
+		FileUtil.deltree(_TEMPLATE_DIR);
+	}
+
 	private String _removeBooleanIndexes(String sqlDir, String data)
-		throws IOException {
+		throws Exception {
 
 		String portalData = FileUtil.read(sqlDir + "/portal-tables.sql");
 
@@ -608,6 +617,9 @@ public class SampleSQLBuilder {
 	private static final String _MODULE_SQL_PATH = "META-INF/sql/";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
+
+	private static final File _TEMPLATE_DIR = new File(
+		BenchmarksPropsValues.OUTPUT_DIR, "/templates");
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
