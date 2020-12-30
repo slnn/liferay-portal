@@ -222,6 +222,46 @@ public class SampleSQLBuilder {
 
 		tablesSQLFileBufferWriter.close();
 		indexesSQLFileBufferWriter.close();
+
+		File createSQLFile = new File(BenchmarksPropsValues.OUTPUT_FILE);
+
+		try (BufferedWriter createSQLFileBufferWriter = new BufferedWriter(
+				new FileWriter(createSQLFile.getAbsoluteFile()))) {
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							templateDir.getAbsolutePath(), "/",
+							_CORE_SQL_FILE_NAME, "/", _CORE_SQL_FILE_NAME, "-",
+							BenchmarksPropsValues.DB_TYPE, ".sql"))));
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							templateDir.getAbsolutePath(), "/",
+							_INDEX_SQL_FILE_NAME, "/", _INDEX_SQL_FILE_NAME,
+							"-", BenchmarksPropsValues.DB_TYPE, ".sql"))));
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							templateDir.getAbsolutePath(), "/",
+							_MODULE_SQL_FILE_NAME, "-",
+							BenchmarksPropsValues.DB_TYPE, ".sql"))));
+
+			createSQLFileBufferWriter.write(
+				FileUtil.read(
+					new File(
+						StringBundler.concat(
+							templateDir.getAbsolutePath(), "/",
+							_INDEX_SQL_FILE_NAME, "-",
+							BenchmarksPropsValues.DB_TYPE, ".sql"))));
+		}
+
+		FileUtil.deltree(templateDir);
 	}
 
 	protected void compressSQL(
