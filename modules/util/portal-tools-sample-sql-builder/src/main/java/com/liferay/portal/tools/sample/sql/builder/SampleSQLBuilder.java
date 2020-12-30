@@ -272,48 +272,6 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
-	private void _generateCreateSQLFile(Writer writer, String... templates)
-		throws Exception {
-
-		String template = "";
-
-		if (templates.length == 1) {
-			StringBundler sb = new StringBundler();
-
-			try (UnsyncBufferedReader unsyncBufferedReader =
-					new UnsyncBufferedReader(
-						new UnsyncStringReader(templates[0]))) {
-
-				String line = null;
-
-				while ((line = unsyncBufferedReader.readLine()) != null) {
-					sb.append(line);
-					sb.append("\n");
-				}
-			}
-
-			template = sb.toString();
-		}
-		else if (templates.length == 2) {
-			if (BenchmarksPropsValues.DB_TYPE == DBType.SYBASE) {
-				template = _removeBooleanIndexes(templates[0], templates[1]);
-			}
-			else {
-				template = templates[1];
-			}
-		}
-
-		if (Validator.isNull(template)) {
-			return;
-		}
-
-		DB db = DBManagerUtil.getDB(BenchmarksPropsValues.DB_TYPE, null);
-
-		template = db.buildSQL(template);
-
-		writer.write(template);
-	}
-
 	private void _getGenericSQLTemplate(Writer writer) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -363,7 +321,7 @@ public class SampleSQLBuilder {
 			}
 		}
 
-		_generateCreateSQLFile(writer, sb1.toString());
+		_translateCreateSQLFile(writer, sb1.toString());
 
 		StringBundler sb2 = new StringBundler();
 
@@ -381,7 +339,7 @@ public class SampleSQLBuilder {
 			}
 		}
 
-		_generateCreateSQLFile(writer, sb1.toString(), sb2.toString());
+		_translateCreateSQLFile(writer, sb1.toString(), sb2.toString());
 	}
 
 	private void _getModuleCreateSQLFiles(Writer writer) throws Exception {
@@ -508,6 +466,48 @@ public class SampleSQLBuilder {
 
 			return sb.toString();
 		}
+	}
+
+	private void _translateCreateSQLFile(Writer writer, String... templates)
+		throws Exception {
+
+		String template = "";
+
+		if (templates.length == 1) {
+			StringBundler sb = new StringBundler();
+
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(
+						new UnsyncStringReader(templates[0]))) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					sb.append(line);
+					sb.append("\n");
+				}
+			}
+
+			template = sb.toString();
+		}
+		else if (templates.length == 2) {
+			if (BenchmarksPropsValues.DB_TYPE == DBType.SYBASE) {
+				template = _removeBooleanIndexes(templates[0], templates[1]);
+			}
+			else {
+				template = templates[1];
+			}
+		}
+
+		if (Validator.isNull(template)) {
+			return;
+		}
+
+		DB db = DBManagerUtil.getDB(BenchmarksPropsValues.DB_TYPE, null);
+
+		template = db.buildSQL(template);
+
+		writer.write(template);
 	}
 
 	private static final String _CORE_COMMON_SQL_FILE_NAME =
