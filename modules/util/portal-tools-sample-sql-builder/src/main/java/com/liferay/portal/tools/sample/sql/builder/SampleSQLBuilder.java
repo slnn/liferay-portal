@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +48,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * @author Brian Wing Shun Chan
@@ -82,6 +85,8 @@ public class SampleSQLBuilder {
 				new FileWriter(createSQLFile.getAbsoluteFile()))) {
 
 			_getGenericSQLTemplate(createSQLFileBufferWriter);
+
+			_getModuleCreateSQLFiles(createSQLFileBufferWriter);
 		}
 	}
 
@@ -337,6 +342,75 @@ public class SampleSQLBuilder {
 		_translateCreateSQLFile(writer, sb1.toString(), sb2.toString());
 	}
 
+	private void _getModuleCreateSQLFiles(Writer writer) throws Exception {
+		List<String> moduleServiceJarNames = _getModuleServiceJarNames();
+
+		for (String jarName : moduleServiceJarNames) {
+			JarFile jarFile = new JarFile(
+				BenchmarksPropsValues.SERVICE_JARS_DIR + jarName);
+
+			JarEntry tableEntry = jarFile.getJarEntry(
+				StringBundler.concat(
+					_MODULE_SQL_PATH, _MODULE_SQL_FILE_NAME, "/",
+					_MODULE_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+					".sql"));
+			JarEntry indexEntry = jarFile.getJarEntry(
+				StringBundler.concat(
+					_MODULE_SQL_PATH, _INDEX_SQL_FILE_NAME, "/",
+					_INDEX_SQL_FILE_NAME, "-", BenchmarksPropsValues.DB_TYPE,
+					".sql"));
+
+			if (tableEntry != null) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(jarFile.getInputStream(tableEntry)));
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					writer.write(line + System.lineSeparator());
+				}
+
+				reader.close();
+			}
+
+			if (indexEntry != null) {
+				BufferedReader reader = new BufferedReader(
+					new InputStreamReader(jarFile.getInputStream(indexEntry)));
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+					writer.write(line + System.lineSeparator());
+				}
+
+				reader.close();
+			}
+
+			jarFile.close();
+		}
+	}
+
+	private List<String> _getModuleServiceJarNames() throws Exception {
+		List<String> moduleServiceJarNames = new ArrayList<>();
+
+		for (String bndFile : BenchmarksPropsValues.MODULE_BND_FILES) {
+			String bndContent = FileUtil.read(bndFile);
+
+			int index1 = bndContent.indexOf("Bundle-SymbolicName: ");
+			int index2 = bndContent.indexOf("Bundle-Version:");
+
+			String bundleSymbolicName = bndContent.substring(
+				index1 + 21, index2 - 1);
+
+			String bundleVersion = bndContent.substring(
+				index2 + 16, index2 + 21);
+
+			moduleServiceJarNames.add(
+				StringBundler.concat(
+					bundleSymbolicName, "-", bundleVersion, ".jar"));
+		}
+
+		return moduleServiceJarNames;
+	}
+
 	private String _removeBooleanIndexes(String portalData, String indexData)
 		throws Exception {
 
@@ -448,6 +522,10 @@ public class SampleSQLBuilder {
 	private static final String _CORE_SQL_FILE_NAME = "portal-tables";
 
 	private static final String _INDEX_SQL_FILE_NAME = "indexes";
+
+	private static final String _MODULE_SQL_FILE_NAME = "tables";
+
+	private static final String _MODULE_SQL_PATH = "META-INF/sql/";
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
