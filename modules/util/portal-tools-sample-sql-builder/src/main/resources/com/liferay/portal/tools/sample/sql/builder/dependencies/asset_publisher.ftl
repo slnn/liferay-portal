@@ -40,13 +40,35 @@
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
-	<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount) />
+	<#if pageCount = 1>
+		<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId) />
 
-	${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
-
-	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount) />
-
-	<#list assetPublisherPortletPreferencesModels as assetPublisherPortletPreferencesModel>
 		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
-	</#list>
+
+		<#list dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount, null) as assetPublisherPortletPreferencesModel>
+			${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
+		</#list>
+	<#elseif pageCount % 2 = 0>
+		<#assign
+			nextAssetTagModels = dataFactory.getNextAssetTagModels([journalArticleAssetTagModels, blogAssetTagModels, wikiAssetTagModels])
+			assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, nextAssetTagModels)
+		/>
+
+		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
+
+		<#list dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount, nextAssetTagModels) as assetPublisherPortletPreferencesModel>
+			${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
+		</#list>
+	<#else>
+		<#assign
+			nextAssetCategoryModels = dataFactory.getNextAssetCategoryModels([journalArticleAssetCategoryModels, blogAssetCategoryModels, wikiAssetCategoryModels])
+			assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, nextAssetCategoryModels)
+		/>
+
+		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
+
+		<#list dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount, nextAssetCategoryModels) as assetPublisherPortletPreferencesModel>
+			${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
+		</#list>
+	</#if>
 </#list>
