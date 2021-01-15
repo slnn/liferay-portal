@@ -788,11 +788,10 @@ public class DataFactory {
 				sb.append(StringPool.UNDERLINE);
 				sb.append(k);
 
-				AssetCategoryModel assetCategoryModel = newAssetCategoryModel(
-					groupId, sb.toString(),
-					assetVocabularyModel.getVocabularyId());
-
-				assetCategoryModels.add(assetCategoryModel);
+				assetCategoryModels.add(
+					newAssetCategoryModel(
+						groupId, sb.toString(),
+						assetVocabularyModel.getVocabularyId()));
 			}
 		}
 
@@ -1015,10 +1014,9 @@ public class DataFactory {
 			sb.append(StringPool.UNDERLINE);
 			sb.append(j);
 
-			AssetVocabularyModel assetVocabularyModel = newAssetVocabularyModel(
-				groupId, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
-
-			assetVocabularyModels.add(assetVocabularyModel);
+			assetVocabularyModels.add(
+				newAssetVocabularyModel(
+					groupId, _sampleUserId, _SAMPLE_USER_NAME, sb.toString()));
 		}
 
 		return assetVocabularyModels;
