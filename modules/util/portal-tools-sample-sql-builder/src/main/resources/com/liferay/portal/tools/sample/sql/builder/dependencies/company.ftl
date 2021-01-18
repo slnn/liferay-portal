@@ -6,7 +6,7 @@
 	${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel(companyModel))}
 
 	${csvFileWriter.write("company", companyModel.companyId + "\n")}
-	
+
 	<#assign companyModel = companyModel />
 
 	<#include "roles.ftl">
@@ -17,7 +17,7 @@
 
 	<#include "ddm.ftl">
 
-	<#include "default_dl_file_type.ftl">
+	<#include "dl_structure.ftl">
 
 	<#include "groups.ftl">
 </#list>
