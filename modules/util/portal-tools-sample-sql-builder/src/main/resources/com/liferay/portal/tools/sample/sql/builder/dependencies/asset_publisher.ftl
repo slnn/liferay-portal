@@ -1,7 +1,7 @@
 <#assign
-	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId)
+	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId, companyModel)
 	assetCategoryModels = dataFactory.newAssetCategoryModels(groupId, assetVocabularyModels)
-	assetTagModels = dataFactory.newAssetTagModels(groupId)
+	assetTagModels = dataFactory.newAssetTagModels(groupId, companyModel)
 	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
 />
 
@@ -27,21 +27,21 @@
 	<#assign
 		portletId = dataFactory.getPortletId("com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_")
 
-		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
+		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId, companyModel)
 	/>
 
 	${csvFileWriter.write("assetPublisher", layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 
-	<#assign portletPreferencesModels = dataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid) />
+	<#assign portletPreferencesModels = dataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid, companyModel) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
 	</#list>
 
 	<#if pageCount = 1>
-		<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId) />
+		<#assign assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, companyModel) />
 
 		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
 
@@ -51,7 +51,7 @@
 	<#elseif pageCount % 2 = 0>
 		<#assign
 			nextAssetTagModels = dataFactory.getNextAssetTagModels([journalArticleAssetTagModels, blogAssetTagModels, wikiAssetTagModels])
-			assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, nextAssetTagModels)
+			assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, nextAssetTagModels, companyModel)
 		/>
 
 		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
@@ -62,7 +62,7 @@
 	<#else>
 		<#assign
 			nextAssetCategoryModels = dataFactory.getNextAssetCategoryModels([journalArticleAssetCategoryModels, blogAssetCategoryModels, wikiAssetCategoryModels])
-			assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, nextAssetCategoryModels)
+			assetPublisherPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount, nextAssetCategoryModels, companyModel)
 		/>
 
 		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}

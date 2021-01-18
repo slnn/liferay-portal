@@ -16,14 +16,14 @@
 	<#assign
 		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_"
 
-		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
+		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix), companyModel)
 	/>
 
 	${csvFileWriter.write("layout", layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel=layoutModel />
 
-	<#assign portletPreferencesModels = dataFactory.newJournalPortletPreferencesModels(layoutModel.plid) />
+	<#assign portletPreferencesModels = dataFactory.newJournalPortletPreferencesModels(layoutModel.plid, companyModel) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
@@ -32,7 +32,7 @@
 	<#assign journalArticleCounts = dataFactory.getSequence(dataFactory.maxJournalArticleCount) />
 
 	<#list journalArticleCounts as journalArticleCount>
-		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
+		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId, companyModel) />
 
 		${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
@@ -71,7 +71,7 @@
 			_mbThreadId=dataFactory.getCounterNext()
 		/>
 
-		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
+		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, companyModel) />
 
 		${dataFactory.toInsertSQL(journalArticleResourcePortletPreferencesModel)}
 

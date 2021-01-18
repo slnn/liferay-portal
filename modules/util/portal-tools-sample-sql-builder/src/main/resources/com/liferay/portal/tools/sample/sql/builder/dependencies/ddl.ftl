@@ -3,12 +3,12 @@
 <#list ddlRecordSetCounts as ddlRecordSetCount>
 	<#if ddlRecordSetCount = 1>
 		<#assign
-			ddmStructureModel = dataFactory.newDDLDDMStructureModel(groupId)
+			ddmStructureModel = dataFactory.newDDLDDMStructureModel(groupId, companyModel)
 			ddmStructureVersionModel = dataFactory.newDDMStructureVersionModel(ddmStructureModel)
 		/>
 
 		<@insertDDMStructure
-			_ddmStructureLayoutModel=dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
+			_ddmStructureLayoutModel=dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel, companyModel)
 			_ddmStructureModel=ddmStructureModel
 			_ddmStructureVersionModel=ddmStructureVersionModel
 		/>
@@ -18,7 +18,7 @@
 		layoutName = "dynamic_data_list_display_" + ddlRecordSetCount
 		portletId = "com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet_INSTANCE_TEST" + ddlRecordSetCount
 
-		layoutModel = dataFactory.newLayoutModel(groupId, layoutName, "", portletId)
+		layoutModel = dataFactory.newLayoutModel(groupId, layoutName, "", portletId, companyModel)
 	/>
 
 	<@insertLayout _layoutModel=layoutModel />
@@ -49,7 +49,7 @@
 		${csvFileWriter.write("dynamicDataList", ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
 	</#list>
 
-	<#assign ddlPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId) />
+	<#assign ddlPortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletId, companyModel) />
 
 	${dataFactory.toInsertSQL(ddlPortletPreferencesModel)}
 
@@ -59,7 +59,7 @@
 		${dataFactory.toInsertSQL(ddlPortletPreferenceValueModel)}
 	</#list>
 
-	<#assign portletPreferencesModels = dataFactory.newDDLPortletPreferencesModels(layoutModel.plid) />
+	<#assign portletPreferencesModels = dataFactory.newDDLPortletPreferencesModels(layoutModel.plid, companyModel) />
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		${dataFactory.toInsertSQL(portletPreferencesModel)}
