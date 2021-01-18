@@ -340,8 +340,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_companyModel = newCompanyModel();
-
 		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureId = _counter.get();
@@ -458,10 +456,6 @@ public class DataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
-	}
-
-	public CompanyModel getCompanyModel() {
-		return _companyModel;
 	}
 
 	public long getCounterNext() {
@@ -5399,7 +5393,6 @@ public class DataFactory {
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
-	private final CompanyModel _companyModel;
 	private final SimpleCounter _counter;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
