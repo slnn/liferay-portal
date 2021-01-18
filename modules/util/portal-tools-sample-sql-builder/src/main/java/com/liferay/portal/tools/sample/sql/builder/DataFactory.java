@@ -1131,21 +1131,16 @@ public class DataFactory {
 		return commerceCurrencyModel;
 	}
 
-	public CompanyModel newCompanyModel() {
-		CompanyModel companyModel = new CompanyModelImpl();
+	public List<CompanyModel> newCompanyModels() {
+		List<CompanyModel> companyModels = new ArrayList<>();
 
-		// PK fields
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT;
+			 i++) {
 
-		companyModel.setCompanyId(_counter.get());
+			companyModels.add(newCompanyModel(i));
+		}
 
-		// Other fields
-
-		companyModel.setAccountId(_counter.get());
-		companyModel.setWebId("liferay.com");
-		companyModel.setMx("liferay.com");
-		companyModel.setActive(true);
-
-		return companyModel;
+		return companyModels;
 	}
 
 	public ContactModel newContactModel(
@@ -4355,6 +4350,23 @@ public class DataFactory {
 		blogsEntryModel.setStatusDate(new Date());
 
 		return blogsEntryModel;
+	}
+
+	protected CompanyModel newCompanyModel(int index) {
+		CompanyModel companyModel = new CompanyModelImpl();
+
+		// PK fields
+
+		companyModel.setCompanyId(_counter.get());
+
+		// Other fields
+
+		companyModel.setAccountId(_counter.get());
+		companyModel.setWebId(StringBundler.concat("liferay", index, ".com"));
+		companyModel.setMx("liferay.com");
+		companyModel.setActive(true);
+
+		return companyModel;
 	}
 
 	protected DDMStorageLinkModel newDDMStorageLinkModel(
