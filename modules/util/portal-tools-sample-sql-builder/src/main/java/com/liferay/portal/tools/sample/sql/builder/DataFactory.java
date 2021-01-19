@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMTemplateId = _counter.get();
@@ -461,10 +460,6 @@ public class DataFactory {
 
 	public long getCounterNext() {
 		return _counter.get();
-	}
-
-	public long getDefaultDLDDMStructureId() {
-		return _defaultDLDDMStructureId;
 	}
 
 	public long getDLFileEntryClassNameId() {
@@ -2134,7 +2129,7 @@ public class DataFactory {
 		return newDDMStructureModel(
 			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
-			_defaultDLDDMStructureId, companyModel.getCompanyId());
+			_counter.get(), companyModel.getCompanyId());
 	}
 
 	public DDMStructureVersionModel newDefaultDLDDMStructureVersionModel(
@@ -5441,7 +5436,6 @@ public class DataFactory {
 	private final SimpleCounter _counter;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
-	private final long _defaultDLDDMStructureId;
 	private final long _defaultDLDDMStructureVersionId;
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;

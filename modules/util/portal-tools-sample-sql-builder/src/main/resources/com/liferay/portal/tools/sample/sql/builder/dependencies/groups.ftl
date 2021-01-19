@@ -26,7 +26,7 @@
 	<#include "users.ftl">
 
 	<@insertDLFolder
-		_ddmStructureId=dataFactory.defaultDLDDMStructureId
+		_ddmStructureId=defaultDLDDMStructureModel.structureId
 		_dlFolderDepth=1
 		_groupId=groupId
 		_parentDLFolderId=0
