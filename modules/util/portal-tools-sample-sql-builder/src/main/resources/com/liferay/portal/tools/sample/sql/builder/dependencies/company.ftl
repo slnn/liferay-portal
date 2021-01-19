@@ -17,7 +17,5 @@
 
 	<#include "ddm.ftl">
 
-	<#include "dl_structure.ftl">
-
 	<#include "groups.ftl">
 </#list>
