@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_defaultJournalDDMTemplateId = _counter.get();
 		_defaultUserId = _counter.get();
 		_globalGroupId = _counter.get();
 		_guestGroupId = _counter.get();
@@ -2173,13 +2172,14 @@ public class DataFactory {
 		return newDDMTemplateModel(
 			_globalGroupId, _defaultUserId,
 			defaultJournalDDMStructureModel.getStructureId(),
-			getClassNameId(JournalArticle.class), _defaultJournalDDMTemplateId,
+			getClassNameId(JournalArticle.class), _counter.get(),
 			companyModel.getCompanyId());
 	}
 
 	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel(
 		CompanyModel companyModel,
-		DDMStructureModel defaultJournalDDMStructureModel) {
+		DDMStructureModel defaultJournalDDMStructureModel,
+		DDMTemplateModel defaultJournalDDMTemplateModel) {
 
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			new DDMTemplateVersionModelImpl();
@@ -2204,7 +2204,8 @@ public class DataFactory {
 			getClassNameId(DDMStructure.class));
 		ddmTemplateVersionModelImpl.setClassPK(
 			defaultJournalDDMStructureModel.getStructureId());
-		ddmTemplateVersionModelImpl.setTemplateId(_defaultJournalDDMTemplateId);
+		ddmTemplateVersionModelImpl.setTemplateId(
+			defaultJournalDDMTemplateModel.getTemplateId());
 		ddmTemplateVersionModelImpl.setVersion(
 			DDMTemplateConstants.VERSION_DEFAULT);
 
@@ -5440,7 +5441,6 @@ public class DataFactory {
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;
-	private final long _defaultJournalDDMTemplateId;
 	private final long _defaultUserId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;

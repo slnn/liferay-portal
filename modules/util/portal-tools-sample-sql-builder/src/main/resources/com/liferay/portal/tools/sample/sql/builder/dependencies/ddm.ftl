@@ -13,7 +13,7 @@
 
 ${dataFactory.toInsertSQL(defaultJournalDDMTemplateModel)}
 
-${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(companyModel, defaultJournalDDMStructureModel))}
+${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(companyModel, defaultJournalDDMStructureModel, defaultJournalDDMTemplateModel))}
 
 <#assign
 	defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel)
