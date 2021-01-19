@@ -57,7 +57,7 @@
 				<@insertAssetEntry
 					_assetCategoryModels=journalArticleAssetCategoryModels
 					_assetTagModels=journalArticleAssetTagModels
-					_entry=dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+					_entry=dataFactory.newObjectValuePairMap(defaultJournalDDMStructureModel.structureId, dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel))
 				/>
 			</#if>
 		</#list>

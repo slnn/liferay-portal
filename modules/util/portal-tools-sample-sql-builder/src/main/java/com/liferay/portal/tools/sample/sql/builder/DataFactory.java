@@ -203,6 +203,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -303,6 +304,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
@@ -342,7 +344,6 @@ public class DataFactory {
 
 		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
-		_defaultJournalDDMStructureId = _counter.get();
 		_defaultJournalDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMTemplateId = _counter.get();
 		_defaultUserId = _counter.get();
@@ -744,6 +745,40 @@ public class DataFactory {
 			null, dLFolderModel.getName(), dLFolderModel.getCompanyId());
 	}
 
+	public AssetEntryModel newAssetEntryModel(
+		Map
+			<Long,
+			 ObjectValuePair
+				 <JournalArticleModel, JournalArticleLocalizationModel>>
+					objectValuePairMap) {
+
+		Set<Long> keySet = objectValuePairMap.keySet();
+
+		Long[] defaultJournalDDMStructureIds = keySet.toArray(new Long[0]);
+
+		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
+			objectValuePair = objectValuePairMap.get(
+				defaultJournalDDMStructureIds[0]);
+
+		JournalArticleModel journalArticleModel = objectValuePair.getKey();
+		JournalArticleLocalizationModel journalArticleLocalizationModel =
+			objectValuePair.getValue();
+
+		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
+
+		String resourceUUID = _journalArticleResourceUUIDs.get(resourcePrimKey);
+
+		return newAssetEntryModel(
+			journalArticleModel.getGroupId(),
+			journalArticleModel.getCreateDate(),
+			journalArticleModel.getModifiedDate(),
+			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUUID,
+			defaultJournalDDMStructureIds[0], journalArticleModel.isIndexable(),
+			true, ContentTypes.TEXT_HTML,
+			journalArticleLocalizationModel.getTitle(),
+			journalArticleModel.getCompanyId());
+	}
+
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
 		long classNameId = 0;
 		boolean visible = false;
@@ -774,29 +809,6 @@ public class DataFactory {
 			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()),
 			mbThreadModel.getCompanyId());
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
-			objectValuePair) {
-
-		JournalArticleModel journalArticleModel = objectValuePair.getKey();
-		JournalArticleLocalizationModel journalArticleLocalizationModel =
-			objectValuePair.getValue();
-
-		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
-
-		String resourceUUID = _journalArticleResourceUUIDs.get(resourcePrimKey);
-
-		return newAssetEntryModel(
-			journalArticleModel.getGroupId(),
-			journalArticleModel.getCreateDate(),
-			journalArticleModel.getModifiedDate(),
-			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUUID,
-			_defaultJournalDDMStructureId, journalArticleModel.isIndexable(),
-			true, ContentTypes.TEXT_HTML,
-			journalArticleLocalizationModel.getTitle(),
-			journalArticleModel.getCompanyId());
 	}
 
 	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
@@ -2147,7 +2159,7 @@ public class DataFactory {
 		return newDDMStructureModel(
 			_globalGroupId, _defaultUserId,
 			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
-			_journalDDMStructureContent, _defaultJournalDDMStructureId,
+			_journalDDMStructureContent, _counter.get(),
 			companyModel.getCompanyId());
 	}
 
@@ -2159,16 +2171,19 @@ public class DataFactory {
 	}
 
 	public DDMTemplateModel newDefaultJournalDDMTemplateModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel,
+		DDMStructureModel defaultJournalDDMStructureModel) {
 
 		return newDDMTemplateModel(
-			_globalGroupId, _defaultUserId, _defaultJournalDDMStructureId,
+			_globalGroupId, _defaultUserId,
+			defaultJournalDDMStructureModel.getStructureId(),
 			getClassNameId(JournalArticle.class), _defaultJournalDDMTemplateId,
 			companyModel.getCompanyId());
 	}
 
 	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel,
+		DDMStructureModel defaultJournalDDMStructureModel) {
 
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			new DDMTemplateVersionModelImpl();
@@ -2191,7 +2206,8 @@ public class DataFactory {
 
 		ddmTemplateVersionModelImpl.setClassNameId(
 			getClassNameId(DDMStructure.class));
-		ddmTemplateVersionModelImpl.setClassPK(_defaultJournalDDMStructureId);
+		ddmTemplateVersionModelImpl.setClassPK(
+			defaultJournalDDMStructureModel.getStructureId());
 		ddmTemplateVersionModelImpl.setTemplateId(_defaultJournalDDMTemplateId);
 		ddmTemplateVersionModelImpl.setVersion(
 			DDMTemplateConstants.VERSION_DEFAULT);
@@ -3331,6 +3347,23 @@ public class DataFactory {
 
 	public <K, V> ObjectValuePair<K, V> newObjectValuePair(K key, V value) {
 		return new ObjectValuePair<>(key, value);
+	}
+
+	public Map
+		<Long,
+		 ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>>
+			newObjectValuePairMap(
+				long structureId,
+				ObjectValuePair
+					<JournalArticleModel, JournalArticleLocalizationModel>
+						objectValuePair) {
+
+		return HashMapBuilder.
+			<Long,
+			 ObjectValuePair
+				 <JournalArticleModel, JournalArticleLocalizationModel>>put(
+				structureId, objectValuePair
+			).build();
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
@@ -5413,7 +5446,6 @@ public class DataFactory {
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;
-	private final long _defaultJournalDDMStructureId;
 	private final long _defaultJournalDDMStructureVersionId;
 	private final long _defaultJournalDDMTemplateId;
 	private final long _defaultUserId;
