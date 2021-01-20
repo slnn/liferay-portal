@@ -5,7 +5,7 @@
 
 	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
 
-	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId)
+	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId, sampleUserModel)
 />
 
 <#list resourcePermissionModels as resourcePermissionModel>
@@ -16,7 +16,7 @@
 	<#assign
 		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_"
 
-		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix), companyModel)
+		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix), companyModel, sampleUserModel)
 	/>
 
 	${csvFileWriter.write("layout", layoutModel.friendlyURL + "\n")}
@@ -36,10 +36,14 @@
 
 		${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
+		<#list dataFactory.newResourcePermissionModels(journalArticleResourceModel, sampleUserModel) as resourcePermissionModel>
+			${dataFactory.toInsertSQL(resourcePermissionModel)}
+		</#list>
+
 		<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount) />
 
 		<#list versionCounts as versionCount>
-			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount) />
+			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, sampleUserModel, journalArticleCount, versionCount) />
 
 			${dataFactory.toInsertSQL(journalArticleModel)}
 

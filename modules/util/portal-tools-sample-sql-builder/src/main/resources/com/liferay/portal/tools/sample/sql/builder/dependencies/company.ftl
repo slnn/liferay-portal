@@ -9,9 +9,9 @@
 
 	<#assign companyModel = companyModel />
 
-	<#include "roles.ftl">
+	<#include "sample_user.ftl">
 
-	<#include "commerce_product.ftl">
+	<#include "roles.ftl">
 
 	<#include "groups.ftl">
 

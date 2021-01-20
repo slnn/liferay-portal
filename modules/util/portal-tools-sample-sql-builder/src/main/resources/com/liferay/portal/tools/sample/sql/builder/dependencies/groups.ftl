@@ -1,20 +1,22 @@
-<#assign guestGroupModel = dataFactory.newGuestGroupModel(companyModel) />
+<#assign guestGroupModel = dataFactory.newGuestGroupModel(companyModel, sampleUserModel) />
 
 <#include "default_user.ftl">
+
+<#include "commerce_product.ftl">
 
 <#include "ddm.ftl">
 
 <#include "segments.ftl">
 
-<@insertLayout _layoutModel=dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,", companyModel) />
+<@insertLayout _layoutModel=dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,", companyModel, sampleUserModel) />
 
-<@insertGroup _groupModel=dataFactory.newGlobalGroupModel(companyModel) />
+<@insertGroup _groupModel=dataFactory.newGlobalGroupModel(companyModel, sampleUserModel) />
 
 <@insertGroup _groupModel=guestGroupModel />
 
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel(companyModel, defaultUserModel) />
+<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel(companyModel, defaultUserModel, sampleUserModel) />
 
-<#list dataFactory.newGroupModels(companyModel) as groupModel>
+<#list dataFactory.newGroupModels(companyModel, sampleUserModel) as groupModel>
 	<#assign groupId = groupModel.groupId />
 
 	<#include "asset_publisher.ftl">
@@ -35,7 +37,7 @@
 		_parentDLFolderId=0
 	/>
 
-	<#assign groupLayoutModels = dataFactory.newGroupLayoutModels(groupId, companyModel) />
+	<#assign groupLayoutModels = dataFactory.newGroupLayoutModels(groupId, companyModel, sampleUserModel) />
 
 	<#list groupLayoutModels as groupLayoutModel>
 		<@insertLayout _layoutModel=groupLayoutModel />

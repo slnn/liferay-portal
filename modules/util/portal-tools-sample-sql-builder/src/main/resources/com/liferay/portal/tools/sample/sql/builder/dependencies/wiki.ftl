@@ -3,7 +3,7 @@
 
 	wikiAssetTagModels = dataFactory.pickAssetTagModels(assetTagModels, 3)
 
-	wikiNodeModels = dataFactory.newWikiNodeModels(groupId, companyModel)
+	wikiNodeModels = dataFactory.newWikiNodeModels(groupId, companyModel, sampleUserModel)
 />
 
 <#list wikiNodeModels as wikiNodeModel>

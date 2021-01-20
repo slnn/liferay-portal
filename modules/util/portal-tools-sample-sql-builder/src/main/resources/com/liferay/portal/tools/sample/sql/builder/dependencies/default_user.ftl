@@ -8,7 +8,7 @@
 
 <#assign guestUserModel = dataFactory.newGuestUserModel(companyModel) />
 
-<@insertGroup _groupModel=dataFactory.newGroupModel(guestUserModel, companyModel) />
+<@insertGroup _groupModel=dataFactory.newGroupModel(guestUserModel, companyModel, sampleUserModel) />
 
 <#assign
 	groupIds = [guestGroupModel.groupId]
@@ -21,14 +21,10 @@
 	_userModel=guestUserModel
 />
 
-<#-- Sample user -->
-
 <#assign
-	sampleUserModel = dataFactory.newSampleUserModel(companyModel)
+	userGroupModel = dataFactory.newGroupModel(sampleUserModel, companyModel, sampleUserModel)
 
-	userGroupModel = dataFactory.newGroupModel(sampleUserModel, companyModel)
-
-	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "", companyModel)
+	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "", companyModel, sampleUserModel)
 />
 
 <@insertLayout _layoutModel=layoutModel />
@@ -47,7 +43,7 @@
 />
 
 <#list groupIds as groupId>
-	${dataFactory.toInsertSQL(dataFactory.newBlogsStatsUserModel(groupId, companyModel))}
+	${dataFactory.toInsertSQL(dataFactory.newBlogsStatsUserModel(groupId, companyModel, sampleUserModel))}
 
-	${dataFactory.toInsertSQL(dataFactory.newMBStatsUserModel(groupId))}
+	${dataFactory.toInsertSQL(dataFactory.newMBStatsUserModel(groupId, sampleUserModel))}
 </#list>

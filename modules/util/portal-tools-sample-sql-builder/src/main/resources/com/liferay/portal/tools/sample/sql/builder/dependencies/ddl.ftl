@@ -3,7 +3,7 @@
 <#list ddlRecordSetCounts as ddlRecordSetCount>
 	<#if ddlRecordSetCount = 1>
 		<#assign
-			ddmStructureModel = dataFactory.newDDLDDMStructureModel(groupId, companyModel)
+			ddmStructureModel = dataFactory.newDDLDDMStructureModel(groupId, companyModel, sampleUserModel)
 			ddmStructureVersionModel = dataFactory.newDDMStructureVersionModel(ddmStructureModel)
 		/>
 
@@ -18,7 +18,7 @@
 		layoutName = "dynamic_data_list_display_" + ddlRecordSetCount
 		portletId = "com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet_INSTANCE_TEST" + ddlRecordSetCount
 
-		layoutModel = dataFactory.newLayoutModel(groupId, layoutName, "", portletId, companyModel)
+		layoutModel = dataFactory.newLayoutModel(groupId, layoutName, "", portletId, companyModel, sampleUserModel)
 	/>
 
 	<@insertLayout _layoutModel=layoutModel />

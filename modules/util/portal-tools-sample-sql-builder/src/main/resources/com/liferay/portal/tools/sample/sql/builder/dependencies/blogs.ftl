@@ -3,7 +3,7 @@
 
 	blogAssetTagModels = dataFactory.pickAssetTagModels(assetTagModels, 2)
 
-	blogsEntryModels = dataFactory.newBlogsEntryModels(groupId, companyModel)
+	blogsEntryModels = dataFactory.newBlogsEntryModels(groupId, companyModel, sampleUserModel)
 />
 
 <#list blogsEntryModels as blogsEntryModel>

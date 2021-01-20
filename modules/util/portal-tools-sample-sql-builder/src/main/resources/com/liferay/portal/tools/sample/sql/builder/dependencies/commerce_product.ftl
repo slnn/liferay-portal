@@ -1,11 +1,11 @@
 <#assign
-	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel(companyModel)
+	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel(companyModel, sampleUserModel)
 
 	commerceCatalogModel = dataFactory.newCommerceCatalogModel(commerceCurrencyModel)
 
 	commerceCatalogGroupModel = dataFactory.newCommerceCatalogGroupModel(commerceCatalogModel, companyModel)
 	commerceChannelModel = dataFactory.newCommerceChannelModel(commerceCurrencyModel)
-	cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel(companyModel)
+	cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel(companyModel, sampleUserModel)
 />
 
 ${dataFactory.toInsertSQL(commerceCatalogModel)}

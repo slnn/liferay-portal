@@ -1,4 +1,4 @@
-<#assign mbCategoryModels = dataFactory.newMBCategoryModels(groupId, companyModel) />
+<#assign mbCategoryModels = dataFactory.newMBCategoryModels(groupId, companyModel, sampleUserModel) />
 
 <#list mbCategoryModels as mbCategoryModel>
 	${dataFactory.toInsertSQL(mbCategoryModel)}

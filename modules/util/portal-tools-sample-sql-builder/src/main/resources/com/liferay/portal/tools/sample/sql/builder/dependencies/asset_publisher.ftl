@@ -1,7 +1,7 @@
 <#assign
-	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId, companyModel)
+	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId, companyModel, sampleUserModel)
 	assetCategoryModels = dataFactory.newAssetCategoryModels(groupId, assetVocabularyModels)
-	assetTagModels = dataFactory.newAssetTagModels(groupId, companyModel)
+	assetTagModels = dataFactory.newAssetTagModels(groupId, companyModel, sampleUserModel)
 	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
 />
 
@@ -27,7 +27,7 @@
 	<#assign
 		portletId = dataFactory.getPortletId("com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_")
 
-		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId, companyModel)
+		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId, companyModel, sampleUserModel)
 	/>
 
 	${csvFileWriter.write("assetPublisher", layoutModel.friendlyURL + "\n")}
