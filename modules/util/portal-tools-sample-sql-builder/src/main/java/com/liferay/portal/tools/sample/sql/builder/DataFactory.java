@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_globalGroupId = _counter.get();
 		_guestGroupId = _counter.get();
 		_userPersonalSiteGroupId = _counter.get();
 
@@ -1561,7 +1560,8 @@ public class DataFactory {
 
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel,
-		CompanyModel companyModel, UserModel defaultUserModel) {
+		CompanyModel companyModel, UserModel defaultUserModel,
+		GroupModel globalGroupModel) {
 
 		StringBundler sb = new StringBundler(
 			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 4));
@@ -1586,7 +1586,7 @@ public class DataFactory {
 		sb.append("\"single-page\"}");
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, defaultUserModel.getUserId(),
+			globalGroupModel.getGroupId(), defaultUserModel.getUserId(),
 			ddmStructureVersionModel.getStructureVersionId(), sb.toString(),
 			companyModel.getCompanyId());
 	}
@@ -2116,10 +2116,11 @@ public class DataFactory {
 	}
 
 	public AssetVocabularyModel newDefaultAssetVocabularyModel(
-		CompanyModel companyModel, UserModel defaultUserModel) {
+		CompanyModel companyModel, UserModel defaultUserModel,
+		GroupModel globalGroupModel) {
 
 		return newAssetVocabularyModel(
-			_globalGroupId, defaultUserModel.getUserId(), null,
+			globalGroupModel.getGroupId(), defaultUserModel.getUserId(), null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT, companyModel.getCompanyId());
 	}
 
@@ -2129,16 +2130,17 @@ public class DataFactory {
 		UserModel defaultUserModel) {
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, defaultUserModel.getUserId(),
+			ddmStructureVersionModel.getGroupId(), defaultUserModel.getUserId(),
 			ddmStructureVersionModel.getStructureVersionId(),
 			_dlDDMStructureLayoutContent, companyModel.getCompanyId());
 	}
 
 	public DDMStructureModel newDefaultDLDDMStructureModel(
-		CompanyModel companyModel, UserModel defaultUserModel) {
+		CompanyModel companyModel, UserModel defaultUserModel,
+		GroupModel globalGroupModel) {
 
 		return newDDMStructureModel(
-			_globalGroupId, defaultUserModel.getUserId(),
+			globalGroupModel.getGroupId(), defaultUserModel.getUserId(),
 			getClassNameId(DLFileEntry.class),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
 			_counter.get(), companyModel.getCompanyId());
@@ -2156,16 +2158,17 @@ public class DataFactory {
 		UserModel defaultUserModel) {
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, defaultUserModel.getUserId(),
+			ddmStructureVersionModel.getGroupId(), defaultUserModel.getUserId(),
 			ddmStructureVersionModel.getStructureVersionId(),
 			_journalDDMStructureLayoutContent, companyModel.getCompanyId());
 	}
 
 	public DDMStructureModel newDefaultJournalDDMStructureModel(
-		CompanyModel companyModel, UserModel defaultUserModel) {
+		CompanyModel companyModel, UserModel defaultUserModel,
+		GroupModel globalGroupModel) {
 
 		return newDDMStructureModel(
-			_globalGroupId, defaultUserModel.getUserId(),
+			globalGroupModel.getGroupId(), defaultUserModel.getUserId(),
 			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
 			_journalDDMStructureContent, _counter.get(),
 			companyModel.getCompanyId());
@@ -2183,7 +2186,8 @@ public class DataFactory {
 		UserModel defaultUserModel) {
 
 		return newDDMTemplateModel(
-			_globalGroupId, defaultUserModel.getUserId(),
+			defaultJournalDDMStructureModel.getGroupId(),
+			defaultUserModel.getUserId(),
 			defaultJournalDDMStructureModel.getStructureId(),
 			getClassNameId(JournalArticle.class), _counter.get(),
 			companyModel.getCompanyId());
@@ -2204,7 +2208,8 @@ public class DataFactory {
 
 		// Group instance
 
-		ddmTemplateVersionModelImpl.setGroupId(_globalGroupId);
+		ddmTemplateVersionModelImpl.setGroupId(
+			defaultJournalDDMStructureModel.getGroupId());
 
 		// Audit fields
 
@@ -2617,7 +2622,7 @@ public class DataFactory {
 		CompanyModel companyModel, UserModel sampleUserModel) {
 
 		return newGroupModel(
-			_globalGroupId, getClassNameId(Company.class),
+			_counter.get(), getClassNameId(Company.class),
 			companyModel.getCompanyId(), GroupConstants.GLOBAL, false,
 			companyModel.getCompanyId(), sampleUserModel.getUserId());
 	}
@@ -5517,7 +5522,6 @@ public class DataFactory {
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
-	private final long _globalGroupId;
 	private final long _guestGroupId;
 	private RoleModel _guestRoleModel;
 	private String _journalArticleContent;

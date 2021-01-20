@@ -1,4 +1,4 @@
-<#assign defaultAssetVocabularyModel = dataFactory.newDefaultAssetVocabularyModel(companyModel, defaultUserModel) />
+<#assign defaultAssetVocabularyModel = dataFactory.newDefaultAssetVocabularyModel(companyModel, defaultUserModel, globalGroupModel) />
 
 ${dataFactory.toInsertSQL(defaultAssetVocabularyModel)}
 

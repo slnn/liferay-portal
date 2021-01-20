@@ -1,4 +1,7 @@
-<#assign guestGroupModel = dataFactory.newGuestGroupModel(companyModel, sampleUserModel) />
+<#assign
+	globalGroupModel = dataFactory.newGlobalGroupModel(companyModel, sampleUserModel)
+	guestGroupModel = dataFactory.newGuestGroupModel(companyModel, sampleUserModel)
+/>
 
 <#include "default_user.ftl">
 
@@ -10,7 +13,7 @@
 
 <@insertLayout _layoutModel=dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,", companyModel, sampleUserModel) />
 
-<@insertGroup _groupModel=dataFactory.newGlobalGroupModel(companyModel, sampleUserModel) />
+<@insertGroup _groupModel=globalGroupModel />
 
 <@insertGroup _groupModel=guestGroupModel />
 

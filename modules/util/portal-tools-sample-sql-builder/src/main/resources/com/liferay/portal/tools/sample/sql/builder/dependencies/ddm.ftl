@@ -1,5 +1,5 @@
 <#assign
-	defaultJournalDDMStructureModel = dataFactory.newDefaultJournalDDMStructureModel(companyModel, defaultUserModel)
+	defaultJournalDDMStructureModel = dataFactory.newDefaultJournalDDMStructureModel(companyModel, defaultUserModel, globalGroupModel)
 	defaultJournalDDMStructureVersionModel = dataFactory.newDefaultJournalDDMStructureVersionModel(defaultJournalDDMStructureModel)
 />
 
@@ -16,7 +16,7 @@ ${dataFactory.toInsertSQL(defaultJournalDDMTemplateModel)}
 ${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(companyModel, defaultJournalDDMStructureModel, defaultJournalDDMTemplateModel, defaultUserModel))}
 
 <#assign
-	defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel, defaultUserModel)
+	defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel, defaultUserModel, globalGroupModel)
 	defaultDLDDMStructureVersionModel = dataFactory.newDefaultDLDDMStructureVersionModel(defaultDLDDMStructureModel)
 />
 
