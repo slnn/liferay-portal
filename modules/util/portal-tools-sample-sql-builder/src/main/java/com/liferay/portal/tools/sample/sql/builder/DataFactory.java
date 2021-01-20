@@ -342,8 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_userPersonalSiteGroupId = _counter.get();
-
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
 			"ddm_structure_layout_basic_document.json");
@@ -3977,7 +3975,7 @@ public class DataFactory {
 		UserModel sampleUserModel) {
 
 		return newGroupModel(
-			_userPersonalSiteGroupId, getClassNameId(UserPersonalSite.class),
+			_counter.get(), getClassNameId(UserPersonalSite.class),
 			defaultUserModel.getUserId(), GroupConstants.USER_PERSONAL_SITE,
 			false, companyModel.getCompanyId(), sampleUserModel.getUserId());
 	}
@@ -5541,7 +5539,6 @@ public class DataFactory {
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityCounter;
 	private final SimpleCounter _timeCounter;
-	private final long _userPersonalSiteGroupId;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 
