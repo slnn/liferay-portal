@@ -27,6 +27,7 @@
 
 	<@insertDLFolder
 		_ddmStructureId=defaultDLDDMStructureModel.structureId
+		_ddmStructureVersionId=defaultDLDDMStructureVersionModel.structureVersionId
 		_dlFolderDepth=1
 		_groupId=groupId
 		_parentDLFolderId=0

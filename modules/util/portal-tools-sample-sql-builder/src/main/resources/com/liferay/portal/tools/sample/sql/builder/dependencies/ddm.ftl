@@ -12,10 +12,13 @@ ${dataFactory.toInsertSQL(defaultJournalDDMTemplateModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(companyModel, defaultJournalDDMStructureModel))}
 
-<#assign defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel) />
+<#assign
+	defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel)
+	defaultDLDDMStructureVersionModel = dataFactory.newDefaultDLDDMStructureVersionModel(defaultDLDDMStructureModel)
+/>
 
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.newDefaultDLDDMStructureLayoutModel(companyModel)
+	_ddmStructureLayoutModel=dataFactory.newDefaultDLDDMStructureLayoutModel(companyModel, defaultDLDDMStructureVersionModel)
 	_ddmStructureModel=defaultDLDDMStructureModel
-	_ddmStructureVersionModel=dataFactory.newDefaultDLDDMStructureVersionModel(defaultDLDDMStructureModel)
+	_ddmStructureVersionModel=defaultDLDDMStructureVersionModel
 />

@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMTemplateId = _counter.get();
 		_defaultUserId = _counter.get();
@@ -1882,7 +1881,7 @@ public class DataFactory {
 
 	public List<DDMFieldModel> newDDMFieldModels(
 		DLFileEntryModel dlFileEntryModel,
-		DDMStorageLinkModel ddmStorageLinkModel) {
+		DDMStorageLinkModel ddmStorageLinkModel, long structureVersionId) {
 
 		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
 
@@ -1890,7 +1889,7 @@ public class DataFactory {
 		ddmFieldModel1.setCompanyId(dlFileEntryModel.getCompanyId());
 		ddmFieldModel1.setParentFieldId(0);
 		ddmFieldModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel1.setStructureVersionId(_defaultDLDDMStructureVersionId);
+		ddmFieldModel1.setStructureVersionId(structureVersionId);
 		ddmFieldModel1.setFieldName(StringPool.BLANK);
 		ddmFieldModel1.setFieldType(StringPool.BLANK);
 		ddmFieldModel1.setInstanceId(StringPool.BLANK);
@@ -1903,7 +1902,7 @@ public class DataFactory {
 		ddmFieldModel2.setCompanyId(dlFileEntryModel.getCompanyId());
 		ddmFieldModel2.setParentFieldId(0);
 		ddmFieldModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel2.setStructureVersionId(_defaultDLDDMStructureVersionId);
+		ddmFieldModel2.setStructureVersionId(structureVersionId);
 		ddmFieldModel2.setFieldName("CONTENT_TYPE");
 		ddmFieldModel2.setFieldType("string");
 		ddmFieldModel2.setInstanceId(StringUtil.randomId());
@@ -1973,11 +1972,11 @@ public class DataFactory {
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
 		DLFileEntryModel dlFileEntryModel, long ddmStorageLinkId,
-		long structureId) {
+		long structureId, long structureVersionId) {
 
 		return newDDMStorageLinkModel(
-			ddmStorageLinkId, _counter.get(), structureId,
-			_defaultDLDDMStructureVersionId, dlFileEntryModel.getCompanyId());
+			ddmStorageLinkId, _counter.get(), structureId, structureVersionId,
+			dlFileEntryModel.getCompanyId());
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -2116,10 +2115,12 @@ public class DataFactory {
 	}
 
 	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel,
+		DDMStructureVersionModel ddmStructureVersionModel) {
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId, _defaultDLDDMStructureVersionId,
+			_globalGroupId, _defaultUserId,
+			ddmStructureVersionModel.getStructureVersionId(),
 			_dlDDMStructureLayoutContent, companyModel.getCompanyId());
 	}
 
@@ -2135,8 +2136,7 @@ public class DataFactory {
 	public DDMStructureVersionModel newDefaultDLDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
 
-		return newDDMStructureVersionModel(
-			ddmStructureModel, _defaultDLDDMStructureVersionId);
+		return newDDMStructureVersionModel(ddmStructureModel, _counter.get());
 	}
 
 	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel(
@@ -5436,7 +5436,6 @@ public class DataFactory {
 	private final SimpleCounter _counter;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
-	private final long _defaultDLDDMStructureVersionId;
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;

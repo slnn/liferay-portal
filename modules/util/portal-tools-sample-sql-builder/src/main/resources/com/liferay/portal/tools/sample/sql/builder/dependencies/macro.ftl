@@ -63,9 +63,9 @@
 	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
-		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId)>
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId, _ddmStructureVersionId)>
 
-		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_entry, ddmStorageLinkModel)>
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_entry, ddmStorageLinkModel, _ddmStructureVersionId)>
 
 		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_entry, ddmFieldModels, ddmStorageLinkModel)>
 	<#else>
@@ -101,6 +101,7 @@
 
 <#macro insertDLFolder
 	_ddmStructureId
+	_ddmStructureVersionId
 	_dlFolderDepth
 	_groupId
 	_parentDLFolderId
@@ -129,6 +130,7 @@
 				<@insertDDMContent
 					_ddmStorageLinkId=ddmStorageLinkId
 					_ddmStructureId=_ddmStructureId
+					_ddmStructureVersionId=_ddmStructureVersionId
 					_entry=dlFileEntryModel
 				/>
 
@@ -154,6 +156,7 @@
 
 			<@insertDLFolder
 				_ddmStructureId=_ddmStructureId
+				_ddmStructureVersionId=_ddmStructureVersionId
 				_dlFolderDepth=_dlFolderDepth + 1
 				_groupId=groupId
 				_parentDLFolderId=dlFolderModel.folderId
