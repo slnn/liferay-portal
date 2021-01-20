@@ -4,7 +4,7 @@
 	commerceCatalogModel = dataFactory.newCommerceCatalogModel(commerceCurrencyModel)
 
 	commerceCatalogGroupModel = dataFactory.newCommerceCatalogGroupModel(commerceCatalogModel, companyModel)
-	commerceChannelModel = dataFactory.newCommerceChannelModel(commerceCurrencyModel)
+	commerceChannelModel = dataFactory.newCommerceChannelModel(commerceCurrencyModel, guestGroupModel)
 	cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel(companyModel, sampleUserModel)
 />
 

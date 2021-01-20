@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_guestGroupId = _counter.get();
 		_userPersonalSiteGroupId = _counter.get();
 
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
@@ -1060,7 +1059,8 @@ public class DataFactory {
 	}
 
 	public CommerceChannelModel newCommerceChannelModel(
-		CommerceCurrencyModel commerceCurrencyModel) {
+		CommerceCurrencyModel commerceCurrencyModel,
+		GroupModel guestGroupModel) {
 
 		CommerceChannelModel commerceChannelModel =
 			new CommerceChannelModelImpl();
@@ -1082,7 +1082,8 @@ public class DataFactory {
 		commerceChannelModel.setSiteGroupId(1);
 		commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
 		commerceChannelModel.setType("site");
-		commerceChannelModel.setTypeSettings(String.valueOf(_guestGroupId));
+		commerceChannelModel.setTypeSettings(
+			String.valueOf(guestGroupModel.getGroupId()));
 		commerceChannelModel.setCommerceCurrencyCode(
 			commerceCurrencyModel.getCode());
 
@@ -2721,8 +2722,10 @@ public class DataFactory {
 	public GroupModel newGuestGroupModel(
 		CompanyModel companyModel, UserModel sampleUserModel) {
 
+		long guestGroupId = _counter.get();
+
 		return newGroupModel(
-			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
+			guestGroupId, getClassNameId(Group.class), guestGroupId,
 			GroupConstants.GUEST, true, companyModel.getCompanyId(),
 			sampleUserModel.getUserId());
 	}
@@ -5522,7 +5525,6 @@ public class DataFactory {
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
-	private final long _guestGroupId;
 	private RoleModel _guestRoleModel;
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
