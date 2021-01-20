@@ -11,11 +11,9 @@
 
 	<#include "roles.ftl">
 
-	<#include "asset.ftl">
-
 	<#include "commerce_product.ftl">
 
-	<#include "ddm.ftl">
-
 	<#include "groups.ftl">
+
+	<#include "asset.ftl">
 </#list>

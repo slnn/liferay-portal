@@ -2,6 +2,8 @@
 
 <#include "default_user.ftl">
 
+<#include "ddm.ftl">
+
 <#include "segments.ftl">
 
 <@insertLayout _layoutModel=dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,", companyModel) />
@@ -10,7 +12,7 @@
 
 <@insertGroup _groupModel=guestGroupModel />
 
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel(companyModel) />
+<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel(companyModel, defaultUserModel) />
 
 <#list dataFactory.newGroupModels(companyModel) as groupModel>
 	<#assign groupId = groupModel.groupId />

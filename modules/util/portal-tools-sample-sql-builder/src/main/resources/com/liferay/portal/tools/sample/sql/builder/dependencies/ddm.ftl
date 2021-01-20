@@ -1,27 +1,27 @@
 <#assign
-	defaultJournalDDMStructureModel = dataFactory.newDefaultJournalDDMStructureModel(companyModel)
+	defaultJournalDDMStructureModel = dataFactory.newDefaultJournalDDMStructureModel(companyModel, defaultUserModel)
 	defaultJournalDDMStructureVersionModel = dataFactory.newDefaultJournalDDMStructureVersionModel(defaultJournalDDMStructureModel)
 />
 
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.newDefaultJournalDDMStructureLayoutModel(companyModel, defaultJournalDDMStructureVersionModel)
+	_ddmStructureLayoutModel=dataFactory.newDefaultJournalDDMStructureLayoutModel(companyModel, defaultJournalDDMStructureVersionModel, defaultUserModel)
 	_ddmStructureModel=defaultJournalDDMStructureModel
 	_ddmStructureVersionModel=defaultJournalDDMStructureVersionModel
 />
 
-<#assign defaultJournalDDMTemplateModel = dataFactory.newDefaultJournalDDMTemplateModel(companyModel, defaultJournalDDMStructureModel) />
+<#assign defaultJournalDDMTemplateModel = dataFactory.newDefaultJournalDDMTemplateModel(companyModel, defaultJournalDDMStructureModel, defaultUserModel) />
 
 ${dataFactory.toInsertSQL(defaultJournalDDMTemplateModel)}
 
-${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(companyModel, defaultJournalDDMStructureModel, defaultJournalDDMTemplateModel))}
+${dataFactory.toInsertSQL(dataFactory.newDefaultJournalDDMTemplateVersionModel(companyModel, defaultJournalDDMStructureModel, defaultJournalDDMTemplateModel, defaultUserModel))}
 
 <#assign
-	defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel)
+	defaultDLDDMStructureModel = dataFactory.newDefaultDLDDMStructureModel(companyModel, defaultUserModel)
 	defaultDLDDMStructureVersionModel = dataFactory.newDefaultDLDDMStructureVersionModel(defaultDLDDMStructureModel)
 />
 
 <@insertDDMStructure
-	_ddmStructureLayoutModel=dataFactory.newDefaultDLDDMStructureLayoutModel(companyModel, defaultDLDDMStructureVersionModel)
+	_ddmStructureLayoutModel=dataFactory.newDefaultDLDDMStructureLayoutModel(companyModel, defaultDLDDMStructureVersionModel, defaultUserModel)
 	_ddmStructureModel=defaultDLDDMStructureModel
 	_ddmStructureVersionModel=defaultDLDDMStructureVersionModel
 />

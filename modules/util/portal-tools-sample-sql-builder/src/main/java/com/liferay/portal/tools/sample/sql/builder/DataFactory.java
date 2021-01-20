@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_defaultUserId = _counter.get();
 		_globalGroupId = _counter.get();
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
@@ -1552,7 +1551,7 @@ public class DataFactory {
 
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel,
-		CompanyModel companyModel) {
+		CompanyModel companyModel, UserModel defaultUserModel) {
 
 		StringBundler sb = new StringBundler(
 			3 + (BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT * 4));
@@ -1577,7 +1576,7 @@ public class DataFactory {
 		sb.append("\"single-page\"}");
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
+			_globalGroupId, defaultUserModel.getUserId(),
 			ddmStructureVersionModel.getStructureVersionId(), sb.toString(),
 			companyModel.getCompanyId());
 	}
@@ -2107,28 +2106,30 @@ public class DataFactory {
 	}
 
 	public AssetVocabularyModel newDefaultAssetVocabularyModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel, UserModel defaultUserModel) {
 
 		return newAssetVocabularyModel(
-			_globalGroupId, _defaultUserId, null,
+			_globalGroupId, defaultUserModel.getUserId(), null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT, companyModel.getCompanyId());
 	}
 
 	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel(
 		CompanyModel companyModel,
-		DDMStructureVersionModel ddmStructureVersionModel) {
+		DDMStructureVersionModel ddmStructureVersionModel,
+		UserModel defaultUserModel) {
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
+			_globalGroupId, defaultUserModel.getUserId(),
 			ddmStructureVersionModel.getStructureVersionId(),
 			_dlDDMStructureLayoutContent, companyModel.getCompanyId());
 	}
 
 	public DDMStructureModel newDefaultDLDDMStructureModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel, UserModel defaultUserModel) {
 
 		return newDDMStructureModel(
-			_globalGroupId, _defaultUserId, getClassNameId(DLFileEntry.class),
+			_globalGroupId, defaultUserModel.getUserId(),
+			getClassNameId(DLFileEntry.class),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent,
 			_counter.get(), companyModel.getCompanyId());
 	}
@@ -2141,19 +2142,20 @@ public class DataFactory {
 
 	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel(
 		CompanyModel companyModel,
-		DDMStructureVersionModel ddmStructureVersionModel) {
+		DDMStructureVersionModel ddmStructureVersionModel,
+		UserModel defaultUserModel) {
 
 		return newDDMStructureLayoutModel(
-			_globalGroupId, _defaultUserId,
+			_globalGroupId, defaultUserModel.getUserId(),
 			ddmStructureVersionModel.getStructureVersionId(),
 			_journalDDMStructureLayoutContent, companyModel.getCompanyId());
 	}
 
 	public DDMStructureModel newDefaultJournalDDMStructureModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel, UserModel defaultUserModel) {
 
 		return newDDMStructureModel(
-			_globalGroupId, _defaultUserId,
+			_globalGroupId, defaultUserModel.getUserId(),
 			getClassNameId(JournalArticle.class), _JOURNAL_STRUCTURE_KEY,
 			_journalDDMStructureContent, _counter.get(),
 			companyModel.getCompanyId());
@@ -2167,10 +2169,11 @@ public class DataFactory {
 
 	public DDMTemplateModel newDefaultJournalDDMTemplateModel(
 		CompanyModel companyModel,
-		DDMStructureModel defaultJournalDDMStructureModel) {
+		DDMStructureModel defaultJournalDDMStructureModel,
+		UserModel defaultUserModel) {
 
 		return newDDMTemplateModel(
-			_globalGroupId, _defaultUserId,
+			_globalGroupId, defaultUserModel.getUserId(),
 			defaultJournalDDMStructureModel.getStructureId(),
 			getClassNameId(JournalArticle.class), _counter.get(),
 			companyModel.getCompanyId());
@@ -2179,7 +2182,8 @@ public class DataFactory {
 	public DDMTemplateVersionModel newDefaultJournalDDMTemplateVersionModel(
 		CompanyModel companyModel,
 		DDMStructureModel defaultJournalDDMStructureModel,
-		DDMTemplateModel defaultJournalDDMTemplateModel) {
+		DDMTemplateModel defaultJournalDDMTemplateModel,
+		UserModel defaultUserModel) {
 
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			new DDMTemplateVersionModelImpl();
@@ -2195,7 +2199,7 @@ public class DataFactory {
 		// Audit fields
 
 		ddmTemplateVersionModelImpl.setCompanyId(companyModel.getCompanyId());
-		ddmTemplateVersionModelImpl.setUserId(_defaultUserId);
+		ddmTemplateVersionModelImpl.setUserId(defaultUserModel.getUserId());
 		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
 
 		// Other fields
@@ -2218,7 +2222,8 @@ public class DataFactory {
 
 		ddmTemplateVersionModelImpl.setName(sb.toString());
 
-		ddmTemplateVersionModelImpl.setStatusByUserId(_defaultUserId);
+		ddmTemplateVersionModelImpl.setStatusByUserId(
+			defaultUserModel.getUserId());
 		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
 
 		return ddmTemplateVersionModelImpl;
@@ -2226,7 +2231,7 @@ public class DataFactory {
 
 	public UserModel newDefaultUserModel(CompanyModel companyModel) {
 		return newUserModel(
-			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
+			_counter.get(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, true, companyModel.getCompanyId());
 	}
 
@@ -3494,19 +3499,21 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetVocabularyModel assetVocabularyModel) {
 
-		if (assetVocabularyModel.getUserId() == _defaultUserId) {
-			return Collections.singletonList(
-				newResourcePermissionModel(
-					AssetVocabulary.class.getName(),
-					String.valueOf(assetVocabularyModel.getVocabularyId()),
-					_ownerRoleModel.getRoleId(), _defaultUserId,
-					assetVocabularyModel.getCompanyId()));
-		}
-
 		return newResourcePermissionModels(
 			AssetVocabulary.class.getName(),
 			String.valueOf(assetVocabularyModel.getVocabularyId()),
 			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		AssetVocabularyModel assetVocabularyModel, UserModel defaultUserModel) {
+
+		return Collections.singletonList(
+			newResourcePermissionModel(
+				AssetVocabulary.class.getName(),
+				String.valueOf(assetVocabularyModel.getVocabularyId()),
+				_ownerRoleModel.getRoleId(), defaultUserModel.getUserId(),
+				assetVocabularyModel.getCompanyId()));
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3905,11 +3912,13 @@ public class DataFactory {
 		return userModels;
 	}
 
-	public GroupModel newUserPersonalSiteGroupModel(CompanyModel companyModel) {
+	public GroupModel newUserPersonalSiteGroupModel(
+		CompanyModel companyModel, UserModel defaultUserModel) {
+
 		return newGroupModel(
 			_userPersonalSiteGroupId, getClassNameId(UserPersonalSite.class),
-			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false,
-			companyModel.getCompanyId());
+			defaultUserModel.getUserId(), GroupConstants.USER_PERSONAL_SITE,
+			false, companyModel.getCompanyId());
 	}
 
 	public VirtualHostModel newVirtualHostModel(CompanyModel companyModel) {
@@ -5441,7 +5450,6 @@ public class DataFactory {
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;
-	private final long _defaultUserId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
