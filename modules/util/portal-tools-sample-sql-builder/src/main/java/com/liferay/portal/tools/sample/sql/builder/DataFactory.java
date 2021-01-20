@@ -342,7 +342,6 @@ public class DataFactory {
 			_classNameModels.put(model, classNameModel);
 		}
 
-		_defaultJournalDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMTemplateId = _counter.get();
 		_defaultUserId = _counter.get();
 		_globalGroupId = _counter.get();
@@ -1980,7 +1979,9 @@ public class DataFactory {
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
-		JournalArticleModel journalArticleModel, long structureId) {
+		JournalArticleModel journalArticleModel,
+		DDMStructureVersionModel defaultJournalDDMStructureVersionModel,
+		long structureId) {
 
 		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
 
@@ -2003,7 +2004,7 @@ public class DataFactory {
 		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
 		ddmStorageLinkModel.setStructureId(structureId);
 		ddmStorageLinkModel.setStructureVersionId(
-			_defaultJournalDDMStructureVersionId);
+			defaultJournalDDMStructureVersionModel.getStructureVersionId());
 
 		return ddmStorageLinkModel;
 	}
@@ -2140,11 +2141,12 @@ public class DataFactory {
 	}
 
 	public DDMStructureLayoutModel newDefaultJournalDDMStructureLayoutModel(
-		CompanyModel companyModel) {
+		CompanyModel companyModel,
+		DDMStructureVersionModel ddmStructureVersionModel) {
 
 		return newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
-			_defaultJournalDDMStructureVersionId,
+			ddmStructureVersionModel.getStructureVersionId(),
 			_journalDDMStructureLayoutContent, companyModel.getCompanyId());
 	}
 
@@ -2161,8 +2163,7 @@ public class DataFactory {
 	public DDMStructureVersionModel newDefaultJournalDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
 
-		return newDDMStructureVersionModel(
-			ddmStructureModel, _defaultJournalDDMStructureVersionId);
+		return newDDMStructureVersionModel(ddmStructureModel, _counter.get());
 	}
 
 	public DDMTemplateModel newDefaultJournalDDMTemplateModel(
@@ -5439,7 +5440,6 @@ public class DataFactory {
 	private long _defaultDLFileEntryTypeId =
 		DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	private String _defaultJournalArticleId;
-	private final long _defaultJournalDDMStructureVersionId;
 	private final long _defaultJournalDDMTemplateId;
 	private final long _defaultUserId;
 	private final String _dlDDMStructureContent;
