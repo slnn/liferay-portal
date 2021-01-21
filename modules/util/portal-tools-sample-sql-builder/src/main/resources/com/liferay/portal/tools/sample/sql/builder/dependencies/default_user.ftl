@@ -21,13 +21,9 @@
 	_userModel=guestUserModel
 />
 
-<#assign
-	userGroupModel = dataFactory.newGroupModel(sampleUserModel, companyModel, sampleUserModel)
+<#assign userGroupModel = dataFactory.newGroupModel(sampleUserModel, companyModel, sampleUserModel) />
 
-	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "", companyModel, sampleUserModel)
-/>
-
-<@insertLayout _layoutModel=layoutModel />
+<@insertLayout _layoutModel=dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "", companyModel, sampleUserModel) />
 
 <@insertGroup _groupModel=userGroupModel />
 
