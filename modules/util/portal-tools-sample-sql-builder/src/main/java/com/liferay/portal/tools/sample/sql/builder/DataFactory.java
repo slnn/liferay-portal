@@ -4000,7 +4000,7 @@ public class DataFactory {
 
 		// Other fields
 
-		virtualHostModel.setHostname(BenchmarksPropsValues.VIRTUAL_HOST_NAME);
+		virtualHostModel.setHostname(companyModel.getWebId());
 
 		return virtualHostModel;
 	}
