@@ -378,8 +378,9 @@ public class DataFactory {
 
 		if (_assetCategoryCounters == null) {
 			_assetCategoryCounters =
-				(Map<Long, SimpleCounter>[])
-					new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+				(Map<Long, SimpleCounter>[])new HashMap<?, ?>
+					[BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT *
+						BenchmarksPropsValues.MAX_GROUP_COUNT];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
@@ -412,9 +413,9 @@ public class DataFactory {
 		}
 
 		if (_assetTagCounters == null) {
-			_assetTagCounters =
-				(Map<Long, SimpleCounter>[])
-					new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+			_assetTagCounters = (Map<Long, SimpleCounter>[])new HashMap<?, ?>
+				[BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT *
+					BenchmarksPropsValues.MAX_GROUP_COUNT];
 		}
 
 		SimpleCounter counter = getSimpleCounter(
