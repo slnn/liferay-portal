@@ -3546,13 +3546,14 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AssetCategoryModel assetCategoryModel) {
+		AssetCategoryModel assetCategoryModel, RoleModel guestRoleModel,
+		RoleModel ownerRoleModel, RoleModel siteMemberRoleModel) {
 
 		return newResourcePermissionModels(
 			AssetCategory.class.getName(),
 			String.valueOf(assetCategoryModel.getCategoryId()),
 			assetCategoryModel.getUserId(), assetCategoryModel.getCompanyId(),
-			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
+			guestRoleModel, ownerRoleModel, siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

@@ -10,7 +10,7 @@
 </#list>
 
 <#list assetCategoryModels as assetCategoryModel>
-	${dataFactory.toInsertSQL(assetCategoryModel)}
+	${dataFactory.toInsertSQL(assetCategoryModel, dataFactory.guestRoleModel, dataFactory.ownerRoleModel, dataFactory.siteMemberRoleModel)}
 </#list>
 
 <#list assetTagModels as assetTagModel>
