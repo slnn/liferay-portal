@@ -573,6 +573,10 @@ public class DataFactory {
 			BenchmarksPropsValues.MAX_ASSET_ENTRY_DATA_TYPE_COUNT;
 	}
 
+	public RoleModel getOwnerRoleModel() {
+		return _ownerRoleModel;
+	}
+
 	public String getPortletId(String portletPrefix) {
 		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
 	}
@@ -3706,12 +3710,12 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		RoleModel roleModel) {
+		RoleModel roleModel, RoleModel ownerRoleModel) {
 
 		return Collections.singletonList(
 			newResourcePermissionModel(
 				Role.class.getName(), String.valueOf(roleModel.getRoleId()),
-				_ownerRoleModel.getRoleId(), roleModel.getUserId(),
+				ownerRoleModel.getRoleId(), roleModel.getUserId(),
 				roleModel.getCompanyId()));
 	}
 
