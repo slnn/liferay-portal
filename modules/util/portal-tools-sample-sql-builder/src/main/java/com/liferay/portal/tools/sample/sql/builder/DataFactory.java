@@ -4178,37 +4178,48 @@ public class DataFactory {
 		return fullAssetTagModels.subList(fromIndex, toIndex);
 	}
 
-	public String toInsertSQL(BaseModel<?> baseModel) {
-		try {
-			StringBundler sb = new StringBundler();
+	public String toInsertSQL(
+		BaseModel<?> baseModel, BaseModel<?>... roleModels) {
 
-			toInsertSQL(sb, baseModel);
+		StringBundler sb = new StringBundler();
 
+		toInsertSQL(sb, baseModel);
+
+		if (roleModels.length != 0) {
 			Class<?> clazz = baseModel.getClass();
 
+			Class<?> roleModelClazz = roleModels[0].getClass();
+
 			for (Class<?> modelClass : clazz.getInterfaces()) {
-				try {
-					Method method = DataFactory.class.getMethod(
-						"newResourcePermissionModels", modelClass);
+				for (Class<?> roleModelClass : roleModelClazz.getInterfaces()) {
+					try {
+						Method method = DataFactory.class.getMethod(
+							"newResourcePermissionModels", modelClass,
+							roleModelClass, roleModelClass, roleModelClass);
 
-					for (ResourcePermissionModel resourcePermissionModel :
-							(List<ResourcePermissionModel>)method.invoke(
-								this, baseModel)) {
+						for (ResourcePermissionModel resourcePermissionModel :
+								(List<ResourcePermissionModel>)method.invoke(
+									this, baseModel, roleModels[0],
+									roleModels[1], roleModels[2])) {
 
-						sb.append("\n");
+							sb.append("\n");
 
-						toInsertSQL(sb, resourcePermissionModel);
+							toInsertSQL(sb, resourcePermissionModel);
+						}
+					}
+					catch (NoSuchMethodException noSuchMethodException) {
+					}
+					catch (ReflectiveOperationException
+								reflectiveOperationException) {
+
+						return ReflectionUtil.throwException(
+							reflectiveOperationException);
 					}
 				}
-				catch (NoSuchMethodException noSuchMethodException) {
-				}
 			}
+		}
 
-			return sb.toString();
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			return ReflectionUtil.throwException(reflectiveOperationException);
-		}
+		return sb.toString();
 	}
 
 	public String toInsertSQL(
