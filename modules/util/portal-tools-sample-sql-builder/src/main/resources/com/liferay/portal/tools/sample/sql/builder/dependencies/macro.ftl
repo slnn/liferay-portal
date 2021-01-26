@@ -233,6 +233,12 @@
 >
 	${dataFactory.toInsertSQL(_userModel)}
 
+	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_userModel, dataFactory.ownerRoleModel)>
+
+	<#list resourcePermissionModels as resourcePermissionModel>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
+	</#list>
+
 	${dataFactory.toInsertSQL(dataFactory.newContactModel(_userModel, companyModel))}
 
 	<#list _roleIds as roleId>
