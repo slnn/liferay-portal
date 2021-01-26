@@ -3539,7 +3539,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			AssetCategory.class.getName(),
 			String.valueOf(assetCategoryModel.getCategoryId()),
-			assetCategoryModel.getUserId(), assetCategoryModel.getCompanyId());
+			assetCategoryModel.getUserId(), assetCategoryModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3549,7 +3550,8 @@ public class DataFactory {
 			AssetVocabulary.class.getName(),
 			String.valueOf(assetVocabularyModel.getVocabularyId()),
 			assetVocabularyModel.getUserId(),
-			assetVocabularyModel.getCompanyId());
+			assetVocabularyModel.getCompanyId(), _guestRoleModel,
+			_ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3569,7 +3571,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			BlogsEntry.class.getName(),
 			String.valueOf(blogsEntryModel.getEntryId()),
-			blogsEntryModel.getUserId(), blogsEntryModel.getCompanyId());
+			blogsEntryModel.getUserId(), blogsEntryModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3578,7 +3581,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			DDLRecordSet.class.getName(),
 			String.valueOf(ddlRecordSetModel.getRecordSetId()),
-			ddlRecordSetModel.getUserId(), ddlRecordSetModel.getCompanyId());
+			ddlRecordSetModel.getUserId(), ddlRecordSetModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3591,7 +3595,8 @@ public class DataFactory {
 
 		return newResourcePermissionModels(
 			name, primKey, ddmStructureModel.getUserId(),
-			ddmStructureModel.getCompanyId());
+			ddmStructureModel.getCompanyId(), _guestRoleModel, _ownerRoleModel,
+			_siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3604,7 +3609,8 @@ public class DataFactory {
 
 		return newResourcePermissionModels(
 			name, primKey, ddmTemplateModel.getUserId(),
-			ddmTemplateModel.getCompanyId());
+			ddmTemplateModel.getCompanyId(), _guestRoleModel, _ownerRoleModel,
+			_siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3613,7 +3619,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			DLFileEntry.class.getName(),
 			String.valueOf(dlFileEntryModel.getFileEntryId()),
-			dlFileEntryModel.getUserId(), dlFileEntryModel.getCompanyId());
+			dlFileEntryModel.getUserId(), dlFileEntryModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3622,7 +3629,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			DLFolder.class.getName(),
 			String.valueOf(dlFolderModel.getFolderId()),
-			dlFolderModel.getUserId(), dlFolderModel.getCompanyId());
+			dlFolderModel.getUserId(), dlFolderModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3643,7 +3651,8 @@ public class DataFactory {
 			JournalArticle.class.getName(),
 			String.valueOf(journalArticleResourceModel.getResourcePrimKey()),
 			sampleUserModel.getUserId(),
-			journalArticleResourceModel.getCompanyId());
+			journalArticleResourceModel.getCompanyId(), _guestRoleModel,
+			_ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3651,7 +3660,8 @@ public class DataFactory {
 
 		return newResourcePermissionModels(
 			Layout.class.getName(), String.valueOf(layoutModel.getPlid()), 0,
-			layoutModel.getCompanyId());
+			layoutModel.getCompanyId(), _guestRoleModel, _ownerRoleModel,
+			_siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3660,7 +3670,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			MBCategory.class.getName(),
 			String.valueOf(mbCategoryModel.getCategoryId()),
-			mbCategoryModel.getUserId(), mbCategoryModel.getCompanyId());
+			mbCategoryModel.getUserId(), mbCategoryModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3669,7 +3680,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			MBMessage.class.getName(),
 			String.valueOf(mbMessageModel.getMessageId()),
-			mbMessageModel.getUserId(), mbMessageModel.getCompanyId());
+			mbMessageModel.getUserId(), mbMessageModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3689,7 +3701,8 @@ public class DataFactory {
 			portletPreferencesModel.getPlid(), portletId);
 
 		return newResourcePermissionModels(
-			name, primKey, 0, portletPreferencesModel.getCompanyId());
+			name, primKey, 0, portletPreferencesModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3718,7 +3731,8 @@ public class DataFactory {
 
 		return newResourcePermissionModels(
 			name, String.valueOf(primKey), sampleUserModel.getUserId(),
-			sampleUserModel.getCompanyId());
+			sampleUserModel.getCompanyId(), _guestRoleModel, _ownerRoleModel,
+			_siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3736,7 +3750,8 @@ public class DataFactory {
 
 		return newResourcePermissionModels(
 			WikiNode.class.getName(), String.valueOf(wikiNodeModel.getNodeId()),
-			wikiNodeModel.getUserId(), wikiNodeModel.getCompanyId());
+			wikiNodeModel.getUserId(), wikiNodeModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -3745,7 +3760,8 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			WikiPage.class.getName(),
 			String.valueOf(wikiPageModel.getResourcePrimKey()),
-			wikiPageModel.getUserId(), wikiPageModel.getCompanyId());
+			wikiPageModel.getUserId(), wikiPageModel.getCompanyId(),
+			_guestRoleModel, _ownerRoleModel, _siteMemberRoleModel);
 	}
 
 	public List<RoleModel> newRoleModels(
@@ -5080,21 +5096,22 @@ public class DataFactory {
 	}
 
 	protected List<ResourcePermissionModel> newResourcePermissionModels(
-		String name, String primKey, long ownerId, long companyId) {
+		String name, String primKey, long ownerId, long companyId,
+		RoleModel guestRoleModel, RoleModel ownerRoleModel,
+		RoleModel siteMemberRoleModel) {
 
 		List<ResourcePermissionModel> resourcePermissionModels =
 			new ArrayList<>(3);
 
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
-				name, primKey, _guestRoleModel.getRoleId(), 0, companyId));
+				name, primKey, guestRoleModel.getRoleId(), 0, companyId));
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
-				name, primKey, _ownerRoleModel.getRoleId(), ownerId,
-				companyId));
+				name, primKey, ownerRoleModel.getRoleId(), ownerId, companyId));
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
-				name, primKey, _siteMemberRoleModel.getRoleId(), 0, companyId));
+				name, primKey, siteMemberRoleModel.getRoleId(), 0, companyId));
 
 		return resourcePermissionModels;
 	}
