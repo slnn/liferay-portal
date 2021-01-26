@@ -599,6 +599,10 @@ public class DataFactory {
 		return sequence;
 	}
 
+	public RoleModel getSiteMemberRoleModel() {
+		return _siteMemberRoleModel;
+	}
+
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
 	}
@@ -3736,12 +3740,14 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		String name, long primKey, UserModel sampleUserModel) {
+		String name, long primKey, UserModel sampleUserModel,
+		RoleModel guestRoleModel, RoleModel ownerRoleModel,
+		RoleModel siteMemberRoleModel) {
 
 		return newResourcePermissionModels(
 			name, String.valueOf(primKey), sampleUserModel.getUserId(),
-			sampleUserModel.getCompanyId(), _guestRoleModel, _ownerRoleModel,
-			_siteMemberRoleModel);
+			sampleUserModel.getCompanyId(), guestRoleModel, ownerRoleModel,
+			siteMemberRoleModel);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

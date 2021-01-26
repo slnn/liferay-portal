@@ -5,7 +5,7 @@
 
 	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
 
-	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId, sampleUserModel)
+	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId, sampleUserModel, dataFactory.guestRoleModel, dataFactory.ownerRoleModel, dataFactory.siteMemberRoleModel)
 />
 
 <#list resourcePermissionModels as resourcePermissionModel>
