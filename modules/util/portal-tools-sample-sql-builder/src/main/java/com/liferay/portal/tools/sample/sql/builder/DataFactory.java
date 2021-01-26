@@ -3725,13 +3725,13 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		SegmentsEntryModel segmentsEntryModel) {
+		SegmentsEntryModel segmentsEntryModel, RoleModel guestRoleModel) {
 
 		return Collections.singletonList(
 			newResourcePermissionModel(
 				SegmentsEntry.class.getName(),
 				String.valueOf(segmentsEntryModel.getSegmentsEntryId()),
-				_guestRoleModel.getRoleId(), segmentsEntryModel.getUserId(),
+				guestRoleModel.getRoleId(), segmentsEntryModel.getUserId(),
 				segmentsEntryModel.getCompanyId()));
 	}
 
