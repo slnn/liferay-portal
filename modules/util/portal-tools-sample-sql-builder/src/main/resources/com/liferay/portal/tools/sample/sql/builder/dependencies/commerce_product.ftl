@@ -10,7 +10,7 @@
 
 ${dataFactory.toInsertSQL(commerceCatalogModel)}
 
-${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermissionModel(commerceCatalogModel))}
+${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermissionModel(commerceCatalogModel, dataFactory.guestRoleModel))}
 
 ${dataFactory.toInsertSQL(commerceChannelModel)}
 

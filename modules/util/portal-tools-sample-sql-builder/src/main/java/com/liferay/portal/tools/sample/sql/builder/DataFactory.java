@@ -461,6 +461,10 @@ public class DataFactory {
 		return getClassNameId(DLFileEntry.class);
 	}
 
+	public RoleModel getGuestRoleModel() {
+		return _guestRoleModel;
+	}
+
 	public long getJournalArticleClassNameId() {
 		return getClassNameId(JournalArticle.class);
 	}
@@ -1045,12 +1049,12 @@ public class DataFactory {
 	}
 
 	public ResourcePermissionModel newCommerceCatalogResourcePermissionModel(
-		CommerceCatalogModel commerceCatalogModel) {
+		CommerceCatalogModel commerceCatalogModel, RoleModel guestRoleModel) {
 
 		return newResourcePermissionModel(
 			CommerceCatalog.class.getName(),
 			String.valueOf(commerceCatalogModel.getCommerceCatalogId()),
-			_guestRoleModel.getRoleId(), commerceCatalogModel.getUserId(),
+			guestRoleModel.getRoleId(), commerceCatalogModel.getUserId(),
 			commerceCatalogModel.getCompanyId());
 	}
 
