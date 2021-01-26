@@ -3563,13 +3563,14 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AssetVocabularyModel assetVocabularyModel, UserModel defaultUserModel) {
+		AssetVocabularyModel assetVocabularyModel, UserModel defaultUserModel,
+		RoleModel ownerRoleModel) {
 
 		return Collections.singletonList(
 			newResourcePermissionModel(
 				AssetVocabulary.class.getName(),
 				String.valueOf(assetVocabularyModel.getVocabularyId()),
-				_ownerRoleModel.getRoleId(), defaultUserModel.getUserId(),
+				ownerRoleModel.getRoleId(), defaultUserModel.getUserId(),
 				assetVocabularyModel.getCompanyId()));
 	}
 

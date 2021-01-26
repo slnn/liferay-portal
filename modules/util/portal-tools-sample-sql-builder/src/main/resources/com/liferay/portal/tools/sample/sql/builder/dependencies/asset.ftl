@@ -2,6 +2,6 @@
 
 ${dataFactory.toInsertSQL(defaultAssetVocabularyModel)}
 
-<#list dataFactory.newResourcePermissionModels(defaultAssetVocabularyModel, defaultUserModel) as resourcePermissionModel>
+<#list dataFactory.newResourcePermissionModels(defaultAssetVocabularyModel, defaultUserModel, dataFactory.ownerRoleModel) as resourcePermissionModel>
 	${dataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>
