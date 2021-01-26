@@ -170,6 +170,12 @@
 >
 	${dataFactory.toInsertSQL(_groupModel)}
 
+	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_groupModel, dataFactory.ownerRoleModel)>
+
+	<#list resourcePermissionModels as resourcePermissionModel>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
+	</#list>
+
 	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel)>
 
 	<#list layoutSetModels as layoutSetModel>

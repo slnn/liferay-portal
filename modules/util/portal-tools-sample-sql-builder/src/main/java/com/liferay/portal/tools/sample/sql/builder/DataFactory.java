@@ -3643,12 +3643,12 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		GroupModel groupModel) {
+		GroupModel groupModel, RoleModel ownerRoleModel) {
 
 		return Collections.singletonList(
 			newResourcePermissionModel(
 				Group.class.getName(), String.valueOf(groupModel.getGroupId()),
-				_ownerRoleModel.getRoleId(), groupModel.getCreatorUserId(),
+				ownerRoleModel.getRoleId(), groupModel.getCreatorUserId(),
 				groupModel.getCompanyId()));
 	}
 
