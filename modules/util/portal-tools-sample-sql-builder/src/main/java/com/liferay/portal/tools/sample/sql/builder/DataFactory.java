@@ -553,6 +553,10 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
 	}
 
+	public int getMaxVirtualInstanceCount() {
+		return BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_COUNT;
+	}
+
 	public int getMaxWikiPageCommentCount() {
 		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
 	}
@@ -1216,7 +1220,7 @@ public class DataFactory {
 		return commerceCurrencyModel;
 	}
 
-	public CompanyModel newCompanyModel() {
+	public CompanyModel newCompanyModel(int index) {
 		CompanyModel companyModel = new CompanyModelImpl();
 
 		// PK fields
@@ -1226,7 +1230,7 @@ public class DataFactory {
 		// Other fields
 
 		companyModel.setAccountId(_counter.get());
-		companyModel.setWebId("liferay.com");
+		companyModel.setWebId(StringBundler.concat("liferay", index, ".com"));
 		companyModel.setMx("liferay.com");
 		companyModel.setActive(true);
 
