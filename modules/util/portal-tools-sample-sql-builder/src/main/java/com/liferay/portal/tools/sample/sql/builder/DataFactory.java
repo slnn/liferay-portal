@@ -345,7 +345,6 @@ public class DataFactory {
 			getClassNameId(JournalArticle.class), getClassNameId(WikiPage.class)
 		};
 
-		_accountId = _counter.get();
 		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureId = _counter.get();
@@ -1300,11 +1299,12 @@ public class DataFactory {
 
 		// Other fields
 
-		companyModel.setAccountId(_accountId);
+		companyModel.setAccountId(_counter.get());
 		companyModel.setWebId("liferay.com");
 		companyModel.setMx("liferay.com");
 		companyModel.setActive(true);
 
+		_accountId = companyModel.getAccountId();
 		_companyId = companyModel.getCompanyId();
 
 		return companyModel;
@@ -5299,7 +5299,7 @@ public class DataFactory {
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
-	private final long _accountId;
+	private long _accountId;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private Map<Long, List<AssetCategoryModel>>[] _assetCategoryModelsMaps =
