@@ -14,8 +14,6 @@
 
 <#include "groups.ftl">
 
-<#include "roles.ftl">
-
 <#include "release.ftl">
 
 <#include "counters.ftl">
