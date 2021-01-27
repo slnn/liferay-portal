@@ -346,7 +346,6 @@ public class DataFactory {
 		};
 
 		_accountId = _counter.get();
-		_companyId = _counter.get();
 		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureId = _counter.get();
@@ -1297,7 +1296,7 @@ public class DataFactory {
 
 		// PK fields
 
-		companyModel.setCompanyId(_companyId);
+		companyModel.setCompanyId(_counter.get());
 
 		// Other fields
 
@@ -1305,6 +1304,8 @@ public class DataFactory {
 		companyModel.setWebId("liferay.com");
 		companyModel.setMx("liferay.com");
 		companyModel.setActive(true);
+
+		_companyId = companyModel.getCompanyId();
 
 		return companyModel;
 	}
@@ -5315,7 +5316,7 @@ public class DataFactory {
 			new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
-	private final long _companyId;
+	private long _companyId;
 	private final SimpleCounter _counter;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
