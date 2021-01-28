@@ -19,11 +19,7 @@
 	_userModel=guestUserModel
 />
 
-<#-- Sample user -->
-
 <#assign
-	sampleUserModel = dataFactory.newSampleUserModel()
-
 	userGroupModel = dataFactory.newGroupModel(sampleUserModel)
 
 	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
