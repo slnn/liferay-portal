@@ -175,7 +175,6 @@ public class SampleSQLBuilderTest {
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
 				"/sample.ftl");
 		properties.put(BenchmarksPropsKeys.SEARCH_BAR_ENABLED, "true");
-		properties.put(BenchmarksPropsKeys.VIRTUAL_HOST_NAME, "localhost");
 	}
 
 	private void _loadHypersonic(String sqlDir, String outputDir)
