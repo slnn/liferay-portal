@@ -677,7 +677,7 @@ public class DataFactory {
 		unsyncBufferedReader.close();
 	}
 
-	public AccountModel newAccountModel() {
+	public AccountModel newAccountModel(CompanyModel companyModel) {
 		AccountModel accountModel = new AccountModelImpl();
 
 		// PK fields
@@ -686,13 +686,13 @@ public class DataFactory {
 
 		// Audit fields
 
-		accountModel.setCompanyId(_companyId);
+		accountModel.setCompanyId(companyModel.getCompanyId());
 		accountModel.setCreateDate(new Date());
 		accountModel.setModifiedDate(new Date());
 
 		// Other fields
 
-		accountModel.setName("Liferay");
+		accountModel.setName(companyModel.getWebId());
 		accountModel.setLegalName("Liferay, Inc.");
 
 		return accountModel;
@@ -3926,7 +3926,7 @@ public class DataFactory {
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
-	public VirtualHostModel newVirtualHostModel() {
+	public VirtualHostModel newVirtualHostModel(CompanyModel companyModel) {
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
 		//  PK fields
@@ -3935,11 +3935,11 @@ public class DataFactory {
 
 		// Audit fields
 
-		virtualHostModel.setCompanyId(_companyId);
+		virtualHostModel.setCompanyId(companyModel.getCompanyId());
 
 		// Other fields
 
-		virtualHostModel.setHostname(BenchmarksPropsValues.VIRTUAL_HOST_NAME);
+		virtualHostModel.setHostname(companyModel.getWebId());
 
 		return virtualHostModel;
 	}
