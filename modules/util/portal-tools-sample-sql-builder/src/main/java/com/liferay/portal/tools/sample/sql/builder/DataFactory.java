@@ -317,6 +317,9 @@ public class DataFactory {
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
 		_counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
+
+		_groupCounter = new SimpleCounter(1);
+
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
@@ -376,7 +379,9 @@ public class DataFactory {
 
 	public List<Long> getAssetCategoryIds(AssetEntryModel assetEntryModel) {
 		Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-			_assetCategoryModelsMaps[(int)assetEntryModel.getGroupId() - 1];
+			_assetCategoryModelsMaps
+				[((int)assetEntryModel.getGroupId() - 1) %
+					BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 		if ((assetCategoryModelsMap == null) ||
 			assetCategoryModelsMap.isEmpty()) {
@@ -420,8 +425,9 @@ public class DataFactory {
 	}
 
 	public List<Long> getAssetTagIds(AssetEntryModel assetEntryModel) {
-		Map<Long, List<AssetTagModel>> assetTagModelsMap =
-			_assetTagModelsMaps[(int)assetEntryModel.getGroupId() - 1];
+		Map<Long, List<AssetTagModel>> assetTagModelsMap = _assetTagModelsMaps
+			[((int)assetEntryModel.getGroupId() - 1) %
+				BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 		if ((assetTagModelsMap == null) || assetTagModelsMap.isEmpty()) {
 			return Collections.emptyList();
@@ -701,6 +707,10 @@ public class DataFactory {
 	public List<AssetCategoryModel> newAssetCategoryModels(
 		long groupId, List<AssetVocabularyModel> assetVocabularyModels) {
 
+		_assetCategoryModelsMaps =
+			(Map<Long, List<AssetCategoryModel>>[])
+				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+
 		List<AssetCategoryModel> assetCategoryModels = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(4);
@@ -752,7 +762,9 @@ public class DataFactory {
 				groupAssetCategoryModels.subList(fromIndex, toIndex));
 		}
 
-		_assetCategoryModelsMaps[(int)groupId - 1] = assetCategoryModelsMap;
+		_assetCategoryModelsMaps
+			[((int)groupId - 1) % BenchmarksPropsValues.MAX_GROUP_COUNT] =
+				assetCategoryModelsMap;
 
 		return assetCategoryModels;
 	}
@@ -887,7 +899,9 @@ public class DataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				_assetCategoryModelsMaps[(int)groupId - 1];
+				_assetCategoryModelsMaps
+					[((int)groupId - 1) %
+						BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
@@ -903,7 +917,9 @@ public class DataFactory {
 		}
 		else {
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				_assetTagModelsMaps[(int)groupId - 1];
+				_assetTagModelsMaps
+					[((int)groupId - 1) %
+						BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 				getNextAssetClassNameId(groupId));
@@ -960,6 +976,9 @@ public class DataFactory {
 	}
 
 	public List<AssetTagModel> newAssetTagModels(long groupId) {
+		_assetTagModelsMaps =
+			(Map<Long, List<AssetTagModel>>[])
+				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 		List<AssetTagModel> assetTagModels = new ArrayList<>();
 
 		List<AssetTagModel> groupAssetTagModels = new ArrayList<>(
@@ -1003,7 +1022,9 @@ public class DataFactory {
 				groupAssetTagModels.subList(fromIndex, toIndex));
 		}
 
-		_assetTagModelsMaps[(int)groupId - 1] = assetTagModelsMap;
+		_assetTagModelsMaps
+			[((int)groupId - 1) % BenchmarksPropsValues.MAX_GROUP_COUNT] =
+				assetTagModelsMap;
 
 		return assetTagModels;
 	}
@@ -2692,9 +2713,12 @@ public class DataFactory {
 			BenchmarksPropsValues.MAX_GROUP_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+			long groupId = _groupCounter.get();
+
 			groupModels.add(
 				newGroupModel(
-					i, getClassNameId(Group.class), i, "Site " + i, true));
+					groupId, getClassNameId(Group.class), groupId, "Site " + i,
+					true));
 		}
 
 		return groupModels;
@@ -3362,7 +3386,9 @@ public class DataFactory {
 
 		if (assetPublisherQueryName.equals("assetCategories")) {
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
-				_assetCategoryModelsMaps[(int)groupId - 1];
+				_assetCategoryModelsMaps
+					[((int)groupId - 1) %
+						BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 			List<AssetCategoryModel> assetCategoryModels =
 				assetCategoryModelsMap.get(getNextAssetClassNameId(groupId));
@@ -3378,7 +3404,9 @@ public class DataFactory {
 		}
 		else {
 			Map<Long, List<AssetTagModel>> assetTagModelsMap =
-				_assetTagModelsMaps[(int)groupId - 1];
+				_assetTagModelsMaps
+					[((int)groupId - 1) %
+						BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 			List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 				getNextAssetClassNameId(groupId));
@@ -4091,13 +4119,15 @@ public class DataFactory {
 		Map<Long, SimpleCounter>[] simpleCountersArray, long groupId,
 		long classNameId) {
 
-		Map<Long, SimpleCounter> simpleCounters =
-			simpleCountersArray[(int)groupId - 1];
+		Map<Long, SimpleCounter> simpleCounters = simpleCountersArray
+			[((int)groupId - 1) % BenchmarksPropsValues.MAX_GROUP_COUNT];
 
 		if (simpleCounters == null) {
 			simpleCounters = new HashMap<>();
 
-			simpleCountersArray[(int)groupId - 1] = simpleCounters;
+			simpleCountersArray
+				[((int)groupId - 1) % BenchmarksPropsValues.MAX_GROUP_COUNT] =
+					simpleCounters;
 		}
 
 		SimpleCounter simpleCounter = simpleCounters.get(classNameId);
@@ -5304,18 +5334,14 @@ public class DataFactory {
 	private long _accountId;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private Map<Long, List<AssetCategoryModel>>[] _assetCategoryModelsMaps =
-		(Map<Long, List<AssetCategoryModel>>[])
-			new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+	private Map<Long, List<AssetCategoryModel>>[] _assetCategoryModelsMaps;
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps =
-		(Map<Long, List<AssetTagModel>>[])
-			new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 	private long _companyId;
@@ -5334,6 +5360,7 @@ public class DataFactory {
 	private List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
 	private long _globalGroupId;
+	private final SimpleCounter _groupCounter;
 	private long _guestGroupId;
 	private RoleModel _guestRoleModel;
 	private String _journalArticleContent;
