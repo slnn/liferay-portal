@@ -348,8 +348,6 @@ public class DataFactory {
 			getClassNameId(JournalArticle.class), getClassNameId(WikiPage.class)
 		};
 
-		_defaultDLDDMStructureVersionId = _counter.get();
-
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
 			"ddm_structure_layout_basic_document.json");
@@ -2201,6 +2199,8 @@ public class DataFactory {
 
 	public DDMStructureVersionModel newDefaultDLDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
+
+		_defaultDLDDMStructureVersionId = _counter.get();
 
 		return newDDMStructureVersionModel(
 			ddmStructureModel, _defaultDLDDMStructureVersionId);
@@ -5353,7 +5353,7 @@ public class DataFactory {
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private long _defaultDLDDMStructureId;
-	private final long _defaultDLDDMStructureVersionId;
+	private long _defaultDLDDMStructureVersionId;
 	private String _defaultJournalArticleId;
 	private long _defaultJournalDDMStructureId;
 	private long _defaultJournalDDMStructureVersionId;
