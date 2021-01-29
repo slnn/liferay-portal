@@ -7,7 +7,7 @@
 
 	${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel(companyModel))}
 
-	${csvFileWriter.write("company", companyModel.companyId + "\n")}
+	${csvFileWriter.write("company", companyModel.companyId + "," + companyModel.webId+ "\n")}
 
 	<#-- Sample user -->
 
