@@ -324,7 +324,6 @@ public class DataFactory {
 		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
-		_userScreenNameCounter = new SimpleCounter();
 
 		List<String> models = ModelHintsUtil.getModels();
 
@@ -3791,6 +3790,8 @@ public class DataFactory {
 	public UserModel newSampleUserModel() {
 		_sampleUserId = _counter.get();
 
+		_userScreenNameCounter = new SimpleCounter();
+
 		return newUserModel(
 			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
 			_SAMPLE_USER_NAME, false);
@@ -5382,6 +5383,6 @@ public class DataFactory {
 	private final SimpleCounter _socialActivityCounter;
 	private final SimpleCounter _timeCounter;
 	private RoleModel _userRoleModel;
-	private final SimpleCounter _userScreenNameCounter;
+	private SimpleCounter _userScreenNameCounter;
 
 }
