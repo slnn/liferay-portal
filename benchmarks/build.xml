@@ -67,7 +67,7 @@ Use ${sample.sql.output.sql.file} and sql files in ${sample.sql.output.dir} to i
 		<delete includeemptydirs="true">
 			<fileset
 				dir="${basedir}"
-				includes="benchmarks-actual.properties, liferay/**, ${build.dir}/**, ${sample.sql.output.sql.file}"
+				includes="benchmarks-actual.properties, liferay/**, ${build.dir}/**, *.sql"
 			/>
 		</delete>
 	</target>
