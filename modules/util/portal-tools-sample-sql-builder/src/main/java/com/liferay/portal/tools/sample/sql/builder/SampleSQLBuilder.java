@@ -311,6 +311,20 @@ public class SampleSQLBuilder {
 			for (File inputFile : inputDir.listFiles()) {
 				String inputFileName = inputFile.getName();
 
+				if (inputFileName.contains("create")) {
+					mergeSQL(inputFile, outputFileChannel);
+
+					break;
+				}
+			}
+
+			for (File inputFile : inputDir.listFiles()) {
+				String inputFileName = inputFile.getName();
+
+				if (inputFileName.contains("create")) {
+					continue;
+				}
+
 				if (inputFileName.equals("misc.sql")) {
 					miscSQLFile = inputFile;
 
