@@ -4,11 +4,10 @@
 	<import file="../build-common.xml" />
 
 	<property name="build.dir" value="build" />
+	<property name="sample.sql.output.sql.file" value="${basedir}/sample-data-${sample.sql.db.type}.sql" />
 
-	<target name="build-sample-sql">
+	<target depends="clean" name="build-sample-sql">
 		<property name="sample.sql.output.dir" value="${basedir}/${build.dir}" />
-	
-		property name="sample.sql.output.sql.file" value="${basedir}/sample-data-${sample.sql.db.type}.sql" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
@@ -57,7 +56,7 @@
 	<target name="clean">
 		<delete includeemptydirs="true">
 			<fileset
-				dir="."
+				dir="${basedir}"
 				includes="*.sql,benchmarks-actual.properties, liferay/**, ${build.dir}/**"
 			/>
 		</delete>
