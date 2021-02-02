@@ -7,8 +7,8 @@
 
 	<target name="build-sample-sql">
 		<property name="sample.sql.output.dir" value="${basedir}/${build.dir}" />
-		
-		<property name="output.sql.file" value="sample-data-${sample.sql.db.type}.sql" />
+	
+		property name="sample.sql.output.sql.file" value="${basedir}/sample-data-${sample.sql.db.type}.sql" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
@@ -42,12 +42,12 @@
 						/>
 					</path>
 					<sequential>
-						<concat append="true" destfile="${output.sql.file}">
+						<concat append="true" destfile="${sample.sql.output.sql.file}">
 							<filelist dir="${sample.sql.output.dir}" files="@{sql-file-filename}" />
 						</concat>
 					</sequential>
 				</for>
-				<concat append="true" destfile="${output.sql.file}">
+				<concat append="true" destfile="${sample.sql.output.sql.file}">
 					<filelist dir="${sample.sql.output.dir}" files="misc.sql" />
 				</concat>
 			</then>
