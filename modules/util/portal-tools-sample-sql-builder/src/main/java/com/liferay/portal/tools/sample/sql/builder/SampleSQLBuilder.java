@@ -23,7 +23,6 @@ import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,7 +34,6 @@ import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,8 +42,6 @@ import java.io.Reader;
 import java.io.Writer;
 
 import java.net.URL;
-
-import java.nio.channels.FileChannel;
 
 import java.sql.SQLException;
 
