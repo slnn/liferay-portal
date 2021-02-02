@@ -106,7 +106,7 @@ public class SampleSQLBuilder {
 			}
 			else {
 				File outputDir = new File(
-					BenchmarksPropsValues.OUTPUT_DIR, "output");
+					BenchmarksPropsValues.OUTPUT_DIR, "sqlfiles");
 
 				FileUtil.deltree(outputDir);
 
