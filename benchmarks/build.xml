@@ -46,10 +46,20 @@
 						</concat>
 					</sequential>
 				</for>
+
 				<concat append="true" destfile="${sample.sql.output.sql.file}">
 					<filelist dir="${sample.sql.output.dir}" files="misc.sql" />
 				</concat>
+
+				<echo>
+Sample SQL Build Successful
+Use ${sample.sql.output.sql.file} to insert into database.</echo>
 			</then>
+			<else>
+				<echo>
+Sample SQL Build Successful
+Use ${sample.sql.output.sql.file} and sql files in ${sample.sql.output.dir} to insert into database.</echo>
+			</else>
 		</if>
 	</target>
 
