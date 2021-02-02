@@ -82,7 +82,10 @@ public class SampleSQLBuilder {
 			exception.printStackTrace();
 		}
 
-		Reader reader = generateSQL();
+		File sampleSQLFile = new File(
+			BenchmarksPropsValues.OUTPUT_DIR, "sample.sql");
+
+		Reader reader = generateSQL(sampleSQLFile);
 
 		try {
 
@@ -121,6 +124,7 @@ public class SampleSQLBuilder {
 		}
 		finally {
 			FileUtil.deltree(tempDir);
+			sampleSQLFile.delete();
 		}
 	}
 
@@ -255,7 +259,7 @@ public class SampleSQLBuilder {
 		return new UnsyncBufferedWriter(writer, _WRITER_BUFFER_SIZE);
 	}
 
-	protected Reader generateSQL() {
+	protected Reader generateSQL(File sampleSQLFile) {
 		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 
 		Thread thread = new Thread(
@@ -264,10 +268,7 @@ public class SampleSQLBuilder {
 					Writer sampleSQLWriter = new UnsyncTeeWriter(
 						new UnsyncBufferedWriter(
 							charPipe.getWriter(), _WRITER_BUFFER_SIZE),
-						createFileWriter(
-							new File(
-								BenchmarksPropsValues.OUTPUT_DIR,
-								"sample.sql")))) {
+						createFileWriter(sampleSQLFile))) {
 
 					FreeMarkerUtil.process(
 						BenchmarksPropsValues.SCRIPT,
