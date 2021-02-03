@@ -4011,6 +4011,24 @@ public class DataFactory {
 		return virtualHostModel;
 	}
 
+	public List<UserModel> newVirtualInstanceUserModels() {
+		List<UserModel> userModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_USER_COUNT);
+
+		for (int i = 0;
+			 i < BenchmarksPropsValues.MAX_VIRTUAL_INSTANCE_USER_COUNT; i++) {
+
+			String[] userName = nextUserName(i);
+
+			userModels.add(
+				newUserModel(
+					_counter.get(), userName[0], userName[1],
+					"test" + _userScreenNameCounter.get(), false));
+		}
+
+		return userModels;
+	}
+
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
 		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_WIKI_NODE_COUNT);
