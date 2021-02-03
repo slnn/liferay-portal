@@ -168,7 +168,8 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.OUTPUT_CSV_FILE_NAMES,
 			"assetPublisher,blog,company,documentLibrary,dynamicDataList," +
-				"fragment,layout,mbCategory,mbThread,repository,segments,wiki");
+				"fragment,layout,mbCategory,mbThread,repository,segments," +
+					"user,wiki");
 		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
 		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(
