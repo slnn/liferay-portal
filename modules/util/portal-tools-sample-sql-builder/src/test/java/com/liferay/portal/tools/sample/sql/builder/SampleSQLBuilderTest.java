@@ -160,6 +160,7 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_VIRTUAL_INSTANCE_COUNT, "2");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_PAGE_COMMENT_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_PAGE_COUNT, "1");
@@ -167,7 +168,8 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.OUTPUT_CSV_FILE_NAMES,
 			"assetPublisher,blog,company,documentLibrary,dynamicDataList," +
-				"fragment,layout,mbCategory,mbThread,repository,segments,wiki");
+				"fragment,layout,mbCategory,mbThread,repository,segments," +
+					"user,wiki");
 		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
 		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(

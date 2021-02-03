@@ -33,7 +33,7 @@
 
 	<#include "mb.ftl">
 
-	<#include "users.ftl">
+	<#include "virtaul_instance_users.ftl">
 
 	<#include "wiki.ftl">
 

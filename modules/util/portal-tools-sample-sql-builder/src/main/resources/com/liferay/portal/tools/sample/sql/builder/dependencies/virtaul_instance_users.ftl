@@ -2,7 +2,7 @@
 	groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId, guestGroupModel)
 	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
 
-	userModels = dataFactory.newUserModels()
+	userModels = dataFactory.newVirtualInstanceUserModels()
 />
 
 <#list userModels as userModel>
