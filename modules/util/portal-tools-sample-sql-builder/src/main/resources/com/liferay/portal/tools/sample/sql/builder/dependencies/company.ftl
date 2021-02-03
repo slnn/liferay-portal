@@ -33,5 +33,5 @@ ${csvFileWriter.write("company", companyModel.companyId + "," + companyModel.web
 
 	<#include "roles.ftl">
 
-	<#include "groups.ftl">
+	<#include "virtual_instance_groups.ftl">
 </#list>
