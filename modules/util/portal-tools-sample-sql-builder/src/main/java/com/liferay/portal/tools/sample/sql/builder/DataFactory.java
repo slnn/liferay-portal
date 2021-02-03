@@ -680,6 +680,27 @@ public class DataFactory {
 		unsyncBufferedReader.close();
 	}
 
+	public AccountModel newAccountModel() {
+		AccountModel accountModel = new AccountModelImpl();
+
+		// PK fields
+
+		accountModel.setAccountId(_accountId);
+
+		// Audit fields
+
+		accountModel.setCompanyId(_companyId);
+		accountModel.setCreateDate(new Date());
+		accountModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		accountModel.setName("Liferay");
+		accountModel.setLegalName("Liferay, Inc.");
+
+		return accountModel;
+	}
+
 	public AccountModel newAccountModel(CompanyModel companyModel) {
 		AccountModel accountModel = new AccountModelImpl();
 
@@ -2183,6 +2204,26 @@ public class DataFactory {
 		return newAssetVocabularyModel(
 			_globalGroupId, _defaultUserId, null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
+	}
+
+	public CompanyModel newDefaultCompanyModel() {
+		CompanyModel companyModel = new CompanyModelImpl();
+
+		// PK fields
+
+		companyModel.setCompanyId(_counter.get());
+
+		// Other fields
+
+		companyModel.setAccountId(_counter.get());
+		companyModel.setWebId("liferay.com");
+		companyModel.setMx("liferay.com");
+		companyModel.setActive(true);
+
+		_accountId = companyModel.getAccountId();
+		_companyId = companyModel.getCompanyId();
+
+		return companyModel;
 	}
 
 	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel() {
@@ -3932,6 +3973,24 @@ public class DataFactory {
 		return newGroupModel(
 			_counter.get(), getClassNameId(UserPersonalSite.class),
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
+	}
+
+	public VirtualHostModel newVirtualHostModel() {
+		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
+
+		//  PK fields
+
+		virtualHostModel.setVirtualHostId(_counter.get());
+
+		// Audit fields
+
+		virtualHostModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		virtualHostModel.setHostname(BenchmarksPropsValues.VIRTUAL_HOST_NAME);
+
+		return virtualHostModel;
 	}
 
 	public VirtualHostModel newVirtualHostModel(CompanyModel companyModel) {
