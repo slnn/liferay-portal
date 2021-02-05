@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -327,43 +328,55 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		clearCache();
 
-		for (Company company : companyLocalService.getCompanies()) {
-			Portlet companyPortletModel = (Portlet)portlet.clone();
+		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
 
-			companyPortletModel.setCompanyId(company.getCompanyId());
+		try {
+			for (Company company : companyLocalService.getCompanies()) {
+				CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
-			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-				companyPortletModel.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+				Portlet companyPortletModel = (Portlet)portlet.clone();
 
-			if (portletCategory == null) {
-				_log.error(
-					"Unable to register remote portlet for company " +
-						companyPortletModel.getCompanyId() +
-							" because it does not exist");
+				companyPortletModel.setCompanyId(company.getCompanyId());
 
-				return portlet;
-			}
+				PortletCategory portletCategory =
+					(PortletCategory)WebAppPool.get(
+						companyPortletModel.getCompanyId(),
+						WebKeys.PORTLET_CATEGORY);
 
-			portletCategory.separate(companyPortletModel.getPortletId());
+				if (portletCategory == null) {
+					_log.error(
+						"Unable to register remote portlet for company " +
+							companyPortletModel.getCompanyId() +
+								" because it does not exist");
 
-			for (String categoryName : categoryNames) {
-				PortletCategory newPortletCategory = new PortletCategory(
-					categoryName);
-
-				if (newPortletCategory.getParentCategory() == null) {
-					PortletCategory rootPortletCategory = new PortletCategory();
-
-					rootPortletCategory.addCategory(newPortletCategory);
+					return portlet;
 				}
 
-				Set<String> portletIds = newPortletCategory.getPortletIds();
+				portletCategory.separate(companyPortletModel.getPortletId());
 
-				portletIds.add(companyPortletModel.getPortletId());
+				for (String categoryName : categoryNames) {
+					PortletCategory newPortletCategory = new PortletCategory(
+						categoryName);
 
-				portletCategory.merge(newPortletCategory.getRootCategory());
+					if (newPortletCategory.getParentCategory() == null) {
+						PortletCategory rootPortletCategory =
+							new PortletCategory();
+
+						rootPortletCategory.addCategory(newPortletCategory);
+					}
+
+					Set<String> portletIds = newPortletCategory.getPortletIds();
+
+					portletIds.add(companyPortletModel.getPortletId());
+
+					portletCategory.merge(newPortletCategory.getRootCategory());
+				}
+
+				checkPortlet(companyPortletModel);
 			}
-
-			checkPortlet(companyPortletModel);
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 		}
 
 		return portlet;
