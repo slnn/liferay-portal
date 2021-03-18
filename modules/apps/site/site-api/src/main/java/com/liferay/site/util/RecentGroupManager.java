@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -80,6 +82,29 @@ public class RecentGroupManager {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			String value = SessionClicks.get(
+				httpServletRequest, _KEY_RECENT_GROUPS, null);
+
+			List<Long> groupIds = ListUtil.fromArray(
+				ArrayUtil.toLongArray(
+					com.liferay.portal.kernel.util.StringUtil.split(
+						value, 0L)));
+
+			groupIds.remove(liveGroupId);
+
+			groupIds.add(0, liveGroupId);
+
+			groupIds = ListUtil.subList(
+				groupIds, 0, PropsValues.RECENT_GROUPS_MAX_ELEMENTS);
+
+			SessionClicks.put(
+				httpServletRequest, _KEY_RECENT_GROUPS,
+				com.liferay.portal.kernel.util.StringUtil.merge(groupIds));
+
+			return;
+		}
 
 		_portalPreferenceValueLocalService.updatePreferenceValue(
 			themeDisplay.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER,
