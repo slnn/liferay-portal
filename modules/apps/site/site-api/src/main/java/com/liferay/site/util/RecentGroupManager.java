@@ -14,6 +14,9 @@
 
 package com.liferay.site.util;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -24,14 +27,16 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -72,21 +77,38 @@ public class RecentGroupManager {
 			return;
 		}
 
-		String value = SessionClicks.get(
-			httpServletRequest, _KEY_RECENT_GROUPS, null);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		List<Long> groupIds = ListUtil.fromArray(
-			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
+		_portalPreferenceValueLocalService.updatePreferenceValue(
+			themeDisplay.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER,
+			SessionClicks.class.getName(), _KEY_RECENT_GROUPS, 0,
+			value -> {
+				String liveGroupIdString = String.valueOf(liveGroupId);
 
-		groupIds.remove(liveGroupId);
+				List<String> groupIds = StringUtil.split(value);
 
-		groupIds.add(0, liveGroupId);
+				if (groupIds.isEmpty()) {
+					return liveGroupIdString;
+				}
 
-		groupIds = ListUtil.subList(
-			groupIds, 0, PropsValues.RECENT_GROUPS_MAX_ELEMENTS);
+				groupIds.remove(liveGroupIdString);
 
-		SessionClicks.put(
-			httpServletRequest, _KEY_RECENT_GROUPS, StringUtil.merge(groupIds));
+				StringBundler sb = new StringBundler((2 * groupIds.size()) + 1);
+
+				sb.append(liveGroupIdString);
+
+				for (int i = 0;
+					 (i < groupIds.size()) &&
+					 (i < PropsValues.RECENT_GROUPS_MAX_ELEMENTS); i++) {
+
+					sb.append(StringPool.COMMA);
+					sb.append(groupIds.get(i));
+				}
+
+				return sb.toString();
+			});
 	}
 
 	public List<Group> getRecentGroups(HttpServletRequest httpServletRequest) {
@@ -113,16 +135,17 @@ public class RecentGroupManager {
 	 */
 	@Deprecated
 	protected List<Group> getRecentGroups(String value) {
-		long[] groupIds = StringUtil.split(value, 0L);
+		List<String> groupIds = StringUtil.split(value);
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		if (groupIds.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		List<Group> groups = new ArrayList<>(groupIds.length);
+		List<Group> groups = new ArrayList<>(groupIds.size());
 
-		for (long groupId : groupIds) {
-			Group group = _groupLocalService.fetchGroup(groupId);
+		for (String groupId : groupIds) {
+			Group group = _groupLocalService.fetchGroup(
+				GetterUtil.getLong(groupId));
 
 			if (!_groupLocalService.isLiveGroupActive(group)) {
 				continue;
@@ -138,20 +161,21 @@ public class RecentGroupManager {
 			String value, PortletRequest portletRequest)
 		throws Exception {
 
-		long[] groupIds = StringUtil.split(value, 0L);
+		List<String> groupIds = StringUtil.split(value);
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		if (groupIds.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		List<Group> groups = new ArrayList<>(groupIds.length);
+		List<Group> groups = new ArrayList<>(groupIds.size());
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(
 				_portal.getUser(portletRequest));
 
-		for (long groupId : groupIds) {
-			Group group = _groupLocalService.fetchGroup(groupId);
+		for (String groupId : groupIds) {
+			Group group = _groupLocalService.fetchGroup(
+				GetterUtil.getLong(groupId));
 
 			if (!_groupLocalService.isLiveGroupActive(group)) {
 				continue;
@@ -224,5 +248,9 @@ public class RecentGroupManager {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalPreferenceValueLocalService
+		_portalPreferenceValueLocalService;
 
 }
