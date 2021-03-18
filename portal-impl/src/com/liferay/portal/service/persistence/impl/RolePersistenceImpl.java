@@ -5859,18 +5859,17 @@ public class RolePersistenceImpl
 
 				List<Role> list = query.list();
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_N, finderArgs, list);
-					}
-				}
-				else {
+				if (!list.isEmpty()) {
 					Role role = list.get(0);
 
 					result = role;
 
-					cacheResult(role);
+					if (useFinderCache && productionMode) {
+						cacheResult(role);
+					}
+				}
+				else {
+					result = null;
 				}
 			}
 			catch (Exception exception) {
@@ -5881,11 +5880,11 @@ public class RolePersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
+		if (result != null) {
+			return (Role)result;
 		}
 		else {
-			return (Role)result;
+			return null;
 		}
 	}
 
