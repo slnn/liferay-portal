@@ -72,7 +72,8 @@ public class RecentGroupManager {
 			return;
 		}
 
-		String value = _getRecentGroupsValue(httpServletRequest);
+		String value = SessionClicks.get(
+			httpServletRequest, _KEY_RECENT_GROUPS, null);
 
 		List<Long> groupIds = ListUtil.fromArray(
 			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
@@ -88,7 +89,8 @@ public class RecentGroupManager {
 	}
 
 	public List<Group> getRecentGroups(HttpServletRequest httpServletRequest) {
-		String value = _getRecentGroupsValue(httpServletRequest);
+		String value = SessionClicks.get(
+			httpServletRequest, _KEY_RECENT_GROUPS, null);
 
 		try {
 			PortletRequest portletRequest =
@@ -203,12 +205,6 @@ public class RecentGroupManager {
 		}
 
 		return groupId;
-	}
-
-	private String _getRecentGroupsValue(
-		HttpServletRequest httpServletRequest) {
-
-		return SessionClicks.get(httpServletRequest, _KEY_RECENT_GROUPS, null);
 	}
 
 	private void _setRecentGroupsValue(
