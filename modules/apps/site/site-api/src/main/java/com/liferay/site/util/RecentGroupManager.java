@@ -85,7 +85,8 @@ public class RecentGroupManager {
 		groupIds = ListUtil.subList(
 			groupIds, 0, PropsValues.RECENT_GROUPS_MAX_ELEMENTS);
 
-		_setRecentGroupsValue(httpServletRequest, StringUtil.merge(groupIds));
+		SessionClicks.put(
+			httpServletRequest, _KEY_RECENT_GROUPS, StringUtil.merge(groupIds));
 	}
 
 	public List<Group> getRecentGroups(HttpServletRequest httpServletRequest) {
@@ -205,12 +206,6 @@ public class RecentGroupManager {
 		}
 
 		return groupId;
-	}
-
-	private void _setRecentGroupsValue(
-		HttpServletRequest httpServletRequest, String value) {
-
-		SessionClicks.put(httpServletRequest, _KEY_RECENT_GROUPS, value);
 	}
 
 	private static final String _KEY_RECENT_GROUPS =
