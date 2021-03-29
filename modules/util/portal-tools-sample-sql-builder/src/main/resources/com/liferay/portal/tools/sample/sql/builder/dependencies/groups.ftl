@@ -60,9 +60,7 @@ ${dataFactory.toInsertSQL(countryModel)}
 		_templateFileName="default-homepage-layout-definition.json"
 	/>
 
-	<#assign groupLayoutModels = dataFactory.newGroupLayoutModels(groupId) />
-
-	<#list groupLayoutModels as groupLayoutModel>
+	<#list dataFactory.newGroupLayoutModels(groupId) as groupLayoutModel>
 		<@insertLayout _layoutModel=groupLayoutModel />
 	</#list>
 
