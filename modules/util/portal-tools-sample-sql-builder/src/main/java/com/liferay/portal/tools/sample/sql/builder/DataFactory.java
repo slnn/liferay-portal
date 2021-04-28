@@ -3915,8 +3915,11 @@ public class DataFactory {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _HEADING_RENDER_KEY, _readFile("heading.css"),
-					_readFile("heading.html"),
+					layoutModel, _HEADING_RENDER_KEY,
+					_readFile(
+						_getFragmentComponentInputStream("heading", "css")),
+					_readFile(
+						_getFragmentComponentInputStream("heading", "html")),
 					_readFile("heading_configuration.json"),
 					_readFile("heading_editValue.json"), 0,
 					headingRenderNamespace));
@@ -3924,14 +3927,19 @@ public class DataFactory {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _PARAGRAPH_RENDER_KEY,
-					_readFile("paragraph.css"), _readFile("paragraph.html"),
+					_readFile(
+						_getFragmentComponentInputStream("paragraph", "css")),
+					_readFile(
+						_getFragmentComponentInputStream("paragraph", "html")),
 					_readFile("paragraph_configuration.json"),
 					_replaceReleaseInfo(_readFile("paragraph_editValue.json")),
 					0, paragraphRenderNamespace));
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _IMAGE_RENDER_KEY, "", _readFile("image.html"),
+					layoutModel, _IMAGE_RENDER_KEY, "",
+					_readFile(
+						_getFragmentComponentInputStream("image", "html")),
 					_readFile("image_configuration.json"),
 					_readFile("image_editValue.json"), 0,
 					imageRenderNamespace));
