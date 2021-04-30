@@ -3196,8 +3196,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel1 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel1.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
@@ -3207,8 +3215,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel2 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel2.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
@@ -3220,8 +3236,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel3 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel3.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel3.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
@@ -3246,8 +3270,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel1 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel1.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
@@ -3259,8 +3291,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel2 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel2.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
@@ -3275,8 +3315,16 @@ public class DataFactory {
 			DDMFieldAttributeModel ddmFieldAttributeModel =
 				new DDMFieldAttributeModelImpl();
 
+			//  PK fields
+
 			ddmFieldAttributeModel.setFieldAttributeId(_counter.get());
+
+			// Audit fields
+
 			ddmFieldAttributeModel.setCompanyId(_companyId);
+
+			// Other fields
+
 			ddmFieldAttributeModel.setFieldId(ddmFieldModel.getFieldId());
 			ddmFieldAttributeModel.setStorageId(
 				ddmStorageLinkModel.getClassPK());
@@ -3300,8 +3348,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel1 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel1.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel1.setStorageId(journalArticleModel.getId());
 		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
@@ -3311,8 +3367,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel2 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel2.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel2.setStorageId(journalArticleModel.getId());
 		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
@@ -3324,8 +3388,16 @@ public class DataFactory {
 		DDMFieldAttributeModel ddmFieldAttributeModel3 =
 			new DDMFieldAttributeModelImpl();
 
+		//  PK fields
+
 		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldAttributeModel3.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel3.setStorageId(journalArticleModel.getId());
 		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
@@ -3353,8 +3425,16 @@ public class DataFactory {
 
 		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
 
+		// PK fields
+
 		ddmFieldModel1.setFieldId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldModel1.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldModel1.setParentFieldId(0);
 		ddmFieldModel1.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldModel1.setStructureVersionId(_defaultDLDDMStructureVersionId);
@@ -3366,8 +3446,16 @@ public class DataFactory {
 
 		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
 
+		// PK fields
+
 		ddmFieldModel2.setFieldId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldModel2.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldModel2.setParentFieldId(0);
 		ddmFieldModel2.setStorageId(ddmStorageLinkModel.getClassPK());
 		ddmFieldModel2.setStructureVersionId(_defaultDLDDMStructureVersionId);
@@ -3389,8 +3477,16 @@ public class DataFactory {
 
 		DDMFieldModel ddmFieldModel = new DDMFieldModelImpl();
 
+		// PK fields
+
 		ddmFieldModel.setFieldId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldModel.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldModel.setParentFieldId(0);
 		ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
 
@@ -3411,8 +3507,16 @@ public class DataFactory {
 
 			ddmFieldModel = new DDMFieldModelImpl();
 
+			// PK fields
+
 			ddmFieldModel.setFieldId(_counter.get());
+
+			// Audit fields
+
 			ddmFieldModel.setCompanyId(_companyId);
+
+			// Other fields
+
 			ddmFieldModel.setParentFieldId(0);
 			ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
 			ddmFieldModel.setStructureVersionId(structureVersionId);
@@ -3434,8 +3538,16 @@ public class DataFactory {
 
 		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
 
+		// PK fields
+
 		ddmFieldModel1.setFieldId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldModel1.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldModel1.setParentFieldId(0);
 		ddmFieldModel1.setStorageId(journalArticleModel.getId());
 		ddmFieldModel1.setStructureVersionId(
@@ -3448,8 +3560,16 @@ public class DataFactory {
 
 		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
 
+		// PK fields
+
 		ddmFieldModel2.setFieldId(_counter.get());
+
+		// Audit fields
+
 		ddmFieldModel2.setCompanyId(_companyId);
+
+		// Other fields
+
 		ddmFieldModel2.setParentFieldId(0);
 		ddmFieldModel2.setStorageId(journalArticleModel.getId());
 		ddmFieldModel2.setStructureVersionId(
