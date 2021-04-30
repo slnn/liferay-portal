@@ -61,8 +61,8 @@ public class CacheFieldEntryPersistenceImplTest {
 		CacheFieldEntry cacheFieldEntry = _cacheFieldEntryPersistence.create(
 			RandomTestUtil.nextLong());
 
-		cacheFieldEntry.setGroupId(groupId);
 		cacheFieldEntry.setName("test.name");
+		cacheFieldEntry.setGroupId(groupId);
 
 		_cacheFieldEntry = _cacheFieldEntryPersistence.update(cacheFieldEntry);
 
@@ -75,7 +75,7 @@ public class CacheFieldEntryPersistenceImplTest {
 
 		Assert.assertNotNull(
 			ReflectionTestUtil.getFieldValue(
-				existingCacheFieldEntry, "_nickname"));
+				existingCacheFieldEntry, "_nickName"));
 	}
 
 	@Test
@@ -94,7 +94,7 @@ public class CacheFieldEntryPersistenceImplTest {
 		Assert.assertNotNull(existingCacheFieldEntry);
 		Assert.assertNotNull(
 			ReflectionTestUtil.getFieldValue(
-				existingCacheFieldEntry, "_nickname"));
+				existingCacheFieldEntry, "_nickName"));
 	}
 
 	@DeleteAfterTestRun
