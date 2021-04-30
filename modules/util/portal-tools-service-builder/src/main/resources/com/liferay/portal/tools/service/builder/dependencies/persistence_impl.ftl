@@ -356,7 +356,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	@Override
 	public void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
 		for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
-
 			<#if entity.isChangeTrackingEnabled()>
 				if (${entity.variableName}.getCtCollectionId() != 0) {
 					<#if serviceBuilder.isVersionLTE_7_2_0()>
@@ -367,39 +366,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			</#if>
 
-			<#if (cacheFields?size > 0)>
-				${entity.name} cached${entity.name} = (${entity.name})${entityCache}.getResult(
-					<#if serviceBuilder.isVersionLTE_7_2_0()>
-						${entityCacheEnabled},
-					</#if>
-					${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey());
-
-				if (cached${entity.name} == null) {
-					cacheResult(${entity.variableName});
-				}
-				else {
-					${entity.name}ModelImpl ${entity.variableName}ModelImpl = (${entity.name}ModelImpl)${entity.variableName};
-					${entity.name}ModelImpl cached${entity.name}ModelImpl = (${entity.name}ModelImpl)cached${entity.name};
-
-					<#list cacheFields as cacheField>
-						<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
-
-						${entity.variableName}ModelImpl.set${methodName}(cached${entity.name}ModelImpl.get${methodName}());
-					</#list>
-				}
-			<#else>
-				if (${entityCache}.getResult(
-					<#if serviceBuilder.isVersionLTE_7_2_0()>
-						${entityCacheEnabled},
-					</#if>
-					${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey()) == null) {
-					cacheResult(${entity.variableName});
-				}
+			if (${entityCache}.getResult(
 				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					else {
-						${entity.variableName}.resetOriginalValues();
-					}
+					${entityCacheEnabled},
 				</#if>
+				${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey()) == null) {
+				cacheResult(${entity.variableName});
+			}
+			<#if serviceBuilder.isVersionLTE_7_2_0()>
+				else {
+					${entity.variableName}.resetOriginalValues();
+				}
 			</#if>
 		}
 	}
