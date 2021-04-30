@@ -356,6 +356,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	@Override
 	public void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
 		for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
+
 			<#if entity.isChangeTrackingEnabled()>
 				if (${entity.variableName}.getCtCollectionId() != 0) {
 					<#if serviceBuilder.isVersionLTE_7_2_0()>
