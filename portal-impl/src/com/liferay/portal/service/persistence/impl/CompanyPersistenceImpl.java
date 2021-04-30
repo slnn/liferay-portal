@@ -1281,22 +1281,10 @@ public class CompanyPersistenceImpl
 	@Override
 	public void cacheResult(List<Company> companies) {
 		for (Company company : companies) {
-			Company cachedCompany = (Company)EntityCacheUtil.getResult(
-				CompanyImpl.class, company.getPrimaryKey());
+			if (EntityCacheUtil.getResult(
+					CompanyImpl.class, company.getPrimaryKey()) == null) {
 
-			if (cachedCompany == null) {
 				cacheResult(company);
-			}
-			else {
-				CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
-				CompanyModelImpl cachedCompanyModelImpl =
-					(CompanyModelImpl)cachedCompany;
-
-				companyModelImpl.setCompanySecurityBag(
-					cachedCompanyModelImpl.getCompanySecurityBag());
-
-				companyModelImpl.setVirtualHostname(
-					cachedCompanyModelImpl.getVirtualHostname());
 			}
 		}
 	}

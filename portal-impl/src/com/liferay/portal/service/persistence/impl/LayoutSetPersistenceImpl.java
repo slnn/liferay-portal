@@ -2313,24 +2313,10 @@ public class LayoutSetPersistenceImpl
 				continue;
 			}
 
-			LayoutSet cachedLayoutSet = (LayoutSet)EntityCacheUtil.getResult(
-				LayoutSetImpl.class, layoutSet.getPrimaryKey());
+			if (EntityCacheUtil.getResult(
+					LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
 
-			if (cachedLayoutSet == null) {
 				cacheResult(layoutSet);
-			}
-			else {
-				LayoutSetModelImpl layoutSetModelImpl =
-					(LayoutSetModelImpl)layoutSet;
-				LayoutSetModelImpl cachedLayoutSetModelImpl =
-					(LayoutSetModelImpl)cachedLayoutSet;
-
-				layoutSetModelImpl.setCompanyFallbackVirtualHostname(
-					cachedLayoutSetModelImpl.
-						getCompanyFallbackVirtualHostname());
-
-				layoutSetModelImpl.setVirtualHostnames(
-					cachedLayoutSetModelImpl.getVirtualHostnames());
 			}
 		}
 	}

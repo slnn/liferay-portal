@@ -332,11 +332,11 @@ public class CacheFieldEntryModelImpl
 		_name = name;
 	}
 
-	public String getNickname() {
+	public String getNickName() {
 		return null;
 	}
 
-	public void setNickname(String nickname) {
+	public void setNickName(String nickName) {
 	}
 
 	public long getColumnBitmask() {
@@ -468,7 +468,7 @@ public class CacheFieldEntryModelImpl
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
-		setNickname(null);
+		setNickName(null);
 
 		_columnBitmask = 0;
 	}
@@ -490,7 +490,7 @@ public class CacheFieldEntryModelImpl
 			cacheFieldEntryCacheModel.name = null;
 		}
 
-		cacheFieldEntryCacheModel._nickname = getNickname();
+		cacheFieldEntryCacheModel._nickName = getNickName();
 
 		return cacheFieldEntryCacheModel;
 	}
