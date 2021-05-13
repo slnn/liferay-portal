@@ -186,6 +186,8 @@ public class SynchronousDestinationTestRule
 			_bufferedIncrementForceSyncSafeCloseable =
 				BufferedIncrementThreadLocal.setWithSafeCloseable(true);
 
+			replaceDestination(
+				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
 			replaceDestination(DestinationNames.AUDIT);
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
