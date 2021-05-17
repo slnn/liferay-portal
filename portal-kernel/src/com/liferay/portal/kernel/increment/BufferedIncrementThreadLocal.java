@@ -33,6 +33,6 @@ public class BufferedIncrementThreadLocal {
 	private static final CentralizedThreadLocal<Boolean> _forceSync =
 		new CentralizedThreadLocal<>(
 			BufferedIncrementThreadLocal.class + "_forceSync",
-			() -> Boolean.TRUE);
+			() -> Boolean.FALSE);
 
 }
