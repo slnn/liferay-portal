@@ -153,12 +153,18 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor;
+import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
+import com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor;
+import com.liferay.fragment.internal.util.configuration.FragmentEntryConfigurationParserImpl;
 import com.liferay.fragment.model.FragmentCollectionModel;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.model.impl.FragmentEntryModelImpl;
+import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
@@ -213,8 +219,10 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -375,6 +383,8 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -441,6 +451,8 @@ public class DataFactory {
 		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
 				_readFile("default_asset_publisher_preference.xml"));
+
+		initFragmentEntryProcessorList();
 
 		initJournalArticleContent();
 
@@ -721,6 +733,13 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return getClassNameId(WikiPage.class);
+	}
+
+	public void initFragmentEntryProcessorList() {
+		_fragmentEntryProcessorList.add(new FreeMarkerFragmentEntryProcessor());
+		_fragmentEntryProcessorList.add(new EditableFragmentEntryProcessor());
+		_fragmentEntryProcessorList.add(
+			new BackgroundImageFragmentEntryProcessor());
 	}
 
 	public void initJournalArticleContent() {
@@ -3841,35 +3860,43 @@ public class DataFactory {
 					_readFile("loginPortlet_editValue.json"), 0,
 					loginPortletNamespace));
 
+			String html = _readFile(
+				_getFragmentComponentResourceName("heading", "html"));
+
+			String configuration = _readFile("heading_configuration.json");
+
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
 					_readFile(
 						_getFragmentComponentResourceName("heading", "css")),
-					_readFile(
-						_getFragmentComponentResourceName("heading", "html")),
-					_readFile("heading_configuration.json"),
-					_readFile("heading_editValue.json"), 0,
+					html, configuration,
+					_getDefaultEditableValues(html, configuration), 0,
 					headingRenderNamespace));
+
+			html = _readFile(
+				_getFragmentComponentResourceName("paragraph", "html"));
+
+			configuration = _readFile("paragraph_configuration.json");
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _PARAGRAPH_RENDER_KEY,
 					_readFile(
 						_getFragmentComponentResourceName("paragraph", "css")),
-					_readFile(
-						_getFragmentComponentResourceName("paragraph", "html")),
-					_readFile("paragraph_configuration.json"),
-					_replaceReleaseInfo(_readFile("paragraph_editValue.json")),
-					0, paragraphRenderNamespace));
+					html, configuration,
+					_getDefaultEditableValues(html, configuration), 0,
+					paragraphRenderNamespace));
+
+			html = _readFile(
+				_getFragmentComponentResourceName("image", "html"));
+
+			configuration = _readFile("image_configuration.json");
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _IMAGE_RENDER_KEY, "",
-					_readFile(
-						_getFragmentComponentResourceName("image", "html")),
-					_readFile("image_configuration.json"),
-					_readFile("image_editValue.json"), 0,
+					layoutModel, _IMAGE_RENDER_KEY, "", html, configuration,
+					_getDefaultEditableValues(html, configuration), 0,
 					imageRenderNamespace));
 		}
 
@@ -7160,6 +7187,44 @@ public class DataFactory {
 		return data;
 	}
 
+	private String _getDefaultEditableValues(
+		String html, String configuration) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		for (FragmentEntryProcessor fragmentEntryProcessor :
+				_fragmentEntryProcessorList) {
+
+			JSONObject defaultEditableValuesJSONObject = null;
+
+			if (fragmentEntryProcessor instanceof
+					FreeMarkerFragmentEntryProcessor) {
+
+				FragmentEntryConfigurationParser
+					fragmentEntryConfigurationParser =
+						new FragmentEntryConfigurationParserImpl();
+
+				defaultEditableValuesJSONObject =
+					fragmentEntryConfigurationParser.
+						getConfigurationDefaultValuesJSONObject(configuration);
+			}
+			else {
+				defaultEditableValuesJSONObject =
+					fragmentEntryProcessor.getDefaultEditableValuesJSONObject(
+						html, configuration);
+			}
+
+			if (defaultEditableValuesJSONObject != null) {
+				Class<?> clazz = fragmentEntryProcessor.getClass();
+
+				jsonObject.put(
+					clazz.getName(), defaultEditableValuesJSONObject);
+			}
+		}
+
+		return String.valueOf(jsonObject);
+	}
+
 	private String _getFragmentComponentResourceName(
 		String fragmentName, String suffix) {
 
@@ -7272,16 +7337,6 @@ public class DataFactory {
 		return StringUtil.merge(lines, StringPool.SPACE);
 	}
 
-	private String _replaceReleaseInfo(String resource) throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("Welcome to");
-		sb.append(ReleaseInfo.getReleaseInfo());
-		sb.append(StringPool.PERIOD);
-
-		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
-	}
-
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final long _DEFAULT_DL_FILE_ENTRY_TYPE_ID =
@@ -7340,6 +7395,8 @@ public class DataFactory {
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
+	private final List<FragmentEntryProcessor> _fragmentEntryProcessorList =
+		new ArrayList<>();
 	private final SimpleCounter _futureDateCounter;
 	private final long _globalGroupId;
 	private final long _guestGroupId;
@@ -7349,6 +7406,7 @@ public class DataFactory {
 		new HashMap<>();
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;
