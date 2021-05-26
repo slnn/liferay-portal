@@ -2367,7 +2367,8 @@ public class DataFactory {
 		}
 
 		counterModels.add(
-			_newCounterModel(Layout.class.getName(), totalLayoutId + 1));
+			_newCounterModel(
+				Layout.class.getName(), _counter.get() + totalLayoutId + 1));
 
 		return counterModels;
 	}
@@ -5717,6 +5718,10 @@ public class DataFactory {
 		return userName;
 	}
 
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public CProductModel setCProductModelPublishedCPDefinitionId(
 		CProductModel cProductModel,
 		List<CPDefinitionModel> cpDefinitionModels) {
@@ -5740,10 +5745,6 @@ public class DataFactory {
 		}
 
 		return cProductModel;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public String toInsertSQL(BaseModel<?> baseModel) {
