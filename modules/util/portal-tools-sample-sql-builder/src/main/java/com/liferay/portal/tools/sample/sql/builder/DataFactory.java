@@ -236,6 +236,7 @@ import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletModel;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferenceValueModel;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
@@ -285,6 +286,7 @@ import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
+import com.liferay.portal.model.impl.PortletModelImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
@@ -4906,6 +4908,29 @@ public class DataFactory {
 		return new ObjectValuePair<>(key, value);
 	}
 
+	public List<PortletModel> newPortletModels(CompanyModel companyModel)
+		throws IOException {
+
+		List<String> portletNames = new ArrayList<>();
+
+		List<PortletModel> portletModels = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(getResourceInputStream("PortletNames.txt")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			portletNames.add(line);
+		}
+
+		for (String portletName : portletNames) {
+			portletModels.add(newPortletModel(companyModel, portletName));
+		}
+
+		return portletModels;
+	}
+
 	public PortletPreferencesModel newPortletPreferencesModel(
 		long ownerId, int ownerType, long plid, String portletId) {
 
@@ -6728,6 +6753,27 @@ public class DataFactory {
 		mbThreadModel.setStatusDate(new Date());
 
 		return mbThreadModel;
+	}
+
+	protected PortletModel newPortletModel(
+		CompanyModel companyModel, String portletName) {
+
+		PortletModel portletModel = new PortletModelImpl();
+
+		// PK fields
+
+		portletModel.setId(_counter.get());
+
+		// Audit fields
+
+		portletModel.setCompanyId(companyModel.getCompanyId());
+
+		// Other fields
+
+		portletModel.setPortletId(portletName);
+		portletModel.setActive(true);
+
+		return portletModel;
 	}
 
 	protected ReleaseModelImpl newReleaseModel(
