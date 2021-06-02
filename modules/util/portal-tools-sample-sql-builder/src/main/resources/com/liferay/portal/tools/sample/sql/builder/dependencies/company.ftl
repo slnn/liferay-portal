@@ -1,3 +1,7 @@
+<#list dataFactory.newResourceActionModels() as resourceActionModel>
+	${dataFactory.toInsertSQL(resourceActionModel)}
+</#list>
+
 <#list dataFactory.newCompanyModels() as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
 
@@ -18,4 +22,8 @@
 	<#include "roles.ftl">
 
 	<#include "groups.ftl">
+
+	<#list dataFactory.newResourcePermissionModels() as resourcePermissionModel>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
+	</#list>
 </#list>
