@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountEntryUserRelModel;
@@ -5478,6 +5479,12 @@ public class DataFactory {
 
 		roleModels.add(_userRoleModel);
 
+		// Account Manager
+
+		_accountManagerRoleModel = newRoleModel(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			RoleConstants.TYPE_ORGANIZATION);
+
 		return roleModels;
 	}
 
@@ -7466,6 +7473,7 @@ public class DataFactory {
 		new PortletPreferencesFactoryImpl();
 
 	private long _accountId;
+	private RoleModel _accountManagerRoleModel;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private final Map<Long, List<AssetCategoryModel>>[]
