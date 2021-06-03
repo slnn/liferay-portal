@@ -112,7 +112,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 
 		try {
 			if (!_executorService.awaitTermination(
-					_syncTimeout, TimeUnit.SECONDS)) {
+					_syncTimeout, TimeUnit.MINUTES)) {
 
 				_executorService.shutdownNow();
 
