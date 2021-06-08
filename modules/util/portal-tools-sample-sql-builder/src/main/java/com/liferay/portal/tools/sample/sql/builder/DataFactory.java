@@ -5632,10 +5632,6 @@ public class DataFactory {
 		return userName;
 	}
 
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public CProductModel setCProductModelPublishedCPDefinitionId(
 		CProductModel cProductModel,
 		List<CPDefinitionModel> cpDefinitionModels) {
