@@ -3873,7 +3873,7 @@ public class DataFactory {
 
 		return fragmentEntryLinkModel;
 	}
-	
+
 	public List<FragmentEntryLinkModel> newFragmentEntryLinkModels(
 			List<LayoutModel> layoutModels)
 		throws Exception {
@@ -3887,9 +3887,17 @@ public class DataFactory {
 			_IMAGE_RENDER_KEY, StringUtil.randomId()
 		).put(
 			_PARAGRAPH_RENDER_KEY, StringUtil.randomId()
+		).put(
+			"LoginPortlet", StringUtil.randomId()
 		).build();
 
 		for (LayoutModel layoutModel : layoutModels) {
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, "", "", "", "",
+					_readFile("loginPortlet_editValue.json"), 0,
+					nameSpaces.get("LoginPortlet")));
+
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _HEADING_RENDER_KEY,
@@ -7293,7 +7301,7 @@ public class DataFactory {
 		System.currentTimeMillis() + Time.YEAR;
 
 	private static final String _HEADING_RENDER_KEY = "BASIC_COMPONENT-heading";
-	
+
 	private static final String _IMAGE_RENDER_KEY = "BASIC_COMPONENT-image";
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
