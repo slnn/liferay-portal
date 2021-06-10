@@ -243,6 +243,8 @@ import com.liferay.portal.kernel.model.PortletPreferenceValueModel;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.model.ReleaseModel;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceActionModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -292,6 +294,7 @@ import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 import com.liferay.portal.model.impl.PortletPreferenceValueModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
+import com.liferay.portal.model.impl.ResourceActionModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
@@ -407,6 +410,7 @@ public class DataFactory {
 		_layoutPlidCounter = new SimpleCounter();
 		_layoutSetIdCounter = new SimpleCounter();
 		_portletPreferenceValueIdCounter = new SimpleCounter();
+		_resourceActionIdCounter = new SimpleCounter();
 		_resourcePermissionIdCounter = new SimpleCounter();
 		_socialActivityIdCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -452,6 +456,10 @@ public class DataFactory {
 		initJournalArticleContent();
 
 		initUserNames();
+
+		initResourceActionModels();
+
+		initPortletResourcePermissionModels();
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -772,6 +780,98 @@ public class DataFactory {
 		}
 
 		_journalArticleContent = new String(chars);
+	}
+
+	public void initPortletResourcePermissionModels() throws IOException {
+		List<String> resourcePermissionTemplates = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(
+				getResourceInputStream("ResourcePermissionTemplate.txt")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			resourcePermissionTemplates.add(line);
+		}
+
+		List<Map<String, String>> resourcePermissionRowValues =
+			new ArrayList<>();
+
+		for (String resourcePermissionTemplate : resourcePermissionTemplates) {
+			String[] values = resourcePermissionTemplate.split(",");
+
+			Map<String, String> rawValues = new LinkedHashMap<>();
+
+			for (String value : values) {
+				String[] pairs = value.split(":");
+
+				rawValues.put(pairs[0], pairs[1]);
+			}
+
+			resourcePermissionRowValues.add(rawValues);
+		}
+
+		for (Map<String, String> resourcePermissionRowValue :
+				resourcePermissionRowValues) {
+
+			_portletResourcePermissionModelList.add(
+				new SampleSQLBuilderResourcePermissionModel(
+					resourcePermissionRowValue.get("mvccVersion"),
+					resourcePermissionRowValue.get("ctCollectionId"),
+					resourcePermissionRowValue.get("resourcePermissionId"),
+					resourcePermissionRowValue.get("companyId"),
+					resourcePermissionRowValue.get("name"),
+					resourcePermissionRowValue.get("scope"),
+					resourcePermissionRowValue.get("primKey"),
+					resourcePermissionRowValue.get("primKeyId"),
+					resourcePermissionRowValue.get("roleId"),
+					resourcePermissionRowValue.get("ownerId"),
+					resourcePermissionRowValue.get("actionIds"),
+					resourcePermissionRowValue.get("viewActionId")));
+		}
+	}
+
+	public void initResourceActionModels() throws IOException {
+		List<String> resourceActionTemplates = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(
+				getResourceInputStream("ResourceActionTemplate.txt")));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			resourceActionTemplates.add(line);
+		}
+
+		List<Map<String, String>> resourceActionRowValues = new ArrayList<>();
+
+		for (String resourceActionTemplate : resourceActionTemplates) {
+			String[] values = resourceActionTemplate.split(",");
+
+			Map<String, String> rawValues = new LinkedHashMap<>();
+
+			for (String value : values) {
+				String[] pairs = value.split(":");
+
+				rawValues.put(pairs[0], pairs[1]);
+			}
+
+			resourceActionRowValues.add(rawValues);
+		}
+
+		for (Map<String, String> resourceActionRowValue :
+				resourceActionRowValues) {
+
+			_resourceActionModelList.add(
+				new SampleSQLBuilderResourceActionModel(
+					resourceActionRowValue.get("mvccVersion"),
+					resourceActionRowValue.get("resourceActionId"),
+					resourceActionRowValue.get("name"),
+					resourceActionRowValue.get("actionId"),
+					resourceActionRowValue.get("bitwiseValue")));
+		}
 	}
 
 	public void initUserNames() throws IOException {
@@ -2368,6 +2468,10 @@ public class DataFactory {
 			_newCounterModel(
 				PortletPreferenceValue.class.getName(),
 				_portletPreferenceValueIdCounter.get()));
+		counterModels.add(
+			_newCounterModel(
+				ResourceAction.class.getName(),
+				_resourceActionIdCounter.get()));
 		counterModels.add(
 			_newCounterModel(
 				ResourcePermission.class.getName(),
@@ -5087,6 +5191,33 @@ public class DataFactory {
 		return releases;
 	}
 
+	public List<ResourceActionModel> newResourceActionModels() {
+		List<ResourceActionModel> resourceActionModels = new ArrayList<>();
+
+		for (SampleSQLBuilderResourceActionModel resourceActionModel :
+				_resourceActionModelList) {
+
+			resourceActionModels.add(
+				newResourceActionModel(resourceActionModel));
+		}
+
+		return resourceActionModels;
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels() {
+		List<ResourcePermissionModel> resourcePermissionModels =
+			new ArrayList<>();
+
+		for (SampleSQLBuilderResourcePermissionModel resourcePermissionModel :
+				_portletResourcePermissionModelList) {
+
+			resourcePermissionModels.add(
+				newResourcePermissionModel(resourcePermissionModel));
+		}
+
+		return resourcePermissionModels;
+	}
+
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AccountEntryModel accountEntryModel) {
 
@@ -5646,9 +5777,11 @@ public class DataFactory {
 	}
 
 	public GroupModel newUserPersonalSiteGroupModel() {
-		return newGroupModel(
+		_userPersonalSiteGroupModel = newGroupModel(
 			_counter.get(), getClassNameId(UserPersonalSite.class),
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
+
+		return _userPersonalSiteGroupModel;
 	}
 
 	public VirtualHostModel newVirtualHostModel() {
@@ -6811,6 +6944,86 @@ public class DataFactory {
 		return releaseModelImpl;
 	}
 
+	protected ResourceActionModel newResourceActionModel(
+		SampleSQLBuilderResourceActionModel
+			sampleSQLBuilderResourceActionModel) {
+
+		ResourceActionModel resourceActionModel = new ResourceActionModelImpl();
+
+		// PK fields
+
+		resourceActionModel.setResourceActionId(_resourceActionIdCounter.get());
+
+		// Other fields
+
+		resourceActionModel.setName(
+			sampleSQLBuilderResourceActionModel.getName());
+		resourceActionModel.setActionId(
+			sampleSQLBuilderResourceActionModel.getActionId());
+		resourceActionModel.setBitwiseValue(
+			Long.valueOf(
+				sampleSQLBuilderResourceActionModel.getBitwiseValue()));
+
+		return resourceActionModel;
+	}
+
+	protected ResourcePermissionModel newResourcePermissionModel(
+		SampleSQLBuilderResourcePermissionModel
+			sampleSQLBuilderResourcePermissionModel) {
+
+		ResourcePermissionModel resourcePermissionModel =
+			new ResourcePermissionModelImpl();
+
+		// PK fields
+
+		resourcePermissionModel.setResourcePermissionId(
+			_resourcePermissionIdCounter.get());
+
+		// Audit fields
+
+		resourcePermissionModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		resourcePermissionModel.setName(
+			sampleSQLBuilderResourcePermissionModel.getName());
+		resourcePermissionModel.setScope(
+			Integer.valueOf(
+				sampleSQLBuilderResourcePermissionModel.getScope()));
+
+		String primKey = sampleSQLBuilderResourcePermissionModel.getPrimKey();
+
+		if (primKey.contains("companyId")) {
+			resourcePermissionModel.setPrimKey(String.valueOf(_companyId));
+			resourcePermissionModel.setPrimKeyId(_companyId);
+		}
+		else if (primKey.contains("userPersonalSiteGroupId")) {
+			resourcePermissionModel.setPrimKey(
+				String.valueOf(_userPersonalSiteGroupModel.getGroupId()));
+			resourcePermissionModel.setPrimKeyId(
+				_userPersonalSiteGroupModel.getGroupId());
+		}
+		else {
+			resourcePermissionModel.setPrimKey(primKey);
+			resourcePermissionModel.setPrimKeyId(
+				Long.valueOf(
+					sampleSQLBuilderResourcePermissionModel.getPrimKeyId()));
+		}
+
+		resourcePermissionModel.setRoleId(
+			_getRoleId(sampleSQLBuilderResourcePermissionModel.getRoleId()));
+		resourcePermissionModel.setOwnerId(
+			Long.valueOf(sampleSQLBuilderResourcePermissionModel.getOwnerId()));
+		resourcePermissionModel.setActionIds(
+			Long.valueOf(
+				sampleSQLBuilderResourcePermissionModel.getActionIds()));
+		resourcePermissionModel.setViewActionId(
+			Boolean.valueOf(
+				sampleSQLBuilderResourcePermissionModel.getViewActionId()));
+
+		return resourcePermissionModel;
+	}
+
 	protected ResourcePermissionModel newResourcePermissionModel(
 		String name, String primKey, long roleId, long ownerId) {
 
@@ -7326,6 +7539,42 @@ public class DataFactory {
 		return sb.toString();
 	}
 
+	private long _getRoleId(String roleIdTemplate) {
+		long roleId = 0;
+
+		if (roleIdTemplate.contains("Administrator")) {
+			roleId = _administratorRoleModel.getRoleId();
+		}
+
+		if (roleIdTemplate.contains("Account Manager")) {
+			roleId = _accountManagerRoleModel.getRoleId();
+		}
+
+		if (roleIdTemplate.contains("Guest")) {
+			roleId = _guestRoleModel.getRoleId();
+		}
+
+		if (roleIdTemplate.contains("Owner")) {
+			roleId = _ownerRoleModel.getRoleId();
+		}
+
+		if (roleIdTemplate.contains("Power User")) {
+			roleId = _powerUserRoleModel.getRoleId();
+		}
+
+		if (roleIdTemplate.contains("Site Member")) {
+			roleId = _siteMemberRoleModel.getRoleId();
+		}
+
+		if (roleIdTemplate.contains("User") &&
+			!roleIdTemplate.contains("Power User")) {
+
+			roleId = _userRoleModel.getRoleId();
+		}
+
+		return roleId;
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
@@ -7496,13 +7745,19 @@ public class DataFactory {
 	private final SimpleCounter _layoutSetIdCounter;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
+	private final List<SampleSQLBuilderResourcePermissionModel>
+		_portletResourcePermissionModelList = new ArrayList<>();
 	private RoleModel _powerUserRoleModel;
+	private final SimpleCounter _resourceActionIdCounter;
+	private final List<SampleSQLBuilderResourceActionModel>
+		_resourceActionModelList = new ArrayList<>();
 	private final SimpleCounter _resourcePermissionIdCounter;
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityIdCounter;
 	private final SimpleCounter _timeCounter;
+	private GroupModel _userPersonalSiteGroupModel;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
 	private String _webId;
