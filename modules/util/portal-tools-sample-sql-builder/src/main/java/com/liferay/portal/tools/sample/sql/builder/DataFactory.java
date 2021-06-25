@@ -16,7 +16,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
-import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.model.impl.AccountEntryModelImpl;
 import com.liferay.account.model.impl.AccountEntryUserRelModelImpl;
@@ -46,7 +45,6 @@ import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemM
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceAddressModel;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -370,6 +368,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -384,7 +383,9 @@ public class DataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
-		_counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
+		_counter = new SimpleCounter(
+			BenchmarksPropsValues.MAX_GROUP_COUNT +
+				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT + 1);
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_layoutPlidCounter = new SimpleCounter();
@@ -557,6 +558,12 @@ public class DataFactory {
 		return getClassNameId(CPDefinition.class);
 	}
 
+	public long getCPInstanceId(long cpDefinitionId) {
+		CPInstanceModel cpInstanceModel = _cpInstanceModels.get(cpDefinitionId);
+
+		return cpInstanceModel.getCPInstanceId();
+	}
+
 	public long getCProductClassNameId() {
 		return getClassNameId(CProduct.class);
 	}
@@ -594,6 +601,10 @@ public class DataFactory {
 
 	public int getMaxBlogsEntryCommentCount() {
 		return BenchmarksPropsValues.MAX_BLOGS_ENTRY_COMMENT_COUNT;
+	}
+
+	public int getMaxCommerceGroupCount() {
+		return BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
 	}
 
 	public int getMaxContentLayoutCount() {
@@ -696,6 +707,22 @@ public class DataFactory {
 
 	public RoleModel getPowerUserRoleModel() {
 		return _powerUserRoleModel;
+	}
+
+	public int getRandomCProductModelIndex() {
+		Random random = new Random();
+
+		int count = (int)Math.ceil(
+			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT /
+				BenchmarksPropsValues.MAX_COMMERCE_CATALOG_COUNT);
+
+		if (BenchmarksPropsValues.MAX_COMMERCE_CATALOG_COUNT >
+				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_COUNT) {
+
+			count = BenchmarksPropsValues.MAX_COMMERCE_CATALOG_COUNT;
+		}
+
+		return random.nextInt(count);
 	}
 
 	public List<Integer> getSequence(int size) {
@@ -1530,7 +1557,8 @@ public class DataFactory {
 			commerceInventoryWarehouseModel.getCommerceInventoryWarehouseId());
 		commerceInventoryWarehouseItemModel.setSku(cpInstanceModel.getSku());
 		commerceInventoryWarehouseItemModel.setQuantity(
-			BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT);
+			BenchmarksPropsValues.
+				MAX_COMMERCE_INVENTORY_WAREHOUSE_ITEM_QUANTITY);
 		commerceInventoryWarehouseItemModel.setReservedQuantity(0);
 
 		return commerceInventoryWarehouseItemModel;
@@ -1694,7 +1722,7 @@ public class DataFactory {
 
 	public CommerceOrderItemModel newCommerceOrderItemModel(
 		CommerceOrderModel commerceOrderModel, long commercePriceListId,
-		long cProductId, CPInstanceModel cpInstanceModel) {
+		CProductModel cProductModel) {
 
 		CommerceOrderItemModel commerceOrderItemModel =
 			new CommerceOrderItemModelImpl();
@@ -1721,9 +1749,14 @@ public class DataFactory {
 		commerceOrderItemModel.setCommerceOrderId(
 			commerceOrderModel.getCommerceOrderId());
 		commerceOrderItemModel.setCommercePriceListId(commercePriceListId);
-		commerceOrderItemModel.setCProductId(cProductId);
+		commerceOrderItemModel.setCProductId(cProductModel.getCProductId());
+
+		CPInstanceModel cpInstanceModel = _cpInstanceModels.get(
+			cProductModel.getPublishedCPDefinitionId());
+
 		commerceOrderItemModel.setCPInstanceId(
 			cpInstanceModel.getCPInstanceId());
+
 		commerceOrderItemModel.setParentCommerceOrderItemId(0);
 		commerceOrderItemModel.setName("Commerce Order Item Name");
 		commerceOrderItemModel.setQuantity(1);
@@ -2450,7 +2483,15 @@ public class DataFactory {
 
 		// PK fields
 
-		cpDefinitionModel.setCPDefinitionId(_counter.get());
+		if (version ==
+				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT) {
+
+			cpDefinitionModel.setCPDefinitionId(
+				cProductModel.getPublishedCPDefinitionId());
+		}
+		else {
+			cpDefinitionModel.setCPDefinitionId(_counter.get());
+		}
 
 		// Group instance
 
@@ -2664,6 +2705,8 @@ public class DataFactory {
 		cpInstanceModel.setStatusByUserName(_SAMPLE_USER_NAME);
 		cpInstanceModel.setStatusDate(new Date());
 
+		_cpInstanceModels.put(cpDefinitionId, cpInstanceModel);
+
 		return cpInstanceModel;
 	}
 
@@ -2754,16 +2797,16 @@ public class DataFactory {
 
 		cpOptionModel.setName(
 			StringBundler.concat(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root",
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
 				"available-locales=\"en_US\" default-locale=\"en_US\">",
-				"<Title language-id=\"en_US\">Option Name ", index,
-				"</Title></root>"));
+				"<Name language-id=\"en_US\">Option Name ", index,
+				"</Name></root>"));
 		cpOptionModel.setDescription("Option Description");
 		cpOptionModel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOptionModel.setFacetable(true);
 		cpOptionModel.setRequired(true);
 		cpOptionModel.setSkuContributor(true);
-		cpOptionModel.setKey("key" + index);
+		cpOptionModel.setKey("option-name-" + index);
 
 		return cpOptionModel;
 	}
@@ -2798,7 +2841,7 @@ public class DataFactory {
 				"locales=\"en_US\" default-locale=\"en_US\"><Name language-id",
 				"=\"en_US\">Option Value Name ", index, "</Name></root>"));
 		cpOptionValueModel.setPriority(index - 1);
-		cpOptionValueModel.setKey("key" + index);
+		cpOptionValueModel.setKey("option-value-" + index);
 
 		return cpOptionValueModel;
 	}
@@ -2828,6 +2871,7 @@ public class DataFactory {
 
 		// Other fields
 
+		cProductModel.setPublishedCPDefinitionId(_counter.get());
 		cProductModel.setLatestVersion(
 			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT);
 
@@ -2884,7 +2928,7 @@ public class DataFactory {
 			"Description for specification option with ID " +
 				cpSpecificationOptionId);
 		cpSpecificationOptionModel.setFacetable(false);
-		cpSpecificationOptionModel.setKey("key" + index);
+		cpSpecificationOptionModel.setKey("specification-option-" + index);
 		cpSpecificationOptionModel.setLastPublishDate(null);
 
 		return cpSpecificationOptionModel;
@@ -4359,6 +4403,8 @@ public class DataFactory {
 		// Other fields
 
 		layoutFriendlyURLEntryModel.setPlid(layoutModel.getPlid());
+		layoutFriendlyURLEntryModel.setPrivateLayout(
+			layoutModel.getPrivateLayout());
 		layoutFriendlyURLEntryModel.setFriendlyURL(
 			layoutModel.getFriendlyURL());
 		layoutFriendlyURLEntryModel.setLanguageId("en_US");
@@ -4882,15 +4928,6 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
-		AccountEntryUserRelModel accountEntryUserRelModel) {
-
-		return newResourcePermissionModels(
-			AccountEntryUserRel.class.getName(),
-			String.valueOf(accountEntryUserRelModel.getAccountEntryUserRelId()),
-			_sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetCategoryModel assetCategoryModel) {
 
 		return newResourcePermissionModels(
@@ -4940,15 +4977,6 @@ public class DataFactory {
 			String.valueOf(
 				commerceInventoryWarehouseModel.
 					getCommerceInventoryWarehouseId()),
-			_sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		CommerceOrderModel commerceOrderModel) {
-
-		return newResourcePermissionModels(
-			CommerceOrder.class.getName(),
-			String.valueOf(commerceOrderModel.getCommerceOrderId()),
 			_sampleUserId);
 	}
 
@@ -5512,31 +5540,6 @@ public class DataFactory {
 		userName[1] = _lastNames.get((int)(index % _lastNames.size()));
 
 		return userName;
-	}
-
-	public CProductModel setCProductModelPublishedCPDefinitionId(
-		CProductModel cProductModel,
-		List<CPDefinitionModel> cpDefinitionModels) {
-
-		for (CPDefinitionModel cpDefinitionModel : cpDefinitionModels) {
-			if (cProductModel.getCProductId() !=
-					cpDefinitionModel.getCProductId()) {
-
-				continue;
-			}
-
-			if (cpDefinitionModel.getVersion() ==
-					BenchmarksPropsValues.
-						MAX_COMMERCE_PRODUCT_DEFINITION_COUNT) {
-
-				cProductModel.setPublishedCPDefinitionId(
-					cpDefinitionModel.getCPDefinitionId());
-
-				break;
-			}
-		}
-
-		return cProductModel;
 	}
 
 	public String toInsertSQL(BaseModel<?> baseModel) {
@@ -7057,6 +7060,8 @@ public class DataFactory {
 		new HashMap<>();
 	private final long _companyId;
 	private final SimpleCounter _counter;
+	private final Map<Long, CPInstanceModel> _cpInstanceModels =
+		new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private long _defaultDLDDMStructureId;
