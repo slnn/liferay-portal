@@ -2,6 +2,10 @@
 	${dataFactory.toInsertSQL(resourceActionModel)}
 </#list>
 
+<#list dataFactory.newDDMTemplateModels() as ddmTemplateModel>
+	${dataFactory.toInsertSQL(ddmTemplateModel)}
+</#list>
+
 <#list dataFactory.newCompanyModels() as companyModel>
 	${dataFactory.setCompanyId(companyModel.companyId)}
 

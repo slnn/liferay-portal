@@ -34,12 +34,12 @@ public class SampleSQLBuilderDDMTemplateModel {
 		return _className;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	public String getDescription() {
 		return _description;
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public String getScript() {
