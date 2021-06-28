@@ -1,0 +1,4112 @@
+templateKey:ASSET-CATEGORIES-NAVIGATION-MULTI-COLUMN-LAYOUT-FTL,script:<#assign hasCategories = false />
+
+<#if entries?has_content>
+	<@liferay_aui.row>
+		<#list entries as entry>
+			<#assign categories = entry.getCategories() />
+
+			<#if categories?has_content>
+				<#assign hasCategories = true />
+
+				<@liferay_aui.col width=25>
+					<div class="results-header">
+						<h3>
+							${entry.getUnambiguousTitle(entries, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())}
+						</h3>
+					</div>
+
+					<@displayCategories categories=categories />
+				</@liferay_aui.col>
+			</#if>
+		</#list>
+
+		<#if !hasCategories>
+			${renderRequest.setAttribute("PORTLET_CONFIGURATOR_VISIBILITY", true)}
+
+			<div class="alert alert-info w-100">
+				<@liferay_ui.message key="there-are-no-categories" />
+			</div>
+		</#if>
+	</@liferay_aui.row>
+</#if>
+
+<#macro displayCategories
+	categories
+>
+	<#if categories?has_content>
+		<ul class="categories">
+			<#list categories as category>
+				<li>
+					<#assign categoryURL = renderResponse.createRenderURL() />
+
+					${categoryURL.setParameter("resetCur", "true")}
+					${categoryURL.setParameter("categoryId", category.getCategoryId()?string)}
+
+					<a href="${categoryURL}">${category.getName()}</a>
+
+					<#if serviceLocator??>
+						<#assign
+							assetCategoryService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryService")
+
+							childCategories = assetCategoryService.getChildCategories(category.getCategoryId())
+						/>
+
+						<@displayCategories categories=childCategories />
+					</#if>
+				</li>
+			</#list>
+		</ul>
+	</#if>
+</#macro>
+templateKey:ASSET-PUBLISHER-GEOLOCALIZED,script:<#assign
+	defaultLatitude = -3.6833
+	defaultLongitude = 40.40
+
+	group = themeDisplay.getScopeGroup()
+
+	mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!""
+
+	companyPortletPreferences = prefsPropsUtil.getPreferences(companyId)
+/>
+
+<#if validator.isNull(mapsAPIProvider)>
+	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "Google") />
+</#if>
+
+<#assign featureCollectionJSONObject = jsonFactoryUtil.createJSONObject() />
+
+<@liferay.silently featureCollectionJSONObject.put("type", "FeatureCollection") />
+
+<#assign featureJSONArray = jsonFactoryUtil.createJSONArray() />
+
+<#list entries as entry>
+	<#assign
+		assetRenderer = entry.getAssetRenderer()
+
+		ddmFormValuesReader = assetRenderer.getDDMFormValuesReader()
+
+		ddmFormFieldValues = ddmFormValuesReader.getDDMFormFieldValues("ddm-geolocation")
+
+		coordinatesJSONObjects = []
+	/>
+
+	<#list ddmFormFieldValues as ddmFormFieldValue>
+		<#assign
+			value = ddmFormFieldValue.getValue()
+
+			coordinatesJSONObject = jsonFactoryUtil.createJSONObject(value.getString(locale))
+
+			coordinatesJSONObjects = coordinatesJSONObjects + [coordinatesJSONObject]
+		/>
+	</#list>
+
+	<#list coordinatesJSONObjects as coordinatesJSONObject>
+		<#assign featureJSONObject = jsonFactoryUtil.createJSONObject() />
+
+		<@liferay.silently featureJSONObject.put("type", "Feature") />
+
+		<#assign geometryJSONObject = jsonFactoryUtil.createJSONObject() />
+
+		<@liferay.silently geometryJSONObject.put("type", "Point") />
+
+		<#assign coordinatesJSONArray = [coordinatesJSONObject.getDouble("longitude"), coordinatesJSONObject.getDouble("latitude")] />
+
+		<@liferay.silently geometryJSONObject.put("coordinates", coordinatesJSONArray) />
+
+		<@liferay.silently featureJSONObject.put("geometry", geometryJSONObject) />
+
+		<#assign propertiesJSONObject = jsonFactoryUtil.createJSONObject() />
+
+		<@liferay.silently propertiesJSONObject.put("title", assetRenderer.getTitle(locale)) />
+
+		<#assign entryAbstract>
+			<@getAbstract asset=entry />
+		</#assign>
+
+		<@liferay.silently propertiesJSONObject.put("abstract", entryAbstract) />
+
+		<#if stringUtil.equals(mapsAPIProvider, "Google")>
+			<#assign
+				images = {
+					"com.liferay.document.library.kernel.model.DLFileEntry": "${themeDisplay.getProtocol()}://maps.google.com/mapfiles/ms/icons/green-dot.png",
+					"com.liferay.portlet.dynamicdatalists.model.DDLRecord": "${themeDisplay.getProtocol()}://maps.google.com/mapfiles/ms/icons/red-dot.png",
+					"com.liferay.journal.model.JournalArticle": "${themeDisplay.getProtocol()}://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+					"default": "${themeDisplay.getProtocol()}://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+				}
+			/>
+
+			<#if images?keys?seq_contains(entry.getClassName())>
+				<@liferay.silently propertiesJSONObject.put("icon", images[entry.getClassName()]) />
+			<#else>
+				<@liferay.silently propertiesJSONObject.put("icon", images["default"]) />
+			</#if>
+		</#if>
+
+		<@liferay.silently featureJSONObject.put("properties", propertiesJSONObject) />
+
+		<@liferay.silently featureJSONArray.put(featureJSONObject) />
+	</#list>
+</#list>
+
+<@liferay.silently featureCollectionJSONObject.put("features", featureJSONArray) />
+
+<style type="text/css">
+	.asset-entry-abstract {
+		min-width: 400px;
+	}
+
+	.leaflet-popup .asset-entry-abstract {
+		display: inline-block;
+	}
+
+	.asset-entry-abstract .asset-entry-abstract-image {
+		display: block;
+		float: left;
+		height: 128px;
+		margin-right: 1em;
+		text-align: center;
+	}
+
+	.asset-entry-abstract .asset-entry-abstract-image img {
+		display: block;
+		margin: 0 auto;
+		max-height: 100%;
+	}
+
+	.asset-entry-abstract .taglib-icon {
+		float: right;
+	}
+</style>
+
+<@liferay_map["map-display"]
+	name='Map'
+	points="${featureCollectionJSONObject}"
+/>
+
+<@liferay_aui.script use="liferay-map-base">
+	Liferay.componentReady('<@portlet.namespace />Map').then(
+		function(map) {
+			map.on(
+				'featureClick',
+				function(event) {
+					var feature = event.feature;
+
+					map.openDialog(
+						{
+							content: feature.getProperty('abstract'),
+							marker: feature.getMarker(),
+							position: feature.getGeometry().get('location')
+						}
+					);
+				}
+			);
+		}
+	);
+</@liferay_aui.script>
+
+<#macro getAbstract asset>
+	<div class="asset-entry-abstract" id="<@portlet.namespace />assetEntryAbstract">
+		<#assign
+			showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true)
+
+			assetRenderer = asset.getAssetRenderer()
+		/>
+
+		<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
+			<#assign
+				editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("NORMAL"), themeDisplay.getURLCurrent())
+			/>
+
+			<@liferay_ui.icon
+				image="edit"
+				label=true
+				message="edit"
+				url=editPortletURL.toString()
+			/>
+		</#if>
+
+		<#if assetRenderer.getThumbnailPath(renderRequest)??>
+			<div class="asset-entry-abstract-image">
+				<img src="${assetRenderer.getThumbnailPath(renderRequest)}" />
+			</div>
+		</#if>
+
+		<#assign assetURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, assetRenderer, asset, !stringUtil.equals(assetLinkBehavior, "showFullContent")) />
+
+		<div class="asset-entry-abstract-content">
+			<h3><a href="${assetURL}">${assetRenderer.getTitle(locale)}</a></h3>
+
+			<div>
+				${assetRenderer.getSummary(renderRequest, renderResponse)}
+			</div>
+		</div>
+
+		<div class="asset-entry-abstract-footer">
+			<a href="${assetURL}">${languageUtil.get(locale, "read-more")} &raquo;</a>
+		</div>
+	</div>
+</#macro>
+templateKey:ASSET-PUBLISHER-RICH-SUMMARY-FTL,script:<#if !entries?has_content>
+	<#if !themeDisplay.isSignedIn()>
+		${renderRequest.setAttribute("PORTLET_CONFIGURATOR_VISIBILITY", true)}
+	</#if>
+
+	<div class="alert alert-info">
+		<@liferay_ui["message"] key="there-are-no-results" />
+	</div>
+</#if>
+
+<#list entries as entry>
+	<#assign
+		entry = entry
+
+		assetRenderer = entry.getAssetRenderer()
+
+		entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale))
+
+		viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, assetRenderer, entry, !stringUtil.equals(assetLinkBehavior, "showFullContent"))
+	/>
+
+	<div class="asset-abstract">
+		<div class="float-right">
+			<@getPrintIcon />
+
+			<@getFlagsIcon />
+
+			<@getEditIcon />
+		</div>
+
+		<h3 class="asset-title">
+			<a href="${viewURL}">
+				${entryTitle}
+			</a>
+		</h3>
+
+		<@getMetadataField fieldName="tags" />
+
+		<@getMetadataField fieldName="create-date" />
+
+		<@getMetadataField fieldName="view-count" />
+
+		<div class="asset-content">
+			<@getSocialBookmarks />
+
+			<div class="asset-summary">
+				<@getMetadataField fieldName="author" />
+
+				${htmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse))}
+
+				<a href="${viewURL}"><@liferay.language key="read-more" /><span class="hide-accessible"><@liferay.language key="about" />${entryTitle}</span> &raquo;</a>
+			</div>
+
+			<@getRatings />
+
+			<@getRelatedAssets />
+
+			<@getDiscussion />
+		</div>
+	</div>
+</#list>
+
+<#macro getDiscussion>
+	<#if getterUtil.getBoolean(enableComments) && assetRenderer.isCommentable()>
+		<br />
+
+		<@liferay_comment["discussion"]
+			className=entry.getClassName()
+			classPK=entry.getClassPK()
+			formName="fm" + entry.getClassPK()
+			ratingsEnabled=getterUtil.getBoolean(enableCommentRatings)
+			redirect=currentURL
+			userId=assetRenderer.getUserId()
+		/>
+	</#if>
+</#macro>
+
+<#macro getEditIcon>
+	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
+		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("NORMAL"), themeDisplay.getURLCurrent())!"" />
+
+		<#if validator.isNotNull(editPortletURL)>
+			<#assign title = languageUtil.format(locale, "edit-x", entryTitle, false) />
+
+			<@liferay_ui["icon"]
+				cssClass="icon-monospaced visible-interaction"
+				icon="pencil"
+				markupView="lexicon"
+				message=title
+				url=editPortletURL.toString()
+			/>
+		</#if>
+	</#if>
+</#macro>
+
+<#macro getFlagsIcon>
+	<#if getterUtil.getBoolean(enableFlags)>
+		<@liferay_flags["flags"]
+			className=entry.getClassName()
+			classPK=entry.getClassPK()
+			contentTitle=entry.getTitle(locale)
+			label=false
+			reportedUserId=entry.getUserId()
+		/>
+	</#if>
+</#macro>
+
+<#macro getMetadataField
+	fieldName
+>
+	<#if stringUtil.split(metadataFields)?seq_contains(fieldName)>
+		<span class="metadata-entry metadata-${fieldName}">
+			<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
+
+			<#if stringUtil.equals(fieldName, "author")>
+				<@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()))}
+			<#elseif stringUtil.equals(fieldName, "categories")>
+				<@liferay_asset["asset-categories-summary"]
+					className=entry.getClassName()
+					classPK=entry.getClassPK()
+					portletURL=renderResponse.createRenderURL()
+				/>
+			<#elseif stringUtil.equals(fieldName, "create-date")>
+				${dateUtil.getDate(entry.getCreateDate(), dateFormat, locale)}
+			<#elseif stringUtil.equals(fieldName, "expiration-date")>
+				${dateUtil.getDate(entry.getExpirationDate(), dateFormat, locale)}
+			<#elseif stringUtil.equals(fieldName, "modified-date")>
+				${dateUtil.getDate(entry.getModifiedDate(), dateFormat, locale)}
+			<#elseif stringUtil.equals(fieldName, "priority")>
+				${entry.getPriority()}
+			<#elseif stringUtil.equals(fieldName, "publish-date")>
+				${dateUtil.getDate(entry.getPublishDate(), dateFormat, locale)}
+			<#elseif stringUtil.equals(fieldName, "tags")>
+				<@liferay_asset["asset-tags-summary"]
+					className=entry.getClassName()
+					classPK=entry.getClassPK()
+					portletURL=renderResponse.createRenderURL()
+				/>
+			<#elseif stringUtil.equals(fieldName, "view-count")>
+				${entry.getViewCount()} <@liferay.language key="views" />
+			</#if>
+		</span>
+	</#if>
+</#macro>
+
+<#macro getPrintIcon>
+	<#if getterUtil.getBoolean(enablePrint)>
+		<#assign printURL = renderResponse.createRenderURL() />
+
+		${printURL.setParameter("mvcPath", "/view_content.jsp")}
+		${printURL.setParameter("assetEntryId", entry.getEntryId()?string)}
+		${printURL.setParameter("viewMode", "print")}
+		${printURL.setParameter("type", entry.getAssetRendererFactory().getType())}
+		${printURL.setWindowState("pop_up")}
+
+		<@liferay_ui["icon"]
+			icon="print"
+			markupView="lexicon"
+			message="print"
+			url="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle], false) + "', id:'" + renderResponse.getNamespace() + "printAsset', url: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+		/>
+	</#if>
+</#macro>
+
+<#macro getRatings>
+	<#if getterUtil.getBoolean(enableRatings) && assetRenderer.isRatable()>
+		<div class="asset-ratings">
+			<@liferay_ratings["ratings"]
+				className=entry.getClassName()
+				classPK=entry.getClassPK()
+			/>
+		</div>
+	</#if>
+</#macro>
+
+<#macro getRelatedAssets>
+	<#if getterUtil.getBoolean(enableRelatedAssets)>
+		<@liferay_asset["asset-links"]
+			assetEntryId=entry.getEntryId()
+			viewInContext=!stringUtil.equals(assetLinkBehavior, "showFullContent")
+		/>
+	</#if>
+</#macro>
+
+<#macro getSocialBookmarks>
+	<@liferay_social_bookmarks["bookmarks"]
+		className=entry.getClassName()
+		classPK=entry.getClassPK()
+		displayStyle="${socialBookmarksDisplayStyle}"
+		target="_blank"
+		title=entry.getTitle(locale)
+		types="${socialBookmarksTypes}"
+		url=viewURL
+	/>
+</#macro>
+templateKey:ASSET-TAGS-NAVIGATION-COLOR-BY-POPULARITY-FTL,script:<#if entries?has_content>
+	<ul class="tag-items tag-list">
+		<#assign
+			scopeGroupId = getterUtil.getLong(scopeGroupId, themeDisplay.getScopeGroupId())
+			classNameId = getterUtil.getLong(classNameId, 0)
+
+			maxCount = 1
+			minCount = 1
+		/>
+
+		<#list entries as entry>
+			<#assign
+				maxCount = liferay.max(maxCount, entry.getAssetCount())
+				minCount = liferay.min(minCount, entry.getAssetCount())
+			/>
+		</#list>
+
+		<#assign multiplier = 1 />
+
+		<#if maxCount != minCount>
+			<#assign multiplier = 3 / (maxCount - minCount) />
+		</#if>
+
+		<#list entries as entry>
+			<li class="taglib-asset-tags-summary">
+				<#assign popularity = (maxCount - (maxCount - (entry.getAssetCount() - minCount))) * multiplier />
+
+				<#if popularity < 1>
+					<#assign color = "green" />
+				<#elseif (popularity >= 1) && (popularity < 2)>
+					<#assign color = "orange" />
+				<#else>
+					<#assign color = "red" />
+				</#if>
+
+				<#assign tagURL = renderResponse.createRenderURL() />
+
+				${tagURL.setParameter("resetCur", "true")}
+				${tagURL.setParameter("tag", entry.getName())}
+
+				<a class="tag" href="${tagURL}" style="color: ${color};">
+					${entry.getName()}
+
+					<#if entry.getAssetCount()?? && getterUtil.getBoolean(showAssetCount)>
+						<span class="tag-asset-count">(${entry.getAssetCount()})</span>
+					</#if>
+				</a>
+			</li>
+		</#list>
+	</ul>
+
+	<br style="clear: both;" />
+</#if>
+templateKey:BLOGS-BASIC-FTL,script:<div class="widget-mode-simple">
+	<#if entries?has_content>
+		<#list entries as curBlogEntry>
+			<div class="widget-mode-simple-entry">
+				<div class="autofit-row widget-topbar">
+					<div class="autofit-col autofit-col-expand">
+						<#assign viewEntryPortletURL = renderResponse.createRenderURL() />
+
+						${viewEntryPortletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
+						${viewEntryPortletURL.setParameter("redirect", currentURL)}
+
+						<#if validator.isNotNull(curBlogEntry.getUrlTitle())>
+							${viewEntryPortletURL.setParameter("urlTitle", curBlogEntry.getUrlTitle())}
+						<#else>
+							${viewEntryPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
+						</#if>
+
+						<h3 class="title">
+							<a class="title-link" href="${viewEntryPortletURL.toString()}">${htmlUtil.escape(blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry))}</a>
+						</h3>
+					</div>
+
+					<div class="autofit-col">
+						<@clay["dropdown-actions"]
+							additionalProps=blogsEntryActionDropdownAdditionalProps
+							dropdownItems=blogsEntryActionDropdownItemsProvider.getActionDropdownItems(curBlogEntry)
+							propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+							propsTransformerServletContext=blogsEntryActionDropdownPropsTransformerServletContext
+						/>
+					</div>
+				</div>
+
+				<div class="autofit-row widget-metadata">
+					<div class="autofit-col inline-item-before">
+						<@liferay_ui["user-portrait"]
+							userId=curBlogEntry.userId
+							userName=curBlogEntry.userName
+						/>
+					</div>
+
+					<div class="autofit-col autofit-col-expand">
+						<div class="autofit-row">
+							<div class="autofit-col autofit-col-expand">
+								<#if serviceLocator??>
+									<#assign
+										userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
+
+										entryUser = userLocalService.fetchUser(curBlogEntry.getUserId())
+									/>
+
+									<#if entryUser?? && !entryUser.isDefaultUser()>
+										<#assign entryUserURL = entryUser.getDisplayURL(themeDisplay) />
+									</#if>
+								</#if>
+
+								<div class="text-truncate-inline">
+									<a href="${(entryUserURL?? && validator.isNotNull(entryUserURL))?then(entryUserURL, "")}" class="text-truncate username">${curBlogEntry.getUserName()}</a>
+								</div>
+
+								<div>
+									${dateUtil.getDate(curBlogEntry.getStatusDate(), "dd MMM", locale)}
+
+									<#if blogsPortletInstanceConfiguration.enableReadingTime()>
+										- <@liferay_reading_time["reading-time"] displayStyle="simple" model=curBlogEntry />
+									</#if>
+
+									<#assign assetEntry = blogsEntryAssetEntryUtil.getAssetEntry(request, curBlogEntry) />
+
+									<#if blogsPortletInstanceConfiguration.enableViewCount()>
+										- <@liferay_ui["message"] arguments=assetEntry.getViewCount() key=(assetEntry.getViewCount()==0)?then("x-view", "x-views") />
+									</#if>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="widget-content">
+					<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(curBlogEntry.getContent()), 400)}</p>
+
+					<div class="autofit-float autofit-row autofit-row-center widget-toolbar">
+						<#if blogsPortletInstanceConfiguration.enableComments()>
+							<div class="autofit-col">
+								<#assign viewCommentsPortletURL = renderResponse.createRenderURL() />
+
+								${viewCommentsPortletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
+								${viewCommentsPortletURL.setParameter("scroll", renderResponse.getNamespace() + "discussionContainer")}
+
+								<#if validator.isNotNull(curBlogEntry.getUrlTitle())>
+									${viewCommentsPortletURL.setParameter("urlTitle", curBlogEntry.getUrlTitle())}
+								<#else>
+									${viewCommentsPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
+								</#if>
+
+								<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="${viewCommentsPortletURL.toString()}" title="${language.get(locale, "comments")}">
+									<span class="inline-item inline-item-before">
+										<@clay["icon"] symbol="comments" />
+									</span> ${commentManager.getCommentsCount("com.liferay.blogs.model.BlogsEntry", curBlogEntry.getEntryId())}
+								</a>
+							</div>
+						</#if>
+
+						<#if blogsPortletInstanceConfiguration.enableRatings()>
+							<div class="autofit-col">
+								<@liferay_ratings["ratings"]
+									className="com.liferay.blogs.model.BlogsEntry"
+									classPK=curBlogEntry.getEntryId()
+								/>
+							</div>
+						</#if>
+
+						<div class="autofit-col autofit-col-end">
+							<#assign bookmarkURL = renderResponse.createRenderURL() />
+
+							${bookmarkURL.setWindowState(windowStateFactory.getWindowState("NORMAL"))}
+							${bookmarkURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
+
+							<#if validator.isNotNull(curBlogEntry.getUrlTitle())>
+								${bookmarkURL.setParameter("urlTitle", curBlogEntry.getUrlTitle())}
+							<#else>
+								${bookmarkURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
+							</#if>
+
+							<@liferay_social_bookmarks["bookmarks"]
+								className="com.liferay.blogs.model.BlogsEntry"
+								classPK=curBlogEntry.getEntryId()
+								displayStyle="inline"
+								target="_blank"
+								title=blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)
+								types=blogsPortletInstanceConfiguration.socialBookmarksTypes()
+								url=portalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, themeDisplay.getLayout())
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</#list>
+	</#if>
+</div>
+templateKey:BLOGS-CARD-FTL,script:<div class="row widget-mode-card">
+	<#if entries?has_content>
+		<#list entries as curBlogEntry>
+			<#if curBlogEntry.getCoverImageURL(themeDisplay)??>
+				<#assign cardImage = true />
+			<#else>
+				<#assign cardImage = false />
+			</#if>
+
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-header">
+						<div class="aspect-ratio aspect-ratio-8-to-3">
+							<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="${cardImage?then(curBlogEntry.getCoverImageURL(themeDisplay), portalUtil.getPathContext(renderRequest) + "/images/cover_image_placeholder.jpg")}">
+						</div>
+					</div>
+
+					<div class="card-body widget-topbar">
+						<div class="autofit-row card-title">
+								<div class="autofit-col autofit-col-expand">
+									<#assign viewEntryPortletURL = renderResponse.createRenderURL() />
+
+									${viewEntryPortletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
+									${viewEntryPortletURL.setParameter("redirect", currentURL)}
+
+									<#if validator.isNotNull(curBlogEntry.getUrlTitle())>
+										${viewEntryPortletURL.setParameter("urlTitle", curBlogEntry.getUrlTitle())}
+									<#else>
+										${viewEntryPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
+									</#if>
+
+									<h3 class="title">
+										<a class="title-link" href="${viewEntryPortletURL.toString()}">
+										${htmlUtil.escape(blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry))}</a>
+									</h3>
+								</div>
+
+								<div class="autofit-col">
+									<@clay["dropdown-actions"]
+										additionalProps=blogsEntryActionDropdownAdditionalProps
+										dropdownItems=blogsEntryActionDropdownItemsProvider.getActionDropdownItems(curBlogEntry)
+										propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+										propsTransformerServletContext=blogsEntryActionDropdownPropsTransformerServletContext
+									/>
+								</div>
+						</div>
+
+						<div class="autofit-row widget-metadata">
+							<div class="autofit-col inline-item-before">
+								<@liferay_ui["user-portrait"]
+									size="lg"
+									userId=curBlogEntry.userId
+									userName=curBlogEntry.userName
+								/>
+							</div>
+
+							<div class="autofit-col autofit-col-expand">
+								<div class="autofit-row">
+									<div class="autofit-col autofit-col-expand">
+										<#if serviceLocator??>
+											<#assign
+												userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")
+
+												entryUser = userLocalService.fetchUser(curBlogEntry.getUserId())
+											/>
+
+											<#if entryUser?? && !entryUser.isDefaultUser()>
+												<#assign entryUserURL = entryUser.getDisplayURL(themeDisplay) />
+											</#if>
+										</#if>
+
+										<div class="text-truncate-inline">
+											<a href="${(entryUserURL?? && validator.isNotNull(entryUserURL))?then(entryUserURL, "")}" class="text-truncate username">${curBlogEntry.getUserName()}</a>
+										</div>
+
+										<div>
+											${dateUtil.getDate(curBlogEntry.getStatusDate(), "dd MMM", locale)}
+
+											<#if blogsPortletInstanceConfiguration.enableReadingTime()>
+												- <@liferay_reading_time["reading-time"] displayStyle="simple" model=curBlogEntry />
+											</#if>
+
+											<#assign assetEntry = blogsEntryAssetEntryUtil.getAssetEntry(request, curBlogEntry) />
+
+											<#if blogsPortletInstanceConfiguration.enableViewCount()>
+												- <@liferay_ui["message"] arguments=assetEntry.getViewCount() key=(assetEntry.getViewCount()==0)?then("x-view", "x-views") />
+											</#if>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<#if validator.isNotNull(curBlogEntry.getDescription())>
+							<#assign content = curBlogEntry.getDescription() />
+						<#else>
+							<#assign content = curBlogEntry.getContent() />
+						</#if>
+
+						<#if cardImage>
+							<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 150)}</p>
+						<#else>
+							<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 400)}</p>
+						</#if>
+					</div>
+
+					<div class="card-footer">
+						<div class="autofit-float autofit-row autofit-row-center widget-toolbar">
+							<#if blogsPortletInstanceConfiguration.enableComments()>
+								<div class="autofit-col">
+									<#assign viewCommentsPortletURL = renderResponse.createRenderURL() />
+
+									${viewCommentsPortletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
+									${viewCommentsPortletURL.setParameter("scroll", renderResponse.getNamespace() + "discussionContainer")}
+
+									<#if validator.isNotNull(curBlogEntry.getUrlTitle())>
+										${viewCommentsPortletURL.setParameter("urlTitle", curBlogEntry.getUrlTitle())}
+									<#else>
+										${viewCommentsPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
+									</#if>
+
+									<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="${viewCommentsPortletURL.toString()}" title="${language.get(locale, "comments")}">
+										<span class="inline-item inline-item-before">
+											<@clay["icon"] symbol="comments" />
+										</span> ${commentManager.getCommentsCount("com.liferay.blogs.model.BlogsEntry", curBlogEntry.getEntryId())}
+									</a>
+								</div>
+							</#if>
+
+							<#if blogsPortletInstanceConfiguration.enableRatings()>
+								<div class="autofit-col">
+									<@liferay_ratings["ratings"]
+										className="com.liferay.blogs.model.BlogsEntry"
+										classPK=curBlogEntry.getEntryId()
+									/>
+								</div>
+							</#if>
+
+							<div class="autofit-col autofit-col-end">
+								<#assign bookmarkURL = renderResponse.createRenderURL() />
+
+								${bookmarkURL.setWindowState(windowStateFactory.getWindowState("NORMAL"))}
+								${bookmarkURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
+
+								<#if validator.isNotNull(curBlogEntry.getUrlTitle())>
+									${bookmarkURL.setParameter("urlTitle", curBlogEntry.getUrlTitle())}
+								<#else>
+									${bookmarkURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
+								</#if>
+
+								<@liferay_social_bookmarks["bookmarks"]
+									className="com.liferay.blogs.model.BlogsEntry"
+									classPK=curBlogEntry.getEntryId()
+									maxInlineItems=0
+									target="_blank"
+									title=blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)
+									types=blogsPortletInstanceConfiguration.socialBookmarksTypes()
+									url=portalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, themeDisplay.getLayout())
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</#list>
+	</#if>
+</div>
+templateKey:BASIC-WEB-CONTENT,script:${content.getData()}
+templateKey:SITE-MAP-MULTI-COLUMN-LAYOUT-FTL,script:<#if entries?has_content>
+	<@liferay_aui.row>
+		<#list entries as entry>
+			<#if (getterUtil.getBoolean(showHiddenPages) || !entry.isHidden()) && layoutPermission.containsWithoutViewableGroup(permissionChecker, entry, "VIEW")>
+				<@liferay_aui.col width=25>
+					<div class="results-header">
+						<h3>
+							<a
+
+							<#assign layoutType = entry.getLayoutType() />
+
+							<#if layoutType.isBrowsable()>
+								href="${portalUtil.getLayoutURL(entry, themeDisplay)}"
+							</#if>
+
+							>${entry.getName(locale)}</a>
+						</h3>
+					</div>
+
+					<@displayPages
+						depth=1
+						pages=entry.getChildren(permissionChecker)
+					/>
+				</@liferay_aui.col>
+			</#if>
+		</#list>
+	</@liferay_aui.row>
+</#if>
+
+<#macro displayPages
+	depth
+	pages
+>
+	<#if pages?has_content && ((depth < displayDepth?number) || (displayDepth?number == 0))>
+		<ul class="child-pages">
+			<#list pages as page>
+				<#if getterUtil.getBoolean(showHiddenPages) || !page.isHidden()>
+					<li>
+						<a
+
+						<#assign pageType = page.getLayoutType() />
+
+						<#if pageType.isBrowsable()>
+							href="${portalUtil.getLayoutURL(page, themeDisplay)}"
+						</#if>
+
+						>${page.getName(locale)}</a>
+
+						<@displayPages
+							depth=depth + 1
+							pages=page.getChildren(permissionChecker)
+						/>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</#if>
+</#macro>
+templateKey:WIKI-SOCIAL-FTL,script:<#assign
+	wikiPageClassName = "com.liferay.wiki.model.WikiPage"
+
+	assetRenderer = assetEntry.getAssetRenderer()
+/>
+
+<div class="taglib-header">
+	<h1 class="header-title">${entry.getTitle()}</h1>
+</div>
+
+<div style="float: right;">
+	<@getEditIcon />
+
+	<@getPageDetailsIcon />
+
+	<@getPrintIcon />
+</div>
+
+<div class="wiki-body">
+	<div class="wiki-info">
+		<span class="stats">${assetEntry.getViewCount()} <@liferay.language key="views" /></span> |
+
+		<span class="date"><@liferay.language key="last-modified" /> ${dateUtil.getDate(entry.getModifiedDate(), "dd MMM yyyy - HH:mm:ss", locale)}</span>
+
+		<span class="author"><@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(entry.getUserId(), entry.getUserName()))}</span>
+	</div>
+
+	<div class="wiki-content">
+		<@liferay_social_bookmarks["bookmarks"]
+			className=wikiPageClassName
+			classPK=entry.getResourcePrimKey()
+			displayStyle="normal"
+			target="_blank"
+			title=entry.getTitle()
+			url=viewURL
+		/>
+
+		${formattedContent}
+	</div>
+
+	<div class="page-actions">
+		<div class="article-actions">
+			<@getAddChildPageIcon />
+
+			<@getAttatchmentsIcon />
+		</div>
+	</div>
+
+	 <br />
+
+	<@getRatings
+		cssClass="page-ratings"
+		entry=entry
+	/>
+
+	<@getRelatedAssets />
+</div>
+
+<div class="page-categorization">
+	<div class="page-categories">
+		<#assign viewCategorizedPagesURL = renderResponse.createRenderURL() />
+
+		${viewCategorizedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages")}
+		${viewCategorizedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
+
+		<@liferay_asset["asset-categories-summary"]
+			className=wikiPageClassName
+			classPK=entry.getResourcePrimKey()
+			portletURL=viewCategorizedPagesURL
+		/>
+	</div>
+
+	<div class="page-tags">
+		<#assign viewTaggedPagesURL = renderResponse.createRenderURL() />
+
+		${viewTaggedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages")}
+		${viewTaggedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
+
+		<@liferay_asset["asset-tags-summary"]
+			className=wikiPageClassName
+			classPK=entry.getResourcePrimKey()
+			portletURL=viewTaggedPagesURL
+		/>
+	</div>
+</div>
+
+<#assign childPages = entry.getChildPages() />
+
+<#if (childPages?has_content)>
+	<div class="child-pages">
+		<h2><@liferay.language key="children-pages" /></h2>
+
+		<table class="taglib-search-iterator">
+			<tr class="portlet-section-header results-header">
+				<th>
+					<@liferay.language key="page" />
+				</th>
+				<th>
+					<@liferay.language key="last-modified" />
+				</th>
+				<th>
+					<@liferay.language key="ratings" />
+				</th>
+			</tr>
+
+			<#list childPages as childPage>
+				<tr class="results-row">
+					<#assign viewPageURL = renderResponse.createRenderURL() />
+
+					${viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view")}
+
+					<#assign childNode = childPage.getNode() />
+
+					${viewPageURL.setParameter("nodeName", childNode.getName())}
+					${viewPageURL.setParameter("title", childPage.getTitle())}
+
+					<td>
+						<a href="${viewPageURL}">${childPage.getTitle()}</a>
+					</td>
+					<td>
+						<a href="${viewPageURL}">${dateUtil.getDate(childPage.getModifiedDate(),"dd MMM yyyy - HH:mm:ss", locale)} <@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(childPage.getUserId(), childPage.getUserName()))}</a>
+					</td>
+					<td>
+						<@getRatings
+							cssClass="child-ratings"
+							entry=childPage
+						/>
+					</td>
+				</tr>
+			</#list>
+		</table>
+	</div>
+</#if>
+
+<@getDiscussion />
+
+<#macro getAddChildPageIcon>
+	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
+		<#assign addPageURL = renderResponse.createRenderURL() />
+
+		${addPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page")}
+		${addPageURL.setParameter("redirect", currentURL)}
+		${addPageURL.setParameter("nodeId", entry.getNodeId()?string)}
+		${addPageURL.setParameter("title", "")}
+		${addPageURL.setParameter("editTitle", "1")}
+		${addPageURL.setParameter("parentTitle", entry.getTitle())}
+
+		<@liferay_ui["icon"]
+			icon="plus"
+			label=true
+			markupView="lexicon"
+			message="add-child-page"
+			url=addPageURL?string
+		/>
+	</#if>
+</#macro>
+
+<#macro getAttatchmentsIcon>
+	<#assign viewPageAttachmentsURL = renderResponse.createRenderURL() />
+
+	${viewPageAttachmentsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments") }
+
+	<@liferay_ui["icon"]
+		icon="paperclip"
+		label=true
+		markupView="lexicon"
+		message='${entry.getAttachmentsFileEntriesCount() + languageUtil.get(locale, "attachments")}'
+		url=viewPageAttachmentsURL?string
+	/>
+</#macro>
+
+<#macro getDiscussion>
+	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceConfiguration.enableComments()>
+		<br />
+
+		<@liferay_comment["discussion"]
+			className=wikiPageClassName
+			classPK=entry.getResourcePrimKey()
+			ratingsEnabled=wikiPortletInstanceConfiguration.enableCommentRatings()
+			redirect=currentURL
+			subject=assetRenderer.getTitle(locale)
+			userId=assetRenderer.getUserId()
+		/>
+	</#if>
+</#macro>
+
+<#macro getEditIcon>
+	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
+		<#assign editPageURL = renderResponse.createRenderURL() />
+
+		${editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page")}
+		${editPageURL.setParameter("redirect", currentURL)}
+		${editPageURL.setParameter("nodeId", entry.getNodeId()?string)}
+		${editPageURL.setParameter("title", entry.getTitle())}
+
+		<@liferay_ui["icon"]
+			icon="pencil"
+			markupView="lexicon"
+			message=entry.getTitle()
+			url=editPageURL?string
+		/>
+	</#if>
+</#macro>
+
+<#macro getPageDetailsIcon>
+	<#assign viewPageDetailsURL = renderResponse.createRenderURL() />
+
+	${viewPageDetailsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_details")}
+	${viewPageDetailsURL.setParameter("redirect", currentURL)}
+
+	<@liferay_ui["icon"]
+		icon="document"
+		markupView="lexicon"
+		message="details"
+		url=viewPageDetailsURL?string
+	/>
+</#macro>
+
+<#macro getPrintIcon>
+	<#assign printURL = renderResponse.createRenderURL() />
+
+	${printURL.setParameter("viewMode", "print")}
+	${printURL.setWindowState("pop_up")}
+
+	<#assign
+		title = languageUtil.format(locale, "print-x-x", ["hide-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))], false)
+		taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+	/>
+
+	<@liferay_ui["icon"]
+		icon="print"
+		markupView="lexicon"
+		message="print"
+		url=taglibPrintURL
+	/>
+</#macro>
+
+<#macro getRatings
+	cssClass
+	entry
+>
+	<#if wikiPortletInstanceConfiguration.enablePageRatings()>
+		<div class="${cssClass}">
+			<@liferay_ratings["ratings"]
+				className=wikiPageClassName
+				classPK=entry.getResourcePrimKey()
+			/>
+		</div>
+	</#if>
+</#macro>
+
+<#macro getRelatedAssets>
+	<#if assetEntry?? && wikiPortletInstanceConfiguration.enableRelatedAssets()>
+		<@liferay_asset["asset-links"] assetEntryId=assetEntry.getEntryId() />
+	</#if>
+</#macro>
+templateKey:LIST-MENU-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<div aria-label="<@liferay.language key="site-pages" />" class="list-menu">
+		<@buildNavigation
+			branchNavItems=branchNavItems
+			cssClass="layouts"
+			displayDepth=displayDepth
+			includeAllChildNavItems=true
+			navItemLevel=1
+			navItems=entries
+		/>
+	</div>
+</#if>
+templateKey:NAV-PILLS-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label=<@liferay.language key="site-pages" />" class="nav nav-pills navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign
+							nav_item_attr_has_popup = "aria-haspopup='true'"
+							nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAV-PILLS-JUSTIFIED-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-justified nav-pills navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign
+							nav_item_attr_has_popup = "aria-haspopup='true'"
+							nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAV-PILLS-STACKED-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-pills nav-stacked navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign
+							nav_item_attr_has_popup = "aria-haspopup='true'"
+							nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAV-TABS-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-tabs navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign
+							nav_item_attr_has_popup = "aria-haspopup='true'"
+						 	nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="nav-item ${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="nav-link ${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu nav-item" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAV-TABS-JUSTIFIED-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-justified nav-tabs navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign
+							nav_item_attr_has_popup = "aria-haspopup='true'"
+						 	nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="nav-item ${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="nav-link ${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu nav-item" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAVBAR-BLANK-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="navbar-blank navbar-nav navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign nav_item_attr_has_popup = "aria-haspopup='true'" />
+
+						<#assign nav_item_caret>
+							<span class="lfr-nav-child-toggle">
+								<@liferay_aui.icon
+									image="angle-down"
+									markupView="lexicon"
+								/>
+							</span>
+						</#assign>
+
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if !navItem.isChildSelected() && navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAVBAR-BLANK-JUSTIFIED-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-justified navbar-blank navbar-nav navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign nav_item_attr_has_popup = "aria-haspopup='true'" />
+						<#assign nav_item_caret>
+							<span class="lfr-nav-child-toggle">
+								<@clay["icon"] symbol="angle-down" />
+							</span>
+						</#assign>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAVBAR-DEFAULT-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav navbar-nav navbar-site" role="menubar">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = "nav-link text-truncate"
+					/>
+
+					<#if showChildrenNavItems>
+						<#assign
+							nav_item_attr_has_popup = "aria-haspopup='true'"
+							nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
+						/>
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
+					</#if>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
+					</#if>
+
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
+						</a>
+
+						<#if showChildrenNavItems>
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:NAVIGATION-MACRO-FTL,script:<#macro buildChildrenNavItems
+	displayDepth
+	navItem
+	navItemLevel = 2
+>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+	/>
+
+	<#list navItem.getChildren() as childNavigationItem>
+		<#assign
+			nav_child_css_class = ""
+		/>
+
+		<#if !childNavigationItem.isChildSelected() && childNavigationItem.isSelected()>
+			<#assign
+				nav_child_css_class = "active selected"
+			/>
+		</#if>
+
+		<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
+			<#if childNavigationItem.isBrowsable()>
+				<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+			<#else>
+				<span class="dropdown-item font-weight-semi-bold navigation-menu__submenu">${childNavigationItem.getName()}</span>
+			</#if>
+		</li>
+
+		<#if childNavigationItem.hasBrowsableChildren() && ((displayDepth == 0) || (navItemLevel < displayDepth))>
+			<ul class="list-unstyled pl-3">
+				<@buildChildrenNavItems
+					displayDepth=displayDepth
+					navItem=childNavigationItem
+					navItemLevel=(navItemLevel + 1)
+				/>
+			</ul>
+		</#if>
+	</#list>
+</#macro>
+
+<#macro buildNavigation
+	branchNavItems
+	cssClass
+	displayDepth
+	includeAllChildNavItems
+	navItemLevel
+	navItems
+>
+	<#if navItems?has_content && ((displayDepth == 0) || (navItemLevel <= displayDepth))>
+		<ul class="${cssClass} level-${navItemLevel}">
+			<#list navItems as navItem>
+				<#assign
+					nav_item_css_class = "lfr-nav-item"
+				/>
+
+				<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>
+					<#assign nav_item_css_class = "${nav_item_css_class} open" />
+				</#if>
+
+				<#if !navItem.isChildSelected() && navItem.isSelected()>
+					<#assign
+						nav_item_css_class = "${nav_item_css_class} selected active"
+					/>
+				</#if>
+
+				<li class="${nav_item_css_class}">
+					<#if navItem.isBrowsable()>
+						<a class="${nav_item_css_class}" href="${navItem.getRegularURL()!""}" ${navItem.getTarget()}>${navItem.getName()}</a>
+					<#else>
+						${navItem.getName()}
+					</#if>
+
+					<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>
+						<@buildNavigation
+							branchNavItems=branchNavItems
+							cssClass=cssClass
+							displayDepth=displayDepth
+							includeAllChildNavItems=includeAllChildNavItems
+							navItemLevel=(navItemLevel + 1)
+							navItems=navItem.getChildren()
+						/>
+					</#if>
+				</li>
+			</#list>
+		</ul>
+	</#if>
+</#macro>
+templateKey:SPLIT-BUTTON-DROPDOWNS-FTL,script:<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
+<#if !entries?has_content>
+	<#if themeDisplay.isSignedIn()>
+		<div class="alert alert-info">
+			<@liferay.language key="there-are-no-menu-items-to-display" />
+		</div>
+	</#if>
+<#else>
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
+
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
+
+	<div id="${navbarId}">
+		<ul class="navbar-site split-button-dropdowns">
+			<#assign navItems = entries />
+
+			<#list navItems as navItem>
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+				<#if navItem.isBrowsable() || showChildrenNavItems>
+					<#assign
+						nav_item_css_class = ""
+						nav_item_href_link = ""
+					/>
+
+					<#if navItem.isChildSelected() || navItem.isSelected()>
+						<#assign nav_item_css_class = "active" />
+					</#if>
+
+					<#if navItem.isBrowsable()>
+						<#assign nav_item_href_link = "href='${navItem.getURL()}' ${navItem.getTarget()}" />
+					</#if>
+
+					<li>
+						<#if showChildrenNavItems>
+							<#assign toggle_text>
+								<@liferay.language key="toggle" />
+							</#assign>
+
+							<div class="btn-group">
+						</#if>
+
+						<a class="${nav_item_css_class} btn btn-secondary" ${nav_item_href_link}><span>${navItem.getName()}</span></a>
+
+						<#if showChildrenNavItems>
+							<button aria-expanded="false" aria-haspopup="true" class="${nav_item_css_class} btn btn-secondary c-px-2 dropdown-toggle" data-toggle="liferay-dropdown" type="button">
+								<@liferay_aui.icon
+									image="angle-down"
+									markupView="lexicon"
+								/>
+
+								<span class='sr-only'>${toggle_text}</span>
+							</button>
+
+							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+								<@buildChildrenNavItems
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
+							</ul>
+
+							</div>
+						</#if>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+
+	<@liferay_aui.script use="liferay-navigation-interaction">
+		var navigation = A.one('#${navbarId}');
+
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
+		if (navigation) {
+			navigation.plug(Liferay.NavigationInteraction);
+		}
+	</@>
+</#if>
+templateKey:CATEGORY-FACET-CLOUD-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetAssetCategoriesPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="category"
+	>
+		<ul class="list-unstyled tag-cloud">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<span class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} tag-popularity-${entry.getPopularity()} term-name"
+							data-term-id="${entry.getAssetCategoryId()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getDisplayName())}
+						</button>
+					</span>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:CATEGORY-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetAssetCategoriesPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="category"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+							data-term-id="${entry.getAssetCategoryId()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getDisplayName())}
+
+							<#if entry.isFrequencyVisible()>
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:CATEGORY-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetAssetCategoriesPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="category"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						data-term-id="${entry.getAssetCategoryId()}"
+						disabled
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						<span class="label-item label-item-expand">
+							${htmlUtil.escape(entry.getDisplayName())}
+
+							<#if entry.isFrequencyVisible()>
+								(${entry.getFrequency()})
+							</#if>
+						</span>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:CUSTOM-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetCustomPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetCustomPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="${customFacetDisplayContext.getDisplayCaption()}"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li>
+						<button
+							class="btn btn-link btn-unstyled facet-term term-name ${(entry.isSelected())?then('facet-term-selected','facet-term-unselected')}"
+							disabled
+							id="${entry.getFieldName()}"
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+							type="button"
+						>
+							${htmlUtil.escape(entry.getFieldName())}
+
+							<#if entry.isFrequencyVisible()>
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !customFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:CUSTOM-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetCustomPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetCustomPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="${customFacetDisplayContext.getDisplayCaption()}"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						disabled
+						id="${entry.getFieldName()}"
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						${htmlUtil.escape(entry.getFieldName())}
+
+						<#if entry.isFrequencyVisible()>
+							(${entry.getFrequency()})
+						</#if>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !customFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:CUSTOM-FILTER-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'filterCustomPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'filterCustomPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="${htmlUtil.escapeAttribute(customFilterDisplayContext.getHeading())}"
+	>
+		<div class="form-group-autofit">
+			<@liferay_aui["input"]
+				cssClass="custom-filter-value-input"
+				data\-qa\-id="customFilterValueInput"
+				disabled=customFilterDisplayContext.isImmutable()
+				id="${namespace + stringUtil.randomId()}"
+				label=""
+				name="${htmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName())}"
+				useNamespace=false
+				value="${htmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue())}"
+				wrapperCssClass="form-group-item"
+			/>
+
+			<@clay["button"]
+				ariaLabel='${languageUtil.get(request, "apply")}'
+				disabled=customFilterDisplayContext.isImmutable()
+				elementClasses="btn-secondary"
+				label='${languageUtil.get(request, "apply")}'
+				type="submit"
+			/>
+		</div>
+	</@>
+</@>
+templateKey:FOLDER-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetFolderPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetFolderPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="folder"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+							data-term-id="${entry.getFolderId()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getDisplayName())}
+
+							<#if entry.isFrequencyVisible()>
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !folderSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:FOLDER-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetFolderPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetFolderPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="folder"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						data-term-id="${entry.getFolderId()}"
+						disabled
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						<span class="label-item label-item-expand">
+							${htmlUtil.escape(entry.getDisplayName())}
+
+							<#if entry.isFrequencyVisible()>
+								(${entry.getFrequency()})
+							</#if>
+						</span>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !folderSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:MODIFIED-FACET-RADIO-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetModifiedPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetModifiedPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="last-modified"
+	>
+		<ul class="list-unstyled modified">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li class="facet-value">
+						<div class="custom-control custom-radio">
+							<label class="facet-checkbox-label" for="${entry.getLabel()}">
+								<input
+									${(entry.isSelected())?then("checked", "")}
+									class="custom-control-input facet-term"
+									disabled
+									id="${entry.getLabel()}"
+									name="${entry.getLabel()}"
+									onChange='${"window.location.href = \"${entry.getRangeURL()}\";"}'
+									role="radio"
+									type="radio"
+								/>
+
+								<span class="custom-control-label term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
+									<span class="custom-control-label-text">
+										<@liferay_ui["message"] key="${htmlUtil.escape(entry.getLabel())}" />
+									</span>
+								</span>
+
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</label>
+						</div>
+					</li>
+				</#list>
+			</#if>
+
+			<li class="facet-value">
+				<div class="custom-control custom-radio">
+					<label class="facet-checkbox-label" for="${customRangeModifiedFacetTermDisplayContext.getLabel()}">
+						<input
+							${(customRangeModifiedFacetTermDisplayContext.isSelected())?then("checked", "")}
+							class="custom-control-input facet-term"
+							disabled
+							id="${customRangeModifiedFacetTermDisplayContext.getLabel()}"
+							name="${customRangeModifiedFacetTermDisplayContext.getLabel()}"
+							onChange='${"window.location.href = \"${customRangeModifiedFacetTermDisplayContext.getRangeURL()}\";"}'
+							role="radio"
+							type="radio"
+						/>
+
+						<span class="custom-control-label term-name ${(customRangeModifiedFacetTermDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
+							<span class="custom-control-label-text">
+								<@liferay_ui["message"] key="${htmlUtil.escape(customRangeModifiedFacetTermDisplayContext.getLabel())}" />
+							</span>
+						</span>
+
+						<#if customRangeModifiedFacetTermDisplayContext.isSelected()>
+							<small class="term-count">
+								(${customRangeModifiedFacetTermDisplayContext.getFrequency()})
+							</small>
+						</#if>
+					</label>
+				</div>
+			</li>
+
+			<div class="${(!modifiedFacetCalendarDisplayContext.isSelected())?then("hide", "")} modified-custom-range" id="${namespace}customRange">
+				<div class="col-md-6" id="${namespace}customRangeFrom">
+					<@liferay_aui["field-wrapper"] label="from">
+						<@liferay_ui["input-date"]
+							cssClass="modified-facet-custom-range-input-date-from"
+							dayParam="fromDay"
+							dayValue=modifiedFacetCalendarDisplayContext.getFromDayValue()
+							disabled=false
+							firstDayOfWeek=modifiedFacetCalendarDisplayContext.getFromFirstDayOfWeek()
+							monthParam="fromMonth"
+							monthValue=modifiedFacetCalendarDisplayContext.getFromMonthValue()
+							name="fromInput"
+							yearParam="fromYear"
+							yearValue=modifiedFacetCalendarDisplayContext.getFromYearValue()
+						/>
+					</@>
+				</div>
+
+				<div class="col-md-6" id="${namespace}customRangeTo">
+					<@liferay_aui["field-wrapper"] label="to">
+						<@liferay_ui["input-date"]
+							cssClass="modified-facet-custom-range-input-date-to"
+							dayParam="toDay"
+							dayValue=modifiedFacetCalendarDisplayContext.getToDayValue()
+							disabled=false
+							firstDayOfWeek=modifiedFacetCalendarDisplayContext.getToFirstDayOfWeek()
+							monthParam="toMonth"
+							monthValue=modifiedFacetCalendarDisplayContext.getToMonthValue()
+							name="toInput"
+							yearParam="toYear"
+							yearValue=modifiedFacetCalendarDisplayContext.getToYearValue()
+						/>
+					</@>
+				</div>
+
+				<@liferay_aui.button
+					cssClass="modified-facet-custom-range-filter-button"
+					disabled=modifiedFacetCalendarDisplayContext.isRangeBackwards()
+					name="searchCustomRangeButton"
+					value="search"
+				/>
+			</div>
+		</ul>
+
+		<#if !modifiedFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:SEARCH-BAR-LEFT-ALIGNED-ICON-FTL,script:<@liferay_aui.fieldset cssClass="search-bar">
+	<@liferay_aui.input
+		cssClass="search-bar-empty-search-input"
+		name="emptySearchEnabled"
+		type="hidden"
+		value=searchBarPortletDisplayContext.isEmptySearchEnabled()
+	/>
+
+	<div class="input-group ${searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()?then("search-bar-scope","search-bar-simple")}">
+		<#if searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()>
+			<div class="input-group-item input-group-item-shrink input-group-prepend">
+				<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-secondary" type="submit">
+					<@clay.icon symbol="search" />
+				</button>
+			</div>
+
+			<@liferay_aui.select
+				cssClass="search-bar-scope-select"
+				label=""
+				name=htmlUtil.escape(searchBarPortletDisplayContext.getScopeParameterName())
+				title="scope"
+				useNamespace=false
+				wrapperCssClass="input-group-item input-group-item-shrink input-group-prepend search-bar-search-select-wrapper"
+			>
+				<@liferay_aui.option
+				label="this-site"
+				selected=searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope()
+				value=searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString()
+				/>
+
+				<#if searchBarPortletDisplayContext.isAvailableEverythingSearchScope()>
+					<@liferay_aui.option
+						label="everything"
+						selected=searchBarPortletDisplayContext.isSelectedEverythingSearchScope()
+						value=searchBarPortletDisplayContext.getEverythingSearchScopeParameterString()
+					/>
+				</#if>
+			</@>
+
+			<#assign data = {
+				"test-id": "searchInput"
+			} />
+
+			<@liferay_aui.input
+				autoFocus=true
+				cssClass="search-bar-keywords-input"
+				data=data
+				label=""
+				name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
+				placeholder=searchBarPortletDisplayContext.getInputPlaceholder()
+				title=languageUtil.get(locale, "search")
+				type="text"
+				useNamespace=false
+				value=htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())
+				wrapperCssClass="input-group-item input-group-append search-bar-keywords-input-wrapper"
+			/>
+		<#else>
+			<div class="input-group-item search-bar-keywords-input-wrapper">
+				<input
+					class="form-control input-group-inset input-group-inset-before search-bar-keywords-input"
+					data-qa-id="searchInput"
+					id="${namespace + stringUtil.randomId()}"
+					name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
+					placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}"
+					title="${languageUtil.get(locale, "search")}"
+					type="text"
+					value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}"
+				/>
+
+				<div class="input-group-inset-item input-group-inset-item-before">
+					<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-unstyled" type="submit">
+						<@clay.icon symbol="search" />
+					</button>
+				</div>
+
+				<@liferay_aui.input
+					name=htmlUtil.escape(searchBarPortletDisplayContext.getScopeParameterName())
+					type="hidden"
+					value=searchBarPortletDisplayContext.getScopeParameterValue()
+				/>
+			</div>
+		</#if>
+	</div>
+</@>
+templateKey:SEARCH-RESULTS-CARD-FTL,script:<div class="search-total-label">
+	${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+</div>
+
+<div class="display-card">
+	<ul class="card-page">
+		<#if entries?has_content>
+			<#list entries as entry>
+				<li class="card-page-item card-page-item-asset">
+					<div class="card card-type-asset file-card">
+						<div class="aspect-ratio card-item-first">
+							<#if entry.isThumbnailVisible()>
+								<img alt="${htmlUtil.escape(entry.getTitle())}" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid" src="${entry.getThumbnailURLString()}" />
+							<#elseif entry.isUserPortraitVisible() && stringUtil.equals(entry.getClassName(), userClassName)>
+								<div class="user-card">
+									<div class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid card-type-asset-icon">
+											<span class="sticker sticker-secondary sticker-user-icon">
+												<span class="sticker-overlay">
+													<img alt="${htmlUtil.escape(entry.getTitle())}" class="img-fluid" src="${entry.getUserPortraitURLString()}" />
+												</span>
+											</span>
+									</div>
+								</div>
+							<#else>
+								<div class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid card-type-asset-icon">
+									<@clay.icon symbol="${(entry.isIconVisible())?then(entry.getIconId(),'web-content')}" />
+								</div>
+							</#if>
+						</div>
+
+						<div class="card-body">
+							<div class="card-row">
+								<div class="autofit-col autofit-col-expand">
+									<section class="autofit-section">
+										<h3 class="card-title">
+											<a href="${entry.getViewURL()}">
+												${entry.getHighlightedTitle()}
+											</a>
+										</h3>
+
+										<#if entry.isCreatorVisible()>
+											<p class="card-subtitle">
+												<span class="text-truncate-inline">
+													<span class="text-truncate">
+														${htmlUtil.escape(entry.getCreatorUserName())}
+													</span>
+												</span>
+											</p>
+										</#if>
+
+										<#if entry.isCreationDateVisible()>
+											<p class="card-subtitle">
+												<span class="text-truncate-inline">
+													<span class="text-truncate">
+														${entry.getCreationDateString()}
+													</span>
+												</span>
+											</p>
+										</#if>
+
+										<#if entry.isModelResourceVisible()>
+											<p class="card-subtitle">
+												<span class="text-truncate-inline">
+													<span class="text-truncate">
+														${entry.getModelResource()}
+													</span>
+												</span>
+											</p>
+										</#if>
+
+										<#if entry.isContentVisible()>
+											<p class="card-description">
+												${entry.getContent()}
+											</p>
+										</#if>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</#list>
+		</#if>
+	</ul>
+</div>
+templateKey:SEARCH-RESULTS-COMPACT-FTL,script:<div class="search-total-label">
+	${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+</div>
+
+<div class="display-compact">
+	<ul>
+		<#if entries?has_content>
+			<#list entries as entry>
+				<#if !entry.isTemporarilyUnavailable()>
+					<li>
+						<a class="link-primary single-link" href="${entry.getViewURL()}">
+							${entry.getHighlightedTitle()}
+						</a>
+					</li>
+				</#if>
+			</#list>
+		</#if>
+	</ul>
+</div>
+templateKey:SEARCH-RESULTS-LIST-FTL,script:<div class="search-total-label">
+	${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+</div>
+
+<div class="display-list">
+	<ul class="list-group" id="search-results-display-list">
+		<#if entries?has_content>
+			<#list entries as entry>
+				<li class="list-group-item list-group-item-flex">
+					<#if !entry.isTemporarilyUnavailable()>
+						<div class="autofit-col">
+							<#if entry.isThumbnailVisible()>
+								<span class="sticker">
+									<span class="sticker-overlay">
+										<img
+											alt="${languageUtil.get(locale, "thumbnail")}"
+											class="sticker-img"
+											src="${entry.getThumbnailURLString()}"
+										/>
+									</span>
+								</span>
+							<#elseif entry.isUserPortraitVisible() && stringUtil.equals(entry.getClassName(), userClassName)>
+								<@liferay_ui["user-portrait"] userId=entry.getAssetEntryUserId() />
+							<#elseif entry.isIconVisible()>
+								<span class="sticker sticker-rounded sticker-secondary sticker-static">
+									<@clay.icon symbol="${entry.getIconId()}" />
+								</span>
+							</#if>
+						</div>
+
+						<div class="autofit-col autofit-col-expand">
+							<section class="autofit-section">
+								<div class="list-group-title">
+									<a href="${entry.getViewURL()}">
+										${entry.getHighlightedTitle()}
+									</a>
+								</div>
+
+								<div class="search-results-metadata">
+									<p class="list-group-subtext">
+										<#if entry.isModelResourceVisible()>
+											<span class="subtext-item">
+												<strong>${entry.getModelResource()}</strong>
+											</span>
+										</#if>
+
+										<#if entry.isLocaleReminderVisible()>
+											<@liferay_ui["icon"]
+												icon="../language/${entry.getLocaleLanguageId()}"
+												message=entry.getLocaleReminder()
+											/>
+										</#if>
+
+										<#if entry.isCreatorVisible()>
+											<span class="subtext-item">
+												&#183;
+
+												<@liferay.language key="written-by" />
+
+												<strong>${htmlUtil.escape(entry.getCreatorUserName())}</strong>
+											</span>
+										</#if>
+
+										<#if entry.isCreationDateVisible()>
+											<span class="subtext-item">
+												<@liferay.language key="on-date" />
+
+												${entry.getCreationDateString()}
+											</span>
+										</#if>
+									</p>
+
+									<#if entry.isContentVisible()>
+										<p class="list-group-subtext">
+											<span class="subtext-item">
+												${entry.getContent()}
+											</span>
+										</p>
+									</#if>
+
+									<#if entry.isFieldsVisible()>
+										<p class="list-group-subtext">
+											<#assign separate = false />
+
+											<#list entry.getFieldDisplayContexts() as fieldDisplayContext>
+												<#if separate>
+													&#183;
+												</#if>
+
+												<span class="badge">${fieldDisplayContext.getName()}</span>
+
+												<span>${fieldDisplayContext.getValuesToString()}</span>
+
+												<#assign separate = true />
+											</#list>
+										</p>
+									</#if>
+
+									<#if entry.isAssetCategoriesOrTagsVisible()>
+										<h6 class="search-document-tags text-default">
+											<@liferay_asset["asset-tags-summary"]
+												className=entry.getClassName()
+												classPK=entry.getClassPK()
+												paramName=entry.getFieldAssetTagNames()
+												portletURL=entry.getPortletURL()
+											/>
+
+											<@liferay_asset["asset-categories-summary"]
+												className=entry.getClassName()
+												classPK=entry.getClassPK()
+												paramName=entry.getFieldAssetCategoryIds()
+												portletURL=entry.getPortletURL()
+											/>
+										</h6>
+									</#if>
+
+									<#if entry.isDocumentFormVisible()>
+										<h6 class="expand-details text-default">
+											<span class="list-group-text" style="">
+												<a href="javascript:;">
+													<@liferay.language key="details" />...
+												</a>
+											</span>
+										</h6>
+
+										<div class="hide search-results-list table-details table-responsive">
+											<table class="table">
+												<thead>
+													<tr>
+														<th class="key-column">
+															<@liferay.language key="key" />
+														</th>
+														<th>
+															<@liferay.language key="value" />
+														</th>
+													</tr>
+												</thead>
+
+												<tbody>
+													<#list entry.getDocumentFormFieldDisplayContexts() as fieldDisplayContext>
+														<tr>
+															<td class="key-column table-details-content">
+																<strong>${htmlUtil.escape(fieldDisplayContext.getName())}</strong>
+															</td>
+															<td class="table-details-content">
+																<code>
+																	${fieldDisplayContext.getValuesToString()}
+																</code>
+															</td>
+														</tr>
+													</#list>
+												</tbody>
+											</table>
+										</div>
+									</#if>
+								</div>
+							</section>
+						</div>
+					<#else>
+						<div class="autofit-col">
+							<div class="alert alert-danger">
+								<@liferay.language_format
+									arguments="result"
+									key="is-temporarily-unavailable"
+								/>
+							</div>
+						</div>
+					</#if>
+				</li>
+			</#list>
+		</#if>
+	</ul>
+</div>
+
+<@liferay_aui.script use="aui-base">
+	A.one('#search-results-display-list').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			currentTarget.siblings('.search-results-list').toggleClass('hide');
+		},
+		'.expand-details'
+	);
+</@liferay_aui.script>
+templateKey:SITE-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetScopePanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetScopePanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="site"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li>
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+							data-term-id="${entry.getGroupId()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getDescriptiveName())}
+
+							<#if entry.isShowCount()>
+								<small class="term-count">
+									(${entry.getCount()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !scopeSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:SITE-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetScopePanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetScopePanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="site"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						data-term-id="${entry.getGroupId()}"
+						disabled
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						${htmlUtil.escape(entry.getDescriptiveName())}
+
+						<#if entry.isShowCount()>
+							(${entry.getCount()})
+						</#if>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !scopeSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:SORT-COMPACT-FTL,script:<div class="form-group-autofit">
+	<div class="form-group-item form-group-item-label form-group-item-shrink">
+		<label>
+			<span class="text-truncate-inline">
+				<span class="text-truncate">
+					${languageUtil.get(locale, "sort-by")}
+				</span>
+			</span>
+		</label>
+	</div>
+
+	<div class="form-group-item">
+		<@liferay_aui.select
+			cssClass="sort-term"
+			label=""
+			name="sortSelection"
+		>
+			<#if entries?has_content>
+				<#list entries as entry>
+					<@liferay_aui.option
+						label="${entry.getLanguageLabel()}"
+						selected=entry.isSelected()
+						value="${entry.getField()}"
+					/>
+				</#list>
+			</#if>
+		</@liferay_aui.select>
+	</div>
+</div>
+templateKey:TAG-FACET-CLOUD-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetTagsPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetAssetTagsPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="tag"
+	>
+		<ul class="list-unstyled tag-cloud">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<span class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} tag-popularity-${entry.getPopularity()} term-name"
+							data-term-id="${entry.getValue()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getDisplayName())}
+						</button>
+					</span>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !assetTagsSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:TAG-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetTagsPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetAssetTagsPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="tag"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+							data-term-id="${entry.getValue()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getDisplayName())}
+
+							<#if entry.isFrequencyVisible()>
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !assetTagsSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:TAG-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetTagsPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetAssetTagsPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="tag"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						data-term-id="${entry.getValue()}"
+						disabled
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						<span class="label-item label-item-expand">
+							${htmlUtil.escape(entry.getDisplayName())}
+
+							<#if entry.isFrequencyVisible()>
+								(${entry.getFrequency()})
+							</#if>
+						</span>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !assetTagsSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:TYPE-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetEntriesPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetAssetEntriesPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="type"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+							data-term-id="${entry.getAssetType()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getTypeName())}
+
+							<#if entry.isFrequencyVisible()>
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !assetEntriesSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:TYPE-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetAssetEntriesPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetAssetEntriesPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="type"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						data-term-id="${entry.getAssetType()}"
+						disabled
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						<span class="label-item label-item-expand">
+							${htmlUtil.escape(entry.getTypeName())}
+
+							<#if entry.isFrequencyVisible()>
+								(${entry.getFrequency()})
+							</#if>
+						</span>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !assetEntriesSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:USER-FACET-COMPACT-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetUserPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet"
+		id="${namespace + 'facetUserPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="user"
+	>
+		<ul class="list-unstyled">
+			<#if entries?has_content>
+				<#list entries as entry>
+					<li class="facet-value">
+						<button
+							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+							data-term-id="${entry.getUserName()}"
+							disabled
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						>
+							${htmlUtil.escape(entry.getUserName())}
+
+							<#if entry.isFrequencyVisible()>
+								<small class="term-count">
+									(${entry.getFrequency()})
+								</small>
+							</#if>
+						</button>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+
+		<#if !userSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:USER-FACET-LABEL-FTL,script:<@liferay_ui["panel-container"]
+	extended=true
+	id="${namespace + 'facetUserPanelContainer'}"
+	markupView="lexicon"
+	persistState=true
+>
+	<@liferay_ui.panel
+		collapsible=true
+		cssClass="search-facet search-facet-display-label"
+		id="${namespace + 'facetUserPanel'}"
+		markupView="lexicon"
+		persistState=true
+		title="user"
+	>
+		<#if entries?has_content>
+			<div class="label-container">
+				<#list entries as entry>
+					<button
+						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+						data-term-id="${entry.getUserName()}"
+						disabled
+						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+						type="button"
+					>
+						<span class="label-item label-item-expand">
+							${htmlUtil.escape(entry.getUserName())}
+
+							<#if entry.isFrequencyVisible()>
+								(${entry.getFrequency()})
+							</#if>
+						</span>
+					</button>
+				</#list>
+			</div>
+		</#if>
+
+		<#if !userSearchFacetDisplayContext.isNothingSelected()>
+			<@liferay_aui.button
+				cssClass="btn-link btn-unstyled facet-clear-btn"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			/>
+		</#if>
+	</@>
+</@>
+templateKey:LANGUAGE-ICON-FTL,script:<#if entries?has_content>
+	<#list entries as entry>
+		<#if entry.isSelected()>
+			<#assign cssClass = "current-language" />
+		</#if>
+
+		<#if !entry.isDisabled()>
+			<@liferay_aui["icon"]
+				cssClass=cssClass
+				image=entry.getW3cLanguageId()?lower_case
+				markupView="lexicon"
+				message=entry.getLongDisplayName()
+				url=entry.getURL()
+			/>
+		</#if>
+	</#list>
+</#if>
+templateKey:LANGUAGE-ICON-MENU-FTL,script:<#if entries?has_content>
+	<#assign normalizedDefaultLanguageId = stringUtil.replace(languageId, "_", "-") />
+
+	<div class="text-truncate">
+		<@liferay_ui["icon-menu"]
+			direction="left-side"
+			icon=stringUtil.toLowerCase(normalizedDefaultLanguageId)
+			markupView="lexicon"
+			showWhenSingleIcon=true
+			triggerLabel=normalizedDefaultLanguageId
+			triggerType="button"
+		>
+			<#list entries as entry>
+				<#if !entry.isSelected() && !entry.isDisabled()>
+					<#assign
+						entryLocale = entry.getLocale()
+						displayName = stringUtil.toLowerCase(entryLocale.getDisplayLanguage(entryLocale)) + "-" + entryLocale.getDisplayCountry(entryLocale)
+						normalizedDefaultLanguageId = stringUtil.toLowerCase(stringUtil.replace(entry.getLanguageId(), "_", "-"))
+					/>
+
+					<#if languageUtil.isBetaLocale(entryLocale)>
+						<#assign displayName += " [beta]" />
+					</#if>
+
+					<@liferay_ui["icon"]
+						icon=normalizedDefaultLanguageId
+						iconCssClass="inline-item inline-item-before"
+						markupView="lexicon"
+						message=displayName
+						url=entry.getURL()
+					/>
+				</#if>
+			</#list>
+		</@>
+	</div>
+</#if>
+templateKey:LANGUAGE-LONG-TEXT-FTL,script:<style>
+	.language-entry-long-text {
+		display: inline-block;
+		padding: 0 0.5em;
+	}
+</style>
+
+<#if entries?has_content>
+	<#list entries as entry>
+		<#if !entry.isDisabled()>
+			<@liferay_aui["a"]
+				cssClass="language-entry-long-text"
+				href=entry.getURL()
+				label=entry.getLongDisplayName()
+				lang=entry.getW3cLanguageId()
+				localizeLabel=false
+			/>
+		</#if>
+	</#list>
+</#if>
+templateKey:LANGUAGE-SELECT-BOX-FTL,script:<#if entries?has_content>
+	<#assign languageId = localeUtil.toLanguageId(locale) />
+
+	<style>
+		.taglib-language-option {
+			background: none no-repeat 5px center;
+			padding-left: 25px;
+		}
+
+		<#list entries as entry>
+			.taglib-language-option-${entry.getW3cLanguageId()} {
+				background-image: url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png);
+			}
+		</#list>
+	</style>
+
+	<@liferay_aui["form"]
+		action=formAction
+		method="post"
+		name='${namespace + formName}'
+		useNamespace=false
+	>
+		<@liferay_aui["select"]
+			changesContext=true
+			id='${namespace + formName}'
+			label=""
+			name='${name}'
+			onChange='${namespace + "changeLanguage();"}'
+			title="language"
+		>
+			<#list entries as entry>
+				<@liferay_aui["option"]
+					cssClass="taglib-language-option taglib-language-option-${entry.getW3cLanguageId()}"
+					disabled=entry.isDisabled()
+					label=entry.getLongDisplayName()
+					lang=entry.getW3cLanguageId()
+					localizeLabel=false
+					selected=entry.isSelected()
+					value=entry.getLanguageId()
+				/>
+			</#list>
+		</@>
+	</@>
+
+	<@liferay_aui["script"]>
+		function ${namespace}changeLanguage() {
+			submitForm(document.${namespace + formName});
+		}
+	</@>
+</#if>
+templateKey:LANGUAGE-SHORT-TEXT-FTL,script:<style>
+	.language-entry-short-text {
+		padding: 0 0.5em;
+	}
+</style>
+
+<#if entries?has_content>
+	<#list entries as entry>
+		<#if !entry.isDisabled()>
+			<@liferay_aui["a"]
+				cssClass="language-entry-short-text"
+				href=entry.getURL()
+				label=entry.getShortDisplayName()
+				lang=entry.getW3cLanguageId()
+			/>
+		</#if>
+	</#list>
+</#if>
+templateKey:COMMERCE-ORDER-ITEM-MINI-BASIC-FTL,script:<#assign count = 0 />
+
+<#if entries?has_content>
+	<div class="row">
+		<#assign
+			orderPrice = commerceCartContentMiniDisplayContext.getCommerceOrderPrice()
+
+			subTotal = orderPrice.getSubtotal()
+		/>
+
+		<div class="col-md-12">
+			<strong>Total: ${subTotal.format(themeDisplay.getLocale())}</strong>
+		</div>
+
+		<#list entries as curCommerceOrderItem>
+			<#assign
+				cpDefinition = curCommerceOrderItem.getCPDefinition()
+
+				image = ''
+
+				productURL = commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
+
+				name = cpDefinition.getName(themeDisplay.getLanguageId())
+			/>
+
+			<#if commerceCartContentMiniDisplayContext.getCommerceOrderItemThumbnailSrc(curCommerceOrderItem)??>
+				<#assign
+					image = commerceCartContentMiniDisplayContext.getCommerceOrderItemThumbnailSrc(curCommerceOrderItem)
+				/>
+			</#if>
+
+			<div class="col-md-6">
+				<div class="row-fluid">
+					<img class="w-100" src="${htmlUtil.escapeAttribute(image)}">
+				</div>
+
+				<div class="row-fluid">
+					<a href="${htmlUtil.escapeAttribute(productURL)}">
+						<strong>${htmlUtil.escape(name)}</strong>
+					</a>
+
+					<div class="commerce-price-section d-inline float-right">
+						<@commerce_ui["price"]
+							CPDefinitionId=cpDefinition.getCPDefinitionId()
+							CPInstanceId=curCommerceOrderItem.getCPInstanceId()
+							showDiscount=false
+						/>
+					</div>
+				</div>
+			</div>
+
+			<#assign count = count + 1 />
+
+			<#if count gte 2>
+				</div>
+
+				<div class="row">
+
+				<#assign count = 0 />
+			</#if>
+		</#list>
+	</div>
+</#if>
+templateKey:COMMERCE-ORDER-ITEM-BASIC-FTL,script:<div class="table-responsive">
+	<table class="table">
+		<#if entries?has_content>
+			<tr>
+				<th>${languageUtil.get(request, "product")}</th>
+				<th>${languageUtil.get(request, "description")}</th>
+				<th>${languageUtil.get(request, "price")}</th>
+				<th>${languageUtil.get(request, "quantity")}</th>
+				<th></th>
+			</tr>
+
+			<#list entries as curCommerceOrderItem>
+				<#assign
+					cpDefinition = curCommerceOrderItem.getCPDefinition()
+
+					image = ''
+
+					productURL = commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
+
+					name = cpDefinition.getName(themeDisplay.getLanguageId())
+
+					deleteURL = commerceCartContentDisplayContext.getDeleteURL(curCommerceOrderItem)
+				/>
+
+				<#if commerceCartContentDisplayContext.getCommerceOrderItemThumbnailSrc(curCommerceOrderItem)??>
+					<#assign
+						image = commerceCartContentDisplayContext.getCommerceOrderItemThumbnailSrc(curCommerceOrderItem)
+					/>
+				</#if>
+
+				<tr>
+					<td>
+						<#if image?has_content>
+							<img class="aspect-ratio-bg-cover sticker sticker-lg sticker-static" src="${htmlUtil.escapeAttribute(image)}">
+						</#if>
+					</td>
+					<td>
+						<a href="${htmlUtil.escapeAttribute(productURL)}">
+							<strong>${htmlUtil.escape(name)}</strong>
+						</a>
+					</td>
+					<td>
+						<@commerce_ui["price"]
+							CPDefinitionId=cpDefinition.getCPDefinitionId()
+							CPInstanceId=curCommerceOrderItem.getCPInstanceId()
+							showDiscount=false
+						/>
+					</td>
+					<td>${curCommerceOrderItem.getQuantity()}</td>
+					<td>
+						<a href="${htmlUtil.escapeAttribute(deleteURL)}">
+							${languageUtil.get(request, "delete")}
+						</a>
+					</td>
+				</tr>
+			</#list>
+		</#if>
+	</table>
+</div>
+templateKey:COMMERCE-ORDER-ITEM-TOTAL-BASIC-FTL,script:<#if commerceCartContentTotalDisplayContext.getCommerceOrderPrice()??>
+	<#assign
+		commerceOrderPrice = commerceCartContentTotalDisplayContext.getCommerceOrderPrice()
+
+		commerceOrderTotal = commerceOrderPrice.getTotal()
+	/>
+
+	<h4>
+		<strong><@liferay_ui["message"] key="total" /> ${commerceOrderTotal.format(locale)}</strong>
+	</h4>
+</#if>
+templateKey:COMMERCE-ADDRESS-BASIC-FTL,script:<#assign count = 0 />
+
+<div class="container-fluid container-fluid-max-xl" style="text-align:center">
+	<div class="row" style="padding:15px">
+		<#if entries?has_content>
+			<#list entries as curCommerceAddress>
+				<div class="col-md-4" style="text-align:left">
+					<#assign
+						editURL = commerceAddressDisplayContext.getEditCommerceAddressURL(curCommerceAddress.getCommerceAddressId())
+
+						deleteURL = commerceAddressDisplayContext.getDeleteCommerceAddressURL(curCommerceAddress.getCommerceAddressId())
+
+						editButtonValue = languageUtil.get(request, "edit")
+
+						removeButtonValue = languageUtil.get(request, "remove")
+
+						commerceCountry = curCommerceAddress.getCommerceCountry()
+					/>
+
+					<h2 style="color:#000"><strong>${htmlUtil.escape(curCommerceAddress.getName())}</strong></h2>
+
+					<h3 style="color:#000">${htmlUtil.escape(curCommerceAddress.getStreet1())}</h3>
+
+					<h3 style="color:#000">${htmlUtil.escape(curCommerceAddress.getZip())}, ${htmlUtil.escape(curCommerceAddress.getCity())}</h3>
+
+					<#if commerceCountry??>
+						<h3 style="color:#000">${htmlUtil.escape(commerceCountry.getName(themeDisplay.getLanguageId()))}</h3>
+					</#if>
+
+					<div class="row" style="padding-top:30px">
+						<@liferay_aui.button
+							cssClass="btn-lg"
+							href="${editURL}"
+							name="editAddressButton"
+							value="${editButtonValue}"
+						/>
+
+						<@liferay_aui.button
+							cssClass="btn-lg"
+							href="${deleteURL}"
+							name="removeAddressButton"
+							value="${removeButtonValue}"
+						/>
+					</div>
+				</div>
+
+				<#assign count = count + 1 />
+
+				<#if count gte 3>
+					</div>
+
+					<div class="row" style="padding:15px">
+
+					<#assign count = 0 />
+				</#if>
+			</#list>
+		</#if>
+	</div>
+
+	<div class="row" style="padding:50px 0 15px 0">
+		<#assign addButtonValue = languageUtil.get(request, "add-address") />
+
+		<@liferay_aui.button
+			cssClass="btn-lg btn-primary"
+			href="${commerceAddressDisplayContext.getAddCommerceAddressURL()}"
+			name="addAddressButton"
+			value="${addButtonValue}"
+		/>
+	</div>
+</div>
+templateKey:COMMERCE-PRODUCT-DEFINITION-BASIC-FTL,script:<#assign count = 0
+/>
+
+<#if entries?has_content>
+	<div class="row">
+		<#list entries as curCPCatalogEntry>
+			<#assign
+				image = curCPCatalogEntry.getDefaultImageFileUrl()
+
+				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
+
+				name = curCPCatalogEntry.getName()
+			/>
+
+			<div class="col-md-4">
+				<div>
+					<img src="${htmlUtil.escapeAttribute(image)}">
+				</div>
+
+				<div>
+					<a href="${htmlUtil.escapeHREF(friendlyURL)}">
+						<strong>${htmlUtil.escape(name)}</strong>
+					</a>
+				</div>
+			</div>
+
+			<#assign count = count + 1 />
+
+			<#if count gte 3>
+				</div>
+
+				<div class="row">
+
+				<#assign count = 0 />
+			</#if>
+		</#list>
+	</div>
+<#else>
+	<div class="alert alert-info">
+		<@liferay_ui["message"] key="no-products-were-found" />
+	</div>
+</#if>
+templateKey:DOCUMENTLIBRARY-CAROUSEL-FTL,script:<#if entries?has_content>
+	<style>
+		#<@portlet.namespace />carousel .carousel-item {
+			background-color: #000;
+			height: 250px;
+			overflow: hidden;
+			text-align: center;
+			width: 700px;
+		}
+
+		#<@portlet.namespace />carousel .carousel-item img {
+			max-height: 250px;
+			max-width: 700px;
+		}
+	</style>
+
+	<div id="<@portlet.namespace />carousel">
+		<#assign imageMimeTypes = propsUtil.getArray("dl.file.entry.preview.image.mime.types") />
+
+		<#list entries as entry>
+			<#if imageMimeTypes?seq_contains(entry.getMimeType())>
+				<div class="carousel-item image-viewer-base-image">
+					<img src="${dlUtil.getPreviewURL(entry, entry.getFileVersion(), themeDisplay, "")}" />
+				</div>
+			</#if>
+		</#list>
+	</div>
+
+	<@liferay_aui.script use="aui-carousel">
+		var carousel = new A.Carousel(
+			{
+				after: {
+					responsive: function(event) {
+						event.stopImmediatePropagation();
+
+						var boundingBox = event.currentTarget.get('boundingBox');
+
+						boundingBox.all('.image-viewer-base-image-list, .image-viewer-base-image').setStyles(
+							{
+								height: 'auto',
+								maxHeight: event.height,
+								maxWidth: event.width,
+								width: 'auto'
+							}
+						);
+					}
+				},
+
+				contentBox: '#<@portlet.namespace />carousel',
+				height: 250,
+				intervalTime: 2,
+				width: 700
+			}
+		).render();
+	</@liferay_aui.script>
+</#if>
+templateKey:BREADCRUMB-ARROWS-FTL,script:<#if entries?has_content>
+	<@liferay_util["html-top"]>
+		<style>
+			.breadcrumb-arrows li {
+				background-color: #EFEFEF;
+				margin-bottom: 3px;
+				overflow: visible;
+			}
+
+			.breadcrumb-arrows li + li::before {
+				content: none;
+			}
+
+			.breadcrumb-arrows li > a {
+				border-right: 4px solid #FFF;
+				display: block;
+				max-width: 100%;
+				position: relative;
+			}
+
+			.breadcrumb-arrows .entry {
+				line-height: 40px;
+				overflow: hidden;
+				padding-left: 30px;
+				padding-right: 7px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.breadcrumb-arrows a::after {
+				border-bottom: 20px inset transparent;
+				border-left: 20px solid #EFEFEF;
+				border-top: 20px inset transparent;
+				content: '';
+				height: 0;
+				position: absolute;
+				right: -20px;
+				top: 0;
+				width: 0;
+				z-index: 2;
+			}
+
+			.breadcrumb-arrows li:nth-child(n+2) a::before {
+				border-bottom: 20px inset transparent;
+				border-left: 20px solid #FFF;
+				border-top: 20px inset transparent;
+				content: '';
+				height: 0;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 0;
+			}
+
+			.breadcrumb-arrows li:last-child {
+				border-bottom-right-radius: 4px;
+				border-right-width: 0;
+				border-top-right-radius: 4px;
+				position: relative;
+			}
+
+			.breadcrumb-arrows li:last-child::before {
+				border-bottom: 20px inset transparent;
+				border-left: 20px solid #FFF;
+				border-top: 20px inset transparent;
+				content: '';
+				height: 0;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 0;
+			}
+
+			.breadcrumb-arrows li:last-child .entry {
+				padding-right: 23px;
+			}
+
+			.breadcrumb-arrows li:first-child {
+				border-bottom-left-radius: 4px;
+				border-top-left-radius: 4px;
+			}
+
+			.breadcrumb-arrows li:first-child::before {
+				border-left-width: 0;
+			}
+
+			.breadcrumb-arrows li:first-child .entry {
+				padding-left: 23px;
+			}
+
+			.breadcrumb-arrows .active {
+				background-color: #007ACC;
+			}
+
+			.breadcrumb-arrows .active a, .breadcrumb-arrows .active .entry {
+				color: #FFF;
+			}
+
+			.breadcrumb-arrows .active a::after {
+				border-left-color: #007ACC;
+			}
+
+			.portlet-barebone .breadcrumb-arrows li > a, .portlet-borderless .breadcrumb-arrows li > a, .taglib-portlet-preview .breadcrumb-arrows li > a {
+				border-right-color: #F5F7F8;
+			}
+
+			.portlet-barebone .breadcrumb-arrows li:last-child::before, .portlet-barebone .breadcrumb-arrows li:nth-child(n+2) a::before, .portlet-borderless .breadcrumb-arrows li:last-child::before, .portlet-borderless .breadcrumb-arrows li:nth-child(n+2) a::before, .taglib-portlet-preview .breadcrumb-arrows li:last-child::before, .taglib-portlet-preview .breadcrumb-arrows li:nth-child(n+2) a::before {
+				border-left-color: #F5F7F8;
+			}
+		</style>
+	</@>
+
+	<div class="breadcrumb breadcrumb-arrows">
+		<#assign cssClass = "" />
+
+		<#list entries as entry>
+			<#if entry?is_last>
+				<#assign cssClass = "active" />
+			</#if>
+
+			<li class="${cssClass}" <#if entry?is_last>aria-current="page"</#if>>
+				<#if entry?has_next>
+					<a
+
+					<#if entry.isBrowsable()>
+						href="${entry.getURL()!""}"
+					</#if>
+
+					>
+				</#if>
+
+				<div class="entry">
+					${htmlUtil.escape(entry.getTitle())}
+				</div>
+
+				<#if entry?has_next>
+					</a>
+				</#if>
+			</li>
+		</#list>
+	</div>
+</#if>
+templateKey:BREADCRUMB-HORIZONTAL-FTL,script:<#if entries?has_content>
+	<ol class="breadcrumb">
+		<#list entries as entry>
+			<li class="breadcrumb-item">
+				<#if entry?has_next>
+					<a class="breadcrumb-link" href="${entry.getURL()!""}" title="${htmlUtil.escape(entry.getTitle())}">
+						<span class="breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
+					</a>
+				<#else>
+					<span class="active breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
+				</#if>
+			</li>
+		</#list>
+	</ol>
+</#if>
+templateKey:BREADCRUMB-VERTICAL-FTL,script:<#if entries?has_content>
+	<ul class="breadcrumb breadcrumb-vertical">
+		<#assign cssClass = "" />
+
+		<#list entries as entry>
+			<#if entry?is_last>
+				<#assign cssClass = "active" />
+			</#if>
+
+			<li class="${cssClass}" <#if entry?is_last>aria-current="page"</#if>>
+				<#if entry?has_next>
+					<a
+
+					<#if entry.isBrowsable()>
+						href="${entry.getURL()!""}"
+					</#if>
+
+					>
+				</#if>
+
+				${htmlUtil.escape(entry.getTitle())}
+
+				<#if entry?has_next>
+					</a>
+				</#if>
+			</li>
+		</#list>
+	</ul>
+</#if>
+templateKey:SIMILAR-RESULTS-CARD-FTL,script:<div class="display-card">
+	<ul class="card-page">
+		<#if entries?has_content>
+			<#list entries as entry>
+				<li class="card-page-item card-page-item-asset">
+					<div class="card card-type-asset file-card">
+						<div class="aspect-ratio card-item-first">
+							<#if (entry.getThumbnailURLString()??) && validator.isNotNull(entry.getThumbnailURLString())>
+								<img alt="${htmlUtil.escape(entry.getTitle())}" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid" src="${entry.getThumbnailURLString()}" />
+							<#else>
+								<div class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid card-type-asset-icon">
+									<@clay.icon symbol="${entry.getIconId()}" />
+								</div>
+							</#if>
+						</div>
+
+						<div class="card-body">
+							<div class="card-row">
+								<div class="autofit-col autofit-col-expand">
+									<section class="autofit-section">
+										<#if (entry.getCategoriesString()??) && validator.isNotNull(entry.getCategoriesString())>
+											<span class="card-category text-truncate-inline">
+												${entry.getCategoriesString()}
+											</span>
+										</#if>
+
+										<h3 class="card-title" title="${htmlUtil.escape(entry.getTitle())}">
+											<a href="${entry.getViewURL()}">
+												${htmlUtil.escape(entry.getTitle())}
+											</a>
+										</h3>
+
+										<#if (entry.getCreatorUserName()??) && validator.isNotNull(entry.getCreatorUserName())>
+											<p class="card-subtitle">
+												<span class="text-truncate-inline">
+													<span class="text-truncate">
+														${htmlUtil.escape(entry.getCreatorUserName())}
+													</span>
+												</span>
+											</p>
+										</#if>
+
+										<#if (entry.getCreationDateString()??) && validator.isNotNull(entry.getCreationDateString())>
+											<p class="card-subtitle">
+												<span class="text-truncate-inline">
+													<span class="text-truncate">
+														${entry.getCreationDateString()}
+													</span>
+												</span>
+											</p>
+										</#if>
+
+										<p class="card-subtitle">
+											<span class="text-truncate-inline">
+												<span class="text-truncate">
+													${entry.getModelResource()}
+												</span>
+											</span>
+										</p>
+
+										<div class="card-description">
+											${htmlUtil.escape(entry.getContent())}
+										</div>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</#list>
+		</#if>
+	</ul>
+</div>
+templateKey:SIMILAR-RESULTS-COMPACT-FTL,script:<div class="display-compact">
+	<ul>
+		<#if entries?has_content>
+			<#list entries as entry>
+				<li>
+					<a class="link-primary single-link" href="${entry.getViewURL()}">
+						${htmlUtil.escape(entry.getTitle())}
+					</a>
+				</li>
+			</#list>
+		</#if>
+	</ul>
+</div>
+templateKey:SIMILAR-RESULTS-LIST-FTL,script:<div class="display-list">
+	<ul class="list-group">
+		<#if entries?has_content>
+			<#list entries as entry>
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col">
+						<div class="sticker sticker-secondary">
+							<@clay.icon symbol="${entry.getIconId()}" />
+						</div>
+					</div>
+
+					<div class="autofit-col autofit-col-expand">
+						<section class="autofit-section">
+							<div class="list-group-title">
+								<a href="${entry.getViewURL()}" title="${htmlUtil.escape(entry.getTitle())}">
+									${htmlUtil.escape(entry.getTitle())}
+								</a>
+							</div>
+
+							<div class="similar-results-metadata">
+								<p class="list-group-subtext">
+									<#if (entry.getCreatorUserName()??) && validator.isNotNull(entry.getCreatorUserName())>
+										<span class="subtext-item">
+											${htmlUtil.escape(entry.getCreatorUserName())}
+										</span>
+									</#if>
+
+									<#if (entry.getCreationDateString()??) && validator.isNotNull(entry.getCreationDateString())>
+										<span class="subtext-item">
+											${entry.getCreationDateString()}
+										</span>
+									</#if>
+								</p>
+
+								<p class="list-group-subtext">
+									${entry.getModelResource()}
+								</p>
+							</div>
+
+							<p class="list-group-text similar-results-description">
+								${htmlUtil.escape(entry.getContent())}
+							</p>
+						</section>
+					</div>
+				</li>
+			</#list>
+		</#if>
+	</ul>
+</div>
+templateKey:COMMERCE-PRODUCT-CATEGORY-CONTENT-BASIC-FTL,script:<div class="row">
+	<#assign
+		image = ''
+
+		title = ''
+
+		description = ''
+	/>
+
+	<#if cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay)??>
+		<#assign
+			image = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay)
+		/>
+	</#if>
+
+	<#if assetCategory??>
+		<#assign
+			title = assetCategory.getTitle(locale)
+
+			description = assetCategory.getTitle(locale)
+		/>
+	</#if>
+
+	<div>
+		<img src="${htmlUtil.escapeAttribute(image)}">
+	</div>
+
+	<div class="container-fluid container-fluid-max-xl">
+		<h1>${htmlUtil.escape(title)}</h1>
+
+		<p>${htmlUtil.escape(description)}</p>
+	</div>
+</div>
+templateKey:RSS-NAVIGATION-FTL,script:<#assign rssPortletInstanceConfiguration = rssDisplayContext.getRSSPortletInstanceConfiguration() />
+
+<style>
+	.portlet-rss .feed-entry-content {
+		margin-bottom: 20px;
+		padding-left: 0;
+	}
+</style>
+
+<#if entries?has_content>
+	<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
+
+	<div class="container-fluid">
+		<div class="row" id="<@portlet.namespace />feedsTab">
+			<ul class="col-4">
+				<#list entries as curEntry>
+					<li><a href="#tab-${curEntry_index}">${htmlUtil.escape(curEntry.getTitle())}</a></li>
+				</#list>
+			</ul>
+
+			<div class="col-8 tab-content">
+				<#list entries as curEntry>
+					<#assign rssFeedEntries = curEntry.getRSSFeedEntries(themeDisplay) />
+
+					<#if rssFeedEntries??>
+						<div class="tab-pane" id="tab-${curEntry_index}">
+							<#list rssFeedEntries as rssFeedEntry>
+								<#if (rssFeedEntry_index >= entriesPerFeed?number)>
+									<#break>
+								</#if>
+
+								<#assign syndEntry = rssFeedEntry.getSyndEntry() />
+
+								<div class="feed-entry-content">
+									<div class="feed-title">
+										<@liferay_aui["a"] href="${htmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink())}">${htmlUtil.escape(syndEntry.getTitle())}</@>
+									</div>
+
+									<#if rssPortletInstanceConfiguration.showFeedTitle() && syndEntry.getAuthor()??>
+										<div class="feed-entry-author">
+											${htmlUtil.escape(syndEntry.getAuthor())}
+										</div>
+									</#if>
+
+									<#if syndEntry.getPublishedDate()??>
+										<div class="feed-date">
+											<@liferay_ui["icon"]
+												icon="calendar"
+												label=true
+												markupView="lexicon"
+												message="${dateUtil.getDate(syndEntry.getPublishedDate(), dateFormat, locale)}"
+											/>
+										</div>
+									</#if>
+
+									${rssFeedEntry.getSanitizedContent()}
+								</div>
+							</#list>
+						</div>
+					</#if>
+				</#list>
+			</div>
+		</div>
+	</div>
+
+	<@liferay_aui["script"] use="aui-base,aui-tabview">
+		new A.TabView(
+			{
+				srcNode: '#<@portlet.namespace />feedsTab',
+				stacked: true,
+				type: 'pills'
+			}
+		).render();
+	</@>
+</#if>
