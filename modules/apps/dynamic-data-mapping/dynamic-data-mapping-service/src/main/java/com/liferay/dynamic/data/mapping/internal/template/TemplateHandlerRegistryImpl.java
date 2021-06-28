@@ -190,6 +190,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 		@Override
 		public void portalInstanceRegistered(Company company) throws Exception {
+			System.out.println("############ 1 TemplateHandlerRegistryImpl _templateHandler.getClassName()= " + _templateHandler.getClassName());
 			long classNameId = _portal.getClassNameId(
 				_templateHandler.getClassName());
 
@@ -216,6 +217,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 			Map<String, DDMTemplate> ddmTemplateMap = null;
 
 			if (ddmTemplateMaps != null) {
+				System.out.println("############ 2 TemplateHandlerRegistryImpl ddmTemplateMaps != null");
 				ddmTemplateMap = ddmTemplateMaps.computeIfAbsent(
 					group.getGroupId(),
 					groupId -> {
@@ -245,6 +247,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				DDMTemplate ddmTemplate = null;
 
 				if (ddmTemplateMap != null) {
+					System.out.println("############ 3 TemplateHandlerRegistryImpl ddmTemplateMaps != null");
 					ddmTemplate = ddmTemplateMap.get(
 						StringBundler.concat(
 							classNameId, StringPool.POUND,
@@ -252,6 +255,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				}
 
 				if (ddmTemplate == null) {
+					System.out.println("############ 4 TemplateHandlerRegistryImpl ddmTemplate == null");
 					ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 						group.getGroupId(), classNameId, templateKey);
 				}
@@ -259,7 +263,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				if ((ddmTemplate != null) &&
 					((ddmTemplate.getUserId() != userId) ||
 					 (ddmTemplate.getVersionUserId() != userId))) {
-
+					System.out.println("############ 5 TemplateHandlerRegistryImpl ddmTemplate != null but userId is not match");
 					continue;
 				}
 
@@ -273,7 +277,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 				if ((ddmTemplate != null) &&
 					StringUtil.equals(script, ddmTemplate.getScript())) {
-
+					System.out.println("############ 6 TemplateHandlerRegistryImpl ddmTemplate != null script = ddmTemplate.getScript()");
 					continue;
 				}
 
@@ -303,6 +307,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				String type = templateElement.elementText("type");
 
 				if (type == null) {
+					System.out.println("############ 7 TemplateHandlerRegistryImpl type == null set type= " + DDMTemplateManager.TEMPLATE_TYPE_DISPLAY);
 					type = DDMTemplateManager.TEMPLATE_TYPE_DISPLAY;
 				}
 
@@ -312,6 +317,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 					templateElement.elementText("cacheable"));
 
 				if (ddmTemplate == null) {
+					System.out.println("############ 8 TemplateHandlerRegistryImpl ddmTemplate == null _ddmTemplateLocalService.addTemplate");
 					_ddmTemplateLocalService.addTemplate(
 						userId, group.getGroupId(), classNameId, 0,
 						_portal.getClassNameId(
@@ -321,6 +327,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 						serviceContext);
 				}
 				else {
+					System.out.println("############ 9 TemplateHandlerRegistryImpl ddmTemplate != null _ddmTemplateLocalService.addTemplate");
 					_ddmTemplateLocalService.updateTemplate(
 						userId, ddmTemplate.getTemplateId(), 0, nameMap,
 						descriptionMap, type, null, language, script, cacheable,
