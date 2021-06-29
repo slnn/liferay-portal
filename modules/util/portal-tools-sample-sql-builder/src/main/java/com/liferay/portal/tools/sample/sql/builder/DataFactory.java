@@ -425,6 +425,8 @@ public class DataFactory {
 		models.add(_getMBDiscussionCombinedClassName(BlogsEntry.class));
 		models.add(_getMBDiscussionCombinedClassName(WikiPage.class));
 
+		_readFiletoList("ClassNameModels.txt", models);
+
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
 
@@ -7652,6 +7654,21 @@ public class DataFactory {
 
 	private String _readFile(String resourceName) throws Exception {
 		return _readFile(getResourceInputStream(resourceName));
+	}
+
+	private void _readFiletoList(String fileName, List<String> lines)
+		throws Exception {
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(getResourceInputStream(fileName)))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
+		}
 	}
 
 	private String _replaceReleaseInfo(String resource) throws Exception {
