@@ -7,7 +7,6 @@ templateKey:COMMERCE-ORDER-ITEM-TOTAL-BASIC-FTL@&&@name:Basic
 templateKey:FOLDER-FACET-LABEL-FTL@&&@name:Label Layout
 templateKey:BREADCRUMB-VERTICAL-FTL@&&@name:Vertical
 templateKey:BLOGS-CARD-FTL@&&@name:Card
-templateKey:BASIC-WEB-CONTENT@&&@name:Basic Web Content
 templateKey:SITE-MAP-MULTI-COLUMN-LAYOUT-FTL@&&@name:Multi Column Layout
 templateKey:MODIFIED-FACET-RADIO-FTL@&&@name:Radio Layout
 templateKey:COMMERCE-PRODUCT-CATEGORY-CONTENT-BASIC-FTL@&&@name:Basic

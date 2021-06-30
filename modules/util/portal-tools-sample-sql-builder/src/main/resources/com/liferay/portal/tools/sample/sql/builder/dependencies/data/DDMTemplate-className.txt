@@ -4,7 +4,6 @@ templateKey:ASSET-PUBLISHER-RICH-SUMMARY-FTL,className:com.liferay.asset.kernel.
 templateKey:ASSET-TAGS-NAVIGATION-COLOR-BY-POPULARITY-FTL,className:com.liferay.asset.kernel.model.AssetTag
 templateKey:BLOGS-BASIC-FTL,className:com.liferay.blogs.model.BlogsEntry
 templateKey:BLOGS-CARD-FTL,className:com.liferay.blogs.model.BlogsEntry
-templateKey:BASIC-WEB-CONTENT,className:com.liferay.dynamic.data.mapping.model.DDMStructure
 templateKey:SITE-MAP-MULTI-COLUMN-LAYOUT-FTL,className:com.liferay.portal.kernel.model.LayoutSet
 templateKey:WIKI-SOCIAL-FTL,className:com.liferay.wiki.model.WikiPage
 templateKey:LIST-MENU-FTL,className:com.liferay.portal.kernel.theme.NavItem
