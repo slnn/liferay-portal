@@ -7843,7 +7843,15 @@ public class DataFactory {
 			InputStream inputStream = new FileInputStream(
 				new File(sb.toString()));
 
-			String value = StringUtil.read(inputStream);
+			List<String> lines = new ArrayList<>();
+
+			StringUtil.readLines(inputStream, lines);
+
+			String value = StringUtil.merge(lines, StringPool.SPACE);
+
+			value = value.replaceAll(StringPool.QUOTE, "\\\\\"");
+
+			value = value.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
 
 			_ddmTemplateScriptMap.put(entry.getKey(), value);
 		}
