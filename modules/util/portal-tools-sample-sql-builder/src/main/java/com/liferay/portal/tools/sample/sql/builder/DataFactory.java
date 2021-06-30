@@ -3665,7 +3665,7 @@ public class DataFactory {
 				type = "macro";
 			}
 			else {
-				type = TemplateConstants.LANG_TYPE_FTL;
+				type = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
 			}
 
 			ddmTemplateModels.add(
@@ -6695,9 +6695,9 @@ public class DataFactory {
 
 		ddmTemplateModel.setName(sb.toString());
 
-		ddmTemplateModel.setType(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+		ddmTemplateModel.setType(type);
 		ddmTemplateModel.setMode(mode);
-		ddmTemplateModel.setLanguage(type);
+		ddmTemplateModel.setLanguage(TemplateConstants.LANG_TYPE_FTL);
 		ddmTemplateModel.setScript(script);
 		ddmTemplateModel.setCacheable(true);
 		ddmTemplateModel.setSmallImage(false);
