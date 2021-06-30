@@ -3700,6 +3700,46 @@ public class DataFactory {
 		return ddmTemplateModels;
 	}
 
+	public DDMTemplateVersionModel newDDMTemplateVersionModel(
+		DDMTemplateModel ddmTemplateModel) {
+
+		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
+			new DDMTemplateVersionModelImpl();
+
+		// PK fields
+
+		ddmTemplateVersionModelImpl.setTemplateVersionId(_counter.get());
+
+		// Group instance
+
+		ddmTemplateVersionModelImpl.setGroupId(_globalGroupId);
+
+		// Audit fields
+
+		ddmTemplateVersionModelImpl.setCompanyId(_companyId);
+		ddmTemplateVersionModelImpl.setUserId(_defaultUserId);
+		ddmTemplateVersionModelImpl.setCreateDate(nextFutureDate());
+
+		// Other fields
+
+		ddmTemplateVersionModelImpl.setClassNameId(
+			ddmTemplateModel.getClassNameId());
+
+		ddmTemplateVersionModelImpl.setClassPK(ddmTemplateModel.getClassPK());
+		ddmTemplateVersionModelImpl.setTemplateId(
+			ddmTemplateModel.getTemplateId());
+
+		ddmTemplateVersionModelImpl.setVersion(ddmTemplateModel.getVersion());
+		ddmTemplateVersionModelImpl.setName(ddmTemplateModel.getName());
+		ddmTemplateVersionModelImpl.setLanguage(ddmTemplateModel.getLanguage());
+		ddmTemplateVersionModelImpl.setScript(ddmTemplateModel.getScript());
+
+		ddmTemplateVersionModelImpl.setStatusByUserId(_defaultUserId);
+		ddmTemplateVersionModelImpl.setStatusDate(nextFutureDate());
+
+		return ddmTemplateVersionModelImpl;
+	}
+
 	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
 		return newAssetVocabularyModel(
 			_globalGroupId, _defaultUserId, null,
