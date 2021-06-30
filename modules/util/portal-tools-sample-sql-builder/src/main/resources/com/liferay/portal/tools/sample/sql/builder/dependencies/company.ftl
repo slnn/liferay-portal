@@ -29,5 +29,7 @@
 
 	<#list dataFactory.newDDMTemplateModels() as ddmTemplateModel>
 		${dataFactory.toInsertSQL(ddmTemplateModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newDDMTemplateVersionModel(ddmTemplateModel))}
 	</#list>
 </#list>
