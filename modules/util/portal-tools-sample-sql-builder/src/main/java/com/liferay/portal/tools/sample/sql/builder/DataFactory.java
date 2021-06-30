@@ -7788,12 +7788,21 @@ public class DataFactory {
 	}
 
 	private void _processDDMTemplateScript() throws Exception {
-		File file = new File("");
+		String rootModulePath = "";
 
-		String currentModulePath = file.getCanonicalPath();
+		Class<?> clazz = getClass();
 
-		String rootModulePath = currentModulePath.substring(
-			0, currentModulePath.indexOf("util"));
+		String classLoaderStr = String.valueOf(clazz.getClassLoader());
+
+		String userDir = System.getProperty("user.dir");
+
+		if (classLoaderStr.contains("AppClassLoader")) {
+			rootModulePath = userDir.substring(0, userDir.indexOf("util"));
+		}
+		else {
+			rootModulePath =
+				userDir.substring(0, userDir.indexOf("benchmarks")) + "modules";
+		}
 
 		for (Map.Entry<String, String> entry :
 				_ddmTemplateScriptNameMap.entrySet()) {
