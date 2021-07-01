@@ -6638,7 +6638,12 @@ public class DataFactory {
 		ddmTemplateModel.setMode(mode);
 		ddmTemplateModel.setLanguage(TemplateConstants.LANG_TYPE_FTL);
 		ddmTemplateModel.setScript(script);
-		ddmTemplateModel.setCacheable(true);
+		ddmTemplateModel.setCacheable(false);
+
+		if (templateKey.equals("BASIC-WEB-CONTENT")) {
+			ddmTemplateModel.setCacheable(true);
+		}
+
 		ddmTemplateModel.setSmallImage(false);
 		ddmTemplateModel.setLastPublishDate(nextFutureDate());
 
