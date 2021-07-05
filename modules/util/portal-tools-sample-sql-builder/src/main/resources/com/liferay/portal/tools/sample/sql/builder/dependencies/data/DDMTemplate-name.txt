@@ -1,0 +1,61 @@
+templateKey:ASSET-PUBLISHER-GEOLOCALIZED@&&@name:Map
+templateKey:CUSTOM-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:USER-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:CATEGORY-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:LANGUAGE-SHORT-TEXT-FTL@&&@name:Short Text
+templateKey:COMMERCE-ORDER-ITEM-TOTAL-BASIC-FTL@&&@name:Basic
+templateKey:FOLDER-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:BREADCRUMB-VERTICAL-FTL@&&@name:Vertical
+templateKey:BLOGS-CARD-FTL@&&@name:Card
+templateKey:SITE-MAP-MULTI-COLUMN-LAYOUT-FTL@&&@name:Multi Column Layout
+templateKey:MODIFIED-FACET-RADIO-FTL@&&@name:Radio Layout
+templateKey:COMMERCE-PRODUCT-CATEGORY-CONTENT-BASIC-FTL@&&@name:Basic
+templateKey:CATEGORY-FACET-CLOUD-FTL@&&@name:Cloud Layout
+templateKey:NAV-PILLS-STACKED-FTL@&&@name:Pills Stacked
+templateKey:BREADCRUMB-HORIZONTAL-FTL@&&@name:Horizontal
+templateKey:COMMERCE-PRODUCT-DEFINITION-BASIC-FTL@&&@name:Basic
+templateKey:TAG-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:SITE-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:DOCUMENTLIBRARY-CAROUSEL-FTL@&&@name:Carousel
+templateKey:TAG-FACET-CLOUD-FTL@&&@name:Cloud Layout
+templateKey:SIMILAR-RESULTS-COMPACT-FTL@&&@name:Compact Layout
+templateKey:SEARCH-RESULTS-LIST-FTL@&&@name:List Layout
+templateKey:USER-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:SIMILAR-RESULTS-CARD-FTL@&&@name:Card Layout
+templateKey:NAVBAR-DEFAULT-FTL@&&@name:Bar default styled
+templateKey:SITE-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:BREADCRUMB-ARROWS-FTL@&&@name:Arrows
+templateKey:NAVIGATION-MACRO-FTL@&&@name:Navigation common macros
+templateKey:ASSET-CATEGORIES-NAVIGATION-MULTI-COLUMN-LAYOUT-FTL@&&@name:Multi Column Layout
+templateKey:TAG-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:CUSTOM-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:LANGUAGE-LONG-TEXT-FTL@&&@name:Long Text
+templateKey:CATEGORY-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:SEARCH-BAR-LEFT-ALIGNED-ICON-FTL@&&@name:Left Aligned Icon Layout
+templateKey:COMMERCE-ADDRESS-BASIC-FTL@&&@name:Basic
+templateKey:SEARCH-RESULTS-CARD-FTL@&&@name:Card Layout
+templateKey:NAV-PILLS-JUSTIFIED-FTL@&&@name:Pills Justified
+templateKey:NAVBAR-BLANK-FTL@&&@name:Bar minimally styled
+templateKey:LANGUAGE-ICON-MENU-FTL@&&@name:Icon Menu
+templateKey:TYPE-FACET-LABEL-FTL@&&@name:Label Layout
+templateKey:FOLDER-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:BLOGS-BASIC-FTL@&&@name:Basic
+templateKey:WIKI-SOCIAL-FTL@&&@name:Social
+templateKey:LANGUAGE-SELECT-BOX-FTL@&&@name:Select Box
+templateKey:ASSET-TAGS-NAVIGATION-COLOR-BY-POPULARITY-FTL@&&@name:Color by Popularity
+templateKey:RSS-NAVIGATION-FTL@&&@name:Navigation
+templateKey:COMMERCE-ORDER-ITEM-MINI-BASIC-FTL@&&@name:Basic
+templateKey:NAV-TABS-JUSTIFIED-FTL@&&@name:Tabs Justified
+templateKey:LIST-MENU-FTL@&&@name:List Menu
+templateKey:LANGUAGE-ICON-FTL@&&@name:Icon
+templateKey:NAV-PILLS-FTL@&&@name:Pills Horizontal
+templateKey:SEARCH-RESULTS-COMPACT-FTL@&&@name:Compact Layout
+templateKey:SIMILAR-RESULTS-LIST-FTL@&&@name:List Layout
+templateKey:NAVBAR-BLANK-JUSTIFIED-FTL@&&@name:Bar minimally justified styled
+templateKey:SPLIT-BUTTON-DROPDOWNS-FTL@&&@name:Split Button Dropdowns
+templateKey:COMMERCE-ORDER-ITEM-BASIC-FTL@&&@name:Basic
+templateKey:TYPE-FACET-COMPACT-FTL@&&@name:Compact Layout
+templateKey:ASSET-PUBLISHER-RICH-SUMMARY-FTL@&&@name:Rich Summary
+templateKey:NAV-TABS-FTL@&&@name:Tabs
+templateKey:CUSTOM-FILTER-COMPACT-FTL@&&@name:Compact Layout
+templateKey:SORT-COMPACT-FTL@&&@name:Compact Layout
