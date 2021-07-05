@@ -352,6 +352,8 @@ import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -363,6 +365,12 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
 import java.net.URL;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.Types;
 
@@ -462,6 +470,8 @@ public class DataFactory {
 		initResourceActionModels();
 
 		initPortletResourcePermissionModels();
+
+		initDDMTemplateModels();
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -561,7 +571,11 @@ public class DataFactory {
 	}
 
 	public long getClassNameId(Class<?> clazz) {
-		ClassNameModel classNameModel = _classNameModels.get(clazz.getName());
+		return getClassNameId(clazz.getName());
+	}
+
+	public long getClassNameId(String className) {
+		ClassNameModel classNameModel = _classNameModels.get(className);
 
 		return classNameModel.getClassNameId();
 	}
@@ -765,6 +779,41 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return getClassNameId(WikiPage.class);
+	}
+
+	public void initDDMTemplateModels() throws Exception {
+		List<String> templateKeys = new ArrayList<>();
+
+		_readFiletoList("DDMTemplate-templateKey.txt", templateKeys);
+
+		List<String> templates = new ArrayList<>();
+
+		_readFiletoList("DDMTemplate-className.txt", templates);
+
+		_processListtoMap(
+			templates, _ddmTemplateClassNameMap, "className", ",");
+
+		templates.clear();
+
+		_readFiletoList("DDMTemplate-name.txt", templates);
+
+		_processListtoMap(templates, _ddmTemplateNameMap, "name", "@&&@");
+
+		templates.clear();
+
+		_readFiletoList("DDMTemplate-ScriptName.txt", templates);
+
+		_processListtoMap(templates, _ddmTemplateScriptNameMap);
+
+		_processDDMTemplateScript();
+
+		for (String templateKey : templateKeys) {
+			_ddmTemplateModelList.add(
+				new SampleSQLBuilderDDMTemplateModel(
+					_ddmTemplateClassNameMap.get(templateKey), templateKey,
+					_ddmTemplateNameMap.get(templateKey),
+					_ddmTemplateScriptMap.get(templateKey)));
+		}
 	}
 
 	public void initJournalArticleContent() {
@@ -3620,6 +3669,35 @@ public class DataFactory {
 		ddmTemplateLinkModel.setTemplateId(templateId);
 
 		return ddmTemplateLinkModel;
+	}
+
+	public List<DDMTemplateModel> newDDMTemplateModels() {
+		List<DDMTemplateModel> ddmTemplateModels = new ArrayList<>();
+
+		String type = null;
+
+		for (SampleSQLBuilderDDMTemplateModel ddmTemplateModel :
+				_ddmTemplateModelList) {
+
+			String templateKey = ddmTemplateModel.getTemplateKey();
+
+			if (templateKey.contains("NAVIGATION-MACRO-FTL")) {
+				type = "macro";
+			}
+			else {
+				type = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
+			}
+
+			ddmTemplateModels.add(
+				newDDMTemplateModel(
+					_globalGroupId, _defaultUserId, "",
+					ddmTemplateModel.getName(), ddmTemplateModel.getScript(),
+					getClassNameId(ddmTemplateModel.getClassName()), 0,
+					getClassNameId(PortletDisplayTemplate.class),
+					_counter.get(), templateKey, type));
+		}
+
+		return ddmTemplateModels;
 	}
 
 	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
@@ -6505,6 +6583,17 @@ public class DataFactory {
 		long classNameId, long classPK, long resourceClassNameId,
 		long templateId, String templateKey) {
 
+		return newDDMTemplateModel(
+			groupId, userId, mode, name, script, classNameId, classPK,
+			resourceClassNameId, templateId, templateKey,
+			TemplateConstants.LANG_TYPE_FTL);
+	}
+
+	protected DDMTemplateModel newDDMTemplateModel(
+		long groupId, long userId, String mode, String name, String script,
+		long classNameId, long classPK, long resourceClassNameId,
+		long templateId, String templateKey, String type) {
+
 		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
 
 		// UUID
@@ -6545,7 +6634,7 @@ public class DataFactory {
 
 		ddmTemplateModel.setName(sb.toString());
 
-		ddmTemplateModel.setType(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+		ddmTemplateModel.setType(type);
 		ddmTemplateModel.setMode(mode);
 		ddmTemplateModel.setLanguage(TemplateConstants.LANG_TYPE_FTL);
 		ddmTemplateModel.setScript(script);
@@ -7577,6 +7666,60 @@ public class DataFactory {
 		return roleId;
 	}
 
+	private void _getScriptAbsolutePath(
+		File baseDir, String ftlName, StringBundler sb) {
+
+		if (!baseDir.exists() || !baseDir.isDirectory()) {
+			return;
+		}
+
+		try {
+			Files.walkFileTree(
+				baseDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						String fileName = String.valueOf(path.getFileName());
+
+						if (_isSkip(fileName) || fileName.contains("test")) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						if (path.endsWith(ftlName)) {
+							sb.append(path);
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+		}
+	}
+
+	private boolean _isSkip(String fileName) {
+		if (fileName.startsWith(".") ||
+			_skipModuleFileNames.contains(fileName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private LayoutModel _newContentPageLayoutModel(
 		long groupId, String name, long classNameId, long classPK) {
 
@@ -7644,6 +7787,54 @@ public class DataFactory {
 		return counterModel;
 	}
 
+	private void _processDDMTemplateScript() throws Exception {
+		File file = new File("");
+
+		String currentModulePath = file.getCanonicalPath();
+
+		String rootModulePath = currentModulePath.substring(
+			0, currentModulePath.indexOf("util"));
+
+		for (Map.Entry<String, String> entry :
+				_ddmTemplateScriptNameMap.entrySet()) {
+
+			StringBundler sb = new StringBundler();
+
+			_getScriptAbsolutePath(
+				new File(rootModulePath), entry.getValue(), sb);
+
+			InputStream inputStream = new FileInputStream(
+				new File(sb.toString()));
+
+			String value = StringUtil.read(inputStream);
+
+			_ddmTemplateScriptMap.put(entry.getKey(), value);
+		}
+	}
+
+	private void _processListtoMap(
+		List<String> lines, Map<String, String> map) {
+
+		for (String line : lines) {
+			String[] items = line.split(",");
+
+			map.put(items[0], items[1]);
+		}
+	}
+
+	private void _processListtoMap(
+		List<String> lines, Map<String, String> map, String columnName,
+		String separator) {
+
+		for (String line : lines) {
+			String[] items = line.split(separator);
+
+			map.put(
+				items[0].substring(12),
+				items[1].substring(columnName.length() + 1));
+		}
+	}
+
 	private String _readFile(InputStream inputStream) throws Exception {
 		List<String> lines = new ArrayList<>();
 
@@ -7707,6 +7898,10 @@ public class DataFactory {
 
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
+	private static final List<String> _skipModuleFileNames = Arrays.asList(
+		"aspectj", "build", "classes", "core", "etl", "node_modules",
+		"node_modules_cache", "post-upgrade-fix", "sdk", "suites",
+		"third-party", "test", "util");
 
 	private long _accountId;
 	private RoleModel _accountManagerRoleModel;
@@ -7732,6 +7927,14 @@ public class DataFactory {
 	private long _companyId;
 	private final SimpleCounter _counter;
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
+		new HashMap<>();
+	private final Map<String, String> _ddmTemplateClassNameMap =
+		new HashMap<>();
+	private final List<SampleSQLBuilderDDMTemplateModel> _ddmTemplateModelList =
+		new ArrayList<>();
+	private final Map<String, String> _ddmTemplateNameMap = new HashMap<>();
+	private final Map<String, String> _ddmTemplateScriptMap = new HashMap<>();
+	private final Map<String, String> _ddmTemplateScriptNameMap =
 		new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
