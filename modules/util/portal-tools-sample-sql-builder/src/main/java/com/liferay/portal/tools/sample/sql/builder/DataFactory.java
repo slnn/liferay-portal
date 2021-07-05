@@ -7807,17 +7807,25 @@ public class DataFactory {
 		for (Map.Entry<String, String> entry :
 				_ddmTemplateScriptNameMap.entrySet()) {
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb1 = new StringBundler();
 
 			_getScriptAbsolutePath(
-				new File(rootModulePath), entry.getValue(), sb);
+				new File(rootModulePath), entry.getValue(), sb1);
 
 			InputStream inputStream = new FileInputStream(
-				new File(sb.toString()));
+				new File(sb1.toString()));
 
 			String value = StringUtil.read(inputStream);
 
-			_ddmTemplateScriptMap.put(entry.getKey(), value);
+			value = value.replaceAll(StringPool.QUOTE, "\\\\\"");
+
+			value = value.replaceAll(StringPool.APOSTROPHE, "\\\\\'");
+
+			StringBundler sb2 = new StringBundler();
+
+			_processScript(value, sb2);
+
+			_ddmTemplateScriptMap.put(entry.getKey(), sb2.toString());
 		}
 	}
 
@@ -7841,6 +7849,19 @@ public class DataFactory {
 			map.put(
 				items[0].substring(12),
 				items[1].substring(columnName.length() + 1));
+		}
+	}
+
+	private void _processScript(String script, StringBundler sb) {
+		char[] scriptArray = script.toCharArray();
+
+		for (char item : scriptArray) {
+			if (item == CharPool.NEW_LINE) {
+				sb.append("\\n");
+			}
+			else {
+				sb.append(item);
+			}
 		}
 	}
 
