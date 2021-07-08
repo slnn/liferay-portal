@@ -64,6 +64,7 @@ dependencies {
 	compileInclude project(":apps:layout:layout-api")
 	compileInclude project(":apps:layout:layout-page-template-api")
 	compileInclude project(":apps:layout:layout-page-template-service")
+	compileInclude project(":apps:layout:layout-seo-api")
 	compileInclude project(":apps:layout:layout-service")
 	compileInclude project(":apps:login:login-web-api")
 	compileInclude project(":apps:message-boards:message-boards-api")
@@ -79,6 +80,7 @@ dependencies {
 	compileInclude project(":apps:view-count:view-count-service")
 	compileInclude project(":apps:wiki:wiki-api")
 	compileInclude project(":apps:wiki:wiki-service")
+	compileInclude project(":dxp:apps:portal-workflow:portal-workflow-kaleo-forms-api")
 
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
