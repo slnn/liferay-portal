@@ -1,0 +1,5 @@
+com/liferay/dynamic/data/lists/internal/events/dependencies/default-dynamic-data-lists-structures.xml,com.liferay.dynamic.data.lists.model.DDLRecordSet
+com/liferay/portal/workflow/kaleo/forms/internal/instance/lifecycle/dependencies/default-kaleo-process-ddm-structures.xml,com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
+com/liferay/layout/seo/internal/instance/lifecycle/dependencies/custom-meta-tags-structure.xml,com.liferay.layout.seo.model.LayoutSEOEntry
+com/liferay/document/library/google/docs/internal/util/dependencies/google-docs-metadata-structure.xml,com.liferay.document.library.kernel.model.DLFileEntryMetadata
+com/liferay/document/library/video/internal/util/dependencies/dl-video-external-shortcut-metadata-structure.xml,com.liferay.document.library.kernel.model.DLFileEntryMetadata
