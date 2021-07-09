@@ -31,6 +31,10 @@
 		${dataFactory.toInsertSQL(resourcePermissionModel)}
 	</#list>
 
+	<#list dataFactory.newDDMStructureModels() as ddmStructureModel>
+		${dataFactory.toInsertSQL(ddmStructureModel)}
+	</#list>
+
 	<#list dataFactory.newDDMTemplateModels() as ddmTemplateModel>
 		${dataFactory.toInsertSQL(ddmTemplateModel)}
 
