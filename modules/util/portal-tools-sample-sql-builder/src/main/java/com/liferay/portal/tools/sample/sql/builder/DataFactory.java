@@ -121,11 +121,23 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.internal.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeModel;
 import com.liferay.dynamic.data.mapping.model.DDMFieldModel;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
@@ -136,6 +148,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFieldModelImpl;
@@ -148,6 +161,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollectionModel;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
@@ -387,6 +401,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -3664,20 +3679,13 @@ public class DataFactory {
 
 			String structureKey = structureElement.elementText("name");
 
-			String definition = "";
+			DDMForm ddmForm = _getDDMForm(
+				LocaleUtil.ENGLISH, structureElement,
+				new DDMFormJSONDeserializer(), new DDMFormXSDDeserializer(),
+				new DDMImpl());
 
-			Element structureElementDefinitionElement =
-				structureElement.element("definition");
-
-			if (structureElementDefinitionElement != null) {
-				definition = structureElementDefinitionElement.asXML();
-			}
-			else {
-				Element structureElementRootElement = structureElement.element(
-					"root");
-
-				definition = structureElementRootElement.asXML();
-			}
+			String definition = _serializeJSONDDMForm(
+				ddmForm, new DDMFormJSONSerializer());
 
 			ddmStructureModels.add(
 				newDDMStructureModel(
@@ -7686,6 +7694,19 @@ public class DataFactory {
 		}
 	}
 
+	private DDMForm _deserialize(
+		String content, DDMFormDeserializer ddmFormDeserializer) {
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
 	private String _generateJsonData(
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels,
 		String templateFileName) {
@@ -7733,6 +7754,35 @@ public class DataFactory {
 		return data;
 	}
 
+	private DDMForm _getDDMForm(
+		Locale locale, Element structureElement,
+		DDMFormJSONDeserializer jsonDDMFormDeserializer,
+		DDMFormXSDDeserializer xsdDDMFormDeserializer, DDM ddm) {
+
+		Element structureElementDefinitionElement = structureElement.element(
+			"definition");
+
+		if (structureElementDefinitionElement != null) {
+			return _deserialize(
+				structureElementDefinitionElement.getTextTrim(),
+				jsonDDMFormDeserializer);
+		}
+
+		Element structureElementRootElement = structureElement.element("root");
+
+		String definition = structureElementRootElement.asXML();
+
+		DDMForm ddmForm = _deserialize(definition, xsdDDMFormDeserializer);
+
+		ddmForm = ddm.updateDDMFormDefaultLocale(ddmForm, locale);
+
+		Set<Locale> locales = new HashSet<>();
+
+		locales.add(locale);
+
+		return _getPopulateDDMForm(ddmForm, locale, locales);
+	}
+
 	private List<Element> _getDDMStructures(
 			InputStream inputStream, Locale locale)
 		throws Exception {
@@ -7768,6 +7818,62 @@ public class DataFactory {
 		return StringBundler.concat(
 			MBDiscussion.class.getName(), StringPool.UNDERLINE,
 			clazz.getName());
+	}
+
+	private DDMForm _getPopulateDDMForm(
+		DDMForm ddmForm, Locale defaultLocale, Set<Locale> locales) {
+
+		for (Locale locale : locales) {
+			ddmForm.addAvailableLocale(locale);
+		}
+
+		ddmForm.setDDMFormFields(
+			_getPopulateDDMFormFields(
+				ddmForm.getDDMFormFields(), defaultLocale));
+
+		return ddmForm;
+	}
+
+	private List<DDMFormField> _getPopulateDDMFormFields(
+		List<DDMFormField> ddmFormFields, Locale defaultLocale) {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			DDMFormFieldOptions ddmFormFieldOptions =
+				ddmFormField.getDDMFormFieldOptions();
+
+			Map<String, LocalizedValue> options =
+				ddmFormFieldOptions.getOptions();
+
+			for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
+				options.put(
+					entry.getKey(),
+					_getPopulateLocalizedValue(
+						defaultLocale, entry.getValue()));
+			}
+
+			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+			ddmFormField.setLabel(
+				_getPopulateLocalizedValue(
+					defaultLocale, ddmFormField.getLabel()));
+			ddmFormField.setNestedDDMFormFields(
+				_getPopulateDDMFormFields(
+					ddmFormField.getNestedDDMFormFields(), defaultLocale));
+			ddmFormField.setTip(
+				_getPopulateLocalizedValue(
+					defaultLocale, ddmFormField.getTip()));
+		}
+
+		return ddmFormFields;
+	}
+
+	private LocalizedValue _getPopulateLocalizedValue(
+		Locale defaultLocale, LocalizedValue localizedValue) {
+
+		String defaultValue = localizedValue.getString(defaultLocale);
+
+		localizedValue.addString(defaultLocale, defaultValue);
+
+		return localizedValue;
 	}
 
 	private String _getResourcePermissionModelName(String... classNames) {
@@ -8059,6 +8165,18 @@ public class DataFactory {
 		sb.append(StringPool.PERIOD);
 
 		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
+	}
+
+	private String _serializeJSONDDMForm(
+		DDMForm ddmForm, DDMFormJSONSerializer jsonDDMFormSerializer) {
+
+		DDMFormSerializerSerializeRequest.Builder builder =
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
+			jsonDDMFormSerializer.serialize(builder.build());
+
+		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
