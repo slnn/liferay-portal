@@ -280,6 +280,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.impl.AccountModelImpl;
 import com.liferay.portal.model.impl.AddressModelImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
@@ -386,6 +389,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -476,6 +480,8 @@ public class DataFactory {
 		initPortletResourcePermissionModels();
 
 		initDDMTemplateModels();
+
+		initDDMStructureModels();
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -783,6 +789,57 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return getClassNameId(WikiPage.class);
+	}
+
+	public void initDDMStructureModels() throws Exception {
+		List<String> ddmStructureDataList = new ArrayList<>();
+
+		_readFiletoList("DDMStructure.txt", ddmStructureDataList);
+
+		for (String ddmStructureData : ddmStructureDataList) {
+			String[] ddmStructureItems = ddmStructureData.split(
+				StringPool.COMMA);
+
+			String rootModulePath = "";
+
+			Class<?> clazz = getClass();
+
+			String classLoaderStr = String.valueOf(clazz.getClassLoader());
+
+			String userDir = System.getProperty("user.dir");
+
+			if (classLoaderStr.contains("AppClassLoader")) {
+				rootModulePath = userDir.substring(0, userDir.indexOf("util"));
+			}
+			else {
+				rootModulePath =
+					userDir.substring(0, userDir.indexOf("benchmarks")) +
+						"modules";
+			}
+
+			StringBundler sb = new StringBundler();
+
+			_getScriptAbsolutePath(
+				new File(rootModulePath), ddmStructureItems[0], sb);
+
+			_ddmStructureClassNameMap.put(sb.toString(), ddmStructureItems[1]);
+		}
+
+		for (Map.Entry<String, String> entry :
+				_ddmStructureClassNameMap.entrySet()) {
+
+			InputStream inputStream = new FileInputStream(
+				new File(entry.getKey()));
+
+			List<Element> structureElements = _getDDMStructures(
+				inputStream, LocaleUtil.ENGLISH);
+
+			for (Element structureElement : structureElements) {
+				_ddmStructureModelList.add(
+					new SampleSQLBuilderDDMStructureModel(
+						entry.getValue(), structureElement));
+			}
+		}
 	}
 
 	public void initDDMTemplateModels() throws Exception {
@@ -3595,6 +3652,42 @@ public class DataFactory {
 			getClassNameId(DLFileEntryMetadata.class),
 			dLFileEntryMetadataModel.getFileEntryMetadataId(),
 			dLFileEntryMetadataModel.getDDMStructureId());
+	}
+
+	public List<DDMStructureModel> newDDMStructureModels() {
+		List<DDMStructureModel> ddmStructureModels = new ArrayList<>();
+
+		for (SampleSQLBuilderDDMStructureModel ddmStructureModel :
+				_ddmStructureModelList) {
+
+			Element structureElement = ddmStructureModel.getStructureElement();
+
+			String structureKey = structureElement.elementText("name");
+
+			String definition = "";
+
+			Element structureElementDefinitionElement =
+				structureElement.element("definition");
+
+			if (structureElementDefinitionElement != null) {
+				definition = structureElementDefinitionElement.asXML();
+			}
+			else {
+				Element structureElementRootElement = structureElement.element(
+					"root");
+
+				definition = structureElementRootElement.asXML();
+			}
+
+			ddmStructureModels.add(
+				newDDMStructureModel(
+					_globalGroupId, _defaultUserId,
+					getClassNameId(ddmStructureModel.getClassName()),
+					StringUtil.toUpperCase(structureKey), definition,
+					_counter.get()));
+		}
+
+		return ddmStructureModels;
 	}
 
 	public DDMStructureVersionModel newDDMStructureVersionModel(
@@ -7640,6 +7733,21 @@ public class DataFactory {
 		return data;
 	}
 
+	private List<Element> _getDDMStructures(
+			InputStream inputStream, Locale locale)
+		throws Exception {
+
+		String xml = StringUtil.read(inputStream);
+
+		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
+
+		Document document = UnsecureSAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.elements("structure");
+	}
+
 	private InputStream _getFragmentComponentInputStream(
 			String fragmentName, String suffix)
 		throws Exception {
@@ -7982,7 +8090,7 @@ public class DataFactory {
 	private static final List<String> _skipModuleFileNames = Arrays.asList(
 		"aspectj", "build", "classes", "core", "etl", "node_modules",
 		"node_modules_cache", "post-upgrade-fix", "sdk", "suites",
-		"third-party", "test", "util");
+		"third-party", "test");
 
 	private long _accountId;
 	private RoleModel _accountManagerRoleModel;
@@ -8009,6 +8117,10 @@ public class DataFactory {
 	private final SimpleCounter _counter;
 	private final Map<Long, CPInstanceModel> _cpInstanceModels =
 		new HashMap<>();
+	private final Map<String, String> _ddmStructureClassNameMap =
+		new HashMap<>();
+	private final List<SampleSQLBuilderDDMStructureModel>
+		_ddmStructureModelList = new ArrayList<>();
 	private final Map<String, String> _ddmTemplateClassNameMap =
 		new HashMap<>();
 	private final List<SampleSQLBuilderDDMTemplateModel> _ddmTemplateModelList =
